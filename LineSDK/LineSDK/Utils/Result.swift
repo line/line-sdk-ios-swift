@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  Result.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,20 +19,41 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+public enum Result<Value> {
+    case success(Value)
+    case failure(Error)
+    
+    public var isSuccess: Bool {
+        if case .success = self {
+            return true
+        }
+        return false
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    public var value: Value? {
+        if case .success(let v) = self {
+            return v
+        }
+        return nil
     }
-
-
+    
+    public var failure: Bool {
+        return !isSuccess
+    }
+    
+    public var error: Error? {
+        if case .failure(let e) = self {
+            return e
+        }
+        return nil
+    }
+    
+    public func map<T>(_ transform: (Value) -> T) -> Result<T> {
+        switch self {
+        case .success(let value): return .success(transform(value))
+        case .failure(let error): return .failure(error)
+        }
+    }
 }
-

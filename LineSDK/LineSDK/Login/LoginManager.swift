@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LoginConfiguration.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,20 +19,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+public class LoginManager {
+    
+    public static let shared = LoginManager()
+    
+    var configuration: LoginConfiguration?
+    
+    private init() { }
+    
+    public func setup(channelID: String) {
+        guard configuration == nil else {
+            assertionFailure("Trying to set configuration of LINEKit multiplet imes is not permitted.")
+            return
+        }
+        self.configuration = LoginConfiguration(channelID: channelID)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
+    
+//    public func login(in viewController: UIViewController?, completionHandler: ) {
+//        
+//    }
 }
-

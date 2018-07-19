@@ -1,4 +1,6 @@
 //
+//  LineSDK.h
+//
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
 //  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
