@@ -1,0 +1,9 @@
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Hello world"
+  lane :hello do
+    puts "Hello world"
+  end
+end
