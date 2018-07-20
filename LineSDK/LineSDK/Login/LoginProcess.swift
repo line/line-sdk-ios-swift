@@ -1,5 +1,5 @@
 //
-//  LoginConfiguration.swift
+//  LoginProcess.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,6 @@
 
 import Foundation
 
-struct LoginConfiguration {
-    let channelID: String
-    let APIHost = "api.line.me"
+public class LoginProcess {
+    
 }

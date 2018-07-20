@@ -1,5 +1,5 @@
 //
-//  LoginConfiguration.swift
+//  LineSDKError.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,13 @@
 
 import Foundation
 
-struct LoginConfiguration {
-    let channelID: String
-    let APIHost = "api.line.me"
+public enum LineSDKError: Error {
+    
+    public enum RequestErrorReason {
+        case missingURL
+        case lackOfAccessToken
+        case jsonEncodingFailed(Error)
+    }
+    
+    case requestFailed(reason: RequestErrorReason)
 }

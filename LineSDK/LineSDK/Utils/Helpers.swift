@@ -1,5 +1,5 @@
 //
-//  LoginConfiguration.swift
+//  Helpers.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,14 @@
 
 import Foundation
 
-struct LoginConfiguration {
-    let channelID: String
-    let APIHost = "api.line.me"
+struct Log {
+    static func assertionFailure(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) {
+        Swift.assertionFailure("[LineSDK] \(message())", file: file, line: line)
+    }
+    
+    static func fatalError(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) -> Never {
+        Swift.fatalError("[LineSDK] \(message())", file: file, line: line)
+    }
 }
+
+

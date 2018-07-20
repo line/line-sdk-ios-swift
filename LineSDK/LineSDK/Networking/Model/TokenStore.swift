@@ -1,5 +1,5 @@
 //
-//  LoginConfiguration.swift
+//  TokenStore.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,14 @@
 
 import Foundation
 
-struct LoginConfiguration {
-    let channelID: String
-    let APIHost = "api.line.me"
+class TokenStore {
+    static let shared = TokenStore()
+    private init() { }
+    
+    var current: AccessToken?
+}
+
+struct AccessToken {
+    let token: String
+    let expiresIn: TimeInterval
 }

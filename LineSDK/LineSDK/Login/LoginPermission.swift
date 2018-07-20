@@ -1,5 +1,5 @@
 //
-//  LoginConfiguration.swift
+//  LoginPermission.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,12 @@
 
 import Foundation
 
-struct LoginConfiguration {
-    let channelID: String
-    let APIHost = "api.line.me"
+public struct LoginPermission: Hashable {
+    public let rawValue: String
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+    
+    static let openID = LoginPermission(rawValue: "openid")
+    static let profile = LoginPermission(rawValue: "profile")
 }

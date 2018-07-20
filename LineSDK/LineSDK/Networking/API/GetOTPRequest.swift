@@ -1,5 +1,5 @@
 //
-//  LoginConfiguration.swift
+//  GetOTPRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,22 @@
 
 import Foundation
 
-struct LoginConfiguration {
+struct GetOTPRequest: APIRequest {
+    var additionalAdapters: [RequestAdapter]? = nil
+    
+    var contentType: ContentType = .formUrlEncoded
+    
+    var adapters: [RequestAdapter]? = nil
+    
+    
     let channelID: String
-    let APIHost = "api.line.me"
+    
+    let method: HTTPMethod = .post
+    let path = "/oauth2/v2.1/otp"
+    var parameters: [String : Any]? { return ["client_id": channelID] }
+    let authenticate: AuthenticateMethod = .none
+    
+    typealias Response = OneTimePassword
+    
 }
+

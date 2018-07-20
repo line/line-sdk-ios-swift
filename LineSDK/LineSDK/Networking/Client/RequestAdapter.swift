@@ -1,5 +1,5 @@
 //
-//  LoginConfiguration.swift
+//  RequestAdapter.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,35 @@
 
 import Foundation
 
-struct LoginConfiguration {
-    let channelID: String
-    let APIHost = "api.line.me"
+protocol RequestAdapter {
+    func adapted(_ request: URLRequest) throws -> URLRequest
+}
+
+struct TokenAdapter: RequestAdapter {
+    let token: AccessToken?
+    init(token: AccessToken?) {
+        self.token = token
+    }
+    
+    func adapted(_ request: URLRequest) throws -> URLRequest {
+        guard let token = token else {
+            throw LineSDKError.requestFailed(reason: .lackOfAccessToken)
+        }
+        var request = request
+        request.setValue("Bearer " + token.token, forHTTPHeaderField: "Authorization")
+        return request
+    }
+}
+
+struct AnyRequestAdapter: RequestAdapter {
+
+    var block: (URLRequest) throws -> URLRequest
+    
+    init(_ block: @escaping (URLRequest) throws -> URLRequest) {
+        self.block = block
+    }
+    
+    func adapted(_ request: URLRequest) throws -> URLRequest {
+        return try block(request)
+    }
 }

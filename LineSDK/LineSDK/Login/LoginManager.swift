@@ -21,9 +21,20 @@
 
 import Foundation
 
+public protocol LoginManagerDelegate: class {
+    func loginManager(_ manager: LoginManager, didComplete loginProcess: LoginProcess, withResult: LoginResult)
+    func loginManager(_ manager: LoginManager, didFail loginProcess: LoginProcess, withError: Error)
+}
+
+extension LoginManagerDelegate {
+    
+}
+
 public class LoginManager {
     
     public static let shared = LoginManager()
+    
+    public private(set) var currentProcess: LoginProcess?
     
     var configuration: LoginConfiguration?
     
@@ -31,13 +42,18 @@ public class LoginManager {
     
     public func setup(channelID: String) {
         guard configuration == nil else {
-            assertionFailure("Trying to set configuration of LINEKit multiplet imes is not permitted.")
+            Log.assertionFailure("Trying to set configuration of LINEKit multiplet times is not permitted.")
             return
         }
         self.configuration = LoginConfiguration(channelID: channelID)
     }
     
-//    public func login(in viewController: UIViewController?, completionHandler: ) {
-//        
-//    }
+    public func login(permissions: Set<LoginPermission> = [], in viewController: UIViewController? = nil) -> LoginProcess? {
+        guard currentProcess == nil else {
+            Log.assertionFailure("Trying to start another login process while the previous one still valid is not permitted.")
+            return nil
+        }
+
+        fatalError()
+    }
 }

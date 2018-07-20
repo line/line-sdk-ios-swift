@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256A2101810D00A39D4F /* LoginProcess.swift */; };
+		4B45256D2101829F00A39D4F /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256C2101829F00A39D4F /* Helpers.swift */; };
+		4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256E210188C300A39D4F /* LoginPermission.swift */; };
+		4B4525712101938F00A39D4F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4525702101938F00A39D4F /* Request.swift */; };
+		4B45257621019EFB00A39D4F /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257521019EFB00A39D4F /* APIClient.swift */; };
+		4B45257821019FCC00A39D4F /* GetOTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257721019FCC00A39D4F /* GetOTPRequest.swift */; };
+		4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257A2101A4E900A39D4F /* OneTimePassword.swift */; };
+		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
+		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
 		4B90588221006E5D004D717F /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B90587821006E5C004D717F /* LineSDK.framework */; };
 		4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90588621006E5D004D717F /* LineSDKTests.swift */; };
 		4B90588921006E5D004D717F /* LineSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B90587B21006E5C004D717F /* LineSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -15,6 +24,8 @@
 		4B9058D8210078FB004D717F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
 		4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
 		4B9058DE21007CF3004D717F /* LoginCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DD21007CF3004D717F /* LoginCredential.swift */; };
+		4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
+		4BBAFC472101C8A100E7BFF6 /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* TokenStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +39,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B45256A2101810D00A39D4F /* LoginProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcess.swift; sourceTree = "<group>"; };
+		4B45256C2101829F00A39D4F /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		4B45256E210188C300A39D4F /* LoginPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPermission.swift; sourceTree = "<group>"; };
+		4B4525702101938F00A39D4F /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		4B45257521019EFB00A39D4F /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		4B45257721019FCC00A39D4F /* GetOTPRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOTPRequest.swift; sourceTree = "<group>"; };
+		4B45257A2101A4E900A39D4F /* OneTimePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimePassword.swift; sourceTree = "<group>"; };
+		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
+		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
 		4B90587821006E5C004D717F /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90587B21006E5C004D717F /* LineSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineSDK.h; sourceTree = "<group>"; };
 		4B90587C21006E5C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +59,8 @@
 		4B9058D7210078FB004D717F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		4B9058DB21007C8C004D717F /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
 		4B9058DD21007CF3004D717F /* LoginCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCredential.swift; sourceTree = "<group>"; };
+		4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
+		4BBAFC462101C8A100E7BFF6 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +82,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B4525792101A4DE00A39D4F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4B45257A2101A4E900A39D4F /* OneTimePassword.swift */,
+				4BBAFC462101C8A100E7BFF6 /* TokenStore.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4B45257C2101A77300A39D4F /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				4B4525702101938F00A39D4F /* Request.swift */,
+				4B45257521019EFB00A39D4F /* APIClient.swift */,
+				4B813C592101B1450091F78E /* RequestAdapter.swift */,
+				4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
 		4B90586E21006E5C004D717F = {
 			isa = PBXGroup;
 			children = (
@@ -81,9 +123,9 @@
 		4B90587A21006E5C004D717F /* LineSDK */ = {
 			isa = PBXGroup;
 			children = (
+				4BBAFC432101BB8200E7BFF6 /* General */,
 				4B9058CE210072B9004D717F /* Login */,
 				4B9058CD210072B0004D717F /* Networking */,
-				4B9058CC2100729F004D717F /* API */,
 				4B9058CF210072C3004D717F /* Utils */,
 				4B90587B21006E5C004D717F /* LineSDK.h */,
 				4B90587C21006E5C004D717F /* Info.plist */,
@@ -103,6 +145,7 @@
 		4B9058CC2100729F004D717F /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4B45257721019FCC00A39D4F /* GetOTPRequest.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -110,6 +153,9 @@
 		4B9058CD210072B0004D717F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				4B45257C2101A77300A39D4F /* Client */,
+				4B4525792101A4DE00A39D4F /* Model */,
+				4B9058CC2100729F004D717F /* API */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -121,6 +167,8 @@
 				4B9058D5210073E6004D717F /* LoginManager.swift */,
 				4B9058DB21007C8C004D717F /* LoginResult.swift */,
 				4B9058DD21007CF3004D717F /* LoginCredential.swift */,
+				4B45256A2101810D00A39D4F /* LoginProcess.swift */,
+				4B45256E210188C300A39D4F /* LoginPermission.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -129,8 +177,17 @@
 			isa = PBXGroup;
 			children = (
 				4B9058D7210078FB004D717F /* Result.swift */,
+				4B45256C2101829F00A39D4F /* Helpers.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		4BBAFC432101BB8200E7BFF6 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,11 +299,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */,
+				4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */,
 				4B9058DE21007CF3004D717F /* LoginCredential.swift in Sources */,
+				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
+				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
+				4B45257821019FCC00A39D4F /* GetOTPRequest.swift in Sources */,
+				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
+				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
+				4B45257621019EFB00A39D4F /* APIClient.swift in Sources */,
+				4BBAFC472101C8A100E7BFF6 /* TokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
 				4B9058D8210078FB004D717F /* Result.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
+				4B4525712101938F00A39D4F /* Request.swift in Sources */,
+				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
