@@ -45,7 +45,10 @@ public class LoginManager {
             Log.assertionFailure("Trying to set configuration of LINEKit multiplet times is not permitted.")
             return
         }
-        self.configuration = LoginConfiguration(channelID: channelID)
+        
+        let config = LoginConfiguration(channelID: channelID)
+        self.configuration = config
+        Session.shared = Session(configuration: config)
     }
     
     public func login(permissions: Set<LoginPermission> = [], in viewController: UIViewController? = nil) -> LoginProcess? {

@@ -37,6 +37,8 @@ class Session: Client {
         case action(HandleAction)
     }
     
+    static var shared: Session!
+    
     let baseURL: String
     let session: URLSession
     let delegate: SessionDelegate

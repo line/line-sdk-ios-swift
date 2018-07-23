@@ -1,9 +1,25 @@
-
 default_platform(:ios)
 
 platform :ios do
-  desc "Hello world"
-  lane :hello do
-    puts "Hello world"
+  desc "Switch between Release and Beta environment"
+  lane :switch do |options|
+    
+    env = options[:env] || "release"
+    env_path = Pathname.new("../LineSDK/LineSDK/Utils/URLs.swift")
+    beta_path = Pathname.new("../LineSDK/LineSDK/Utils/URLs.swift.beta")
+    release_path = Pathname.new("../LineSDK/LineSDK/Utils/URLs.swift.release")
+
+    if env == "beta"
+      if File.exist?(beta_path)
+        FileUtils.mv(env_path, release_path)
+        FileUtils.mv(beta_path, env_path)
+      end
+    else
+      if File.exist?(release_path)
+        FileUtils.mv(env_path, beta_path)
+        FileUtils.mv(release_path, env_path)
+      end
+    end
+
   end
 end

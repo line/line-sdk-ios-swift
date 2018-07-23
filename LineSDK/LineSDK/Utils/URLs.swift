@@ -1,5 +1,5 @@
 //
-//  LoginConfiguration.swift
+//  URLsBeta.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,11 @@
 
 import Foundation
 
-struct LoginConfiguration {
-    let channelID: String
-    let APIHost = Constant.APIHost
+extension Constant {
+    static let APIHost = "api.line.me"
+    static let schemePrefix = "line3rdp"
+    static let lineAuthScheme = "lineauth"
+    static let lineAuthV2Scheme = "lineauth2"
+    static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
+    static let lineWebAuthURL = "https://access.line.me/oauth2/v2.1/login"
 }

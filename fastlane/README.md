@@ -16,11 +16,11 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
-### ios hello
+### ios switch
 ```
-fastlane ios hello
+fastlane ios switch
 ```
-Hello world
+Switch between Release and Beta environment
 
 ----
 

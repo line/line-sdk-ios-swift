@@ -19,6 +19,7 @@
 		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
 		4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
 		4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48C210598F500890AEF /* ResponsePipeline.swift */; };
+		4B8FF48F2105B27600890AEF /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48E2105B27600890AEF /* URLs.swift */; };
 		4B90588221006E5D004D717F /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B90587821006E5C004D717F /* LineSDK.framework */; };
 		4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90588621006E5D004D717F /* LineSDKTests.swift */; };
 		4B90588921006E5D004D717F /* LineSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B90587B21006E5C004D717F /* LineSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -56,6 +57,7 @@
 		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 		4B8FF48A21056B3800890AEF /* CallbackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
 		4B8FF48C210598F500890AEF /* ResponsePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePipeline.swift; sourceTree = "<group>"; };
+		4B8FF48E2105B27600890AEF /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		4B90587821006E5C004D717F /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90587B21006E5C004D717F /* LineSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineSDK.h; sourceTree = "<group>"; };
 		4B90587C21006E5C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				4B45256C2101829F00A39D4F /* Helpers.swift */,
 				4B8FF4852105656500890AEF /* Delegate.swift */,
 				4B8FF48A21056B3800890AEF /* CallbackQueue.swift */,
+				4B8FF48E2105B27600890AEF /* URLs.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				4BBAFC472101C8A100E7BFF6 /* TokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
 				4B9058D8210078FB004D717F /* Result.swift in Sources */,
+				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,
