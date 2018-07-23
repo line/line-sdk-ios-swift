@@ -22,5 +22,6 @@
 import Foundation
 
 struct OneTimePassword: Decodable {
-    
+    let otpId: String
+    let otp: String
 }

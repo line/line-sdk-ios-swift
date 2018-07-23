@@ -31,4 +31,24 @@ struct Log {
     }
 }
 
+struct Constant {
+    static let SDKVersion: String = {
+        let bundle = Bundle.frameworkBundle
+        guard let version = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
+            Log.fatalError("SDK resource bundle cannot be loaded, please verify your installation is not corrupted and try to reinstall LineSDK.")
+        }
+        return version
+    }()
+}
 
+extension Bundle {
+    static let frameworkBundle: Bundle = {
+        let frameworkBundle = Bundle(for: LoginManager.self)
+        guard let path = frameworkBundle.path(forResource: "Resource", ofType: "bundle"),
+              let bundle = Bundle(path: path) else
+        {
+            Log.fatalError("SDK resource bundle cannot be found, please verify your installation is not corrupted and try to reinstall LineSDK.")
+        }
+        return bundle
+    }()
+}

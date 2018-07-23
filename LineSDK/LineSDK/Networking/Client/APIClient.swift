@@ -23,14 +23,25 @@ import Foundation
 
 protocol Client {
     var baseURL: String { get }
-    func send<T: APIRequest>(_ request: T, handler: (Result<T.Response>) -> Void)
+    func send<T: Request>(_ request: T, handler: ((Result<T.Response>) -> Void)?)
 }
 
 class Session: Client {
     
+    enum HandleAction {
+        case restart
+    }
+    
+    enum HanldeResult<T> {
+        case value(T)
+        case action(HandleAction)
+    }
+    
     let baseURL: String
     let session: URLSession
     let delegate: SessionDelegate
+    
+    let callbackQueue = CallbackQueue.asyncMain
     
     init(configuration: LoginConfiguration) {
         baseURL = "https://\(configuration.APIHost)"
@@ -38,11 +49,55 @@ class Session: Client {
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: delegate, delegateQueue: nil)
     }
     
-    func send<T: Request>(_ request: T, handler: (Result<T.Response>) -> Void) {
-        
+    func send<T>(_ request: T, handler: ((Result<T.Response>) -> Void)?) where T : Request {
+        send(request, callbackQueue: nil, handler: handler)
     }
     
-    func create<T: Request>(_ request: T) -> URLRequest {
+    @discardableResult
+    func send<T: Request>(_ request: T, callbackQueue: CallbackQueue? = nil, handler: ((Result<T.Response>) -> Void)? = nil) -> SessionTask? {
+        
+        let callbackQueue = callbackQueue ?? self.callbackQueue
+        
+        let urlRequest: URLRequest!
+        do {
+            urlRequest = try create(request)
+        } catch {
+            callbackQueue.execute { handler?(.failure(error)) }
+            return nil
+        }
+        
+        let sessionTask = SessionTask(session: session, request: urlRequest)
+        sessionTask.onResult.delegate(on: self) { (self, value) in
+            
+            switch value {
+            case (_, _, let error?):
+                let error = LineSDKError.responseFailed(reason: .URLSessionError(error))
+                callbackQueue.execute { handler?(.failure(error)) }
+            case (let data?, let response as HTTPURLResponse, _):
+                do {
+                    try self.handle(request: request, data: data, response: response, pipelines: request.pipelines) { result in
+                        switch result {
+                        case .value(let value):
+                            callbackQueue.execute { handler?(.success(value)) }
+                        case .action(.restart):
+                            self.send(request, callbackQueue: callbackQueue, handler: handler)
+                        }
+                    }
+                } catch {
+                    callbackQueue.execute { handler?(.failure(error)) }
+                }
+            default:
+                let error = LineSDKError.responseFailed(reason: .nonHTTPURLResponse)
+                callbackQueue.execute { handler?(.failure(error)) }
+            }
+        }
+        
+        delegate.add(sessionTask)
+        sessionTask.resume()
+        return sessionTask
+    }
+    
+    func create<T: Request>(_ request: T) throws -> URLRequest {
         let urlString = baseURL + request.path
 
         guard let url = URL(string: urlString) else {
@@ -50,21 +105,106 @@ class Session: Client {
         }
         
         let urlRequest = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
-        
-        
-        
-        
-        
-        
-        
-        return urlRequest
+        let adaptedRequest = try request.adapters.reduce(urlRequest) { r, adapter in
+            try adapter.adapted(r)
+        }
+        return adaptedRequest
+    }
+    
+    func handle<T: Request>(request: T, data: Data, response: HTTPURLResponse, pipelines: [ResponsePipeline], done: ((HanldeResult<T.Response>) throws -> Void)) throws {
+        var leftPipelines = pipelines
+        for pipeline in request.pipelines {
+            leftPipelines.removeFirst()
+            switch pipeline {
+            case .redirector(let redirector):
+                guard redirector.shouldApply(reqeust: request, data: data, response: response) else {
+                    continue
+                }
+                redirector.redirect { action in
+                    switch action {
+                    case .continue:
+                        try handle(request: request, data: data, response: response, pipelines: leftPipelines, done: done)
+                    case .restart:
+                        try done(.action(.restart))
+                    case .stop(let error):
+                        if let error = error {
+                            throw error
+                        }
+                    }
+                }
+                return
+            case .terminator(let terminator):
+                do {
+                    let value = try terminator.parse(request: request, data: data)
+                    try done(.value(value))
+                } catch {
+                    throw LineSDKError.responseFailed(reason: .dataParsingFailed(error))
+                }
+            }
+        }
     }
 }
 
 class SessionDelegate: NSObject {
-    var requests: [Int: URLRequest] = [:]
+    private var tasks: [Int: SessionTask] = [:]
+    private let lock = NSLock()
+    
+    func add(_ task: SessionTask) {
+        lock.lock()
+        defer { lock.unlock() }
+        tasks[task.task.taskIdentifier] = task
+    }
+    
+    func task(for task: URLSessionDataTask) -> SessionTask? {
+        lock.lock()
+        defer { lock.unlock() }
+        return tasks[task.taskIdentifier]
+    }
 }
 
-extension SessionDelegate: URLSessionTaskDelegate {
+extension SessionDelegate: URLSessionDataDelegate {
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        guard let task = self.task(for: dataTask) else {
+            return
+        }
+        task.didReceiveData(data)
+    }
     
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        guard let dataTask = task as? URLSessionDataTask, let task = self.task(for: dataTask) else {
+            return
+        }
+        task.onResult.call((task.mutableData, dataTask.response, error))
+    }
+    
+}
+
+typealias SessionTaskResult = (Data?, URLResponse?, Error?)
+
+class SessionTask {
+    let request: URLRequest
+    let session: URLSession
+    let task: URLSessionDataTask
+    
+    var mutableData: Data
+    
+    let onResult = Delegate<SessionTaskResult, Void>()
+    
+    init(session: URLSession, request: URLRequest) {
+        self.session = session
+        self.request = request
+        
+        self.task = session.dataTask(with: request)
+        self.mutableData = Data()
+    }
+    
+    func resume() {
+        task.resume()
+    }
+}
+
+extension SessionTask {
+    func didReceiveData(_ data: Data) {
+        mutableData.append(data)
+    }
 }

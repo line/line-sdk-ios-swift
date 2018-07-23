@@ -16,6 +16,9 @@
 		4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257A2101A4E900A39D4F /* OneTimePassword.swift */; };
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
+		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
+		4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
+		4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48C210598F500890AEF /* ResponsePipeline.swift */; };
 		4B90588221006E5D004D717F /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B90587821006E5C004D717F /* LineSDK.framework */; };
 		4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90588621006E5D004D717F /* LineSDKTests.swift */; };
 		4B90588921006E5D004D717F /* LineSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B90587B21006E5C004D717F /* LineSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,6 +29,8 @@
 		4B9058DE21007CF3004D717F /* LoginCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DD21007CF3004D717F /* LoginCredential.swift */; };
 		4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
 		4BBAFC472101C8A100E7BFF6 /* TokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* TokenStore.swift */; };
+		4BBAFC4B2101CE8100E7BFF6 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
+		4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +53,9 @@
 		4B45257A2101A4E900A39D4F /* OneTimePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimePassword.swift; sourceTree = "<group>"; };
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
+		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
+		4B8FF48A21056B3800890AEF /* CallbackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
+		4B8FF48C210598F500890AEF /* ResponsePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePipeline.swift; sourceTree = "<group>"; };
 		4B90587821006E5C004D717F /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90587B21006E5C004D717F /* LineSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineSDK.h; sourceTree = "<group>"; };
 		4B90587C21006E5C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -61,6 +69,8 @@
 		4B9058DD21007CF3004D717F /* LoginCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCredential.swift; sourceTree = "<group>"; };
 		4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
 		4BBAFC462101C8A100E7BFF6 /* TokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStore.swift; sourceTree = "<group>"; };
+		4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resource.bundle; sourceTree = "<group>"; };
+		4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +108,7 @@
 				4B45257521019EFB00A39D4F /* APIClient.swift */,
 				4B813C592101B1450091F78E /* RequestAdapter.swift */,
 				4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */,
+				4B8FF48C210598F500890AEF /* ResponsePipeline.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -123,6 +134,7 @@
 		4B90587A21006E5C004D717F /* LineSDK */ = {
 			isa = PBXGroup;
 			children = (
+				4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */,
 				4BBAFC432101BB8200E7BFF6 /* General */,
 				4B9058CE210072B9004D717F /* Login */,
 				4B9058CD210072B0004D717F /* Networking */,
@@ -137,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				4B90588621006E5D004D717F /* LineSDKTests.swift */,
+				4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */,
 				4B90588821006E5D004D717F /* Info.plist */,
 			);
 			path = LineSDKTests;
@@ -178,6 +191,8 @@
 			children = (
 				4B9058D7210078FB004D717F /* Result.swift */,
 				4B45256C2101829F00A39D4F /* Helpers.swift */,
+				4B8FF4852105656500890AEF /* Delegate.swift */,
+				4B8FF48A21056B3800890AEF /* CallbackQueue.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -282,6 +297,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BBAFC4B2101CE8100E7BFF6 /* Resource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,12 +318,15 @@
 				4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */,
 				4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */,
 				4B9058DE21007CF3004D717F /* LoginCredential.swift in Sources */,
+				4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */,
 				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
 				4B45257821019FCC00A39D4F /* GetOTPRequest.swift in Sources */,
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
 				4B45257621019EFB00A39D4F /* APIClient.swift in Sources */,
+				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
+				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
 				4BBAFC472101C8A100E7BFF6 /* TokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
 				4B9058D8210078FB004D717F /* Result.swift in Sources */,
@@ -323,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
+				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

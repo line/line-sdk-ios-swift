@@ -23,5 +23,5 @@ import Foundation
 
 struct LoginConfiguration {
     let channelID: String
-    let APIHost = "api.line.me"
+    let APIHost = "api.line-beta.me"
 }

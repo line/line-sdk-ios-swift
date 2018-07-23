@@ -1,5 +1,5 @@
 //
-//  GetOTPRequest.swift
+//  ConstantTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,17 +19,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import XCTest
+@testable import LineSDK
 
-struct GetOTPRequest: APIRequest {
-    let channelID: String
+class ConstantTests: XCTestCase {
     
-    let method: HTTPMethod = .post
-    let path = "/oauth2/v2.1/otp"
-    let contentType = ContentType.formUrlEncoded
-    var parameters: [String : Any]? { return ["client_id": channelID] }
-    let authenticate: AuthenticateMethod = .none
-    
-    typealias Response = OneTimePassword   
+    func testCanLoadSDKVersion() {
+        let version = Constant.SDKVersion
+        let numbers = version.components(separatedBy: ".")
+        XCTAssertEqual(numbers.count, 3)
+    }
+
 }
-

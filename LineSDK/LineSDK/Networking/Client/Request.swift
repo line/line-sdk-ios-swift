@@ -24,6 +24,16 @@ import Foundation
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
+    
+    var adapter: AnyRequestAdapter {
+        return .init { request in
+            var request = request
+            request.httpMethod = self.rawValue
+            return request
+        }
+    }
 }
 
 enum AuthenticateMethod {
@@ -82,26 +92,28 @@ protocol Request {
     var contentType: ContentType { get }
     
     var additionalAdapters: [RequestAdapter]? { get }
+    
+    var additionalPipelines: [ResponsePipeline]? { get }
+    
+    var responseParser: JSONDecoder? { get }
 }
 
 extension Request {
-    var adapters: [RequestAdapter]? {
-        
-        var adapters: [RequestAdapter] = []
+    var adapters: [RequestAdapter] {
         
         // Default header, UA etc
-        
+        var adapters: [RequestAdapter] = [HeaderAdapter.default, method.adapter]
         
         // Parameter adapters
         if let parameters = parameters {
             switch (method, contentType) {
             case (.get, _):
                 adapters.append(URLQueryEncoder(parameters: parameters))
-            case (.post, .formUrlEncoded):
+            case (_, .formUrlEncoded):
                 adapters.append(FormUrlEncodedParameterEncoder(parameters: parameters))
-            case (.post, .json):
+            case (_, .json):
                 adapters.append(JSONParameterEncoder(parameters: parameters))
-            case (.post, .none):
+            case (_, .none):
                 Log.fatalError("You must specifiy a contentType to use POST request.")
             }
         }
@@ -112,8 +124,6 @@ extension Request {
         // Token adapter
         authenticate.adapter.map { adapters.append($0) }
         
-        
-        
         // Other adapters
         if let additionalAdapters = additionalAdapters {
             adapters.append(contentsOf: additionalAdapters)
@@ -121,6 +131,19 @@ extension Request {
         
         return adapters
     }
+    
+    var pipelines: [ResponsePipeline] {
+        let pipelines: [ResponsePipeline] = [
+            .redirector(RefreshTokenRedirector.default),
+            .terminator(ParsePipeline.default)
+        ]
+        return pipelines
+    }
+    
+    var additionalPipelines: [ResponsePipeline]? { return nil }
+    var additionalAdapters: [RequestAdapter]? { return nil }
+    var responseParser: JSONDecoder? { return nil }
+    var contentType: ContentType { return .json }
 }
 
 protocol APIRequest: Request {

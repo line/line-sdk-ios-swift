@@ -1,5 +1,5 @@
 //
-//  GetOTPRequest.swift
+//  Delegate.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,15 +21,24 @@
 
 import Foundation
 
-struct GetOTPRequest: APIRequest {
-    let channelID: String
+public class Delegate<Input, Output> {
+    public init() {}
     
-    let method: HTTPMethod = .post
-    let path = "/oauth2/v2.1/otp"
-    let contentType = ContentType.formUrlEncoded
-    var parameters: [String : Any]? { return ["client_id": channelID] }
-    let authenticate: AuthenticateMethod = .none
+    private var block: ((Input) -> Output?)?
+    public func delegate<T: AnyObject>(on target: T, block: ((T, Input) -> Output)?) {
+        self.block = { [weak target] input in
+            guard let target = target else { return nil }
+            return block?(target, input)
+        }
+    }
     
-    typealias Response = OneTimePassword   
+    public func call(_ input: Input) -> Output? {
+        return block?(input)
+    }
 }
 
+public extension Delegate where Input == Void {
+    func call() -> Output? {
+        return call(())
+    }
+}

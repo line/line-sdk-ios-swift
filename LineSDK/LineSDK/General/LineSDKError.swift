@@ -29,5 +29,12 @@ public enum LineSDKError: Error {
         case jsonEncodingFailed(Error)
     }
     
+    public enum ResponseErrorReason {
+        case URLSessionError(Error)
+        case nonHTTPURLResponse
+        case dataParsingFailed(Error)
+    }
+    
     case requestFailed(reason: RequestErrorReason)
+    case responseFailed(reason: ResponseErrorReason)
 }

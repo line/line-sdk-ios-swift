@@ -41,6 +41,36 @@ struct TokenAdapter: RequestAdapter {
     }
 }
 
+struct HeaderAdapter: RequestAdapter {
+    static let `default` = HeaderAdapter()
+    
+    let userAgent: String
+    
+    init(in info: [String: Any]? = nil) {
+        
+        let info = info ?? Bundle.main.infoDictionary ?? [:]
+        
+        let appId = info["CFBundleIdentifier"] as? String ?? ""
+        let appVersion = info["CFBundleShortVersionString"] as? String ?? ""
+        
+        let device = UIDevice.current
+        let systemVersion = device.systemVersion.replacingOccurrences(of: ".", with: "_")
+        let model = device.model
+        
+        userAgent = "\(appId)/\(appVersion) ChannelSDK/\(Constant.SDKVersion) (\(model); CPU iPhone OS \(systemVersion) like Mac OS X)"
+    }
+    
+    func adapted(_ request: URLRequest) throws -> URLRequest {
+        var request = request
+        
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("private, no-store, no-cache, must-revalidate", forHTTPHeaderField: "Cache-Control")
+        request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+        
+        return request
+    }
+}
+
 struct AnyRequestAdapter: RequestAdapter {
 
     var block: (URLRequest) throws -> URLRequest

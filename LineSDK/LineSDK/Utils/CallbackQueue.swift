@@ -1,5 +1,5 @@
 //
-//  GetOTPRequest.swift
+//  CallbackQueue.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,15 +21,38 @@
 
 import Foundation
 
-struct GetOTPRequest: APIRequest {
-    let channelID: String
+enum CallbackQueue {
+    case asyncMain
+    case currentMainOrAsync
+    case untouch
+    case dispatch(DispatchQueue)
+    case operation(OperationQueue)
     
-    let method: HTTPMethod = .post
-    let path = "/oauth2/v2.1/otp"
-    let contentType = ContentType.formUrlEncoded
-    var parameters: [String : Any]? { return ["client_id": channelID] }
-    let authenticate: AuthenticateMethod = .none
-    
-    typealias Response = OneTimePassword   
+    func execute(_ block: @escaping () -> Void) {
+        switch self {
+        case .asyncMain:
+            DispatchQueue.main.async { block() }
+        case .currentMainOrAsync:
+            DispatchQueue.main.safeAsync { block() }
+        case .untouch:
+            block()
+        case .dispatch(let queue):
+            queue.async { block() }
+        case .operation(let queue):
+            queue.addOperation { block() }
+        }
+    }
 }
 
+extension DispatchQueue {
+    // This method will dispatch the `block` to self.
+    // If `self` is the main queue, and current thread is main thread, the block
+    // will be invoked immediately instead of being dispatched.
+    public func safeAsync(_ block: @escaping ()->()) {
+        if self === DispatchQueue.main && Thread.isMainThread {
+            block()
+        } else {
+            async { block() }
+        }
+    }
+}
