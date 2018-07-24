@@ -20,7 +20,323 @@
 //
 
 import Foundation
+import UIKit
+import SafariServices
 
 public class LoginProcess {
+    let configuration: LoginConfiguration
+    let scopes: Set<LoginPermission>
     
+    var appUniversalLinkFlow: AppUniversalLinkFlow?
+    var appAuthSchemeFlow: AppAuthSchemeFlow?
+    var webLoginFlow: WebLoginFlow?
+    
+    weak var presentingViewController: UIViewController?
+    
+    let processID: String
+    
+    var otpHolder: OneTimePassword?
+    
+    var otp: OneTimePassword {
+        guard let value = otpHolder else { Log.fatalError("The one time password does not exist.") }
+        return value
+    }
+    
+    let onSucceed = Delegate<LoginResult, Void>()
+    let onFail = Delegate<Error, Void>()
+    
+    init(configuration: LoginConfiguration, scopes: Set<LoginPermission>, viewController: UIViewController) {
+        self.configuration = configuration
+        self.processID = UUID().uuidString
+        self.scopes = scopes
+        self.presentingViewController = viewController
+    }
+    
+    func start() {
+        let otpRequest = PostOTPRequest(channelID: configuration.channelID)
+        Session.shared.send(otpRequest) { result in
+            switch result {
+            case .success(let otp):
+                self.otpHolder = otp
+                if self.canUseLineAuthV2 {
+                    self.startAppUniversalLinkFlow()
+                } else {
+                    // TODO: Determine what we want to do, if canUseLineAuthV1 is true (maybe we need some pop up for user to upgrade LINE)
+                    // Now, just jump to web login process.
+                    self.startWebLoginFlow()
+                }
+            case .failure(let error):
+                self.onFail.call(error)
+            }
+        }
+    }
+    
+    private func startAppUniversalLinkFlow() {
+        let appUniversalLinkFlow = AppUniversalLinkFlow(
+            channelID: configuration.channelID,
+            scopes: scopes,
+            otp: otp,
+            processID: processID)
+        appUniversalLinkFlow.onNext.delegate(on: self) { (self, started) in
+            // Can handle app universal link flow. Store the flow for later resuming use.
+            if started {
+                self.appUniversalLinkFlow = appUniversalLinkFlow
+            } else {
+                // LINE universal link handling failed for some reason. Fallback to LINE v2 auth
+                if self.canUseLineAuthV2 {
+                    self.startAppAuthSchemeFlow()
+                } else {
+                    self.startWebLoginFlow()
+                }
+            }
+        }
+        
+        appUniversalLinkFlow.start()
+    }
+    
+    private func startAppAuthSchemeFlow() {
+        let appAuthSchemeFlow = AppAuthSchemeFlow(
+            channelID: configuration.channelID,
+            scopes: scopes,
+            otp: otp,
+            processID: processID)
+        appAuthSchemeFlow.onNext.delegate(on: self) { (self, started) in
+            if started {
+                self.appAuthSchemeFlow = appAuthSchemeFlow
+            } else {
+                self.startWebLoginFlow()
+            }
+        }
+        
+        appAuthSchemeFlow.start()
+    }
+    
+    private func startWebLoginFlow() {
+        let webLoginFlow = WebLoginFlow(
+            channelID: configuration.channelID,
+            scopes: scopes,
+            otp: otp,
+            processID: processID)
+        webLoginFlow.onNext.delegate(on: self) { (self, error) in
+            if let error = error {
+                // Starting login flow failed. There is no more
+                // fallback methods or cannot find correct view controller.
+                // This should normally not happen, but in case we throw an error out.
+                self.onFail.call(error)
+            } else {
+                self.webLoginFlow = webLoginFlow
+            }
+        }
+        webLoginFlow.onCancel.delegate(on: self) { (self, _) in
+            self.onFail.call(LineSDKError.authorizeFailed(reason: .userCancelled))
+        }
+        
+        webLoginFlow.start(in: presentingViewController)
+    }
+    
+    func resumeOpenURL(url: URL) {
+        
+    }
+    
+    private var canUseLineAuthV1: Bool {
+        guard let url = URL(string: "\(Constant.lineAuthScheme)://authorize/") else {
+            return false
+        }
+        return UIApplication.shared.canOpenURL(url)
+    }
+    
+    private var canUseLineAuthV2: Bool {
+        guard let url = URL(string: "\(Constant.lineAuthV2Scheme)://authorize/") else {
+            return false
+        }
+        return UIApplication.shared.canOpenURL(url)
+    }
+}
+
+class AppUniversalLinkFlow {
+    
+    let url: URL
+    let onNext = Delegate<Bool, Void>()
+    
+    init(channelID: String, scopes: Set<LoginPermission>, otp: OneTimePassword, processID: String) {
+        let universalURLBase = URL(string: Constant.lineWebAuthUniversalURL)!
+        url = universalURLBase.appendedLoginQuery(channelID: channelID,
+                                                  scopes: scopes,
+                                                  otpID: otp.otpId,
+                                                  state: processID)
+    }
+    
+    func start() {
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [UIApplicationOpenURLOptionUniversalLinksOnly: true]) {
+                opened in
+                self.onNext.call(opened)
+            }
+        } else {
+            self.onNext.call(false)
+        }
+    }
+}
+
+class AppAuthSchemeFlow {
+    
+    let url: URL
+    let onNext = Delegate<Bool, Void>()
+    
+    init(channelID: String, scopes: Set<LoginPermission>, otp: OneTimePassword, processID: String) {
+        let appAuthURLBase = URL(string: "\(Constant.lineAuthV2Scheme)://authorize/")!
+        url = appAuthURLBase.appendedURLSchemeQuery(channelID: channelID,
+                                                    scopes: scopes,
+                                                    otpID: otp.otpId,
+                                                    state: processID)
+    }
+    
+    func start() {
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [UIApplicationOpenURLOptionUniversalLinksOnly: true]) {
+                opened in
+                self.onNext.call(opened)
+            }
+        } else {
+            let opened = UIApplication.shared.openURL(url)
+            self.onNext.call(opened)
+        }
+    }
+}
+
+class WebLoginFlow: NSObject {
+    
+    let url: URL
+    let onNext = Delegate<Error?, Void>()
+    let onCancel = Delegate<(), Void>()
+    
+    init(channelID: String, scopes: Set<LoginPermission>, otp: OneTimePassword, processID: String) {
+        let webLoginURLBase = URL(string: Constant.lineWebAuthURL)!
+        url = webLoginURLBase.appendedLoginQuery(channelID: channelID,
+                                                  scopes: scopes,
+                                                  otpID: otp.otpId,
+                                                  state: processID)
+    }
+    
+    func start(in viewController: UIViewController?) {
+        if #available(iOS 9.0, *) {
+            let safariViewController = SFSafariViewController(url: url)
+            safariViewController.delegate = self
+            guard let presenting = viewController ?? .topMost else {
+                self.onNext.call(LineSDKError.authorizeFailed(reason: .malformedHierarchy))
+                return
+            }
+            presenting.present(safariViewController, animated: true) {
+                self.onNext.call(nil)
+            }
+        } else {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:]) { opened in
+                    let error = opened ? nil : LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)
+                    self.onNext.call(error)
+                }
+            } else {
+                let opened = UIApplication.shared.openURL(url)
+                let error = opened ? nil : LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)
+                self.onNext.call(error)
+            }
+        }
+    }
+}
+
+@available(iOS 9.0, *)
+extension WebLoginFlow: SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        onCancel.call()
+    }
+}
+
+// Helpers for creating urls in login flows
+extension String {
+    static func returnUri(channelID: String,
+                          scopes: Set<LoginPermission>,
+                          otpID: String,
+                          state: String,
+                          appID: String) -> String
+    {
+        let result =
+            "/oauth2/v2.1/authorize/consent?response_type=code&sdk_ver=\(Constant.SDKVersion)" +
+                "client_id=\(channelID)&scope=\((scopes.map { $0.rawValue }).joined(separator: " "))" +
+        "otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartySchemePrefix).\(appID)://authorize/"
+        return result
+    }
+}
+
+extension URL {
+    func appendedLoginQuery(channelID: String, scopes: Set<LoginPermission>, otpID: String, state: String, appID: String? = nil) -> URL {
+        guard let appID = appID ?? Bundle.main.bundleIdentifier else {
+            Log.fatalError("You need to specify a bundle ID in your app's Info.plist")
+        }
+        
+        let returnUri = String.returnUri(channelID: channelID,
+                                         scopes: scopes,
+                                         otpID: otpID,
+                                         state: state,
+                                         appID: appID)
+        let parameters: [String: Any] = [
+            "returnUri": "[\(returnUri)]",
+            "loginChannelId": channelID
+        ]
+        let encoder = URLQueryEncoder(parameters: parameters)
+        return encoder.encoded(for: self)
+    }
+    
+    func appendedURLSchemeQuery(channelID: String, scopes: Set<LoginPermission>, otpID: String, state: String, appID: String? = nil) -> URL {
+        guard let appID = appID ?? Bundle.main.bundleIdentifier else {
+            Log.fatalError("You need to specify a bundle ID in your app's Info.plist")
+        }
+        let returnUri = String.returnUri(channelID: channelID,
+                                         scopes: scopes,
+                                         otpID: otpID,
+                                         state: state,
+                                         appID: appID)
+        let loginUrl = "\(Constant.lineWebAuthUniversalURL)?returnUri=[\(returnUri)]&loginChannelId=\(channelID)"
+        let parameters = [
+            "loginUrl": "[\(loginUrl)]"
+        ]
+        let encoder = URLQueryEncoder(parameters: parameters)
+        return encoder.encoded(for: self)
+    }
+}
+
+extension UIWindow {
+    static func findKeyWindow() -> UIWindow? {
+        if let window = UIApplication.shared.keyWindow, window.windowLevel == UIWindowLevelNormal {
+            // A key window of main app exists, go ahead and use it
+            return window
+        }
+        
+        // Otherwise, try to find a normal level window
+        let window = UIApplication.shared.windows.first { $0.windowLevel == UIWindowLevelNormal }
+        guard let result = window else {
+            Log.print("Cannot find a valid UIWindow at normal level. Current windows: \(UIApplication.shared.windows)")
+            return nil
+        }
+        return result
+    }
+}
+
+extension UIViewController {
+    static var topMost: UIViewController? {
+        let keyWindow = UIWindow.findKeyWindow()
+        if let window = keyWindow, !window.isKeyWindow {
+            Log.print("Cannot find a key window. Making window \(window) to keyWindow. This might be not what you want, please check your window hierarchy.")
+            window.makeKey()
+        }
+        guard var topViewController = keyWindow?.rootViewController else {
+            Log.print("Cannot find a root view controll in current window. Please check your view controller hierarchy.")
+            return nil
+        }
+        
+        while let currentTop = topViewController.presentedViewController {
+            topViewController = currentTop
+        }
+        
+        return topViewController
+    }
 }

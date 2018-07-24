@@ -35,6 +35,13 @@ public enum LineSDKError: Error {
         case dataParsingFailed(Error)
     }
     
+    public enum AuthorizeErrorReason {
+        case exhaustedLoginFlow
+        case malformedHierarchy
+        case userCancelled
+    }
+    
     case requestFailed(reason: RequestErrorReason)
     case responseFailed(reason: ResponseErrorReason)
+    case authorizeFailed(reason: AuthorizeErrorReason)
 }

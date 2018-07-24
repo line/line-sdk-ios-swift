@@ -12,7 +12,7 @@
 		4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256E210188C300A39D4F /* LoginPermission.swift */; };
 		4B4525712101938F00A39D4F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4525702101938F00A39D4F /* Request.swift */; };
 		4B45257621019EFB00A39D4F /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257521019EFB00A39D4F /* APIClient.swift */; };
-		4B45257821019FCC00A39D4F /* GetOTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257721019FCC00A39D4F /* GetOTPRequest.swift */; };
+		4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257721019FCC00A39D4F /* PostOTPRequest.swift */; };
 		4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257A2101A4E900A39D4F /* OneTimePassword.swift */; };
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
@@ -20,6 +20,7 @@
 		4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
 		4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48C210598F500890AEF /* ResponsePipeline.swift */; };
 		4B8FF48F2105B27600890AEF /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48E2105B27600890AEF /* URLs.swift */; };
+		4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4922105C49200890AEF /* LoginFlowTests.swift */; };
 		4B90588221006E5D004D717F /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B90587821006E5C004D717F /* LineSDK.framework */; };
 		4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90588621006E5D004D717F /* LineSDKTests.swift */; };
 		4B90588921006E5D004D717F /* LineSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B90587B21006E5C004D717F /* LineSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -50,7 +51,7 @@
 		4B45256E210188C300A39D4F /* LoginPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPermission.swift; sourceTree = "<group>"; };
 		4B4525702101938F00A39D4F /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		4B45257521019EFB00A39D4F /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		4B45257721019FCC00A39D4F /* GetOTPRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOTPRequest.swift; sourceTree = "<group>"; };
+		4B45257721019FCC00A39D4F /* PostOTPRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOTPRequest.swift; sourceTree = "<group>"; };
 		4B45257A2101A4E900A39D4F /* OneTimePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimePassword.swift; sourceTree = "<group>"; };
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
@@ -58,6 +59,7 @@
 		4B8FF48A21056B3800890AEF /* CallbackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
 		4B8FF48C210598F500890AEF /* ResponsePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePipeline.swift; sourceTree = "<group>"; };
 		4B8FF48E2105B27600890AEF /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
+		4B8FF4922105C49200890AEF /* LoginFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowTests.swift; sourceTree = "<group>"; };
 		4B90587821006E5C004D717F /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90587B21006E5C004D717F /* LineSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineSDK.h; sourceTree = "<group>"; };
 		4B90587C21006E5C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				4B90588621006E5D004D717F /* LineSDKTests.swift */,
 				4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */,
+				4B8FF4922105C49200890AEF /* LoginFlowTests.swift */,
 				4B90588821006E5D004D717F /* Info.plist */,
 			);
 			path = LineSDKTests;
@@ -160,7 +163,7 @@
 		4B9058CC2100729F004D717F /* API */ = {
 			isa = PBXGroup;
 			children = (
-				4B45257721019FCC00A39D4F /* GetOTPRequest.swift */,
+				4B45257721019FCC00A39D4F /* PostOTPRequest.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -324,7 +327,7 @@
 				4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */,
 				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
-				4B45257821019FCC00A39D4F /* GetOTPRequest.swift in Sources */,
+				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
 				4B45257621019EFB00A39D4F /* APIClient.swift in Sources */,
@@ -345,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
 			);

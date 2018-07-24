@@ -1,5 +1,5 @@
 //
-//  GetOTPRequest.swift
+//  PostOTPRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,7 @@
 
 import Foundation
 
-struct GetOTPRequest: APIRequest {
+struct PostOTPRequest: APIRequest {
     let channelID: String
     
     let method: HTTPMethod = .post

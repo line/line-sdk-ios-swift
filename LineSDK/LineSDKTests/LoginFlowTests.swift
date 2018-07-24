@@ -1,5 +1,5 @@
 //
-//  LineSDKTests.swift
+//  LoginFlowTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,30 +22,35 @@
 import XCTest
 @testable import LineSDK
 
-class LineSDKTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        let expect = expectation(description: "hello")
-        let request = PostOTPRequest(channelID: "44")
-        let s = Session(configuration: LoginConfiguration.init(channelID: "44"))
-        s.send(request) { result in
-            XCTAssert(result.isSuccess)
-            XCTAssertNotNil(result.value)
-            expect.fulfill()
+class LoginFlowTests: XCTestCase {
+
+    func testLoginQueryURLEncode() {
+        let baseURL = URL(string: Constant.lineWebAuthUniversalURL)!
+        let result = baseURL.appendedLoginQuery(
+            channelID: "123",
+            scopes: [.profile, .openID],
+            otpID: "321",
+            state: "abc",
+            appID: "appid"
+        )
+        let urlString = result.absoluteString.removingPercentEncoding
+        XCTAssertNotNil(urlString)
+        
+        let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
+        let items = components!.queryItems!
+        XCTAssertEqual(items.count, 2)
+        
+        var hit = 0
+        for item in items {
+            if item.name == "loginChannelId" {
+                hit += 1
+                XCTAssertEqual(item.value, "123")
+            }
+            if (item.name == "returnUri") {
+                hit += 1
+                // Should be already fully decoded (no double encoding in the url)
+                XCTAssertEqual(item.value, item.value?.removingPercentEncoding)
+            }
         }
-        waitForExpectations(timeout: 3, handler: nil)
     }
-    
 }

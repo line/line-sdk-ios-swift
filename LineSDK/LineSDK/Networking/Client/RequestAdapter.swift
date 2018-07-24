@@ -50,14 +50,14 @@ struct HeaderAdapter: RequestAdapter {
         
         let info = info ?? Bundle.main.infoDictionary ?? [:]
         
-        let appId = info["CFBundleIdentifier"] as? String ?? ""
+        let appID = info["CFBundleIdentifier"] as? String ?? ""
         let appVersion = info["CFBundleShortVersionString"] as? String ?? ""
         
         let device = UIDevice.current
         let systemVersion = device.systemVersion.replacingOccurrences(of: ".", with: "_")
         let model = device.model
         
-        userAgent = "\(appId)/\(appVersion) ChannelSDK/\(Constant.SDKVersion) (\(model); CPU iPhone OS \(systemVersion) like Mac OS X)"
+        userAgent = "\(appID)/\(appVersion) ChannelSDK/\(Constant.SDKVersion) (\(model); CPU iPhone OS \(systemVersion) like Mac OS X)"
     }
     
     func adapted(_ request: URLRequest) throws -> URLRequest {

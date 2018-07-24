@@ -22,7 +22,7 @@
 import Foundation
 
 public protocol LoginManagerDelegate: class {
-    func loginManager(_ manager: LoginManager, didComplete loginProcess: LoginProcess, withResult: LoginResult)
+    func loginManager(_ manager: LoginManager, didSucceed loginProcess: LoginProcess, withResult: LoginResult)
     func loginManager(_ manager: LoginManager, didFail loginProcess: LoginProcess, withError: Error)
 }
 
@@ -42,7 +42,7 @@ public class LoginManager {
     
     public func setup(channelID: String) {
         guard configuration == nil else {
-            Log.assertionFailure("Trying to set configuration of LINEKit multiplet times is not permitted.")
+            Log.assertionFailure("Trying to set configuration multiplet times is not permitted.")
             return
         }
         

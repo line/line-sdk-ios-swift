@@ -37,7 +37,21 @@ class Session: Client {
         case action(HandleAction)
     }
     
-    static var shared: Session!
+    static var _shared: Session?
+    static var shared: Session {
+        get {
+            guard let session = _shared else {
+                Log.fatalError("Use session before setup. Please call `LoginManager.setup` before you do any other things in LineSDK.")
+            }
+            return session
+        }
+        set {
+            guard _shared == nil else {
+                Log.fatalError("Trying to set session multiplet times is not permitted.")
+            }
+            _shared = newValue
+        }
+    }
     
     let baseURL: String
     let session: URLSession

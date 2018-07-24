@@ -30,13 +30,19 @@ struct URLQueryEncoder: RequestAdapter {
         }
         
         var request = request
+        let finalURL = encoded(for: url)
+        request.url = finalURL
+        
+        return request
+    }
+    
+    func encoded(for url: URL) -> URL {
         if var components = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
             let percentEncodedQuery = (components.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters)
             components.percentEncodedQuery = percentEncodedQuery
-            request.url = components.url
+            return components.url ?? url
         }
-        
-        return request
+        return url
     }
 }
 

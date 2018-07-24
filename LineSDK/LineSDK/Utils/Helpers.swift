@@ -29,6 +29,13 @@ struct Log {
     static func fatalError(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) -> Never {
         Swift.fatalError("[LineSDK] \(message())", file: file, line: line)
     }
+    
+    static func print(_ items: Any...) {
+        let s = items.reduce("") { result, next in
+            return result + String(describing: next)
+        }
+        Swift.print("[LineSDK] \(s)")
+    }
 }
 
 struct Constant {
@@ -37,6 +44,7 @@ struct Constant {
         guard let version = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
             Log.fatalError("SDK resource bundle cannot be loaded, please verify your installation is not corrupted and try to reinstall LineSDK.")
         }
+
         return version
     }()
 }
