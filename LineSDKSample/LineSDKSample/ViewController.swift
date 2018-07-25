@@ -20,12 +20,16 @@
 //
 
 import UIKit
+import LineSDK
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            LoginManager.shared.login(permissions: [.profile], in: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {

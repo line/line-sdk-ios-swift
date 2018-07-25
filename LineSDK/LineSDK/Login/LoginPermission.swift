@@ -27,6 +27,6 @@ public struct LoginPermission: Hashable {
         self.rawValue = rawValue
     }
     
-    static let openID = LoginPermission(rawValue: "openid")
-    static let profile = LoginPermission(rawValue: "profile")
+    public static let openID = LoginPermission(rawValue: "openid")
+    public static let profile = LoginPermission(rawValue: "profile")
 }

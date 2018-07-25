@@ -29,7 +29,14 @@ public class LoginProcess {
     
     var appUniversalLinkFlow: AppUniversalLinkFlow?
     var appAuthSchemeFlow: AppAuthSchemeFlow?
-    var webLoginFlow: WebLoginFlow?
+    var webLoginFlow: WebLoginFlow? {
+        didSet {
+            // Dismiss safari view controller (if exists) when reset web login flow
+            if webLoginFlow == nil {
+                oldValue?.dismiss()
+            }
+        }
+    }
     
     weak var presentingViewController: UIViewController?
     
@@ -45,7 +52,7 @@ public class LoginProcess {
     let onSucceed = Delegate<LoginResult, Void>()
     let onFail = Delegate<Error, Void>()
     
-    init(configuration: LoginConfiguration, scopes: Set<LoginPermission>, viewController: UIViewController) {
+    init(configuration: LoginConfiguration, scopes: Set<LoginPermission>, viewController: UIViewController?) {
         self.configuration = configuration
         self.processID = UUID().uuidString
         self.scopes = scopes
@@ -66,7 +73,7 @@ public class LoginProcess {
                     self.startWebLoginFlow()
                 }
             case .failure(let error):
-                self.onFail.call(error)
+                self.invokeFailure(error: error)
             }
         }
     }
@@ -122,20 +129,37 @@ public class LoginProcess {
                 // Starting login flow failed. There is no more
                 // fallback methods or cannot find correct view controller.
                 // This should normally not happen, but in case we throw an error out.
-                self.onFail.call(error)
+                self.invokeFailure(error: error)
             } else {
                 self.webLoginFlow = webLoginFlow
             }
         }
         webLoginFlow.onCancel.delegate(on: self) { (self, _) in
-            self.onFail.call(LineSDKError.authorizeFailed(reason: .userCancelled))
+            self.invokeFailure(error: LineSDKError.authorizeFailed(reason: .userCancelled))
         }
         
         webLoginFlow.start(in: presentingViewController)
     }
     
-    func resumeOpenURL(url: URL) {
+    func resumeOpenURL(url: URL, sourceApplication: String?) -> Bool {
+        guard configuration.isValidURLScheme(url: url) else {
+            invokeFailure(error: LineSDKError.authorizeFailed(reason: .callbackURLSchemeNotMatching))
+            return false
+        }
         
+        guard let sourceApp = sourceApplication, configuration.isValidSourceApplication(appID: sourceApp) else {
+            invokeFailure(error: LineSDKError.authorizeFailed(reason: .invalidSourceApplication))
+            return false
+        }
+        
+        do {
+            let response = try LoginProcessURLResponse(from: url, validatingWith: processID)
+            
+        } catch {
+            invokeFailure(error: error)
+        }
+        
+        return true
     }
     
     private var canUseLineAuthV1: Bool {
@@ -150,6 +174,14 @@ public class LoginProcess {
             return false
         }
         return UIApplication.shared.canOpenURL(url)
+    }
+    
+    private func invokeFailure(error: Error) {
+        appUniversalLinkFlow = nil
+        appAuthSchemeFlow = nil
+        webLoginFlow = nil
+        
+        onFail.call(error)
     }
 }
 
@@ -210,6 +242,8 @@ class WebLoginFlow: NSObject {
     let onNext = Delegate<Error?, Void>()
     let onCancel = Delegate<(), Void>()
     
+    weak var safariViewController: UIViewController?
+    
     init(channelID: String, scopes: Set<LoginPermission>, otp: OneTimePassword, processID: String) {
         let webLoginURLBase = URL(string: Constant.lineWebAuthURL)!
         url = webLoginURLBase.appendedLoginQuery(channelID: channelID,
@@ -221,7 +255,12 @@ class WebLoginFlow: NSObject {
     func start(in viewController: UIViewController?) {
         if #available(iOS 9.0, *) {
             let safariViewController = SFSafariViewController(url: url)
+            safariViewController.modalPresentationStyle = .overFullScreen
+            safariViewController.modalTransitionStyle = .coverVertical
             safariViewController.delegate = self
+            
+            self.safariViewController = safariViewController
+            
             guard let presenting = viewController ?? .topMost else {
                 self.onNext.call(LineSDKError.authorizeFailed(reason: .malformedHierarchy))
                 return
@@ -242,6 +281,10 @@ class WebLoginFlow: NSObject {
             }
         }
     }
+    
+    func dismiss() {
+        self.safariViewController?.dismiss(animated: true)
+    }
 }
 
 @available(iOS 9.0, *)
@@ -261,8 +304,8 @@ extension String {
     {
         let result =
             "/oauth2/v2.1/authorize/consent?response_type=code&sdk_ver=\(Constant.SDKVersion)" +
-                "client_id=\(channelID)&scope=\((scopes.map { $0.rawValue }).joined(separator: " "))" +
-        "otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartySchemePrefix).\(appID)://authorize/"
+                "&client_id=\(channelID)&scope=\((scopes.map { $0.rawValue }).joined(separator: " "))" +
+        "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartySchemePrefix).\(appID)://authorize/"
         return result
     }
 }
@@ -279,10 +322,10 @@ extension URL {
                                          state: state,
                                          appID: appID)
         let parameters: [String: Any] = [
-            "returnUri": "[\(returnUri)]",
+            "returnUri": returnUri,
             "loginChannelId": channelID
         ]
-        let encoder = URLQueryEncoder(parameters: parameters)
+        let encoder = URLQueryEncoder(parameters: parameters, allowed: .urlHostAllowed)
         return encoder.encoded(for: self)
     }
     
@@ -295,9 +338,9 @@ extension URL {
                                          otpID: otpID,
                                          state: state,
                                          appID: appID)
-        let loginUrl = "\(Constant.lineWebAuthUniversalURL)?returnUri=[\(returnUri)]&loginChannelId=\(channelID)"
+        let loginUrl = "\(Constant.lineWebAuthUniversalURL)?returnUri=\(returnUri)]&loginChannelId=\(channelID)"
         let parameters = [
-            "loginUrl": "[\(loginUrl)]"
+            "loginUrl": "\(loginUrl)"
         ]
         let encoder = URLQueryEncoder(parameters: parameters)
         return encoder.encoded(for: self)

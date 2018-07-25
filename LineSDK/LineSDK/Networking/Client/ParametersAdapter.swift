@@ -23,6 +23,13 @@ import Foundation
 
 struct URLQueryEncoder: RequestAdapter {
     let parameters: Parameters
+    let allowed: CharacterSet
+    
+    init(parameters: Parameters, allowed: CharacterSet = .urlQueryAllowed) {
+        self.parameters = parameters
+        self.allowed = allowed
+    }
+    
     func adapted(_ request: URLRequest) throws -> URLRequest {
         
         guard let url = request.url else {
@@ -38,7 +45,7 @@ struct URLQueryEncoder: RequestAdapter {
     
     func encoded(for url: URL) -> URL {
         if var components = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
-            let percentEncodedQuery = (components.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters)
+            let percentEncodedQuery = (components.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters, allowed: allowed)
             components.percentEncodedQuery = percentEncodedQuery
             return components.url ?? url
         }
@@ -72,26 +79,26 @@ struct FormUrlEncodedParameterEncoder: RequestAdapter {
 }
 
 
-private func query(_ parameters: Parameters) -> String {
+private func query(_ parameters: Parameters, allowed: CharacterSet = .urlQueryAllowed) -> String {
     return parameters
         .reduce([]) {
             (result, kvp) in
-            result + queryComponents(fromKey: kvp.key, value: kvp.value)
+            result + queryComponents(fromKey: kvp.key, value: kvp.value, allowed: allowed)
         }
         .map { "\($0)=\($1)" }
         .joined(separator: "&")
 }
 
-private func queryComponents(fromKey key: String, value: Any) -> [(String, String)] {
+private func queryComponents(fromKey key: String, value: Any, allowed: CharacterSet = .urlQueryAllowed) -> [(String, String)] {
     var components: [(String, String)] = []
 
     if let dictionary = value as? [String: Any] {
         for (nestedKey, value) in dictionary {
-            components += queryComponents(fromKey: "\(key)[\(nestedKey)]", value: value)
+            components += queryComponents(fromKey: "\(key)[\(nestedKey)]", value: value, allowed: allowed)
         }
     } else if let array = value as? [Any] {
         for value in array {
-            components += queryComponents(fromKey: "\(key)[]", value: value)
+            components += queryComponents(fromKey: "\(key)[]", value: value, allowed: allowed)
         }
     } else if let value = value as? NSNumber {
         if value.isBool {
@@ -102,7 +109,7 @@ private func queryComponents(fromKey key: String, value: Any) -> [(String, Strin
     } else if let bool = value as? Bool {
         components.append((escape(key), escape(bool ? "true": "false")))
     } else {
-        components.append((escape(key), escape("\(value)")))
+        components.append((escape(key), escape("\(value)", allowed: allowed)))
     }
     
     return components
@@ -110,11 +117,11 @@ private func queryComponents(fromKey key: String, value: Any) -> [(String, Strin
 
 // Reserved characters defined by RFC 3986
 // Reference: https://www.ietf.org/rfc/rfc3986.txt
-private func escape(_ string: String) -> String {
+private func escape(_ string: String, allowed: CharacterSet = .urlQueryAllowed) -> String {
     let generalDelimitersToEncode = ":#[]@"
     let subDelimitersToEncode = "!$&'()*+,;="
     
-    var allowedCharacterSet = CharacterSet.urlQueryAllowed
+    var allowedCharacterSet = allowed
     allowedCharacterSet.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
     
     var escaped = ""

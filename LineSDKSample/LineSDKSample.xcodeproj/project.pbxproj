@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B63F46F2106D43D003D1BF1 /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; };
+		4B63F4702106D43D003D1BF1 /* LineSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B90589F21006E9C004D717F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90589E21006E9C004D717F /* AppDelegate.swift */; };
 		4B9058A121006E9C004D717F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058A021006E9C004D717F /* ViewController.swift */; };
 		4B9058A421006E9C004D717F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A221006E9C004D717F /* Main.storyboard */; };
@@ -33,7 +35,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4B63F4712106D43D003D1BF1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4B63F4702106D43D003D1BF1 /* LineSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4B63F46E2106D43C003D1BF1 /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90589B21006E9B004D717F /* LineSDKSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LineSDKSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90589E21006E9C004D717F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B9058A021006E9C004D717F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B63F46F2106D43D003D1BF1 /* LineSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +95,7 @@
 		4B90589221006E9B004D717F = {
 			isa = PBXGroup;
 			children = (
+				4B63F46E2106D43C003D1BF1 /* LineSDK.framework */,
 				4B90589D21006E9C004D717F /* LineSDKSample */,
 				4B9058B221006E9C004D717F /* LineSDKSampleTests */,
 				4B9058BD21006E9C004D717F /* LineSDKSampleUITests */,
@@ -135,6 +154,7 @@
 				4B90589721006E9B004D717F /* Sources */,
 				4B90589821006E9B004D717F /* Frameworks */,
 				4B90589921006E9B004D717F /* Resources */,
+				4B63F4712106D43D003D1BF1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -432,11 +452,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LineSDKSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKSample;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.naver.Iam3RDP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -449,11 +470,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LineSDKSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKSample;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.naver.Iam3RDP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

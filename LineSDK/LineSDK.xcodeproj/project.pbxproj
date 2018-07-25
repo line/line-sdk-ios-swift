@@ -14,6 +14,7 @@
 		4B45257621019EFB00A39D4F /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257521019EFB00A39D4F /* APIClient.swift */; };
 		4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257721019FCC00A39D4F /* PostOTPRequest.swift */; };
 		4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257A2101A4E900A39D4F /* OneTimePassword.swift */; };
+		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
 		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
@@ -53,6 +54,7 @@
 		4B45257521019EFB00A39D4F /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		4B45257721019FCC00A39D4F /* PostOTPRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOTPRequest.swift; sourceTree = "<group>"; };
 		4B45257A2101A4E900A39D4F /* OneTimePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimePassword.swift; sourceTree = "<group>"; };
+		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
 		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				4B9058DB21007C8C004D717F /* LoginResult.swift */,
 				4B9058DD21007CF3004D717F /* LoginCredential.swift */,
 				4B45256A2101810D00A39D4F /* LoginProcess.swift */,
+				4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */,
 				4B45256E210188C300A39D4F /* LoginPermission.swift */,
 			);
 			path = Login;
@@ -339,6 +342,7 @@
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
+				4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
 			);

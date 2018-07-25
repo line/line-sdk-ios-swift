@@ -24,4 +24,21 @@ import Foundation
 struct LoginConfiguration {
     let channelID: String
     let APIHost = Constant.APIHost
+    
+    func isValidURLScheme(url: URL) -> Bool {
+        guard let scheme = url.scheme else {
+            return false
+        }
+        return scheme.lowercased() == "\(Constant.thirdPartySchemePrefix).\(Bundle.main.bundleIdentifier ?? "")".lowercased()
+    }
+    
+    func isValidSourceApplication(appID: String) -> Bool {
+        var validPrefixes = ["jp.naver", "com.apple"]
+        if let currentAppID = Bundle.main.bundleIdentifier {
+            validPrefixes.append(currentAppID)
+        }
+        
+        let valid = validPrefixes.contains { appID.hasPrefix($0) }
+        return valid
+    }
 }

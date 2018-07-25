@@ -39,6 +39,14 @@ public enum LineSDKError: Error {
         case exhaustedLoginFlow
         case malformedHierarchy
         case userCancelled
+        case userDenied
+        case callbackURLSchemeNotMatching
+        case invalidSourceApplication
+        case malformedRedirectURL(url: URL, message: String?)
+        case invalidLineURLResultCode(String)
+        case lineClientError(code: String, message: String?)
+        case responseStateValueNotMatching(expected: String, got: String?)
+        case webLoginError(error: String, description: String?)
     }
     
     case requestFailed(reason: RequestErrorReason)

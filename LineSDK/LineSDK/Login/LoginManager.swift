@@ -51,12 +51,29 @@ public class LoginManager {
         Session.shared = Session(configuration: config)
     }
     
+    @discardableResult
     public func login(permissions: Set<LoginPermission> = [], in viewController: UIViewController? = nil) -> LoginProcess? {
         guard currentProcess == nil else {
             Log.assertionFailure("Trying to start another login process while the previous one still valid is not permitted.")
             return nil
         }
-
-        fatalError()
+        currentProcess = LoginProcess(configuration: configuration!, scopes: permissions, viewController: viewController)
+        currentProcess?.start()
+        return currentProcess
     }
+    
+    @available(iOS 9.0, *)
+    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let sourceApplication = options[.sourceApplication] as? String
+        let annotation = options[.annotation] as Any
+        return application(app, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        // Not in login process. Ignore.
+        guard let currentProcess = currentProcess else { return false }
+        
+        return currentProcess.resumeOpenURL(url: url, sourceApplication: sourceApplication)
+    }
+
 }
