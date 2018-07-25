@@ -21,19 +21,22 @@
 
 import Foundation
 
-protocol ResponsePipelineTerminator {
+// Use class protocol for easier Equatable conforming
+protocol ResponsePipelineTerminator: class {
     func parse<T: Request>(request: T, data: Data) throws -> T.Response
+}
+
+// Use class protocol for easier Equatable conforming
+protocol ResponsePipelineRedirector: class {
+    func shouldApply<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool
+    func redirect<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse, done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
 enum ResponsePipelineRedirectorAction {
     case restart
-    case stop(Error?)
+    case restartWithout(ResponsePipeline)
+    case stop(Error)
     case `continue`
-}
-
-protocol ResponsePipelineRedirector {
-    func shouldApply<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool
-    func redirect(done closure: (ResponsePipelineRedirectorAction) throws -> Void)
 }
 
 enum ResponsePipeline {
@@ -41,30 +44,69 @@ enum ResponsePipeline {
     case redirector(ResponsePipelineRedirector)
 }
 
-struct ParsePipeline: ResponsePipelineTerminator {
-    static let `default` = ParsePipeline()
+extension ResponsePipeline: Equatable {
+    static func == (lhs: ResponsePipeline, rhs: ResponsePipeline) -> Bool {
+        switch (lhs, rhs) {
+        case (.terminator(let l), .terminator(let r)): return l === r
+        case (.redirector(let l), .redirector(let r)): return l === r
+        default: return false
+        }
+    }
+}
+
+class ParsePipeline: ResponsePipelineTerminator {
     
     let parser: JSONDecoder
     
-    private init() {
-        parser = JSONDecoder()
+    init(_ parser: JSONDecoder) {
+        self.parser = parser
     }
     
     func parse<T: Request>(request: T, data: Data) throws -> T.Response {
-        let parser = request.responseParser ?? self.parser
         return try parser.decode(T.Response.self, from: data)
     }
 }
 
-struct RefreshTokenRedirector: ResponsePipelineRedirector {
-    
-    static let `default` = RefreshTokenRedirector()
+class RefreshTokenRedirector: ResponsePipelineRedirector {
     
     func shouldApply<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool {
-        return false
+        return response.statusCode == 403
     }
     
-    func redirect(done closure: (ResponsePipelineRedirectorAction) throws -> Void) {
-        
+    func redirect<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse, done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws {
+        // Do refrest request here.
+        try closure(.restartWithout(.redirector(self)))
+    }
+}
+
+class BadHTTPStatusRedirector: ResponsePipelineRedirector {
+    let valid: Range<Int>
+    
+    init(valid: Range<Int>) {
+        self.valid = valid
+    }
+    
+    func shouldApply<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool {
+        let code = response.statusCode
+        return !valid.contains(code)
+    }
+    
+    func redirect<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse, done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        do {
+            let error = try decoder.decode(APIError.self, from: data)
+            try closure(.stop(
+                LineSDKError.responseFailed(
+                    reason: .invalidHTTPStatus(code: response.statusCode, error: error, body: data))
+                )
+            )
+        } catch {
+            try closure(.stop(
+                LineSDKError.responseFailed(
+                    reason: .invalidHTTPStatus(code: response.statusCode, error: nil, body: data))
+                )
+            )
+        }
     }
 }

@@ -91,11 +91,11 @@ protocol Request {
     
     var contentType: ContentType { get }
     
-    var additionalAdapters: [RequestAdapter]? { get }
+    var suffixAdapters: [RequestAdapter]? { get }
     
-    var additionalPipelines: [ResponsePipeline]? { get }
+    var prefixPipelines: [ResponsePipeline]? { get }
     
-    var responseParser: JSONDecoder? { get }
+    var responseParser: JSONDecoder { get }
 }
 
 extension Request {
@@ -125,28 +125,35 @@ extension Request {
         authenticate.adapter.map { adapters.append($0) }
         
         // Other adapters
-        if let additionalAdapters = additionalAdapters {
-            adapters.append(contentsOf: additionalAdapters)
+        if let suffixAdapters = suffixAdapters {
+            adapters.append(contentsOf: suffixAdapters)
         }
         
         return adapters
     }
     
     var pipelines: [ResponsePipeline] {
-        let pipelines: [ResponsePipeline] = [
-            .redirector(RefreshTokenRedirector.default),
-            .terminator(ParsePipeline.default)
-        ]
+        var pipelines: [ResponsePipeline] = prefixPipelines ?? []
+        if authenticate == .token {
+            pipelines.append(.redirector(RefreshTokenRedirector()))
+        }
+        pipelines.append(contentsOf: [
+            .redirector(BadHTTPStatusRedirector(valid: 200..<300)),
+            .terminator(ParsePipeline(responseParser))
+        ])
         return pipelines
     }
     
-    var additionalPipelines: [ResponsePipeline]? { return nil }
-    var additionalAdapters: [RequestAdapter]? { return nil }
-    var responseParser: JSONDecoder? { return nil }
+    var suffixAdapters: [RequestAdapter]? { return nil }
+    var prefixPipelines: [ResponsePipeline]? { return nil }
+    var responseParser: JSONDecoder { return defaultJSONParser }
     var contentType: ContentType { return .json }
 }
 
-protocol APIRequest: Request {
-    
-}
+let defaultJSONParser = JSONDecoder()
+
+// It is now empty. Maybe we will add some other type of
+// request (like downloading taks) later. Then we could
+// make it a modification entry point.
+protocol APIRequest: Request { }
 

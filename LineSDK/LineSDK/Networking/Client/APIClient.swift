@@ -30,6 +30,7 @@ class Session: Client {
     
     enum HandleAction {
         case restart
+        case restartWith(pipelines: [ResponsePipeline])
     }
     
     enum HanldeResult<T> {
@@ -70,8 +71,12 @@ class Session: Client {
     }
     
     @discardableResult
-    func send<T: Request>(_ request: T, callbackQueue: CallbackQueue? = nil, handler: ((Result<T.Response>) -> Void)? = nil) -> SessionTask? {
-        
+    func send<T: Request>(
+        _ request: T,
+        callbackQueue: CallbackQueue? = nil,
+        pipelines: [ResponsePipeline]? = nil,
+        handler: ((Result<T.Response>) -> Void)? = nil) -> SessionTask?
+    {
         let callbackQueue = callbackQueue ?? self.callbackQueue
         
         let urlRequest: URLRequest!
@@ -97,6 +102,8 @@ class Session: Client {
                             callbackQueue.execute { handler?(.success(value)) }
                         case .action(.restart):
                             self.send(request, callbackQueue: callbackQueue, handler: handler)
+                        case .action(.restartWith(let pipelines)):
+                            self.send(request, callbackQueue: callbackQueue, pipelines: pipelines, handler: handler)
                         }
                     }
                 } catch {
@@ -128,34 +135,41 @@ class Session: Client {
     }
     
     func handle<T: Request>(request: T, data: Data, response: HTTPURLResponse, pipelines: [ResponsePipeline], done: ((HanldeResult<T.Response>) throws -> Void)) throws {
+        guard !pipelines.isEmpty else {
+            Log.fatalError("The pipeline is already empty but request does not be parsed. Please set a terminator pipeline to the request pipelines.")
+        }
         var leftPipelines = pipelines
-        for pipeline in request.pipelines {
-            leftPipelines.removeFirst()
-            switch pipeline {
-            case .redirector(let redirector):
-                guard redirector.shouldApply(reqeust: request, data: data, response: response) else {
-                    continue
-                }
-                redirector.redirect { action in
-                    switch action {
-                    case .continue:
-                        try handle(request: request, data: data, response: response, pipelines: leftPipelines, done: done)
-                    case .restart:
-                        try done(.action(.restart))
-                    case .stop(let error):
-                        if let error = error {
-                            throw error
-                        }
-                    }
-                }
+        let pipeline = leftPipelines.removeFirst()
+        switch pipeline {
+        case .redirector(let redirector):
+            guard redirector.shouldApply(reqeust: request, data: data, response: response) else {
+                // Recursive calling on `handle` might be an issue when there are tons of
+                // redirectors in the pipeline. However, it should not happen at all in a
+                // foreseeable future. If there is any problem on it, we might need a pipeline
+                // queue to break the recursiving.
+                try self.handle(request: request, data: data, response: response, pipelines: leftPipelines, done: done)
                 return
-            case .terminator(let terminator):
-                do {
-                    let value = try terminator.parse(request: request, data: data)
-                    try done(.value(value))
-                } catch {
-                    throw LineSDKError.responseFailed(reason: .dataParsingFailed(error))
+            }
+            try redirector.redirect(reqeust: request, data: data, response: response) { action in
+                switch action {
+                case .continue:
+                    try handle(request: request, data: data, response: response, pipelines: leftPipelines, done: done)
+                case .restart:
+                    try done(.action(.restart))
+                case .restartWithout(let pipeline):
+                    var pipelines = request.pipelines
+                    pipelines.removeAll { $0 == pipeline }
+                    try done(.action(.restartWith(pipelines: pipelines)))
+                case .stop(let error): throw error
                 }
+            }
+            return
+        case .terminator(let terminator):
+            do {
+                let value = try terminator.parse(request: request, data: data)
+                try done(.value(value))
+            } catch {
+                throw LineSDKError.responseFailed(reason: .dataParsingFailed(error))
             }
         }
     }

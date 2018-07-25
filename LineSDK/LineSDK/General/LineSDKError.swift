@@ -33,6 +33,7 @@ public enum LineSDKError: Error {
         case URLSessionError(Error)
         case nonHTTPURLResponse
         case dataParsingFailed(Error)
+        case invalidHTTPStatus(code: Int, error: APIError?, body: Data)
     }
     
     public enum AuthorizeErrorReason {
