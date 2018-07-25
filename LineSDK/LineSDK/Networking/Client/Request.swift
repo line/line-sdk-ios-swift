@@ -148,6 +148,7 @@ extension Request {
     var prefixPipelines: [ResponsePipeline]? { return nil }
     var responseParser: JSONDecoder { return defaultJSONParser }
     var contentType: ContentType { return .json }
+    var parameters: Parameters? { return nil }
 }
 
 let defaultJSONParser = JSONDecoder()

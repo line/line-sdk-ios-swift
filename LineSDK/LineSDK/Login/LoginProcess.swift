@@ -159,14 +159,26 @@ public class LoginProcess {
                 code: response.requestToken,
                 otpValue: otp.otp,
                 redirectURI: Constant.thirdPartyAppRetrurnURL)
-            Session.shared.send(tokenExchageRequest) { result in
-                switch result {
+            Session.shared.send(tokenExchageRequest) { tokenResult in
+                switch tokenResult {
                 case .success(let token):
-                    let result = LoginResult.init(
-                        accessToken: token,
-                        permissions: Set(token.permissions),
-                        userProfile: nil)
-                    self.invokeSuccess(result: result)
+                    // Store token
+                    AccessTokenStore.shared.current = token
+                    if token.permissions.contains(.profile) {
+                        Session.shared.send(GetUserProfileRequest()) { profileResult in
+                            let result = LoginResult.init(
+                                accessToken: token,
+                                permissions: Set(token.permissions),
+                                userProfile: profileResult.value)
+                            self.invokeSuccess(result: result)
+                        }
+                    } else {
+                        let result = LoginResult.init(
+                            accessToken: token,
+                            permissions: Set(token.permissions),
+                            userProfile: nil)
+                        self.invokeSuccess(result: result)
+                    }
                 case .failure(let error):
                     self.invokeFailure(error: error)
                 }

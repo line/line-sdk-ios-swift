@@ -22,8 +22,8 @@
 import Foundation
 
 public protocol LoginManagerDelegate: class {
-    func loginManager(_ manager: LoginManager, didSucceed loginProcess: LoginProcess, withResult: LoginResult)
-    func loginManager(_ manager: LoginManager, didFail loginProcess: LoginProcess, withError: Error)
+    func loginManager(_ manager: LoginManager, didSucceed loginProcess: LoginProcess, withResult result: LoginResult)
+    func loginManager(_ manager: LoginManager, didFail loginProcess: LoginProcess, withError error: Error)
 }
 
 extension LoginManagerDelegate {

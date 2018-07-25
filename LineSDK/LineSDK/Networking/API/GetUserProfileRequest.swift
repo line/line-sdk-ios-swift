@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  GetUserProfileRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,33 +19,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
-import LineSDK
+import Foundation
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let manager = LoginManager.shared
-            manager.delegate = self
-            manager.login(permissions: [.profile], in: self)
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-}
-
-extension ViewController: LoginManagerDelegate {
-    func loginManager(_ manager: LoginManager, didFail loginProcess: LoginProcess, withError error: Error) {
-        print("Failed: \(error)")
-    }
+struct GetUserProfileRequest: APIRequest {
+    let method: HTTPMethod = .get
+    let path = "/v2/profile"
+    let authenticate: AuthenticateMethod = .token
     
-    func loginManager(_ manager: LoginManager, didSucceed loginProcess: LoginProcess, withResult result: LoginResult) {
-        print("OK: \(result)")
-    }
+    typealias Response = UserProfile
 }
+
