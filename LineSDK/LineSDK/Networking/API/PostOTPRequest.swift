@@ -26,10 +26,11 @@ struct PostOTPRequest: APIRequest {
     
     let method: HTTPMethod = .post
     let path = "/oauth2/v2.1/otp"
-    let contentType = ContentType.formUrlEncoded
-    var parameters: [String : Any]? { return ["client_id": channelID] }
+    let contentType: ContentType = .formUrlEncoded
     let authenticate: AuthenticateMethod = .none
     
+    var parameters: [String : Any]? { return ["client_id": channelID] }
+
     typealias Response = OneTimePassword   
 }
 

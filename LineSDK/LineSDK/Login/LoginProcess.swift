@@ -154,7 +154,23 @@ public class LoginProcess {
         
         do {
             let response = try LoginProcessURLResponse(from: url, validatingWith: processID)
-            
+            let tokenExchageRequest = PostTokenExchangeRequest(
+                channelID: configuration.channelID,
+                code: response.requestToken,
+                otpValue: otp.otp,
+                redirectURI: Constant.thirdPartyAppRetrurnURL)
+            Session.shared.send(tokenExchageRequest) { result in
+                switch result {
+                case .success(let token):
+                    let result = LoginResult.init(
+                        accessToken: token,
+                        permissions: Set(token.permissions),
+                        userProfile: nil)
+                    self.invokeSuccess(result: result)
+                case .failure(let error):
+                    self.invokeFailure(error: error)
+                }
+            }
         } catch {
             invokeFailure(error: error)
         }
@@ -163,24 +179,32 @@ public class LoginProcess {
     }
     
     private var canUseLineAuthV1: Bool {
-        guard let url = URL(string: "\(Constant.lineAuthScheme)://authorize/") else {
+        guard let url = URL(string: Constant.lineAppAuthURLv1) else {
             return false
         }
         return UIApplication.shared.canOpenURL(url)
     }
     
     private var canUseLineAuthV2: Bool {
-        guard let url = URL(string: "\(Constant.lineAuthV2Scheme)://authorize/") else {
+        guard let url = URL(string: Constant.lineAppAuthURLv2) else {
             return false
         }
         return UIApplication.shared.canOpenURL(url)
     }
     
-    private func invokeFailure(error: Error) {
+    private func resetFlows() {
         appUniversalLinkFlow = nil
         appAuthSchemeFlow = nil
         webLoginFlow = nil
-        
+    }
+    
+    private func invokeSuccess(result: LoginResult) {
+        resetFlows()
+        onSucceed.call(result)
+    }
+    
+    private func invokeFailure(error: Error) {
+        resetFlows()
         onFail.call(error)
     }
 }

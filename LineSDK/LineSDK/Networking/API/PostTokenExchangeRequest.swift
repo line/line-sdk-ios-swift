@@ -1,5 +1,5 @@
 //
-//  LoginResult.swift
+//  PostTokenExchangeRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,8 +21,26 @@
 
 import Foundation
 
-public struct LoginResult {
-    let accessToken: AccessToken
-    let permissions: Set<LoginPermission>
-    let userProfile: UserProfile?
+struct PostTokenExchangeRequest: APIRequest {
+    let channelID: String
+    let code: String
+    let otpValue: String
+    let redirectURI: String
+    
+    let method: HTTPMethod = .post
+    let path = "/oauth2/v2.1/token"
+    let contentType: ContentType = .formUrlEncoded
+    let authenticate: AuthenticateMethod = .none
+    
+    var parameters: [String : Any]? {
+        return [
+            "client_id": channelID,
+            "grant_type": "authorization_code",
+            "code": code,
+            "otp": otpValue,
+            "redirect_uri": redirectURI
+        ]
+    }
+    
+    typealias Response = AccessToken
 }

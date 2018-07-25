@@ -1,5 +1,5 @@
 //
-//  TokenStore.swift
+//  UserProfile.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,14 +21,9 @@
 
 import Foundation
 
-class TokenStore {
-    static let shared = TokenStore()
-    private init() { }
-    
-    var current: AccessToken?
-}
-
-struct AccessToken {
-    let token: String
-    let expiresIn: TimeInterval
+struct UserProfile: Decodable {
+    let userId: String
+    let displayName: String
+    let pictureUrl: URL?
+    let statusMessage: String?
 }

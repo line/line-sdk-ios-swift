@@ -35,6 +35,7 @@ public class LoginManager {
     public static let shared = LoginManager()
     
     public private(set) var currentProcess: LoginProcess?
+    public weak var delegate: LoginManagerDelegate?
     
     var configuration: LoginConfiguration?
     
@@ -57,8 +58,17 @@ public class LoginManager {
             Log.assertionFailure("Trying to start another login process while the previous one still valid is not permitted.")
             return nil
         }
-        currentProcess = LoginProcess(configuration: configuration!, scopes: permissions, viewController: viewController)
-        currentProcess?.start()
+        let process = LoginProcess(configuration: configuration!, scopes: permissions, viewController: viewController)
+        process.start()
+        
+        process.onSucceed.delegate(on: self) { (self, result) in
+            self.delegate?.loginManager(self, didSucceed: process, withResult: result)
+        }
+        process.onFail.delegate(on: self) { (self, error) in
+            self.delegate?.loginManager(self, didFail: process, withError: error)
+        }
+        
+        self.currentProcess = process
         return currentProcess
     }
     

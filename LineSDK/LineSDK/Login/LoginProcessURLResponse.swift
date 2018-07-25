@@ -56,7 +56,7 @@ struct LoginProcessURLResponse {
         if isClientURLResponse {
             try self.init(clientURL:url, queryItems: items)
         } else {
-            try self.init(clientURL:url, queryItems: items)
+            try self.init(webURL: url, queryItems: items, validatingState: state)
         }
     }
     

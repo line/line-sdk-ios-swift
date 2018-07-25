@@ -1,5 +1,5 @@
 //
-//  LoginResult.swift
+//  AccessTokenStore.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,8 +21,9 @@
 
 import Foundation
 
-public struct LoginResult {
-    let accessToken: AccessToken
-    let permissions: Set<LoginPermission>
-    let userProfile: UserProfile?
+class AccessTokenStore {
+    static let shared = AccessTokenStore()
+    private init() { }
+    
+    var current: AccessToken?
 }

@@ -29,7 +29,7 @@ struct LoginConfiguration {
         guard let scheme = url.scheme else {
             return false
         }
-        return scheme.lowercased() == "\(Constant.thirdPartySchemePrefix).\(Bundle.main.bundleIdentifier ?? "")".lowercased()
+        return scheme.lowercased() == Constant.thirdPartyAppRetrurnScheme.lowercased()
     }
     
     func isValidSourceApplication(appID: String) -> Bool {

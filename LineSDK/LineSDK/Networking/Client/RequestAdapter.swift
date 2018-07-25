@@ -36,7 +36,7 @@ struct TokenAdapter: RequestAdapter {
             throw LineSDKError.requestFailed(reason: .lackOfAccessToken)
         }
         var request = request
-        request.setValue("Bearer " + token.token, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + token.value, forHTTPHeaderField: "Authorization")
         return request
     }
 }

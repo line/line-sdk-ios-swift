@@ -45,7 +45,7 @@ enum AuthenticateMethod {
         case .none:
             return nil
         case .token:
-            return TokenAdapter(token: TokenStore.shared.current)
+            return TokenAdapter(token: AccessTokenStore.shared.current)
         }
     }
 }
