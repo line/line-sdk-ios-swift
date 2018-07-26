@@ -21,6 +21,9 @@
 		4B4F0B8B21086BE5006D17F5 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8A21086BE5006D17F5 /* APIError.swift */; };
 		4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */; };
 		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
+		4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A7025210956B600D71C66 /* KeychainStore.swift */; };
+		4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */; };
+		4B6A70312109793500D71C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A70302109793500D71C66 /* AppDelegate.swift */; };
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
 		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
@@ -43,6 +46,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4B6A70402109796800D71C66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B90586F21006E5C004D717F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4B6A702D2109793500D71C66;
+			remoteInfo = TestHost;
+		};
 		4B90588321006E5D004D717F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4B90586F21006E5C004D717F /* Project object */;
@@ -67,6 +77,11 @@
 		4B4F0B8A21086BE5006D17F5 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequest.swift; sourceTree = "<group>"; };
 		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
+		4B6A7025210956B600D71C66 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStoreTests.swift; sourceTree = "<group>"; };
+		4B6A702E2109793500D71C66 /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B6A70302109793500D71C66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4B6A703C2109793700D71C66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
 		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
@@ -92,6 +107,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4B6A702B2109793500D71C66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4B90587421006E5C004D717F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -134,11 +156,21 @@
 			path = Client;
 			sourceTree = "<group>";
 		};
+		4B6A702F2109793500D71C66 /* TestHost */ = {
+			isa = PBXGroup;
+			children = (
+				4B6A70302109793500D71C66 /* AppDelegate.swift */,
+				4B6A703C2109793700D71C66 /* Info.plist */,
+			);
+			path = TestHost;
+			sourceTree = "<group>";
+		};
 		4B90586E21006E5C004D717F = {
 			isa = PBXGroup;
 			children = (
 				4B90587A21006E5C004D717F /* LineSDK */,
 				4B90588521006E5D004D717F /* LineSDKTests */,
+				4B6A702F2109793500D71C66 /* TestHost */,
 				4B90587921006E5C004D717F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -148,6 +180,7 @@
 			children = (
 				4B90587821006E5C004D717F /* LineSDK.framework */,
 				4B90588121006E5D004D717F /* LineSDKTests.xctest */,
+				4B6A702E2109793500D71C66 /* TestHost.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -173,6 +206,7 @@
 				4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */,
 				4B8FF4922105C49200890AEF /* LoginFlowTests.swift */,
 				4B90588821006E5D004D717F /* Info.plist */,
+				4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */,
 			);
 			path = LineSDKTests;
 			sourceTree = "<group>";
@@ -220,6 +254,7 @@
 				4B8FF48A21056B3800890AEF /* CallbackQueue.swift */,
 				4B8FF48E2105B27600890AEF /* URLs.swift */,
 				4B4F0B8121083CDB006D17F5 /* Constant.swift */,
+				4B6A7025210956B600D71C66 /* KeychainStore.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -246,6 +281,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4B6A702D2109793500D71C66 /* TestHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4B6A703D2109793700D71C66 /* Build configuration list for PBXNativeTarget "TestHost" */;
+			buildPhases = (
+				4B6A702A2109793500D71C66 /* Sources */,
+				4B6A702B2109793500D71C66 /* Frameworks */,
+				4B6A702C2109793500D71C66 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestHost;
+			productName = TestHost;
+			productReference = 4B6A702E2109793500D71C66 /* TestHost.app */;
+			productType = "com.apple.product-type.application";
+		};
 		4B90587721006E5C004D717F /* LineSDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B90588C21006E5D004D717F /* Build configuration list for PBXNativeTarget "LineSDK" */;
@@ -276,6 +328,7 @@
 			);
 			dependencies = (
 				4B90588421006E5D004D717F /* PBXTargetDependency */,
+				4B6A70412109796800D71C66 /* PBXTargetDependency */,
 			);
 			name = LineSDKTests;
 			productName = LineSDKTests;
@@ -292,12 +345,16 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "LINE Corp";
 				TargetAttributes = {
+					4B6A702D2109793500D71C66 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
 					4B90587721006E5C004D717F = {
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 0940;
 					};
 					4B90588021006E5D004D717F = {
 						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = 4B6A702D2109793500D71C66;
 					};
 				};
 			};
@@ -307,6 +364,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 4B90586E21006E5C004D717F;
 			productRefGroup = 4B90587921006E5C004D717F /* Products */;
@@ -315,11 +373,19 @@
 			targets = (
 				4B90587721006E5C004D717F /* LineSDK */,
 				4B90588021006E5D004D717F /* LineSDKTests */,
+				4B6A702D2109793500D71C66 /* TestHost */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4B6A702C2109793500D71C66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4B90587621006E5C004D717F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,6 +404,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4B6A702A2109793500D71C66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B6A70312109793500D71C66 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4B90587321006E5C004D717F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -353,6 +427,7 @@
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
 				4B4F0B8B21086BE5006D17F5 /* APIError.swift in Sources */,
 				4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */,
+				4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */,
 				4B45257621019EFB00A39D4F /* APIClient.swift in Sources */,
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
 				4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */,
@@ -379,12 +454,18 @@
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
+				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4B6A70412109796800D71C66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4B6A702D2109793500D71C66 /* TestHost */;
+			targetProxy = 4B6A70402109796800D71C66 /* PBXContainerItemProxy */;
+		};
 		4B90588421006E5D004D717F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4B90587721006E5C004D717F /* LineSDK */;
@@ -393,6 +474,42 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		4B6A703E2109793700D71C66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TestHost/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.TestHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4B6A703F2109793700D71C66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = TestHost/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.TestHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		4B90588A21006E5D004D717F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -579,6 +696,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Debug;
 		};
@@ -597,12 +715,22 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestHost.app/TestHost";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4B6A703D2109793700D71C66 /* Build configuration list for PBXNativeTarget "TestHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4B6A703E2109793700D71C66 /* Debug */,
+				4B6A703F2109793700D71C66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4B90587221006E5C004D717F /* Build configuration list for PBXProject "LineSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

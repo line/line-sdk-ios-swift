@@ -40,7 +40,6 @@ public enum LineSDKError: Error {
         case exhaustedLoginFlow
         case malformedHierarchy
         case userCancelled
-        case userDenied
         case callbackURLSchemeNotMatching
         case invalidSourceApplication
         case malformedRedirectURL(url: URL, message: String?)
@@ -48,9 +47,16 @@ public enum LineSDKError: Error {
         case lineClientError(code: String, message: String?)
         case responseStateValueNotMatching(expected: String, got: String?)
         case webLoginError(error: String, description: String?)
+        case keychainOperation(status: OSStatus)
+        case invalidDataInKeychain
+    }
+    
+    public enum GeneralErrorReason {
+        case conversionError(string: String, encoding: String.Encoding)
     }
     
     case requestFailed(reason: RequestErrorReason)
     case responseFailed(reason: ResponseErrorReason)
     case authorizeFailed(reason: AuthorizeErrorReason)
+    case generalError(reason: GeneralErrorReason)
 }
