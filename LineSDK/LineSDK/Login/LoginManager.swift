@@ -49,6 +49,8 @@ public class LoginManager {
         
         let config = LoginConfiguration(channelID: channelID)
         self.configuration = config
+
+        AccessTokenStore.shared = AccessTokenStore(configuration: config)
         Session.shared = Session(configuration: config)
     }
     
@@ -60,9 +62,12 @@ public class LoginManager {
         }
         let process = LoginProcess(configuration: configuration!, scopes: permissions, viewController: viewController)
         process.start()
-        
-        process.onSucceed.delegate(on: self) { (self, result) in
-            self.delegate?.loginManager(self, didSucceed: process, withResult: result)
+        process.onSucceed.delegate(on: self) { (self, token) in
+            do {
+                try self.postLogin(token, process: process)
+            } catch {
+                self.delegate?.loginManager(self, didFail: process, withError: error)
+            }
         }
         process.onFail.delegate(on: self) { (self, error) in
             self.delegate?.loginManager(self, didFail: process, withError: error)
@@ -70,6 +75,26 @@ public class LoginManager {
         
         self.currentProcess = process
         return currentProcess
+    }
+    
+    func postLogin(_ token: AccessToken, process: LoginProcess) throws {
+        // Store token
+        try AccessTokenStore.shared.setCurrentToken(token)
+        if token.permissions.contains(.profile) {
+            Session.shared.send(GetUserProfileRequest()) { profileResult in
+                let result = LoginResult.init(
+                    accessToken: token,
+                    permissions: Set(token.permissions),
+                    userProfile: profileResult.value)
+                self.delegate?.loginManager(self, didSucceed: process, withResult: result)
+            }
+        } else {
+            let result = LoginResult.init(
+                accessToken: token,
+                permissions: Set(token.permissions),
+                userProfile: nil)
+            self.delegate?.loginManager(self, didSucceed: process, withResult: result)
+        }
     }
     
     @available(iOS 9.0, *)

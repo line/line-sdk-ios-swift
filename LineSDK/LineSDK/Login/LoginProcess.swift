@@ -49,7 +49,7 @@ public class LoginProcess {
         return value
     }
     
-    let onSucceed = Delegate<LoginResult, Void>()
+    let onSucceed = Delegate<AccessToken, Void>()
     let onFail = Delegate<Error, Void>()
     
     init(configuration: LoginConfiguration, scopes: Set<LoginPermission>, viewController: UIViewController?) {
@@ -161,26 +161,8 @@ public class LoginProcess {
                 redirectURI: Constant.thirdPartyAppRetrurnURL)
             Session.shared.send(tokenExchageRequest) { tokenResult in
                 switch tokenResult {
-                case .success(let token):
-                    // Store token
-                    AccessTokenStore.shared.current = token
-                    if token.permissions.contains(.profile) {
-                        Session.shared.send(GetUserProfileRequest()) { profileResult in
-                            let result = LoginResult.init(
-                                accessToken: token,
-                                permissions: Set(token.permissions),
-                                userProfile: profileResult.value)
-                            self.invokeSuccess(result: result)
-                        }
-                    } else {
-                        let result = LoginResult.init(
-                            accessToken: token,
-                            permissions: Set(token.permissions),
-                            userProfile: nil)
-                        self.invokeSuccess(result: result)
-                    }
-                case .failure(let error):
-                    self.invokeFailure(error: error)
+                case .success(let token): self.invokeSuccess(result: token)
+                case .failure(let error): self.invokeFailure(error: error)
                 }
             }
         } catch {
@@ -210,7 +192,7 @@ public class LoginProcess {
         webLoginFlow = nil
     }
     
-    private func invokeSuccess(result: LoginResult) {
+    private func invokeSuccess(result: AccessToken) {
         resetFlows()
         onSucceed.call(result)
     }

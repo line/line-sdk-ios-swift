@@ -21,13 +21,20 @@
 
 import Foundation
 
-struct AccessToken: Decodable {
+protocol AccessTokenType {}
+
+struct AccessToken: Codable, AccessTokenType {
     let value: String
-    let expiresAt: Date
+    let expiresIn: TimeInterval
+    let createdAt: Date
     let IDToken: String?
     let refreshToken: String
     let permissions: [LoginPermission]
     let tokenType: String
+    
+    var expiresAt: Date {
+        return createdAt.addingTimeInterval(expiresIn)
+    }
     
     enum CodingKeys: String, CodingKey {
         case value = "access_token"
@@ -36,14 +43,17 @@ struct AccessToken: Decodable {
         case refreshToken = "refresh_token"
         case scope
         case tokenType = "token_type"
+        case createdAt
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         value = try container.decode(String.self, forKey: .value)
+        expiresIn = try container.decode(TimeInterval.self, forKey: .expiresIn)
         
-        let expiresIn = try container.decode(TimeInterval.self, forKey: .expiresIn)
-        expiresAt = Date(timeIntervalSinceNow: expiresIn)
+        // Try to decode createdAt. If there is no such value, it means we are receiving it
+        // from server and we should create a reference Date for it
+        createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt) ?? Date()
         
         IDToken = try container.decodeIfPresent(String.self, forKey: .IDToken)
         refreshToken = try container.decode(String.self, forKey: .refreshToken)
@@ -59,4 +69,21 @@ struct AccessToken: Decodable {
         
         tokenType = try container.decode(String.self, forKey: .tokenType)
     }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(value, forKey: .value)
+        try container.encode(expiresIn, forKey: .expiresIn)
+        try container.encode(createdAt, forKey: .createdAt)
+        try container.encodeIfPresent(IDToken, forKey: .IDToken)
+        try container.encode(refreshToken, forKey: .refreshToken)
+        
+        let scope = permissions.map { $0.rawValue }.joined(separator: " ")
+        try container.encode(scope, forKey: .scope)
+        
+        try container.encode(tokenType, forKey: .tokenType)
+    }
 }
+
+
+
