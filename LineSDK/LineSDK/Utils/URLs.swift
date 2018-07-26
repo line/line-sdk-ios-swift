@@ -23,7 +23,7 @@ import Foundation
 
 extension Constant {
     static let APIHost = "api.line.me"
-    static let schemePrefix = "line3rdp"
+    static let thirdPartySchemePrefix = "line3rdp"
     static let lineAuthScheme = "lineauth"
     static let lineAuthV2Scheme = "lineauth2"
     static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
