@@ -73,7 +73,7 @@ public class LoginManager {
     }
     
     @available(iOS 9.0, *)
-    public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    public func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let sourceApplication = options[.sourceApplication] as? String
         let annotation = options[.annotation] as Any
         return application(app, open: url, sourceApplication: sourceApplication, annotation: annotation)

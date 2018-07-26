@@ -157,8 +157,7 @@ class Session: Client {
                 case .restart:
                     try done(.action(.restart))
                 case .restartWithout(let pipeline):
-                    var pipelines = request.pipelines
-                    pipelines.removeAll { $0 == pipeline }
+                    let pipelines = request.pipelines.filter { $0 != pipeline }
                     try done(.action(.restartWith(pipelines: pipelines)))
                 case .stop(let error): throw error
                 }
