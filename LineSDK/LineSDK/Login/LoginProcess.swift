@@ -65,13 +65,7 @@ public class LoginProcess {
             switch result {
             case .success(let otp):
                 self.otpHolder = otp
-                if self.canUseLineAuthV2 {
-                    self.startAppUniversalLinkFlow()
-                } else {
-                    // TODO: Determine what we want to do, if canUseLineAuthV1 is true (maybe we need some pop up for user to upgrade LINE)
-                    // Now, just jump to web login process.
-                    self.startWebLoginFlow()
-                }
+                self.startAppUniversalLinkFlow()
             case .failure(let error):
                 self.invokeFailure(error: error)
             }
@@ -93,7 +87,25 @@ public class LoginProcess {
                 if self.canUseLineAuthV2 {
                     self.startAppAuthSchemeFlow()
                 } else {
-                    self.startWebLoginFlow()
+                    // No lineauth2 scheme supported. Make user to choose
+                    // install/upgrade LINE, or continue login with web.
+                    let mainActionTitle = self.canUseLineAuthV1 ? "Upgrade" : "Install"
+                    
+                    let actions: [UIAlertAction] = [
+                        UIAlertAction(title: mainActionTitle, style: .default) { _ in
+                            UIApplication.shared.openLINEInAppStore()
+                        },
+                        .init(title: "Continue Login", style: .default) { _ in
+                            self.startWebLoginFlow()
+                        }
+                    ]
+                    let showed = UIAlertController.presentAlert(in: self.presentingViewController,
+                                                                title: "Earlier LINE app detected",
+                                                                message: "You are using an earlier LINE app which does not support login with LINE client.",
+                                                                actions: actions)
+                    if !showed {
+                        self.startWebLoginFlow()
+                    }
                 }
             }
         }
