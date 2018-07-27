@@ -396,28 +396,22 @@ extension String {
     static func returnUri(channelID: String,
                           scopes: Set<LoginPermission>,
                           otpID: String,
-                          state: String,
-                          appID: String) -> String
+                          state: String) -> String
     {
         let result =
             "/oauth2/v2.1/authorize/consent?response_type=code&sdk_ver=\(Constant.SDKVersion)" +
                 "&client_id=\(channelID)&scope=\((scopes.map { $0.rawValue }).joined(separator: " "))" +
-        "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartySchemePrefix).\(appID)://authorize/"
+        "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartyAppRetrurnScheme)://authorize/"
         return result
     }
 }
 
 extension URL {
     func appendedLoginQuery(channelID: String, scopes: Set<LoginPermission>, otpID: String, state: String, appID: String? = nil) -> URL {
-        guard let appID = appID ?? Bundle.main.bundleIdentifier else {
-            Log.fatalError("You need to specify a bundle ID in your app's Info.plist")
-        }
-        
         let returnUri = String.returnUri(channelID: channelID,
                                          scopes: scopes,
                                          otpID: otpID,
-                                         state: state,
-                                         appID: appID)
+                                         state: state)
         let parameters: [String: Any] = [
             "returnUri": returnUri,
             "loginChannelId": channelID
@@ -427,14 +421,10 @@ extension URL {
     }
     
     func appendedURLSchemeQuery(channelID: String, scopes: Set<LoginPermission>, otpID: String, state: String, appID: String? = nil) -> URL {
-        guard let appID = appID ?? Bundle.main.bundleIdentifier else {
-            Log.fatalError("You need to specify a bundle ID in your app's Info.plist")
-        }
         let returnUri = String.returnUri(channelID: channelID,
                                          scopes: scopes,
                                          otpID: otpID,
-                                         state: state,
-                                         appID: appID)
+                                         state: state)
         let loginUrl = "\(Constant.lineWebAuthUniversalURL)?returnUri=\(returnUri)]&loginChannelId=\(channelID)"
         let parameters = [
             "loginUrl": "\(loginUrl)"
