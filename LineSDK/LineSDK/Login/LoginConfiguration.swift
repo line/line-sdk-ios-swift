@@ -23,6 +23,8 @@ import Foundation
 
 struct LoginConfiguration {
     let channelID: String
+    let universalLinkURL: URL?
+    
     let APIHost = Constant.APIHost
     
     func isValidURLScheme(url: URL) -> Bool {
