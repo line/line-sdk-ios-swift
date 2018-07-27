@@ -63,6 +63,7 @@ public class LoginManager {
         let process = LoginProcess(configuration: configuration!, scopes: permissions, viewController: viewController)
         process.start()
         process.onSucceed.delegate(on: self) { (self, token) in
+            self.currentProcess = nil
             do {
                 try self.postLogin(token, process: process)
             } catch {
@@ -70,6 +71,7 @@ public class LoginManager {
             }
         }
         process.onFail.delegate(on: self) { (self, error) in
+            self.currentProcess = nil
             self.delegate?.loginManager(self, didFail: process, withError: error)
         }
         
