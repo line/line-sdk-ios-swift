@@ -170,7 +170,13 @@ class SessionDelegate: NSObject {
         tasks[task.task.taskIdentifier] = task
     }
     
-    func task(for task: URLSessionDataTask) -> SessionTask? {
+    func remove(_ task: URLSessionTask) {
+        lock.lock()
+        defer { lock.unlock() }
+        tasks.removeValue(forKey: task.taskIdentifier)
+    }
+    
+    func task(for task: URLSessionTask) -> SessionTask? {
         lock.lock()
         defer { lock.unlock() }
         return tasks[task.taskIdentifier]
@@ -189,6 +195,7 @@ extension SessionDelegate: URLSessionDataDelegate {
         guard let dataTask = task as? URLSessionDataTask, let task = self.task(for: dataTask) else {
             return
         }
+        remove(dataTask)
         task.onResult.call((task.mutableData, dataTask.response, error))
     }
     

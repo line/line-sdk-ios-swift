@@ -39,11 +39,11 @@
 		4B9058D6210073E6004D717F /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D5210073E6004D717F /* LoginManager.swift */; };
 		4B9058D8210078FB004D717F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
 		4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
-		4B9058DE21007CF3004D717F /* LoginCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DD21007CF3004D717F /* LoginCredential.swift */; };
 		4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
 		4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */; };
 		4BBAFC4B2101CE8100E7BFF6 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
 		4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */; };
+		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,11 +101,11 @@
 		4B9058D5210073E6004D717F /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		4B9058D7210078FB004D717F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		4B9058DB21007C8C004D717F /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
-		4B9058DD21007CF3004D717F /* LoginCredential.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCredential.swift; sourceTree = "<group>"; };
 		4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
 		4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenStore.swift; sourceTree = "<group>"; };
 		4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resource.bundle; sourceTree = "<group>"; };
 		4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantTests.swift; sourceTree = "<group>"; };
+		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,7 +239,6 @@
 				4B9058D321007394004D717F /* LoginConfiguration.swift */,
 				4B9058D5210073E6004D717F /* LoginManager.swift */,
 				4B9058DB21007C8C004D717F /* LoginResult.swift */,
-				4B9058DD21007CF3004D717F /* LoginCredential.swift */,
 				4B45256A2101810D00A39D4F /* LoginProcess.swift */,
 				4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */,
 				4B45256E210188C300A39D4F /* LoginPermission.swift */,
@@ -258,6 +257,7 @@
 				4B4F0B8121083CDB006D17F5 /* Constant.swift */,
 				4B6A7025210956B600D71C66 /* KeychainStore.swift */,
 				4B6A70422109A11600D71C66 /* LazySingleton.swift */,
+				4BEE5B34210AC2D000846C6D /* NotificationToken.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -422,7 +422,6 @@
 				4B6A70432109A11600D71C66 /* LazySingleton.swift in Sources */,
 				4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */,
 				4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */,
-				4B9058DE21007CF3004D717F /* LoginCredential.swift in Sources */,
 				4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */,
 				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
@@ -444,6 +443,7 @@
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
 				4B4F0B7E21080C51006D17F5 /* PostTokenExchangeRequest.swift in Sources */,
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,
+				4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */,
 				4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,

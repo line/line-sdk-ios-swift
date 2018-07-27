@@ -37,3 +37,31 @@ struct Log {
         Swift.print("[LineSDK] \(s)")
     }
 }
+
+extension UIAlertController {
+    static func presentAlert(in viewController: UIViewController?,
+                             title: String?,
+                             message: String?,
+                             style: UIAlertControllerStyle = .alert,
+                             actions: [UIAlertAction]) -> Bool
+    {
+        guard let presenting = viewController ?? .topMost else {
+            return false
+        }
+        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
+        actions.forEach(alert.addAction)
+        presenting.present(alert, animated: true, completion: nil)
+        return true
+    }
+}
+
+extension UIApplication {
+    func openLINEInAppStore() {
+        let url = URL(string: "https://itunes.apple.com/app/id443904275?mt=8")!
+        if #available(iOS 10.0, *) {
+            open(url, options: [:], completionHandler: nil)
+        } else {
+            openURL(url)
+        }
+    }
+}

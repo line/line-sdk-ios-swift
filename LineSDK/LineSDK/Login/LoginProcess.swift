@@ -24,6 +24,32 @@ import UIKit
 import SafariServices
 
 public class LoginProcess {
+    
+    // If the app switching happens during login process, we want to
+    // inspect the event of switched back from another app (Safari or LINE or any other)
+    // If SDK container app has not been invoked by an `open(url:)`, we thought current
+    // login process fails.
+    class AppSwitchingObserver {
+        
+        var token: NotificationToken?
+        var valid: Bool = true
+        
+        let onTrigger = Delegate<(), Void>()
+        
+        init() { }
+        
+        func startObserving() {
+            token = NotificationCenter.default
+                .addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil)
+            {
+                [weak self] _ in
+                guard let `self` = self else { return }
+                guard self.valid else { return }
+                self.onTrigger.call()
+            }
+        }
+    }
+    
     let configuration: LoginConfiguration
     let scopes: Set<LoginPermission>
     
@@ -37,6 +63,10 @@ public class LoginProcess {
             }
         }
     }
+    
+    // When we leave current app, we need to set the switching observer
+    // to intercept cancel event (switching back but without a token url response)
+    var appSwitchingObserver: AppSwitchingObserver?
     
     weak var presentingViewController: UIViewController?
     
@@ -65,17 +95,26 @@ public class LoginProcess {
             switch result {
             case .success(let otp):
                 self.otpHolder = otp
-                if self.canUseLineAuthV2 {
-                    self.startAppUniversalLinkFlow()
-                } else {
-                    // TODO: Determine what we want to do, if canUseLineAuthV1 is true (maybe we need some pop up for user to upgrade LINE)
-                    // Now, just jump to web login process.
-                    self.startWebLoginFlow()
-                }
+                self.startAppUniversalLinkFlow()
             case .failure(let error):
                 self.invokeFailure(error: error)
             }
         }
+    }
+    
+    private func setupAppSwitchingObserver() {
+        let observer = AppSwitchingObserver()
+        observer.onTrigger.delegate(on: self) { (self, _) in
+            // This trigger will be called during `UIApplicationDidBecomeActive` event.
+            // There is some (UI or main thread) bugs on earlier iOS system that users cannot pop up an alert
+            // at this time. So we wait for a while before report the cancel event to framework users.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.invokeFailure(error: LineSDKError.authorizeFailed(reason: .userCancelled))
+            }
+        }
+        appSwitchingObserver = observer
+        
+        observer.startObserving()
     }
     
     private func startAppUniversalLinkFlow() {
@@ -84,16 +123,36 @@ public class LoginProcess {
             scopes: scopes,
             otp: otp,
             processID: processID)
-        appUniversalLinkFlow.onNext.delegate(on: self) { (self, started) in
+        appUniversalLinkFlow.onNext.delegate(on: self) { [unowned appUniversalLinkFlow] (self, started) in
             // Can handle app universal link flow. Store the flow for later resuming use.
             if started {
+                self.setupAppSwitchingObserver()
                 self.appUniversalLinkFlow = appUniversalLinkFlow
             } else {
                 // LINE universal link handling failed for some reason. Fallback to LINE v2 auth
                 if self.canUseLineAuthV2 {
                     self.startAppAuthSchemeFlow()
                 } else {
-                    self.startWebLoginFlow()
+                    // No lineauth2 scheme supported. Make user to choose
+                    // install/upgrade LINE, or continue login with web.
+                    let mainActionTitle = self.canUseLineAuthV1 ? "Upgrade" : "Install"
+                    
+                    let actions: [UIAlertAction] = [
+                        UIAlertAction(title: mainActionTitle, style: .default) { _ in
+                            UIApplication.shared.openLINEInAppStore()
+                            self.setupAppSwitchingObserver()
+                        },
+                        .init(title: "Continue Login", style: .default) { _ in
+                            self.startWebLoginFlow()
+                        }
+                    ]
+                    let showed = UIAlertController.presentAlert(in: self.presentingViewController,
+                                                                title: "Earlier LINE app detected",
+                                                                message: "You are using an earlier LINE app which does not support login with LINE client.",
+                                                                actions: actions)
+                    if !showed {
+                        self.startWebLoginFlow()
+                    }
                 }
             }
         }
@@ -107,8 +166,9 @@ public class LoginProcess {
             scopes: scopes,
             otp: otp,
             processID: processID)
-        appAuthSchemeFlow.onNext.delegate(on: self) { (self, started) in
+        appAuthSchemeFlow.onNext.delegate(on: self) { [unowned appAuthSchemeFlow] (self, started) in
             if started {
+                self.setupAppSwitchingObserver()
                 self.appAuthSchemeFlow = appAuthSchemeFlow
             } else {
                 self.startWebLoginFlow()
@@ -124,14 +184,18 @@ public class LoginProcess {
             scopes: scopes,
             otp: otp,
             processID: processID)
-        webLoginFlow.onNext.delegate(on: self) { (self, error) in
-            if let error = error {
+        webLoginFlow.onNext.delegate(on: self) { [unowned webLoginFlow] (self, result) in
+            switch result {
+            case .safariViewController:
+                self.webLoginFlow = webLoginFlow
+            case .externalSafari:
+                self.setupAppSwitchingObserver()
+                self.webLoginFlow = webLoginFlow
+            case .error(let error):
                 // Starting login flow failed. There is no more
                 // fallback methods or cannot find correct view controller.
                 // This should normally not happen, but in case we throw an error out.
                 self.invokeFailure(error: error)
-            } else {
-                self.webLoginFlow = webLoginFlow
             }
         }
         webLoginFlow.onCancel.delegate(on: self) { (self, _) in
@@ -151,6 +215,9 @@ public class LoginProcess {
             invokeFailure(error: LineSDKError.authorizeFailed(reason: .invalidSourceApplication))
             return false
         }
+        
+        // It is the callback url we could handle, so the app switching observer should be invalidate.
+        appSwitchingObserver?.valid = false
         
         do {
             let response = try LoginProcessURLResponse(from: url, validatingWith: processID)
@@ -256,8 +323,14 @@ class AppAuthSchemeFlow {
 
 class WebLoginFlow: NSObject {
     
+    enum Next {
+        case safariViewController
+        case externalSafari
+        case error(Error)
+    }
+    
     let url: URL
-    let onNext = Delegate<Error?, Void>()
+    let onNext = Delegate<Next, Void>()
     let onCancel = Delegate<(), Void>()
     
     weak var safariViewController: UIViewController?
@@ -280,22 +353,28 @@ class WebLoginFlow: NSObject {
             self.safariViewController = safariViewController
             
             guard let presenting = viewController ?? .topMost else {
-                self.onNext.call(LineSDKError.authorizeFailed(reason: .malformedHierarchy))
+                self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .malformedHierarchy)))
                 return
             }
             presenting.present(safariViewController, animated: true) {
-                self.onNext.call(nil)
+                self.onNext.call(.safariViewController)
             }
         } else {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:]) { opened in
-                    let error = opened ? nil : LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)
-                    self.onNext.call(error)
+                    if opened {
+                        self.onNext.call(.externalSafari)
+                    } else {
+                        self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)))
+                    }
                 }
             } else {
                 let opened = UIApplication.shared.openURL(url)
-                let error = opened ? nil : LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)
-                self.onNext.call(error)
+                if opened {
+                    self.onNext.call(.externalSafari)
+                } else {
+                    self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)))
+                }
             }
         }
     }

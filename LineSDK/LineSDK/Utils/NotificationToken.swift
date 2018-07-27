@@ -1,5 +1,5 @@
 //
-//  LoginCredential.swift
+//  NotificationToken.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,3 +20,26 @@
 //
 
 import Foundation
+
+class NotificationToken {
+    let token: NSObjectProtocol
+    let center: NotificationCenter
+    
+    init(token: NSObjectProtocol, in center: NotificationCenter) {
+        self.token = token
+        self.center = center
+    }
+    
+    deinit {
+        center.removeObserver(token)
+    }
+}
+
+extension NotificationCenter {
+    func addObserver(forName name: Notification.Name?, object obj: Any?, queue: OperationQueue?, using block: @escaping (Notification) -> Swift.Void) -> NotificationToken
+    {
+        let token: NSObjectProtocol = addObserver(forName: name, object: obj, queue: queue, using: block)
+        return NotificationToken(token: token, in: self)
+    }
+
+}
