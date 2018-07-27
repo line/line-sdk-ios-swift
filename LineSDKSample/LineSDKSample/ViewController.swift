@@ -23,17 +23,22 @@ import UIKit
 import LineSDK
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let manager = LoginManager.shared
-            manager.delegate = self
-            manager.login(permissions: [.profile], in: self)
-        }
+        LoginManager.shared.delegate = self
     }
-
+    
+    @IBAction func login(_ sender: Any) {
+        indicator.isHidden = false
+        indicator.startAnimating()
+        
+        LoginManager.shared.login(permissions: [.profile], in: self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -42,10 +47,18 @@ class ViewController: UIViewController {
 
 extension ViewController: LoginManagerDelegate {
     func loginManager(_ manager: LoginManager, didFail loginProcess: LoginProcess, withError error: Error) {
+        indicator.stopAnimating()
         print("Failed: \(error)")
+        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+        alert.addAction(.init(title: "OK", style: .default))
+        present(alert, animated: true)
     }
     
     func loginManager(_ manager: LoginManager, didSucceed loginProcess: LoginProcess, withResult result: LoginResult) {
+        indicator.stopAnimating()
         print("OK: \(result)")
+        let alert = UIAlertController(title: "Success", message: "\(result)", preferredStyle: .alert)
+        alert.addAction(.init(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
