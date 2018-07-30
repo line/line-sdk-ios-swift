@@ -86,7 +86,15 @@ class Session: Client, LazySingleton {
                 callbackQueue.execute { handler?(.failure(error)) }
             case (let data?, let response as HTTPURLResponse, _):
                 do {
-                    try self.handle(request: request, data: data, response: response, pipelines: request.pipelines) { result in
+                    let pipelines = pipelines ?? request.pipelines
+                    try self.handle(
+                        request: request,
+                        data: data,
+                        response: response,
+                        pipelines: pipelines,
+                        fullPipelines: pipelines)
+                    {
+                        result in
                         switch result {
                         case .value(let value):
                             callbackQueue.execute { handler?(.success(value)) }
@@ -127,9 +135,17 @@ class Session: Client, LazySingleton {
         return adaptedRequest
     }
     
-    func handle<T: Request>(request: T, data: Data, response: HTTPURLResponse, pipelines: [ResponsePipeline], done: ((HanldeResult<T.Response>) throws -> Void)) throws {
+    func handle<T: Request>(
+        request: T,
+        data: Data,
+        response: HTTPURLResponse,
+        pipelines: [ResponsePipeline],
+        fullPipelines: [ResponsePipeline],
+        done: ((HanldeResult<T.Response>) throws -> Void)) throws
+    {
         guard !pipelines.isEmpty else {
-            Log.fatalError("The pipeline is already empty but request does not be parsed. Please set a terminator pipeline to the request pipelines.")
+            Log.fatalError("The pipeline is already empty but request does not be parsed." +
+                "Please at least set a terminator pipeline to the request `pipelines` property.")
         }
         var leftPipelines = pipelines
         let pipeline = leftPipelines.removeFirst()
@@ -140,17 +156,29 @@ class Session: Client, LazySingleton {
                 // redirectors in the pipeline. However, it should not happen at all in a
                 // foreseeable future. If there is any problem on it, we might need a pipeline
                 // queue to break the recursiving.
-                try self.handle(request: request, data: data, response: response, pipelines: leftPipelines, done: done)
+                try self.handle(
+                    request: request,
+                    data: data,
+                    response: response,
+                    pipelines: leftPipelines,
+                    fullPipelines: fullPipelines,
+                    done: done)
                 return
             }
             try redirector.redirect(reqeust: request, data: data, response: response) { action in
                 switch action {
                 case .continue:
-                    try handle(request: request, data: data, response: response, pipelines: leftPipelines, done: done)
+                    try handle(
+                        request: request,
+                        data: data,
+                        response: response,
+                        pipelines: leftPipelines,
+                        fullPipelines: fullPipelines,
+                        done: done)
                 case .restart:
                     try done(.action(.restart))
                 case .restartWithout(let pipeline):
-                    let pipelines = request.pipelines.filter { $0 != pipeline }
+                    let pipelines = fullPipelines.filter { $0 != pipeline }
                     try done(.action(.restartWith(pipelines: pipelines)))
                 case .stop(let error): throw error
                 }

@@ -22,17 +22,6 @@
 import XCTest
 @testable import LineSDK
 
-private struct SimpleStubRequest: Request {
-    
-    struct Response: Decodable {
-        let foo: String
-    }
-    
-    let method: HTTPMethod = .get
-    let path: String = ""
-    let authenticate: AuthenticateMethod = .none
-}
-
 class PipelineTests: XCTestCase {
     
     override func setUp() {
@@ -45,11 +34,26 @@ class PipelineTests: XCTestCase {
         super.tearDown()
     }
     
+    func testPipelineEquality() {
+        
+        let token1 = RefreshTokenRedirector()
+        let token2 = RefreshTokenRedirector()
+        
+        XCTAssertTrue(ResponsePipeline.redirector(token1) == ResponsePipeline.redirector(token1))
+        XCTAssertFalse(ResponsePipeline.redirector(token1) == ResponsePipeline.redirector(token2))
+        
+        let parser1 = ParsePipeline(JSONDecoder())
+        let parser2 = ParsePipeline(JSONDecoder())
+        
+        XCTAssertTrue(ResponsePipeline.terminator(parser1) == ResponsePipeline.terminator(parser1))
+        XCTAssertFalse(ResponsePipeline.terminator(parser1) == ResponsePipeline.terminator(parser2))
+        
+        XCTAssertFalse(ResponsePipeline.redirector(token1) == ResponsePipeline.terminator(parser1))
+    }
+    
     func testParsePipeline() {
         let pipeline = ParsePipeline(JSONDecoder())
-        let text = "{\"foo\": \"bar\"}"
-        let data = text.data(using: .utf8)!
-        let result = try! pipeline.parse(request: SimpleStubRequest(), data: data)
+        let result = try! pipeline.parse(request: StubRequestSimple(), data: StubRequestSimple.successData)
         XCTAssertEqual(result.foo, "bar")
     }
     
@@ -60,7 +64,7 @@ class PipelineTests: XCTestCase {
     func testBadHTTPStatusPipelineValidCode() {
         let pipeline = BadHTTPStatusRedirector(valid: 200..<300)
         
-        let request = SimpleStubRequest()
+        let request = StubRequestSimple()
         let response = HTTPURLResponse.responseFromCode(200)
         let shouldApply = pipeline.shouldApply(reqeust: request, data: Data(), response: response)
         XCTAssertFalse(shouldApply)
@@ -69,7 +73,7 @@ class PipelineTests: XCTestCase {
     func testBadHTTPStatusPipelineApplyAuthError() {
         let pipeline = BadHTTPStatusRedirector(valid: 200..<300)
         
-        let request = SimpleStubRequest()
+        let request = StubRequestSimple()
         let response = HTTPURLResponse.responseFromCode(404)
         
         let authError = ["error": "123", "error_description": "sample"]
@@ -97,7 +101,7 @@ class PipelineTests: XCTestCase {
     func testBadHTTPStatusPipelineApplyAPIError() {
         let pipeline = BadHTTPStatusRedirector(valid: 200..<300)
         
-        let request = SimpleStubRequest()
+        let request = StubRequestSimple()
         let response = HTTPURLResponse.responseFromCode(404)
         
         let apiError = ["message": "hello"]
@@ -124,7 +128,7 @@ class PipelineTests: XCTestCase {
     func testBadHTTPStatusPipelineApplyUnknownError() {
         let pipeline = BadHTTPStatusRedirector(valid: 200..<300)
         
-        let request = SimpleStubRequest()
+        let request = StubRequestSimple()
         let response = HTTPURLResponse.responseFromCode(404)
         
         let error = ["error_domain": "error_detail"]

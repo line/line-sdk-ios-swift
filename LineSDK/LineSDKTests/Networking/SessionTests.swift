@@ -22,21 +22,6 @@
 import XCTest
 @testable import LineSDK
 
-enum ErrorStub: Error {
-    case testError
-}
-
-private struct SimpleStubRequest: Request {
-    
-    struct Response: Decodable {
-        let foo: String
-    }
-    
-    let method: HTTPMethod = .get
-    let path: String = ""
-    let authenticate: AuthenticateMethod = .none
-}
-
 class SessionTests: XCTestCase {
     
     let configuration = LoginConfiguration(channelID: "1", universalLinkURL: nil)
@@ -51,10 +36,250 @@ class SessionTests: XCTestCase {
         super.tearDown()
     }
     
+    func testSessionCreateRequest() {
+        let request = StubRequestWithAdapters()
+        let session = Session(configuration: configuration)
+        let result = try! session.create(request)
+        
+        XCTAssertEqual(result.url?.absoluteString, "https://\(Constant.APIHost)/api/test")
+        XCTAssertEqual(result.httpMethod, "POST")
+        XCTAssertEqual(result.value(forHTTPHeaderField: "foo"), "bar")
+    }
+    
+    func testSessionHandleSingleTerminatorPipeline() {
+        let request = StubRequestWithSingleTerminatorPipeline()
+        let session = Session(configuration: configuration)
+        let pipelines = request.pipelines
+        try! session.handle(
+            request: request,
+            data: StubRequestWithSingleTerminatorPipeline.successData,
+            response: .responseFromCode(200),
+            pipelines: pipelines,
+            fullPipelines: pipelines)
+        {
+            result in
+            switch result {
+            case .value(let v):
+                XCTAssertEqual(v.foo, "bar")
+            default:
+                XCTFail("Parser should give a correct result")
+            }
+        }
+    }
+    
+    func testSessionHandleSingleTerminatorPipelineWithInvalidData() {
+        let request = StubRequestWithSingleTerminatorPipeline()
+        let session = Session(configuration: configuration)
+        let pipelines = request.pipelines
+        let text = "{\"strange\": \"data\"}"
+        do {
+            try session.handle(
+                request: request,
+                data: text.data(using: .utf8)!,
+                response: .responseFromCode(200),
+                pipelines: pipelines,
+                fullPipelines: pipelines)
+            {
+                result in
+                switch result {
+                default:
+                    XCTFail("Wrong data should throw an error")
+                }
+            }
+        } catch {
+            guard let sdkError = error as? LineSDKError,
+                case LineSDKError.responseFailed(reason: .dataParsingFailed) = sdkError else
+            {
+                XCTFail(".dataParsingFailed should be thrown")
+                return
+            }
+        }
+    }
+    
+    func testSessionHandleContinuesRedirector() {
+        let request = StubRequestWithContinusPipeline()
+        let session = Session(configuration: configuration)
+        let pipelines = request.pipelines
+        guard case .redirector(let redirector) = pipelines[0],
+              let continuer = redirector as? StubRequestWithContinusPipeline.ContinuesRedirector else
+        {
+            XCTFail("The first pipeline should be a ContinuesRedirector")
+            return
+        }
+        
+        XCTAssertFalse(continuer.invoked)
+        try! session.handle(
+            request: request,
+            data: StubRequestWithContinusPipeline.successData,
+            response: .responseFromCode(200),
+            pipelines: pipelines,
+            fullPipelines: pipelines)
+        {
+            result in
+            switch result {
+            case .value(let v):
+                XCTAssertTrue(continuer.invoked)
+                XCTAssertEqual(v.foo, "bar")
+            default:
+                XCTFail("Parser should give a correct result")
+            }
+        }
+    }
+    
+    func testSessionHandleStopRedirector() {
+        let request = StubRequestWithStopPipeline()
+        let session = Session(configuration: configuration)
+        let pipelines = request.pipelines
+        guard case .redirector(let redirector) = pipelines[0],
+              let stopper = redirector as? StubRequestWithStopPipeline.StopRedirector else
+        {
+            XCTFail("The first pipeline should be a StopRedirector")
+            return
+        }
+        XCTAssertFalse(stopper.invoked)
+        do {
+            try session.handle(
+                request: request,
+                data: StubRequestWithStopPipeline.successData,
+                response: .responseFromCode(200),
+                pipelines: pipelines,
+                fullPipelines: pipelines)
+            {
+                _ in
+                XCTFail("Stopper pipeline should not allow handler being called")
+            }
+        } catch {
+            guard let testError = error as? ErrorStub else {
+                XCTFail("Should throw a test error")
+                return
+            }
+            XCTAssertTrue(stopper.invoked)
+            XCTAssertEqual(testError, .testError)
+        }
+    }
+    
+    func testSessionHandleRestartRedirector() {
+        let request = StubRequestWithRestartPipeline()
+        let session = Session(configuration: configuration)
+        let pipelines = request.pipelines
+        guard case .redirector(let redirector) = pipelines[0],
+              let restarter = redirector as? StubRequestWithRestartPipeline.RestartRedirector else
+        {
+            XCTFail("The first pipeline should be a RestartRedirector")
+            return
+        }
+        XCTAssertFalse(restarter.invoked)
+        try! session.handle(
+            request: request,
+            data: StubRequestWithStopPipeline.successData,
+            response: .responseFromCode(123), // A non-200 code will make `restarter` to work.
+            pipelines: pipelines,
+            fullPipelines: pipelines)
+        {
+            result in
+            switch result {
+            case .action(.restart):
+                XCTAssertTrue(restarter.invoked)
+            default:
+                XCTFail("Parser should give a correct restart action")
+            }
+        }
+    }
+    
+    func testSessionCouldRestartSendingRequest() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        let request = StubRequestWithRestartPipeline()
+        let delegate = SessionDelegateStub(stubs: [
+            .response(Data(), HTTPURLResponse.responseFromCode(123)),
+            .response(StubRequestWithRestartPipeline.successData, HTTPURLResponse.responseFromCode(200)),
+        ])
+        
+        let pipelines = request.pipelines
+        guard case .redirector(let redirector) = pipelines[0],
+              let restarter = redirector as? StubRequestWithRestartPipeline.RestartRedirector else
+        {
+            XCTFail("The first pipeline should be a RestartRedirector")
+            return
+        }
+        XCTAssertFalse(restarter.invoked)
+
+        let session = Session(configuration: configuration, delegate: delegate)
+        session.send(request) { result in
+            expect.fulfill()
+            guard let value = result.value else {
+                XCTFail("Should parse to final result after restarting for once.")
+                return
+            }
+            XCTAssertTrue(delegate.stubs.isEmpty)
+            XCTAssertEqual(value.foo, "bar")
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testSessionHandleRestartAnotherPipelinesRedirector() {
+        let request = StubRequestWithRestartAnotherPipeline()
+        let session = Session(configuration: configuration)
+        let pipelines = request.pipelines
+        guard case .redirector(let redirector) = pipelines[0],
+              let restarter = redirector as? StubRequestWithRestartAnotherPipeline.RestartAnotherPipeline else
+        {
+            XCTFail("The first pipeline should be a RestartAnotherPipeline")
+            return
+        }
+        XCTAssertFalse(restarter.invoked)
+        try! session.handle(
+            request: request,
+            data: StubRequestWithStopPipeline.successData,
+            response: .responseFromCode(200),
+            pipelines: pipelines,
+            fullPipelines: pipelines)
+        {
+            result in
+            switch result {
+            case .action(.restartWith(let other)):
+                XCTAssertTrue(restarter.invoked)
+                XCTAssertEqual(other.count, 1)
+                XCTAssertEqual(other[0], pipelines[1])
+            default:
+                XCTFail("Parser should give a correct restart action")
+            }
+        }
+    }
+    
+    func testSessionCouldRestartSendingRequestWithAnotherPipelines() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        let request = StubRequestWithRestartAnotherPipeline()
+        let delegate = SessionDelegateStub(stubs: [
+            .response(Data(), HTTPURLResponse.responseFromCode(123)),
+            .response(StubRequestWithRestartPipeline.successData, HTTPURLResponse.responseFromCode(200)),
+            ])
+        
+        let pipelines = request.pipelines
+        guard case .redirector(let redirector) = pipelines[0],
+              let restarter = redirector as? StubRequestWithRestartAnotherPipeline.RestartAnotherPipeline else
+        {
+            XCTFail("The first pipeline should be a RestartAnotherPipeline")
+            return
+        }
+        XCTAssertFalse(restarter.invoked)
+        
+        let session = Session(configuration: configuration, delegate: delegate)
+        session.send(request) { result in
+            expect.fulfill()
+            guard let value = result.value else {
+                XCTFail("Should parse to final result after restarting for once.")
+                return
+            }
+            XCTAssertTrue(delegate.stubs.isEmpty)
+            XCTAssertEqual(value.foo, "bar")
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
     func testSessionPlainError() {
         let expect = expectation(description: "\(#file)_\(#line)")
         let session = Session.stub(configuration: configuration, error: ErrorStub.testError)
-        session.send(SimpleStubRequest()) { result in
+        session.send(StubRequestSimple()) { result in
             guard let e = result.error as? LineSDKError,
                   case .responseFailed(reason: .URLSessionError(ErrorStub.testError)) = e
             else {
@@ -68,8 +293,8 @@ class SessionTests: XCTestCase {
     
     func testSessionPlainResponse() {
         let expect = expectation(description: "\(#file)_\(#line)")
-        let session = Session.stub(configuration: configuration, string: "{\"foo\": \"bar\"}")
-        session.send(SimpleStubRequest()) { result in
+        let session = Session.stub(configuration: configuration, string: StubRequestSimple.success)
+        session.send(StubRequestSimple()) { result in
             XCTAssertNotNil(result.value)
             XCTAssertEqual(result.value!.foo, "bar")
             expect.fulfill()
