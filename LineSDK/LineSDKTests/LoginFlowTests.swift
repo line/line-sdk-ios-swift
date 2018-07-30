@@ -28,10 +28,10 @@ class LoginFlowTests: XCTestCase {
         let baseURL = URL(string: Constant.lineWebAuthUniversalURL)!
         let result = baseURL.appendedLoginQuery(
             channelID: "123",
+            universalLinkURL: nil,
             scopes: [.profile, .openID],
             otpID: "321",
-            state: "abc",
-            appID: "appid"
+            state: "abc"
         )
         let urlString = result.absoluteString.removingPercentEncoding
         XCTAssertNotNil(urlString)

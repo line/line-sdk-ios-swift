@@ -1,6 +1,11 @@
 default_platform(:ios)
 
 platform :ios do
+
+  before_all do
+    xcversion(version: "9.4.1")
+  end
+
   desc "Switch between Release and Beta environment"
   lane :switch do |options|
     
@@ -22,4 +27,14 @@ platform :ios do
     end
 
   end
+
+  desc "Run tests"
+  lane :tests do
+    run_tests(
+        workspace: "LineSDK.xcworkspace",
+        devices: ["iPhone 6s"],
+        scheme: "LineSDK"
+    )
+  end
+
 end
