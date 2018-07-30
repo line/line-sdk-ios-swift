@@ -41,13 +41,13 @@ public class LoginManager {
     
     private init() { }
     
-    public func setup(channelID: String) {
+    public func setup(channelID: String, universalLinkURL: URL?) {
         guard configuration == nil else {
             Log.assertionFailure("Trying to set configuration multiplet times is not permitted.")
             return
         }
         
-        let config = LoginConfiguration(channelID: channelID)
+        let config = LoginConfiguration(channelID: channelID, universalLinkURL: universalLinkURL)
         self.configuration = config
 
         AccessTokenStore.shared = AccessTokenStore(configuration: config)
