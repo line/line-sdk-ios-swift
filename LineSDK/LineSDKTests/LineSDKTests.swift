@@ -35,17 +35,6 @@ class LineSDKTests: XCTestCase {
     }
     
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        let expect = expectation(description: "hello")
-        let request = PostOTPRequest(channelID: "44")
-        let s = Session(configuration: LoginConfiguration.init(channelID: "44"))
-        s.send(request) { result in
-            XCTAssert(result.isSuccess)
-            XCTAssertNotNil(result.value)
-            expect.fulfill()
-        }
-        waitForExpectations(timeout: 3, handler: nil)
     }
     
 }

@@ -131,6 +131,9 @@ GEM
     unf_ext (0.0.7.5)
     unicode-display_width (1.4.0)
     word_wrap (1.0.0)
+    xcode-install (2.4.4)
+      claide (>= 0.9.1, < 1.1.0)
+      fastlane (>= 2.1.0, < 3.0.0)
     xcodeproj (1.5.9)
       CFPropertyList (>= 2.3.3, < 4.0)
       atomos (~> 0.1.2)
@@ -147,6 +150,7 @@ PLATFORMS
 
 DEPENDENCIES
   fastlane
+  xcode-install
 
 BUNDLED WITH
    1.16.3
