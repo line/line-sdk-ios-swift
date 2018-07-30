@@ -42,13 +42,18 @@ class Session: Client, LazySingleton {
     
     let baseURL: String
     let session: URLSession
-    let delegate: SessionDelegate
+    let delegate: SessionDelegateType
     
     let callbackQueue = CallbackQueue.asyncMain
     
-    init(configuration: LoginConfiguration) {
+    convenience init(configuration: LoginConfiguration) {
+        let delegate = SessionDelegate()
+        self.init(configuration: configuration, delegate: delegate)
+    }
+    
+    init(configuration: LoginConfiguration, delegate: SessionDelegateType) {
         baseURL = "https://\(configuration.APIHost)"
-        delegate = SessionDelegate()
+        self.delegate = delegate
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: delegate, delegateQueue: nil)
     }
     
@@ -75,7 +80,6 @@ class Session: Client, LazySingleton {
         
         let sessionTask = SessionTask(session: session, request: urlRequest)
         sessionTask.onResult.delegate(on: self) { (self, value) in
-            
             switch value {
             case (_, _, let error?):
                 let error = LineSDKError.responseFailed(reason: .URLSessionError(error))
@@ -101,8 +105,11 @@ class Session: Client, LazySingleton {
             }
         }
         
-        delegate.add(sessionTask)
-        sessionTask.resume()
+        if delegate.shouldTaskStart(sessionTask) {
+            delegate.add(sessionTask)
+            sessionTask.resume()
+        }
+        
         return sessionTask
     }
     
@@ -160,6 +167,13 @@ class Session: Client, LazySingleton {
     }
 }
 
+protocol SessionDelegateType: URLSessionDataDelegate {
+    func add(_ task: SessionTask)
+    func remove(_ task: URLSessionTask)
+    func task(for task: URLSessionTask) -> SessionTask?
+    func shouldTaskStart(_ task: SessionTask) -> Bool
+}
+
 class SessionDelegate: NSObject {
     private var tasks: [Int: SessionTask] = [:]
     private let lock = NSLock()
@@ -181,9 +195,13 @@ class SessionDelegate: NSObject {
         defer { lock.unlock() }
         return tasks[task.taskIdentifier]
     }
+    
+    func shouldTaskStart(_ task: SessionTask) -> Bool {
+        return true
+    }
 }
 
-extension SessionDelegate: URLSessionDataDelegate {
+extension SessionDelegate: SessionDelegateType {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         guard let task = self.task(for: dataTask) else {
             return

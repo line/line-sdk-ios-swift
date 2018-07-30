@@ -91,7 +91,11 @@ protocol Request {
     
     var contentType: ContentType { get }
     
+    var adapters: [RequestAdapter] { get }
+    
     var suffixAdapters: [RequestAdapter]? { get }
+    
+    var pipelines: [ResponsePipeline] { get }
     
     var prefixPipelines: [ResponsePipeline]? { get }
     
