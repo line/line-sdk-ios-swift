@@ -26,8 +26,8 @@ protocol RequestAdapter {
 }
 
 struct TokenAdapter: RequestAdapter {
-    let token: AccessToken?
-    init(token: AccessToken?) {
+    let token: String?
+    init(token: String?) {
         self.token = token
     }
     
@@ -36,7 +36,7 @@ struct TokenAdapter: RequestAdapter {
             throw LineSDKError.requestFailed(reason: .lackOfAccessToken)
         }
         var request = request
-        request.setValue("Bearer " + token.value, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         return request
     }
 }
