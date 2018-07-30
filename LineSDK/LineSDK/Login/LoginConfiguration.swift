@@ -25,13 +25,58 @@ struct LoginConfiguration {
     let channelID: String
     let universalLinkURL: URL?
     
+    init(channelID: String, universalLinkURL: URL?) {
+        self.channelID = channelID
+        
+        if let url = universalLinkURL, url.scheme?.lowercased() != "https" {
+            Log.assertionFailure("Universal link is required to start with https scheme.")
+        }
+        
+        self.universalLinkURL = universalLinkURL
+    }
+    
     let APIHost = Constant.APIHost
     
-    func isValidURLScheme(url: URL) -> Bool {
+    func isValidCustomizeURL(url: URL) -> Bool {
         guard let scheme = url.scheme else {
             return false
         }
-        return scheme.lowercased() == Constant.thirdPartyAppRetrurnScheme.lowercased()
+        guard scheme.lowercased() == Constant.thirdPartyAppRetrurnScheme.lowercased() else {
+            return false
+        }
+        guard url.host?.lowercased() == "authorize" else {
+            return false
+        }
+        return true
+    }
+    
+    func isValidUniversalLinkURL(url: URL) -> Bool {
+        
+        guard let setURL = universalLinkURL else {
+            return false
+        }
+        
+        guard let setComponents = URLComponents(url: setURL, resolvingAgainstBaseURL: false),
+              let receivedComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else
+        {
+            return false
+        }
+        
+        guard setComponents.scheme?.lowercased() == "https",
+              receivedComponents.scheme?.lowercased() == "https" else
+        {
+            return false
+        }
+        
+        guard setComponents.host?.lowercased() == receivedComponents.host?.lowercased() else {
+            return false
+        }
+        
+        guard setComponents.path.lowercased() == receivedComponents.path.lowercased() else {
+            return false
+        }
+        
+        return true
     }
     
     func isValidSourceApplication(appID: String) -> Bool {

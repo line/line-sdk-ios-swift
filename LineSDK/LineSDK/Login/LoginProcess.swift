@@ -209,7 +209,9 @@ public class LoginProcess {
     }
     
     func resumeOpenURL(url: URL, sourceApplication: String?) -> Bool {
-        guard configuration.isValidURLScheme(url: url) else {
+        guard configuration.isValidUniversalLinkURL(url: url) ||
+              configuration.isValidCustomizeURL(url: url) else
+        {
             invokeFailure(error: LineSDKError.authorizeFailed(reason: .callbackURLSchemeNotMatching))
             return false
         }

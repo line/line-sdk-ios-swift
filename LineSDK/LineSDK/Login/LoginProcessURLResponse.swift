@@ -45,7 +45,7 @@ struct LoginProcessURLResponse {
             throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
         }
         
-        guard urlComponent.host == "authorize", let items = urlComponent.queryItems else {
+        guard let items = urlComponent.queryItems else {
             throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
         }
         
