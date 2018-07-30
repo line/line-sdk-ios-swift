@@ -26,7 +26,7 @@ extension HTTPURLResponse {
     static func responseFromCode(_ code: Int) -> HTTPURLResponse {
         return HTTPURLResponse(
             url: URL(string: "linesdktest://sampleurl")!,
-            statusCode: 200,
+            statusCode: code,
             httpVersion: "HTTP/1.1",
             headerFields: [:])!
     }

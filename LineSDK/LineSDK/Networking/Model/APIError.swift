@@ -21,7 +21,11 @@
 
 import Foundation
 
-public struct APIError: Decodable {
+public struct AuthError: Decodable {
     public let error: String
-    public let errorDescription: String
+    public let errorDescription: String?
+}
+
+public struct APIError: Decodable {
+    public let message: String
 }

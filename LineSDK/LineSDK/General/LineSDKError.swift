@@ -33,7 +33,9 @@ public enum LineSDKError: Error {
         case URLSessionError(Error)
         case nonHTTPURLResponse
         case dataParsingFailed(Error)
-        case invalidHTTPStatus(code: Int, error: APIError?, body: Data)
+        case invalidHTTPStatusAuth(code: Int, error: AuthError, raw: String?)
+        case invalidHTTPStatusAPI(code: Int, error: APIError, raw: String?)
+        case invalidHTTPStatus(code: Int, raw: String?)
     }
     
     public enum AuthorizeErrorReason {

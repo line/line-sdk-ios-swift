@@ -26,7 +26,7 @@ enum ErrorStub: Error {
     case testError
 }
 
-struct SimpleStubRequest: Request {
+private struct SimpleStubRequest: Request {
     
     struct Response: Decodable {
         let foo: String

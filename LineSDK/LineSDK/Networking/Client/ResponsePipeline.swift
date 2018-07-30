@@ -73,7 +73,12 @@ class RefreshTokenRedirector: ResponsePipelineRedirector {
         return response.statusCode == 403
     }
     
-    func redirect<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse, done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws {
+    func redirect<T: Request>(
+        reqeust: T,
+        data: Data,
+        response: HTTPURLResponse,
+        done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
+    {
         // Do refrest request here.
         try closure(.restartWithout(.redirector(self)))
     }
@@ -91,22 +96,41 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
         return !valid.contains(code)
     }
     
-    func redirect<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse, done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws {
+    func redirect<T: Request>(
+        reqeust: T,
+        data: Data,
+        response: HTTPURLResponse,
+        done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
+    {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let raw = String(data: data, encoding: .utf8)
         do {
-            let error = try decoder.decode(APIError.self, from: data)
+            // There are two possible error format now.
+            // First, try to parse the error into a auth related error
+            let error = try decoder.decode(AuthError.self, from: data)
             try closure(.stop(
                 LineSDKError.responseFailed(
-                    reason: .invalidHTTPStatus(code: response.statusCode, error: error, body: data))
+                    reason: .invalidHTTPStatusAuth(code: response.statusCode, error: error, raw: raw))
                 )
             )
         } catch {
-            try closure(.stop(
-                LineSDKError.responseFailed(
-                    reason: .invalidHTTPStatus(code: response.statusCode, error: nil, body: data))
+            do {
+                // If failed to parse to a auth error, then try APIError format.
+                let error = try decoder.decode(APIError.self, from: data)
+                try closure(.stop(
+                    LineSDKError.responseFailed(
+                        reason: .invalidHTTPStatusAPI(code: response.statusCode, error: error, raw: raw))
+                    )
                 )
-            )
+            } catch {
+                // An unknown error resposne format, let framework user decide what to do.
+                try closure(.stop(
+                    LineSDKError.responseFailed(
+                        reason: .invalidHTTPStatus(code: response.statusCode, raw: raw))
+                    )
+                )
+            }
         }
     }
 }
