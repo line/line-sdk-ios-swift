@@ -1,0 +1,107 @@
+//
+//  LoginManagerTests.swift
+//
+//  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
+//
+//  You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
+//  copy and distribute this software in source code or binary form for use
+//  in connection with the web services and APIs provided by LINE Corporation.
+//
+//  As with any software that integrates with the LINE Corporation platform, your use of this software
+//  is subject to the LINE Developers Agreement [http://terms2.line.me/LINE_Developers_Agreement].
+//  This copyright notice shall be included in all copies or substantial portions of the software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+//  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+//  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+
+import XCTest
+@testable import LineSDK
+
+class LoginManagerTests: XCTestCase {
+    
+    var window: UIWindow!
+    
+    override func setUp() {
+        super.setUp()
+        let url = URL(string: "https://sample.com/auth")
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: url)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        Session._shared = nil
+        AccessTokenStore._shared = nil
+        LoginManager.shared.delegate = nil
+        LoginManager.shared.configuration = nil
+    }
+    
+    func testSetupLoginManager() {
+        XCTAssertNotNil(Session.shared)
+        XCTAssertNotNil(AccessTokenStore.shared)
+        XCTAssertNotNil(LoginManager.shared.configuration)
+    }
+    
+    class LoginActionDelegate: NSObject, LoginManagerDelegate {
+        
+        let expect: XCTestExpectation
+        
+        init(expect: XCTestExpectation) {
+            self.expect = expect
+            super.init()
+        }
+        
+        func loginManager(
+            _ manager: LoginManager,
+            didSucceed loginProcess: LoginProcess,
+            withResult result: LoginResult)
+        {
+            print("result")
+        }
+        
+        func loginManager(
+            _ manager: LoginManager,
+            didFail loginProcess: LoginProcess,
+            withError error: Error)
+        {
+            expect.fulfill()
+        }
+    }
+    
+    var loginActionDelegate: LoginActionDelegate!
+    func testLoginAction() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        let rootViewController = setupViewController()
+        loginActionDelegate = LoginActionDelegate(expect: expect)
+        LoginManager.shared.delegate = loginActionDelegate
+        
+        // TODO: Stubs
+        
+        LoginManager.shared.login(permissions: [.profile], in: rootViewController)
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    
+    private func setupViewController() -> UIViewController {
+        let rootViewController =  UIViewController()
+        if #available(iOS 9.0, *) {
+            rootViewController.loadViewIfNeeded()
+        } else {
+            _ = rootViewController.view
+        }
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = rootViewController
+        window.makeKeyAndVisible()
+        return rootViewController
+    }
+    
+    private func resetViewController() {
+        window = nil
+    }
+}
+
