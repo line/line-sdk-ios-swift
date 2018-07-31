@@ -23,7 +23,7 @@ import Foundation
 
 protocol AccessTokenType {}
 
-struct AccessToken: Codable, AccessTokenType {
+struct AccessToken: Codable, AccessTokenType, Equatable {
     let value: String
     let expiresIn: TimeInterval
     let createdAt: Date
@@ -84,6 +84,4 @@ struct AccessToken: Codable, AccessTokenType {
         try container.encode(tokenType, forKey: .tokenType)
     }
 }
-
-
 
