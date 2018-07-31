@@ -38,19 +38,14 @@ extension PostOTPRequest: ResponseDataStub {
     """
 }
 
-class PostOTPRequestTests: XCTestCase {
-    
-    let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
-    
+class PostOTPRequestTests: LineSDKAPITests {
+        
     func testSuccess() {
-        let expect = expectation(description: "\(#file)_\(#line)")
-        let session = Session.stub(configuration: config, string: PostOTPRequest.success)
-        session.send(PostOTPRequest(channelID: config.channelID)) { result in
-            XCTAssertEqual(result.value!.otpId, "7IMDGquTwIkgPGM2Z0ZXIGYnhIo=")
-            XCTAssertEqual(result.value!.otp, "mggOa8NxWrrlcd0rhLTt")
-            expect.fulfill()
+        let request = PostOTPRequest(channelID: config.channelID)
+        runTestSuccess(for: request) { result in
+            XCTAssertEqual(result.otpId, "7IMDGquTwIkgPGM2Z0ZXIGYnhIo=")
+            XCTAssertEqual(result.otp, "mggOa8NxWrrlcd0rhLTt")
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testFail() {

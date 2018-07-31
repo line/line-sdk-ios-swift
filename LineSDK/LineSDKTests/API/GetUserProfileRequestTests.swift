@@ -33,30 +33,6 @@ extension GetUserProfileRequest: ResponseDataStub {
     """
 }
 
-class LineSDKAPITests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        LoginManager.shared.reset()
-    }
-    
-    let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
-    func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
-        let expect = expectation(description: "\(#file)_\(#line)")
-        let session = Session.stub(configuration: config, string: T.success)
-        session.send(request) { result in
-            verifier(result.value!)
-            expect.fulfill()
-        }
-        waitForExpectations(timeout: 1.0, handler: nil)
-    }
-}
-
 class GetUserProfileRequestTests: LineSDKAPITests {
 
     func testSuccess() {

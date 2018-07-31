@@ -1,5 +1,5 @@
 //
-//  PostTokenExchangeRequestTests.swift
+//  LineSDKAPITests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,38 +22,26 @@
 import XCTest
 @testable import LineSDK
 
-extension PostTokenExchangeRequest: ResponseDataStub {
+class LineSDKAPITests: XCTestCase {
     
-    static let successToken = "123"
-    
-    static let success: String =
-    """
-    {
-        "access_token":"\(successToken)",
-        "refresh_token":"abc",
-        "token_type":"Bearer",
-        "scope":"profile openid",
-        "id_token": "hello",
-        "expires_in":2592000
+    override func setUp() {
+        super.setUp()
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
     }
-    """
-}
-
-class PostTokenExchangeRequestTests: LineSDKAPITests {
-
-    func testSuccess() {
-        let request = PostTokenExchangeRequest(
-            channelID: config.channelID,
-            code: "abcabc",
-            otpValue: "123123",
-            redirectURI: "urlurl")
-        runTestSuccess(for: request) { token in
-            XCTAssertEqual(token.value, "123")
-            XCTAssertEqual(token.refreshToken, "abc")
-            XCTAssertEqual(token.tokenType, "Bearer")
-            XCTAssertEqual(token.permissions, [LoginPermission.profile, LoginPermission.openID])
-            XCTAssertEqual(token.expiresAt, token.createdAt.addingTimeInterval(token.expiresIn))
-            XCTAssertEqual(token.IDToken, "hello")
+    
+    override func tearDown() {
+        super.tearDown()
+        LoginManager.shared.reset()
+    }
+    
+    let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
+    func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        let session = Session.stub(configuration: config, string: T.success)
+        session.send(request) { result in
+            verifier(result.value!)
+            expect.fulfill()
         }
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
 }
