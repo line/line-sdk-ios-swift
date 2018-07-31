@@ -26,7 +26,7 @@ enum ErrorStub: Error {
     case testError
 }
 
-struct StubRequestSimple: Request {
+struct StubRequestSimple: Request, ResponseDataStub {
     
     struct Response: Decodable {
         let foo: String
@@ -37,9 +37,6 @@ struct StubRequestSimple: Request {
     let authenticate: AuthenticateMethod = .none
     
     static let success = "{\"foo\": \"bar\"}"
-    static var successData: Data {
-        return success.data(using: .utf8)!
-    }
 }
 
 
@@ -64,7 +61,7 @@ struct StubRequestWithAdapters: Request {
     }
 }
 
-struct StubRequestWithSingleTerminatorPipeline: Request {
+struct StubRequestWithSingleTerminatorPipeline: Request, ResponseDataStub {
     struct Response: Decodable {
         let foo: String
     }
@@ -78,12 +75,9 @@ struct StubRequestWithSingleTerminatorPipeline: Request {
     }
     
     static let success = "{\"foo\": \"bar\"}"
-    static var successData: Data {
-        return success.data(using: .utf8)!
-    }
 }
 
-struct StubRequestWithContinusPipeline: Request {
+struct StubRequestWithContinusPipeline: Request, ResponseDataStub {
     
     class ContinuesRedirector: ResponsePipelineRedirector {
         
@@ -120,12 +114,9 @@ struct StubRequestWithContinusPipeline: Request {
     }
     
     static let success = "{\"foo\": \"bar\"}"
-    static var successData: Data {
-        return success.data(using: .utf8)!
-    }
 }
 
-struct StubRequestWithStopPipeline: Request {
+struct StubRequestWithStopPipeline: Request, ResponseDataStub {
     class StopRedirector: ResponsePipelineRedirector {
         
         var invoked = false
@@ -161,12 +152,9 @@ struct StubRequestWithStopPipeline: Request {
     }
     
     static let success = "{\"foo\": \"bar\"}"
-    static var successData: Data {
-        return success.data(using: .utf8)!
-    }
 }
 
-struct StubRequestWithRestartPipeline: Request {
+struct StubRequestWithRestartPipeline: Request, ResponseDataStub {
     class RestartRedirector: ResponsePipelineRedirector {
         
         let valid: Int
@@ -208,12 +196,9 @@ struct StubRequestWithRestartPipeline: Request {
     }
     
     static let success = "{\"foo\": \"bar\"}"
-    static var successData: Data {
-        return success.data(using: .utf8)!
-    }
 }
 
-struct StubRequestWithRestartAnotherPipeline: Request {
+struct StubRequestWithRestartAnotherPipeline: Request, ResponseDataStub {
     class RestartAnotherPipeline: ResponsePipelineRedirector {
         
         var invoked = false
@@ -249,7 +234,4 @@ struct StubRequestWithRestartAnotherPipeline: Request {
     }
     
     static let success = "{\"foo\": \"bar\"}"
-    static var successData: Data {
-        return success.data(using: .utf8)!
-    }
 }

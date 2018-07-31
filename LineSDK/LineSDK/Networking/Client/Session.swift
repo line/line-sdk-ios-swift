@@ -26,6 +26,7 @@ class Session: LazySingleton {
     enum HandleAction {
         case restart
         case restartWith(pipelines: [ResponsePipeline])
+        case stop(Error)
     }
     
     enum HanldeResult<T> {
@@ -97,6 +98,8 @@ class Session: LazySingleton {
                             self.send(request, callbackQueue: callbackQueue, handler: handler)
                         case .action(.restartWith(let pipelines)):
                             self.send(request, callbackQueue: callbackQueue, pipelines: pipelines, handler: handler)
+                        case .action(.stop(let error)):
+                            callbackQueue.execute { handler?(.failure(error)) }
                         }
                     }
                 } catch {
@@ -171,7 +174,8 @@ class Session: LazySingleton {
                 case .restartWithout(let pipeline):
                     let pipelines = fullPipelines.filter { $0 != pipeline }
                     try done(.action(.restartWith(pipelines: pipelines)))
-                case .stop(let error): throw error
+                case .stop(let error):
+                    try done(.action(.stop(error)))
                 }
             }
             return

@@ -127,24 +127,26 @@ class SessionTests: XCTestCase {
             return
         }
         XCTAssertFalse(stopper.invoked)
-        do {
-            try session.handle(
-                request: request,
-                data: StubRequestWithStopPipeline.successData,
-                response: .responseFromCode(200),
-                pipelines: pipelines,
-                fullPipelines: pipelines)
-            {
-                _ in
-                XCTFail("Stopper pipeline should not allow handler being called")
+        
+        try! session.handle(
+            request: request,
+            data: StubRequestWithStopPipeline.successData,
+            response: .responseFromCode(200),
+            pipelines: pipelines,
+            fullPipelines: pipelines)
+        {
+            result in
+            switch result {
+            case .action(.stop(let error)):
+                guard let testError = error as? ErrorStub else {
+                    XCTFail("Should throw a test error")
+                    return
+                }
+                XCTAssertEqual(testError, .testError)
+                XCTAssertTrue(stopper.invoked)
+            default:
+                XCTFail("Parser should give a correct restart action")
             }
-        } catch {
-            guard let testError = error as? ErrorStub else {
-                XCTFail("Should throw a test error")
-                return
-            }
-            XCTAssertTrue(stopper.invoked)
-            XCTAssertEqual(testError, .testError)
         }
     }
     
