@@ -91,6 +91,23 @@ struct KeychainStore {
     }
 }
 
+extension KeychainStore {
+    func contains(_ key: String) throws -> Bool {
+        var query = options.query
+        query[kAttributeAccount] = key
+        
+        let status = SecItemCopyMatching(query as CFDictionary, nil)
+        switch status {
+        case errSecSuccess:
+            return true
+        case errSecItemNotFound:
+            return false
+        default:
+            throw keychainError(status)
+        }
+    }
+}
+
 /// Keychain Setter
 extension KeychainStore {
     func set<T: Encodable>(_ value: T, for key: String, using encoder: JSONEncoder) throws {

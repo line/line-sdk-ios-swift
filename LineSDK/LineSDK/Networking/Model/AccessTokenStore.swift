@@ -23,6 +23,7 @@ import Foundation
 
 extension Notification.Name {
     static let LineSDKAccessTokenDidUpdate = Notification.Name("com.linecorp.linesdk.AccessTokenDidUpdate")
+    static let LineSDKAccessTokenDidRemove = Notification.Name("com.linecorp.linesdk.AccessTokenDidRemove")
 }
 
 public let LineSDKOldAccessTokenUserInfoKey = "oldToken"
@@ -98,12 +99,17 @@ class AccessTokenStore: LazySingleton {
             userInfo[LineSDKOldAccessTokenUserInfoKey] = old
         }
         current = token
+        
         NotificationCenter.default.post(name: .LineSDKAccessTokenDidUpdate, object: token, userInfo: userInfo)
     }
     
     func removeCurrentAccessToken() throws {
         let key = keychainStore.tokenKey(for: configuration, version: storeVersion)
-        try keychainStore.remove(key)
+        if try keychainStore.contains(key) {
+            try keychainStore.remove(key)
+            
+            NotificationCenter.default.post(name: .LineSDKAccessTokenDidRemove, object: nil, userInfo: nil)
+        }
     }
 }
 

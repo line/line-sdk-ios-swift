@@ -121,6 +121,20 @@ class KeychainStoreTests: XCTestCase {
         }
         
     }
+    
+    func testContains() {
+        do {
+            try keychianStore.set("123", for: "user")
+            
+            let result1 = try keychianStore.contains("user")
+            let result2 = try keychianStore.contains("pass")
+            
+            XCTAssertTrue(result1)
+            XCTAssertFalse(result2)
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
 }
 
 struct Value: Codable {
