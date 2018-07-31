@@ -20,7 +20,7 @@ or alternatively using `brew cask install fastlane`
 ```
 fastlane ios to_beta
 ```
-Switch between Release and Beta environment
+Switch to Beta environment
 ### ios tests
 ```
 fastlane ios tests

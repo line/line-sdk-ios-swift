@@ -6,7 +6,7 @@ platform :ios do
     xcversion(version: "9.4.1")
   end
 
-  desc "Switch between Release and Beta environment"
+  desc "Switch to Beta environment"
   lane :to_beta do
     Dir.chdir("../") do
       `git clone https://git.linecorp.com/wei-wang/linesdk-ios-swift-beta-config.git 2> /dev/null || (cd linesdk-ios-swift-beta-config ; git pull)`
