@@ -26,8 +26,10 @@
 		4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */; };
 		4B6A70312109793500D71C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A70302109793500D71C66 /* AppDelegate.swift */; };
 		4B6A70432109A11600D71C66 /* LazySingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A70422109A11600D71C66 /* LazySingleton.swift */; };
+		4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */; };
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
+		4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8A965621100A5800760219 /* LoginConfigurationTests.swift */; };
 		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
 		4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
 		4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48C210598F500890AEF /* ResponsePipeline.swift */; };
@@ -91,8 +93,10 @@
 		4B6A70302109793500D71C66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B6A703C2109793700D71C66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B6A70422109A11600D71C66 /* LazySingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazySingleton.swift; sourceTree = "<group>"; };
+		4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponseTests.swift; sourceTree = "<group>"; };
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
+		4B8A965621100A5800760219 /* LoginConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurationTests.swift; sourceTree = "<group>"; };
 		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 		4B8FF48A21056B3800890AEF /* CallbackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
 		4B8FF48C210598F500890AEF /* ResponsePipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePipeline.swift; sourceTree = "<group>"; };
@@ -179,6 +183,16 @@
 			path = TestHost;
 			sourceTree = "<group>";
 		};
+		4B8A9655211009A400760219 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4B8FF4922105C49200890AEF /* LoginFlowTests.swift */,
+				4B8A965621100A5800760219 /* LoginConfigurationTests.swift */,
+				4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		4B90586E21006E5C004D717F = {
 			isa = PBXGroup;
 			children = (
@@ -216,11 +230,11 @@
 		4B90588521006E5D004D717F /* LineSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				4B8A9655211009A400760219 /* Login */,
 				4BA8E446210ED7F900355F03 /* Networking */,
 				4BA8E443210ED26100355F03 /* Utils */,
 				4B90588621006E5D004D717F /* LineSDKTests.swift */,
 				4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */,
-				4B8FF4922105C49200890AEF /* LoginFlowTests.swift */,
 				4B90588821006E5D004D717F /* Info.plist */,
 				4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */,
 			);
@@ -491,6 +505,7 @@
 			files = (
 				4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */,
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
+				4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */,
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
 				4BA8E44C210EDB5100355F03 /* ParameterEncoderTests.swift in Sources */,
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
@@ -498,6 +513,7 @@
 				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
 				4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */,
 				4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */,
+				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

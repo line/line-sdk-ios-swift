@@ -245,17 +245,11 @@ public class LoginProcess {
     }
     
     private var canUseLineAuthV1: Bool {
-        guard let url = URL(string: Constant.lineAppAuthURLv1) else {
-            return false
-        }
-        return UIApplication.shared.canOpenURL(url)
+        return UIApplication.shared.canOpenURL(Constant.lineAppAuthURLv1)
     }
     
     private var canUseLineAuthV2: Bool {
-        guard let url = URL(string: Constant.lineAppAuthURLv2) else {
-            return false
-        }
-        return UIApplication.shared.canOpenURL(url)
+        return UIApplication.shared.canOpenURL(Constant.lineAppAuthURLv2)
     }
     
     private func resetFlows() {
@@ -319,12 +313,13 @@ class AppAuthSchemeFlow {
         otp: OneTimePassword,
         processID: String)
     {
-        let appAuthURLBase = URL(string: "\(Constant.lineAuthV2Scheme)://authorize/")!
-        url = appAuthURLBase.appendedURLSchemeQuery(channelID: channelID,
-                                                    universalLinkURL: universalLinkURL,
-                                                    scopes: scopes,
-                                                    otpID: otp.otpId,
-                                                    state: processID)
+        url = Constant.lineAppAuthURLv2
+                .appendedURLSchemeQuery(
+                    channelID: channelID,
+                    universalLinkURL: universalLinkURL,
+                    scopes: scopes,
+                    otpID: otp.otpId,
+                    state: processID)
     }
     
     func start() {
@@ -434,7 +429,7 @@ extension String {
         let result =
             "/oauth2/v2.1/authorize/consent?response_type=code&sdk_ver=\(Constant.SDKVersion)" +
             "&client_id=\(channelID)&scope=\((scopes.map { $0.rawValue }).joined(separator: " "))" +
-            "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartyAppRetrurnScheme)://authorize/" +
+            "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartyAppRetrurnURL)" +
             universalLinkQuery
         
         return result
@@ -477,11 +472,11 @@ extension URL {
             scopes: scopes,
             otpID: otpID,
             state: state)
-        let loginUrl = "\(Constant.lineWebAuthUniversalURL)?returnUri=\(returnUri)]&loginChannelId=\(channelID)"
+        let loginUrl = "\(Constant.lineWebAuthUniversalURL)?returnUri=\(returnUri)&loginChannelId=\(channelID)"
         let parameters = [
             "loginUrl": "\(loginUrl)"
         ]
-        let encoder = URLQueryEncoder(parameters: parameters)
+        let encoder = URLQueryEncoder(parameters: parameters, allowed: .urlHostAllowed)
         return encoder.encoded(for: self)
     }
 }
