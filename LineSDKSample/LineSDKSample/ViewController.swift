@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         indicator.isHidden = false
         indicator.startAnimating()
         
-        LoginManager.shared.login(permissions: [.profile], in: self)
+        LoginManager.shared.login(permissions: [.profile, .friends, .groups], in: self)
     }
     
     override func didReceiveMemoryWarning() {

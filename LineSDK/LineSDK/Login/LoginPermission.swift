@@ -29,4 +29,7 @@ public struct LoginPermission: Hashable {
     
     public static let openID = LoginPermission(rawValue: "openid")
     public static let profile = LoginPermission(rawValue: "profile")
+    public static let friends = LoginPermission(rawValue: "friends")
+    public static let groups = LoginPermission(rawValue: "groups")
+    
 }

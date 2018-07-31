@@ -45,7 +45,7 @@ enum AuthenticateMethod {
         case .none:
             return nil
         case .token:
-            return TokenAdapter(token: AccessTokenStore.shared.current)
+            return TokenAdapter(token: AccessTokenStore.shared.current?.value)
         }
     }
 }
@@ -91,7 +91,11 @@ protocol Request {
     
     var contentType: ContentType { get }
     
+    var adapters: [RequestAdapter] { get }
+    
     var suffixAdapters: [RequestAdapter]? { get }
+    
+    var pipelines: [ResponsePipeline] { get }
     
     var prefixPipelines: [ResponsePipeline]? { get }
     

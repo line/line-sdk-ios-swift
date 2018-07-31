@@ -21,12 +21,7 @@
 
 import Foundation
 
-protocol Client {
-    var baseURL: String { get }
-    func send<T: Request>(_ request: T, handler: ((Result<T.Response>) -> Void)?)
-}
-
-class Session: Client, LazySingleton {
+class Session: LazySingleton {
     
     enum HandleAction {
         case restart
@@ -40,15 +35,20 @@ class Session: Client, LazySingleton {
     
     static var _shared: Session?
     
-    let baseURL: String
+    let baseURL: URL
     let session: URLSession
-    let delegate: SessionDelegate
+    let delegate: SessionDelegateType
     
     let callbackQueue = CallbackQueue.asyncMain
     
-    init(configuration: LoginConfiguration) {
-        baseURL = "https://\(configuration.APIHost)"
-        delegate = SessionDelegate()
+    convenience init(configuration: LoginConfiguration) {
+        let delegate = SessionDelegate()
+        self.init(configuration: configuration, delegate: delegate)
+    }
+    
+    init(configuration: LoginConfiguration, delegate: SessionDelegateType) {
+        baseURL = URL(string: "https://\(configuration.APIHost)")!
+        self.delegate = delegate
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: delegate, delegateQueue: nil)
     }
     
@@ -75,14 +75,21 @@ class Session: Client, LazySingleton {
         
         let sessionTask = SessionTask(session: session, request: urlRequest)
         sessionTask.onResult.delegate(on: self) { (self, value) in
-            
             switch value {
             case (_, _, let error?):
                 let error = LineSDKError.responseFailed(reason: .URLSessionError(error))
                 callbackQueue.execute { handler?(.failure(error)) }
             case (let data?, let response as HTTPURLResponse, _):
                 do {
-                    try self.handle(request: request, data: data, response: response, pipelines: request.pipelines) { result in
+                    let pipelines = pipelines ?? request.pipelines
+                    try self.handle(
+                        request: request,
+                        data: data,
+                        response: response,
+                        pipelines: pipelines,
+                        fullPipelines: pipelines)
+                    {
+                        result in
                         switch result {
                         case .value(let value):
                             callbackQueue.execute { handler?(.success(value)) }
@@ -101,49 +108,68 @@ class Session: Client, LazySingleton {
             }
         }
         
-        delegate.add(sessionTask)
-        sessionTask.resume()
+        if delegate.shouldTaskStart(sessionTask) {
+            delegate.add(sessionTask)
+            sessionTask.resume()
+        }
+        
         return sessionTask
     }
     
     func create<T: Request>(_ request: T) throws -> URLRequest {
-        let urlString = baseURL + request.path
-
-        guard let url = URL(string: urlString) else {
-            Log.fatalError("Cannot create correct URLRequest for url string: \(urlString)")
-        }
-        
+        let url = baseURL.appendingPathComponent(request.path)
         let urlRequest = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
+        
         let adaptedRequest = try request.adapters.reduce(urlRequest) { r, adapter in
             try adapter.adapted(r)
         }
         return adaptedRequest
     }
     
-    func handle<T: Request>(request: T, data: Data, response: HTTPURLResponse, pipelines: [ResponsePipeline], done: ((HanldeResult<T.Response>) throws -> Void)) throws {
+    func handle<T: Request>(
+        request: T,
+        data: Data,
+        response: HTTPURLResponse,
+        pipelines: [ResponsePipeline],
+        fullPipelines: [ResponsePipeline],
+        done: ((HanldeResult<T.Response>) throws -> Void)) throws
+    {
         guard !pipelines.isEmpty else {
-            Log.fatalError("The pipeline is already empty but request does not be parsed. Please set a terminator pipeline to the request pipelines.")
+            Log.fatalError("The pipeline is already empty but request does not be parsed." +
+                "Please at least set a terminator pipeline to the request `pipelines` property.")
         }
         var leftPipelines = pipelines
         let pipeline = leftPipelines.removeFirst()
         switch pipeline {
         case .redirector(let redirector):
-            guard redirector.shouldApply(reqeust: request, data: data, response: response) else {
+            guard redirector.shouldApply(request: request, data: data, response: response) else {
                 // Recursive calling on `handle` might be an issue when there are tons of
                 // redirectors in the pipeline. However, it should not happen at all in a
                 // foreseeable future. If there is any problem on it, we might need a pipeline
                 // queue to break the recursiving.
-                try self.handle(request: request, data: data, response: response, pipelines: leftPipelines, done: done)
+                try self.handle(
+                    request: request,
+                    data: data,
+                    response: response,
+                    pipelines: leftPipelines,
+                    fullPipelines: fullPipelines,
+                    done: done)
                 return
             }
-            try redirector.redirect(reqeust: request, data: data, response: response) { action in
+            try redirector.redirect(request: request, data: data, response: response) { action in
                 switch action {
                 case .continue:
-                    try handle(request: request, data: data, response: response, pipelines: leftPipelines, done: done)
+                    try handle(
+                        request: request,
+                        data: data,
+                        response: response,
+                        pipelines: leftPipelines,
+                        fullPipelines: fullPipelines,
+                        done: done)
                 case .restart:
                     try done(.action(.restart))
                 case .restartWithout(let pipeline):
-                    let pipelines = request.pipelines.filter { $0 != pipeline }
+                    let pipelines = fullPipelines.filter { $0 != pipeline }
                     try done(.action(.restartWith(pipelines: pipelines)))
                 case .stop(let error): throw error
                 }
@@ -158,6 +184,13 @@ class Session: Client, LazySingleton {
             }
         }
     }
+}
+
+protocol SessionDelegateType: URLSessionDataDelegate {
+    func add(_ task: SessionTask)
+    func remove(_ task: URLSessionTask)
+    func task(for task: URLSessionTask) -> SessionTask?
+    func shouldTaskStart(_ task: SessionTask) -> Bool
 }
 
 class SessionDelegate: NSObject {
@@ -181,9 +214,13 @@ class SessionDelegate: NSObject {
         defer { lock.unlock() }
         return tasks[task.taskIdentifier]
     }
+    
+    func shouldTaskStart(_ task: SessionTask) -> Bool {
+        return true
+    }
 }
 
-extension SessionDelegate: URLSessionDataDelegate {
+extension SessionDelegate: SessionDelegateType {
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         guard let task = self.task(for: dataTask) else {
             return
