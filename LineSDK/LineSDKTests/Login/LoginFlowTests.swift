@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-class LoginFlowTests: XCTestCase {
+class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
     
     var window: UIWindow!
 
@@ -222,24 +222,6 @@ class LoginFlowTests: XCTestCase {
             expect.fulfill()
         }
         waitForExpectations(timeout: 1.0, handler: nil)
-    }
-    
-    private func setupViewController() -> UIViewController {
-        let rootViewController =  UIViewController()
-        if #available(iOS 9.0, *) {
-            rootViewController.loadViewIfNeeded()
-        } else {
-            _ = rootViewController.view
-        }
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = rootViewController
-        window.makeKeyAndVisible()
-        return rootViewController
-    }
-    
-    private func resetViewController() {
-        window = nil
     }
 }
 

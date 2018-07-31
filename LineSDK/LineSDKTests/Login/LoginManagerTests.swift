@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-class LoginManagerTests: XCTestCase {
+class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     
     var window: UIWindow!
     
@@ -35,6 +35,7 @@ class LoginManagerTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         LoginManager.shared.reset()
+        resetViewController()
     }
     
     func testSetupLoginManager() {
@@ -73,7 +74,7 @@ class LoginManagerTests: XCTestCase {
     var loginActionDelegate: LoginActionDelegate!
     func testLoginAction() {
         let expect = expectation(description: "\(#file)_\(#line)")
-        let rootViewController = setupViewController()
+        
         loginActionDelegate = LoginActionDelegate(expect: expect)
         LoginManager.shared.delegate = loginActionDelegate
         
@@ -87,7 +88,7 @@ class LoginManagerTests: XCTestCase {
             delegate: delegateStub
         )
         
-        let process = LoginManager.shared.login(permissions: [.profile], in: rootViewController)!
+        let process = LoginManager.shared.login(permissions: [.profile], in: setupViewController())!
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let urlString = "\(Constant.thirdPartyAppRetrurnURL)?code=123&state=\(process.processID)"
@@ -96,25 +97,6 @@ class LoginManagerTests: XCTestCase {
         }
         
         waitForExpectations(timeout: 1, handler: nil)
-    }
-    
-    
-    private func setupViewController() -> UIViewController {
-        let rootViewController =  UIViewController()
-        if #available(iOS 9.0, *) {
-            rootViewController.loadViewIfNeeded()
-        } else {
-            _ = rootViewController.view
-        }
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = rootViewController
-        window.makeKeyAndVisible()
-        return rootViewController
-    }
-    
-    private func resetViewController() {
-        window = nil
     }
 }
 
