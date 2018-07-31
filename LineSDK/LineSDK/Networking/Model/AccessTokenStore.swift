@@ -21,6 +21,13 @@
 
 import Foundation
 
+extension Notification.Name {
+    static let LineSDKAccessTokenDidUpdate = Notification.Name("com.linecorp.linesdk.AccessTokenDidUpdate")
+}
+
+public let LineSDKOldAccessTokenUserInfoKey = "oldToken"
+public let LineSDKNewAccessTokenUserInfoKey = "newToken"
+
 class AccessTokenStore: LazySingleton {
     
     // In case we might do migration later on the token,
@@ -82,16 +89,16 @@ class AccessTokenStore: LazySingleton {
     private(set) var current: AccessToken?
     
     func setCurrentToken(_ token: AccessToken) throws {
+        guard current != token else { return }
+        
         try keychainStore.set(token, configuration: configuration, version: storeVersion)
         
-        /* TODO: Need to check whether the token was upadated or not
-         If so, we need to send a notification to let third party users know it.
-         if current != token {
-         
-         }
-         */
-        
+        var userInfo = [LineSDKNewAccessTokenUserInfoKey: token]
+        if let old = current {
+            userInfo[LineSDKOldAccessTokenUserInfoKey] = old
+        }
         current = token
+        NotificationCenter.default.post(name: .LineSDKAccessTokenDidUpdate, object: token, userInfo: userInfo)
     }
     
     func removeCurrentAccessToken() throws {
