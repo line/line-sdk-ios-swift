@@ -142,7 +142,7 @@ class Session: LazySingleton {
         let pipeline = leftPipelines.removeFirst()
         switch pipeline {
         case .redirector(let redirector):
-            guard redirector.shouldApply(reqeust: request, data: data, response: response) else {
+            guard redirector.shouldApply(request: request, data: data, response: response) else {
                 // Recursive calling on `handle` might be an issue when there are tons of
                 // redirectors in the pipeline. However, it should not happen at all in a
                 // foreseeable future. If there is any problem on it, we might need a pipeline
@@ -156,7 +156,7 @@ class Session: LazySingleton {
                     done: done)
                 return
             }
-            try redirector.redirect(reqeust: request, data: data, response: response) { action in
+            try redirector.redirect(request: request, data: data, response: response) { action in
                 switch action {
                 case .continue:
                     try handle(

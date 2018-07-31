@@ -89,12 +89,12 @@ struct StubRequestWithContinusPipeline: Request {
         
         var invoked = false
         
-        func shouldApply<T>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
+        func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
             return true
         }
         
         func redirect<T>(
-            reqeust: T,
+            request: T,
             data: Data,
             response: HTTPURLResponse,
             done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
@@ -130,12 +130,12 @@ struct StubRequestWithStopPipeline: Request {
         
         var invoked = false
         
-        func shouldApply<T>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
+        func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
             return true
         }
         
         func redirect<T>(
-            reqeust: T,
+            request: T,
             data: Data,
             response: HTTPURLResponse,
             done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
@@ -177,12 +177,12 @@ struct StubRequestWithRestartPipeline: Request {
         
         var invoked = false
         
-        func shouldApply<T>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
+        func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
             return response.statusCode != valid
         }
         
         func redirect<T>(
-            reqeust: T,
+            request: T,
             data: Data,
             response: HTTPURLResponse,
             done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
@@ -218,12 +218,12 @@ struct StubRequestWithRestartAnotherPipeline: Request {
         
         var invoked = false
         
-        func shouldApply<T>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
+        func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
             return true
         }
         
         func redirect<T>(
-            reqeust: T,
+            request: T,
             data: Data,
             response: HTTPURLResponse,
             done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request

@@ -66,7 +66,7 @@ class PipelineTests: XCTestCase {
         
         let request = StubRequestSimple()
         let response = HTTPURLResponse.responseFromCode(200)
-        let shouldApply = pipeline.shouldApply(reqeust: request, data: Data(), response: response)
+        let shouldApply = pipeline.shouldApply(request: request, data: Data(), response: response)
         XCTAssertFalse(shouldApply)
     }
     
@@ -78,7 +78,7 @@ class PipelineTests: XCTestCase {
         
         let authError = ["error": "123", "error_description": "sample"]
         let data = try! JSONSerialization.data(withJSONObject: authError, options: [])
-        try! pipeline.redirect(reqeust: request, data: data, response: response) { action in
+        try! pipeline.redirect(request: request, data: data, response: response) { action in
             switch action {
             case .stop(let error):
                 if let sdkError = error as? LineSDKError,
@@ -106,7 +106,7 @@ class PipelineTests: XCTestCase {
         
         let apiError = ["message": "hello"]
         let data = try! JSONSerialization.data(withJSONObject: apiError, options: [])
-        try! pipeline.redirect(reqeust: request, data: data, response: response) { action in
+        try! pipeline.redirect(request: request, data: data, response: response) { action in
             switch action {
             case .stop(let error):
                 if let sdkError = error as? LineSDKError,
@@ -133,7 +133,7 @@ class PipelineTests: XCTestCase {
         
         let error = ["error_domain": "error_detail"]
         let data = try! JSONSerialization.data(withJSONObject: error, options: [])
-        try! pipeline.redirect(reqeust: request, data: data, response: response) { action in
+        try! pipeline.redirect(request: request, data: data, response: response) { action in
             switch action {
             case .stop(let err):
                 if let sdkError = err as? LineSDKError,

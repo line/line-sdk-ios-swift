@@ -28,8 +28,8 @@ protocol ResponsePipelineTerminator: class {
 
 // Use class protocol for easier Equatable conforming
 protocol ResponsePipelineRedirector: class {
-    func shouldApply<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool
-    func redirect<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse, done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
+    func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
+    func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
 enum ResponsePipelineRedirectorAction {
@@ -69,12 +69,12 @@ class ParsePipeline: ResponsePipelineTerminator {
 
 class RefreshTokenRedirector: ResponsePipelineRedirector {
     
-    func shouldApply<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool {
+    func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool {
         return response.statusCode == 403
     }
     
     func redirect<T: Request>(
-        reqeust: T,
+        request: T,
         data: Data,
         response: HTTPURLResponse,
         done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
@@ -91,13 +91,13 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
         self.valid = valid
     }
     
-    func shouldApply<T: Request>(reqeust: T, data: Data, response: HTTPURLResponse) -> Bool {
+    func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool {
         let code = response.statusCode
         return !valid.contains(code)
     }
     
     func redirect<T: Request>(
-        reqeust: T,
+        request: T,
         data: Data,
         response: HTTPURLResponse,
         done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
