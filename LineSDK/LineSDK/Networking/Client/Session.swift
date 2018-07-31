@@ -21,12 +21,7 @@
 
 import Foundation
 
-protocol Client {
-    var baseURL: String { get }
-    func send<T: Request>(_ request: T, handler: ((Result<T.Response>) -> Void)?)
-}
-
-class Session: Client, LazySingleton {
+class Session: LazySingleton {
     
     enum HandleAction {
         case restart
@@ -40,7 +35,7 @@ class Session: Client, LazySingleton {
     
     static var _shared: Session?
     
-    let baseURL: String
+    let baseURL: URL
     let session: URLSession
     let delegate: SessionDelegateType
     
@@ -52,7 +47,7 @@ class Session: Client, LazySingleton {
     }
     
     init(configuration: LoginConfiguration, delegate: SessionDelegateType) {
-        baseURL = "https://\(configuration.APIHost)"
+        baseURL = URL(string: "https://\(configuration.APIHost)")!
         self.delegate = delegate
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: delegate, delegateQueue: nil)
     }
@@ -122,13 +117,9 @@ class Session: Client, LazySingleton {
     }
     
     func create<T: Request>(_ request: T) throws -> URLRequest {
-        let urlString = baseURL + request.path
-
-        guard let url = URL(string: urlString) else {
-            Log.fatalError("Cannot create correct URLRequest for url string: \(urlString)")
-        }
-        
+        let url = baseURL.appendingPathComponent(request.path)
         let urlRequest = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
+        
         let adaptedRequest = try request.adapters.reduce(urlRequest) { r, adapter in
             try adapter.adapted(r)
         }
