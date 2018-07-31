@@ -182,8 +182,8 @@ class SessionTests: XCTestCase {
         let expect = expectation(description: "\(#file)_\(#line)")
         let request = StubRequestWithRestartPipeline()
         let delegate = SessionDelegateStub(stubs: [
-            .response(Data(), HTTPURLResponse.responseFromCode(123)),
-            .response(StubRequestWithRestartPipeline.successData, HTTPURLResponse.responseFromCode(200)),
+            .response(Data(), .responseFromCode(123)),
+            .response(StubRequestWithRestartPipeline.successData, .responseFromCode(200)),
         ])
         
         let pipelines = request.pipelines
@@ -242,8 +242,8 @@ class SessionTests: XCTestCase {
         let expect = expectation(description: "\(#file)_\(#line)")
         let request = StubRequestWithRestartAnotherPipeline()
         let delegate = SessionDelegateStub(stubs: [
-            .response(Data(), HTTPURLResponse.responseFromCode(123)),
-            .response(StubRequestWithRestartPipeline.successData, HTTPURLResponse.responseFromCode(200)),
+            .response(Data(), .responseFromCode(123)),
+            .response(StubRequestWithRestartPipeline.successData, .responseFromCode(200)),
             ])
         
         let pipelines = request.pipelines

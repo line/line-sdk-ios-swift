@@ -1,5 +1,5 @@
 //
-//  PostTokenExchangeRequestTests.swift
+//  GetUserProfileRequestTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,48 +22,47 @@
 import XCTest
 @testable import LineSDK
 
-extension PostTokenExchangeRequest: ResponseDataStub {
-    
-    static let successToken = "123"
-    
-    static let success: String =
-    """
+extension GetUserProfileRequest: ResponseDataStub {
+    static let success = """
     {
-        "access_token":"\(successToken)",
-        "refresh_token":"abc",
-        "token_type":"Bearer",
-        "scope":"profile openid",
-        "id_token": "hello",
-        "expires_in":2592000
+      "userId":"abcd",
+      "displayName":"Brown",
+      "pictureUrl":"https://example.com/abc",
+      "statusMessage":"Hello, LINE!"
     }
     """
 }
 
-class PostTokenExchangeRequestTests: XCTestCase {
-
-    let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
+class LineSDKAPITests: XCTestCase {
     
-    func testSuccess() {
+    override func setUp() {
+        super.setUp()
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        LoginManager.shared.reset()
+    }
+    
+    let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
+    func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
         let expect = expectation(description: "\(#file)_\(#line)")
-        let session = Session.stub(configuration: config, string: PostTokenExchangeRequest.success)
-        
-        let request = PostTokenExchangeRequest(
-            channelID: config.channelID,
-            code: "abcabc",
-            otpValue: "123123",
-            redirectURI: "urlurl")
-        
+        let session = Session.stub(configuration: config, string: T.success)
         session.send(request) { result in
-            let token = result.value!
-            XCTAssertEqual(token.value, "123")
-            XCTAssertEqual(token.refreshToken, "abc")
-            XCTAssertEqual(token.tokenType, "Bearer")
-            XCTAssertEqual(token.permissions, [LoginPermission.profile, LoginPermission.openID])
-            XCTAssertEqual(token.expiresAt, token.createdAt.addingTimeInterval(token.expiresIn))
-            XCTAssertEqual(token.IDToken, "hello")
-            
+            verifier(result.value!)
             expect.fulfill()
         }
         waitForExpectations(timeout: 1.0, handler: nil)
+    }
+}
+
+class GetUserProfileRequestTests: LineSDKAPITests {
+
+    func testSuccess() {
+        let r = GetUserProfileRequest()
+        runTestSuccess(for: r) { profile in
+            XCTAssertEqual(profile.userId, "abcd")
+        }
     }
 }

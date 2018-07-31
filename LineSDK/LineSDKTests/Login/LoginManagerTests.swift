@@ -34,10 +34,7 @@ class LoginManagerTests: XCTestCase {
     
     override func tearDown() {
         super.tearDown()
-        Session._shared = nil
-        AccessTokenStore._shared = nil
-        LoginManager.shared.delegate = nil
-        LoginManager.shared.configuration = nil
+        LoginManager.shared.reset()
     }
     
     func testSetupLoginManager() {
@@ -60,7 +57,8 @@ class LoginManagerTests: XCTestCase {
             didSucceed loginProcess: LoginProcess,
             withResult result: LoginResult)
         {
-            print("result")
+            XCTAssertEqual(result.accessToken.value, PostTokenExchangeRequest.successToken)
+            expect.fulfill()
         }
         
         func loginManager(
@@ -68,7 +66,7 @@ class LoginManagerTests: XCTestCase {
             didFail loginProcess: LoginProcess,
             withError error: Error)
         {
-            expect.fulfill()
+            XCTFail("The login process should not fail.")
         }
     }
     
@@ -79,9 +77,24 @@ class LoginManagerTests: XCTestCase {
         loginActionDelegate = LoginActionDelegate(expect: expect)
         LoginManager.shared.delegate = loginActionDelegate
         
-        // TODO: Stubs
+        let delegateStub = SessionDelegateStub(stubs: [
+            .init(data: PostOTPRequest.successData, responseCode: 200),
+            .init(data: PostTokenExchangeRequest.successData, responseCode: 200),
+            .init(data: GetUserProfileRequest.successData, responseCode: 200)
+        ])
+        Session._shared = Session(
+            configuration: LoginManager.shared.configuration!,
+            delegate: delegateStub
+        )
         
-        LoginManager.shared.login(permissions: [.profile], in: rootViewController)
+        let process = LoginManager.shared.login(permissions: [.profile], in: rootViewController)!
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let urlString = "\(Constant.thirdPartyAppRetrurnURL)?code=123&state=\(process.processID)"
+            let handled = process.resumeOpenURL(url: URL(string: urlString)!, sourceApplication: "com.apple.safari")
+            XCTAssertTrue(handled)
+        }
+        
         waitForExpectations(timeout: 1, handler: nil)
     }
     

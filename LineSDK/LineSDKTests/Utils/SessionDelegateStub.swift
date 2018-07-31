@@ -35,11 +35,11 @@ extension HTTPURLResponse {
 class SessionDelegateStub: NSObject, SessionDelegateType {
     
     enum Either {
-        case response(Data, URLResponse)
+        case response(Data, HTTPURLResponse)
         case error(Error)
         
-        init(data: Data, response: URLResponse? = nil) {
-            let response = response ?? HTTPURLResponse.responseFromCode(200)
+        init(data: Data, response: HTTPURLResponse? = nil) {
+            let response = response ?? .responseFromCode(200)
             self = .response(data, response)
         }
         
@@ -48,7 +48,7 @@ class SessionDelegateStub: NSObject, SessionDelegateType {
             self.init(data: data, response: response)
         }
         
-        init(string: String, response: URLResponse? = nil) {
+        init(string: String, response: HTTPURLResponse? = nil) {
             let data = string.data(using: .utf8)!
             self.init(data: data, response: response)
         }
