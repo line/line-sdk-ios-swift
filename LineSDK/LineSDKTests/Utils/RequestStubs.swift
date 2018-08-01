@@ -91,7 +91,7 @@ struct StubRequestWithContinusPipeline: Request, ResponseDataStub {
             request: T,
             data: Data,
             response: HTTPURLResponse,
-            done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
+            done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
         {
             invoked = true
             try closure(.continue)
@@ -129,7 +129,7 @@ struct StubRequestWithStopPipeline: Request, ResponseDataStub {
             request: T,
             data: Data,
             response: HTTPURLResponse,
-            done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
+            done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
         {
             invoked = true
             try closure(.stop(ErrorStub.testError))
@@ -173,7 +173,7 @@ struct StubRequestWithRestartPipeline: Request, ResponseDataStub {
             request: T,
             data: Data,
             response: HTTPURLResponse,
-            done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
+            done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
         {
             invoked = true
             try closure(.restart)
@@ -211,7 +211,7 @@ struct StubRequestWithRestartAnotherPipeline: Request, ResponseDataStub {
             request: T,
             data: Data,
             response: HTTPURLResponse,
-            done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
+            done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
         {
             invoked = true
             try closure(.restartWithout(.redirector(self)))

@@ -29,7 +29,7 @@ protocol ResponsePipelineTerminator: class {
 // Use class protocol for easier Equatable conforming
 protocol ResponsePipelineRedirector: class {
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
-    func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
+    func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
 enum ResponsePipelineRedirectorAction {
@@ -69,6 +69,14 @@ class ParsePipeline: ResponsePipelineTerminator {
 
 class RefreshTokenRedirector: ResponsePipelineRedirector {
     
+    let channelID: String
+    let refreshToken: String
+    
+    init(channelID: String, refreshToken: String) {
+        self.channelID = channelID
+        self.refreshToken = refreshToken
+    }
+    
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool {
         return response.statusCode == 403
     }
@@ -77,10 +85,23 @@ class RefreshTokenRedirector: ResponsePipelineRedirector {
         request: T,
         data: Data,
         response: HTTPURLResponse,
-        done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
+        done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
     {
-        // Do refrest request here.
-        try closure(.restartWithout(.redirector(self)))
+        
+        let request = PostRefreshTokenRequest(channelID: channelID, refreshToken: refreshToken)
+        Session.shared.send(request) { result in
+            switch result {
+            case .success(let token):
+                do {
+                    try AccessTokenStore.shared.setCurrentToken(token)
+                    try closure(.restartWithout(.redirector(self)))
+                } catch {
+                    try? closure(.stop(error))
+                }
+            case .failure(let error):
+                try? closure(.stop(error))
+            }
+        }
     }
 }
 
@@ -100,7 +121,7 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
         request: T,
         data: Data,
         response: HTTPURLResponse,
-        done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
+        done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
     {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase

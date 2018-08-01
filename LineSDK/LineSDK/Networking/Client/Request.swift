@@ -48,6 +48,22 @@ enum AuthenticateMethod {
             return TokenAdapter(token: AccessTokenStore.shared.current?.value)
         }
     }
+    
+    var refreshTokenPipeline: ResponsePipeline? {
+        switch self {
+        case .none:
+            return nil
+        case .token:
+            guard let channelID = LoginManager.shared.configuration?.channelID else {
+                return nil
+            }
+            guard let refreshToken = AccessTokenStore.shared.current?.refreshToken else {
+                return nil
+            }
+            let tokenRefresher = RefreshTokenRedirector(channelID: channelID, refreshToken: refreshToken)
+            return .redirector(tokenRefresher)
+        }
+    }
 }
 
 enum ContentType {
@@ -138,9 +154,10 @@ extension Request {
     
     var pipelines: [ResponsePipeline] {
         var pipelines: [ResponsePipeline] = prefixPipelines ?? []
-        if authenticate == .token {
-            pipelines.append(.redirector(RefreshTokenRedirector()))
-        }
+        
+        // Token refresh pipeline
+        authenticate.refreshTokenPipeline.map { pipelines.append($0) }
+        
         pipelines.append(contentsOf: [
             .redirector(BadHTTPStatusRedirector(valid: 200..<300)),
             .terminator(ParsePipeline(responseParser))
