@@ -24,27 +24,54 @@ import Foundation
 struct LineSDKAPI {
     static func refreshAccessToken(
         with refreshToken: String? = nil,
-        completionHandler: @escaping ((Result<AccessToken>) -> Void))
+        completionHandler completion: @escaping (Result<AccessToken>) -> Void)
     {
-        let config = LoginManager.shared.configuration!
         guard let token = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
             CallbackQueue.currentMainOrAsync.execute {
-                completionHandler(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken)))
+                completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken)))
             }
             return
         }
+        let config = LoginManager.shared.configuration!
         let request = PostRefreshTokenRequest(channelID: config.channelID, refreshToken: token)
         Session.shared.send(request) { result in
             switch result {
             case .success(let token):
                 do {
                     try AccessTokenStore.shared.setCurrentToken(token)
-                    completionHandler(.success(token))
+                    completion(.success(token))
                 } catch {
-                    completionHandler(.failure(error))
+                    completion(.failure(error))
                 }
             case .failure(let error):
-                completionHandler(.failure(error))
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    static func revokeAccessToken(
+        _ token: String? = nil,
+        completionHandler completion: @escaping (Result<()>) -> Void)
+    {
+        guard let token = token ?? AccessTokenStore.shared.current?.value else {
+            CallbackQueue.currentMainOrAsync.execute {
+                completion(.success(()))
+            }
+            return
+        }
+        let config = LoginManager.shared.configuration!
+        let request = PostRevokeTokenRequest(channelID: config.channelID, accessToken: token)
+        Session.shared.send(request) { result in
+            switch result {
+            case .success(_):
+                do {
+                    try AccessTokenStore.shared.removeCurrentAccessToken()
+                    completion(.success(()))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

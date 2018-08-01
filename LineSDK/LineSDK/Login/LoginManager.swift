@@ -21,21 +21,11 @@
 
 import Foundation
 
-public protocol LoginManagerDelegate: class {
-    func loginManager(_ manager: LoginManager, didSucceed loginProcess: LoginProcess, withResult result: LoginResult)
-    func loginManager(_ manager: LoginManager, didFail loginProcess: LoginProcess, withError error: Error)
-}
-
-extension LoginManagerDelegate {
-    
-}
-
 public class LoginManager {
     
     public static let shared = LoginManager()
     
     public private(set) var currentProcess: LoginProcess?
-    public weak var delegate: LoginManagerDelegate?
     
     var configuration: LoginConfiguration?
     
@@ -55,9 +45,13 @@ public class LoginManager {
     }
     
     @discardableResult
-    public func login(permissions: Set<LoginPermission> = [], in viewController: UIViewController? = nil) -> LoginProcess? {
+    public func login(
+        permissions: Set<LoginPermission> = [],
+        in viewController: UIViewController? = nil,
+        completionHandler completion: @escaping (Result<LoginResult>) -> Void) -> LoginProcess? {
         guard currentProcess == nil else {
-            Log.assertionFailure("Trying to start another login process while the previous one still valid is not permitted.")
+            Log.assertionFailure("Trying to start another login process " +
+                "while the previous one still valid is not permitted.")
             return nil
         }
         let process = LoginProcess(configuration: configuration!, scopes: permissions, viewController: viewController)
@@ -65,21 +59,24 @@ public class LoginManager {
         process.onSucceed.delegate(on: self) { [unowned process] (self, token) in
             self.currentProcess = nil
             do {
-                try self.postLogin(token, process: process)
+                try self.postLogin(token, process: process, completionHandler: completion)
             } catch {
-                self.delegate?.loginManager(self, didFail: process, withError: error)
+                completion(.failure(error))
             }
         }
-        process.onFail.delegate(on: self) { [unowned process] (self, error) in
+        process.onFail.delegate(on: self) { (self, error) in
             self.currentProcess = nil
-            self.delegate?.loginManager(self, didFail: process, withError: error)
+            completion(.failure(error))
         }
         
         self.currentProcess = process
         return currentProcess
     }
     
-    func postLogin(_ token: AccessToken, process: LoginProcess) throws {
+    func postLogin(
+        _ token: AccessToken,
+        process: LoginProcess,
+        completionHandler completion: @escaping (Result<LoginResult>) -> Void) throws {
         // Store token
         try AccessTokenStore.shared.setCurrentToken(token)
         if token.permissions.contains(.profile) {
@@ -88,14 +85,14 @@ public class LoginManager {
                     accessToken: token,
                     permissions: Set(token.permissions),
                     userProfile: profileResult.value)
-                self.delegate?.loginManager(self, didSucceed: process, withResult: result)
+                completion(.success(result))
             }
         } else {
             let result = LoginResult.init(
                 accessToken: token,
                 permissions: Set(token.permissions),
                 userProfile: nil)
-            self.delegate?.loginManager(self, didSucceed: process, withResult: result)
+            completion(.success(result))
         }
     }
     
