@@ -127,24 +127,26 @@ class SessionTests: XCTestCase {
             return
         }
         XCTAssertFalse(stopper.invoked)
-        do {
-            try session.handle(
-                request: request,
-                data: StubRequestWithStopPipeline.successData,
-                response: .responseFromCode(200),
-                pipelines: pipelines,
-                fullPipelines: pipelines)
-            {
-                _ in
-                XCTFail("Stopper pipeline should not allow handler being called")
+        
+        try! session.handle(
+            request: request,
+            data: StubRequestWithStopPipeline.successData,
+            response: .responseFromCode(200),
+            pipelines: pipelines,
+            fullPipelines: pipelines)
+        {
+            result in
+            switch result {
+            case .action(.stop(let error)):
+                guard let testError = error as? ErrorStub else {
+                    XCTFail("Should throw a test error")
+                    return
+                }
+                XCTAssertEqual(testError, .testError)
+                XCTAssertTrue(stopper.invoked)
+            default:
+                XCTFail("Parser should give a correct restart action")
             }
-        } catch {
-            guard let testError = error as? ErrorStub else {
-                XCTFail("Should throw a test error")
-                return
-            }
-            XCTAssertTrue(stopper.invoked)
-            XCTAssertEqual(testError, .testError)
         }
     }
     
@@ -180,8 +182,8 @@ class SessionTests: XCTestCase {
         let expect = expectation(description: "\(#file)_\(#line)")
         let request = StubRequestWithRestartPipeline()
         let delegate = SessionDelegateStub(stubs: [
-            .response(Data(), HTTPURLResponse.responseFromCode(123)),
-            .response(StubRequestWithRestartPipeline.successData, HTTPURLResponse.responseFromCode(200)),
+            .response(Data(), .responseFromCode(123)),
+            .response(StubRequestWithRestartPipeline.successData, .responseFromCode(200)),
         ])
         
         let pipelines = request.pipelines
@@ -240,8 +242,8 @@ class SessionTests: XCTestCase {
         let expect = expectation(description: "\(#file)_\(#line)")
         let request = StubRequestWithRestartAnotherPipeline()
         let delegate = SessionDelegateStub(stubs: [
-            .response(Data(), HTTPURLResponse.responseFromCode(123)),
-            .response(StubRequestWithRestartPipeline.successData, HTTPURLResponse.responseFromCode(200)),
+            .response(Data(), .responseFromCode(123)),
+            .response(StubRequestWithRestartPipeline.successData, .responseFromCode(200)),
             ])
         
         let pipelines = request.pipelines

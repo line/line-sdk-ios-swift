@@ -1,5 +1,5 @@
 //
-//  LoginFlowTests.swift
+//  LineSDKAPITests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,35 +22,26 @@
 import XCTest
 @testable import LineSDK
 
-class LoginFlowTests: XCTestCase {
-
-    func testLoginQueryURLEncode() {
-        let baseURL = URL(string: Constant.lineWebAuthUniversalURL)!
-        let result = baseURL.appendedLoginQuery(
-            channelID: "123",
-            universalLinkURL: nil,
-            scopes: [.profile, .openID],
-            otpID: "321",
-            state: "abc"
-        )
-        let urlString = result.absoluteString.removingPercentEncoding
-        XCTAssertNotNil(urlString)
-        
-        let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
-        let items = components!.queryItems!
-        XCTAssertEqual(items.count, 2)
-        
-        var hit = 0
-        for item in items {
-            if item.name == "loginChannelId" {
-                hit += 1
-                XCTAssertEqual(item.value, "123")
-            }
-            if (item.name == "returnUri") {
-                hit += 1
-                // Should be already fully decoded (no double encoding in the url)
-                XCTAssertEqual(item.value, item.value?.removingPercentEncoding)
-            }
+class LineSDKAPITests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        LoginManager.shared.reset()
+    }
+    
+    let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
+    func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        let session = Session.stub(configuration: config, string: T.success)
+        session.send(request) { result in
+            verifier(result.value!)
+            expect.fulfill()
         }
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
 }

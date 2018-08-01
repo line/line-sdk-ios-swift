@@ -56,23 +56,17 @@ struct LoginConfiguration {
             return false
         }
         
-        guard let setComponents = URLComponents(url: setURL, resolvingAgainstBaseURL: false),
-              let receivedComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else
+        guard setURL.scheme?.lowercased() == "https",
+              url.scheme?.lowercased() == "https" else
         {
             return false
         }
         
-        guard setComponents.scheme?.lowercased() == "https",
-              receivedComponents.scheme?.lowercased() == "https" else
-        {
+        guard setURL.host?.lowercased() == url.host?.lowercased() else {
             return false
         }
         
-        guard setComponents.host?.lowercased() == receivedComponents.host?.lowercased() else {
-            return false
-        }
-        
-        guard setComponents.path.lowercased() == receivedComponents.path.lowercased() else {
+        guard setURL.path.lowercased() == url.path.lowercased() else {
             return false
         }
         

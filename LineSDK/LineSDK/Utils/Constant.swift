@@ -42,12 +42,12 @@ struct Constant {
         return "\(Constant.thirdPartyAppRetrurnScheme)://authorize/"
     }
     
-    static var lineAppAuthURLv1: String {
-        return "\(Constant.lineAuthScheme)://authorize/"
+    static var lineAppAuthURLv1: URL {
+        return URL(string: "\(Constant.lineAuthScheme)://authorize/")!
     }
     
-    static var lineAppAuthURLv2: String {
-        return "\(Constant.lineAuthV2Scheme)://authorize/"
+    static var lineAppAuthURLv2: URL {
+        return URL(string: "\(Constant.lineAuthV2Scheme)://authorize/")!
     }
 }
 
