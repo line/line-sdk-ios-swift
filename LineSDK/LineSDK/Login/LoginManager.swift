@@ -23,23 +23,27 @@ import Foundation
 
 public class LoginManager {
     
+    let lock = NSLock()
+    
     public static let shared = LoginManager()
-    
     public private(set) var currentProcess: LoginProcess?
-    
-    var configuration: LoginConfiguration?
+    public internal(set) var setup = false
     
     private init() { }
     
     public func setup(channelID: String, universalLinkURL: URL?) {
-        guard configuration == nil else {
+        
+        lock.lock()
+        defer { lock.unlock() }
+        
+        guard !setup else {
             Log.assertionFailure("Trying to set configuration multiplet times is not permitted.")
             return
         }
+        defer { setup = true }
         
         let config = LoginConfiguration(channelID: channelID, universalLinkURL: universalLinkURL)
-        self.configuration = config
-
+        LoginConfiguration.shared = config
         AccessTokenStore.shared = AccessTokenStore(configuration: config)
         Session.shared = Session(configuration: config)
     }
@@ -49,12 +53,20 @@ public class LoginManager {
         permissions: Set<LoginPermission> = [],
         in viewController: UIViewController? = nil,
         completionHandler completion: @escaping (Result<LoginResult>) -> Void) -> LoginProcess? {
+        
+        lock.lock()
+        defer { lock.unlock() }
+        
         guard currentProcess == nil else {
             Log.assertionFailure("Trying to start another login process " +
                 "while the previous one still valid is not permitted.")
             return nil
         }
-        let process = LoginProcess(configuration: configuration!, scopes: permissions, viewController: viewController)
+        
+        let process = LoginProcess(
+            configuration: LoginConfiguration.shared,
+            scopes: permissions,
+            viewController: viewController)
         process.start()
         process.onSucceed.delegate(on: self) { [unowned process] (self, token) in
             self.currentProcess = nil

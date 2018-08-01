@@ -41,7 +41,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     func testSetupLoginManager() {
         XCTAssertNotNil(Session.shared)
         XCTAssertNotNil(AccessTokenStore.shared)
-        XCTAssertNotNil(LoginManager.shared.configuration)
+        XCTAssertNotNil(LoginConfiguration.shared)
     }
     
     func testLoginAction() {
@@ -53,7 +53,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             .init(data: GetUserProfileRequest.successData, responseCode: 200)
         ])
         Session._shared = Session(
-            configuration: LoginManager.shared.configuration!,
+            configuration: LoginConfiguration.shared,
             delegate: delegateStub
         )
         

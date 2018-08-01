@@ -30,17 +30,15 @@ public struct LineSDKAPI {
     ///   - completion: Completion block called when the user's access token is refreshed.
     public static func refreshAccessToken(
         with refreshToken: String? = nil,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<AccessToken>) -> Void)
     {
         guard let token = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
-            CallbackQueue.currentMainOrAsync.execute {
-                completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken)))
-            }
+            queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
             return
         }
-        let config = LoginManager.shared.configuration!
-        let request = PostRefreshTokenRequest(channelID: config.channelID, refreshToken: token)
-        Session.shared.send(request) { result in
+        let request = PostRefreshTokenRequest(channelID: LoginConfiguration.shared.channelID, refreshToken: token)
+        Session.shared.send(request, callbackQueue: queue) { result in
             switch result {
             case .success(let token):
                 do {
@@ -57,16 +55,15 @@ public struct LineSDKAPI {
     
     static func revokeAccessToken(
         _ token: String? = nil,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<()>) -> Void)
     {
         guard let token = token ?? AccessTokenStore.shared.current?.value else {
-            CallbackQueue.currentMainOrAsync.execute {
-                completion(.success(()))
-            }
+            // No token input or found in store, just recognize it as success.
+            queue.execute { completion(.success(())) }
             return
         }
-        let config = LoginManager.shared.configuration!
-        let request = PostRevokeTokenRequest(channelID: config.channelID, accessToken: token)
+        let request = PostRevokeTokenRequest(channelID: LoginConfiguration.shared.channelID, accessToken: token)
         Session.shared.send(request) { result in
             switch result {
             case .success(_):
