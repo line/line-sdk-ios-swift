@@ -59,6 +59,7 @@
 		4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */; };
 		4BBAFC4B2101CE8100E7BFF6 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
 		4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */; };
+		4BD191B22111452E00E2C481 /* PostRefreshTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
 /* End PBXBuildFile section */
@@ -138,6 +139,7 @@
 		4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenStore.swift; sourceTree = "<group>"; };
 		4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resource.bundle; sourceTree = "<group>"; };
 		4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantTests.swift; sourceTree = "<group>"; };
+		4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequestTests.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -207,6 +209,7 @@
 				4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */,
 				4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */,
 				4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */,
+				4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BD191B22111452E00E2C481 /* PostRefreshTokenRequestTests.swift in Sources */,
 				4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */,
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
 				4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */,
