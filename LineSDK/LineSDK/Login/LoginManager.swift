@@ -29,6 +29,14 @@ public class LoginManager {
     public private(set) var currentProcess: LoginProcess?
     public internal(set) var setup = false
     
+    public var isAuthorized: Bool {
+        return AccessTokenStore.shared.current != nil
+    }
+    
+    public var isAuthorizing: Bool {
+        return currentProcess != nil
+    }
+    
     private init() { }
     
     public func setup(channelID: String, universalLinkURL: URL?) {
@@ -106,6 +114,10 @@ public class LoginManager {
                 userProfile: nil)
             completion(.success(result))
         }
+    }
+    
+    public func logout(completionHandler completion: @escaping (Result<()>) -> Void) {
+        LineSDKAPI.revokeAccessToken(completionHandler: completion)
     }
     
     @available(iOS 9.0, *)

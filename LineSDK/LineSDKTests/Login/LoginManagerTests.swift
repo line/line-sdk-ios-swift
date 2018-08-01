@@ -47,6 +47,9 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     func testLoginAction() {
         let expect = expectation(description: "\(#file)_\(#line)")
         
+        XCTAssertFalse(LoginManager.shared.isAuthorized)
+        XCTAssertFalse(LoginManager.shared.isAuthorizing)
+        
         let delegateStub = SessionDelegateStub(stubs: [
             .init(data: PostOTPRequest.successData, responseCode: 200),
             .init(data: PostTokenExchangeRequest.successData, responseCode: 200),
@@ -60,14 +63,23 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         let process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
             loginResult in
             XCTAssertNotNil(loginResult.value)
+            
             let result = loginResult.value!
             XCTAssertEqual(result.accessToken.value, PostTokenExchangeRequest.successToken)
             XCTAssertEqual(AccessTokenStore.shared.current, result.accessToken)
+            
+            XCTAssertTrue(LoginManager.shared.isAuthorized)
+            XCTAssertFalse(LoginManager.shared.isAuthorizing)
+            
             try! AccessTokenStore.shared.removeCurrentAccessToken()
             expect.fulfill()
         }!
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            
+            XCTAssertFalse(LoginManager.shared.isAuthorized)
+            XCTAssertTrue(LoginManager.shared.isAuthorizing)
+            
             let urlString = "\(Constant.thirdPartyAppRetrurnURL)?code=123&state=\(process.processID)"
             let handled = process.resumeOpenURL(url: URL(string: urlString)!, sourceApplication: "com.apple.safari")
             XCTAssertTrue(handled)
@@ -75,5 +87,21 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testLogout() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+
+        setupTestToken()
+        XCTAssertTrue(LoginManager.shared.isAuthorized)
+        
+        Session._shared = Session.stub(configuration: LoginConfiguration.shared, string: "")
+        LoginManager.shared.logout { result in
+            XCTAssertFalse(LoginManager.shared.isAuthorized)
+            XCTAssertNotNil(result.value)
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
 }
 
