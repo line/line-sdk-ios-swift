@@ -69,14 +69,6 @@ class ParsePipeline: ResponsePipelineTerminator {
 
 class RefreshTokenRedirector: ResponsePipelineRedirector {
     
-    let channelID: String
-    let refreshToken: String
-    
-    init(channelID: String, refreshToken: String) {
-        self.channelID = channelID
-        self.refreshToken = refreshToken
-    }
-    
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool {
         return response.statusCode == 403
     }
@@ -87,17 +79,10 @@ class RefreshTokenRedirector: ResponsePipelineRedirector {
         response: HTTPURLResponse,
         done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
     {
-        
-        let request = PostRefreshTokenRequest(channelID: channelID, refreshToken: refreshToken)
-        Session.shared.send(request) { result in
+        LineSDKAPI.refreshAccessToken { result in
             switch result {
-            case .success(let token):
-                do {
-                    try AccessTokenStore.shared.setCurrentToken(token)
-                    try closure(.restartWithout(.redirector(self)))
-                } catch {
-                    try? closure(.stop(error))
-                }
+            case .success(_):
+                try? closure(.restartWithout(.redirector(self)))
             case .failure(let error):
                 try? closure(.stop(error))
             }

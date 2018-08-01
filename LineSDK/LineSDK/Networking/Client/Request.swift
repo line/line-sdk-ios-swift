@@ -54,13 +54,7 @@ enum AuthenticateMethod {
         case .none:
             return nil
         case .token:
-            guard let channelID = LoginManager.shared.configuration?.channelID else {
-                return nil
-            }
-            guard let refreshToken = AccessTokenStore.shared.current?.refreshToken else {
-                return nil
-            }
-            let tokenRefresher = RefreshTokenRedirector(channelID: channelID, refreshToken: refreshToken)
+            let tokenRefresher = RefreshTokenRedirector()
             return .redirector(tokenRefresher)
         }
     }
