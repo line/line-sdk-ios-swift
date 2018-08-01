@@ -1,5 +1,5 @@
 //
-//  PostRefreshTokenRequestTests.swift
+//  PostRevokeTokenRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,35 +19,35 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-@testable import LineSDK
+import Foundation
 
-extension PostRefreshTokenRequest: ResponseDataStub {
-    static let successToken = "123"
+struct PostRevokeTokenRequest: APIRequest {
+    let channelID: String
+    let accessToken: String
     
-    static let success =
-    """
-    {
-        "scope":"profile openid",
-        "access_token":"\(successToken)",
-        "token_type":"Bearer",
-        "refresh_token":"abc",
-        "expires_in":259200
+    let method: HTTPMethod = .post
+    let path = "/oauth2/v2.1/revoke"
+    let contentType: ContentType = .formUrlEncoded
+    let authenticate: AuthenticateMethod = .none
+    
+    var parameters: [String : Any]? {
+        return [
+            "client_id": channelID,
+            "access_token": accessToken
+        ]
     }
-    """
-}
-
-class PostRefreshTokenRequestTests: LineSDKAPITests {
     
-    func testSuccess() {
-        let request = PostRefreshTokenRequest(channelID: "abc", refreshToken: "123123")
-        runTestSuccess(for: request) { token in
-            XCTAssertEqual(token.value, "123")
-            XCTAssertEqual(token.refreshToken, "abc")
-            XCTAssertEqual(token.tokenType, "Bearer")
-            XCTAssertEqual(token.permissions, [LoginPermission.profile, LoginPermission.openID])
-            XCTAssertEqual(token.expiresAt, token.createdAt.addingTimeInterval(token.expiresIn))
-            XCTAssertNil(token.IDToken)
+    typealias Response = Unit
+    
+    var prefixPipelines: [ResponsePipeline]? {
+        
+        // Convert empty data to an empty JSON `{}`
+        let isDataEmpty: ((Data) -> Bool) = { $0.isEmpty }
+        let dataTransformer = DataTransformRedirector(condition: isDataEmpty) { _ in
+            return "{}".data(using: .utf8)!
         }
+        return [
+            .redirector(dataTransformer)
+        ]
     }
 }

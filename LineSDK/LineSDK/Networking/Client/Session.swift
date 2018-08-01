@@ -169,6 +169,14 @@ class Session: LazySingleton {
                         pipelines: leftPipelines,
                         fullPipelines: fullPipelines,
                         done: done)
+                case .continueWith(let data, let response):
+                    try self.handle(
+                        request: request,
+                        data: data,
+                        response: response,
+                        pipelines: leftPipelines,
+                        fullPipelines: fullPipelines,
+                        done: done)
                 case .restart:
                     try done(.action(.restart))
                 case .restartWithout(let pipeline):

@@ -61,6 +61,9 @@
 		4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */; };
 		4BD191B22111452E00E2C481 /* PostRefreshTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */; };
 		4BD191B4211154DF00E2C481 /* LineSDKAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B3211154DF00E2C481 /* LineSDKAPI.swift */; };
+		4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */; };
+		4BD191B821116C4C00E2C481 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B721116C4C00E2C481 /* Unit.swift */; };
+		4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
 /* End PBXBuildFile section */
@@ -142,6 +145,9 @@
 		4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantTests.swift; sourceTree = "<group>"; };
 		4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequestTests.swift; sourceTree = "<group>"; };
 		4BD191B3211154DF00E2C481 /* LineSDKAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAPI.swift; sourceTree = "<group>"; };
+		4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRevokeTokenRequest.swift; sourceTree = "<group>"; };
+		4BD191B721116C4C00E2C481 /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
+		4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRevokeTokenRequestTests.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,6 +186,7 @@
 				4B4F0B7F21080D69006D17F5 /* AccessToken.swift */,
 				4B4F0B8321084755006D17F5 /* UserProfile.swift */,
 				4B414D5B210EF12C00FD19BC /* APIError.swift */,
+				4BD191B721116C4C00E2C481 /* Unit.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -212,6 +219,7 @@
 				4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */,
 				4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */,
 				4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */,
+				4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -283,6 +291,7 @@
 				4B4F0B7D21080C51006D17F5 /* PostTokenExchangeRequest.swift */,
 				4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */,
 				4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */,
+				4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -514,6 +523,7 @@
 				4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */,
 				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
+				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,
 				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
@@ -527,6 +537,7 @@
 				4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
 				4B9058D8210078FB004D717F /* Result.swift in Sources */,
+				4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
@@ -567,6 +578,7 @@
 				4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */,
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */,
+				4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -201,6 +201,32 @@ class PipelineTests: XCTestCase {
         }
     }
     
+    func testDataTransformPipeline() {
+        let pipeline = DataTransformRedirector(condition: { $0.isEmpty }) {
+            data in
+            return "123".data(using: .utf8)!
+        }
+        
+        let request = StubRequestSimple()
+        let response = HTTPURLResponse.responseFromCode(200)
+        
+        let result1 = pipeline.shouldApply(request: request, data: Data(), response: response)
+        XCTAssertTrue(result1)
+        
+        let result2 = pipeline.shouldApply(request: request, data: Data(bytes: [1,2,3]), response: response)
+        XCTAssertFalse(result2)
+        
+        try! pipeline.redirect(request: request, data: Data(), response: response) { action in
+            switch action {
+            case .continueWith(let data, let res):
+                XCTAssertEqual(String(data: data, encoding: .utf8), "123")
+                XCTAssertEqual(res, response)
+            default:
+                XCTFail("Pipeline should continue with data and response.")
+            }
+        }
+    }
+    
     private func assertJSONText(_ text: String!, equalsTo obj: [String: String]) {
         let rawData = text!.data(using: .utf8)!
         let payload = try! JSONSerialization.jsonObject(with: rawData, options: []) as! [String: String]

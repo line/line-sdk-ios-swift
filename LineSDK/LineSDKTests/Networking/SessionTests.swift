@@ -116,6 +116,36 @@ class SessionTests: XCTestCase {
         }
     }
     
+    func testSessionHandleContinueRedirectorWithDataResponse() {
+        let request = StubRequestWithContinusDataResponsePipeline()
+        let session = Session(configuration: configuration)
+        let pipelines = request.pipelines
+        guard case .redirector(let redirector) = pipelines[0],
+            let continuer = redirector as? StubRequestWithContinusDataResponsePipeline.TransformRedirector else
+        {
+            XCTFail("The first pipeline should be a TransformRedirector")
+            return
+        }
+        
+        XCTAssertFalse(continuer.invoked)
+        try! session.handle(
+            request: request,
+            data: StubRequestWithContinusDataResponsePipeline.successData,
+            response: .responseFromCode(200),
+            pipelines: pipelines,
+            fullPipelines: pipelines)
+        {
+            result in
+            switch result {
+            case .value(let v):
+                XCTAssertTrue(continuer.invoked)
+                XCTAssertEqual(v.foo, "barbar")
+            default:
+                XCTFail("Parser should give a correct result")
+            }
+        }
+    }
+    
     func testSessionHandleStopRedirector() {
         let request = StubRequestWithStopPipeline()
         let session = Session(configuration: configuration)

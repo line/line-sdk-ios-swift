@@ -37,6 +37,7 @@ enum ResponsePipelineRedirectorAction {
     case restartWithout(ResponsePipeline)
     case stop(Error)
     case `continue`
+    case continueWith(Data, HTTPURLResponse)
 }
 
 enum ResponsePipeline {
@@ -139,4 +140,30 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
             }
         }
     }
+}
+
+class DataTransformRedirector: ResponsePipelineRedirector {
+    
+    let condition: ((Data) -> Bool)?
+    let transform: (Data) -> Data
+    
+    init(condition: ((Data) -> Bool)? = nil, transform: @escaping (Data) -> Data) {
+        self.transform = transform
+        self.condition = condition
+    }
+    
+    func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool {
+        return condition?(data) ?? true
+    }
+    
+    func redirect<T: Request>(
+        request: T,
+        data: Data,
+        response: HTTPURLResponse,
+        done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
+    {
+        try closure(.continueWith(transform(data), response))
+    }
+    
+    
 }

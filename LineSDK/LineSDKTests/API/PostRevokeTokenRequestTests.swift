@@ -1,5 +1,5 @@
 //
-//  PostRefreshTokenRequestTests.swift
+//  PostRevokeTokenRequestTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,32 +22,13 @@
 import XCTest
 @testable import LineSDK
 
-extension PostRefreshTokenRequest: ResponseDataStub {
-    static let successToken = "123"
-    
-    static let success =
-    """
-    {
-        "scope":"profile openid",
-        "access_token":"\(successToken)",
-        "token_type":"Bearer",
-        "refresh_token":"abc",
-        "expires_in":259200
-    }
-    """
+extension PostRevokeTokenRequest: ResponseDataStub {
+    static let success = ""
 }
 
-class PostRefreshTokenRequestTests: LineSDKAPITests {
-    
+class PostRevokeTokenRequestTests: LineSDKAPITests {
     func testSuccess() {
-        let request = PostRefreshTokenRequest(channelID: "abc", refreshToken: "123123")
-        runTestSuccess(for: request) { token in
-            XCTAssertEqual(token.value, "123")
-            XCTAssertEqual(token.refreshToken, "abc")
-            XCTAssertEqual(token.tokenType, "Bearer")
-            XCTAssertEqual(token.permissions, [LoginPermission.profile, LoginPermission.openID])
-            XCTAssertEqual(token.expiresAt, token.createdAt.addingTimeInterval(token.expiresIn))
-            XCTAssertNil(token.IDToken)
-        }
+        let request = PostRevokeTokenRequest(channelID: "123", accessToken: "123")
+        runTestSuccess(for: request) { _ in }
     }
 }
