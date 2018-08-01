@@ -124,5 +124,5 @@ fastlane/test_output
 
 
 # End of https://www.gitignore.io/api/xcode,swift,macos,ios
-URLs.swift.beta
-URLs.swift.release
+
+linesdk-ios-swift-beta-config
