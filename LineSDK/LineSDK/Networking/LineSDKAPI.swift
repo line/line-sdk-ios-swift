@@ -64,7 +64,7 @@ public struct LineSDKAPI {
             return
         }
         let request = PostRevokeTokenRequest(channelID: LoginConfiguration.shared.channelID, accessToken: token)
-        Session.shared.send(request) { result in
+        Session.shared.send(request, callbackQueue: queue) { result in
             switch result {
             case .success(_):
                 do {
