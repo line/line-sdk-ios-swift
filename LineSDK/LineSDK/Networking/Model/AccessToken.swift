@@ -52,7 +52,8 @@ struct AccessToken: Codable, AccessTokenType, Equatable {
         expiresIn = try container.decode(TimeInterval.self, forKey: .expiresIn)
         
         // Try to decode createdAt. If there is no such value, it means we are receiving it
-        // from server and we should create a reference Date for it
+        // from server and we should create a reference Date for it.
+        // Otherwise, it is the case that loaded from keychain.
         createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt) ?? Date()
         
         IDToken = try container.decodeIfPresent(String.self, forKey: .IDToken)

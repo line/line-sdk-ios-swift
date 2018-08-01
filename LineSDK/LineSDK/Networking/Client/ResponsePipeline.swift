@@ -29,7 +29,7 @@ protocol ResponsePipelineTerminator: class {
 // Use class protocol for easier Equatable conforming
 protocol ResponsePipelineRedirector: class {
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
-    func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
+    func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
 enum ResponsePipelineRedirectorAction {
@@ -37,6 +37,7 @@ enum ResponsePipelineRedirectorAction {
     case restartWithout(ResponsePipeline)
     case stop(Error)
     case `continue`
+    case continueWith(Data, HTTPURLResponse)
 }
 
 enum ResponsePipeline {
@@ -77,10 +78,16 @@ class RefreshTokenRedirector: ResponsePipelineRedirector {
         request: T,
         data: Data,
         response: HTTPURLResponse,
-        done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
+        done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
     {
-        // Do refrest request here.
-        try closure(.restartWithout(.redirector(self)))
+        LineSDKAPI.refreshAccessToken { result in
+            switch result {
+            case .success(_):
+                try? closure(.restartWithout(.redirector(self)))
+            case .failure(let error):
+                try? closure(.stop(error))
+            }
+        }
     }
 }
 
@@ -100,7 +107,7 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
         request: T,
         data: Data,
         response: HTTPURLResponse,
-        done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws
+        done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
     {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -133,4 +140,30 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
             }
         }
     }
+}
+
+class DataTransformRedirector: ResponsePipelineRedirector {
+    
+    let condition: ((Data) -> Bool)?
+    let transform: (Data) -> Data
+    
+    init(condition: ((Data) -> Bool)? = nil, transform: @escaping (Data) -> Data) {
+        self.transform = transform
+        self.condition = condition
+    }
+    
+    func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool {
+        return condition?(data) ?? true
+    }
+    
+    func redirect<T: Request>(
+        request: T,
+        data: Data,
+        response: HTTPURLResponse,
+        done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
+    {
+        try closure(.continueWith(transform(data), response))
+    }
+    
+    
 }

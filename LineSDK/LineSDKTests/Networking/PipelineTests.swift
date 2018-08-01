@@ -47,8 +47,68 @@ class PipelineTests: XCTestCase {
         XCTAssertEqual(result.foo, "bar")
     }
     
-    func testRefreshTokenPipeline() {
-        // TODO: RefreshTokenRedirector is not implemented yet.
+    func testRefreshTokenPipelineSuccess() {
+        
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
+        
+        let delegate = SessionDelegateStub(stub: .init(string: PostRefreshTokenRequest.success, responseCode: 200) )
+        Session._shared = Session(configuration: LoginManager.shared.configuration!, delegate: delegate)
+        
+        let pipeline = RefreshTokenRedirector()
+        
+        let request = StubRequestSimple()
+        let response = HTTPURLResponse.responseFromCode(403)
+        try! pipeline.redirect(request: request, data: Data(), response: response) {
+            action in
+            switch action {
+            case .restartWithout(let p):
+                XCTAssertEqual(p, .redirector(pipeline))
+                XCTAssertTrue(delegate.stubs.isEmpty)
+            default:
+                XCTFail("Refresh token pipeline should success.")
+            }
+            expect.fulfill()
+            LoginManager.shared.reset()
+        }
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
+    
+    func testRefreshTokenPipelineFailed() {
+        
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
+        
+        let delegate = SessionDelegateStub(stub: .init(string: "error message", responseCode: 123))
+        Session._shared = Session(configuration: LoginManager.shared.configuration!, delegate: delegate)
+        
+        let pipeline = RefreshTokenRedirector()
+        
+        let request = StubRequestSimple()
+        let response = HTTPURLResponse.responseFromCode(403)
+        try! pipeline.redirect(request: request, data: Data(), response: response) {
+            action in
+            switch action {
+            case .stop(let error):
+                guard case .responseFailed(
+                    reason: .invalidHTTPStatus(
+                        code: let code,
+                        raw: let message)) = error as! LineSDKError else
+                {
+                    XCTFail("Error type is not correct.")
+                    return
+                }
+                XCTAssertEqual(code, 123)
+                XCTAssertEqual(message, "error message")
+            default:
+                XCTFail("Refresh token pipeline should success.")
+            }
+            expect.fulfill()
+            LoginManager.shared.reset()
+        }
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testBadHTTPStatusPipelineValidCode() {
@@ -78,7 +138,7 @@ class PipelineTests: XCTestCase {
                     XCTAssertEqual(code, 404)
                     XCTAssertEqual(authErr.error, "123")
                     XCTAssertEqual(authErr.errorDescription, "sample")
-                    assertJSONText(raw, equalsTo: authError)
+                    self.assertJSONText(raw, equalsTo: authError)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")
                 }
@@ -105,7 +165,7 @@ class PipelineTests: XCTestCase {
                 {
                     XCTAssertEqual(code, 404)
                     XCTAssertEqual(apiErr.message, "hello")
-                    assertJSONText(raw, equalsTo: apiError)
+                    self.assertJSONText(raw, equalsTo: apiError)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")
                 }
@@ -131,12 +191,38 @@ class PipelineTests: XCTestCase {
                         .invalidHTTPStatus(code: let code, raw: let raw)) = sdkError
                 {
                     XCTAssertEqual(code, 404)
-                    assertJSONText(raw, equalsTo: error)
+                    self.assertJSONText(raw, equalsTo: error)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")
                 }
             default:
                 XCTFail("A back HTTP status pipeline should result in .stop action.")
+            }
+        }
+    }
+    
+    func testDataTransformPipeline() {
+        let pipeline = DataTransformRedirector(condition: { $0.isEmpty }) {
+            data in
+            return "123".data(using: .utf8)!
+        }
+        
+        let request = StubRequestSimple()
+        let response = HTTPURLResponse.responseFromCode(200)
+        
+        let result1 = pipeline.shouldApply(request: request, data: Data(), response: response)
+        XCTAssertTrue(result1)
+        
+        let result2 = pipeline.shouldApply(request: request, data: Data(bytes: [1,2,3]), response: response)
+        XCTAssertFalse(result2)
+        
+        try! pipeline.redirect(request: request, data: Data(), response: response) { action in
+            switch action {
+            case .continueWith(let data, let res):
+                XCTAssertEqual(String(data: data, encoding: .utf8), "123")
+                XCTAssertEqual(res, response)
+            default:
+                XCTFail("Pipeline should continue with data and response.")
             }
         }
     }

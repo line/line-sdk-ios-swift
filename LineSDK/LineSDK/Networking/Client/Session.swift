@@ -135,7 +135,7 @@ class Session: LazySingleton {
         response: HTTPURLResponse,
         pipelines: [ResponsePipeline],
         fullPipelines: [ResponsePipeline],
-        done: ((HanldeResult<T.Response>) throws -> Void)) throws
+        done: @escaping ((HanldeResult<T.Response>) throws -> Void)) throws
     {
         guard !pipelines.isEmpty else {
             Log.fatalError("The pipeline is already empty but request does not be parsed." +
@@ -162,7 +162,15 @@ class Session: LazySingleton {
             try redirector.redirect(request: request, data: data, response: response) { action in
                 switch action {
                 case .continue:
-                    try handle(
+                    try self.handle(
+                        request: request,
+                        data: data,
+                        response: response,
+                        pipelines: leftPipelines,
+                        fullPipelines: fullPipelines,
+                        done: done)
+                case .continueWith(let data, let response):
+                    try self.handle(
                         request: request,
                         data: data,
                         response: response,

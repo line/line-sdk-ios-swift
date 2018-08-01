@@ -91,7 +91,7 @@ struct StubRequestWithContinusPipeline: Request, ResponseDataStub {
             request: T,
             data: Data,
             response: HTTPURLResponse,
-            done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
+            done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
         {
             invoked = true
             try closure(.continue)
@@ -116,6 +116,52 @@ struct StubRequestWithContinusPipeline: Request, ResponseDataStub {
     static let success = "{\"foo\": \"bar\"}"
 }
 
+struct StubRequestWithContinusDataResponsePipeline: Request, ResponseDataStub {
+    
+    class TransformRedirector: ResponsePipelineRedirector {
+        
+        var invoked = false
+        
+        func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
+            return true
+        }
+        
+        func redirect<T>(
+            request: T,
+            data: Data,
+            response: HTTPURLResponse,
+            done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
+        {
+            invoked = true
+            let data = "{\"foo\": \"barbar\"}".data(using: .utf8)!
+            let resultResponse = HTTPURLResponse(
+                url: response.url!,
+                statusCode: 999,
+                httpVersion: nil,
+                headerFields: nil)!
+            
+            try closure(.continueWith(data, resultResponse))
+        }
+    }
+    
+    struct Response: Decodable {
+        let foo: String
+    }
+    
+    let method: HTTPMethod = .get
+    let path: String = ""
+    let authenticate: AuthenticateMethod = .none
+    
+    var pipelines: [ResponsePipeline] {
+        return [
+            .redirector(TransformRedirector()),
+            .terminator(ParsePipeline(JSONDecoder()))
+        ]
+    }
+    
+    static let success = "{\"foo\": \"bar\"}"
+}
+
 struct StubRequestWithStopPipeline: Request, ResponseDataStub {
     class StopRedirector: ResponsePipelineRedirector {
         
@@ -129,7 +175,7 @@ struct StubRequestWithStopPipeline: Request, ResponseDataStub {
             request: T,
             data: Data,
             response: HTTPURLResponse,
-            done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
+            done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
         {
             invoked = true
             try closure(.stop(ErrorStub.testError))
@@ -173,7 +219,7 @@ struct StubRequestWithRestartPipeline: Request, ResponseDataStub {
             request: T,
             data: Data,
             response: HTTPURLResponse,
-            done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
+            done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
         {
             invoked = true
             try closure(.restart)
@@ -211,7 +257,7 @@ struct StubRequestWithRestartAnotherPipeline: Request, ResponseDataStub {
             request: T,
             data: Data,
             response: HTTPURLResponse,
-            done closure: (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
+            done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
         {
             invoked = true
             try closure(.restartWithout(.redirector(self)))
