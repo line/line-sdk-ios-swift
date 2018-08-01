@@ -25,16 +25,19 @@ import XCTest
 extension PostRefreshTokenRequest: ResponseDataStub {
     static let successToken = "123"
     
-    static let success =
-    """
-    {
+    static let success = PostRefreshTokenRequest.successToken(with: successToken)
+    
+    static func successToken(with token: String) -> String {
+        return """
+        {
         "scope":"profile openid",
-        "access_token":"\(successToken)",
+        "access_token":"\(token)",
         "token_type":"Bearer",
         "refresh_token":"abc",
         "expires_in":259200
+        }
+        """
     }
-    """
 }
 
 class PostRefreshTokenRequestTests: LineSDKAPITests {

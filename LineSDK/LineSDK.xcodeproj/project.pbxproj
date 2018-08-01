@@ -64,6 +64,7 @@
 		4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */; };
 		4BD191B821116C4C00E2C481 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B721116C4C00E2C481 /* Unit.swift */; };
 		4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */; };
+		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
 /* End PBXBuildFile section */
@@ -148,6 +149,7 @@
 		4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRevokeTokenRequest.swift; sourceTree = "<group>"; };
 		4BD191B721116C4C00E2C481 /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
 		4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRevokeTokenRequestTests.swift; sourceTree = "<group>"; };
+		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -356,6 +358,7 @@
 				4BA8E449210ED82B00355F03 /* AdapterTests.swift */,
 				4BA8E44B210EDB5100355F03 /* ParameterEncoderTests.swift */,
 				4BA8E44D210EE79B00355F03 /* PipelineTests.swift */,
+				4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */,
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
+				4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */,
 				4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */,
 				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
 				4B39D1E421104DBA00A45510 /* LineSDKAPITests.swift in Sources */,

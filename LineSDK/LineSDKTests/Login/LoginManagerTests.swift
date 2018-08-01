@@ -33,9 +33,9 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     }
     
     override func tearDown() {
-        super.tearDown()
         LoginManager.shared.reset()
         resetViewController()
+        super.tearDown()
     }
     
     func testSetupLoginManager() {
@@ -44,39 +44,8 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertNotNil(LoginManager.shared.configuration)
     }
     
-    class LoginActionDelegate: NSObject, LoginManagerDelegate {
-        
-        let expect: XCTestExpectation
-        
-        init(expect: XCTestExpectation) {
-            self.expect = expect
-            super.init()
-        }
-        
-        func loginManager(
-            _ manager: LoginManager,
-            didSucceed loginProcess: LoginProcess,
-            withResult result: LoginResult)
-        {
-            XCTAssertEqual(result.accessToken.value, PostTokenExchangeRequest.successToken)
-            expect.fulfill()
-        }
-        
-        func loginManager(
-            _ manager: LoginManager,
-            didFail loginProcess: LoginProcess,
-            withError error: Error)
-        {
-            XCTFail("The login process should not fail.")
-        }
-    }
-    
-    var loginActionDelegate: LoginActionDelegate!
     func testLoginAction() {
         let expect = expectation(description: "\(#file)_\(#line)")
-        
-        loginActionDelegate = LoginActionDelegate(expect: expect)
-        LoginManager.shared.delegate = loginActionDelegate
         
         let delegateStub = SessionDelegateStub(stubs: [
             .init(data: PostOTPRequest.successData, responseCode: 200),
@@ -88,7 +57,15 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             delegate: delegateStub
         )
         
-        let process = LoginManager.shared.login(permissions: [.profile], in: setupViewController())!
+        let process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
+            loginResult in
+            XCTAssertNotNil(loginResult.value)
+            let result = loginResult.value!
+            XCTAssertEqual(result.accessToken.value, PostTokenExchangeRequest.successToken)
+            XCTAssertEqual(AccessTokenStore.shared.current, result.accessToken)
+            try! AccessTokenStore.shared.removeCurrentAccessToken()
+            expect.fulfill()
+        }!
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let urlString = "\(Constant.thirdPartyAppRetrurnURL)?code=123&state=\(process.processID)"

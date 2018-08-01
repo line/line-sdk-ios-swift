@@ -29,14 +29,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        LoginManager.shared.delegate = self
     }
     
     @IBAction func login(_ sender: Any) {
         indicator.isHidden = false
         indicator.startAnimating()
         
-        LoginManager.shared.login(permissions: [.profile, .friends, .groups], in: self)
+        LoginManager.shared.login(permissions: [.profile, .friends, .groups], in: self) {
+            result in
+            switch result {
+            case .success(let login): self.handleLoginSuccess(login)
+            case .failure(let error): self.handleLoginError(error)
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,8 +50,8 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: LoginManagerDelegate {
-    func loginManager(_ manager: LoginManager, didFail loginProcess: LoginProcess, withError error: Error) {
+extension ViewController {
+    func handleLoginError(_ error: Error) {
         indicator.stopAnimating()
         print("Failed: \(error)")
         let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
@@ -54,7 +59,7 @@ extension ViewController: LoginManagerDelegate {
         present(alert, animated: true)
     }
     
-    func loginManager(_ manager: LoginManager, didSucceed loginProcess: LoginProcess, withResult result: LoginResult) {
+    func handleLoginSuccess(_ result: LoginResult) {
         indicator.stopAnimating()
         print("OK: \(result)")
         let alert = UIAlertController(title: "Success", message: "\(result)", preferredStyle: .alert)

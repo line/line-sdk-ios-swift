@@ -22,6 +22,15 @@
 import XCTest
 @testable import LineSDK
 
+func setupTestToken() {
+    let token = try! JSONDecoder().decode(AccessToken.self, from: PostTokenExchangeRequest.successData)
+    try! AccessTokenStore.shared.setCurrentToken(token)
+}
+
+func resetTestToken() {
+    try! AccessTokenStore.shared.removeCurrentAccessToken()
+}
+
 class LineSDKAPITests: XCTestCase {
     
     override func setUp() {
@@ -30,16 +39,22 @@ class LineSDKAPITests: XCTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()
         LoginManager.shared.reset()
+        super.tearDown()
     }
     
     let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
     func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
         let expect = expectation(description: "\(#file)_\(#line)")
+
+        if request.authenticate == .token {
+            setupTestToken()
+        }
+        
         let session = Session.stub(configuration: config, string: T.success)
         session.send(request) { result in
             verifier(result.value!)
+            resetTestToken()
             expect.fulfill()
         }
         waitForExpectations(timeout: 1.0, handler: nil)

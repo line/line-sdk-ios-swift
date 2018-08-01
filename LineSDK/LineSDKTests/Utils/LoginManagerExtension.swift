@@ -24,7 +24,6 @@ import Foundation
 
 extension LoginManager {
     func reset() {
-        LoginManager.shared.delegate = nil
         Session._shared = nil
         AccessTokenStore._shared = nil
         configuration = nil
