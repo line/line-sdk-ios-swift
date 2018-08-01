@@ -27,10 +27,6 @@ func setupTestToken() {
     try! AccessTokenStore.shared.setCurrentToken(token)
 }
 
-func resetTestToken() {
-    try! AccessTokenStore.shared.removeCurrentAccessToken()
-}
-
 class LineSDKAPITests: XCTestCase {
     
     override func setUp() {
@@ -54,7 +50,6 @@ class LineSDKAPITests: XCTestCase {
         let session = Session.stub(configuration: config, string: T.success)
         session.send(request) { result in
             verifier(result.value!)
-            resetTestToken()
             expect.fulfill()
         }
         waitForExpectations(timeout: 1.0, handler: nil)

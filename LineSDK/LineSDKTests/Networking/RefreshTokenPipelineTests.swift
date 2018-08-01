@@ -63,7 +63,6 @@ class RefreshTokenPipelineTests: XCTestCase {
             }
             try! AccessTokenStore.shared.removeCurrentAccessToken()
             expect.fulfill()
-            resetTestToken()
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
@@ -97,8 +96,6 @@ class RefreshTokenPipelineTests: XCTestCase {
                 XCTFail("Refresh token pipeline should success.")
             }
             expect.fulfill()
-            
-            resetTestToken()
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
