@@ -26,6 +26,11 @@ Switch to Beta environment
 fastlane ios tests
 ```
 Run tests
+### ios doc
+```
+fastlane ios doc
+```
+Generate documentation
 
 ----
 

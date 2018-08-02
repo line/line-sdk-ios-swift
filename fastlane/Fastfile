@@ -26,4 +26,9 @@ platform :ios do
     )
   end
 
+  desc "Generate documentation"
+  lane :doc do
+    jazzy
+  end
+
 end
