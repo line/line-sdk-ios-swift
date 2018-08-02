@@ -1,0 +1,11 @@
+author: LINE Corporation
+author_url: https://line.me
+clean: true
+github_url: https://git.linecorp.com/LINE-Client/linesdk-ios-swift
+hide_documentation_coverage: true
+module: LineSDK
+output: docs
+sdk: iphonesimulator
+skip_undocumented: true
+source_directory: LineSDK
+theme: fullwidth
