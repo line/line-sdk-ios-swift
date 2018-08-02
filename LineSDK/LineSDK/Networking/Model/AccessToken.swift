@@ -23,7 +23,7 @@ import Foundation
 
 protocol AccessTokenType {}
 
-struct AccessToken: Codable, AccessTokenType, Equatable {
+public struct AccessToken: Codable, AccessTokenType, Equatable {
     let value: String
     let expiresIn: TimeInterval
     let createdAt: Date
@@ -46,7 +46,7 @@ struct AccessToken: Codable, AccessTokenType, Equatable {
         case createdAt
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         value = try container.decode(String.self, forKey: .value)
         expiresIn = try container.decode(TimeInterval.self, forKey: .expiresIn)
@@ -71,7 +71,7 @@ struct AccessToken: Codable, AccessTokenType, Equatable {
         tokenType = try container.decode(String.self, forKey: .tokenType)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(value, forKey: .value)
         try container.encode(expiresIn, forKey: .expiresIn)
