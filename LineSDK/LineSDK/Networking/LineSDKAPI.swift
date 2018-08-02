@@ -21,8 +21,14 @@
 
 import Foundation
 
-struct LineSDKAPI {
-    static func refreshAccessToken(
+/// Utility class for calling the API.
+public struct LineSDKAPI {
+    /// Refreshes the access token that the SDK is using for the user.
+    ///
+    /// - Parameters:
+    ///   - refreshToken: Refresh token. Optional. The SDK will use the current refresh token if not provided.
+    ///   - completion: Completion block called when the user's access token is refreshed.
+    public static func refreshAccessToken(
         with refreshToken: String? = nil,
         completionHandler completion: @escaping (Result<AccessToken>) -> Void)
     {
