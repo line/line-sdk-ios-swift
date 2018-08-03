@@ -108,6 +108,12 @@ class AccessTokenStore: LazySingleton {
         if try keychainStore.contains(key) {
             try keychainStore.remove(key)
             
+            // TODO: We need to consider the location of setting `nil` carefully.
+            // In normal case if keychainStore works well, everything should be fine.
+            // But what will happen if revoke request succeeded, then keychain operation fails?
+            // Do we want to keep `current` token or should be put it outside the if statement
+            // and always reset it?
+            current = nil
             NotificationCenter.default.post(name: .LineSDKAccessTokenDidRemove, object: nil, userInfo: nil)
         }
     }

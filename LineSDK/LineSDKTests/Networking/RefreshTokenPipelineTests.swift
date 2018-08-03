@@ -43,7 +43,7 @@ class RefreshTokenPipelineTests: XCTestCase {
         let expect = expectation(description: "\(#file)_\(#line)")
         
         let delegate = SessionDelegateStub(stub: .init(string: PostRefreshTokenRequest.success, responseCode: 200) )
-        Session._shared = Session(configuration: LoginManager.shared.configuration!, delegate: delegate)
+        Session._shared = Session(configuration: LoginConfiguration.shared, delegate: delegate)
         
         XCTAssertNil(AccessTokenStore.shared.current)
         setupTestToken()
@@ -72,7 +72,7 @@ class RefreshTokenPipelineTests: XCTestCase {
         let expect = expectation(description: "\(#file)_\(#line)")
         
         let delegate = SessionDelegateStub(stub: .init(string: "error message", responseCode: 123))
-        Session._shared = Session(configuration: LoginManager.shared.configuration!, delegate: delegate)
+        Session._shared = Session(configuration: LoginConfiguration.shared, delegate: delegate)
         
         setupTestToken()
         
@@ -105,7 +105,7 @@ class RefreshTokenPipelineTests: XCTestCase {
         let expect = expectation(description: "\(#file)_\(#line)")
         
         let delegate = SessionDelegateStub(stub: .init(string: "error message", responseCode: 123))
-        Session._shared = Session(configuration: LoginManager.shared.configuration!, delegate: delegate)
+        Session._shared = Session(configuration: LoginConfiguration.shared, delegate: delegate)
         
         let request = StubRequestSimple()
         let response = HTTPURLResponse.responseFromCode(403)

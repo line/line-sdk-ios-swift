@@ -24,11 +24,13 @@ import Foundation
 
 extension LoginManager {
     func reset() {
+        setup = false
+        
         Session._shared = nil
         
         try! AccessTokenStore.shared.removeCurrentAccessToken()
         AccessTokenStore._shared = nil
         
-        configuration = nil
+        LoginConfiguration._shared = nil
     }
 }
