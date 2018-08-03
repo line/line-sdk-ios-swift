@@ -85,4 +85,17 @@ public struct LineSDKAPI {
             }
         }
     }
+    
+    static func verifyAccessToken(
+        _ token: String? = nil,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<AccessTokenVerifyResult>) -> Void)
+    {
+        guard let token = token ?? AccessTokenStore.shared.current?.value else {
+            queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
+            return
+        }
+        let request = GetVerifyTokenRequest(accessToken: token)
+        Session.shared.send(request, callbackQueue: queue, handler: completion)
+    }
 }

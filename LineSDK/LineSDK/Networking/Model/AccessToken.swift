@@ -58,16 +58,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         
         IDToken = try container.decodeIfPresent(String.self, forKey: .IDToken)
         refreshToken = try container.decode(String.self, forKey: .refreshToken)
-        
-        let scopes = try container.decode(String.self, forKey: .scope)
-        permissions = scopes.split(separator: " ").compactMap { scope in
-            // Ignore empty permissions
-            if scope.trimmingCharacters(in: .whitespaces).isEmpty {
-                return nil
-            }
-            return LoginPermission(rawValue: String(scope))
-        }
-        
+        permissions = try container.decodeLoginPermissions(forKey: .scope)
         tokenType = try container.decode(String.self, forKey: .tokenType)
     }
     
