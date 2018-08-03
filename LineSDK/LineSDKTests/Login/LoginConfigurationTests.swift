@@ -28,6 +28,7 @@ class LoginConfigurationTests: XCTestCase {
         let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
         
         let results = [
+            "/somepath/",
             "https://sample.com",
             "randomUrl://authorize",
             "\(Constant.thirdPartyAppRetrurnScheme)://somePath/",
@@ -37,7 +38,7 @@ class LoginConfigurationTests: XCTestCase {
         ].map { config.isValidCustomizeURL(url: URL(string: $0)!) }
 
         XCTAssertEqual(results, [
-            false, false, false,
+            false, false, false, false,
             true,  true,  true
         ])
     }
@@ -61,6 +62,12 @@ class LoginConfigurationTests: XCTestCase {
             false, false, false, false,
             true,  true,  true,  true
         ])
+    }
+    
+    func testInvalidUniversalLinkURLIfNotSet() {
+        let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
+        let result = config.isValidUniversalLinkURL(url: URL(string: "https://sample.com")!)
+        XCTAssertEqual(result, false)
     }
     
     func testValidSourceApplication() {
