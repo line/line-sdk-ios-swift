@@ -98,4 +98,12 @@ public struct LineSDKAPI {
         let request = GetVerifyTokenRequest(accessToken: token)
         Session.shared.send(request, callbackQueue: queue, handler: completion)
     }
+    
+    public static func getProfile(
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<UserProfile>) -> Void)
+    {
+        let request = GetUserProfileRequest()
+        Session.shared.send(request, callbackQueue: queue, handler: completion)
+    }
 }

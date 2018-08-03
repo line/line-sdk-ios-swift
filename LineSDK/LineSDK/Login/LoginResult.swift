@@ -22,7 +22,7 @@
 import Foundation
 
 public struct LoginResult {
-    let accessToken: AccessToken
-    let permissions: Set<LoginPermission>
-    let userProfile: UserProfile?
+    public let accessToken: AccessToken
+    public let permissions: Set<LoginPermission>
+    public let userProfile: UserProfile?
 }

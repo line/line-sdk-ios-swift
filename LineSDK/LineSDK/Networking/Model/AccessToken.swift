@@ -24,15 +24,15 @@ import Foundation
 protocol AccessTokenType {}
 
 public struct AccessToken: Codable, AccessTokenType, Equatable {
-    let value: String
+    public let value: String
     let expiresIn: TimeInterval
-    let createdAt: Date
-    let IDToken: String?
-    let refreshToken: String
-    let permissions: [LoginPermission]
+    public let createdAt: Date
+    public let IDToken: String?
+    public let refreshToken: String
+    public let permissions: [LoginPermission]
     let tokenType: String
     
-    var expiresAt: Date {
+    public var expiresAt: Date {
         return createdAt.addingTimeInterval(expiresIn)
     }
     

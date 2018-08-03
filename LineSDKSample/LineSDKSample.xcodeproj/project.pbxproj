@@ -10,12 +10,17 @@
 		4B63F46F2106D43D003D1BF1 /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; };
 		4B63F4702106D43D003D1BF1 /* LineSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B90589F21006E9C004D717F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90589E21006E9C004D717F /* AppDelegate.swift */; };
-		4B9058A121006E9C004D717F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058A021006E9C004D717F /* ViewController.swift */; };
+		4B9058A121006E9C004D717F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058A021006E9C004D717F /* LoginViewController.swift */; };
 		4B9058A421006E9C004D717F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A221006E9C004D717F /* Main.storyboard */; };
 		4B9058A621006E9C004D717F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A521006E9C004D717F /* Assets.xcassets */; };
 		4B9058A921006E9C004D717F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A721006E9C004D717F /* LaunchScreen.storyboard */; };
 		4B9058B421006E9C004D717F /* LineSDKSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058B321006E9C004D717F /* LineSDKSampleTests.swift */; };
 		4B9058BF21006E9C004D717F /* LineSDKSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058BE21006E9C004D717F /* LineSDKSampleUITests.swift */; };
+		4BCD27982113F95700B90D8F /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27972113F95700B90D8F /* UserProfileViewController.swift */; };
+		4BCD279E2113FE9D00B90D8F /* IndicatorDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD279D2113FE9D00B90D8F /* IndicatorDisplay.swift */; };
+		4BCD27A02114007500B90D8F /* UIAlertControllerHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */; };
+		4BCD27A32114033000B90D8F /* LoginNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27A22114033000B90D8F /* LoginNavigationController.swift */; };
+		4BCD27A521142A3400B90D8F /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +58,7 @@
 		4B63F46E2106D43C003D1BF1 /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90589B21006E9B004D717F /* LineSDKSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LineSDKSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90589E21006E9C004D717F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4B9058A021006E9C004D717F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4B9058A021006E9C004D717F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4B9058A321006E9C004D717F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4B9058A521006E9C004D717F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B9058A821006E9C004D717F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -64,6 +69,11 @@
 		4B9058BA21006E9C004D717F /* LineSDKSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineSDKSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B9058BE21006E9C004D717F /* LineSDKSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSampleUITests.swift; sourceTree = "<group>"; };
 		4B9058C021006E9C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BCD27972113F95700B90D8F /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		4BCD279D2113FE9D00B90D8F /* IndicatorDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorDisplay.swift; sourceTree = "<group>"; };
+		4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerHelpers.swift; sourceTree = "<group>"; };
+		4BCD27A22114033000B90D8F /* LoginNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNavigationController.swift; sourceTree = "<group>"; };
+		4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,8 +126,9 @@
 		4B90589D21006E9C004D717F /* LineSDKSample */ = {
 			isa = PBXGroup;
 			children = (
+				4BCD27A12114031B00B90D8F /* Login */,
+				4BCD279C2113FE9000B90D8F /* Utils */,
 				4B90589E21006E9C004D717F /* AppDelegate.swift */,
-				4B9058A021006E9C004D717F /* ViewController.swift */,
 				4B9058A221006E9C004D717F /* Main.storyboard */,
 				4B9058A521006E9C004D717F /* Assets.xcassets */,
 				4B9058A721006E9C004D717F /* LaunchScreen.storyboard */,
@@ -142,6 +153,26 @@
 				4B9058C021006E9C004D717F /* Info.plist */,
 			);
 			path = LineSDKSampleUITests;
+			sourceTree = "<group>";
+		};
+		4BCD279C2113FE9000B90D8F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4BCD279D2113FE9D00B90D8F /* IndicatorDisplay.swift */,
+				4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		4BCD27A12114031B00B90D8F /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4B9058A021006E9C004D717F /* LoginViewController.swift */,
+				4BCD27972113F95700B90D8F /* UserProfileViewController.swift */,
+				4BCD27A22114033000B90D8F /* LoginNavigationController.swift */,
+				4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,7 +307,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B9058A121006E9C004D717F /* ViewController.swift in Sources */,
+				4BCD27A521142A3400B90D8F /* UserDetailViewController.swift in Sources */,
+				4BCD279E2113FE9D00B90D8F /* IndicatorDisplay.swift in Sources */,
+				4BCD27A32114033000B90D8F /* LoginNavigationController.swift in Sources */,
+				4BCD27A02114007500B90D8F /* UIAlertControllerHelpers.swift in Sources */,
+				4B9058A121006E9C004D717F /* LoginViewController.swift in Sources */,
+				4BCD27982113F95700B90D8F /* UserProfileViewController.swift in Sources */,
 				4B90589F21006E9C004D717F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

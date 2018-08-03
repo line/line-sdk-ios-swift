@@ -21,9 +21,9 @@
 
 import Foundation
 
-struct UserProfile: Decodable {
-    let userId: String
-    let displayName: String
-    let pictureUrl: URL?
-    let statusMessage: String?
+public struct UserProfile: Decodable {
+    public let userId: String
+    public let displayName: String
+    public let pictureUrl: URL?
+    public let statusMessage: String?
 }
