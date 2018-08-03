@@ -27,7 +27,12 @@ public class LoginManager {
     
     public static let shared = LoginManager()
     public private(set) var currentProcess: LoginProcess?
-    public internal(set) var setup = false
+    var setup = false
+    public var isSetupFinished: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return setup
+    }
     
     public var isAuthorized: Bool {
         return AccessTokenStore.shared.current != nil

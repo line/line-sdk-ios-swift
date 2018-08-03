@@ -42,6 +42,8 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertNotNil(Session.shared)
         XCTAssertNotNil(AccessTokenStore.shared)
         XCTAssertNotNil(LoginConfiguration.shared)
+        
+        XCTAssertTrue(LoginManager.shared.isSetupFinished)
     }
     
     func testLoginAction() {
