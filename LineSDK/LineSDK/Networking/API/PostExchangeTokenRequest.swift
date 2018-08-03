@@ -1,5 +1,5 @@
 //
-//  PostTokenExchangeRequest.swift
+//  PostExchangeTokenRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,7 @@
 
 import Foundation
 
-struct PostTokenExchangeRequest: APIRequest {
+struct PostExchangeTokenRequest: APIRequest {
     let channelID: String
     let code: String
     let otpValue: String

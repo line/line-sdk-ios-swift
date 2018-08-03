@@ -1,5 +1,5 @@
 //
-//  PostTokenExchangeRequestTests.swift
+//  PostExchangeTokenRequestTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-extension PostTokenExchangeRequest: ResponseDataStub {
+extension PostExchangeTokenRequest: ResponseDataStub {
     
     static let successToken = "123"
     
@@ -39,10 +39,10 @@ extension PostTokenExchangeRequest: ResponseDataStub {
     """
 }
 
-class PostTokenExchangeRequestTests: LineSDKAPITests {
+class PostExchangeTokenRequestTests: LineSDKAPITests {
 
     func testSuccess() {
-        let request = PostTokenExchangeRequest(
+        let request = PostExchangeTokenRequest(
             channelID: config.channelID,
             code: "abcabc",
             otpValue: "123123",

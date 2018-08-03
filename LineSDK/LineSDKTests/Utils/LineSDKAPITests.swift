@@ -23,7 +23,7 @@ import XCTest
 @testable import LineSDK
 
 func setupTestToken() {
-    let token = try! JSONDecoder().decode(AccessToken.self, from: PostTokenExchangeRequest.successData)
+    let token = try! JSONDecoder().decode(AccessToken.self, from: PostExchangeTokenRequest.successData)
     try! AccessTokenStore.shared.setCurrentToken(token)
 }
 
