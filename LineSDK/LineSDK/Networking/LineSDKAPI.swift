@@ -23,11 +23,18 @@ import Foundation
 
 /// Utility class for calling the API.
 public struct LineSDKAPI {
-    /// Refreshes the access token that the SDK is using for the user.
+    /// Refreshes the access token with a provided `refreshToken`.
     ///
     /// - Parameters:
     ///   - refreshToken: Refresh token. Optional. The SDK will use the current refresh token if not provided.
-    ///   - completion: Completion block called when the user's access token is refreshed.
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: Completion block called when this API finishes.
+    /// - Note:
+    ///   If the token refresh process finishes without an issue, the received new token will be stored in keychain
+    ///   automatically for later use. And you will get a `.LineSDKAccessTokenDidUpdate` notification. Normally,
+    ///   there is no need for you to invoke this method manually, since all APIs will try refresh expired token
+    ///   if needed.
     public static func refreshAccessToken(
         with refreshToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,

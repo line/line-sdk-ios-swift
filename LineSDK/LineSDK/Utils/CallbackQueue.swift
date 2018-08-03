@@ -21,7 +21,7 @@
 
 import Foundation
 
-enum CallbackQueue {
+public enum CallbackQueue {
     case asyncMain
     case currentMainOrAsync
     case untouch
