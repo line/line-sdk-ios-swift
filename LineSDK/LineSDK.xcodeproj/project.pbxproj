@@ -21,7 +21,7 @@
 		4B45257621019EFB00A39D4F /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257521019EFB00A39D4F /* Session.swift */; };
 		4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257721019FCC00A39D4F /* PostOTPRequest.swift */; };
 		4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257A2101A4E900A39D4F /* OneTimePassword.swift */; };
-		4B4F0B7E21080C51006D17F5 /* PostTokenExchangeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7D21080C51006D17F5 /* PostTokenExchangeRequest.swift */; };
+		4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */; };
 		4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7F21080D69006D17F5 /* AccessToken.swift */; };
 		4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8121083CDB006D17F5 /* Constant.swift */; };
 		4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8321084755006D17F5 /* UserProfile.swift */; };
@@ -59,6 +59,10 @@
 		4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */; };
 		4BBAFC4B2101CE8100E7BFF6 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
 		4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */; };
+		4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */; };
+		4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */; };
+		4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27922113EC6C00B90D8F /* CodingExtension.swift */; };
+		4BCD27952113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27942113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift */; };
 		4BD191B22111452E00E2C481 /* PostRefreshTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */; };
 		4BD191B4211154DF00E2C481 /* LineSDKAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B3211154DF00E2C481 /* LineSDKAPI.swift */; };
 		4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */; };
@@ -101,7 +105,7 @@
 		4B45257521019EFB00A39D4F /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		4B45257721019FCC00A39D4F /* PostOTPRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOTPRequest.swift; sourceTree = "<group>"; };
 		4B45257A2101A4E900A39D4F /* OneTimePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimePassword.swift; sourceTree = "<group>"; };
-		4B4F0B7D21080C51006D17F5 /* PostTokenExchangeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTokenExchangeRequest.swift; sourceTree = "<group>"; };
+		4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostExchangeTokenRequest.swift; sourceTree = "<group>"; };
 		4B4F0B7F21080D69006D17F5 /* AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		4B4F0B8121083CDB006D17F5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		4B4F0B8321084755006D17F5 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
@@ -144,6 +148,10 @@
 		4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenStore.swift; sourceTree = "<group>"; };
 		4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resource.bundle; sourceTree = "<group>"; };
 		4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantTests.swift; sourceTree = "<group>"; };
+		4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyTokenRequest.swift; sourceTree = "<group>"; };
+		4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenVerifyResult.swift; sourceTree = "<group>"; };
+		4BCD27922113EC6C00B90D8F /* CodingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodingExtension.swift; sourceTree = "<group>"; };
+		4BCD27942113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyTokenRequestTests.swift; sourceTree = "<group>"; };
 		4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequestTests.swift; sourceTree = "<group>"; };
 		4BD191B3211154DF00E2C481 /* LineSDKAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAPI.swift; sourceTree = "<group>"; };
 		4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRevokeTokenRequest.swift; sourceTree = "<group>"; };
@@ -183,9 +191,11 @@
 		4B4525792101A4DE00A39D4F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4BCD27912113EC4300B90D8F /* CustomizeCoding */,
 				4B45257A2101A4E900A39D4F /* OneTimePassword.swift */,
 				4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */,
 				4B4F0B7F21080D69006D17F5 /* AccessToken.swift */,
+				4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */,
 				4B4F0B8321084755006D17F5 /* UserProfile.swift */,
 				4B414D5B210EF12C00FD19BC /* APIError.swift */,
 				4BD191B721116C4C00E2C481 /* Unit.swift */,
@@ -222,6 +232,7 @@
 				4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */,
 				4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */,
 				4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */,
+				4BCD27942113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -290,10 +301,11 @@
 			isa = PBXGroup;
 			children = (
 				4B45257721019FCC00A39D4F /* PostOTPRequest.swift */,
-				4B4F0B7D21080C51006D17F5 /* PostTokenExchangeRequest.swift */,
+				4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */,
 				4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */,
 				4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */,
 				4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */,
+				4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -369,6 +381,14 @@
 				4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */,
 			);
 			path = General;
+			sourceTree = "<group>";
+		};
+		4BCD27912113EC4300B90D8F /* CustomizeCoding */ = {
+			isa = PBXGroup;
+			children = (
+				4BCD27922113EC6C00B90D8F /* CodingExtension.swift */,
+			);
+			path = CustomizeCoding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -527,8 +547,10 @@
 				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
 				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,
+				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
 				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
+				4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
 				4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */,
 				4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */,
@@ -544,9 +566,10 @@
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
-				4B4F0B7E21080C51006D17F5 /* PostTokenExchangeRequest.swift in Sources */,
+				4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */,
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,
 				4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */,
+				4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */,
 				4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */,
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
@@ -578,6 +601,7 @@
 				4B39D1E421104DBA00A45510 /* LineSDKAPITests.swift in Sources */,
 				4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */,
 				4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */,
+				4BCD27952113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift in Sources */,
 				4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */,
 				4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */,
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,

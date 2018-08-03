@@ -1,5 +1,5 @@
 //
-//  LineSDKAPITests.swift
+//  AccessTokenVerifyResult.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,39 +19,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-@testable import LineSDK
+import Foundation
 
-func setupTestToken() {
-    let token = try! JSONDecoder().decode(AccessToken.self, from: PostExchangeTokenRequest.successData)
-    try! AccessTokenStore.shared.setCurrentToken(token)
-}
-
-class LineSDKAPITests: XCTestCase {
+struct AccessTokenVerifyResult: Decodable {
+    let channelID: String
+    let permissions: [LoginPermission]
+    let expiresIn: TimeInterval
     
-    override func setUp() {
-        super.setUp()
-        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
+    enum CodingKeys: String, CodingKey {
+        case clientID = "client_id"
+        case expiresIn = "expires_in"
+        case scope
     }
     
-    override func tearDown() {
-        LoginManager.shared.reset()
-        super.tearDown()
-    }
-    
-    let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
-    func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
-        let expect = expectation(description: "\(#file)_\(#line)")
-
-        if request.authenticate == .token {
-            setupTestToken()
-        }
-        
-        let session = Session.stub(configuration: config, string: T.success)
-        session.send(request) { result in
-            verifier(result.value!)
-            expect.fulfill()
-        }
-        waitForExpectations(timeout: 1.0, handler: nil)
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        channelID = try container.decode(String.self, forKey: .clientID)
+        permissions = try container.decodeLoginPermissions(forKey: .scope)
+        expiresIn = try container.decode(TimeInterval.self, forKey: .expiresIn)
     }
 }

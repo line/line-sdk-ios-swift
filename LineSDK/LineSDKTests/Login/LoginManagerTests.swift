@@ -54,7 +54,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         
         let delegateStub = SessionDelegateStub(stubs: [
             .init(data: PostOTPRequest.successData, responseCode: 200),
-            .init(data: PostTokenExchangeRequest.successData, responseCode: 200),
+            .init(data: PostExchangeTokenRequest.successData, responseCode: 200),
             .init(data: GetUserProfileRequest.successData, responseCode: 200)
         ])
         Session._shared = Session(
@@ -67,7 +67,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             XCTAssertNotNil(loginResult.value)
             
             let result = loginResult.value!
-            XCTAssertEqual(result.accessToken.value, PostTokenExchangeRequest.successToken)
+            XCTAssertEqual(result.accessToken.value, PostExchangeTokenRequest.successToken)
             XCTAssertEqual(AccessTokenStore.shared.current, result.accessToken)
             
             XCTAssertTrue(LoginManager.shared.isAuthorized)

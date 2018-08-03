@@ -1,5 +1,5 @@
 //
-//  PostTokenExchangeRequest.swift
+//  CodingExtension.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,26 +21,15 @@
 
 import Foundation
 
-struct PostTokenExchangeRequest: APIRequest {
-    let channelID: String
-    let code: String
-    let otpValue: String
-    let redirectURI: String
-    
-    let method: HTTPMethod = .post
-    let path = "/oauth2/v2.1/token"
-    let contentType: ContentType = .formUrlEncoded
-    let authenticate: AuthenticateMethod = .none
-    
-    var parameters: [String : Any]? {
-        return [
-            "client_id": channelID,
-            "grant_type": "authorization_code",
-            "code": code,
-            "otp": otpValue,
-            "redirect_uri": redirectURI
-        ]
+extension KeyedDecodingContainer {
+    func decodeLoginPermissions(forKey key: Key) throws -> [LoginPermission] {
+        let scopes = try decode(String.self, forKey: key)
+        return scopes.split(separator: " ").compactMap { scope in
+            // Ignore empty permissions
+            if scope.trimmingCharacters(in: .whitespaces).isEmpty {
+                return nil
+            }
+            return LoginPermission(rawValue: String(scope))
+        }
     }
-    
-    typealias Response = AccessToken
 }

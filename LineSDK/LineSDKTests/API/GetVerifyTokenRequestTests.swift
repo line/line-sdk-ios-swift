@@ -1,5 +1,5 @@
 //
-//  PostExchangeTokenRequestTests.swift
+//  GetVerifyTokenRequestTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,40 +20,28 @@
 //
 
 import XCTest
+
+import XCTest
 @testable import LineSDK
 
-extension PostExchangeTokenRequest: ResponseDataStub {
-    
-    static let successToken = "123"
-    
-    static let success: String =
-    """
+extension GetVerifyTokenRequest: ResponseDataStub {
+    static let success = """
     {
-        "access_token":"\(successToken)",
-        "refresh_token":"abc",
-        "token_type":"Bearer",
-        "scope":"profile openid",
-        "id_token": "hello",
-        "expires_in":2592000
+      "scope":"profile",
+      "client_id":"1440057261",
+      "expires_in":2591659
     }
     """
 }
 
-class PostExchangeTokenRequestTests: LineSDKAPITests {
-
+class GetVerifyTokenRequestTests: LineSDKAPITests {
+    
     func testSuccess() {
-        let request = PostExchangeTokenRequest(
-            channelID: config.channelID,
-            code: "abcabc",
-            otpValue: "123123",
-            redirectURI: "urlurl")
-        runTestSuccess(for: request) { token in
-            XCTAssertEqual(token.value, "123")
-            XCTAssertEqual(token.refreshToken, "abc")
-            XCTAssertEqual(token.tokenType, "Bearer")
-            XCTAssertEqual(token.permissions, [LoginPermission.profile, LoginPermission.openID])
-            XCTAssertEqual(token.expiresAt, token.createdAt.addingTimeInterval(token.expiresIn))
-            XCTAssertEqual(token.IDToken, "hello")
+        let r = GetVerifyTokenRequest(accessToken: "123")
+        runTestSuccess(for: r) { token in
+            XCTAssertEqual(token.channelID, "1440057261")
+            XCTAssertEqual(token.permissions, [LoginPermission.profile])
+            XCTAssertEqual(token.expiresIn, 2591659)
         }
     }
 }

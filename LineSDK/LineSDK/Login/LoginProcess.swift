@@ -226,7 +226,7 @@ public class LoginProcess {
         
         do {
             let response = try LoginProcessURLResponse(from: url, validatingWith: processID)
-            let tokenExchageRequest = PostTokenExchangeRequest(
+            let tokenExchageRequest = PostExchangeTokenRequest(
                 channelID: configuration.channelID,
                 code: response.requestToken,
                 otpValue: otp.otp,
