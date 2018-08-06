@@ -192,7 +192,11 @@ public class LoginManager {
     /// - Note: This method has the same method signature as in `UIApplicationDelegate`. You can just pass in all
     ///         arguments without modifying anything.
     @available(iOS 9.0, *)
-    public func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    public func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool
+    {
         let sourceApplication = options[.sourceApplication] as? String
         let annotation = options[.annotation] as Any
         return application(app, open: url, sourceApplication: sourceApplication, annotation: annotation)
@@ -212,7 +216,12 @@ public class LoginManager {
     /// - Note: This method has the same method signature as in `UIApplicationDelegate`. You can just pass in all
     ///         arguments without modifying anything.
     @available(iOS, deprecated:9.0, message: "Use application(_:open:options:) instead.")
-    public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+    public func application(
+        _ application: UIApplication,
+        open url: URL,
+        sourceApplication: String?,
+        annotation: Any) -> Bool
+    {
         // Not in login process. Ignore.
         guard let currentProcess = currentProcess else { return false }
         
