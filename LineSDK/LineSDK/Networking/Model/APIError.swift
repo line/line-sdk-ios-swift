@@ -21,11 +21,25 @@
 
 import Foundation
 
-public struct AuthError: Decodable {
+struct InternalAuthError: Decodable {
     public let error: String
     public let errorDescription: String?
 }
 
-public struct APIError: Decodable {
+struct InternalAPIError: Decodable {
     public let message: String
+}
+
+public struct APIError {
+    public let error: String
+    public let detail: String?
+    init(_ original: InternalAPIError) {
+        self.error = original.message
+        self.detail = nil
+    }
+    
+    init(_ original: InternalAuthError) {
+        self.error = original.error
+        self.detail = original.errorDescription
+    }
 }

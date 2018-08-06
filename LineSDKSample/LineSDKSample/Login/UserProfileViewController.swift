@@ -52,7 +52,7 @@ class UserProfileViewController: UIViewController, IndicatorDisplay {
                     self.userProfile = profile
                     self.reloadData()
                 case .failure(let error):
-                    self.displayErrorMessage("\(error)")
+                    self.displayErrorMessage(error.localizedDescription)
                     UIAlertController.present(in: self, error: error)
                 }
             }
