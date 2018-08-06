@@ -21,7 +21,16 @@
 
 import Foundation
 
-/// Utility class for calling the API.
+/// Utility class for calling the LINE APIs.
+///
+/// - Note:
+/// For most of APIs, using interfaces in `LineSDKAPI` is equivalent with
+/// using underlying `Request` and sending it by a `Session`. However, some methods in `LineSDKAPI` provide useful
+/// side effects like operating on keychain or redirecting final result in a more reasonable way.
+///
+/// Unless you know the detail or want to extend LineSDK to send arbitrary unimplemented LINE API,
+/// using `LineSDKAPI` to interact with LINE's APIs are highly recommended.
+///
 public struct LineSDKAPI {
     /// Refreshes the access token with a provided `refreshToken`.
     ///
@@ -68,6 +77,12 @@ public struct LineSDKAPI {
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be executed when the API finishes.
     /// - Note:
+    ///   The revoked token will be removed from keychain for you. The `completion` closure will be called
+    ///   with a `.success` if you pass a `nil` for `token`, and at the same time, the current access token does
+    ///   not exist. The same thing will also happen when you provide an invalid token to revoke.
+    ///
+    ///   After a token revoked successfully, it will not be able to use again for LINE APIs. Your user need to
+    ///   authorize your app again to issue a new token before using any other APIs.
     ///
     public static func revokeAccessToken(
         _ token: String? = nil,
@@ -100,7 +115,7 @@ public struct LineSDKAPI {
                     completion(.failure(error))
                     return
                 }
-                // We recognize response 400 means a success for revoking (since the token itself is invalid).
+                // We recognize response 400 as a success for revoking (since the token itself is invalid).
                 if code == 400 {
                     Log.print(sdkError.localizedDescription)
                     handleSuccessResult()
@@ -109,7 +124,14 @@ public struct LineSDKAPI {
         }
     }
     
-    static func verifyAccessToken(
+    /// Verifies a token.
+    ///
+    /// - Parameters:
+    ///   - token: The access token which needs to be verified. The SDK will use current access token if not provided.
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: The completion closure to be executed when the API finishes.
+    public static func verifyAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<AccessTokenVerifyResult>) -> Void)
@@ -122,6 +144,13 @@ public struct LineSDKAPI {
         Session.shared.send(request, callbackQueue: queue, handler: completion)
     }
     
+    /// Gets user's basic profile.
+    ///
+    /// - Parameters:
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: The completion closure to be executed when the API finishes.
+    /// - Note: `.profile` permission is required.
     public static func getProfile(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<UserProfile>) -> Void)

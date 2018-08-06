@@ -21,10 +21,10 @@
 
 import Foundation
 
-struct AccessTokenVerifyResult: Decodable {
-    let channelID: String
-    let permissions: [LoginPermission]
-    let expiresIn: TimeInterval
+public struct AccessTokenVerifyResult: Decodable {
+    public let channelID: String
+    public let permissions: [LoginPermission]
+    public let expiresIn: TimeInterval
     
     enum CodingKeys: String, CodingKey {
         case clientID = "client_id"
@@ -32,7 +32,7 @@ struct AccessTokenVerifyResult: Decodable {
         case scope
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         channelID = try container.decode(String.self, forKey: .clientID)
         permissions = try container.decodeLoginPermissions(forKey: .scope)
