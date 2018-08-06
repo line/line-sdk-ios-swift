@@ -60,11 +60,17 @@ public class LoginManager {
     ///
     /// - Parameters:
     ///   - channelID: The channel ID your app is registering.
-    ///   - universalLinkURL: A universal link used to navigate back to your app from LINE client app. If `nil`,
-    ///                       only custom URL scheme will be used to open your app after authorization.
+    ///   - universalLinkURL: A universal link used to navigate back to your app from LINE client app.
     /// - Note:
     ///   This should be the first method you call before you access any other methods or properties in LineSDK.
     ///   A login manager cannot be setup for multiple times, so do not call it more than once.
+    ///
+    ///   Providing a valid `universalLinkURL` is strongly suggested. You need to setup your own universal link callback
+    ///   in your channel setting by following guide on LINE developer dev center page. When set properly, LINE client
+    ///   will try to bring up your app by universal link first, which dreamatically improves the secirity of
+    ///   authorization flow and protects your data. If `universalLinkURL` is `nil`, only custom URL scheme will be
+    ///   used to open your app after authorization in LINE client.
+    ///
     public func setup(channelID: String, universalLinkURL: URL?) {
         
         lock.lock()
@@ -82,6 +88,29 @@ public class LoginManager {
         Session.shared = Session(configuration: config)
     }
     
+    /// Login to LINE service.
+    ///
+    /// - Parameters:
+    ///   - permissions: The set of permissions which are required by client app.
+    ///   - viewController: The view controll from which LineSDK should present its login view controller.
+    ///                     If `nil`, the most top view controller in current view controller hierarchy will be used.
+    ///   - options: The options used during login process. See `LoginManagerOption` for more.
+    ///   - completion: The completion closure to be executed when login action finishes.
+    /// - Returns: A `LoginProcess` object which indicates this started login process.
+    ///
+    /// - Note:
+    ///   Only one process could be started at a time. You should not call this method again to start a new login
+    ///         process before `completion` being invoked.
+    ///
+    ///   If `.profile` is contained in `permissions`, the user profile will be retrieved during the login process
+    ///   and contained in the `userProfile` property of `LoginResult` in `completionHandler`. Otherwise, `userProfile`
+    ///   will be `nil`. You could use this profile to identify your user. See `UserProfile` for more.
+    ///
+    ///   The access token will be issued if user authorized your app. This token will be stored to keychain of your
+    ///   app automatically for later use. A refresh token will be stored as well, and all API invocation will try to
+    ///   refresh the access token if necessary, so basically you do not need to worry about it. However, if you would
+    ///   like to refresh the access token manully, use `LineSDKAPI.refreshAccessToken(with:)`.
+    ///
     @discardableResult
     public func login(
         permissions: Set<LoginPermission> = [],
@@ -143,10 +172,25 @@ public class LoginManager {
         }
     }
     
+    /// Logout current user by revoking the access token.
+    ///
+    /// - Parameter completion: The completion closure to be executed when logout action finishes.
     public func logout(completionHandler completion: @escaping (Result<()>) -> Void) {
         LineSDKAPI.revokeAccessToken(completionHandler: completion)
     }
     
+    /// Asks this `LoginManager` to handle a url callback from either LINE client app or web login flow.
+    ///
+    /// - Parameters:
+    ///   - app: The singleton app object.
+    ///   - url: The URL resource to open. This resource should be the URL iOS system pass to you in
+    ///          related `UIApplicationDelegate` methods.
+    ///   - options: A dictionary of URL handling options which passed to you in related
+    ///              `UIApplicationDelegate` methods.
+    /// - Returns: Whether the `url` is successfully handled or not. If the input `url` is a valid login callback url,
+    ///            it will be handled and `true` is returned.
+    /// - Note: This method has the same method signature as in `UIApplicationDelegate`. You can just pass in all
+    ///         arguments without modifying anything.
     @available(iOS 9.0, *)
     public func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let sourceApplication = options[.sourceApplication] as? String
@@ -154,6 +198,20 @@ public class LoginManager {
         return application(app, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
+    
+    /// Asks this `LoginManager` to handle a url callback from either LINE client app or web login flow.
+    ///
+    /// - Parameters:
+    ///   - application: The singleton app object.
+    ///   - url: The URL resource to open. This resource should be the URL iOS system pass to you in
+    ///          related `UIApplicationDelegate` methods.
+    ///   - sourceApplication: The source application bundle ID.
+    ///   - annotation: A property list supplied by the source app to communicate information to the receiving app.
+    /// - Returns: Whether the `url` is successfully handled or not. If the input `url` is a valid login callback url,
+    ///            it will be handled and `true` is returned.
+    /// - Note: This method has the same method signature as in `UIApplicationDelegate`. You can just pass in all
+    ///         arguments without modifying anything.
+    @available(iOS, deprecated:9.0, message: "Use application(_:open:options:) instead.")
     public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         // Not in login process. Ignore.
         guard let currentProcess = currentProcess else { return false }

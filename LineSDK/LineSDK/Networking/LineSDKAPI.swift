@@ -81,6 +81,8 @@ public struct LineSDKAPI {
                     completion(.failure(error))
                 }
             case .failure(let error):
+                // TODO: Maybe we want to recognize 400 error as logout success as well
+                // (to give client a chance to get rid of corrupted token data in case)
                 completion(.failure(error))
             }
         }
