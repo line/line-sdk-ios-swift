@@ -94,7 +94,7 @@ class UserProfileViewController: UIViewController, IndicatorDisplay {
             title: "Logout",
             message: "Do you really want to log out?",
             actions: [
-                .init(title: "Cancal", style: .cancel),
+                .init(title: "Cancel", style: .cancel),
                 .init(title: "Logout", style: .destructive) { _ in
                     self.logout()
                 }
