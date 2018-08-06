@@ -21,29 +21,50 @@
 
 import Foundation
 
+/// `LoginManager` takes responsibility of login process management. You could setup the LineSDK configuration,
+/// let your users login or logout with LINE authorization flows and check the authorizing state.
 public class LoginManager {
     
     let lock = NSLock()
     
+    /// Shared instance of manager. You should always use this instance to interact with LineSDK login process.
     public static let shared = LoginManager()
+    
+    /// Current login process. A non-`nil` value means there is an on-going process and LineSDK is waiting for the
+    /// login result. Otherwise, `nil`.
     public private(set) var currentProcess: LoginProcess?
-    var setup = false
+    
+    /// Returns whether current `LoginManager` instance is setup and ready to use. You should call `setup` method
+    /// to setup the SDK with its basic information before you call any other methods or properties in LineSDK.
     public var isSetupFinished: Bool {
         lock.lock()
         defer { lock.unlock() }
         return setup
     }
     
+    /// Returns whether a user was authorized and a token is valid.
     public var isAuthorized: Bool {
         return AccessTokenStore.shared.current != nil
     }
     
+    /// Returns whether the authorizing process is currently on-going.
     public var isAuthorizing: Bool {
         return currentProcess != nil
     }
     
+    var setup = false
+    
     private init() { }
     
+    /// Setups current `LoginManager` instance.
+    ///
+    /// - Parameters:
+    ///   - channelID: The channel ID your app is registering.
+    ///   - universalLinkURL: A universal link used to navigate back to your app from LINE client app. If `nil`,
+    ///                       only custom URL scheme will be used to open your app after authorization.
+    /// - Note:
+    ///   This should be the first method you call before you access any other methods or properties in LineSDK.
+    ///   A login manager cannot be setup for multiple times, so do not call it more than once.
     public func setup(channelID: String, universalLinkURL: URL?) {
         
         lock.lock()
@@ -65,6 +86,7 @@ public class LoginManager {
     public func login(
         permissions: Set<LoginPermission> = [],
         in viewController: UIViewController? = nil,
+        options: [LoginManagerOption] = [],
         completionHandler completion: @escaping (Result<LoginResult>) -> Void) -> LoginProcess? {
         
         lock.lock()
@@ -80,7 +102,7 @@ public class LoginManager {
             configuration: LoginConfiguration.shared,
             scopes: permissions,
             viewController: viewController)
-        process.start()
+        process.start(options)
         process.onSucceed.delegate(on: self) { [unowned process] (self, token) in
             self.currentProcess = nil
             do {

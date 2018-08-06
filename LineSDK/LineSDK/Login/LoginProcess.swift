@@ -89,13 +89,17 @@ public class LoginProcess {
         self.presentingViewController = viewController
     }
     
-    func start() {
+    func start(_ options: [LoginManagerOption]) {
         let otpRequest = PostOTPRequest(channelID: configuration.channelID)
         Session.shared.send(otpRequest) { result in
             switch result {
             case .success(let otp):
                 self.otpHolder = otp
-                self.startAppUniversalLinkFlow()
+                if options.contains(.onlyWebLogin) {
+                    self.startWebLoginFlow()
+                } else {
+                    self.startAppUniversalLinkFlow()
+                }
             case .failure(let error):
                 self.invokeFailure(error: error)
             }
