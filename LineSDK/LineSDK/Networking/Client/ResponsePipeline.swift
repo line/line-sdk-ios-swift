@@ -22,17 +22,17 @@
 import Foundation
 
 // Use class protocol for easier Equatable conforming
-protocol ResponsePipelineTerminator: class {
+public protocol ResponsePipelineTerminator: class {
     func parse<T: Request>(request: T, data: Data) throws -> T.Response
 }
 
 // Use class protocol for easier Equatable conforming
-protocol ResponsePipelineRedirector: class {
+public protocol ResponsePipelineRedirector: class {
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
     func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
-enum ResponsePipelineRedirectorAction {
+public enum ResponsePipelineRedirectorAction {
     case restart
     case restartWithout(ResponsePipeline)
     case stop(Error)
@@ -40,13 +40,13 @@ enum ResponsePipelineRedirectorAction {
     case continueWith(Data, HTTPURLResponse)
 }
 
-enum ResponsePipeline {
+public enum ResponsePipeline {
     case terminator(ResponsePipelineTerminator)
     case redirector(ResponsePipelineRedirector)
 }
 
 extension ResponsePipeline: Equatable {
-    static func == (lhs: ResponsePipeline, rhs: ResponsePipeline) -> Bool {
+    public static func == (lhs: ResponsePipeline, rhs: ResponsePipeline) -> Bool {
         switch (lhs, rhs) {
         case (.terminator(let l), .terminator(let r)): return l === r
         case (.redirector(let l), .redirector(let r)): return l === r

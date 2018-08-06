@@ -21,7 +21,7 @@
 
 import Foundation
 
-class Session: LazySingleton {
+public class Session: LazySingleton {
     
     enum HandleAction {
         case restart
@@ -53,12 +53,8 @@ class Session: LazySingleton {
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: delegate, delegateQueue: nil)
     }
     
-    func send<T>(_ request: T, handler: ((Result<T.Response>) -> Void)?) where T : Request {
-        send(request, callbackQueue: nil, handler: handler)
-    }
-    
     @discardableResult
-    func send<T: Request>(
+    public func send<T: Request>(
         _ request: T,
         callbackQueue: CallbackQueue? = nil,
         pipelines: [ResponsePipeline]? = nil,
@@ -252,7 +248,7 @@ extension SessionDelegate: SessionDelegateType {
 
 typealias SessionTaskResult = (Data?, URLResponse?, Error?)
 
-class SessionTask {
+public class SessionTask {
     let request: URLRequest
     let session: URLSession
     let task: URLSessionDataTask

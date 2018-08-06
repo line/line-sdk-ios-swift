@@ -21,7 +21,7 @@
 
 import Foundation
 
-enum HTTPMethod: String {
+public enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
     case put = "PUT"
@@ -36,7 +36,7 @@ enum HTTPMethod: String {
     }
 }
 
-enum AuthenticateMethod {
+public enum AuthenticateMethod {
     case none
     case token
     
@@ -60,7 +60,7 @@ enum AuthenticateMethod {
     }
 }
 
-enum ContentType {
+public enum ContentType {
     case none
     case formUrlEncoded
     case json
@@ -86,9 +86,9 @@ enum ContentType {
     }
 }
 
-typealias Parameters = [String: Any]
+public typealias Parameters = [String: Any]
 
-protocol Request {
+public protocol Request {
     associatedtype Response: Decodable
     
     var method: HTTPMethod { get }
@@ -112,7 +112,7 @@ protocol Request {
     var responseParser: JSONDecoder { get }
 }
 
-extension Request {
+public extension Request {
     var adapters: [RequestAdapter] {
         
         // Default header, UA etc
