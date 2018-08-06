@@ -29,7 +29,7 @@ protocol LazySingleton {
 }
 
 extension LazySingleton {
-    static var shared: T {
+    public static var shared: T {
         get {
             guard let session = _shared else {
                 Log.fatalError("Use \(T.self) before setup. Please call `LoginManager.setup` before you do any other things in LineSDK.")

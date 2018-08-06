@@ -29,7 +29,7 @@ extension Notification.Name {
 public let LineSDKOldAccessTokenUserInfoKey = "oldToken"
 public let LineSDKNewAccessTokenUserInfoKey = "newToken"
 
-class AccessTokenStore: LazySingleton {
+public class AccessTokenStore: LazySingleton {
     
     // In case we might do migration later on the token,
     // we need a way to identifier the token store version.
@@ -87,7 +87,7 @@ class AccessTokenStore: LazySingleton {
         }
     }
     
-    private(set) var current: AccessToken?
+    public private(set) var current: AccessToken?
     
     func setCurrentToken(_ token: AccessToken) throws {
         guard current != token else { return }

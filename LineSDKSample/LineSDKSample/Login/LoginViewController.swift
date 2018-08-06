@@ -22,9 +22,11 @@
 import UIKit
 import LineSDK
 
-class ViewController: UIViewController {
-    
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
+extension Notification.Name {
+    static let userDidLogin = Notification.Name("com.linecorp.linesdk_sample.userDidLogin")
+}
+
+class LoginViewController: UIViewController, IndicatorDisplay {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,38 +34,18 @@ class ViewController: UIViewController {
     }
     
     @IBAction func login(_ sender: Any) {
-        indicator.isHidden = false
-        indicator.startAnimating()
-        
+        showIndicator()
         LoginManager.shared.login(permissions: [.profile, .friends, .groups], in: self) {
             result in
+            self.hideIndicator()
             switch result {
-            case .success(let login): self.handleLoginSuccess(login)
-            case .failure(let error): self.handleLoginError(error)
+            case .success(let login):
+                UIAlertController.present(in: self, successResult: "\(login)") {
+                    NotificationCenter.default.post(name: .userDidLogin, object: login)
+                }
+            case .failure(let error):
+                UIAlertController.present(in: self, error: error)
             }
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-}
-
-extension ViewController {
-    func handleLoginError(_ error: Error) {
-        indicator.stopAnimating()
-        print("Failed: \(error)")
-        let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
-        alert.addAction(.init(title: "OK", style: .default))
-        present(alert, animated: true)
-    }
-    
-    func handleLoginSuccess(_ result: LoginResult) {
-        indicator.stopAnimating()
-        print("OK: \(result)")
-        let alert = UIAlertController(title: "Success", message: "\(result)", preferredStyle: .alert)
-        alert.addAction(.init(title: "OK", style: .default))
-        present(alert, animated: true)
     }
 }
