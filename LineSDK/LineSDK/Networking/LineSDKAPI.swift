@@ -29,7 +29,7 @@ public struct LineSDKAPI {
     ///   - refreshToken: Refresh token. Optional. The SDK will use the current refresh token if not provided.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: Completion block called when this API finishes.
+    ///   - completion: The completion closure to be executed when the API finishes.
     /// - Note:
     ///   If the token refresh process finishes without an issue, the received new token will be stored in keychain
     ///   automatically for later use. And you will get a `.LineSDKAccessTokenDidUpdate` notification. Normally,
@@ -60,11 +60,29 @@ public struct LineSDKAPI {
         }
     }
     
-    static func revokeAccessToken(
+    /// Revokes the access token.
+    ///
+    /// - Parameters:
+    ///   - token: The access token which needs to be revoked. The SDK will use current access token if not provided.
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: The completion closure to be executed when the API finishes.
+    /// - Note:
+    ///
+    public static func revokeAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<()>) -> Void)
     {
+        func handleSuccessResult() {
+            do {
+                try AccessTokenStore.shared.removeCurrentAccessToken()
+                completion(.success(()))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        
         guard let token = token ?? AccessTokenStore.shared.current?.value else {
             // No token input or found in store, just recognize it as success.
             queue.execute { completion(.success(())) }
@@ -74,16 +92,19 @@ public struct LineSDKAPI {
         Session.shared.send(request, callbackQueue: queue) { result in
             switch result {
             case .success(_):
-                do {
-                    try AccessTokenStore.shared.removeCurrentAccessToken()
-                    completion(.success(()))
-                } catch {
-                    completion(.failure(error))
-                }
+                handleSuccessResult()
             case .failure(let error):
-                // TODO: Maybe we want to recognize 400 error as logout success as well
-                // (to give client a chance to get rid of corrupted token data in case)
-                completion(.failure(error))
+                guard let sdkError = error as? LineSDKError,
+                      case .responseFailed(reason: .invalidHTTPStatusAPIError(let code, _, _)) = sdkError else
+                {
+                    completion(.failure(error))
+                    return
+                }
+                // We recognize response 400 means a success for revoking (since the token itself is invalid).
+                if code == 400 {
+                    Log.print(sdkError.localizedDescription)
+                    handleSuccessResult()
+                }
             }
         }
     }

@@ -31,4 +31,32 @@ class PostRevokeTokenRequestTests: LineSDKAPITests {
         let request = PostRevokeTokenRequest(channelID: "123", accessToken: "123")
         runTestSuccess(for: request) { _ in }
     }
+    
+    func testRequestFailWith400Response() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        let request = PostRevokeTokenRequest(channelID: "123", accessToken: "123")
+        
+        let stub = SessionDelegateStub(stub: .init(string: "{\"error\": \"invalid_request\"}", responseCode: 400))
+        let session = Session(configuration: config, delegate: stub)
+        session.send(request) { result in
+            XCTAssertNotNil(result.error)
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
+    
+    func testAPISuccessWith400Response() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        let stub = SessionDelegateStub(stub: .init(string: "{\"error\": \"invalid_request\"}", responseCode: 400))
+        Session._shared = Session(configuration: config, delegate: stub)
+        setupTestToken()
+        
+        LineSDKAPI.revokeAccessToken {result in
+            XCTAssertNotNil(result.value)
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
 }
