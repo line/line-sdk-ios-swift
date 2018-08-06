@@ -69,11 +69,11 @@ class PipelineTests: XCTestCase {
             case .stop(let error):
                 if let sdkError = error as? LineSDKError,
                    case .responseFailed(reason:
-                    .invalidHTTPStatusAuth(code: let code, error: let authErr, raw: let raw)) = sdkError
+                    .invalidHTTPStatusAPIError(code: let code, error: let authErr, raw: let raw)) = sdkError
                 {
                     XCTAssertEqual(code, 404)
                     XCTAssertEqual(authErr.error, "123")
-                    XCTAssertEqual(authErr.errorDescription, "sample")
+                    XCTAssertEqual(authErr.detail, "sample")
                     self.assertJSONText(raw, equalsTo: authError)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")
@@ -97,10 +97,10 @@ class PipelineTests: XCTestCase {
             case .stop(let error):
                 if let sdkError = error as? LineSDKError,
                     case .responseFailed(reason:
-                        .invalidHTTPStatusAPI(code: let code, error: let apiErr, raw: let raw)) = sdkError
+                        .invalidHTTPStatusAPIError(code: let code, error: let apiErr, raw: let raw)) = sdkError
                 {
                     XCTAssertEqual(code, 404)
-                    XCTAssertEqual(apiErr.message, "hello")
+                    XCTAssertEqual(apiErr.error, "hello")
                     self.assertJSONText(raw, equalsTo: apiError)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")

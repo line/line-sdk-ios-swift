@@ -20,6 +20,7 @@
 //
 
 import UIKit
+import LineSDK
 
 extension UIAlertController {
     @discardableResult
@@ -45,7 +46,7 @@ extension UIAlertController {
         return present(
             in: viewController,
             title: "Error",
-            message: "\(error)",
+            message: "\(error.localizedDescription)",
             actions: [
                 .init(title: "OK", style: .cancel) { _ in done?() }
             ]

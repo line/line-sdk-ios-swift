@@ -59,18 +59,18 @@ class PostOTPRequestTests: LineSDKAPITests {
             }
             
             guard case .responseFailed(
-                reason: .invalidHTTPStatusAuth(
+                reason: .invalidHTTPStatusAPIError(
                     code: let code,
                     error: let error,
                     raw: _)) = e else
             {
-                XCTFail("Error reason should be .invalidHTTPStatusAuth")
+                XCTFail("Error reason should be .invalidHTTPStatusAPIError")
                 return
             }
             
             XCTAssertEqual(code, 400)
             XCTAssertEqual(error.error, "invalid_request")
-            XCTAssertEqual(error.errorDescription, "some error")
+            XCTAssertEqual(error.detail, "some error")
             
             expect.fulfill()
         }

@@ -192,7 +192,7 @@ class Session: LazySingleton {
                 let value = try terminator.parse(request: request, data: data)
                 try done(.value(value))
             } catch {
-                throw LineSDKError.responseFailed(reason: .dataParsingFailed(error))
+                throw LineSDKError.responseFailed(reason: .dataParsingFailed(T.Response.self, data, error))
             }
         }
     }
