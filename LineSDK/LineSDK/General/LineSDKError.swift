@@ -107,6 +107,7 @@ public enum LineSDKError: Error {
     case generalError(reason: GeneralErrorReason)
 }
 
+// MARK: - Classifies the Error
 extension LineSDKError {
     /// Returns whether the `LineSDKError` is a request error.
     public var isRequestError: Bool {
@@ -126,7 +127,7 @@ extension LineSDKError {
     
     /// Returns whether the `LineSDKError` is an authorization error.
     public var isAuthorizeError: Bool {
-        if  case .authorizeFailed = self {
+        if case .authorizeFailed = self {
             return true
         }
         return false
@@ -134,13 +135,25 @@ extension LineSDKError {
     
     /// Returns whether the `LineSDKError` is a general error.
     public var isGeneralError: Bool {
-        if  case .generalError = self {
+        if case .generalError = self {
             return true
         }
         return false
     }
 }
 
+// MARK: - Convenience Properties
+extension LineSDKError {
+    /// Returns whether the `LineSDKError` is an authorization error with `.userCancelled` as its reason.
+    public var isUserCancelled: Bool {
+        if case .authorizeFailed(.userCancelled) = self {
+            return true
+        }
+        return false
+    }
+}
+
+// MARK: - Error Description
 extension LineSDKError: LocalizedError {
     /// Describes why an error happens in human-readable text.
     public var errorDescription: String? {
