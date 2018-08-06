@@ -21,12 +21,19 @@
 
 import Foundation
 
+/// Represents the possible options when login to LINE with `LoginManager`
 public struct LoginManagerOption: OptionSet {
     
+    /// Raw value of the option
     public let rawValue: Int
+    
+    /// Initializes an option from raw value.
+    ///
+    /// - Parameter rawValue: Underlying raw value of option.
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
     
+    /// Skipping LINE client app auth flow. Only use web login flow to login.
     public static let onlyWebLogin = LoginManagerOption(rawValue: 1)
 }

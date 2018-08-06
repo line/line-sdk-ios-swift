@@ -68,6 +68,7 @@ public enum LineSDKError: Error {
     /// - malformedHierarchy: The view hierarchy or view controller hierarchy is malformed and LineSDK cannot present
     ///                       its login view controller.
     /// - userCancelled: User cancelled or interrupted the login process.
+    /// - forceStopped: `stop` method is called on the login process.
     /// - callbackURLSchemeNotMatching: The received `URL` while opening app does not match the URL scheme defined.
     /// - invalidSourceApplication: The source application is invalid to finish auth process.
     /// - malformedRedirectURL: The received `URL` while opening app is not a valid one, or does not contain all
@@ -83,6 +84,7 @@ public enum LineSDKError: Error {
         case exhaustedLoginFlow
         case malformedHierarchy
         case userCancelled
+        case forceStopped
         case callbackURLSchemeNotMatching
         case invalidSourceApplication
         case malformedRedirectURL(url: URL, message: String?)
@@ -211,6 +213,8 @@ extension LineSDKError.AuthorizeErrorReason {
                    "present its login view controller."
         case .userCancelled:
             return "User cancelled or interrupted the login process."
+        case .forceStopped:
+            return "Method stop is called on the login process."
         case .callbackURLSchemeNotMatching:
             return "The received `URL` while opening app does not match the URL scheme defined."
         case .invalidSourceApplication:

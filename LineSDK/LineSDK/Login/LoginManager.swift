@@ -52,6 +52,7 @@ public class LoginManager {
         return currentProcess != nil
     }
     
+    /// A flag to prevent setup multiple times
     var setup = false
     
     private init() { }
@@ -134,11 +135,7 @@ public class LoginManager {
         process.start(options)
         process.onSucceed.delegate(on: self) { [unowned process] (self, token) in
             self.currentProcess = nil
-            do {
-                try self.postLogin(token, process: process, completionHandler: completion)
-            } catch {
-                completion(.failure(error))
-            }
+            self.postLogin(token, process: process, completionHandler: completion)
         }
         process.onFail.delegate(on: self) { (self, error) in
             self.currentProcess = nil
@@ -149,12 +146,25 @@ public class LoginManager {
         return currentProcess
     }
     
+    /// Actions after auth process finishes. We do something like storing token and getting user profile before we
+    /// inform framework users every thing is done.
+    ///
+    /// - Parameters:
+    ///   - token: The access token retrieved from auth server.
+    ///   - process: The related login process initialized by `login` method.
+    ///   - completion: The completion closure to be executed when the whole login process finishes.
     func postLogin(
         _ token: AccessToken,
         process: LoginProcess,
-        completionHandler completion: @escaping (Result<LoginResult>) -> Void) throws {
+        completionHandler completion: @escaping (Result<LoginResult>) -> Void) {
         // Store token
-        try AccessTokenStore.shared.setCurrentToken(token)
+        do {
+            try AccessTokenStore.shared.setCurrentToken(token)
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        
         if token.permissions.contains(.profile) {
             Session.shared.send(GetUserProfileRequest()) { profileResult in
                 let result = LoginResult.init(

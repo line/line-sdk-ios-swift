@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// Result code from LINE app auth module
 enum LineAppURLResultCode: String {
     case success = "SUCCESS"
     case disallowed = "DISALLOWED"
@@ -31,11 +32,14 @@ enum LineAppURLResultCode: String {
     case loginFailure = "LOGINFAIL"
 }
 
+/// Result code from LINE web auth flow
 enum LineWebURLResultError: String {
     case accessDenied = "access_denied"
     case serverError = "server_error"
 }
 
+/// Converts an input open app `URL` to a login process response if possible. Later we could use the `requestToken` in
+/// this url to exchange real access token for LINE APIs.
 struct LoginProcessURLResponse {
     
     let requestToken: String
@@ -83,9 +87,14 @@ struct LoginProcessURLResponse {
                 throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: messgae))
             }
             requestToken = token
-        case .cancelled: throw LineSDKError.authorizeFailed(reason: .userCancelled)
-        case .disallowed: throw LineSDKError.authorizeFailed(reason: .userCancelled)
-        default: throw LineSDKError.authorizeFailed(reason: .lineClientError(code: code.rawValue, message: messgae))
+        case .cancelled:
+            throw LineSDKError.authorizeFailed(reason: .userCancelled)
+        case .disallowed:
+            // Disallowed happens when user reject the auth in the confirm screen.
+            // However, here we do not make `.cancelled` and `.disallowed` distinct.
+            throw LineSDKError.authorizeFailed(reason: .userCancelled)
+        default:
+            throw LineSDKError.authorizeFailed(reason: .lineClientError(code: code.rawValue, message: messgae))
         }
     }
     

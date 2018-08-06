@@ -40,6 +40,10 @@ struct LoginConfiguration: LazySingleton {
     
     let APIHost = Constant.APIHost
     
+    /// Whether a `url` is a valid  customize URL scheme of current app.
+    ///
+    /// - Parameter url: The input URL from LINE client or web login flow.
+    /// - Returns: `true` if the `url` is a valid app URL scheme for current app. Otherwise, `false`.
     func isValidCustomizeURL(url: URL) -> Bool {
         guard let scheme = url.scheme else {
             return false
@@ -51,8 +55,13 @@ struct LoginConfiguration: LazySingleton {
             return false
         }
         return true
+        
     }
-    
+
+    /// Compares `url` with current set `universalLinkURL`, to check whether `url` is a valid universal URL or not.
+    ///
+    /// - Parameter url: The input URL from LINE client or web login flow.
+    /// - Returns: `true` if the `url` is a valid app universal link for current app. Otherwise, `false`.
     func isValidUniversalLinkURL(url: URL) -> Bool {
         
         guard let setURL = universalLinkURL else {
@@ -76,6 +85,10 @@ struct LoginConfiguration: LazySingleton {
         return true
     }
     
+    /// Checkes whether the `appID` is on the white list of calling back source app.
+    ///
+    /// - Parameter appID: The app ID of the source app which opens current app by `open(:url:)`.
+    /// - Returns: `true` if `appID` is from a valid auth application.
     func isValidSourceApplication(appID: String) -> Bool {
         var validPrefixes = ["jp.naver", "com.apple"]
         if let currentAppID = Bundle.main.bundleIdentifier {
