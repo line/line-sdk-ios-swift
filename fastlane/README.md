@@ -31,6 +31,11 @@ Run tests
 fastlane ios doc
 ```
 Generate documentation
+### ios change_log
+```
+fastlane ios change_log
+```
+
 
 ----
 
