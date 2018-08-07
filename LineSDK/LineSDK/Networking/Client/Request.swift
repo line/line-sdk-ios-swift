@@ -176,7 +176,7 @@ public extension Request {
             case (_, .json):
                 adapters.append(JSONParameterEncoder(parameters: parameters))
             case (_, .none):
-                Log.fatalError("You must specifiy a contentType to use POST request.")
+                Log.fatalError("You must specify a contentType to use POST request.")
             }
         }
         

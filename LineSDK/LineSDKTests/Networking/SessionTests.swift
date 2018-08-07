@@ -87,11 +87,11 @@ class SessionTests: XCTestCase {
     }
     
     func testSessionHandleContinuesRedirector() {
-        let request = StubRequestWithContinusPipeline()
+        let request = StubRequestWithContinuesPipeline()
         let session = Session(configuration: configuration)
         let pipelines = request.pipelines
         guard case .redirector(let redirector) = pipelines[0],
-              let continuer = redirector as? StubRequestWithContinusPipeline.ContinuesRedirector else
+              let continuer = redirector as? StubRequestWithContinuesPipeline.ContinuesRedirector else
         {
             XCTFail("The first pipeline should be a ContinuesRedirector")
             return
@@ -100,7 +100,7 @@ class SessionTests: XCTestCase {
         XCTAssertFalse(continuer.invoked)
         try! session.handle(
             request: request,
-            data: StubRequestWithContinusPipeline.successData,
+            data: StubRequestWithContinuesPipeline.successData,
             response: .responseFromCode(200),
             pipelines: pipelines,
             fullPipelines: pipelines)

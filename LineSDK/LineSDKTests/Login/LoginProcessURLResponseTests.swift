@@ -25,13 +25,13 @@ import XCTest
 class LoginProcessURLResponseTests: XCTestCase {
     
     func testInitFromClientResponse() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?resultCode=SUCCESS&resultMessage=abc&requestToken=123"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?resultCode=SUCCESS&resultMessage=abc&requestToken=123"
         let response = try! LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "state")
         XCTAssertEqual(response.requestToken, "123")
     }
     
     func testInitFromClientResponseWithoutToken() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?resultCode=SUCCESS&resultMessage=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?resultCode=SUCCESS&resultMessage=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
@@ -47,7 +47,7 @@ class LoginProcessURLResponseTests: XCTestCase {
     }
     
     func testInitFromClientUserCancel() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?resultCode=CANCELLED&resultMessage=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?resultCode=CANCELLED&resultMessage=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
@@ -61,7 +61,7 @@ class LoginProcessURLResponseTests: XCTestCase {
     }
     
     func testInitFromClientUserDisallow() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?resultCode=DISALLOWED&resultMessage=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?resultCode=DISALLOWED&resultMessage=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
@@ -75,23 +75,23 @@ class LoginProcessURLResponseTests: XCTestCase {
     }
     
     func testInitFromClientOtherErrorCode() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?resultCode=INVALIDPARAM&resultMessage=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?resultCode=INVALIDPARAM&resultMessage=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
             let e = error as! LineSDKError
-            guard case LineSDKError.authorizeFailed(reason: .lineClientError(let code, let messge)) = e else {
+            guard case LineSDKError.authorizeFailed(reason: .lineClientError(let code, let message)) = e else {
                 XCTFail("Should be .lineClientError error")
                 return
             }
             XCTAssertEqual(code, "INVALIDPARAM")
-            XCTAssertEqual(messge, "abc")
+            XCTAssertEqual(message, "abc")
         }
     }
     
     func testInitFromClientUnknownCode() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?resultCode=UNKNOWN&resultMessage=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?resultCode=UNKNOWN&resultMessage=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
@@ -106,13 +106,13 @@ class LoginProcessURLResponseTests: XCTestCase {
     }
     
     func testInitFromWebResponse() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?code=123&state=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=abc"
         let response = try! LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
         XCTAssertEqual(response.requestToken, "123")
     }
     
     func testInitFromWebResponseWithoutToken() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?state=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?state=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
@@ -128,7 +128,7 @@ class LoginProcessURLResponseTests: XCTestCase {
     }
     
     func testInitFromWebStateNotMatch() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?code=123&state=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "hello")
             XCTFail("Should not init response")
@@ -144,7 +144,7 @@ class LoginProcessURLResponseTests: XCTestCase {
     }
     
     func testInitFromWebUserCancel() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?error=access_denied&error_description=123&state=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?error=access_denied&error_description=123&state=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
@@ -158,7 +158,7 @@ class LoginProcessURLResponseTests: XCTestCase {
     }
     
     func testInitFromWebServerError() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?error=server_error&error_description=123&state=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?error=server_error&error_description=123&state=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
@@ -174,7 +174,7 @@ class LoginProcessURLResponseTests: XCTestCase {
     }
     
     func testInitFromWebUnknownError() {
-        let urlString = "\(Constant.thirdPartyAppRetrurnURL)?error=some_error&error_description=123&state=abc"
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?error=some_error&error_description=123&state=abc"
         do {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")

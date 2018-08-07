@@ -30,7 +30,7 @@ public class Session: LazySingleton {
     ///
     /// - value: A final result of `Response`. It means the response pipelines finished without problem.
     /// - action: An action should applied to current handling process. See `HandleAction` for more.
-    enum HanldeResult<T> {
+    enum HandleResult<T> {
         
         /// Handle action should by applied.
         ///
@@ -197,7 +197,7 @@ public class Session: LazySingleton {
         response: HTTPURLResponse,
         pipelines: [ResponsePipeline],
         fullPipelines: [ResponsePipeline],
-        done: @escaping ((HanldeResult<T.Response>) throws -> Void)) throws
+        done: @escaping ((HandleResult<T.Response>) throws -> Void)) throws
     {
         guard !pipelines.isEmpty else {
             Log.fatalError("The pipeline is already empty but request does not be parsed." +
@@ -210,7 +210,7 @@ public class Session: LazySingleton {
         
         // Recursive calling on `handle` in this `switch` statement might be an issue when there are tons of
         // redirectors in the pipeline. However, it should not happen at all in a foreseeable future. If there
-        // is any problem on it, we might need a pipeline queue to break the recursiving.
+        // is any problem on it, we might need a pipeline queue to break the recursion.
         //
         switch pipeline {
         case .redirector(let redirector):

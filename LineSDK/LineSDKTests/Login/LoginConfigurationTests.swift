@@ -28,13 +28,13 @@ class LoginConfigurationTests: XCTestCase {
         let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
         
         let results = [
-            "/somepath/",
+            "/somePath/",
             "https://sample.com",
             "randomUrl://authorize",
-            "\(Constant.thirdPartyAppRetrurnScheme)://somePath/",
-            "\(Constant.thirdPartyAppRetrurnScheme)://authorize?hello=world",
-            "\(Constant.thirdPartyAppRetrurnScheme)://authorize",
-            "\(Constant.thirdPartyAppRetrurnScheme.uppercased())://Authorize"
+            "\(Constant.thirdPartyAppReturnScheme)://somePath/",
+            "\(Constant.thirdPartyAppReturnScheme)://authorize?hello=world",
+            "\(Constant.thirdPartyAppReturnScheme)://authorize",
+            "\(Constant.thirdPartyAppReturnScheme.uppercased())://Authorize"
         ].map { config.isValidCustomizeURL(url: URL(string: $0)!) }
 
         XCTAssertEqual(results, [

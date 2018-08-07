@@ -31,15 +31,15 @@ struct Constant {
         return version
     }()
     
-    static var thirdPartyAppRetrurnScheme: String {
+    static var thirdPartyAppReturnScheme: String {
         guard let appID = Bundle.main.bundleIdentifier else {
             Log.fatalError("You need to specify a bundle ID in your app's Info.plist")
         }
         return "\(Constant.thirdPartySchemePrefix).\(appID)"
     }
     
-    static var thirdPartyAppRetrurnURL: String {
-        return "\(Constant.thirdPartyAppRetrurnScheme)://authorize/"
+    static var thirdPartyAppReturnURL: String {
+        return "\(Constant.thirdPartyAppReturnScheme)://authorize/"
     }
     
     static var lineAppAuthURLv1: URL {

@@ -29,7 +29,7 @@ extension Notification.Name {
     /// `LineSDKNotificationKey.oldAccessToken` key.
     public static let LineSDKAccessTokenDidUpdate = Notification.Name("com.linecorp.linesdk.AccessTokenDidUpdate")
     
-    /// Sent when LineSDK removed current token from keychian. This normally happens when you logout a user or invoke
+    /// Sent when LineSDK removed current token from keychain. This normally happens when you logout a user or invoke
     /// `revokeToken` API. Expired token will not be removed automatically since it could be refreshed when
     /// used to access an API. The `object` of the posted `Notification` is the token just removed.
     public static let LineSDKAccessTokenDidRemove = Notification.Name("com.linecorp.linesdk.AccessTokenDidRemove")

@@ -66,12 +66,12 @@ struct LoginProcessURLResponse {
     
     init(clientURL url: URL, queryItems items: [URLQueryItem]) throws {
         var codeString = ""
-        var messgae: String?
+        var message: String?
         var token: String?
         for item in items {
             switch item.name {
             case "resultCode": codeString = item.value ?? ""
-            case "resultMessage": messgae = item.value
+            case "resultMessage": message = item.value
             case "requestToken": token = item.value
             default: break
             }
@@ -84,7 +84,7 @@ struct LoginProcessURLResponse {
         switch code {
         case .success:
             guard let token = token else {
-                throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: messgae))
+                throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: message))
             }
             requestToken = token
         case .cancelled:
@@ -94,7 +94,7 @@ struct LoginProcessURLResponse {
             // However, here we do not make `.cancelled` and `.disallowed` distinct.
             throw LineSDKError.authorizeFailed(reason: .userCancelled)
         default:
-            throw LineSDKError.authorizeFailed(reason: .lineClientError(code: code.rawValue, message: messgae))
+            throw LineSDKError.authorizeFailed(reason: .lineClientError(code: code.rawValue, message: message))
         }
     }
     

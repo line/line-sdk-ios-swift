@@ -24,7 +24,7 @@ import UIKit
 import SafariServices
 
 /// Represents a login process initialized by a `LoginManager`. Normally, a process contains multiple login flows,
-/// which will run serially. If a previous flow successed in auth the user, later flows will not be executed.
+/// which will run serially. If a previous flow succeeded in auth the user, later flows will not be executed.
 public class LoginProcess {
     
     /// Observes application switching to foreground.
@@ -248,12 +248,12 @@ public class LoginProcess {
         
         do {
             let response = try LoginProcessURLResponse(from: url, validatingWith: processID)
-            let tokenExchageRequest = PostExchangeTokenRequest(
+            let tokenExchangeRequest = PostExchangeTokenRequest(
                 channelID: configuration.channelID,
                 code: response.requestToken,
                 otpValue: otp.otp,
-                redirectURI: Constant.thirdPartyAppRetrurnURL)
-            Session.shared.send(tokenExchageRequest) { tokenResult in
+                redirectURI: Constant.thirdPartyAppReturnURL)
+            Session.shared.send(tokenExchangeRequest) { tokenResult in
                 switch tokenResult {
                 case .success(let token): self.invokeSuccess(result: token)
                 case .failure(let error): self.invokeFailure(error: error)
@@ -452,7 +452,7 @@ extension String {
         let result =
             "/oauth2/v2.1/authorize/consent?response_type=code&sdk_ver=\(Constant.SDKVersion)" +
             "&client_id=\(channelID)&scope=\((scopes.map { $0.rawValue }).joined(separator: " "))" +
-            "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartyAppRetrurnURL)" +
+            "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartyAppReturnURL)" +
             universalLinkQuery
         
         return result
@@ -530,7 +530,7 @@ extension UIViewController {
             window.makeKey()
         }
         guard var topViewController = keyWindow?.rootViewController else {
-            Log.print("Cannot find a root view controll in current window. " +
+            Log.print("Cannot find a root view controller in current window. " +
                 "Please check your view controller hierarchy.")
             return nil
         }

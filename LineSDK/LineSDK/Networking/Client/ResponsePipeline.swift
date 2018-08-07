@@ -170,7 +170,7 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
                     )
                 )
             } catch {
-                // An unknown error resposne format, let framework user decide what to do.
+                // An unknown error response format, let framework user decide what to do.
                 try closure(.stop(
                     LineSDKError.responseFailed(
                         reason: .invalidHTTPStatusAPIError(code: response.statusCode, error: nil, raw: raw))

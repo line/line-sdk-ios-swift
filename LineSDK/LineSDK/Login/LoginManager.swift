@@ -68,7 +68,7 @@ public class LoginManager {
     ///
     ///   Providing a valid `universalLinkURL` is strongly suggested. You need to setup your own universal link callback
     ///   in your channel setting by following guide on LINE developer dev center page. When set properly, LINE client
-    ///   will try to bring up your app by universal link first, which dreamatically improves the secirity of
+    ///   will try to bring up your app by universal link first, which dramatically improves the security of
     ///   authorization flow and protects your data. If `universalLinkURL` is `nil`, only custom URL scheme will be
     ///   used to open your app after authorization in LINE client.
     ///
@@ -78,7 +78,7 @@ public class LoginManager {
         defer { lock.unlock() }
         
         guard !setup else {
-            Log.assertionFailure("Trying to set configuration multiplet times is not permitted.")
+            Log.assertionFailure("Trying to set configuration multiple times is not permitted.")
             return
         }
         defer { setup = true }
@@ -93,7 +93,7 @@ public class LoginManager {
     ///
     /// - Parameters:
     ///   - permissions: The set of permissions which are required by client app.
-    ///   - viewController: The view controll from which LineSDK should present its login view controller.
+    ///   - viewController: The view controller from which LineSDK should present its login view controller.
     ///                     If `nil`, the most top view controller in current view controller hierarchy will be used.
     ///   - options: The options used during login process. See `LoginManagerOption` for more.
     ///   - completion: The completion closure to be executed when login action finishes.
@@ -110,7 +110,7 @@ public class LoginManager {
     ///   The access token will be issued if user authorized your app. This token will be stored to keychain of your
     ///   app automatically for later use. A refresh token will be stored as well, and all API invocation will try to
     ///   refresh the access token if necessary, so basically you do not need to worry about it. However, if you would
-    ///   like to refresh the access token manully, use `LineSDKAPI.refreshAccessToken(with:)`.
+    ///   like to refresh the access token manually, use `LineSDKAPI.refreshAccessToken(with:)`.
     ///
     @discardableResult
     public func login(

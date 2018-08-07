@@ -48,7 +48,7 @@ struct LoginConfiguration: LazySingleton {
         guard let scheme = url.scheme else {
             return false
         }
-        guard scheme.lowercased() == Constant.thirdPartyAppRetrurnScheme.lowercased() else {
+        guard scheme.lowercased() == Constant.thirdPartyAppReturnScheme.lowercased() else {
             return false
         }
         guard url.host?.lowercased() == "authorize" else {
@@ -85,7 +85,7 @@ struct LoginConfiguration: LazySingleton {
         return true
     }
     
-    /// Checkes whether the `appID` is on the white list of calling back source app.
+    /// Checks whether the `appID` is on the white list of calling back source app.
     ///
     /// - Parameter appID: The app ID of the source app which opens current app by `open(:url:)`.
     /// - Returns: `true` if `appID` is from a valid auth application.

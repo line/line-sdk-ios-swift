@@ -60,7 +60,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
     let tokenType: String
     
     /// When this token will expire. It is calculated by `createdAt` and a expires duration.
-    /// This valud depends on the system time when `createdAt` was determined, so it might not be the actual data when
+    /// This value depends on the system time when `createdAt` was determined, so it might not be the actual data when
     /// this token gets expired.
     public var expiresAt: Date {
         return createdAt.addingTimeInterval(expiresIn)

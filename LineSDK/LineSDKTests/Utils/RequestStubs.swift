@@ -77,7 +77,7 @@ struct StubRequestWithSingleTerminatorPipeline: Request, ResponseDataStub {
     static let success = "{\"foo\": \"bar\"}"
 }
 
-struct StubRequestWithContinusPipeline: Request, ResponseDataStub {
+struct StubRequestWithContinuesPipeline: Request, ResponseDataStub {
     
     class ContinuesRedirector: ResponsePipelineRedirector {
         

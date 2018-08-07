@@ -33,6 +33,6 @@ public struct UserProfile: Decodable {
     /// Picture URL of current authorized user. `nil` if the user does not set a picture as avatar.
     public let pictureUrl: URL?
     
-    /// Status message of current autorized user. `nil` if the user does not set a status message.
+    /// Status message of current authorized user. `nil` if the user does not set a status message.
     public let statusMessage: String?
 }

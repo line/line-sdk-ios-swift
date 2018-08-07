@@ -35,7 +35,7 @@ public struct LoginPermission: Hashable {
     /// Whether open_id should be returned as login result.
     public static let openID                         = LoginPermission(rawValue: "openid")
     
-    /// Wheter could access the user's profile, including user ID, display name, etc.
+    /// Whether could access the user's profile, including user ID, display name, etc.
     public static let profile                        = LoginPermission(rawValue: "profile")
     
     /// Whether could access user's email.
@@ -78,7 +78,7 @@ public struct LoginPermission: Hashable {
     public static let merchant                       = LoginPermission(rawValue: "merchant")
     
     public static let gender                         = LoginPermission(rawValue: "gender")
-    public static let birthdate                      = LoginPermission(rawValue: "birthdate")
+    public static let birthDate                      = LoginPermission(rawValue: "birthdate")
     public static let address                        = LoginPermission(rawValue: "address")
     public static let realName                       = LoginPermission(rawValue: "real_name")
     public static let botAdd                         = LoginPermission(rawValue: "bot.add")

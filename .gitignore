@@ -127,3 +127,4 @@ fastlane/test_output
 
 linesdk-ios-swift-beta-config
 docs
+.vscode

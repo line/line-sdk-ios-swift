@@ -82,7 +82,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             XCTAssertFalse(LoginManager.shared.isAuthorized)
             XCTAssertTrue(LoginManager.shared.isAuthorizing)
             
-            let urlString = "\(Constant.thirdPartyAppRetrurnURL)?code=123&state=\(process.processID)"
+            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
             let handled = process.resumeOpenURL(url: URL(string: urlString)!, sourceApplication: "com.apple.safari")
             XCTAssertTrue(handled)
         }
