@@ -35,7 +35,7 @@ public class Session: LazySingleton {
         /// Handle action should by applied.
         ///
         /// - restart: Restart the whole request without modifying original pipelines.
-        /// - restartWith: Restart the whole request with the give pipelines.
+        /// - restartWith: Restart the whole request with the given pipelines.
         /// - stop: Stop handling process and an error is reported.
         enum HandleAction {
             case restart
