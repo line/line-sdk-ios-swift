@@ -189,7 +189,7 @@
         <scene sceneID="Jih-P1-iyL">
             <objects>
                 <navigationController title="APINav" id="WNl-HR-yP7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="API" id="D5g-YX-C3e"/>
+                    <tabBarItem key="tabBarItem" title="API" image="api" id="D5g-YX-C3e"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="scK-GX-v50">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -206,7 +206,7 @@
         <scene sceneID="XGx-ih-g3w">
             <objects>
                 <navigationController title="LoginNav" id="IW0-D2-Gk8" customClass="LoginNavigationController" customModule="LineSDKSample" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="User" id="6Mk-yA-WxR"/>
+                    <tabBarItem key="tabBarItem" title="User" image="user" id="6Mk-yA-WxR"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="w71-hL-hR8" customClass="LoginNav">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -238,4 +238,8 @@
             <point key="canvasLocation" x="833" y="134"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="api" width="25" height="25"/>
+        <image name="user" width="25" height="25"/>
+    </resources>
 </document>
