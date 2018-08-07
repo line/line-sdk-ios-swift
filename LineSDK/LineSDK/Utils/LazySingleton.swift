@@ -38,7 +38,7 @@ extension LazySingleton {
         }
         set {
             guard _shared == nil else {
-                Log.fatalError("Trying to set \(T.self) multiplet times is not permitted.")
+                Log.fatalError("Trying to set \(T.self) multiple times is not permitted.")
             }
             _shared = newValue
         }

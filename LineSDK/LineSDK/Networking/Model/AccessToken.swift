@@ -23,15 +23,45 @@ import Foundation
 
 protocol AccessTokenType {}
 
+/// Represents the token which is used to access LINE APIs. Most of LINE API request requires a token as authorization.
+/// You will have a valid token after user authorized your application to his/her content.
+/// An `AccessToken` is bound to certain `permissions` or so-called scopes. It defines which ones of APIs you could
+/// access, and which ones you could not. You need to choose the permissions in LINE Developer center site and in the
+/// login method correctly.
+///
+/// A token will expire after a certain period. You could check it in `expiresAt`, which calculated the expire time by
+/// your local timing setting. LineSDK will try to refresh the token automatically if necessary, when you access any
+/// APIs which require an authorization.
+///
+/// By default, LineSDK will also store the token to keychain of your app, as well as setup all authorization when you
+/// access LINE's APIs through framework request methods.
+///
+/// You should never try to create a token yourself. By accessing the `current` property of a `AccessTokenStore`, you
+/// could get a valid token in use if there is one.
+///
 public struct AccessToken: Codable, AccessTokenType, Equatable {
+    
+    /// The access token value.
     public let value: String
+    
     let expiresIn: TimeInterval
+    
+    /// When this token was created. It is the local time of current token received.
     public let createdAt: Date
+    
+    /// ID token bound to this token. Only exists if you have the `.openID` permission for the token.
     public let IDToken: String?
+    
+    /// Refresh token bound to the access token.
     public let refreshToken: String
+    
+    /// Permissions of the token.
     public let permissions: [LoginPermission]
     let tokenType: String
     
+    /// When this token will expire. It is calculated by `createdAt` and a expires duration.
+    /// This value depends on the system time when `createdAt` was determined, so it might not be the actual date when
+    /// this token gets expired.
     public var expiresAt: Date {
         return createdAt.addingTimeInterval(expiresIn)
     }

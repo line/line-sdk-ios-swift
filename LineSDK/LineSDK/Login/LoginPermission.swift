@@ -21,22 +21,39 @@
 
 import Foundation
 
+/// Represents the possible login permissions being sent when login to LINE.
 public struct LoginPermission: Hashable {
+    /// Raw value of the permission. A `LoginPermission` is composed by a plain raw string.
     public let rawValue: String
+    
+    /// Inits a `LoginPermission` value with a plain string. You could use this
+    /// if a pre-defined permission not defined in the framework.
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
     
+    /// Whether open_id should be returned as login result.
     public static let openID                         = LoginPermission(rawValue: "openid")
+    
+    /// Whether could access the user's profile, including user ID, display name, etc.
     public static let profile                        = LoginPermission(rawValue: "profile")
+    
+    /// Whether could access user's email.
     public static let email                          = LoginPermission(rawValue: "email")
+    
+    /// Whether could get friends information of current user.
+    public static let friends                        = LoginPermission(rawValue: "friends")
+    
+    /// Whether could get groups information of current user.
+    public static let groups                         = LoginPermission(rawValue: "groups")
+    
+    /// Whether could write a message as current user.
+    public static let messageWrite                   = LoginPermission(rawValue: "message.write")
+    
     public static let phone                          = LoginPermission(rawValue: "phone")
     public static let birthday                       = LoginPermission(rawValue: "birthday")
     public static let profilePictureUpdate           = LoginPermission(rawValue: "profile.picture.update")
     
-    public static let friends                        = LoginPermission(rawValue: "friends")
-    public static let groups                         = LoginPermission(rawValue: "groups")
-    public static let messageWrite                   = LoginPermission(rawValue: "message.write")
     public static let timelinePost                   = LoginPermission(rawValue: "timeline.post")
     public static let addAssociatedOfficialAccounts  = LoginPermission(rawValue: "add_associated_official_accounts")
     
@@ -61,7 +78,7 @@ public struct LoginPermission: Hashable {
     public static let merchant                       = LoginPermission(rawValue: "merchant")
     
     public static let gender                         = LoginPermission(rawValue: "gender")
-    public static let birthdate                      = LoginPermission(rawValue: "birthdate")
+    public static let birthDate                      = LoginPermission(rawValue: "birthdate")
     public static let address                        = LoginPermission(rawValue: "address")
     public static let realName                       = LoginPermission(rawValue: "real_name")
     public static let botAdd                         = LoginPermission(rawValue: "bot.add")

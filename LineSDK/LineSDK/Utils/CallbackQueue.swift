@@ -21,6 +21,14 @@
 
 import Foundation
 
+/// Represents callback queue behaviors when an calling of closure be dispatched.
+///
+/// - asyncMain: Dispatch the calling to `DispatchQueue.main` with an `async` behavior.
+/// - currentMainOrAsync: Dispatch the calling to `DispatchQueue.main` with an `async` behavior if current queue is not
+///                       `.main`. Otherwise, call the closure immediately in current main queue.
+/// - untouch: Do not change the calling queue for closure.
+/// - dispatch: Dispatches to a specified `DispatchQueue`.
+/// - operation: Uses a specified `OperationQueue` and add closure to the operation queue to perform.
 public enum CallbackQueue {
     case asyncMain
     case currentMainOrAsync

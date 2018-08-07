@@ -33,7 +33,6 @@ import Foundation
 /// - generalError: Other general errors might happen in LineSDK.
 public enum LineSDKError: Error {
     
-    
     /// The underlying reason for why `.requestFailed` happens.
     ///
     /// - missingURL: `URL` is missing while encoding a request.
@@ -50,16 +49,15 @@ public enum LineSDKError: Error {
     /// - URLSessionError: Error happens in the underlying `URLSession`.
     /// - nonHTTPURLResponse: The response is not a valid `HTTPURLResponse`.
     /// - dataParsingFailed: Cannot parse received data to an instance of target type.
-    /// - invalidHTTPStatusAPIError: Received response contains an invalid HTTP status code, and the response can be
-    ///                              converted to an `APIError` object to indicate what is going wrong.
-    /// - invalidHTTPStatus: Received response contains an invalid HTTP status code, but the response cannot be
-    ///                      converted to an `APIError` due to unknown response format.
+    /// - invalidHTTPStatusAPIError: Received response contains an invalid HTTP status code. If the response data
+    ///                              can be converted to an `APIError` object, it will be associated as the `error`
+    ///                              to indicate what is going wrong. Otherwise, the `error` will be `nil`. In both
+    ///                              cases, `raw` will contain the plain error text.
     public enum ResponseErrorReason {
         case URLSessionError(Error)
         case nonHTTPURLResponse
         case dataParsingFailed(Any.Type, Data, Error)
-        case invalidHTTPStatusAPIError(code: Int, error: APIError, raw: String?)
-        case invalidHTTPStatus(code: Int, raw: String?)
+        case invalidHTTPStatusAPIError(code: Int, error: APIError?, raw: String?)
     }
     
     /// The underlying reason for why `.authorizeFailed` happens.
@@ -68,6 +66,7 @@ public enum LineSDKError: Error {
     /// - malformedHierarchy: The view hierarchy or view controller hierarchy is malformed and LineSDK cannot present
     ///                       its login view controller.
     /// - userCancelled: User cancelled or interrupted the login process.
+    /// - forceStopped: `stop` method is called on the login process.
     /// - callbackURLSchemeNotMatching: The received `URL` while opening app does not match the URL scheme defined.
     /// - invalidSourceApplication: The source application is invalid to finish auth process.
     /// - malformedRedirectURL: The received `URL` while opening app is not a valid one, or does not contain all
@@ -83,6 +82,7 @@ public enum LineSDKError: Error {
         case exhaustedLoginFlow
         case malformedHierarchy
         case userCancelled
+        case forceStopped
         case callbackURLSchemeNotMatching
         case invalidSourceApplication
         case malformedRedirectURL(url: URL, message: String?)
@@ -194,9 +194,11 @@ extension LineSDKError.ResponseErrorReason {
                 return result
             }
         case .invalidHTTPStatusAPIError(let code, let error, let raw):
-            return "HTTP status code is not valid in response. Code: \(code), error: \(error.error), raw data: \(raw ?? "nil")"
-        case .invalidHTTPStatus(let code, let raw):
-            return "HTTP status code is not valid in response. Code: \(code), raw data: \(raw ?? "nil")"
+            if let error = error {
+                return "HTTP status code is not valid in response. Code: \(code), error: \(error.error), raw data: \(raw ?? "nil")"
+            } else {
+                return "HTTP status code is not valid in response. Code: \(code), raw data: \(raw ?? "nil")"
+            }
         }
     }
 }
@@ -211,6 +213,8 @@ extension LineSDKError.AuthorizeErrorReason {
                    "present its login view controller."
         case .userCancelled:
             return "User cancelled or interrupted the login process."
+        case .forceStopped:
+            return "Method stop is called on the login process."
         case .callbackURLSchemeNotMatching:
             return "The received `URL` while opening app does not match the URL scheme defined."
         case .invalidSourceApplication:

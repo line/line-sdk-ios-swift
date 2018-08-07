@@ -21,7 +21,7 @@
 
 import Foundation
 
-struct PostRefreshTokenRequest: APIRequest {
+struct PostRefreshTokenRequest: Request {
     let channelID: String
     let refreshToken: String
     

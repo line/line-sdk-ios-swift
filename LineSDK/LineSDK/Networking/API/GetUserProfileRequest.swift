@@ -21,11 +21,11 @@
 
 import Foundation
 
-struct GetUserProfileRequest: APIRequest {
-    let method: HTTPMethod = .get
-    let path = "/v2/profile"
-    let authenticate: AuthenticateMethod = .token
+public struct GetUserProfileRequest: Request {
+    public let method: HTTPMethod = .get
+    public let path = "/v2/profile"
+    public let authenticate: AuthenticateMethod = .token
     
-    typealias Response = UserProfile
+    public typealias Response = UserProfile
 }
 

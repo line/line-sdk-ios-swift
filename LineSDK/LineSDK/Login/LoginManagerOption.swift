@@ -1,5 +1,5 @@
 //
-//  PostOTPRequest.swift
+//  LoginManagerOption.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,16 +21,19 @@
 
 import Foundation
 
-struct PostOTPRequest: Request {
-    let channelID: String
+/// Represents the possible options when login to LINE with `LoginManager`
+public struct LoginManagerOption: OptionSet {
     
-    let method: HTTPMethod = .post
-    let path = "/oauth2/v2.1/otp"
-    let contentType: ContentType = .formUrlEncoded
-    let authenticate: AuthenticateMethod = .none
+    /// Raw value of the option
+    public let rawValue: Int
     
-    var parameters: [String : Any]? { return ["client_id": channelID] }
-
-    typealias Response = OneTimePassword   
+    /// Initializes an option from raw value.
+    ///
+    /// - Parameter rawValue: Underlying raw value of option.
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    
+    /// Skipping LINE client app auth flow. Only use web login flow to login.
+    public static let onlyWebLogin = LoginManagerOption(rawValue: 1)
 }
-

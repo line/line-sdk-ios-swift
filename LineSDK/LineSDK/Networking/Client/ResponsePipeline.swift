@@ -21,18 +21,38 @@
 
 import Foundation
 
-// Use class protocol for easier Equatable conforming
-protocol ResponsePipelineTerminator: class {
+
+/// Represents the final stage of response pipelines. It will be used to parse response data to
+/// a final `Response` object of a certain `Request`.
+public protocol ResponsePipelineTerminator: class { // Use class protocol for easier Equatable conforming
+    /// Parse input `data` to a `Response`.
+    ///
+    /// - Parameters:
+    ///   - request: Original `request` object.
+    ///   - data: Received `Data` from `Session`.
+    /// - Returns: A parsed `Response` object.
+    /// - Throws: An error happens during the parsing process.
     func parse<T: Request>(request: T, data: Data) throws -> T.Response
 }
 
-// Use class protocol for easier Equatable conforming
-protocol ResponsePipelineRedirector: class {
+/// Represents a redirection might be required to the response pipelines. It would be a chance
+/// to take side effect on current response and data, then perform additional handling by
+/// invoking `closure` with a proper `ResponsePipelineRedirectorAction`.
+public protocol ResponsePipelineRedirector: class { // Use class protocol for easier Equatable conforming
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
     func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
-enum ResponsePipelineRedirectorAction {
+/// Actions for `ResponsePipelineRedirector` result. A redirector needs to decide where to redirect
+/// current handling after it applied its side effect. This enum provides possible destination and
+/// behavior for a redirector.
+///
+/// - restart: The current request needs to be restarted with original pipelines.
+/// - restartWithout: The current request needs to be restarted, but excluding a certain pipeline.
+/// - stop: The handling process should be stopped due to an error.
+/// - `continue`: The handling process should continue.
+/// - continueWith: The handling process should continue with modified data and response.
+public enum ResponsePipelineRedirectorAction {
     case restart
     case restartWithout(ResponsePipeline)
     case stop(Error)
@@ -40,13 +60,20 @@ enum ResponsePipelineRedirectorAction {
     case continueWith(Data, HTTPURLResponse)
 }
 
-enum ResponsePipeline {
+/// Represents pipeline for response. A pipeline will take the response and its data from `Session`.
+/// At the end of a pipeline, there should be always a `terminator` pipeline to convert data to a
+/// `Response` object. In the middle of the pipelines, there could be multiple `redirector`s to
+/// perform some side effects.
+///
+/// - terminator: Associates with a `ResponsePipelineTerminator`, to terminate the pipeline.
+/// - redirector: Associates with a `ResponsePipelineRedirector`, to redirect current handling process.
+public enum ResponsePipeline {
     case terminator(ResponsePipelineTerminator)
     case redirector(ResponsePipelineRedirector)
 }
 
 extension ResponsePipeline: Equatable {
-    static func == (lhs: ResponsePipeline, rhs: ResponsePipeline) -> Bool {
+    public static func == (lhs: ResponsePipeline, rhs: ResponsePipeline) -> Bool {
         switch (lhs, rhs) {
         case (.terminator(let l), .terminator(let r)): return l === r
         case (.redirector(let l), .redirector(let r)): return l === r
@@ -55,15 +82,27 @@ extension ResponsePipeline: Equatable {
     }
 }
 
-class ParsePipeline: ResponsePipelineTerminator {
+/// A terminator pipeline with a JSON decoder to parse data.
+public class JSONParsePipeline: ResponsePipelineTerminator {
     
-    let parser: JSONDecoder
+    /// Underlying JSON parser of this pipeline.
+    public let parser: JSONDecoder
     
-    init(_ parser: JSONDecoder) {
+    /// Initializes a `JSONParsePipeline`.
+    ///
+    /// - Parameter parser: JSON parser which will be used to parse input data.
+    public init(_ parser: JSONDecoder) {
         self.parser = parser
     }
     
-    func parse<T: Request>(request: T, data: Data) throws -> T.Response {
+    /// Parse input `data` to a `Response`.
+    ///
+    /// - Parameters:
+    ///   - request: Original `request` object.
+    ///   - data: Received `Data` from `Session`.
+    /// - Returns: A parsed `Response` object.
+    /// - Throws: An error happens during the parsing process.
+    public func parse<T: Request>(request: T, data: Data) throws -> T.Response {
         return try parser.decode(T.Response.self, from: data)
     }
 }
@@ -131,10 +170,10 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
                     )
                 )
             } catch {
-                // An unknown error resposne format, let framework user decide what to do.
+                // An unknown error response format, let framework user decide what to do.
                 try closure(.stop(
                     LineSDKError.responseFailed(
-                        reason: .invalidHTTPStatus(code: response.statusCode, raw: raw))
+                        reason: .invalidHTTPStatusAPIError(code: response.statusCode, error: nil, raw: raw))
                     )
                 )
             }

@@ -21,17 +21,22 @@
 
 import Foundation
 
-struct GetVerifyTokenRequest: APIRequest {
+/// Represents the request of verifying an access token.
+public struct GetVerifyTokenRequest: Request {
     
-    let accessToken: String
+    public let accessToken: String
     
-    let method: HTTPMethod = .get
-    let path = "/oauth2/v2.1/verify"
-    let authenticate: AuthenticateMethod = .none
+    public init(accessToken: String) {
+        self.accessToken = accessToken
+    }
     
-    var parameters: Parameters? {
+    public let method: HTTPMethod = .get
+    public let path = "/oauth2/v2.1/verify"
+    public let authenticate: AuthenticateMethod = .none
+    
+    public var parameters: Parameters? {
         return [ "access_token": accessToken ]
     }
     
-    typealias Response = AccessTokenVerifyResult
+    public typealias Response = AccessTokenVerifyResult
 }

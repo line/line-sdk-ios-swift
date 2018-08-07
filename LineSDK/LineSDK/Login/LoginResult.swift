@@ -21,8 +21,13 @@
 
 import Foundation
 
+/// Represents the successful result of login process.
 public struct LoginResult {
+    /// The access token obtained by login process.
     public let accessToken: AccessToken
+    /// The permissions bound to the `accessToken` from the authorization.
     public let permissions: Set<LoginPermission>
+    /// A `UserProfile` value contains basic user information like user id, display name and avatar URL.
+    /// Only exists when `.profile` permission contained.
     public let userProfile: UserProfile?
 }

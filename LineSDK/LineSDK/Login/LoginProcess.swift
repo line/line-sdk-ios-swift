@@ -23,15 +23,23 @@ import Foundation
 import UIKit
 import SafariServices
 
+/// Represents a login process initialized by a `LoginManager`. Normally, a process contains multiple login flows,
+/// which will run serially. If a previous flow succeeded in auth the user, later flows will not be executed.
 public class LoginProcess {
     
-    // If the app switching happens during login process, we want to
-    // inspect the event of switched back from another app (Safari or LINE or any other)
-    // If SDK container app has not been invoked by an `open(url:)`, we thought current
-    // login process fails.
+    /// Observes application switching to foreground.
+    /// - Note:
+    /// If the app switching happens during login process, we want to
+    /// inspect the event of switched back from another app (Safari or LINE or any other)
+    /// If the framework container app has not been started up by an `open(url:)`, we think current
+    /// login process fails and we need to call the completion closuer with a `.userCancelled` error.
     class AppSwitchingObserver {
-        
+        // A token holds current observing. It will be released and trigger remove observer
+        // when this `AppSwitchingObserver` gets released.
         var token: NotificationToken?
+        
+        // Controls whether we really need the trigger. By setting this to `false`, `onTrigger` will not be
+        // called even a `.UIApplicationDidBecomeActive` event received.
         var valid: Bool = true
         
         let onTrigger = Delegate<(), Void>()
@@ -53,11 +61,17 @@ public class LoginProcess {
     let configuration: LoginConfiguration
     let scopes: Set<LoginPermission>
     
+    // Flows of login process. A flow will be `nil` until it is running, so we could tell which one should take
+    // responsibility to handle a url callback response.
+    
+    // LINE Client app auth flow captured by LINE universal link.
     var appUniversalLinkFlow: AppUniversalLinkFlow?
+    // LINE Client app auth flow by LINE customize URL scheme.
     var appAuthSchemeFlow: AppAuthSchemeFlow?
+    // Web login flow with Safari View Controller or Mobile Safari
     var webLoginFlow: WebLoginFlow? {
         didSet {
-            // Dismiss safari view controller (if exists) when reset web login flow
+            // Dismiss safari view controller (if exists) when reset web login flow.
             if webLoginFlow == nil {
                 oldValue?.dismiss()
             }
@@ -70,14 +84,10 @@ public class LoginProcess {
     
     weak var presentingViewController: UIViewController?
     
+    /// A UUID string of current process. Used to verify with server `state` response.
     let processID: String
     
-    var otpHolder: OneTimePassword?
-    
-    var otp: OneTimePassword {
-        guard let value = otpHolder else { Log.fatalError("The one time password does not exist.") }
-        return value
-    }
+    var otp: OneTimePassword!
     
     let onSucceed = Delegate<AccessToken, Void>()
     let onFail = Delegate<Error, Void>()
@@ -89,19 +99,31 @@ public class LoginProcess {
         self.presentingViewController = viewController
     }
     
-    func start() {
+    func start(_ options: [LoginManagerOption]) {
         let otpRequest = PostOTPRequest(channelID: configuration.channelID)
         Session.shared.send(otpRequest) { result in
             switch result {
             case .success(let otp):
-                self.otpHolder = otp
-                self.startAppUniversalLinkFlow()
+                self.otp = otp
+                if options.contains(.onlyWebLogin) {
+                    self.startWebLoginFlow()
+                } else {
+                    self.startAppUniversalLinkFlow()
+                }
             case .failure(let error):
                 self.invokeFailure(error: error)
             }
         }
     }
     
+    
+    /// Stops this login process. The login process will fail with a `.forceStopped` error.
+    public func stop() {
+        invokeFailure(error: LineSDKError.authorizeFailed(reason: .forceStopped))
+    }
+    
+    // App switching observer should only work when external app switching happens during login process.
+    // That means, we should not call this when login with SFSafariViewController.
     private func setupAppSwitchingObserver() {
         let observer = AppSwitchingObserver()
         observer.onTrigger.delegate(on: self) { (self, _) in
@@ -136,10 +158,11 @@ public class LoginProcess {
                 } else {
                     // No lineauth2 scheme supported. Make user to choose
                     // install/upgrade LINE, or continue login with web.
+                    // TODO: We need localize these text.
                     let mainActionTitle = self.canUseLineAuthV1 ? "Upgrade" : "Install"
                     
                     let actions: [UIAlertAction] = [
-                        UIAlertAction(title: mainActionTitle, style: .default) { _ in
+                        .init(title: mainActionTitle, style: .default) { _ in
                             UIApplication.shared.openLINEInAppStore()
                             self.setupAppSwitchingObserver()
                         },
@@ -221,17 +244,17 @@ public class LoginProcess {
             return false
         }
         
-        // It is the callback url we could handle, so the app switching observer should be invalidate.
+        // It is the callback url we could handle, so the app switching observer should be invalidated.
         appSwitchingObserver?.valid = false
         
         do {
             let response = try LoginProcessURLResponse(from: url, validatingWith: processID)
-            let tokenExchageRequest = PostExchangeTokenRequest(
+            let tokenExchangeRequest = PostExchangeTokenRequest(
                 channelID: configuration.channelID,
                 code: response.requestToken,
                 otpValue: otp.otp,
-                redirectURI: Constant.thirdPartyAppRetrurnURL)
-            Session.shared.send(tokenExchageRequest) { tokenResult in
+                redirectURI: Constant.thirdPartyAppReturnURL)
+            Session.shared.send(tokenExchangeRequest) { tokenResult in
                 switch tokenResult {
                 case .success(let token): self.invokeSuccess(result: token)
                 case .failure(let error): self.invokeFailure(error: error)
@@ -324,7 +347,7 @@ class AppAuthSchemeFlow {
     
     func start() {
         if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [UIApplicationOpenURLOptionUniversalLinksOnly: true]) {
+            UIApplication.shared.open(url, options: [:]) {
                 opened in
                 self.onNext.call(opened)
             }
@@ -409,11 +432,12 @@ class WebLoginFlow: NSObject {
 @available(iOS 9.0, *)
 extension WebLoginFlow: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        // This happens when user tap "Cancel" in the SFSafariViewController.
         onCancel.call()
     }
 }
 
-// Helpers for creating urls in login flows
+// Helpers for creating urls for login process
 extension String {
     static func returnUri(
         channelID: String,
@@ -429,7 +453,7 @@ extension String {
         let result =
             "/oauth2/v2.1/authorize/consent?response_type=code&sdk_ver=\(Constant.SDKVersion)" +
             "&client_id=\(channelID)&scope=\((scopes.map { $0.rawValue }).joined(separator: " "))" +
-            "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartyAppRetrurnURL)" +
+            "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartyAppReturnURL)" +
             universalLinkQuery
         
         return result
@@ -507,7 +531,7 @@ extension UIViewController {
             window.makeKey()
         }
         guard var topViewController = keyWindow?.rootViewController else {
-            Log.print("Cannot find a root view controll in current window. " +
+            Log.print("Cannot find a root view controller in current window. " +
                 "Please check your view controller hierarchy.")
             return nil
         }

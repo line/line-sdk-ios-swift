@@ -21,15 +21,28 @@
 
 import Foundation
 
-class Session: LazySingleton {
+/// `Session` takes the responsibility of sending a `Request` through `URLSession` for LINE APIs.
+/// It respects `adapters` and `pipelines` properties of `Request`, to create proper request and handle the response
+/// in a designed way.
+public class Session: LazySingleton {
     
-    enum HandleAction {
-        case restart
-        case restartWith(pipelines: [ResponsePipeline])
-        case stop(Error)
-    }
-    
-    enum HanldeResult<T> {
+    /// The result of response `handle` method could give.
+    ///
+    /// - value: A final result of `Response`. It means the response pipelines finished without problem.
+    /// - action: An action should applied to current handling process. See `HandleAction` for more.
+    enum HandleResult<T> {
+        
+        /// Handle action should by applied.
+        ///
+        /// - restart: Restart the whole request without modifying original pipelines.
+        /// - restartWith: Restart the whole request with the given pipelines.
+        /// - stop: Stop handling process and an error is reported.
+        enum HandleAction {
+            case restart
+            case restartWith(pipelines: [ResponsePipeline])
+            case stop(Error)
+        }
+        
         case value(T)
         case action(HandleAction)
     }
@@ -39,8 +52,6 @@ class Session: LazySingleton {
     let baseURL: URL
     let session: URLSession
     let delegate: SessionDelegateType
-    
-    let callbackQueue = CallbackQueue.asyncMain
     
     convenience init(configuration: LoginConfiguration) {
         let delegate = SessionDelegate()
@@ -53,24 +64,45 @@ class Session: LazySingleton {
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: delegate, delegateQueue: nil)
     }
     
-    func send<T>(_ request: T, handler: ((Result<T.Response>) -> Void)?) where T : Request {
-        send(request, callbackQueue: nil, handler: handler)
+    /// Send a `Request` with underlying session.
+    ///
+    /// - Parameters:
+    ///   - request: An `Request` instance which defines necessary information for the request.
+    ///   - callbackQueue: A queue options on which the `completion` closure should be executed.
+    ///                    Default is `.currentMainOrAsync`.
+    ///   - completion: The completion closure to be executed when the session sending finishes.
+    /// - Returns: A `SessionTask` object to indicate the task.
+    @discardableResult
+    public func send<T: Request>(
+        _ request: T,
+        callbackQueue: CallbackQueue = .asyncMain,
+        completionHandler completion: ((Result<T.Response>) -> Void)? = nil) -> SessionTask?
+    {
+        return send(request, callbackQueue: callbackQueue, pipelines: nil, completionHandler: completion)
     }
     
+    /// Send a `Request` with underlying session.
+    ///
+    /// - Parameters:
+    ///   - request: An `Request` instance which defines necessary information for the request.
+    ///   - callbackQueue: A queue options on which the `completion` closure should be executed.
+    ///                    Default is `.currentMainOrAsync`.
+    ///   - pipelines: The pipelines should be used to override `request.pipelines`. When provided, the `Session` will
+    ///                ignore the Default is `nil`,
+    ///   - completion: The completion closure to be executed when the session sending finishes.
+    /// - Returns: A `SessionTask` object to indicate the task.
     @discardableResult
     func send<T: Request>(
         _ request: T,
-        callbackQueue: CallbackQueue? = nil,
-        pipelines: [ResponsePipeline]? = nil,
-        handler: ((Result<T.Response>) -> Void)? = nil) -> SessionTask?
+        callbackQueue: CallbackQueue = .asyncMain,
+        pipelines: [ResponsePipeline]?,
+        completionHandler completion: ((Result<T.Response>) -> Void)? = nil) -> SessionTask?
     {
-        let callbackQueue = callbackQueue ?? self.callbackQueue
-        
-        let urlRequest: URLRequest!
+        let urlRequest: URLRequest
         do {
             urlRequest = try create(request)
         } catch {
-            callbackQueue.execute { handler?(.failure(error)) }
+            callbackQueue.execute { completion?(.failure(error)) }
             return nil
         }
         
@@ -79,10 +111,10 @@ class Session: LazySingleton {
             switch value {
             case (_, _, let error?):
                 let error = LineSDKError.responseFailed(reason: .URLSessionError(error))
-                callbackQueue.execute { handler?(.failure(error)) }
+                callbackQueue.execute { completion?(.failure(error)) }
             case (let data?, let response as HTTPURLResponse, _):
                 do {
-                    let pipelines = pipelines ?? request.pipelines
+                    let pipelines = pipelines ?? (request.prefixPipelines ?? []) + request.pipelines
                     try self.handle(
                         request: request,
                         data: data,
@@ -91,26 +123,37 @@ class Session: LazySingleton {
                         fullPipelines: pipelines)
                     {
                         result in
+                        
                         switch result {
                         case .value(let value):
-                            callbackQueue.execute { handler?(.success(value)) }
-                        case .action(.restart):
-                            self.send(request, callbackQueue: callbackQueue, handler: handler)
-                        case .action(.restartWith(let pipelines)):
-                            self.send(request, callbackQueue: callbackQueue, pipelines: pipelines, handler: handler)
+                            callbackQueue.execute { completion?(.success(value)) }
                         case .action(.stop(let error)):
-                            callbackQueue.execute { handler?(.failure(error)) }
+                            callbackQueue.execute { completion?(.failure(error)) }
+                        case .action(.restart):
+                            self.send(
+                                request,
+                                callbackQueue: callbackQueue,
+                                pipelines: nil,
+                                completionHandler: completion)
+                        case .action(.restartWith(let pipelines)):
+                            self.send(
+                                request,
+                                callbackQueue: callbackQueue,
+                                pipelines: pipelines,
+                                completionHandler: completion)
                         }
                     }
                 } catch {
-                    callbackQueue.execute { handler?(.failure(error)) }
+                    callbackQueue.execute { completion?(.failure(error)) }
                 }
             default:
                 let error = LineSDKError.responseFailed(reason: .nonHTTPURLResponse)
-                callbackQueue.execute { handler?(.failure(error)) }
+                callbackQueue.execute { completion?(.failure(error)) }
             }
         }
         
+        // `shouldTaskStart` is only for testing purpose, to prevent a real request and
+        // intercept with a predefined response for returning.
         if delegate.shouldTaskStart(sessionTask) {
             delegate.add(sessionTask)
             sessionTask.resume()
@@ -119,37 +162,60 @@ class Session: LazySingleton {
         return sessionTask
     }
     
+    /// Create a request based on `Request` definition.
+    ///
+    /// - Parameter request: `Request` definition to create the real `URLRequest`.
+    /// - Returns: Configured request.
+    /// - Throws: Any error might happen during creating the request.
     func create<T: Request>(_ request: T) throws -> URLRequest {
         let url = baseURL.appendingPathComponent(request.path)
-        let urlRequest = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
+        let urlRequest = URLRequest(
+            url: url,
+            cachePolicy: .reloadIgnoringLocalCacheData,
+            timeoutInterval: request.timeout)
         
-        let adaptedRequest = try request.adapters.reduce(urlRequest) { r, adapter in
+        let adapters = request.adapters + (request.suffixAdapters ?? [])
+        let adaptedRequest = try adapters.reduce(urlRequest) { r, adapter in
             try adapter.adapted(r)
         }
         return adaptedRequest
     }
     
+    /// Handle the result of a finished `SessionTask` with pipelines.
+    ///
+    /// - Parameters:
+    ///   - request: The corresponding original `Request` of this response.
+    ///   - data: `Data` received for the response.
+    ///   - response: An `HTTPURLResponse` object from `URLSession` delegate.
+    ///   - pipelines: Pipelines should be applied to current handle process.
+    ///   - fullPipelines: Full pipelines of original request.
+    ///   - done: Invoked when a handling result prepared, to determine the next pipeline step.
+    /// - Throws: The error happens during the handling process.
     func handle<T: Request>(
         request: T,
         data: Data,
         response: HTTPURLResponse,
         pipelines: [ResponsePipeline],
         fullPipelines: [ResponsePipeline],
-        done: @escaping ((HanldeResult<T.Response>) throws -> Void)) throws
+        done: @escaping ((HandleResult<T.Response>) throws -> Void)) throws
     {
         guard !pipelines.isEmpty else {
             Log.fatalError("The pipeline is already empty but request does not be parsed." +
                 "Please at least set a terminator pipeline to the request `pipelines` property.")
         }
         var leftPipelines = pipelines
+        
+        // Handle the first pipeline.
         let pipeline = leftPipelines.removeFirst()
+        
+        // Recursive calling on `handle` in this `switch` statement might be an issue when there are tons of
+        // redirectors in the pipeline. However, it should not happen at all in a foreseeable future. If there
+        // is any problem on it, we might need a pipeline queue to break the recursion.
+        //
         switch pipeline {
         case .redirector(let redirector):
+            // The redirector decides to not apply. Go next.
             guard redirector.shouldApply(request: request, data: data, response: response) else {
-                // Recursive calling on `handle` might be an issue when there are tons of
-                // redirectors in the pipeline. However, it should not happen at all in a
-                // foreseeable future. If there is any problem on it, we might need a pipeline
-                // queue to break the recursiving.
                 try self.handle(
                     request: request,
                     data: data,
@@ -159,9 +225,11 @@ class Session: LazySingleton {
                     done: done)
                 return
             }
+            // Otherwise, do a redirection following the redirector action.
             try redirector.redirect(request: request, data: data, response: response) { action in
                 switch action {
                 case .continue:
+                    // Normally continue to next pipeline in handling process.
                     try self.handle(
                         request: request,
                         data: data,
@@ -169,17 +237,20 @@ class Session: LazySingleton {
                         pipelines: leftPipelines,
                         fullPipelines: fullPipelines,
                         done: done)
-                case .continueWith(let data, let response):
+                case .continueWith(let newData, let newResponse):
+                    // Continue with modified data or response.
                     try self.handle(
                         request: request,
-                        data: data,
-                        response: response,
+                        data: newData,
+                        response: newResponse,
                         pipelines: leftPipelines,
                         fullPipelines: fullPipelines,
                         done: done)
                 case .restart:
+                    // Tell `Session` to restart the request.
                     try done(.action(.restart))
                 case .restartWithout(let pipeline):
+                    // Tell `Session` to restart the request, but exclude a certain pipeline.
                     let pipelines = fullPipelines.filter { $0 != pipeline }
                     try done(.action(.restartWith(pipelines: pipelines)))
                 case .stop(let error):
@@ -205,6 +276,7 @@ protocol SessionDelegateType: URLSessionDataDelegate {
     func shouldTaskStart(_ task: SessionTask) -> Bool
 }
 
+// A thread-safe holder for session tasks.
 class SessionDelegate: NSObject {
     private var tasks: [Int: SessionTask] = [:]
     private let lock = NSLock()
@@ -252,7 +324,8 @@ extension SessionDelegate: SessionDelegateType {
 
 typealias SessionTaskResult = (Data?, URLResponse?, Error?)
 
-class SessionTask {
+/// Represents a task of `Session`.
+public class SessionTask {
     let request: URLRequest
     let session: URLSession
     let task: URLSessionDataTask

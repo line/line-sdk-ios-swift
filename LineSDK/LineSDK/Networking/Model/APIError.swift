@@ -30,9 +30,18 @@ struct InternalAPIError: Decodable {
     public let message: String
 }
 
+/// Represents API error happens when interacting with LINE APIs.
+/// If server returns an error in a known format, the error will be parsed to an `APIError` and
+/// an `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` as its reason will be thrown out.
+///
 public struct APIError {
+    
+    /// Error state received from server.
     public let error: String
+    
+    /// Detail of the error.
     public let detail: String?
+    
     init(_ original: InternalAPIError) {
         self.error = original.message
         self.detail = nil

@@ -24,23 +24,23 @@ import XCTest
 
 class KeychainStoreTests: XCTestCase {
     
-    var keychianStore: KeychainStore!
+    var keychainStore: KeychainStore!
     
     override func setUp() {
         super.setUp()
-        keychianStore = KeychainStore(service: "test")
-        try! keychianStore.removeAll()
+        keychainStore = KeychainStore(service: "test")
+        try! keychainStore.removeAll()
     }
 
     func testString() {
         do {
             // Adding
-            try keychianStore.set("123", for: "user")
-            try keychianStore.set("abc", for: "pass")
+            try keychainStore.set("123", for: "user")
+            try keychainStore.set("abc", for: "pass")
             
-            let user = try keychianStore.string(for: "user")
+            let user = try keychainStore.string(for: "user")
             XCTAssertEqual(user, "123")
-            let pass = try keychianStore.string(for: "pass")
+            let pass = try keychainStore.string(for: "pass")
             XCTAssertEqual(pass, "abc")
         } catch {
             XCTFail(error.localizedDescription)
@@ -48,12 +48,12 @@ class KeychainStoreTests: XCTestCase {
         
         do {
             // Updating
-            try keychianStore.set("321", for: "user")
-            try keychianStore.set("xyz", for: "pass")
+            try keychainStore.set("321", for: "user")
+            try keychainStore.set("xyz", for: "pass")
             
-            let user = try keychianStore.string(for: "user")
+            let user = try keychainStore.string(for: "user")
             XCTAssertEqual(user, "321")
-            let pass = try keychianStore.string(for: "pass")
+            let pass = try keychainStore.string(for: "pass")
             XCTAssertEqual(pass, "xyz")
         } catch {
             XCTFail(error.localizedDescription)
@@ -61,12 +61,12 @@ class KeychainStoreTests: XCTestCase {
         
         do {
             // Removing
-            try keychianStore.remove("user")
-            try keychianStore.remove("pass")
+            try keychainStore.remove("user")
+            try keychainStore.remove("pass")
             
-            let user = try keychianStore.string(for: "user")
+            let user = try keychainStore.string(for: "user")
             XCTAssertNil(user)
-            let pass = try keychianStore.string(for: "pass")
+            let pass = try keychainStore.string(for: "pass")
             XCTAssertNil(pass)
         } catch {
             XCTFail(error.localizedDescription)
@@ -79,8 +79,8 @@ class KeychainStoreTests: XCTestCase {
         do {
             // Adding
             let value = Value(foo: "hello", bar: 100)
-            try keychianStore.set(value, for: "key1", using: encoder)
-            let obj: Value? = try keychianStore.value(for: "key1", using: decoder)
+            try keychainStore.set(value, for: "key1", using: encoder)
+            let obj: Value? = try keychainStore.value(for: "key1", using: decoder)
             XCTAssertNotNil(obj)
             XCTAssertEqual(obj?.foo, "hello")
             XCTAssertEqual(obj?.bar, 100)
@@ -91,8 +91,8 @@ class KeychainStoreTests: XCTestCase {
         do {
             // Updating
             let value = Value(foo: "world", bar: 999)
-            try keychianStore.set(value, for: "key1", using: encoder)
-            let obj: Value? = try keychianStore.value(for: "key1", using: decoder)
+            try keychainStore.set(value, for: "key1", using: encoder)
+            let obj: Value? = try keychainStore.value(for: "key1", using: decoder)
             XCTAssertNotNil(obj)
             XCTAssertEqual(obj?.foo, "world")
             XCTAssertEqual(obj?.bar, 999)
@@ -102,8 +102,8 @@ class KeychainStoreTests: XCTestCase {
         
         do {
             // Removing
-            try keychianStore.remove("key1")
-            let obj: Value? = try keychianStore.value(for: "key1", using: decoder)
+            try keychainStore.remove("key1")
+            let obj: Value? = try keychainStore.value(for: "key1", using: decoder)
             XCTAssertNil(obj)
         } catch {
             XCTFail(error.localizedDescription)
@@ -112,10 +112,10 @@ class KeychainStoreTests: XCTestCase {
     
     func testEmptyCase() {
         do {
-            let user = try keychianStore.string(for: "user")
+            let user = try keychainStore.string(for: "user")
             XCTAssertNil(user)
             // No throw to remove an empty entry
-            try keychianStore.remove("user")
+            try keychainStore.remove("user")
         } catch {
             XCTFail(error.localizedDescription)
         }
@@ -124,10 +124,10 @@ class KeychainStoreTests: XCTestCase {
     
     func testContains() {
         do {
-            try keychianStore.set("123", for: "user")
+            try keychainStore.set("123", for: "user")
             
-            let result1 = try keychianStore.contains("user")
-            let result2 = try keychianStore.contains("pass")
+            let result1 = try keychainStore.contains("user")
+            let result2 = try keychainStore.contains("pass")
             
             XCTAssertTrue(result1)
             XCTAssertFalse(result2)

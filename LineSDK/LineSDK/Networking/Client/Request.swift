@@ -21,7 +21,13 @@
 
 import Foundation
 
-enum HTTPMethod: String {
+/// Represents possible HTTP method for `Request`.
+///
+/// - get: HTTP method "GET"
+/// - post: HTTP method "POST"
+/// - put: HTTP method "PUT"
+/// - delete: HTTP method "DELETE"
+public enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
     case put = "PUT"
@@ -36,7 +42,11 @@ enum HTTPMethod: String {
     }
 }
 
-enum AuthenticateMethod {
+/// Represents possible authenticate method for `Request`.
+///
+/// - none: Do not use an authenticate method.
+/// - token: Uses oAuth 2 Bearer token.
+public enum AuthenticateMethod {
     case none
     case token
     
@@ -60,7 +70,12 @@ enum AuthenticateMethod {
     }
 }
 
-enum ContentType {
+/// Represents possible content type for `Request`.
+///
+/// - none: The request does not contains body content.
+/// - formUrlEncoded: The request contains form url encoded data as its content.
+/// - json: The request contains JSON data as its content.
+public enum ContentType {
     case none
     case formUrlEncoded
     case json
@@ -86,33 +101,66 @@ enum ContentType {
     }
 }
 
-typealias Parameters = [String: Any]
+/// Type for `Request` parameters.
+public typealias Parameters = [String: Any]
 
-protocol Request {
+/// Represents a request to LINE APIs. A request is composed by `method`, `path`, `parameters` and some other
+/// necessary components. By conforming to `Request`, you could implement your own request type for arbitrary LINE API.
+/// You could build a `Request` instance and then send it by `Session` to get a response.
+public protocol Request {
+    
+    /// Response type of this request. The `Response` should conforms to `Decodable` and be able to be decoded from
+    /// raw data from an HTTP response.
     associatedtype Response: Decodable
     
+    /// `HTTPMethod` used for this request.
     var method: HTTPMethod { get }
     
+    /// API entry path for this request.
     var path: String { get }
     
+    /// Parameters be encoded and sent. Default is `nil`.
     var parameters: Parameters? { get }
     
+    /// `AuthenticateMethod` should be used for this request.
     var authenticate: AuthenticateMethod { get }
     
+    /// `ContentType` of HTTP body data for this request. Default is `.json`.
     var contentType: ContentType { get }
     
+    /// The `RequestAdapter`s should be used to synthesize the request. The items in `adapters` will be applied to the
+    /// underlying `URLRequest` to modify it. By default, LineSDK will adapt the request by setting its header and
+    /// body according to properties of this request.
+    ///
+    /// You could provide your own `adapters` to completely change the request properties. However, it's more likely
+    /// you might want to provide some adapters by `suffixAdapters` instead, to modify the request based on LineSDK
+    /// default result. The final adapters are `adapters + (suffixAdapters ?? [])`.
     var adapters: [RequestAdapter] { get }
     
+    /// Additional adapters which will be appended to `adapters`. Default is `nil`.
     var suffixAdapters: [RequestAdapter]? { get }
     
+    /// The `ResponsePipeline`s should be used to intercept or parse the response. The items in `pipelines` will be
+    /// applied to the underlying `URLResponse` and received `Data`. By default, LineSDK provides pipelines to handle
+    /// token refreshing and bad HTTP status code. At last, it will try to decode the data to an instance of `Response`.
+    ///
+    /// You could provide your own `pipelines` to completely change response handling process. However, it's more likely
+    /// you might want to provide some pipelines by `prefixPipelines` instead, to handle the response before LineSDK
+    /// apply its default behaviors. The final pipelines are `(prefixPipelines ?? []) + pipelines`.
     var pipelines: [ResponsePipeline] { get }
     
+    /// Additional pipelines which will be prefixed to `pipelines`. Default is `nil`.
     var prefixPipelines: [ResponsePipeline]? { get }
     
-    var responseParser: JSONDecoder { get }
+    /// The final data parser used in the end of `pipeline`. It should parse the response data into a `Response` object.
+    /// By default, a `JSONParsePipeline` with a standard `JSONDecoder` will be used.
+    var dataParser: ResponsePipelineTerminator { get }
+    
+    /// Timeout interval by second of current request before receiving a response. Default is 30 seconds.
+    var timeout: TimeInterval { get }
 }
 
-extension Request {
+public extension Request {
     var adapters: [RequestAdapter] {
         
         // Default header, UA etc
@@ -128,7 +176,7 @@ extension Request {
             case (_, .json):
                 adapters.append(JSONParameterEncoder(parameters: parameters))
             case (_, .none):
-                Log.fatalError("You must specifiy a contentType to use POST request.")
+                Log.fatalError("You must specify a contentType to use POST request.")
             }
         }
         
@@ -138,38 +186,30 @@ extension Request {
         // Token adapter
         authenticate.adapter.map { adapters.append($0) }
         
-        // Other adapters
-        if let suffixAdapters = suffixAdapters {
-            adapters.append(contentsOf: suffixAdapters)
-        }
-        
         return adapters
     }
     
     var pipelines: [ResponsePipeline] {
-        var pipelines: [ResponsePipeline] = prefixPipelines ?? []
+        var pipelines: [ResponsePipeline] = []
         
         // Token refresh pipeline
         authenticate.refreshTokenPipeline.map { pipelines.append($0) }
         
         pipelines.append(contentsOf: [
             .redirector(BadHTTPStatusRedirector(valid: 200..<300)),
-            .terminator(ParsePipeline(responseParser))
+            .terminator(dataParser)
         ])
         return pipelines
     }
     
     var suffixAdapters: [RequestAdapter]? { return nil }
     var prefixPipelines: [ResponsePipeline]? { return nil }
-    var responseParser: JSONDecoder { return defaultJSONParser }
+    var dataParser: ResponsePipelineTerminator {
+        get { return JSONParsePipeline(defaultJSONParser) }
+    }
     var contentType: ContentType { return .json }
     var parameters: Parameters? { return nil }
+    var timeout: TimeInterval { return 30 }
 }
 
 let defaultJSONParser = JSONDecoder()
-
-// It is now empty. Maybe we will add some other type of
-// request (like downloading taks) later. Then we could
-// make it a modification entry point.
-protocol APIRequest: Request { }
-
