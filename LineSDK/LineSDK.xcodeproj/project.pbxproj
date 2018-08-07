@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B08F9BF211982AA00B140DF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B08F9BE211982AA00B140DF /* Default-568h@2x.png */; };
+		4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */; };
 		4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */; };
 		4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */; };
 		4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1E121104C7A00A45510 /* LoginManagerExtension.swift */; };
@@ -28,7 +30,6 @@
 		4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */; };
 		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
 		4B6508B8211812CE001796E0 /* LoginManagerOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOption.swift */; };
-		4B6508B621180C4A001796E0 /* LineSDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B521180C4A001796E0 /* LineSDKErrorTests.swift */; };
 		4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A7025210956B600D71C66 /* KeychainStore.swift */; };
 		4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */; };
 		4B6A70312109793500D71C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A70302109793500D71C66 /* AppDelegate.swift */; };
@@ -93,6 +94,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4B08F9BE211982AA00B140DF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../LineSDKSample/LineSDKSample/Default-568h@2x.png"; sourceTree = "<group>"; };
+		4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSDKErrorTests.swift; sourceTree = "<group>"; };
 		4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTokenExchangeRequestTests.swift; sourceTree = "<group>"; };
 		4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequestTests.swift; sourceTree = "<group>"; };
 		4B39D1E121104C7A00A45510 /* LoginManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerExtension.swift; sourceTree = "<group>"; };
@@ -114,7 +117,6 @@
 		4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequest.swift; sourceTree = "<group>"; };
 		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
 		4B6508B7211812CE001796E0 /* LoginManagerOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerOption.swift; sourceTree = "<group>"; };
-		4B6508B621180C4A001796E0 /* LineSDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B521180C4A001796E0 /* LineSDKErrorTests.swift */; };
 		4B6A7025210956B600D71C66 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStoreTests.swift; sourceTree = "<group>"; };
 		4B6A702E2109793500D71C66 /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,6 +257,7 @@
 		4B90586E21006E5C004D717F = {
 			isa = PBXGroup;
 			children = (
+				4B08F9BE211982AA00B140DF /* Default-568h@2x.png */,
 				4B90587A21006E5C004D717F /* LineSDK */,
 				4B90588521006E5D004D717F /* LineSDKTests */,
 				4B6A702F2109793500D71C66 /* TestHost */,
@@ -297,7 +300,7 @@
 				4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */,
 				4B90588821006E5D004D717F /* Info.plist */,
 				4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */,
-				4B6508B521180C4A001796E0 /* LineSDKErrorTests.swift */,
+				4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */,
 			);
 			path = LineSDKTests;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B08F9BF211982AA00B140DF /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,7 +615,7 @@
 				4BCD27952113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift in Sources */,
 				4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */,
 				4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */,
-				4B6508B621180C4A001796E0 /* LineSDKErrorTests.swift in Sources */,
+				4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */,
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */,
 				4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */,
