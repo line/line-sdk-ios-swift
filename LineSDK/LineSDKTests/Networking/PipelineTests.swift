@@ -32,8 +32,8 @@ class PipelineTests: XCTestCase {
         XCTAssertTrue(ResponsePipeline.redirector(token1) == ResponsePipeline.redirector(token1))
         XCTAssertFalse(ResponsePipeline.redirector(token1) == ResponsePipeline.redirector(token2))
         
-        let parser1 = ParsePipeline(JSONDecoder())
-        let parser2 = ParsePipeline(JSONDecoder())
+        let parser1 = JSONParsePipeline(JSONDecoder())
+        let parser2 = JSONParsePipeline(JSONDecoder())
         
         XCTAssertTrue(ResponsePipeline.terminator(parser1) == ResponsePipeline.terminator(parser1))
         XCTAssertFalse(ResponsePipeline.terminator(parser1) == ResponsePipeline.terminator(parser2))
@@ -41,8 +41,8 @@ class PipelineTests: XCTestCase {
         XCTAssertFalse(ResponsePipeline.redirector(token1) == ResponsePipeline.terminator(parser1))
     }
     
-    func testParsePipeline() {
-        let pipeline = ParsePipeline(JSONDecoder())
+    func testJSONParsePipeline() {
+        let pipeline = JSONParsePipeline(JSONDecoder())
         let result = try! pipeline.parse(request: StubRequestSimple(), data: StubRequestSimple.successData)
         XCTAssertEqual(result.foo, "bar")
     }
@@ -72,8 +72,8 @@ class PipelineTests: XCTestCase {
                     .invalidHTTPStatusAPIError(code: let code, error: let authErr, raw: let raw)) = sdkError
                 {
                     XCTAssertEqual(code, 404)
-                    XCTAssertEqual(authErr.error, "123")
-                    XCTAssertEqual(authErr.detail, "sample")
+                    XCTAssertEqual(authErr!.error, "123")
+                    XCTAssertEqual(authErr!.detail, "sample")
                     self.assertJSONText(raw, equalsTo: authError)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")
@@ -100,7 +100,7 @@ class PipelineTests: XCTestCase {
                         .invalidHTTPStatusAPIError(code: let code, error: let apiErr, raw: let raw)) = sdkError
                 {
                     XCTAssertEqual(code, 404)
-                    XCTAssertEqual(apiErr.error, "hello")
+                    XCTAssertEqual(apiErr!.error, "hello")
                     self.assertJSONText(raw, equalsTo: apiError)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")
@@ -124,9 +124,10 @@ class PipelineTests: XCTestCase {
             case .stop(let err):
                 if let sdkError = err as? LineSDKError,
                     case .responseFailed(reason:
-                        .invalidHTTPStatus(code: let code, raw: let raw)) = sdkError
+                        .invalidHTTPStatusAPIError(let code, let e, let raw)) = sdkError
                 {
                     XCTAssertEqual(code, 404)
+                    XCTAssertNil(e)
                     self.assertJSONText(raw, equalsTo: error)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")

@@ -69,8 +69,8 @@ class PostOTPRequestTests: LineSDKAPITests {
             }
             
             XCTAssertEqual(code, 400)
-            XCTAssertEqual(error.error, "invalid_request")
-            XCTAssertEqual(error.detail, "some error")
+            XCTAssertEqual(error!.error, "invalid_request")
+            XCTAssertEqual(error!.detail, "some error")
             
             expect.fulfill()
         }

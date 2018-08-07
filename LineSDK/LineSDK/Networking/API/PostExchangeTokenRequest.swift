@@ -21,7 +21,7 @@
 
 import Foundation
 
-struct PostExchangeTokenRequest: APIRequest {
+struct PostExchangeTokenRequest: Request {
     let channelID: String
     let code: String
     let otpValue: String

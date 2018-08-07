@@ -21,7 +21,7 @@
 
 import Foundation
 
-struct PostRevokeTokenRequest: APIRequest {
+struct PostRevokeTokenRequest: Request {
     let channelID: String
     let accessToken: String
     

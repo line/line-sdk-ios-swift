@@ -38,6 +38,9 @@ struct Log {
     }
 }
 
+/// Possible keys in `userInfo` of LineSDK related notifications.
+public struct LineSDKNotificationKey {}
+
 extension UIAlertController {
     static func presentAlert(in viewController: UIViewController?,
                              title: String?,

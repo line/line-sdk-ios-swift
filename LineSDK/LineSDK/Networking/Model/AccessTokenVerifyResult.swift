@@ -21,9 +21,16 @@
 
 import Foundation
 
+/// Response of `GetVerifyTokenRequest`.
 public struct AccessTokenVerifyResult: Decodable {
+    
+    /// The channel ID bound to the token.
     public let channelID: String
+    
+    /// Valid permissions of this token.
     public let permissions: [LoginPermission]
+    
+    /// The time interval before this token expires.
     public let expiresIn: TimeInterval
     
     enum CodingKeys: String, CodingKey {

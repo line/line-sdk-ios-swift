@@ -45,7 +45,7 @@ public struct LineSDKAPI {
     ///   there is no need for you to invoke this method manually, since all APIs will try refresh expired token
     ///   if needed.
     public static func refreshAccessToken(
-        with refreshToken: String? = nil,
+        _ refreshToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<AccessToken>) -> Void)
     {
@@ -141,7 +141,7 @@ public struct LineSDKAPI {
             return
         }
         let request = GetVerifyTokenRequest(accessToken: token)
-        Session.shared.send(request, callbackQueue: queue, handler: completion)
+        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
     
     /// Gets user's basic profile.
@@ -156,6 +156,6 @@ public struct LineSDKAPI {
         completionHandler completion: @escaping (Result<UserProfile>) -> Void)
     {
         let request = GetUserProfileRequest()
-        Session.shared.send(request, callbackQueue: queue, handler: completion)
+        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
 }

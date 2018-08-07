@@ -21,7 +21,7 @@
 
 import Foundation
 
-struct PostOTPRequest: APIRequest {
+struct PostOTPRequest: Request {
     let channelID: String
     
     let method: HTTPMethod = .post

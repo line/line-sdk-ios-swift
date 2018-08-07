@@ -83,13 +83,15 @@ class RefreshTokenPipelineTests: XCTestCase {
             switch action {
             case .stop(let error):
                 guard case .responseFailed(
-                    reason: .invalidHTTPStatus(
-                        code: let code,
-                        raw: let message)) = error as! LineSDKError else
+                    reason: .invalidHTTPStatusAPIError(
+                        let code,
+                        let e,
+                        let message)) = error as! LineSDKError else
                 {
                     XCTFail("Error type is not correct.")
                     return
                 }
+                XCTAssertNil(e)
                 XCTAssertEqual(code, 123)
                 XCTAssertEqual(message, "error message")
             default:

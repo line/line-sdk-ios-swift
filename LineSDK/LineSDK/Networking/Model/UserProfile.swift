@@ -21,9 +21,18 @@
 
 import Foundation
 
+/// Response of `GetUserProfileRequest`.
 public struct UserProfile: Decodable {
+    
+    /// User ID of current authorized user.
     public let userId: String
+    
+    /// Display name of current authorized user.
     public let displayName: String
+    
+    /// Picture URL of current authorized user. `nil` if the user does not set a picture as avatar.
     public let pictureUrl: URL?
+    
+    /// Status message of current autorized user. `nil` if the user does not set a status message.
     public let statusMessage: String?
 }

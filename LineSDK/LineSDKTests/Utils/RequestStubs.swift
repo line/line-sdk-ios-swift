@@ -71,7 +71,7 @@ struct StubRequestWithSingleTerminatorPipeline: Request, ResponseDataStub {
     let authenticate: AuthenticateMethod = .none
     
     var pipelines: [ResponsePipeline] {
-        return [.terminator(ParsePipeline(JSONDecoder()))]
+        return [.terminator(JSONParsePipeline(JSONDecoder()))]
     }
     
     static let success = "{\"foo\": \"bar\"}"
@@ -109,7 +109,7 @@ struct StubRequestWithContinusPipeline: Request, ResponseDataStub {
     var pipelines: [ResponsePipeline] {
         return [
             .redirector(ContinuesRedirector()),
-            .terminator(ParsePipeline(JSONDecoder()))
+            .terminator(JSONParsePipeline(JSONDecoder()))
         ]
     }
     
@@ -155,7 +155,7 @@ struct StubRequestWithContinusDataResponsePipeline: Request, ResponseDataStub {
     var pipelines: [ResponsePipeline] {
         return [
             .redirector(TransformRedirector()),
-            .terminator(ParsePipeline(JSONDecoder()))
+            .terminator(JSONParsePipeline(JSONDecoder()))
         ]
     }
     
@@ -193,7 +193,7 @@ struct StubRequestWithStopPipeline: Request, ResponseDataStub {
     var pipelines: [ResponsePipeline] {
         return [
             .redirector(StopRedirector()),
-            .terminator(ParsePipeline(JSONDecoder()))
+            .terminator(JSONParsePipeline(JSONDecoder()))
         ]
     }
     
@@ -237,7 +237,7 @@ struct StubRequestWithRestartPipeline: Request, ResponseDataStub {
     var pipelines: [ResponsePipeline] {
         return [
             .redirector(RestartRedirector(valid: 200)),
-            .terminator(ParsePipeline(JSONDecoder()))
+            .terminator(JSONParsePipeline(JSONDecoder()))
         ]
     }
     
@@ -275,7 +275,7 @@ struct StubRequestWithRestartAnotherPipeline: Request, ResponseDataStub {
     var pipelines: [ResponsePipeline] {
         return [
             .redirector(RestartAnotherPipeline()),
-            .terminator(ParsePipeline(JSONDecoder()))
+            .terminator(JSONParsePipeline(JSONDecoder()))
         ]
     }
     

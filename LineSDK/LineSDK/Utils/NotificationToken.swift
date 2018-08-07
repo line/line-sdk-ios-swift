@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// Wraps normal `Notification` observing method, to provide a bahavior of releasing `token` automatically when
+/// observer gets deinit.
 class NotificationToken {
     let token: NSObjectProtocol
     let center: NotificationCenter

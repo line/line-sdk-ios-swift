@@ -21,7 +21,15 @@
 
 import Foundation
 
+/// Adapts a request to another one.
+/// An adapter takes responsibility of modifying an input `URLRequest`.
 public protocol RequestAdapter {
+    
+    /// Adapts an input `URLRequest` and return a new modified one.
+    ///
+    /// - Parameter request: Input request to be adapted.
+    /// - Returns: A new request object with modification applied.
+    /// - Throws: An error during adating process.
     func adapted(_ request: URLRequest) throws -> URLRequest
 }
 
@@ -71,15 +79,25 @@ struct HeaderAdapter: RequestAdapter {
     }
 }
 
-struct AnyRequestAdapter: RequestAdapter {
+/// An easy way to create a `RequestAdapter` with a block.
+public struct AnyRequestAdapter: RequestAdapter {
 
     var block: (URLRequest) throws -> URLRequest
     
-    init(_ block: @escaping (URLRequest) throws -> URLRequest) {
+    /// Initialize an `AnyRequestAdapter` with a execution closure.
+    ///
+    /// - Parameter block: A closure will be executed with an input `URLRequest`.
+    public init(_ block: @escaping (URLRequest) throws -> URLRequest) {
         self.block = block
     }
     
-    func adapted(_ request: URLRequest) throws -> URLRequest {
+    /// Adapts an input `URLRequest` and return a new modified one.
+    ///
+    /// - Parameter request: Input request to be adapted.
+    /// - Returns: A new request object with modification applied.
+    /// - Throws: An error during adating process.
+    /// - Note: This method just call the `block` passed in from the initializer.
+    public func adapted(_ request: URLRequest) throws -> URLRequest {
         return try block(request)
     }
 }
