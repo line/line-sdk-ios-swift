@@ -31,14 +31,15 @@ public class LoginProcess {
     /// - Note:
     /// If the app switching happens during login process, we want to
     /// inspect the event of switched back from another app (Safari or LINE or any other)
-    /// If the framework container app has not been invoked by an `open(url:)`, we think current
-    /// login process fails and we need to call user cannel callback.
+    /// If the framework container app has not been started up by an `open(url:)`, we think current
+    /// login process fails and we need to call the completion closuer with a `.userCancelled` error.
     class AppSwitchingObserver {
         // A token holds current observing. It will be released and trigger remove observer
         // when this `AppSwitchingObserver` gets released.
         var token: NotificationToken?
         
-        // Controls whether we really need to trigger.
+        // Controls whether we really need the trigger. By setting this to `false`, `onTrigger` will not be
+        // called even a `.UIApplicationDidBecomeActive` event received.
         var valid: Bool = true
         
         let onTrigger = Delegate<(), Void>()
@@ -431,7 +432,7 @@ class WebLoginFlow: NSObject {
 @available(iOS 9.0, *)
 extension WebLoginFlow: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        // This happens when user tap "Cancel" in the Safari view controller
+        // This happens when user tap "Cancel" in the SFSafariViewController.
         onCancel.call()
     }
 }
