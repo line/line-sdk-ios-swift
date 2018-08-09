@@ -25,6 +25,7 @@
 		4BCD27A02114007500B90D8F /* UIAlertControllerHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */; };
 		4BCD27A32114033000B90D8F /* LoginNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27A22114033000B90D8F /* LoginNavigationController.swift */; };
 		4BCD27A521142A3400B90D8F /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */; };
+		4BDADDD6211C35230044D827 /* APIResultEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDADDD5211C35230044D827 /* APIResultEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerHelpers.swift; sourceTree = "<group>"; };
 		4BCD27A22114033000B90D8F /* LoginNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNavigationController.swift; sourceTree = "<group>"; };
 		4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
+		4BDADDD5211C35230044D827 /* APIResultEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultEntry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 		4BB8445B211BD2B6005B60D7 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4BDADDD5211C35230044D827 /* APIResultEntry.swift */,
 				4BB8445C211BD41A005B60D7 /* APIHomeViewController.swift */,
 				4BB84460211BE5E7005B60D7 /* APIResultViewController.swift */,
 				4BB8445E211BD4DF005B60D7 /* APIStore.swift */,
@@ -331,6 +334,7 @@
 			files = (
 				4BB8445D211BD41A005B60D7 /* APIHomeViewController.swift in Sources */,
 				4BB84463211BF48F005B60D7 /* UIViewControllerExtensions.swift in Sources */,
+				4BDADDD6211C35230044D827 /* APIResultEntry.swift in Sources */,
 				4BCD27A521142A3400B90D8F /* UserDetailViewController.swift in Sources */,
 				4BCD279E2113FE9D00B90D8F /* IndicatorDisplay.swift in Sources */,
 				4BB8445F211BD4DF005B60D7 /* APIStore.swift in Sources */,

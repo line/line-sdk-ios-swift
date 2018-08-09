@@ -52,6 +52,8 @@ class APIHomeViewController: UITableViewController {
         let viewController = segue.destination as! APIResultViewController
         
         let category = APICategory(rawValue: indexPath.section)!
-        viewController.apiItem = APIStore.shared.api(in: category, at: indexPath.row)
+        let api = APIStore.shared.api(in: category, at: indexPath.row)
+        viewController.apiItem = api
+        viewController.title = api.title
     }
 }

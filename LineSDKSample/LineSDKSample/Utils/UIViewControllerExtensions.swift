@@ -29,8 +29,7 @@ extension CellCopyable where Self: UITableViewController {
     func copyCellDetailContent(at indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
-        guard let text = cell.detailTextLabel?.text else { return }
-        print("\(cell.textLabel?.text ?? "N/A"): \(text)")
+        guard let text = cell.detailTextLabel?.text ?? cell.textLabel?.text else { return }
         UIPasteboard.general.string = text
         UIAlertController.present(
             in: self,

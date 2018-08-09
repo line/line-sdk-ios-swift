@@ -40,6 +40,25 @@ extension UIAlertController {
     @discardableResult
     static func present(
         in viewController: UIViewController,
+        title: String?,
+        textViewMessage: String?,
+        style: UIAlertControllerStyle = .alert,
+        actions: [UIAlertAction]) -> Bool
+    {
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: style)
+        alert.addTextField { textField in
+            textField.text =  textViewMessage
+        }
+        actions.forEach(alert.addAction)
+        viewController.present(alert, animated: true, completion: nil)
+        return true
+    }
+    
+    
+    
+    @discardableResult
+    static func present(
+        in viewController: UIViewController,
         error: Error,
         done: (() -> Void)? = nil) -> Bool
     {

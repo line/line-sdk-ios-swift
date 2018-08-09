@@ -22,20 +22,19 @@
 import UIKit
 import LineSDK
 
-struct APIResultEntry: Comparable {
-    let label: String
-    let value: String
-    
-    static func < (lhs: APIResultEntry, rhs: APIResultEntry) -> Bool {
-        return lhs.label < rhs.label
-    }
-}
-
 class APIResultViewController: UITableViewController, IndicatorDisplay, CellCopyable {
-    var apiItem: APIItem!
+    
+    static func create(with entries: [APIResultEntry]) -> APIResultViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: .main)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "APIResultViewController")
+                                    as! APIResultViewController
+        viewController.resultEntries = entries
+        return viewController
+    }
     
     var resultEntries: [APIResultEntry] = []
     
+    var apiItem: APIItem?
     var result: Result<Any>? {
         didSet {
             defer {
@@ -61,7 +60,7 @@ class APIResultViewController: UITableViewController, IndicatorDisplay, CellCopy
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        apiItem.execute { result in
+        apiItem?.execute { result in
             self.result = result
         }
     }
@@ -73,37 +72,38 @@ class APIResultViewController: UITableViewController, IndicatorDisplay, CellCopy
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "APIResultCell", for: indexPath)
         let entry = resultEntries[indexPath.row]
-        cell.textLabel?.text = entry.label
-        cell.detailTextLabel?.text = entry.value
+        
+        switch entry {
+        case .pair(let key, let value):
+            cell.textLabel?.text = key ?? value
+            cell.detailTextLabel?.text = (key != nil) ? value : nil
+            cell.accessoryType = .none
+        case .array(let key, let entries):
+            cell.textLabel?.text = key
+            cell.detailTextLabel?.text = "\(entries.count) values"
+            cell.accessoryType = .disclosureIndicator
+        case .nested(let key, _):
+            cell.textLabel?.text = key
+            cell.detailTextLabel?.text = nil
+            cell.accessoryType = .disclosureIndicator
+        }
+        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        copyCellDetailContent(at: indexPath)
-    }
-}
-
-extension Mirror {
-    static func toEntries(_ value: Any) -> [APIResultEntry] {
-        var result = [APIResultEntry]()
-        let mirror = Mirror(reflecting: value)
-        for child in mirror.children {
-            
-            let key = child.label ?? "unknown"
-            
-            let value: String
-            
-            if let v = child.value as? String {
-                value = v
-            } else if let v = child.value as? URL {
-                value = v.absoluteString
-            } else {
-                value = "\(child.value)"
-            }
-
-            result.append(.init(label: key, value: value))
+        let entry = resultEntries[indexPath.row]
+        switch entry {
+        case .pair:
+            copyCellDetailContent(at: indexPath)
+        case .array(let key, let entries):
+            let next = APIResultViewController.create(with: entries)
+            next.title = key
+            navigationController?.pushViewController(next, animated: true)
+        case .nested(let key, let entries):
+            let next = APIResultViewController.create(with: entries)
+            next.title = key
+            navigationController?.pushViewController(next, animated: true)
         }
-        result.sort()
-        return result
     }
 }
