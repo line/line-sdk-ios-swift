@@ -29,7 +29,7 @@ class APIHomeViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let category = APICategory(rawValue: section)!
-        return APIStore.shared.countOfAPIs(category)
+        return APIStore.shared.numberOfAPIs(in: category)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

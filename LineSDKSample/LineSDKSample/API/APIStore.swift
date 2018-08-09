@@ -70,7 +70,7 @@ class APIStore {
         ]
     }
     
-    func countOfAPIs(_ category: APICategory) -> Int {
+    func numberOfAPIs(in category: APICategory) -> Int {
         switch category {
         case .auth: return authAPIs.count
         case .graph: return graphAPIs.count
