@@ -16,6 +16,10 @@
 		4B9058A921006E9C004D717F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A721006E9C004D717F /* LaunchScreen.storyboard */; };
 		4B9058B421006E9C004D717F /* LineSDKSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058B321006E9C004D717F /* LineSDKSampleTests.swift */; };
 		4B9058BF21006E9C004D717F /* LineSDKSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058BE21006E9C004D717F /* LineSDKSampleUITests.swift */; };
+		4BB8445D211BD41A005B60D7 /* APIHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB8445C211BD41A005B60D7 /* APIHomeViewController.swift */; };
+		4BB8445F211BD4DF005B60D7 /* APIStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB8445E211BD4DF005B60D7 /* APIStore.swift */; };
+		4BB84461211BE5E7005B60D7 /* APIResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB84460211BE5E7005B60D7 /* APIResultViewController.swift */; };
+		4BB84463211BF48F005B60D7 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB84462211BF48F005B60D7 /* UIViewControllerExtensions.swift */; };
 		4BCD27982113F95700B90D8F /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27972113F95700B90D8F /* UserProfileViewController.swift */; };
 		4BCD279E2113FE9D00B90D8F /* IndicatorDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD279D2113FE9D00B90D8F /* IndicatorDisplay.swift */; };
 		4BCD27A02114007500B90D8F /* UIAlertControllerHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */; };
@@ -70,6 +74,10 @@
 		4B9058BA21006E9C004D717F /* LineSDKSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineSDKSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B9058BE21006E9C004D717F /* LineSDKSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSampleUITests.swift; sourceTree = "<group>"; };
 		4B9058C021006E9C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BB8445C211BD41A005B60D7 /* APIHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHomeViewController.swift; sourceTree = "<group>"; };
+		4BB8445E211BD4DF005B60D7 /* APIStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStore.swift; sourceTree = "<group>"; };
+		4BB84460211BE5E7005B60D7 /* APIResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultViewController.swift; sourceTree = "<group>"; };
+		4BB84462211BF48F005B60D7 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		4BCD27972113F95700B90D8F /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		4BCD279D2113FE9D00B90D8F /* IndicatorDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorDisplay.swift; sourceTree = "<group>"; };
 		4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertControllerHelpers.swift; sourceTree = "<group>"; };
@@ -127,6 +135,7 @@
 		4B90589D21006E9C004D717F /* LineSDKSample */ = {
 			isa = PBXGroup;
 			children = (
+				4BB8445B211BD2B6005B60D7 /* API */,
 				4BCD27A12114031B00B90D8F /* Login */,
 				4BCD279C2113FE9000B90D8F /* Utils */,
 				4B90589E21006E9C004D717F /* AppDelegate.swift */,
@@ -157,11 +166,22 @@
 			path = LineSDKSampleUITests;
 			sourceTree = "<group>";
 		};
+		4BB8445B211BD2B6005B60D7 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				4BB8445C211BD41A005B60D7 /* APIHomeViewController.swift */,
+				4BB84460211BE5E7005B60D7 /* APIResultViewController.swift */,
+				4BB8445E211BD4DF005B60D7 /* APIStore.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		4BCD279C2113FE9000B90D8F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				4BCD279D2113FE9D00B90D8F /* IndicatorDisplay.swift */,
 				4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */,
+				4BB84462211BF48F005B60D7 /* UIViewControllerExtensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -309,8 +329,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BB8445D211BD41A005B60D7 /* APIHomeViewController.swift in Sources */,
+				4BB84463211BF48F005B60D7 /* UIViewControllerExtensions.swift in Sources */,
 				4BCD27A521142A3400B90D8F /* UserDetailViewController.swift in Sources */,
 				4BCD279E2113FE9D00B90D8F /* IndicatorDisplay.swift in Sources */,
+				4BB8445F211BD4DF005B60D7 /* APIStore.swift in Sources */,
+				4BB84461211BE5E7005B60D7 /* APIResultViewController.swift in Sources */,
 				4BCD27A32114033000B90D8F /* LoginNavigationController.swift in Sources */,
 				4BCD27A02114007500B90D8F /* UIAlertControllerHelpers.swift in Sources */,
 				4B9058A121006E9C004D717F /* LoginViewController.swift in Sources */,

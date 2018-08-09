@@ -83,3 +83,7 @@ public struct LoginPermission: Hashable {
     public static let realName                       = LoginPermission(rawValue: "real_name")
     public static let botAdd                         = LoginPermission(rawValue: "bot.add")
 }
+
+extension LoginPermission: CustomStringConvertible {
+    public var description: String { return rawValue }
+}

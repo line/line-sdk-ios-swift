@@ -1,5 +1,5 @@
 //
-//  GetUserProfileRequest.swift
+//  UIViewControllerExtensions.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,15 +19,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-public struct GetUserProfileRequest: Request {
-    public init() {}
-    
-    public let method: HTTPMethod = .get
-    public let path = "/v2/profile"
-    public let authenticate: AuthenticateMethod = .token
-    
-    public typealias Response = UserProfile
+protocol CellCopyable {
+    func copyCellDetailContent(at indexPath: IndexPath)
 }
 
+extension CellCopyable where Self: UITableViewController {
+    func copyCellDetailContent(at indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        guard let text = cell.detailTextLabel?.text else { return }
+        print("\(cell.textLabel?.text ?? "N/A"): \(text)")
+        UIPasteboard.general.string = text
+        UIAlertController.present(
+            in: self,
+            title: "Copied",
+            message: text,
+            actions: [.init(title: "OK", style: .default)])
+    }
+}
