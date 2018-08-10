@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		4B08F9BF211982AA00B140DF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B08F9BE211982AA00B140DF /* Default-568h@2x.png */; };
 		4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */; };
+		4B15EEF4211D466D00866E6C /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF3211D466D00866E6C /* TextMessage.swift */; };
+		4B15EEF6211D46FF00866E6C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF5211D46FF00866E6C /* Message.swift */; };
+		4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF7211D473400866E6C /* MessageSender.swift */; };
+		4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */; };
+		4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFC211D628000866E6C /* MessageSample.swift */; };
 		4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */; };
 		4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */; };
 		4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1E121104C7A00A45510 /* LoginManagerExtension.swift */; };
@@ -99,6 +104,11 @@
 /* Begin PBXFileReference section */
 		4B08F9BE211982AA00B140DF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSDKErrorTests.swift; sourceTree = "<group>"; };
+		4B15EEF3211D466D00866E6C /* TextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
+		4B15EEF5211D46FF00866E6C /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		4B15EEF7211D473400866E6C /* MessageSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSender.swift; sourceTree = "<group>"; };
+		4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTests.swift; sourceTree = "<group>"; };
+		4B15EEFC211D628000866E6C /* MessageSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSample.swift; sourceTree = "<group>"; };
 		4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTokenExchangeRequestTests.swift; sourceTree = "<group>"; };
 		4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequestTests.swift; sourceTree = "<group>"; };
 		4B39D1E121104C7A00A45510 /* LoginManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerExtension.swift; sourceTree = "<group>"; };
@@ -200,9 +210,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B15EEF2211D431900866E6C /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				4B15EEF3211D466D00866E6C /* TextMessage.swift */,
+				4B15EEF7211D473400866E6C /* MessageSender.swift */,
+				4B15EEF5211D46FF00866E6C /* Message.swift */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		4B15EEF9211D5BE800866E6C /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
 		4B4525792101A4DE00A39D4F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4B15EEF2211D431900866E6C /* Messages */,
 				4BCD27912113EC4300B90D8F /* CustomizeCoding */,
 				4B45257A2101A4E900A39D4F /* OneTimePassword.swift */,
 				4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */,
@@ -300,6 +329,7 @@
 		4B90588521006E5D004D717F /* LineSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				4B15EEF9211D5BE800866E6C /* Message */,
 				4B792FB421103CFD00EDDD1E /* API */,
 				4B8A9655211009A400760219 /* Login */,
 				4BA8E446210ED7F900355F03 /* Networking */,
@@ -376,6 +406,7 @@
 				4B39D1E121104C7A00A45510 /* LoginManagerExtension.swift */,
 				4B39D1E321104DBA00A45510 /* LineSDKAPITests.swift */,
 				4B39D1E521104F3B00A45510 /* ViewControllerCompatibleTest.swift */,
+				4B15EEFC211D628000866E6C /* MessageSample.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -577,9 +608,12 @@
 				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
 				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,
 				DBE4E370211D6CF500184D66 /* GetFriendsRequest.swift in Sources */,
+				4B15EEF6211D46FF00866E6C /* Message.swift in Sources */,
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
 				4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */,
+				4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
+				4B15EEF4211D466D00866E6C /* TextMessage.swift in Sources */,
 				4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */,
 				4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */,
 				4B45257621019EFB00A39D4F /* Session.swift in Sources */,
@@ -622,6 +656,7 @@
 				DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */,
 				4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */,
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
+				4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */,
 				4BA8E44C210EDB5100355F03 /* ParameterEncoderTests.swift in Sources */,
 				4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */,
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
@@ -637,6 +672,7 @@
 				4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */,
 				4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */,
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
+				4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */,
 				4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */,
 				4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */,
 			);
