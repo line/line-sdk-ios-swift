@@ -24,6 +24,11 @@ platform :ios do
         devices: ["iPhone 6s"],
         scheme: "LineSDK"
     )
+    run_tests(
+        workspace: "LineSDK.xcworkspace",
+        devices: ["iPhone 6s"],
+        scheme: "LineSDKSample"
+    )
   end
 
   desc "Generate documentation"

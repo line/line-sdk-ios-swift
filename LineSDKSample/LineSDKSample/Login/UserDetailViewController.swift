@@ -22,7 +22,7 @@
 import UIKit
 import LineSDK
 
-class UserDetailViewController: UITableViewController {
+class UserDetailViewController: UITableViewController, CellCopyable {
 
     enum Section: Int {
         case user
@@ -108,15 +108,6 @@ class UserDetailViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
-        guard let text = cell.detailTextLabel?.text else { return }
-        print("\(cell.textLabel?.text ?? "N/A"): \(text)")
-        UIPasteboard.general.string = text
-        UIAlertController.present(
-            in: self,
-            title: "Copied",
-            message: text,
-            actions: [.init(title: "OK", style: .default)])
+        copyCellDetailContent(at: indexPath)
     }
 }
