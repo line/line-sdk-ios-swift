@@ -20,6 +20,7 @@
 //
 
 import Foundation
+import LineSDK
 
 enum APIResultEntry: Comparable {
     
@@ -27,35 +28,40 @@ enum APIResultEntry: Comparable {
         return lhs.title < rhs.title
     }
     
-    case pair(String?, String)
+    case pair(String, String)
     case array(String, [APIResultEntry])
     case nested(String, [APIResultEntry])
     
-    init(key: String?, value: Any) {
+    init(key: String, value: Any) {
         switch value {
             
         // These will unwrap if an optional value contained in `value`.
         // Feel free to add additional types you need to unwrap before displaying.
-        case let v as String:   self = .pair(key, v)
-        case let v as URL:      self = .pair(key, "\(v)")
-        case let v as Int:      self = .pair(key, "\(v)")
-        case let v as Double:   self = .pair(key, "\(v)")
-        case let v as Date:     self = .pair(key, "\(v)")
-        
+        case let v as String:          self = .pair(key, v)
+        case let v as URL:             self = .pair(key, "\(v)")
+        case let v as Int:             self = .pair(key, "\(v)")
+        case let v as Double:          self = .pair(key, "\(v)")
+        case let v as Date:            self = .pair(key, "\(v)")
+        case let v as Bool:            self = .pair(key, "\(v)")
+        case let v as LoginPermission: self = .pair(key, "\(v)")
+            
         case let v as [Any]:
-            let entries = v.map { APIResultEntry(key: nil, value: $0) }
-            self = .array(key!, entries)
-        case let v as [String: Any]:
-            let entries = v.map { APIResultEntry(key: $0.key, value: $0.value) }
-            self = .nested(key!, entries.sorted())
+            let entries = v.enumerated().map { offset, element in
+                APIResultEntry(key: "\(key)[\(offset)]", value: element)
+            }
+            self = .array(key, entries)
+            
+        case Optional<Any>.none:
+            self = .pair(key, "nil")
+            
         default:
-            self = .pair(key, "\(value)")
+            self = .nested(key, Mirror.toEntries(value))
         }
     }
     
     var title: String {
         switch self {
-        case .pair(let title, let value): return title ?? value
+        case .pair(let title, _): return title
         case .array(let title, _): return title
         case .nested(let title, _): return title
         }
@@ -66,7 +72,7 @@ extension Mirror {
     static func toEntries(_ value: Any) -> [APIResultEntry] {
         let mirror = Mirror(reflecting: value)
         return mirror.children
-            .map { APIResultEntry(key: $0.label, value: $0.value) }
+            .map { APIResultEntry(key: $0.label!, value: $0.value) }
             .sorted()
     }
 }

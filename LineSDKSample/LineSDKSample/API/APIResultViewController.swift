@@ -75,8 +75,8 @@ class APIResultViewController: UITableViewController, IndicatorDisplay, CellCopy
         
         switch entry {
         case .pair(let key, let value):
-            cell.textLabel?.text = key ?? value
-            cell.detailTextLabel?.text = (key != nil) ? value : nil
+            cell.textLabel?.text = key
+            cell.detailTextLabel?.text = value
             cell.accessoryType = .none
         case .array(let key, let entries):
             cell.textLabel?.text = key
