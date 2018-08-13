@@ -29,7 +29,16 @@ extension GetFriendsRequest: ResponseDataStub {
         {
           "displayName": "Brown",
           "pictureUrl": "https://example.com/abc",
-          "userId": "abcd"
+          "userId": "aaaa"
+        },
+        {
+          "displayName": "Cony",
+          "pictureUrl": "",
+          "userId": "bbbb"
+        },
+        {
+          "displayName": "Sally",
+          "userId": "cccc"
         }
       ]
     }
@@ -41,8 +50,8 @@ class GetFriendsRequestTests: LineSDKAPITests {
     func testSuccess() {
         let r = GetFriendsRequest()
         runTestSuccess(for: r) { response in
-            XCTAssertEqual(response.friends.count, 1)
-            XCTAssertEqual(response.friends.first?.userID, "abcd")
+            XCTAssertEqual(response.friends.count, 3)
+            XCTAssertEqual(response.friends.first?.userID, "aaaa")
         }
     }
 }
