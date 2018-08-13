@@ -45,9 +45,9 @@ class VideoMessageTests: XCTestCase {
         let message = Message.video(videoMessage)
         
         let dic = message.json
-        assertEqual(in: dic, forKey: "type", string: "video")
-        assertEqual(in: dic, forKey: "originalContentUrl", string: "https://sample.com/original.mp4")
-        assertEqual(in: dic, forKey: "previewImageUrl", string: "https://sample.com/preview.jpg")
+        assertEqual(in: dic, forKey: "type", value: "video")
+        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://sample.com/original.mp4")
+        assertEqual(in: dic, forKey: "previewImageUrl", value: "https://sample.com/preview.jpg")
     }
  
     func testVideoMessageDecoding() {

@@ -50,9 +50,9 @@ class AudioMessageTests: XCTestCase {
         let message = Message.audio(audioMessage)
         
         let dic = message.json
-        assertEqual(in: dic, forKey: "type", string: "audio")
-        assertEqual(in: dic, forKey: "originalContentUrl", string: "https://example.com/example.mp3")
-        assertEqual(in: dic, forKey: "duration", int: 3000)
+        assertEqual(in: dic, forKey: "type", value: "audio")
+        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://example.com/example.mp3")
+        assertEqual(in: dic, forKey: "duration", value: 3000)
     }
     
     func testAudioMessageWithoutDurationEncoding() {
@@ -63,8 +63,8 @@ class AudioMessageTests: XCTestCase {
         XCTAssertNil(audioMessage.duration)
         
         let dic = message.json
-        assertEqual(in: dic, forKey: "type", string: "audio")
-        assertEqual(in: dic, forKey: "originalContentUrl", string: "https://example.com/example.mp3")
+        assertEqual(in: dic, forKey: "type", value: "audio")
+        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://example.com/example.mp3")
         XCTAssertNil(dic["duration"])
     }
     

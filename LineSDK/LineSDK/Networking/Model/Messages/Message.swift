@@ -26,6 +26,7 @@ enum MessageType: String, Codable {
     case image
     case video
     case audio
+    case location
 }
 
 public enum Message: Codable {
@@ -34,6 +35,7 @@ public enum Message: Codable {
     case image(ImageMessage)
     case video(VideoMessage)
     case audio(AudioMessage)
+    case location(LocationMessage)
     
     case unknown
     
@@ -57,6 +59,9 @@ public enum Message: Codable {
         case .audio?:
             let message = try AudioMessage(from: decoder)
             self = .audio(message)
+        case .location?:
+            let message = try LocationMessage(from: decoder)
+            self = .location(message)
         case nil:
             self = .unknown
         }
@@ -71,6 +76,8 @@ public enum Message: Codable {
         case .video(let message):
             try message.encode(to: encoder)
         case .audio(let message):
+            try message.encode(to: encoder)
+        case .location(let message):
             try message.encode(to: encoder)
         case .unknown:
             Log.assertionFailure("Cannot encode unknown message type.")
@@ -94,6 +101,11 @@ public enum Message: Codable {
     
     public var asAudioMessage: AudioMessage? {
         if case .audio(let m) = self { return m }
+        return nil
+    }
+    
+    public var asLocationMessage: LocationMessage? {
+        if case .location(let m) = self { return m }
         return nil
     }
 }

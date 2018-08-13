@@ -33,46 +33,35 @@ extension MessageSample {
     }
 }
 
-func assertEqual(
+func assertEqual<T: Equatable>(
     in dic: [String: Any],
     forKey key: String,
-    string value: String,
+    value: T,
     file: String = #file,
     line: Int = #line)
 {
-    XCTAssertEqual(
-        dic[key] as? String,
-        value,
+    guard let dicValue = dic[key] else {
+        XCTFail("Value for key '\(key)' does not exist")
+        return
+    }
+    let failingDescription =
         "Value not match in \(file), line: \(line). " +
-        "Expect String value \(value), found \(String(describing: dic[key])).")
-}
-
-func assertEqual(
-    in dic: [String: Any],
-    forKey key: String,
-    bool value: Bool,
-    file: String = #file,
-    line: Int = #line)
-{
-    XCTAssertEqual(
-        (dic[key] as? NSNumber)?.boolValue,
-        value,
-        "Value not match in \(file), line: \(line). " +
-        "Expect Bool value \(value), found \(String(describing: dic[key])).")
-}
-
-func assertEqual(
-    in dic: [String: Any],
-    forKey key: String,
-    int value: Int,
-    file: String = #file,
-    line: Int = #line)
-{
-    XCTAssertEqual(
-        (dic[key] as? NSNumber)?.intValue,
-        value,
-        "Value not match in \(file), line: \(line). " +
-        "Expect Bool value \(value), found \(String(describing: dic[key])).")
+        "Expect String value \(value), found \(String(describing: dic[key]))."
+    
+    switch value.self {
+    case is String:
+        XCTAssertEqual(dicValue as? String, value as? String, failingDescription)
+    case is Bool:
+        XCTAssertEqual((dic[key] as? NSNumber)?.boolValue, value as? Bool, failingDescription)
+    case is Int:
+        XCTAssertEqual((dic[key] as? NSNumber)?.intValue, value as? Int, failingDescription)
+    case is Float:
+        XCTAssertEqual((dic[key] as? NSNumber)?.floatValue, value as? Float, failingDescription)
+    case is Double:
+        XCTAssertEqual((dic[key] as? NSNumber)?.doubleValue, value as? Double, failingDescription)
+    default:
+        XCTFail("Type comparison not implemented yet.")
+    }
 }
 
 extension Message {

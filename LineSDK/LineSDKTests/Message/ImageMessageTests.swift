@@ -63,11 +63,11 @@ class ImageMessageTests: XCTestCase {
         let message = Message.image(imageMessage)
         
         let dic = message.json
-        assertEqual(in: dic, forKey: "type", string: "image")
-        assertEqual(in: dic, forKey: "originalContentUrl", string: "https://sample.com/original.png")
-        assertEqual(in: dic, forKey: "previewImageUrl", string: "https://sample.com/preview.png")
-        assertEqual(in: dic, forKey: "animated", bool: false)
-        assertEqual(in: dic, forKey: "extension", string: "png")
+        assertEqual(in: dic, forKey: "type", value: "image")
+        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://sample.com/original.png")
+        assertEqual(in: dic, forKey: "previewImageUrl", value: "https://sample.com/preview.png")
+        assertEqual(in: dic, forKey: "animated", value: false)
+        assertEqual(in: dic, forKey: "extension", value: "png")
         XCTAssertNil(dic["sentBy"])
     }
     
@@ -84,15 +84,15 @@ class ImageMessageTests: XCTestCase {
         let message = Message.image(imageMessageWithSender)
         
         let dic = message.json
-        assertEqual(in: dic, forKey: "type", string: "image")
-        assertEqual(in: dic, forKey: "originalContentUrl", string: "https://sample.com/original.png")
-        assertEqual(in: dic, forKey: "previewImageUrl", string: "https://sample.com/preview.png")
+        assertEqual(in: dic, forKey: "type", value: "image")
+        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://sample.com/original.png")
+        assertEqual(in: dic, forKey: "previewImageUrl", value: "https://sample.com/preview.png")
         XCTAssertNil(dic["animated"])
         XCTAssertNil(dic["extension"])
         XCTAssertNotNil(dic["sentBy"])
         
         let sentBy = dic["sentBy"] as! [String: Any]
-        assertEqual(in: sentBy, forKey: "iconUrl", string: "https://sample.com")
+        assertEqual(in: sentBy, forKey: "iconUrl", value: "https://sample.com")
         XCTAssertNil(sentBy["linkUrl"])
     }
     

@@ -53,8 +53,8 @@ class TextMessageTests: XCTestCase {
         let message = Message.text(textMessage)
         
         let dic = message.json
-        assertEqual(in: dic, forKey: "type", string: "text")
-        assertEqual(in: dic, forKey: "text", string: "test")
+        assertEqual(in: dic, forKey: "type", value: "text")
+        assertEqual(in: dic, forKey: "text", value: "test")
         XCTAssertNil(dic["sentBy"])
     }
     
@@ -64,12 +64,12 @@ class TextMessageTests: XCTestCase {
         let message = Message.text(textMessageWithSender)
         
         let dic = message.json
-        assertEqual(in: dic, forKey: "type", string: "text")
-        assertEqual(in: dic, forKey: "text", string: "test")
+        assertEqual(in: dic, forKey: "type", value: "text")
+        assertEqual(in: dic, forKey: "text", value: "test")
         XCTAssertNotNil(dic["sentBy"])
         
         let sentBy = dic["sentBy"] as! [String: Any]
-        assertEqual(in: sentBy, forKey: "iconUrl", string: "https://sample.com")
+        assertEqual(in: sentBy, forKey: "iconUrl", value: "https://sample.com")
         XCTAssertNil(sentBy["linkUrl"])
     }
     

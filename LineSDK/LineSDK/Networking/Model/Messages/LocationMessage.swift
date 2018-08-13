@@ -1,5 +1,5 @@
 //
-//  MessageSender.swift
+//  LocationMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,22 +19,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
-
-public struct MessageSender: Codable {
-    public let label: String
-    public let iconURL: URL
-    public let linkURL: URL?
+public struct LocationMessage: Codable, MessageTypeCompatible {
     
-    public init(label: String, iconURL: URL, linkURL: URL?) {
-        self.label = label
-        self.iconURL = iconURL
-        self.linkURL = linkURL
-    }
+    public typealias LocationDegrees = Double
     
-    enum CodingKeys: String, CodingKey {
-        case label
-        case iconURL = "iconUrl"
-        case linkURL = "linkUrl"
+    let type = MessageType.location
+    
+    public let title: String
+    public let address: String
+    public let latitude: LocationDegrees
+    public let longitude: LocationDegrees
+    
+    public init(title: String, address: String, latitude: LocationDegrees, longitude: LocationDegrees) {
+        self.title = title
+        self.address = address
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }
