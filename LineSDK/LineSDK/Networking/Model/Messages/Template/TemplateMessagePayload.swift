@@ -53,6 +53,7 @@ public enum TemplateMessagePayload: Codable {
     case buttons(TemplateButtonsMessage)
     case confirm(TemplateConfirmMessage)
     case carousel(TemplateCarouselMessage)
+    case imageCarousel(TemplateImageCarouselMessage)
     
     case unknown
     
@@ -74,7 +75,8 @@ public enum TemplateMessagePayload: Codable {
             let message = try TemplateCarouselMessage(from: decoder)
             self = .carousel(message)
         case .imageCarousel?:
-            fatalError()
+            let message = try TemplateImageCarouselMessage(from: decoder)
+            self = .imageCarousel(message)
         case nil:
             self = .unknown
         }
@@ -87,6 +89,8 @@ public enum TemplateMessagePayload: Codable {
         case .confirm(let message):
             try message.encode(to: encoder)
         case .carousel(let message):
+            try message.encode(to: encoder)
+        case .imageCarousel(let message):
             try message.encode(to: encoder)
         default:
             Log.assertionFailure("Cannot encode unknown message type.")
@@ -107,4 +111,10 @@ public enum TemplateMessagePayload: Codable {
         if case .carousel(let message) = self { return message }
         return nil
     }
+    
+    public var asImageCarouselMessage: TemplateImageCarouselMessage? {
+        if case .imageCarousel(let message) = self { return message }
+        return nil
+    }
+    
 }
