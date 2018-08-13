@@ -54,7 +54,7 @@ class ImageMessageTests: XCTestCase {
     func testImageMessageEncoding() {
         let contentURL = URL(string: "https://sample.com/original.png")!
         let previewImageURL = URL(string: "https://sample.com/preview.png")!
-        let imageMessage = ImageMessage(
+        let imageMessage = try! ImageMessage(
             originalContentURL: contentURL,
             previewImageURL: previewImageURL,
             animated: false,
@@ -77,7 +77,7 @@ class ImageMessageTests: XCTestCase {
         let previewImageURL = URL(string: "https://sample.com/preview.png")!
         let sender = MessageSender(label: "user", iconURL: URL(string: "https://sample.com")!, linkURL: nil)
         
-        let imageMessageWithSender = ImageMessage(
+        let imageMessageWithSender = try! ImageMessage(
             originalContentURL: contentURL,
             previewImageURL: previewImageURL,
             sender: sender)
@@ -118,5 +118,36 @@ class ImageMessageTests: XCTestCase {
         XCTAssertEqual(result[1].sender!.label, "onevcat")
         XCTAssertEqual(result[1].sender!.iconURL, URL(string: "https://sample.com")!)
         XCTAssertNil(result[1].sender!.linkURL)
+    }
+    
+    func testImageMessageInitThrows() {
+        let contentURL = URL(string: "http://sample.com/original.png")!
+        let previewImageURL = URL(string: "/sample.com/preview.png")!
+        XCTAssertThrowsError(
+            try ImageMessage.init(
+                originalContentURL: contentURL,
+                previewImageURL: previewImageURL))
+        {
+            error in
+            guard case .generalError(.parameterError(let name, _))? = error as? LineSDKError else {
+                XCTFail("The error should be a `.parameterError`")
+                return
+            }
+            XCTAssertEqual(name, "originalContentURL")
+        }
+        
+        let correctContentURL = URL(string: "https://sample.com/original.png")!
+        XCTAssertThrowsError(
+            try ImageMessage.init(
+                originalContentURL: correctContentURL,
+                previewImageURL: previewImageURL))
+        {
+            error in
+            guard case .generalError(.parameterError(let name, _))? = error as? LineSDKError else {
+                XCTFail("The error should be a `.parameterError`")
+                return
+            }
+            XCTAssertEqual(name, "previewImageURL")
+        }
     }
 }

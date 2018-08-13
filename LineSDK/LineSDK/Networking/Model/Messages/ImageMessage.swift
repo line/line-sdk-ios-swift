@@ -35,8 +35,25 @@ public struct ImageMessage: Codable {
         previewImageURL: URL,
         animated: Bool? = nil,
         extension: String? = nil,
-        sender: MessageSender? = nil)
+        sender: MessageSender? = nil) throws
     {
+        guard originalContentURL.scheme?.lowercased() == "https" else {
+            throw LineSDKError.generalError(
+                reason: .parameterError(
+                    parameterName: "originalContentURL",
+                    description: "HTTPS scheme is required for `originalContentURL`."
+                )
+            )
+        }
+        guard previewImageURL.scheme?.lowercased() == "https" else {
+            throw LineSDKError.generalError(
+                reason: .parameterError(
+                    parameterName: "previewImageURL",
+                    description: "HTTPS scheme is required for `previewImageURL`."
+                )
+            )
+        }
+        
         self.originalContentURL = originalContentURL
         self.previewImageURL = previewImageURL
         self.animated = animated
