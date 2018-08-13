@@ -26,6 +26,13 @@ public struct User: Decodable {
     public let displayName: String
     public let pictureURL: URL?
 
+    public init(from decoder: Decoder) throws {
+        let map = try decoder.container(keyedBy: CodingKeys.self)
+        userID = try map.decode(String.self, forKey: .userID)
+        displayName = try map.decode(String.self, forKey: .displayName)
+        pictureURL = try? map.decode(URL.self, forKey: .pictureURL)
+    }
+
     enum CodingKeys: String, CodingKey {
         case userID = "userId"
         case displayName
