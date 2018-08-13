@@ -79,7 +79,7 @@ class TextMessageTests: XCTestCase {
             .map { try! decoder.decode(Message.self, from: $0) }
             .map { $0.asTextMessage! }
         
-        XCTAssertEqual(result[0].type, "text")
+        XCTAssertEqual(result[0].type, .text)
         XCTAssertEqual(result[0].text, "Hello, world")
         XCTAssertNil(result[0].sender)
         

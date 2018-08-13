@@ -1,5 +1,5 @@
 //
-//  VideoMessage.swift
+//  MessageProtocols.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,24 +19,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct VideoMessage: Codable, MessageTypeCompatible {
-    
-    let type = MessageType.video
-    
-    public let originalContentURL: URL
-    public let previewImageURL: URL
-    
-    public init(originalContentURL: URL, previewImageURL: URL) throws {
-        try assertHTTPSScheme(url: originalContentURL, parameterName: "originalContentURL")
-        try assertHTTPSScheme(url: previewImageURL, parameterName: "previewImageURL")
-        
-        self.originalContentURL = originalContentURL
-        self.previewImageURL = previewImageURL
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case type
-        case originalContentURL = "originalContentUrl"
-        case previewImageURL = "previewImageUrl"
+import Foundation
+
+protocol MessageTypeCompatible {
+    var type: MessageType { get }
+}
+
+func assertHTTPSScheme(url: URL, parameterName: String) throws {
+    guard url.scheme?.lowercased() == "https" else {
+        throw LineSDKError.generalError(
+            reason: .parameterError(
+                parameterName: parameterName,
+                description: "HTTPS scheme is required for `\(parameterName)`."
+            )
+        )
     }
 }

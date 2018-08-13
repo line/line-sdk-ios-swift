@@ -61,6 +61,20 @@ func assertEqual(
         "Expect Bool value \(value), found \(String(describing: dic[key])).")
 }
 
+func assertEqual(
+    in dic: [String: Any],
+    forKey key: String,
+    int value: Int,
+    file: String = #file,
+    line: Int = #line)
+{
+    XCTAssertEqual(
+        (dic[key] as? NSNumber)?.intValue,
+        value,
+        "Value not match in \(file), line: \(line). " +
+        "Expect Bool value \(value), found \(String(describing: dic[key])).")
+}
+
 extension Message {
     var json: [String: Any] {
         let data = try! JSONEncoder().encode(self)

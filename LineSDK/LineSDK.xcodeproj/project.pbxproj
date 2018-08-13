@@ -62,6 +62,9 @@
 		4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3032212111BE00174C6F /* ImageMessageTests.swift */; };
 		4B9A30352121182400174C6F /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30342121182400174C6F /* VideoMessage.swift */; };
 		4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303621211CC100174C6F /* VideoMessageTests.swift */; };
+		4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303821211EC400174C6F /* AudioMessage.swift */; };
+		4B9A303B212121FC00174C6F /* MessageProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303A212121FC00174C6F /* MessageProtocols.swift */; };
+		4B9A303D2121238D00174C6F /* AudioMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303C2121238D00174C6F /* AudioMessageTests.swift */; };
 		4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E441210EBCFF00355F03 /* SessionTests.swift */; };
 		4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */; };
 		4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E449210ED82B00355F03 /* AdapterTests.swift */; };
@@ -166,6 +169,9 @@
 		4B9A3032212111BE00174C6F /* ImageMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageTests.swift; sourceTree = "<group>"; };
 		4B9A30342121182400174C6F /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
 		4B9A303621211CC100174C6F /* VideoMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageTests.swift; sourceTree = "<group>"; };
+		4B9A303821211EC400174C6F /* AudioMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessage.swift; sourceTree = "<group>"; };
+		4B9A303A212121FC00174C6F /* MessageProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageProtocols.swift; sourceTree = "<group>"; };
+		4B9A303C2121238D00174C6F /* AudioMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageTests.swift; sourceTree = "<group>"; };
 		4BA8E441210EBCFF00355F03 /* SessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 		4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDelegateStub.swift; sourceTree = "<group>"; };
 		4BA8E449210ED82B00355F03 /* AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterTests.swift; sourceTree = "<group>"; };
@@ -222,10 +228,12 @@
 			isa = PBXGroup;
 			children = (
 				4B15EEF5211D46FF00866E6C /* Message.swift */,
+				4B9A303A212121FC00174C6F /* MessageProtocols.swift */,
 				4B15EEF7211D473400866E6C /* MessageSender.swift */,
 				4B15EEF3211D466D00866E6C /* TextMessage.swift */,
 				4B9A303021210FE700174C6F /* ImageMessage.swift */,
 				4B9A30342121182400174C6F /* VideoMessage.swift */,
+				4B9A303821211EC400174C6F /* AudioMessage.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -236,6 +244,7 @@
 				4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */,
 				4B9A3032212111BE00174C6F /* ImageMessageTests.swift */,
 				4B9A303621211CC100174C6F /* VideoMessageTests.swift */,
+				4B9A303C2121238D00174C6F /* AudioMessageTests.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -640,12 +649,14 @@
 				4B9A30352121182400174C6F /* VideoMessage.swift in Sources */,
 				4B6508B8211812CE001796E0 /* LoginManagerOption.swift in Sources */,
 				4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */,
+				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
 				4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */,
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,
 				4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */,
+				4B9A303B212121FC00174C6F /* MessageProtocols.swift in Sources */,
 				4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */,
 				4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */,
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
@@ -665,6 +676,7 @@
 				4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */,
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
 				4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */,
+				4B9A303D2121238D00174C6F /* AudioMessageTests.swift in Sources */,
 				4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */,
 				4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */,
 				DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */,

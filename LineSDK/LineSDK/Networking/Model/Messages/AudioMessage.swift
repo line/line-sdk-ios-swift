@@ -1,5 +1,5 @@
 //
-//  VideoMessage.swift
+//  AudioMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,24 +19,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct VideoMessage: Codable, MessageTypeCompatible {
+public struct AudioMessage: Codable, MessageTypeCompatible {
     
-    let type = MessageType.video
+    let type = MessageType.audio
     
     public let originalContentURL: URL
-    public let previewImageURL: URL
+    public var duration: TimeInterval? {
+        return durationInMillisecond.map { TimeInterval($0) / 1000 }
+    }
     
-    public init(originalContentURL: URL, previewImageURL: URL) throws {
+    private let durationInMillisecond: Int?
+    
+    public init(originalContentURL: URL, duration: TimeInterval?) throws {
         try assertHTTPSScheme(url: originalContentURL, parameterName: "originalContentURL")
-        try assertHTTPSScheme(url: previewImageURL, parameterName: "previewImageURL")
-        
         self.originalContentURL = originalContentURL
-        self.previewImageURL = previewImageURL
+        self.durationInMillisecond = duration.map { Int($0 * 1000) }
     }
     
     enum CodingKeys: String, CodingKey {
         case type
         case originalContentURL = "originalContentUrl"
-        case previewImageURL = "previewImageUrl"
+        case durationInMillisecond = "duration"
     }
 }

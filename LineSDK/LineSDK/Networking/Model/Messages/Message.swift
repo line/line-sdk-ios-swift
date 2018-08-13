@@ -21,11 +21,19 @@
 
 import Foundation
 
+enum MessageType: String, Codable {
+    case text
+    case image
+    case video
+    case audio
+}
+
 public enum Message: Codable {
     
     case text(TextMessage)
     case image(ImageMessage)
     case video(VideoMessage)
+    case audio(AudioMessage)
     
     case unknown
     
@@ -35,18 +43,21 @@ public enum Message: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let type = try container.decode(String.self, forKey: .type)
-        switch type {
-        case TextMessage.typeName:
+        let typeValue = try container.decode(String.self, forKey: .type)
+        switch MessageType(rawValue: typeValue) {
+        case .text?:
             let message = try TextMessage(from: decoder)
             self = .text(message)
-        case ImageMessage.typeName:
+        case .image?:
             let message = try ImageMessage(from: decoder)
             self = .image(message)
-        case VideoMessage.typeName:
+        case .video?:
             let message = try VideoMessage(from: decoder)
             self = .video(message)
-        default:
+        case .audio?:
+            let message = try AudioMessage(from: decoder)
+            self = .audio(message)
+        case nil:
             self = .unknown
         }
     }
@@ -58,6 +69,8 @@ public enum Message: Codable {
         case .image(let message):
             try message.encode(to: encoder)
         case .video(let message):
+            try message.encode(to: encoder)
+        case .audio(let message):
             try message.encode(to: encoder)
         case .unknown:
             Log.assertionFailure("Cannot encode unknown message type.")
@@ -76,6 +89,11 @@ public enum Message: Codable {
     
     public var asVideoMessage: VideoMessage? {
         if case .video(let m) = self { return m }
+        return nil
+    }
+    
+    public var asAudioMessage: AudioMessage? {
+        if case .audio(let m) = self { return m }
         return nil
     }
 }

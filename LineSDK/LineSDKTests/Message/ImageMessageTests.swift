@@ -105,7 +105,7 @@ class ImageMessageTests: XCTestCase {
         let contentURL = URL(string: "https://example.com/animation.gif")!
         let previewImageURL = URL(string: "https://example.com/preview.jpg")!
         
-        XCTAssertEqual(result[0].type, "image")
+        XCTAssertEqual(result[0].type, .image)
         XCTAssertEqual(result[0].originalContentURL, contentURL)
         XCTAssertEqual(result[0].previewImageURL, previewImageURL)
         XCTAssertEqual(result[0].animated, true)

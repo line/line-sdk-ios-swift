@@ -19,10 +19,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct TextMessage: Codable {
+public struct TextMessage: Codable, MessageTypeCompatible {
     
-    static let typeName = "text"
-    let type = TextMessage.typeName
+    let type = MessageType.text
     
     public let text: String
     public let sender: MessageSender?

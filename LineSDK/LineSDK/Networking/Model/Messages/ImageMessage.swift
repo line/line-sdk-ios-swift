@@ -19,13 +19,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct ImageMessage: Codable {
-    static let typeName = "image"
-    let type = ImageMessage.typeName
+public struct ImageMessage: Codable, MessageTypeCompatible {
+    
+    let type = MessageType.image
     
     public let originalContentURL: URL
     public let previewImageURL: URL
-    
     public let animated: Bool?
     public let `extension`: String?
     public let sender: MessageSender?
@@ -37,22 +36,8 @@ public struct ImageMessage: Codable {
         extension: String? = nil,
         sender: MessageSender? = nil) throws
     {
-        guard originalContentURL.scheme?.lowercased() == "https" else {
-            throw LineSDKError.generalError(
-                reason: .parameterError(
-                    parameterName: "originalContentURL",
-                    description: "HTTPS scheme is required for `originalContentURL`."
-                )
-            )
-        }
-        guard previewImageURL.scheme?.lowercased() == "https" else {
-            throw LineSDKError.generalError(
-                reason: .parameterError(
-                    parameterName: "previewImageURL",
-                    description: "HTTPS scheme is required for `previewImageURL`."
-                )
-            )
-        }
+        try assertHTTPSScheme(url: originalContentURL, parameterName: "originalContentURL")
+        try assertHTTPSScheme(url: previewImageURL, parameterName: "previewImageURL")
         
         self.originalContentURL = originalContentURL
         self.previewImageURL = previewImageURL

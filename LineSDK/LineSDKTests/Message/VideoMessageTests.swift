@@ -55,7 +55,7 @@ class VideoMessageTests: XCTestCase {
         let result = VideoMessage.samplesData
             .map { try! decoder.decode(Message.self, from: $0) }
             .map { $0.asVideoMessage! }
-        XCTAssertEqual(result[0].type, "video")
+        XCTAssertEqual(result[0].type, .video)
         XCTAssertEqual(result[0].originalContentURL, URL(string: "https://example.com/example.mp4"))
         XCTAssertEqual(result[0].previewImageURL, URL(string: "https://example.com/preview.jpg"))
     }
