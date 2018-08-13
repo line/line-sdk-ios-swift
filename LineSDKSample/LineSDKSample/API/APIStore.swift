@@ -62,7 +62,9 @@ class APIStore {
         ]
         
         graphAPIs = [
-            
+            .init(title: "Get Friends" ,
+                  request: GetFriendsRequest()
+            )
         ]
         
         messagingAPIs = [
