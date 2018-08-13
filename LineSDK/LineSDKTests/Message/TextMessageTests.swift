@@ -30,7 +30,17 @@ extension TextMessage: MessageSample {
           "type": "text",
           "text": "Hello, world"
         }
+        """,
         """
+        {
+          "type": "text",
+          "text": "Hello, world",
+          "sentBy": {
+            "label": "onevcat",
+            "iconUrl": "https://sample.com"
+          }
+        }
+        """,
         ]
     }
 }
@@ -72,12 +82,10 @@ class TextMessageTests: XCTestCase {
         XCTAssertEqual(result[0].type, "text")
         XCTAssertEqual(result[0].text, "Hello, world")
         XCTAssertNil(result[0].sender)
-    }
-}
-
-extension Message {
-    var json: [String: Any] {
-        let data = try! JSONEncoder().encode(self)
-        return try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+        
+        XCTAssertNotNil(result[1].sender)
+        XCTAssertEqual(result[1].sender!.label, "onevcat")
+        XCTAssertEqual(result[1].sender!.iconURL, URL(string: "https://sample.com")!)
+        XCTAssertNil(result[1].sender!.linkURL)
     }
 }

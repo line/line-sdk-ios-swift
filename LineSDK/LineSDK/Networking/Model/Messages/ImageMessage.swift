@@ -1,5 +1,5 @@
 //
-//  TextMessage.swift
+//  ImageMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,22 +19,37 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct TextMessage: Codable {
+public struct ImageMessage: Codable {
+    static let typeName = "image"
+    let type = ImageMessage.typeName
     
-    static let typeName = "text"
-    let type = TextMessage.typeName
+    public let originalContentURL: URL
+    public let previewImageURL: URL
     
-    public let text: String
+    public let animated: Bool?
+    public let `extension`: String?
     public let sender: MessageSender?
     
-    public init(text: String, sender: MessageSender? = nil) {
-        self.text = text
+    public init(
+        originalContentURL: URL,
+        previewImageURL: URL,
+        animated: Bool? = nil,
+        extension: String? = nil,
+        sender: MessageSender? = nil)
+    {
+        self.originalContentURL = originalContentURL
+        self.previewImageURL = previewImageURL
+        self.animated = animated
+        self.extension = `extension`
         self.sender = sender
     }
     
     enum CodingKeys: String, CodingKey {
         case type
-        case text
+        case originalContentURL = "originalContentUrl"
+        case previewImageURL = "previewImageUrl"
+        case animated
+        case `extension`
         case sender = "sentBy"
     }
 }

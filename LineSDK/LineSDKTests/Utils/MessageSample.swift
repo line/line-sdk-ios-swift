@@ -20,6 +20,7 @@
 //
 
 import XCTest
+import LineSDK
 
 protocol MessageSample {
     static var samples: [String] { get }
@@ -32,6 +33,37 @@ extension MessageSample {
     }
 }
 
-func assertEqual(in dic: [String: Any], forKey key: String, string value: String) {
-    XCTAssertEqual(dic[key] as? String, value)
+func assertEqual(
+    in dic: [String: Any],
+    forKey key: String,
+    string value: String,
+    file: String = #file,
+    line: Int = #line)
+{
+    XCTAssertEqual(
+        dic[key] as? String,
+        value,
+        "Value not match in \(file), line: \(line). " +
+        "Expect String value \(value), found \(String(describing: dic[key])).")
+}
+
+func assertEqual(
+    in dic: [String: Any],
+    forKey key: String,
+    bool value: Bool,
+    file: String = #file,
+    line: Int = #line)
+{
+    XCTAssertEqual(
+        (dic[key] as? NSNumber)?.boolValue,
+        value,
+        "Value not match in \(file), line: \(line). " +
+        "Expect Bool value \(value), found \(String(describing: dic[key])).")
+}
+
+extension Message {
+    var json: [String: Any] {
+        let data = try! JSONEncoder().encode(self)
+        return try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+    }
 }

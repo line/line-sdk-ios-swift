@@ -24,6 +24,8 @@ import Foundation
 public enum Message: Codable {
     
     case text(TextMessage)
+    case image(ImageMessage)
+    
     case unknown
     
     enum CodingKeys: String, CodingKey {
@@ -37,6 +39,9 @@ public enum Message: Codable {
         case TextMessage.typeName:
             let message = try TextMessage(from: decoder)
             self = .text(message)
+        case ImageMessage.typeName:
+            let message = try ImageMessage(from: decoder)
+            self = .image(message)
         default:
             self = .unknown
         }
@@ -46,6 +51,8 @@ public enum Message: Codable {
         switch self {
         case .text(let message):
             try message.encode(to: encoder)
+        case .image(let message):
+            try message.encode(to: encoder)
         case .unknown:
             Log.assertionFailure("Cannot encode unknown message type.")
         }
@@ -53,6 +60,11 @@ public enum Message: Codable {
     
     public var asTextMessage: TextMessage? {
         if case .text(let m) = self { return m }
+        return nil
+    }
+    
+    public var asImageMessage: ImageMessage? {
+        if case .image(let m) = self { return m }
         return nil
     }
 }
