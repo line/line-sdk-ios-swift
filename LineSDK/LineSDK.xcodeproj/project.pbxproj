@@ -74,6 +74,9 @@
 		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
+		DBE4E36D211D6C1A00184D66 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36C211D6C1A00184D66 /* User.swift */; };
+		DBE4E370211D6CF500184D66 /* GetFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */; };
+		DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +169,9 @@
 		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
+		DBE4E36C211D6C1A00184D66 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendsRequest.swift; sourceTree = "<group>"; };
+		DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendsRequestTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +242,7 @@
 			children = (
 				4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */,
 				4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */,
+				DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */,
 				4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */,
 				4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */,
 				4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */,
@@ -281,6 +288,7 @@
 				4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */,
 				4BBAFC432101BB8200E7BFF6 /* General */,
 				4B9058CE210072B9004D717F /* Login */,
+				DBE4E36E211D6C2600184D66 /* Social */,
 				4B9058CD210072B0004D717F /* Networking */,
 				4B9058CF210072C3004D717F /* Utils */,
 				4B90587B21006E5C004D717F /* LineSDK.h */,
@@ -398,6 +406,15 @@
 				4BCD27922113EC6C00B90D8F /* CodingExtension.swift */,
 			);
 			path = CustomizeCoding;
+			sourceTree = "<group>";
+		};
+		DBE4E36E211D6C2600184D66 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				DBE4E36C211D6C1A00184D66 /* User.swift */,
+				DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */,
+			);
+			path = Social;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -559,6 +576,7 @@
 				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,
 				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
 				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,
+				DBE4E370211D6CF500184D66 /* GetFriendsRequest.swift in Sources */,
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
 				4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
@@ -568,6 +586,7 @@
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
 				4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */,
 				4BD191B4211154DF00E2C481 /* LineSDKAPI.swift in Sources */,
+				DBE4E36D211D6C1A00184D66 /* User.swift in Sources */,
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
 				4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
@@ -600,6 +619,7 @@
 				4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */,
 				4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */,
 				4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */,
+				DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */,
 				4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */,
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
 				4BA8E44C210EDB5100355F03 /* ParameterEncoderTests.swift in Sources */,

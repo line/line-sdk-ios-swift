@@ -159,3 +159,22 @@ public struct LineSDKAPI {
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
 }
+
+// MARK: - Social API
+
+extension LineSDKAPI {
+    public static func getFriends(
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<[User]>) -> Void)
+    {
+        let request = GetFriendsRequest()
+        Session.shared.send(request, callbackQueue: queue, completionHandler: { result in
+            switch result {
+            case .success(let response):
+                completion(Result.success(response.friends))
+            case .failure(let error):
+                completion(Result.failure(error))
+            }
+        })
+    }
+}
