@@ -26,10 +26,33 @@ enum TemplateMessagePayloadType: String, Codable {
     case imageCarousel = "image_carousel"
 }
 
+public enum ImageAspectRatio: String, Codable {
+    case rectangle
+    case square
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = ImageAspectRatio(rawValue: rawValue) ?? .rectangle
+    }
+}
+
+public enum ImageContentMode: String, Codable {
+    case aspectFill = "cover"
+    case aspectFit = "contain"
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = ImageContentMode(rawValue: rawValue) ?? .aspectFill
+    }
+}
+
 public enum TemplateMessagePayload: Codable {
     
     case buttons(TemplateButtonsMessage)
     case confirm(TemplateConfirmMessage)
+    case carousel(TemplateCarouselMessage)
     
     case unknown
     
@@ -48,7 +71,8 @@ public enum TemplateMessagePayload: Codable {
             let message = try TemplateConfirmMessage(from: decoder)
             self = .confirm(message)
         case .carousel?:
-            fatalError()
+            let message = try TemplateCarouselMessage(from: decoder)
+            self = .carousel(message)
         case .imageCarousel?:
             fatalError()
         case nil:
@@ -62,6 +86,8 @@ public enum TemplateMessagePayload: Codable {
             try message.encode(to: encoder)
         case .confirm(let message):
             try message.encode(to: encoder)
+        case .carousel(let message):
+            try message.encode(to: encoder)
         default:
             Log.assertionFailure("Cannot encode unknown message type.")
         }
@@ -74,6 +100,11 @@ public enum TemplateMessagePayload: Codable {
     
     public var asConfirmMessage: TemplateConfirmMessage? {
         if case .confirm(let message) = self { return message }
+        return nil
+    }
+    
+    public var asCarouselMessage: TemplateCarouselMessage? {
+        if case .carousel(let message) = self { return message }
         return nil
     }
 }

@@ -21,28 +21,6 @@
 
 public struct TemplateButtonsMessage: Codable, TemplateMessagePayloadTypeCompatible {
     
-    public enum ImageAspectRatio: String, Codable {
-        case rectangle
-        case square
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawValue = try container.decode(String.self)
-            self = ImageAspectRatio(rawValue: rawValue) ?? .rectangle
-        }
-    }
-    
-    public enum ImageContentMode: String, Codable {
-        case aspectFill = "cover"
-        case aspectFit = "contain"
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawValue = try container.decode(String.self)
-            self = ImageContentMode(rawValue: rawValue) ?? .aspectFill
-        }
-    }
-    
     let type = TemplateMessagePayloadType.buttons
     
     public var text: String
@@ -81,7 +59,7 @@ public struct TemplateButtonsMessage: Codable, TemplateMessagePayloadTypeCompati
         self.imageBackgroundColor = imageBackgroundColor
     }
     
-    mutating func add(action: TemplateMessageAction) {
+    public mutating func add(action: TemplateMessageAction) {
         actions.append(action)
     }
     
