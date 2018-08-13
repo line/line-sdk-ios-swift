@@ -64,7 +64,7 @@ func assertEqual<T: Equatable>(
     }
 }
 
-extension Message {
+extension Encodable {
     var json: [String: Any] {
         let data = try! JSONEncoder().encode(self)
         return try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]

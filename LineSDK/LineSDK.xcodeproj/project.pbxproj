@@ -67,6 +67,12 @@
 		4B9A303D2121238D00174C6F /* AudioMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303C2121238D00174C6F /* AudioMessageTests.swift */; };
 		4B9A303F2121277400174C6F /* LocationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303E2121277400174C6F /* LocationMessage.swift */; };
 		4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30402121286900174C6F /* LocationMessageTests.swift */; };
+		4B9A3047212139C000174C6F /* TemplateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3046212139C000174C6F /* TemplateMessage.swift */; };
+		4B9A304921213CE100174C6F /* TemplateButtonsMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304821213CE100174C6F /* TemplateButtonsMessage.swift */; };
+		4B9A304B21213DBB00174C6F /* TemplateMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */; };
+		4B9A304E2121405300174C6F /* TemplateMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304D2121405300174C6F /* TemplateMessageAction.swift */; };
+		4B9A30502121429C00174C6F /* TemplateButtonsMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304F2121429C00174C6F /* TemplateButtonsMessageTests.swift */; };
+		4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */; };
 		4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E441210EBCFF00355F03 /* SessionTests.swift */; };
 		4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */; };
 		4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E449210ED82B00355F03 /* AdapterTests.swift */; };
@@ -176,6 +182,12 @@
 		4B9A303C2121238D00174C6F /* AudioMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageTests.swift; sourceTree = "<group>"; };
 		4B9A303E2121277400174C6F /* LocationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMessage.swift; sourceTree = "<group>"; };
 		4B9A30402121286900174C6F /* LocationMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMessageTests.swift; sourceTree = "<group>"; };
+		4B9A3046212139C000174C6F /* TemplateMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessage.swift; sourceTree = "<group>"; };
+		4B9A304821213CE100174C6F /* TemplateButtonsMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateButtonsMessage.swift; sourceTree = "<group>"; };
+		4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessagePayload.swift; sourceTree = "<group>"; };
+		4B9A304D2121405300174C6F /* TemplateMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageAction.swift; sourceTree = "<group>"; };
+		4B9A304F2121429C00174C6F /* TemplateButtonsMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateButtonsMessageTests.swift; sourceTree = "<group>"; };
+		4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageActionTests.swift; sourceTree = "<group>"; };
 		4BA8E441210EBCFF00355F03 /* SessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 		4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDelegateStub.swift; sourceTree = "<group>"; };
 		4BA8E449210ED82B00355F03 /* AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterTests.swift; sourceTree = "<group>"; };
@@ -239,6 +251,8 @@
 				4B9A30342121182400174C6F /* VideoMessage.swift */,
 				4B9A303821211EC400174C6F /* AudioMessage.swift */,
 				4B9A303E2121277400174C6F /* LocationMessage.swift */,
+				4B9A3046212139C000174C6F /* TemplateMessage.swift */,
+				4B9A3045212139AE00174C6F /* Template */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -251,6 +265,8 @@
 				4B9A303621211CC100174C6F /* VideoMessageTests.swift */,
 				4B9A303C2121238D00174C6F /* AudioMessageTests.swift */,
 				4B9A30402121286900174C6F /* LocationMessageTests.swift */,
+				4B9A304F2121429C00174C6F /* TemplateButtonsMessageTests.swift */,
+				4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -422,6 +438,24 @@
 				4BEE5B34210AC2D000846C6D /* NotificationToken.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		4B9A3045212139AE00174C6F /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				4B9A304C2121404000174C6F /* Actions */,
+				4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */,
+				4B9A304821213CE100174C6F /* TemplateButtonsMessage.swift */,
+			);
+			path = Template;
+			sourceTree = "<group>";
+		};
+		4B9A304C2121404000174C6F /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				4B9A304D2121405300174C6F /* TemplateMessageAction.swift */,
+			);
+			path = Actions;
 			sourceTree = "<group>";
 		};
 		4BA8E443210ED26100355F03 /* Utils */ = {
@@ -630,6 +664,7 @@
 				4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */,
 				4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */,
 				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
+				4B9A304E2121405300174C6F /* TemplateMessageAction.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
 				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,
 				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
@@ -644,6 +679,7 @@
 				4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */,
 				4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */,
 				4B9A303F2121277400174C6F /* LocationMessage.swift in Sources */,
+				4B9A304B21213DBB00174C6F /* TemplateMessagePayload.swift in Sources */,
 				4B45257621019EFB00A39D4F /* Session.swift in Sources */,
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
 				4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */,
@@ -652,8 +688,10 @@
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
 				4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
+				4B9A3047212139C000174C6F /* TemplateMessage.swift in Sources */,
 				4B9058D8210078FB004D717F /* Result.swift in Sources */,
 				4B9A30352121182400174C6F /* VideoMessage.swift in Sources */,
+				4B9A304921213CE100174C6F /* TemplateButtonsMessage.swift in Sources */,
 				4B6508B8211812CE001796E0 /* LoginManagerOption.swift in Sources */,
 				4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */,
 				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
@@ -699,6 +737,7 @@
 				4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */,
 				4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */,
 				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
+				4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */,
 				4B39D1E421104DBA00A45510 /* LineSDKAPITests.swift in Sources */,
 				4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */,
 				4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */,
@@ -709,6 +748,7 @@
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */,
 				4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */,
+				4B9A30502121429C00174C6F /* TemplateButtonsMessageTests.swift in Sources */,
 				4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */,
 				4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */,
 			);

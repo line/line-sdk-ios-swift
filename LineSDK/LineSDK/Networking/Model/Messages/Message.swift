@@ -27,6 +27,7 @@ enum MessageType: String, Codable {
     case video
     case audio
     case location
+    case template
 }
 
 public enum Message: Codable {
@@ -36,6 +37,7 @@ public enum Message: Codable {
     case video(VideoMessage)
     case audio(AudioMessage)
     case location(LocationMessage)
+    case template(TemplateMessage)
     
     case unknown
     
@@ -45,8 +47,8 @@ public enum Message: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let typeValue = try container.decode(String.self, forKey: .type)
-        switch MessageType(rawValue: typeValue) {
+        let type = try? container.decode(MessageType.self, forKey: .type)
+        switch type {
         case .text?:
             let message = try TextMessage(from: decoder)
             self = .text(message)
@@ -62,6 +64,9 @@ public enum Message: Codable {
         case .location?:
             let message = try LocationMessage(from: decoder)
             self = .location(message)
+        case .template?:
+            let message = try TemplateMessage(from: decoder)
+            self = .template(message)
         case nil:
             self = .unknown
         }
@@ -78,6 +83,8 @@ public enum Message: Codable {
         case .audio(let message):
             try message.encode(to: encoder)
         case .location(let message):
+            try message.encode(to: encoder)
+        case .template(let message):
             try message.encode(to: encoder)
         case .unknown:
             Log.assertionFailure("Cannot encode unknown message type.")
@@ -106,6 +113,11 @@ public enum Message: Codable {
     
     public var asLocationMessage: LocationMessage? {
         if case .location(let m) = self { return m }
+        return nil
+    }
+    
+    public var asTemplateMessage: TemplateMessage? {
+        if case .template(let m) = self { return m }
         return nil
     }
 }

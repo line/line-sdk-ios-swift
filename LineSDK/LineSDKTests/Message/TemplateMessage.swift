@@ -1,5 +1,5 @@
 //
-//  MessageProtocols.swift
+//  TemplateMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,26 +20,3 @@
 //
 
 import Foundation
-
-protocol MessageTypeCompatible {
-    var type: MessageType { get }
-}
-
-protocol TemplateMessagePayloadTypeCompatible {
-    var type: TemplateMessagePayloadType { get }
-}
-
-protocol TemplateMessageActionTypeCompatible {
-    var type: TemplateMessageActionType { get }
-}
-
-func assertHTTPSScheme(url: URL, parameterName: String) throws {
-    guard url.scheme?.lowercased() == "https" else {
-        throw LineSDKError.generalError(
-            reason: .parameterError(
-                parameterName: parameterName,
-                description: "HTTPS scheme is required for `\(parameterName)`."
-            )
-        )
-    }
-}
