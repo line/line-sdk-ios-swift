@@ -25,6 +25,7 @@ public enum Message: Codable {
     
     case text(TextMessage)
     case image(ImageMessage)
+    case video(VideoMessage)
     
     case unknown
     
@@ -42,6 +43,9 @@ public enum Message: Codable {
         case ImageMessage.typeName:
             let message = try ImageMessage(from: decoder)
             self = .image(message)
+        case VideoMessage.typeName:
+            let message = try VideoMessage(from: decoder)
+            self = .video(message)
         default:
             self = .unknown
         }
@@ -52,6 +56,8 @@ public enum Message: Codable {
         case .text(let message):
             try message.encode(to: encoder)
         case .image(let message):
+            try message.encode(to: encoder)
+        case .video(let message):
             try message.encode(to: encoder)
         case .unknown:
             Log.assertionFailure("Cannot encode unknown message type.")
@@ -65,6 +71,11 @@ public enum Message: Codable {
     
     public var asImageMessage: ImageMessage? {
         if case .image(let m) = self { return m }
+        return nil
+    }
+    
+    public var asVideoMessage: VideoMessage? {
+        if case .video(let m) = self { return m }
         return nil
     }
 }

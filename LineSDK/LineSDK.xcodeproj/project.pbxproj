@@ -60,6 +60,8 @@
 		4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
 		4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303021210FE700174C6F /* ImageMessage.swift */; };
 		4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3032212111BE00174C6F /* ImageMessageTests.swift */; };
+		4B9A30352121182400174C6F /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30342121182400174C6F /* VideoMessage.swift */; };
+		4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303621211CC100174C6F /* VideoMessageTests.swift */; };
 		4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E441210EBCFF00355F03 /* SessionTests.swift */; };
 		4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */; };
 		4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E449210ED82B00355F03 /* AdapterTests.swift */; };
@@ -162,6 +164,8 @@
 		4B9058DB21007C8C004D717F /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
 		4B9A303021210FE700174C6F /* ImageMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessage.swift; sourceTree = "<group>"; };
 		4B9A3032212111BE00174C6F /* ImageMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageTests.swift; sourceTree = "<group>"; };
+		4B9A30342121182400174C6F /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
+		4B9A303621211CC100174C6F /* VideoMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageTests.swift; sourceTree = "<group>"; };
 		4BA8E441210EBCFF00355F03 /* SessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 		4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDelegateStub.swift; sourceTree = "<group>"; };
 		4BA8E449210ED82B00355F03 /* AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterTests.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 				4B15EEF7211D473400866E6C /* MessageSender.swift */,
 				4B15EEF3211D466D00866E6C /* TextMessage.swift */,
 				4B9A303021210FE700174C6F /* ImageMessage.swift */,
+				4B9A30342121182400174C6F /* VideoMessage.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 			children = (
 				4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */,
 				4B9A3032212111BE00174C6F /* ImageMessageTests.swift */,
+				4B9A303621211CC100174C6F /* VideoMessageTests.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -631,6 +637,7 @@
 				4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
 				4B9058D8210078FB004D717F /* Result.swift in Sources */,
+				4B9A30352121182400174C6F /* VideoMessage.swift in Sources */,
 				4B6508B8211812CE001796E0 /* LoginManagerOption.swift in Sources */,
 				4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
@@ -682,6 +689,7 @@
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */,
 				4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */,
+				4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */,
 				4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
