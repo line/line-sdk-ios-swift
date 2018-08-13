@@ -73,6 +73,8 @@
 		4B9A304E2121405300174C6F /* TemplateMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304D2121405300174C6F /* TemplateMessageAction.swift */; };
 		4B9A30502121429C00174C6F /* TemplateButtonsMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304F2121429C00174C6F /* TemplateButtonsMessageTests.swift */; };
 		4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */; };
+		4B9A305421215A1A00174C6F /* TemplateConfirmMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305321215A1A00174C6F /* TemplateConfirmMessage.swift */; };
+		4B9A305621215DED00174C6F /* TemplateConfirmMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305521215DED00174C6F /* TemplateConfirmMessageTests.swift */; };
 		4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E441210EBCFF00355F03 /* SessionTests.swift */; };
 		4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */; };
 		4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E449210ED82B00355F03 /* AdapterTests.swift */; };
@@ -188,6 +190,8 @@
 		4B9A304D2121405300174C6F /* TemplateMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageAction.swift; sourceTree = "<group>"; };
 		4B9A304F2121429C00174C6F /* TemplateButtonsMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateButtonsMessageTests.swift; sourceTree = "<group>"; };
 		4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageActionTests.swift; sourceTree = "<group>"; };
+		4B9A305321215A1A00174C6F /* TemplateConfirmMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateConfirmMessage.swift; sourceTree = "<group>"; };
+		4B9A305521215DED00174C6F /* TemplateConfirmMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateConfirmMessageTests.swift; sourceTree = "<group>"; };
 		4BA8E441210EBCFF00355F03 /* SessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 		4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDelegateStub.swift; sourceTree = "<group>"; };
 		4BA8E449210ED82B00355F03 /* AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterTests.swift; sourceTree = "<group>"; };
@@ -266,6 +270,7 @@
 				4B9A303C2121238D00174C6F /* AudioMessageTests.swift */,
 				4B9A30402121286900174C6F /* LocationMessageTests.swift */,
 				4B9A304F2121429C00174C6F /* TemplateButtonsMessageTests.swift */,
+				4B9A305521215DED00174C6F /* TemplateConfirmMessageTests.swift */,
 				4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */,
 			);
 			path = Message;
@@ -446,6 +451,7 @@
 				4B9A304C2121404000174C6F /* Actions */,
 				4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */,
 				4B9A304821213CE100174C6F /* TemplateButtonsMessage.swift */,
+				4B9A305321215A1A00174C6F /* TemplateConfirmMessage.swift */,
 			);
 			path = Template;
 			sourceTree = "<group>";
@@ -707,6 +713,7 @@
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,
+				4B9A305421215A1A00174C6F /* TemplateConfirmMessage.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
 				4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */,
 				4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */,
@@ -732,6 +739,7 @@
 				4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */,
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
+				4B9A305621215DED00174C6F /* TemplateConfirmMessageTests.swift in Sources */,
 				4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */,
 				4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */,
 				4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */,

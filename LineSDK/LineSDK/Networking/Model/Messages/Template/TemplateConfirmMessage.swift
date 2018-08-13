@@ -1,5 +1,5 @@
 //
-//  MessageProtocols.swift
+//  TemplateConfirmMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,34 +19,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
-
-protocol MessageTypeCompatible {
-    var type: MessageType { get }
-}
-
-protocol TemplateMessagePayloadTypeCompatible {
-    var type: TemplateMessagePayloadType { get }
-}
-
-protocol TemplateMessageActionTypeCompatible {
-    var type: TemplateMessageActionType { get }
-}
-
-func assertHTTPSScheme(url: URL, parameterName: String) throws {
-    try assertParameter(
-        name: parameterName,
-        reson: "HTTPS scheme is required for `\(parameterName)`.")
-    {
-        url.scheme?.lowercased() == "https"
+public struct TemplateConfirmMessage: Codable, TemplateMessagePayloadTypeCompatible {
+    let type = TemplateMessagePayloadType.confirm
+    public var text: String
+    
+    public var confirmAction: TemplateMessageAction {
+        get { return actions[0] }
+        set { actions[0] = newValue }
     }
-}
-
-func assertParameter(
-    name: @autoclosure () -> String,
-    reson: @autoclosure () -> String,
-    unless condition: () -> Bool) throws
-{
-    guard !condition() else { return }
-    throw LineSDKError.generalError(reason: .parameterError(parameterName: name(), description: reson()))
+    public var cancelAction: TemplateMessageAction {
+        get { return actions[1] }
+        set { actions[1] = newValue }
+    }
+    
+    var actions: [TemplateMessageAction]
+    
+    public init(text: String, confirmAction: TemplateMessageAction, cancelAction: TemplateMessageAction) {
+        self.text = text
+        self.actions = [confirmAction, cancelAction]
+    }
 }
