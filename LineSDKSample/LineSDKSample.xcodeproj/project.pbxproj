@@ -61,7 +61,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4B08F9C0211982C300B140DF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4B15EEF0211D322B00866E6C /* APIResultEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultEntryTests.swift; sourceTree = "<group>"; };
 		4B63F46E2106D43C003D1BF1 /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90589B21006E9B004D717F /* LineSDKSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LineSDKSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,7 +143,6 @@
 				4BCD279C2113FE9000B90D8F /* Utils */,
 				4B90589E21006E9C004D717F /* AppDelegate.swift */,
 				4B9058A221006E9C004D717F /* Main.storyboard */,
-				4B08F9C0211982C300B140DF /* Default-568h@2x.png */,
 				4B9058A521006E9C004D717F /* Assets.xcassets */,
 				4B9058A721006E9C004D717F /* LaunchScreen.storyboard */,
 				4B9058AA21006E9C004D717F /* Info.plist */,

@@ -94,7 +94,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4B08F9BE211982AA00B140DF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../LineSDKSample/LineSDKSample/Default-568h@2x.png"; sourceTree = "<group>"; };
+		4B08F9BE211982AA00B140DF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSDKErrorTests.swift; sourceTree = "<group>"; };
 		4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTokenExchangeRequestTests.swift; sourceTree = "<group>"; };
 		4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequestTests.swift; sourceTree = "<group>"; };
@@ -224,6 +224,7 @@
 		4B6A702F2109793500D71C66 /* TestHost */ = {
 			isa = PBXGroup;
 			children = (
+				4B08F9BE211982AA00B140DF /* Default-568h@2x.png */,
 				4B6A70302109793500D71C66 /* AppDelegate.swift */,
 				4B6A703C2109793700D71C66 /* Info.plist */,
 			);
@@ -257,7 +258,6 @@
 		4B90586E21006E5C004D717F = {
 			isa = PBXGroup;
 			children = (
-				4B08F9BE211982AA00B140DF /* Default-568h@2x.png */,
 				4B90587A21006E5C004D717F /* LineSDK */,
 				4B90588521006E5D004D717F /* LineSDKTests */,
 				4B6A702F2109793500D71C66 /* TestHost */,
