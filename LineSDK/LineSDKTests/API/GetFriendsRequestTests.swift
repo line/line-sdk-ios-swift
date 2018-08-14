@@ -54,7 +54,7 @@ class GetFriendsRequestTests: LineSDKAPITests {
         """
         runTestSuccess(for: r) { response in
             XCTAssertEqual(response.friends.count, 3)
-            XCTAssertEqual(response.friends.first?.userID, "aaaa")
+            XCTAssertEqual(response.friends.first?.userId, "aaaa")
         }
     }
 
@@ -77,7 +77,7 @@ class GetFriendsRequestTests: LineSDKAPITests {
         """
         runTestSuccess(for: r) { response in
             XCTAssertEqual(response.friends.count, 1)
-            XCTAssertEqual(response.friends.first?.userID, "bbbb")
+            XCTAssertEqual(response.friends.first?.userId, "bbbb")
             XCTAssertEqual(response.pageToken, "foo")
         }
 
@@ -96,7 +96,7 @@ class GetFriendsRequestTests: LineSDKAPITests {
         """
         runTestSuccess(for: r) { response in
             XCTAssertEqual(response.friends.count, 1)
-            XCTAssertEqual(response.friends.first?.userID, "cccc")
+            XCTAssertEqual(response.friends.first?.userId, "cccc")
             XCTAssertNil(response.pageToken)
         }
     }

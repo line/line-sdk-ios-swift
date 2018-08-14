@@ -21,21 +21,28 @@
 
 import Foundation
 
+/// Represents an `User` object which LineSDK used in `friend list` or `approvers in friend list`.
 public struct User: Decodable {
-    public let userID: String
+
+    /// Identifier of the user
+    public let userId: String
+
+    /// User's display name
     public let displayName: String
-    public let pictureURL: URL?
+
+    /// Profile image URL. Not included in the response if the user doesn't have a profile image.
+    public let pictureUrl: URL?
+
+    enum CodingKeys: String, CodingKey {
+        case userId
+        case displayName
+        case pictureUrl
+    }
 
     public init(from decoder: Decoder) throws {
         let map = try decoder.container(keyedBy: CodingKeys.self)
-        userID = try map.decode(String.self, forKey: .userID)
+        userId = try map.decode(String.self, forKey: .userId)
         displayName = try map.decode(String.self, forKey: .displayName)
-        pictureURL = try? map.decode(URL.self, forKey: .pictureURL)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case userID = "userId"
-        case displayName
-        case pictureURL = "pictureUrl"
+        pictureUrl = try? map.decode(URL.self, forKey: .pictureUrl)
     }
 }
