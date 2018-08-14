@@ -30,6 +30,19 @@ enum MessageType: String, Codable {
     case template
 }
 
+/// Represents a message which LineSDK could send or receive. `Message` is a general wrapper for underlying concrete
+/// type of message. It provides a unifying way to encode and decode messages. You could use related request or APIs
+/// to send or receive messages, as long as your users authorized enough permissions.
+///
+/// - text: Represents the type of text message. A `TextMessage` value is associated.
+/// - image: Represents the type of image message. An `ImageMessage` value is associated.
+/// - video: Represents the type of video message. A `VideoMessage` value is associated.
+/// - audio: Represents the type of audio message. A `AudioMessage` value is associated.
+/// - location: Represents the type of location message. A `LocationMessage` value is associated.
+/// - template: Represents the type of template message. A `TemplateMessage` value is associated.
+///             LINE APIs supports a few types of template messagess. `TemplateMessage` is also a
+///             representing wrapper for underlying template layouts.
+/// - unknown: A message type is not defined in LineSDK yet.
 public enum Message: Codable {
     
     case text(TextMessage)
@@ -46,6 +59,7 @@ public enum Message: Codable {
     }
     
     public init(from decoder: Decoder) throws {
+        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try? container.decode(MessageType.self, forKey: .type)
         switch type {
