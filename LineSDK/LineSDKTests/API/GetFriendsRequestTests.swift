@@ -23,35 +23,81 @@ import XCTest
 @testable import LineSDK
 
 extension GetFriendsRequest: ResponseDataStub {
-    static let success = """
-    {
-      "friends": [
-        {
-          "displayName": "Brown",
-          "pictureUrl": "https://example.com/abc",
-          "userId": "aaaa"
-        },
-        {
-          "displayName": "Cony",
-          "pictureUrl": "",
-          "userId": "bbbb"
-        },
-        {
-          "displayName": "Sally",
-          "userId": "cccc"
-        }
-      ]
-    }
-    """
+    static var success = ""
 }
 
 class GetFriendsRequestTests: LineSDKAPITests {
 
     func testSuccess() {
+
         let r = GetFriendsRequest()
+        GetFriendsRequest.success =
+        """
+        {
+          "friends": [
+            {
+              "displayName": "Brown",
+              "pictureUrl": "https://example.com/abc",
+              "userId": "aaaa"
+            },
+            {
+              "displayName": "Cony",
+              "pictureUrl": "",
+              "userId": "bbbb"
+            },
+            {
+              "displayName": "Sally",
+              "userId": "cccc"
+            }
+          ]
+        }
+        """
         runTestSuccess(for: r) { response in
             XCTAssertEqual(response.friends.count, 3)
             XCTAssertEqual(response.friends.first?.userID, "aaaa")
+        }
+    }
+
+    func testPageTokenExistence() {
+        let r = GetFriendsRequest()
+
+        /// pageToken exists
+        GetFriendsRequest.success =
+        """
+        {
+            "friends": [
+                {
+                    "displayName": "Brown",
+                    "pictureUrl": "https://example.com/abc",
+                    "userId": "bbbb"
+                }
+            ],
+            "pageToken": "foo"
+        }
+        """
+        runTestSuccess(for: r) { response in
+            XCTAssertEqual(response.friends.count, 1)
+            XCTAssertEqual(response.friends.first?.userID, "bbbb")
+            XCTAssertEqual(response.pageToken, "foo")
+        }
+
+        /// pageToken not exists
+        GetFriendsRequest.success =
+        """
+        {
+            "friends": [
+                {
+                "displayName": "Brown",
+                "pictureUrl": "https://example.com/abc",
+                "userId": "cccc"
+                }
+            ],
+        }
+        """
+        runTestSuccess(for: r) { response in
+            XCTAssertEqual(response.friends.count, 1)
+            XCTAssertEqual(response.friends.first?.userID, "cccc")
+            XCTAssertNil(response.pageToken)
         }
     }
 }

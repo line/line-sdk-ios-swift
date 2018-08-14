@@ -164,17 +164,12 @@ public struct LineSDKAPI {
 
 extension LineSDKAPI {
     public static func getFriends(
+        sort: GetFriendsRequest.Sort? = nil,
+        pageToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<[User]>) -> Void)
+        completionHandler completion: @escaping (Result<GetFriendsResult>) -> Void)
     {
-        let request = GetFriendsRequest()
-        Session.shared.send(request, callbackQueue: queue, completionHandler: { result in
-            switch result {
-            case .success(let response):
-                completion(Result.success(response.friends))
-            case .failure(let error):
-                completion(Result.failure(error))
-            }
-        })
+        let request = GetFriendsRequest(sort: sort, pageToken: pageToken)
+        Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
     }
 }

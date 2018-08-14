@@ -22,15 +22,36 @@
 import Foundation
 
 public struct GetFriendsRequest: Request {
-    public init() {}
+    public enum Sort: String {
+        case mid
+        case name
+    }
+
+    public init(sort: Sort? = nil, pageToken: String? = nil) {
+        self.pageToken = pageToken
+        self.sort = sort
+    }
+
+    var sort: Sort?
+    var pageToken: String?
 
     public let method: HTTPMethod = .get
     public let path = "/graph/v2/friends"
     public let authenticate: AuthenticateMethod = .token
 
-    public typealias Response = GetFriendsResponse
+    public var parameters: [String : Any]? {
+        var param: [String : Any] = [:]
+        param["sort"] = sort
+        param["pageToken"] = pageToken
+        return param
+    }
+
+    public typealias Response = GetFriendsResult
 }
 
-public struct GetFriendsResponse: Decodable {
+public struct GetFriendsResult: Decodable {
+
     public let friends: [User]
+
+    public let pageToken: String?
 }
