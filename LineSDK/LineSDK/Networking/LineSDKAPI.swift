@@ -164,11 +164,14 @@ public struct LineSDKAPI {
 
 extension LineSDKAPI {
 
-    /// Returns a friend list of the user. Unless already having granted the channel, users who've configured the privacy filter are excluded from the list.
+    /// Returns a friend list of the user. Unless already having granted the channel,
+    /// users who've configured the privacy filter are excluded from the list.
     ///
     /// - Parameters:
-    ///   - sort: Sorting method for the returned freind list. Only a value of `mid` and `name` is supported with `mid` being set by default.
-    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion closure, pass it here to get the following page of the user's friend list.
+    ///   - sort: Sorting method for the returned freind list.
+    ///           Only a value of `mid` and `name` is supported with `mid` being set by default.
+    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion closure,
+    ///                pass it here to get the following page of the user's friend list.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be executed when the API finishes.
