@@ -21,7 +21,15 @@
 
 import Foundation
 
+/// Represents the request of getting friends list, returns a friend list of current user.
+/// Unless already having granted the channel, users who've configured the privacy filter are excluded from the list.
 public struct GetFriendsRequest: Request {
+
+    /// Sorting method for the returned freind list.
+    /// Only a value of `mid` and `name` is supported.
+    ///
+    /// - mid: Sort by `userId`. This is the default server behavior if no `Sort` had been set.
+    /// - name: Sort by `displayName`
     public enum Sort: String {
         case mid
         case name
@@ -49,9 +57,13 @@ public struct GetFriendsRequest: Request {
     public typealias Response = GetFriendsResult
 }
 
+/// Response of `GetFriendsRequest`
 public struct GetFriendsResult: Decodable {
 
+    /// An array of `User` of current user's friends.
     public let friends: [User]
 
+    /// If there are more objects in the subsequent pages, use this value as the index in the next page request.
+    /// This field is omitted when there is no more objects in subsequent pages.
     public let pageToken: String?
 }
