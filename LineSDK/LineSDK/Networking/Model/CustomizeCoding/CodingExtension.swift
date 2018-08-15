@@ -35,6 +35,14 @@ extension KeyedDecodingContainer {
     }
 }
 
+extension Encodable {
+    func toJSON() throws -> Any {
+        let data = try JSONEncoder().encode(self)
+        return try JSONSerialization.jsonObject(with: data, options: [])
+    }
+}
+
+
 extension UIColor: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
