@@ -32,8 +32,8 @@ public struct GetFriendsRequest: Request {
         self.sort = sort
     }
 
-    var sort: Sort?
-    var pageToken: String?
+    let sort: Sort?
+    let pageToken: String?
 
     public let method: HTTPMethod = .get
     public let path = "/graph/v2/friends"
