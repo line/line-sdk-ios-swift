@@ -208,8 +208,8 @@ extension LineSDKAPI {
     ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and  with 403 as its
     ///   HTTP status code. Please confirm your channel permissions before you use this API.
     ///
-    ///   There is a few cases that API call is successful but message is not delivered. In these cases, the `status`
-    ///   in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
+    ///   There would be a few cases that API call is successful but message is not delivered. In these cases,
+    ///   the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
     ///
     public static func sendMessages(
         _ messages: [Message],
@@ -235,8 +235,8 @@ extension LineSDKAPI {
     ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and  with 403 as its
     ///   HTTP status code. Please confirm your channel permissions before you use this API.
     ///
-    ///   There is a few cases that API call is successful but message is not delivered. In these cases, the `status`
-    ///   in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
+    ///   There would be a few cases that API call is successful but message is not delivered. In these cases,
+    ///   the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
     ///   To know the message delivery result for each receiver, please check the response `results`, which is an array
     ///   of [SendingResult]`. See `SendingResult` for more.
     ///
