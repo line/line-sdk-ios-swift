@@ -38,6 +38,7 @@ public struct PostMultisendMessagesRequest: Request {
     }
     
     public struct Response: Decodable {
+        
         public struct SendingResult: Decodable {
             public let to: String
             public let status: MessageSendingStatus

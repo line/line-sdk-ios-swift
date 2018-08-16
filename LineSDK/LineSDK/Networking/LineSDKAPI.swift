@@ -44,6 +44,7 @@ public struct LineSDKAPI {
     ///   automatically for later use. And you will get a `.LineSDKAccessTokenDidUpdate` notification. Normally,
     ///   there is no need for you to invoke this method manually, since all APIs will try refresh expired token
     ///   if needed.
+    ///
     public static func refreshAccessToken(
         _ refreshToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -131,6 +132,7 @@ public struct LineSDKAPI {
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be executed when the API finishes.
+    ///
     public static func verifyAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -151,6 +153,7 @@ public struct LineSDKAPI {
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be executed when the API finishes.
     /// - Note: `.profile` permission is required.
+    ///
     public static func getProfile(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<UserProfile>) -> Void)
@@ -183,5 +186,67 @@ extension LineSDKAPI {
     {
         let request = GetFriendsRequest(sort: sort, pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
+    }
+}
+
+
+// MARK: - Messaging API
+
+extension LineSDKAPI {
+    
+    /// Sends messages to a certain chat destination on behalf of a user.
+    ///
+    /// - Parameters:
+    ///   - messages: `Messages` will be sent. Up to 5 elements.
+    ///   - chatID: A chat id to send messages to. It could be an ID of user, room, group or square chat ID.
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: The completion closure to be executed when the API finishes.
+    ///
+    /// - Note:
+    ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
+    ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and  with 403 as its
+    ///   HTTP status code. Please confirm your channel permissions before you use this API.
+    ///
+    ///   There is a few cases that API call is successful but message is not delivered. In these cases, the `status`
+    ///   in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
+    ///
+    public static func sendMessages(
+        _ messages: [Message],
+        to chatID: String,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<PostSendMessagesRequest.Response>) -> Void)
+    {
+        let request = PostSendMessagesRequest(chatID: chatID, messages: messages)
+        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+    }
+    
+    /// Sends messages to multiple users on behalf of a user.
+    ///
+    /// - Parameters:
+    ///   - messages: `Messages` will be sent. Up to 5 elements.
+    ///   - chatID: A chat id to send messages to. It could be an ID of user, room, group or square chat ID.
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: The completion closure to be executed when the API finishes.
+    ///
+    /// - Note:
+    ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
+    ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and  with 403 as its
+    ///   HTTP status code. Please confirm your channel permissions before you use this API.
+    ///
+    ///   There is a few cases that API call is successful but message is not delivered. In these cases, the `status`
+    ///   in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
+    ///   To know the message delivery result for each receiver, please check the response `results`, which is an array
+    ///   of [SendingResult]`. See `SendingResult` for more.
+    ///
+    public static func multiSendMessages(
+        _ messages: [Message],
+        to userIDs: [String],
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<PostMultisendMessagesRequest.Response>) -> Void)
+    {
+        let request = PostMultisendMessagesRequest(userIDs: userIDs, messages: messages)
+        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
 }
