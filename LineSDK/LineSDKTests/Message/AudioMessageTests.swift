@@ -91,4 +91,10 @@ class AudioMessageTests: XCTestCase {
             XCTAssertEqual(name, "originalContentURL")
         }
     }
+    
+    func testMessageWrapper() {
+        let contentURL = URL(string: "https://sample.com/original.png")!
+        let message = try? Message.audioMessage(originalContentURL: contentURL, duration: 100)
+        XCTAssertNotNil(message?.asAudioMessage)
+    }
 }

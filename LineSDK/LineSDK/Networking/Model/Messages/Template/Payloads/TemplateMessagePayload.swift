@@ -50,10 +50,10 @@ public enum ImageContentMode: String, Codable {
 
 public enum TemplateMessagePayload: Codable {
     
-    case buttons(TemplateButtonsMessage)
-    case confirm(TemplateConfirmMessage)
-    case carousel(TemplateCarouselMessage)
-    case imageCarousel(TemplateImageCarouselMessage)
+    case buttons(TemplateButtonsPayload)
+    case confirm(TemplateConfirmPayload)
+    case carousel(TemplateCarouselPayload)
+    case imageCarousel(TemplateImageCarouselPayload)
     
     case unknown
     
@@ -66,16 +66,16 @@ public enum TemplateMessagePayload: Codable {
         let type = try? container.decode(TemplateMessagePayloadType.self, forKey: .type)
         switch type {
         case .buttons?:
-            let message = try TemplateButtonsMessage(from: decoder)
+            let message = try TemplateButtonsPayload(from: decoder)
             self = .buttons(message)
         case .confirm?:
-            let message = try TemplateConfirmMessage(from: decoder)
+            let message = try TemplateConfirmPayload(from: decoder)
             self = .confirm(message)
         case .carousel?:
-            let message = try TemplateCarouselMessage(from: decoder)
+            let message = try TemplateCarouselPayload(from: decoder)
             self = .carousel(message)
         case .imageCarousel?:
-            let message = try TemplateImageCarouselMessage(from: decoder)
+            let message = try TemplateImageCarouselPayload(from: decoder)
             self = .imageCarousel(message)
         case nil:
             self = .unknown
@@ -97,22 +97,22 @@ public enum TemplateMessagePayload: Codable {
         }
     }
     
-    public var asButtonsMessage: TemplateButtonsMessage? {
+    public var asButtonsPayload: TemplateButtonsPayload? {
         if case .buttons(let message) = self { return message }
         return nil
     }
     
-    public var asConfirmMessage: TemplateConfirmMessage? {
+    public var asConfirmPayload: TemplateConfirmPayload? {
         if case .confirm(let message) = self { return message }
         return nil
     }
     
-    public var asCarouselMessage: TemplateCarouselMessage? {
+    public var asCarouselPayload: TemplateCarouselPayload? {
         if case .carousel(let message) = self { return message }
         return nil
     }
     
-    public var asImageCarouselMessage: TemplateImageCarouselMessage? {
+    public var asImageCarouselPayload: TemplateImageCarouselPayload? {
         if case .imageCarousel(let message) = self { return message }
         return nil
     }

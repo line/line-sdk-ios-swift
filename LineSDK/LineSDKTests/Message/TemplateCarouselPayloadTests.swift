@@ -1,5 +1,5 @@
 //
-//  TemplateCarouselMessageTests.swift
+//  TemplateCarouselPayloadTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-extension TemplateCarouselMessage: MessageSample {
+extension TemplateCarouselPayload: MessageSample {
     static var samples: [String] {
         return [
         """
@@ -64,18 +64,18 @@ extension TemplateCarouselMessage: MessageSample {
     }
 }
 
-class TemplateCarouselMessageTests: XCTestCase {
+class TemplateCarouselPayloadTests: XCTestCase {
     
-    func testTemplateCarouselMessageEncoding() {
+    func testTemplateCarouselPayloadEncoding() {
         let uriAction = TemplateMessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
         let action = TemplateMessageAction.URI(uriAction)
-        var column = TemplateCarouselMessage.Column(
+        var column = TemplateCarouselPayload.Column(
             text: "hello",
             actions: [action],
             defaultAction: action,
             thumbnailImageURL: nil,
             imageBackgroundColor: .red)
-        var message = TemplateCarouselMessage(columns: [column], imageAspectRatio: .square, imageContentMode: .aspectFill)
+        var message = TemplateCarouselPayload(columns: [column], imageAspectRatio: .square, imageContentMode: .aspectFill)
         
         column.text = "world"
         column.title = "a title"
@@ -102,11 +102,11 @@ class TemplateCarouselMessageTests: XCTestCase {
         XCTAssertEqual(actionsInColumn2.count, 1)
     }
     
-    func testTemplateCarouselMessageDecoding() {
+    func testTemplateCarouselPayloadDecoding() {
         let decoder = JSONDecoder()
-        let result = TemplateCarouselMessage.samplesData
+        let result = TemplateCarouselPayload.samplesData
             .map { try! decoder.decode(TemplateMessagePayload.self, from: $0) }
-            .map { $0.asCarouselMessage! }
+            .map { $0.asCarouselPayload! }
         XCTAssertEqual(result[0].type, .carousel)
         XCTAssertEqual(result[0].imageAspectRatio, .rectangle)
         XCTAssertEqual(result[0].imageContentMode, .aspectFill)
@@ -122,4 +122,9 @@ class TemplateCarouselMessageTests: XCTestCase {
         XCTAssertEqual(result[0].columns[1].actions.count, 2)
     }
     
+    func testMessageWrapper() {
+        let column = TemplateCarouselPayload.Column(text: "Hello")
+        let message = Message.templateCarouselMessage(altText: "altText", columns: [column])
+        XCTAssertNotNil(message.asTemplateMessage?.payload.asCarouselPayload)
+    }
 }

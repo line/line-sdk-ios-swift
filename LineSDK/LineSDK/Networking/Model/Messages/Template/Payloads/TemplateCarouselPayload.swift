@@ -1,5 +1,5 @@
 //
-//  TemplateCarouselMessage.swift
+//  TemplateCarouselPayload.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct TemplateCarouselMessage: Codable, TemplateMessagePayloadTypeCompatible {
+public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompatible {
     
     public struct Column: Codable {
         public var text: String
@@ -110,5 +110,21 @@ public struct TemplateCarouselMessage: Codable, TemplateMessagePayloadTypeCompat
             ?? .rectangle
         imageContentMode = try container.decodeIfPresent(ImageContentMode.self, forKey: .imageContentMode)
             ?? .aspectFill
+    }
+}
+
+extension Message {
+    public static func templateCarouselMessage(
+        altText: String,
+        columns: [TemplateCarouselPayload.Column],
+        imageAspectRatio: ImageAspectRatio = .rectangle,
+        imageContentMode: ImageContentMode = .aspectFill) -> Message
+    {
+        let payload = TemplateCarouselPayload(
+            columns: columns,
+            imageAspectRatio: imageAspectRatio,
+            imageContentMode: imageContentMode)
+        let message = TemplateMessage(altText: altText, payload: .carousel(payload))
+        return .template(message)
     }
 }

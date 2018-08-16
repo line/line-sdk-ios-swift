@@ -37,3 +37,10 @@ public struct TextMessage: Codable, MessageTypeCompatible {
         case sender = "sentBy"
     }
 }
+
+extension Message {
+    public static func textMessage(text: String, sender: MessageSender? = nil) -> Message {
+        let message = TextMessage(text: text, sender: sender)
+        return .text(message)
+    }
+}

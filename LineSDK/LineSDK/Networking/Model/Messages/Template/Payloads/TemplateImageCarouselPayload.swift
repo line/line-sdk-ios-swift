@@ -1,5 +1,5 @@
 //
-//  TemplateImageCarouselMessage.swift
+//  TemplateImageCarouselPayload.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct TemplateImageCarouselMessage: Codable, TemplateMessagePayloadTypeCompatible {
+public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeCompatible {
     public struct Column: Codable {
         public var imageURL: URL
         public var action: TemplateMessageAction
@@ -49,5 +49,16 @@ public struct TemplateImageCarouselMessage: Codable, TemplateMessagePayloadTypeC
     
     public mutating func replaceColumn(at index: Int, with column: Column) {
         columns[index] = column
+    }
+}
+
+extension Message {
+    public static func templateImageCarouselMessage(
+        altText: String,
+        columns: [TemplateImageCarouselPayload.Column] = []) -> Message
+    {
+        let payload = TemplateImageCarouselPayload(columns: columns)
+        let message = TemplateMessage(altText: altText, payload: .imageCarousel(payload))
+        return .template(message)
     }
 }

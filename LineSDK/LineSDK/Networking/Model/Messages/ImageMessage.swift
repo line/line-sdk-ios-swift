@@ -55,3 +55,21 @@ public struct ImageMessage: Codable, MessageTypeCompatible {
         case sender = "sentBy"
     }
 }
+
+extension Message {
+    public static func imageMessage(
+        originalContentURL: URL,
+        previewImageURL: URL,
+        animated: Bool? = nil,
+        extension: String? = nil,
+        sender: MessageSender? = nil) throws -> Message
+    {
+        let message = try ImageMessage(
+            originalContentURL: originalContentURL,
+            previewImageURL: previewImageURL,
+            animated: animated,
+            extension: `extension`,
+            sender: sender)
+        return .image(message)
+    }
+}

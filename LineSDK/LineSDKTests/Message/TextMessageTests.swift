@@ -88,4 +88,12 @@ class TextMessageTests: XCTestCase {
         XCTAssertEqual(result[1].sender!.iconURL, URL(string: "https://sample.com")!)
         XCTAssertNil(result[1].sender!.linkURL)
     }
+    
+    func testMessageWrapper() {
+        let sender = MessageSender(label: "user", iconURL: URL(string: "https://sample.com")!, linkURL: nil)
+        let m = Message.textMessage(text: "123", sender: sender)
+        XCTAssertNotNil(m.asTextMessage)
+        XCTAssertEqual(m.asTextMessage!.text, "123")
+        XCTAssertEqual(m.asTextMessage!.sender!.label, "user")
+    }
 }

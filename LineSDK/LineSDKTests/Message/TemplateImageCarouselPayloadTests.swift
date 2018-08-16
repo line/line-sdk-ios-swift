@@ -1,5 +1,5 @@
 //
-//  TemplateImageCarouselMessageTests.swift
+//  TemplateImageCarouselPayloadTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-extension TemplateImageCarouselMessage: MessageSample {
+extension TemplateImageCarouselPayload: MessageSample {
     static var samples: [String] {
         return [
         """
@@ -52,13 +52,13 @@ extension TemplateImageCarouselMessage: MessageSample {
     }
 }
 
-class TemplateImageCarouselMessageTests: XCTestCase {
+class TemplateImageCarouselPayloadTests: XCTestCase {
     func testTemplateImageCarouselMessageEncoding() {
         let uriAction = TemplateMessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
         let action = TemplateMessageAction.URI(uriAction)
         
-        var column = TemplateImageCarouselMessage.Column(imageURL: URL(string: "https://sample.com")!, action: action)
-        var message = TemplateImageCarouselMessage(columns: [column])
+        var column = TemplateImageCarouselPayload.Column(imageURL: URL(string: "https://sample.com")!, action: action)
+        var message = TemplateImageCarouselPayload(columns: [column])
         
         column.imageURL = URL(string: "https://another-sample.com")!
         
@@ -86,11 +86,11 @@ class TemplateImageCarouselMessageTests: XCTestCase {
         assertEqual(in: actionInColumn2, forKey: "uri", value: "scheme://action-2")
     }
     
-    func testTemplateImageCarouselMessageDecoding() {
+    func testTemplateImageCarouselPayloadDecoding() {
         let decoder = JSONDecoder()
-        let result = TemplateImageCarouselMessage.samplesData
+        let result = TemplateImageCarouselPayload.samplesData
             .map { try! decoder.decode(TemplateMessagePayload.self, from: $0) }
-            .map { $0.asImageCarouselMessage! }
+            .map { $0.asImageCarouselPayload! }
         XCTAssertEqual(result[0].type, .imageCarousel)
         XCTAssertEqual(result[0].columns.count, 2)
         
@@ -99,5 +99,13 @@ class TemplateImageCarouselMessageTests: XCTestCase {
         
         XCTAssertEqual(result[0].columns[1].imageURL, URL(string: "https://image-2.com/"))
         XCTAssertEqual(result[0].columns[1].action.asURIAction?.label, "action 2")
+    }
+    
+    func testMessageWrapper() {
+        let column = TemplateImageCarouselPayload.Column(
+            imageURL: URL(string: "https://sample.com")!,
+            action: .URIAction(label: "open", uri: URL(string: "open://")!))
+        let message = Message.templateImageCarouselMessage(altText: "alt", columns: [column])
+        XCTAssertNotNil(message.asTemplateMessage?.payload.asImageCarouselPayload)
     }
 }

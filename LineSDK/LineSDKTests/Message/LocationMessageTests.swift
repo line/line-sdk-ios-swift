@@ -63,4 +63,9 @@ class LocationMessageTests: XCTestCase {
         XCTAssertEqual(result[0].latitude, 35.65910807942215, accuracy: 0.01)
         XCTAssertEqual(result[0].longitude, 139.70372892916203, accuracy: 0.01)
     }
+    
+    func testMessageWrapper() {
+        let message = Message.locationMessage(title: "123", address: "456", latitude: 1, longitude: 2)
+        XCTAssertNotNil(message.asLocationMessage)
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  TemplateButtonsMessage.swift
+//  TemplateButtonsPayload.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct TemplateButtonsMessage: Codable, TemplateMessagePayloadTypeCompatible {
+public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompatible {
     
     let type = TemplateMessagePayloadType.buttons
     
@@ -98,5 +98,33 @@ public struct TemplateButtonsMessage: Codable, TemplateMessagePayloadTypeCompati
         }
         
         sender = try container.decodeIfPresent(MessageSender.self, forKey: .sender)
+    }
+}
+
+extension Message {
+    public static func templateButtonsMessage(
+        altText: String,
+        text: String,
+        title: String? = nil,
+        actions: [TemplateMessageAction] = [],
+        defaultAction: TemplateMessageAction? = nil,
+        thumbnailImageURL: URL? = nil,
+        imageAspectRatio: ImageAspectRatio = .rectangle,
+        imageContentMode: ImageContentMode = .aspectFill,
+        imageBackgroundColor: UIColor = .white,
+        sender: MessageSender? = nil) -> Message
+    {
+        let payload = TemplateButtonsPayload(
+            text: text,
+            title: title,
+            actions: actions,
+            defaultAction: defaultAction,
+            thumbnailImageURL: thumbnailImageURL,
+            imageAspectRatio: imageAspectRatio,
+            imageContentMode: imageContentMode,
+            imageBackgroundColor: imageBackgroundColor,
+            sender: sender)
+        let message = TemplateMessage(altText: altText, payload: .buttons(payload))
+        return .template(message)
     }
 }

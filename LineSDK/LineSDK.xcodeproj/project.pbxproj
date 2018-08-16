@@ -58,6 +58,7 @@
 		4B9058D6210073E6004D717F /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D5210073E6004D717F /* LoginManager.swift */; };
 		4B9058D8210078FB004D717F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
 		4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
+		4B95F3FF21251BB300AD3A81 /* PostSendMessagesRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */; };
 		4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303021210FE700174C6F /* ImageMessage.swift */; };
 		4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3032212111BE00174C6F /* ImageMessageTests.swift */; };
 		4B9A30352121182400174C6F /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30342121182400174C6F /* VideoMessage.swift */; };
@@ -68,17 +69,17 @@
 		4B9A303F2121277400174C6F /* LocationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303E2121277400174C6F /* LocationMessage.swift */; };
 		4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30402121286900174C6F /* LocationMessageTests.swift */; };
 		4B9A3047212139C000174C6F /* TemplateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3046212139C000174C6F /* TemplateMessage.swift */; };
-		4B9A304921213CE100174C6F /* TemplateButtonsMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304821213CE100174C6F /* TemplateButtonsMessage.swift */; };
+		4B9A304921213CE100174C6F /* TemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304821213CE100174C6F /* TemplateButtonsPayload.swift */; };
 		4B9A304B21213DBB00174C6F /* TemplateMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */; };
 		4B9A304E2121405300174C6F /* TemplateMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304D2121405300174C6F /* TemplateMessageAction.swift */; };
-		4B9A30502121429C00174C6F /* TemplateButtonsMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304F2121429C00174C6F /* TemplateButtonsMessageTests.swift */; };
+		4B9A30502121429C00174C6F /* TemplateButtonsPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304F2121429C00174C6F /* TemplateButtonsPayloadTests.swift */; };
 		4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */; };
-		4B9A305421215A1A00174C6F /* TemplateConfirmMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305321215A1A00174C6F /* TemplateConfirmMessage.swift */; };
-		4B9A305621215DED00174C6F /* TemplateConfirmMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305521215DED00174C6F /* TemplateConfirmMessageTests.swift */; };
-		4B9A30582121613500174C6F /* TemplateCarouselMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30572121613500174C6F /* TemplateCarouselMessage.swift */; };
-		4B9A305A2121639600174C6F /* TemplateCarouselMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30592121639600174C6F /* TemplateCarouselMessageTests.swift */; };
-		4B9A305C21216D2E00174C6F /* TemplateImageCarouselMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305B21216D2E00174C6F /* TemplateImageCarouselMessage.swift */; };
-		4B9A305E21216F2500174C6F /* TemplateImageCarouselMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305D21216F2500174C6F /* TemplateImageCarouselMessageTests.swift */; };
+		4B9A305421215A1A00174C6F /* TemplateConfirmPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305321215A1A00174C6F /* TemplateConfirmPayload.swift */; };
+		4B9A305621215DED00174C6F /* TemplateConfirmPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305521215DED00174C6F /* TemplateConfirmPayloadTests.swift */; };
+		4B9A30582121613500174C6F /* TemplateCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30572121613500174C6F /* TemplateCarouselPayload.swift */; };
+		4B9A305A2121639600174C6F /* TemplateCarouselPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30592121639600174C6F /* TemplateCarouselPayloadTests.swift */; };
+		4B9A305C21216D2E00174C6F /* TemplateImageCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305B21216D2E00174C6F /* TemplateImageCarouselPayload.swift */; };
+		4B9A305E21216F2500174C6F /* TemplateImageCarouselPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305D21216F2500174C6F /* TemplateImageCarouselPayloadTests.swift */; };
 		4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B9AA62123C6E400325B9B /* PostSendMessagesRequest.swift */; };
 		4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E441210EBCFF00355F03 /* SessionTests.swift */; };
 		4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */; };
@@ -180,6 +181,7 @@
 		4B9058D5210073E6004D717F /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		4B9058D7210078FB004D717F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		4B9058DB21007C8C004D717F /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
+		4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSendMessagesRequestTests.swift; sourceTree = "<group>"; };
 		4B9A303021210FE700174C6F /* ImageMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessage.swift; sourceTree = "<group>"; };
 		4B9A3032212111BE00174C6F /* ImageMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageTests.swift; sourceTree = "<group>"; };
 		4B9A30342121182400174C6F /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
@@ -190,17 +192,17 @@
 		4B9A303E2121277400174C6F /* LocationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMessage.swift; sourceTree = "<group>"; };
 		4B9A30402121286900174C6F /* LocationMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMessageTests.swift; sourceTree = "<group>"; };
 		4B9A3046212139C000174C6F /* TemplateMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessage.swift; sourceTree = "<group>"; };
-		4B9A304821213CE100174C6F /* TemplateButtonsMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateButtonsMessage.swift; sourceTree = "<group>"; };
+		4B9A304821213CE100174C6F /* TemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessagePayload.swift; sourceTree = "<group>"; };
 		4B9A304D2121405300174C6F /* TemplateMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageAction.swift; sourceTree = "<group>"; };
-		4B9A304F2121429C00174C6F /* TemplateButtonsMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateButtonsMessageTests.swift; sourceTree = "<group>"; };
+		4B9A304F2121429C00174C6F /* TemplateButtonsPayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateButtonsPayloadTests.swift; sourceTree = "<group>"; };
 		4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageActionTests.swift; sourceTree = "<group>"; };
-		4B9A305321215A1A00174C6F /* TemplateConfirmMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateConfirmMessage.swift; sourceTree = "<group>"; };
-		4B9A305521215DED00174C6F /* TemplateConfirmMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateConfirmMessageTests.swift; sourceTree = "<group>"; };
-		4B9A30572121613500174C6F /* TemplateCarouselMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCarouselMessage.swift; sourceTree = "<group>"; };
-		4B9A30592121639600174C6F /* TemplateCarouselMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCarouselMessageTests.swift; sourceTree = "<group>"; };
-		4B9A305B21216D2E00174C6F /* TemplateImageCarouselMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateImageCarouselMessage.swift; sourceTree = "<group>"; };
-		4B9A305D21216F2500174C6F /* TemplateImageCarouselMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateImageCarouselMessageTests.swift; sourceTree = "<group>"; };
+		4B9A305321215A1A00174C6F /* TemplateConfirmPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateConfirmPayload.swift; sourceTree = "<group>"; };
+		4B9A305521215DED00174C6F /* TemplateConfirmPayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateConfirmPayloadTests.swift; sourceTree = "<group>"; };
+		4B9A30572121613500174C6F /* TemplateCarouselPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCarouselPayload.swift; sourceTree = "<group>"; };
+		4B9A30592121639600174C6F /* TemplateCarouselPayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateCarouselPayloadTests.swift; sourceTree = "<group>"; };
+		4B9A305B21216D2E00174C6F /* TemplateImageCarouselPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateImageCarouselPayload.swift; sourceTree = "<group>"; };
+		4B9A305D21216F2500174C6F /* TemplateImageCarouselPayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateImageCarouselPayloadTests.swift; sourceTree = "<group>"; };
 		4B9B9AA62123C6E400325B9B /* PostSendMessagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSendMessagesRequest.swift; sourceTree = "<group>"; };
 		4BA8E441210EBCFF00355F03 /* SessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionTests.swift; sourceTree = "<group>"; };
 		4BA8E444210ED27900355F03 /* SessionDelegateStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDelegateStub.swift; sourceTree = "<group>"; };
@@ -279,10 +281,10 @@
 				4B9A303621211CC100174C6F /* VideoMessageTests.swift */,
 				4B9A303C2121238D00174C6F /* AudioMessageTests.swift */,
 				4B9A30402121286900174C6F /* LocationMessageTests.swift */,
-				4B9A304F2121429C00174C6F /* TemplateButtonsMessageTests.swift */,
-				4B9A305521215DED00174C6F /* TemplateConfirmMessageTests.swift */,
-				4B9A30592121639600174C6F /* TemplateCarouselMessageTests.swift */,
-				4B9A305D21216F2500174C6F /* TemplateImageCarouselMessageTests.swift */,
+				4B9A304F2121429C00174C6F /* TemplateButtonsPayloadTests.swift */,
+				4B9A305521215DED00174C6F /* TemplateConfirmPayloadTests.swift */,
+				4B9A30592121639600174C6F /* TemplateCarouselPayloadTests.swift */,
+				4B9A305D21216F2500174C6F /* TemplateImageCarouselPayloadTests.swift */,
 				4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */,
 			);
 			path = Message;
@@ -336,6 +338,7 @@
 				4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */,
 				4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */,
 				4BCD27942113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift */,
+				4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -458,15 +461,23 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		4B95F400212528BA00AD3A81 /* Payloads */ = {
+			isa = PBXGroup;
+			children = (
+				4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */,
+				4B9A304821213CE100174C6F /* TemplateButtonsPayload.swift */,
+				4B9A305321215A1A00174C6F /* TemplateConfirmPayload.swift */,
+				4B9A30572121613500174C6F /* TemplateCarouselPayload.swift */,
+				4B9A305B21216D2E00174C6F /* TemplateImageCarouselPayload.swift */,
+			);
+			path = Payloads;
+			sourceTree = "<group>";
+		};
 		4B9A3045212139AE00174C6F /* Template */ = {
 			isa = PBXGroup;
 			children = (
+				4B95F400212528BA00AD3A81 /* Payloads */,
 				4B9A304C2121404000174C6F /* Actions */,
-				4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */,
-				4B9A304821213CE100174C6F /* TemplateButtonsMessage.swift */,
-				4B9A305321215A1A00174C6F /* TemplateConfirmMessage.swift */,
-				4B9A30572121613500174C6F /* TemplateCarouselMessage.swift */,
-				4B9A305B21216D2E00174C6F /* TemplateImageCarouselMessage.swift */,
 			);
 			path = Template;
 			sourceTree = "<group>";
@@ -683,9 +694,9 @@
 				4B6A70432109A11600D71C66 /* LazySingleton.swift in Sources */,
 				4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */,
 				4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */,
-				4B9A305C21216D2E00174C6F /* TemplateImageCarouselMessage.swift in Sources */,
+				4B9A305C21216D2E00174C6F /* TemplateImageCarouselPayload.swift in Sources */,
 				4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */,
-				4B9A30582121613500174C6F /* TemplateCarouselMessage.swift in Sources */,
+				4B9A30582121613500174C6F /* TemplateCarouselPayload.swift in Sources */,
 				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
 				4B9A304E2121405300174C6F /* TemplateMessageAction.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
@@ -714,7 +725,7 @@
 				4B9A3047212139C000174C6F /* TemplateMessage.swift in Sources */,
 				4B9058D8210078FB004D717F /* Result.swift in Sources */,
 				4B9A30352121182400174C6F /* VideoMessage.swift in Sources */,
-				4B9A304921213CE100174C6F /* TemplateButtonsMessage.swift in Sources */,
+				4B9A304921213CE100174C6F /* TemplateButtonsPayload.swift in Sources */,
 				4B6508B8211812CE001796E0 /* LoginManagerOption.swift in Sources */,
 				4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */,
 				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
@@ -731,7 +742,7 @@
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,
-				4B9A305421215A1A00174C6F /* TemplateConfirmMessage.swift in Sources */,
+				4B9A305421215A1A00174C6F /* TemplateConfirmPayload.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
 				4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */,
 				4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */,
@@ -749,6 +760,7 @@
 				4B9A303D2121238D00174C6F /* AudioMessageTests.swift in Sources */,
 				4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */,
 				4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */,
+				4B95F3FF21251BB300AD3A81 /* PostSendMessagesRequestTests.swift in Sources */,
 				DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */,
 				4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */,
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
@@ -757,7 +769,7 @@
 				4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */,
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
-				4B9A305621215DED00174C6F /* TemplateConfirmMessageTests.swift in Sources */,
+				4B9A305621215DED00174C6F /* TemplateConfirmPayloadTests.swift in Sources */,
 				4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */,
 				4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */,
 				4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */,
@@ -765,7 +777,7 @@
 				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
 				4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */,
 				4B39D1E421104DBA00A45510 /* LineSDKAPITests.swift in Sources */,
-				4B9A305A2121639600174C6F /* TemplateCarouselMessageTests.swift in Sources */,
+				4B9A305A2121639600174C6F /* TemplateCarouselPayloadTests.swift in Sources */,
 				4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */,
 				4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */,
 				4BCD27952113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift in Sources */,
@@ -774,9 +786,9 @@
 				4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */,
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */,
-				4B9A305E21216F2500174C6F /* TemplateImageCarouselMessageTests.swift in Sources */,
+				4B9A305E21216F2500174C6F /* TemplateImageCarouselPayloadTests.swift in Sources */,
 				4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */,
-				4B9A30502121429C00174C6F /* TemplateButtonsMessageTests.swift in Sources */,
+				4B9A30502121429C00174C6F /* TemplateButtonsPayloadTests.swift in Sources */,
 				4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */,
 				4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-//  TemplateButtonsMessageTests.swift
+//  TemplateButtonsPayloadTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-extension TemplateButtonsMessage: MessageSample {
+extension TemplateButtonsPayload: MessageSample {
     static var samples: [String] {
         return [
         """
@@ -71,13 +71,13 @@ extension TemplateButtonsMessage: MessageSample {
     }
 }
 
-class TemplateButtonsMessageTests: XCTestCase {
+class TemplateButtonsPayloadTests: XCTestCase {
     
-    func testTemplateButtonsMessageEncoding() {
+    func testTemplateButtonsPayloadEncoding() {
         let uriAction = TemplateMessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
         let action = TemplateMessageAction.URI(uriAction)
         
-        var message = TemplateButtonsMessage(
+        var message = TemplateButtonsPayload(
             text: "hello",
             title: "world",
             actions: [action],
@@ -103,11 +103,11 @@ class TemplateButtonsMessageTests: XCTestCase {
         XCTAssertNil(dic["sentBy"])
     }
     
-    func testTemplateButtonsMessageDecoding() {
+    func testTemplateButtonsPayloadDecoding() {
         let decoder = JSONDecoder()
-        let result = TemplateButtonsMessage.samplesData
+        let result = TemplateButtonsPayload.samplesData
             .map { try! decoder.decode(TemplateMessagePayload.self, from: $0) }
-            .map { $0.asButtonsMessage! }
+            .map { $0.asButtonsPayload! }
         XCTAssertEqual(result[0].type, .buttons)
         XCTAssertEqual(result[0].thumbnailImageURL, URL(string: "https://sample.com")!)
         XCTAssertEqual(result[0].title, "title")
@@ -129,5 +129,11 @@ class TemplateButtonsMessageTests: XCTestCase {
         XCTAssertEqual(result[2].imageAspectRatio, .square)
         XCTAssertEqual(result[2].imageContentMode, .aspectFit)
         XCTAssertEqual(result[2].imageBackgroundColor, .white)
+    }
+    
+    func testMessageWrapper() {
+        let action = TemplateMessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
+        let message = Message.templateButtonsMessage(altText: "alt", text: "Buntton", actions: [action])
+        XCTAssertNotNil(message.asTemplateMessage?.payload.asButtonsPayload)
     }
 }

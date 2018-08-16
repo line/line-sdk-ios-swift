@@ -1,5 +1,5 @@
 //
-//  TemplateConfirmMessageTests.swift
+//  TemplateConfirmPayloadTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-extension TemplateConfirmMessage: MessageSample {
+extension TemplateConfirmPayload: MessageSample {
     static var samples: [String] {
         return [
         """
@@ -47,10 +47,10 @@ extension TemplateConfirmMessage: MessageSample {
     }
 }
 
-class TemplateConfirmMessageTests: XCTestCase {
+class TemplateConfirmPayloadTests: XCTestCase {
 
-    func testTemplateConfirmMessageEncoding() {
-        let message = TemplateConfirmMessage(
+    func testTemplateConfirmPayloadEncoding() {
+        let message = TemplateConfirmPayload(
             text: "123",
             confirmAction: .URI(.init(label: "OK", uri: URL(string: "https://sample.com")!)),
             cancelAction: .URI(.init(label: "Cancel", uri: URL(string: "https://cancel.com")!)))
@@ -70,15 +70,24 @@ class TemplateConfirmMessageTests: XCTestCase {
         assertEqual(in: action2, forKey: "uri", value: "https://cancel.com")
     }
     
-    func testTemplateConfirmMessageDecoding() {
+    func testTemplateConfirmPayloadDecoding() {
         let decoder = JSONDecoder()
-        let result = TemplateConfirmMessage.samplesData
+        let result = TemplateConfirmPayload.samplesData
             .map { try! decoder.decode(TemplateMessagePayload.self, from: $0) }
-            .map { $0.asConfirmMessage! }
+            .map { $0.asConfirmPayload! }
         XCTAssertEqual(result[0].type, .confirm)
         XCTAssertEqual(result[0].text, "some question")
         XCTAssertEqual(result[0].actions.count, 2)
         XCTAssertEqual(result[0].actions[0].asURIAction!.label, "Yes")
         XCTAssertEqual(result[0].actions[1].asURIAction!.label, "No")
+    }
+    
+    func testMessageWrapper() {
+        let message = Message.templateConfirmMessage(
+            altText: "alt",
+            text: "confirm",
+            confirmAction: .URIAction(label: "ok", uri: URL(string: "url://ok")!),
+            cancelAction: .URIAction(label: "cancel", uri: URL(string: "url://cancel")!))
+        XCTAssertNotNil(message.asTemplateMessage?.payload.asConfirmPayload)
     }
 }

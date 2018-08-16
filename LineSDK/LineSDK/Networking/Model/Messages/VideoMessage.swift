@@ -40,3 +40,15 @@ public struct VideoMessage: Codable, MessageTypeCompatible {
         case previewImageURL = "previewImageUrl"
     }
 }
+
+extension Message {
+    public static func videoMessage(
+        originalContentURL: URL,
+        previewImageURL: URL) throws -> Message
+    {
+        let message = try VideoMessage(
+            originalContentURL: originalContentURL,
+            previewImageURL: previewImageURL)
+        return .video(message)
+    }
+}

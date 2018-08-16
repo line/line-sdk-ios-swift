@@ -1,5 +1,5 @@
 //
-//  TemplateConfirmMessage.swift
+//  TemplateConfirmPayload.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct TemplateConfirmMessage: Codable, TemplateMessagePayloadTypeCompatible {
+public struct TemplateConfirmPayload: Codable, TemplateMessagePayloadTypeCompatible {
     let type = TemplateMessagePayloadType.confirm
     public var text: String
     
@@ -37,5 +37,18 @@ public struct TemplateConfirmMessage: Codable, TemplateMessagePayloadTypeCompati
     public init(text: String, confirmAction: TemplateMessageAction, cancelAction: TemplateMessageAction) {
         self.text = text
         self.actions = [confirmAction, cancelAction]
+    }
+}
+
+extension Message {
+    public static func templateConfirmMessage(
+        altText: String,
+        text: String,
+        confirmAction: TemplateMessageAction,
+        cancelAction: TemplateMessageAction) -> Message
+    {
+        let payload = TemplateConfirmPayload(text: text, confirmAction: confirmAction, cancelAction: cancelAction)
+        let message = TemplateMessage(altText: altText, payload: .confirm(payload))
+        return .template(message)
     }
 }

@@ -90,4 +90,11 @@ class VideoMessageTests: XCTestCase {
             XCTAssertEqual(name, "previewImageURL")
         }
     }
+    
+    func testMessageWrapper() {
+        let contentURL = URL(string: "https://sample.com/original.png")!
+        let previewImageURL = URL(string: "https://sample.com/preview.png")!
+        let message = try? Message.videoMessage(originalContentURL: contentURL, previewImageURL: previewImageURL)
+        XCTAssertNotNil(message?.asVideoMessage)
+    }
 }

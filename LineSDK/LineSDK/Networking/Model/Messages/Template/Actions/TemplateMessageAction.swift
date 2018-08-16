@@ -70,3 +70,10 @@ public struct TemplateMessageURIAction: Codable, TemplateMessageActionTypeCompat
         self.uri = uri
     }
 }
+
+extension TemplateMessageAction {
+    public static func URIAction(label: String, uri: URL) -> TemplateMessageAction {
+        let action = TemplateMessageURIAction(label: label, uri: uri)
+        return .URI(action)
+    }
+}

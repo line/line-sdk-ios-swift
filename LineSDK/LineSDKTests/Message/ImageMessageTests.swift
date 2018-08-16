@@ -150,4 +150,11 @@ class ImageMessageTests: XCTestCase {
             XCTAssertEqual(name, "previewImageURL")
         }
     }
+    
+    func testMessageWrapper() {
+        let contentURL = URL(string: "https://sample.com/original.png")!
+        let previewImageURL = URL(string: "https://sample.com/preview.png")!
+        let message = try? Message.imageMessage(originalContentURL: contentURL, previewImageURL: previewImageURL)
+        XCTAssertNotNil(message?.asImageMessage)
+    }
 }
