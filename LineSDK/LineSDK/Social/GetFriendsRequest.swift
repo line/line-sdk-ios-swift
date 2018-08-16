@@ -49,8 +49,12 @@ public struct GetFriendsRequest: Request {
 
     public var parameters: [String : Any]? {
         var param: [String : Any] = [:]
-        param["sort"] = sort
-        param["pageToken"] = pageToken
+        if let sort = sort {
+            param["sort"] = sort
+        }
+        if let pageToken = pageToken {
+            param["pageToken"] = pageToken
+        }
         return param
     }
 
