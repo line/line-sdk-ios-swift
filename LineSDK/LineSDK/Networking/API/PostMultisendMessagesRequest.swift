@@ -26,6 +26,11 @@ public struct PostMultisendMessagesRequest: Request {
     public let userIDs: [String]
     public let messages: [Message]
     
+    public init(userIDs: [String], messages: [Message]) {
+        self.userIDs = userIDs
+        self.messages = messages
+    }
+    
     public let method: HTTPMethod = .post
     public let path = "/message/v3/multisend"
     public let authenticate: AuthenticateMethod = .token

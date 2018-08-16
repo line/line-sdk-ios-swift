@@ -68,7 +68,8 @@ class APIStore {
         ]
         
         messagingAPIs = [
-            
+            .sendTextMessage,
+            .multiSendTextMessage
         ]
     }
     
@@ -101,18 +102,78 @@ struct APIItem {
     let avaliable: Bool
     
     init<T: Request>(title: String, request: T, avaliable: Bool = true) {
-        
-        self.title = title
-        self.path = request.path
-        
-        let block: AnyResultBlock = { handler in
+        self.init(title: title, path: request.path, avaliable: avaliable) { handler in
             Session.shared.send(request) { result in handler(result.map { $0 as Any }) }
         }
+    }
+    
+    init(title: String, path: String, avaliable: Bool = true, block: @escaping AnyResultBlock) {
+        self.title = title
+        self.path = path
+        
         self.block = block
         self.avaliable = avaliable
     }
     
     func execute(handler: @escaping (Result<Any>) -> Void) -> Void {
         block(handler)
+    }
+}
+
+extension APIItem {
+    static var sendTextMessage: APIItem {
+        let mock = PostSendMessagesRequest(chatID: "", messages: [])
+        let block: AnyResultBlock = { handler in
+            let getFriends = GetFriendsRequest()
+            Session.shared.send(getFriends) { res in
+                switch res {
+                case .success(let value):
+                    guard !value.friends.isEmpty else {
+                        let error = LineSDKError.generalError(
+                            reason: .parameterError(
+                                parameterName: "friends",
+                                description: "You need at least one friend to use this API."))
+                        handler(.failure(error))
+                        return
+                    }
+                    let chatID = value.friends[0].userId
+                    let message = Message.textMessage(text: "Hello")
+                    let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [message])
+                    Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
+                case .failure(let error):
+                    handler(.failure(error))
+                }
+            }
+        }
+        
+        return APIItem(title: "Send text message to first friend", path: mock.path, avaliable: true, block: block)
+    }
+    
+    static var multiSendTextMessage: APIItem {
+        let mock = PostMultisendMessagesRequest(userIDs: [], messages: [])
+        let block: AnyResultBlock = { handler in
+            let getFriends = GetFriendsRequest()
+            Session.shared.send(getFriends) { res in
+                switch res {
+                case .success(let value):
+                    guard !value.friends.isEmpty else {
+                        let error = LineSDKError.generalError(
+                            reason: .parameterError(
+                                parameterName: "friends",
+                                description: "You need at least one friend to use this API."))
+                        handler(.failure(error))
+                        return
+                    }
+                    let userIDs = value.friends.prefix(5).map { $0.userId }
+                    let message = Message.textMessage(text: "Hello")
+                    let sendMessage = PostMultisendMessagesRequest(userIDs: userIDs, messages: [message])
+                    Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
+                case .failure(let error):
+                    handler(.failure(error))
+                }
+            }
+        }
+        
+        return APIItem(title: "Multisend text message to first five friends", path: mock.path, avaliable: true, block: block)
     }
 }

@@ -35,7 +35,7 @@ class LoginViewController: UIViewController, IndicatorDisplay {
     
     @IBAction func login(_ sender: Any) {
         showIndicator()
-        LoginManager.shared.login(permissions: [.profile, .friends, .groups], in: self) {
+        LoginManager.shared.login(permissions: [.profile, .friends, .groups, .messageWrite], in: self) {
             result in
             self.hideIndicator()
             switch result {

@@ -26,6 +26,11 @@ public struct PostSendMessagesRequest: Request {
     public let chatID: String
     public let messages: [Message]
     
+    public init(chatID: String, messages: [Message]) {
+        self.chatID = chatID
+        self.messages = messages
+    }
+    
     public let method: HTTPMethod = .post
     public let path = "/message/v3/send"
     public let authenticate: AuthenticateMethod = .token
