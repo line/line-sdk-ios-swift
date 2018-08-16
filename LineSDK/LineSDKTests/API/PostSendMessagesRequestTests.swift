@@ -28,6 +28,8 @@ extension PostSendMessagesRequest: ResponseDataStub {
 
 class PostSendMessagesRequestTests: LineSDKAPITests {
     
+    let message = Message.textMessage(text: "hello")
+    
     func testSuccessOK() {
         PostSendMessagesRequest.success =
         """
@@ -36,7 +38,6 @@ class PostSendMessagesRequestTests: LineSDKAPITests {
         }
         """
         
-        let message = Message.textMessage(text: "hello")
         let r = PostSendMessagesRequest(chatID: "123", messages: [message])
         runTestSuccess(for: r) { status in
             switch status.status {
@@ -54,7 +55,6 @@ class PostSendMessagesRequestTests: LineSDKAPITests {
         }
         """
         
-        let message = Message.textMessage(text: "hello")
         let r = PostSendMessagesRequest(chatID: "123", messages: [message])
         runTestSuccess(for: r) { status in
             switch status.status {
@@ -72,7 +72,6 @@ class PostSendMessagesRequestTests: LineSDKAPITests {
         }
         """
         
-        let message = Message.textMessage(text: "hello")
         let r = PostSendMessagesRequest(chatID: "123", messages: [message])
         runTestSuccess(for: r) { status in
             switch status.status {

@@ -59,6 +59,8 @@
 		4B9058D8210078FB004D717F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
 		4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
 		4B95F3FF21251BB300AD3A81 /* PostSendMessagesRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */; };
+		4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */; };
+		4B95F4042125364500AD3A81 /* PostMultisendMessagesRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B95F4032125364500AD3A81 /* PostMultisendMessagesRequestTests.swift */; };
 		4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303021210FE700174C6F /* ImageMessage.swift */; };
 		4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3032212111BE00174C6F /* ImageMessageTests.swift */; };
 		4B9A30352121182400174C6F /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30342121182400174C6F /* VideoMessage.swift */; };
@@ -182,6 +184,8 @@
 		4B9058D7210078FB004D717F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		4B9058DB21007C8C004D717F /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
 		4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSendMessagesRequestTests.swift; sourceTree = "<group>"; };
+		4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMultisendMessagesRequest.swift; sourceTree = "<group>"; };
+		4B95F4032125364500AD3A81 /* PostMultisendMessagesRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMultisendMessagesRequestTests.swift; sourceTree = "<group>"; };
 		4B9A303021210FE700174C6F /* ImageMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessage.swift; sourceTree = "<group>"; };
 		4B9A3032212111BE00174C6F /* ImageMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageTests.swift; sourceTree = "<group>"; };
 		4B9A30342121182400174C6F /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
@@ -339,6 +343,7 @@
 				4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */,
 				4BCD27942113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift */,
 				4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */,
+				4B95F4032125364500AD3A81 /* PostMultisendMessagesRequestTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -416,6 +421,7 @@
 				4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */,
 				4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */,
 				4B9B9AA62123C6E400325B9B /* PostSendMessagesRequest.swift */,
+				4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -736,6 +742,7 @@
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,
 				4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */,
 				4B9A303B212121FC00174C6F /* MessageProtocols.swift in Sources */,
+				4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */,
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
 				4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */,
 				4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */,
@@ -774,6 +781,7 @@
 				4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */,
 				4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */,
 				4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */,
+				4B95F4042125364500AD3A81 /* PostMultisendMessagesRequestTests.swift in Sources */,
 				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
 				4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */,
 				4B39D1E421104DBA00A45510 /* LineSDKAPITests.swift in Sources */,

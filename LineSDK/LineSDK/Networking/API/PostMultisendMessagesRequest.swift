@@ -1,5 +1,5 @@
 //
-//  PostSendMessagesRequest.swift
+//  PostMultisendMessagesRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,46 +21,28 @@
 
 import Foundation
 
-public struct PostSendMessagesRequest: Request {
+public struct PostMultisendMessagesRequest: Request {
     
-    public let chatID: String
+    public let userIDs: [String]
     public let messages: [Message]
     
     public let method: HTTPMethod = .post
-    public let path = "/message/v3/send"
+    public let path = "/message/v3/multisend"
     public let authenticate: AuthenticateMethod = .token
     
     public var parameters: [String: Any]? {
         return [
-            "to": chatID,
+            "to": userIDs,
             "messages": try! messages.toJSON()
         ]
     }
     
     public struct Response: Decodable {
-        public let status: MessageSendingStatus
-    }
-}
-
-public enum MessageSendingStatus: Decodable {
-    case ok
-    case discarded
-    case unknown(String)
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        switch rawValue {
-        case "ok": self = .ok
-        case "discarded": self = .discarded
-        default: self = .unknown(rawValue)
+        public struct SendingResult: Decodable {
+            public let to: String
+            public let status: MessageSendingStatus
         }
-    }
-    
-    public var isOK: Bool {
-        if case .ok = self {
-            return true
-        }
-        return false
+        
+        public let results: [SendingResult]
     }
 }
