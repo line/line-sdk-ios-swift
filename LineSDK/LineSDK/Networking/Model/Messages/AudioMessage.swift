@@ -25,21 +25,21 @@ public struct AudioMessage: Codable, MessageTypeCompatible {
     
     public let originalContentURL: URL
     public var duration: TimeInterval? {
-        return durationInMillisecond.map { TimeInterval($0) / 1000 }
+        return durationInMilliseconds.map { TimeInterval($0) / 1000 }
     }
     
-    private let durationInMillisecond: Int?
+    private let durationInMilliseconds: Int?
     
     public init(originalContentURL: URL, duration: TimeInterval?) throws {
         try assertHTTPSScheme(url: originalContentURL, parameterName: "originalContentURL")
         self.originalContentURL = originalContentURL
-        self.durationInMillisecond = duration.map { Int($0 * 1000) }
+        self.durationInMilliseconds = duration.map { Int($0 * 1000) }
     }
     
     enum CodingKeys: String, CodingKey {
         case type
         case originalContentURL = "originalContentUrl"
-        case durationInMillisecond = "duration"
+        case durationInMilliseconds = "duration"
     }
 }
 

@@ -26,14 +26,14 @@ public struct ImageMessage: Codable, MessageTypeCompatible {
     public let originalContentURL: URL
     public let previewImageURL: URL
     public let animated: Bool?
-    public let `extension`: String?
+    public let fileExtension: String?
     public let sender: MessageSender?
     
     public init(
         originalContentURL: URL,
         previewImageURL: URL,
         animated: Bool? = nil,
-        extension: String? = nil,
+        fileExtension: String? = nil,
         sender: MessageSender? = nil) throws
     {
         try assertHTTPSScheme(url: originalContentURL, parameterName: "originalContentURL")
@@ -42,7 +42,7 @@ public struct ImageMessage: Codable, MessageTypeCompatible {
         self.originalContentURL = originalContentURL
         self.previewImageURL = previewImageURL
         self.animated = animated
-        self.extension = `extension`
+        self.fileExtension = fileExtension
         self.sender = sender
     }
     
@@ -51,7 +51,7 @@ public struct ImageMessage: Codable, MessageTypeCompatible {
         case originalContentURL = "originalContentUrl"
         case previewImageURL = "previewImageUrl"
         case animated
-        case `extension`
+        case fileExtension = "extension"
         case sender = "sentBy"
     }
 }
@@ -61,14 +61,14 @@ extension Message {
         originalContentURL: URL,
         previewImageURL: URL,
         animated: Bool? = nil,
-        extension: String? = nil,
+        fileExtension: String? = nil,
         sender: MessageSender? = nil) throws -> Message
     {
         let message = try ImageMessage(
             originalContentURL: originalContentURL,
             previewImageURL: previewImageURL,
             animated: animated,
-            extension: `extension`,
+            fileExtension: fileExtension,
             sender: sender)
         return .image(message)
     }

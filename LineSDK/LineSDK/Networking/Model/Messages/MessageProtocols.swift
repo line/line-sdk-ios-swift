@@ -36,7 +36,7 @@ protocol TemplateMessageActionTypeCompatible {
 func assertHTTPSScheme(url: URL, parameterName: String) throws {
     try assertParameter(
         name: parameterName,
-        reson: "HTTPS scheme is required for `\(parameterName)`.")
+        reason: "HTTPS scheme is required for `\(parameterName)`.")
     {
         url.scheme?.lowercased() == "https"
     }
@@ -44,9 +44,9 @@ func assertHTTPSScheme(url: URL, parameterName: String) throws {
 
 func assertParameter(
     name: @autoclosure () -> String,
-    reson: @autoclosure () -> String,
+    reason: @autoclosure () -> String,
     unless condition: () -> Bool) throws
 {
     guard !condition() else { return }
-    throw LineSDKError.generalError(reason: .parameterError(parameterName: name(), description: reson()))
+    throw LineSDKError.generalError(reason: .parameterError(parameterName: name(), description: reason()))
 }

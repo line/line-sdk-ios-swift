@@ -58,7 +58,7 @@ class ImageMessageTests: XCTestCase {
             originalContentURL: contentURL,
             previewImageURL: previewImageURL,
             animated: false,
-            extension: "png",
+            fileExtension: "png",
             sender: nil)
         let message = Message.image(imageMessage)
         
@@ -109,11 +109,11 @@ class ImageMessageTests: XCTestCase {
         XCTAssertEqual(result[0].originalContentURL, contentURL)
         XCTAssertEqual(result[0].previewImageURL, previewImageURL)
         XCTAssertEqual(result[0].animated, true)
-        XCTAssertEqual(result[0].extension, "gif")
+        XCTAssertEqual(result[0].fileExtension, "gif")
         XCTAssertNil(result[0].sender)
         
         XCTAssertNil(result[1].animated)
-        XCTAssertNil(result[1].extension)
+        XCTAssertNil(result[1].fileExtension)
         XCTAssertNotNil(result[1].sender)
         XCTAssertEqual(result[1].sender!.label, "onevcat")
         XCTAssertEqual(result[1].sender!.iconURL, URL(string: "https://sample.com")!)

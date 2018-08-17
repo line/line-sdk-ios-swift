@@ -194,7 +194,7 @@ extension LineSDKAPI {
 
 extension LineSDKAPI {
     
-    /// Sends messages to a certain chat destination on behalf of a user.
+    /// Sends messages to a certain chat destination on behalf of the current authorized user.
     ///
     /// - Parameters:
     ///   - messages: `Messages` will be sent. Up to 5 elements.
