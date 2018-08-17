@@ -103,6 +103,8 @@
 		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
+		DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
+		DBDCFD342126CB6300E8327A /* GetApproversInFriendsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */; };
 		DBE4E36D211D6C1A00184D66 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36C211D6C1A00184D66 /* User.swift */; };
 		DBE4E370211D6CF500184D66 /* GetFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */; };
 		DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */; };
@@ -227,6 +229,8 @@
 		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
+		DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsRequest.swift; sourceTree = "<group>"; };
+		DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsTests.swift; sourceTree = "<group>"; };
 		DBE4E36C211D6C1A00184D66 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendsRequest.swift; sourceTree = "<group>"; };
 		DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendsRequestTests.swift; sourceTree = "<group>"; };
@@ -336,6 +340,7 @@
 				4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */,
 				4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */,
 				DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */,
+				DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */,
 				4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */,
 				4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */,
 				4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */,
@@ -540,6 +545,7 @@
 			children = (
 				DBE4E36C211D6C1A00184D66 /* User.swift */,
 				DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */,
+				DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */,
 			);
 			path = Social;
 			sourceTree = "<group>";
@@ -742,6 +748,7 @@
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
 				4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */,
 				4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */,
+				DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */,
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,
@@ -769,6 +776,7 @@
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
 				4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */,
 				4BA8E44C210EDB5100355F03 /* ParameterEncoderTests.swift in Sources */,
+				DBDCFD342126CB6300E8327A /* GetApproversInFriendsTests.swift in Sources */,
 				4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */,
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,

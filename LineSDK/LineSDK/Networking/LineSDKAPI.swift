@@ -187,6 +187,15 @@ extension LineSDKAPI {
         let request = GetFriendsRequest(sort: sort, pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
     }
+
+    public static func getApproversInFriends(
+        pageToken: String? = nil,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<GetApproversInFriendsRequest.Response>) -> Void)
+    {
+        let request = GetApproversInFriendsRequest(pageToken: pageToken)
+        Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
+    }
 }
 
 
