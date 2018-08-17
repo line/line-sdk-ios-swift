@@ -41,11 +41,6 @@ class GetFriendsRequestTests: LineSDKAPITests {
               "userId": "aaaa"
             },
             {
-              "displayName": "Cony",
-              "pictureUrl": "",
-              "userId": "bbbb"
-            },
-            {
               "displayName": "Sally",
               "userId": "cccc"
             }
@@ -53,7 +48,7 @@ class GetFriendsRequestTests: LineSDKAPITests {
         }
         """
         runTestSuccess(for: r) { response in
-            XCTAssertEqual(response.friends.count, 3)
+            XCTAssertEqual(response.friends.count, 2)
             XCTAssertEqual(response.friends.first?.userId, "aaaa")
         }
     }
