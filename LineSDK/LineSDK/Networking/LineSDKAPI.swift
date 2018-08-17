@@ -179,7 +179,7 @@ extension LineSDKAPI {
         sort: GetFriendsRequest.Sort? = nil,
         pageToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetFriendsResult>) -> Void)
+        completionHandler completion: @escaping (Result<GetFriendsRequest.Response>) -> Void)
     {
         let request = GetFriendsRequest(sort: sort, pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
