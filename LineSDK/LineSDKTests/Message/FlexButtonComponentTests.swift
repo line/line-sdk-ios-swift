@@ -22,14 +22,81 @@
 import XCTest
 @testable import LineSDK
 
+extension FlexButtonComponent: MessageSample {
+    static var samples: [String] {
+        return [
+        """
+        {
+          "type": "button",
+          "action": {
+            "type": "uri",
+            "label": "Tap me",
+            "uri": "https://example.com"
+          },
+          "style": "primary",
+          "color": "#0000ff"
+        }
+        """
+        ]
+    }
+}
+
 class FlexButtonComponentTests: XCTestCase {
     
     func testButtonComponentEncode() {
+        let action = MessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
+        let component = FlexButtonComponent(action: action)
+        let dic = FlexMessageComponent.button(component).json
         
+        assertEqual(in: dic, forKey: "type", value: "button")
+        
+        let actionDic = dic["action"] as! [String: Any]
+        assertEqual(in: actionDic, forKey: "label", value: "action")
+        assertEqual(in: actionDic, forKey: "uri", value: "https://sample.com")
+        
+        XCTAssertNil(dic["flex"])
+        XCTAssertNil(dic["margin"])
+        XCTAssertNil(dic["height"])
+        XCTAssertNil(dic["style"])
+        XCTAssertNil(dic["color"])
+        XCTAssertNil(dic["gravity"])
+    }
+    
+    func testButtonComponentFullEncode() {
+        let action = MessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
+        var component = FlexButtonComponent(action: action)
+        component.flex = 1
+        component.margin = .lg
+        component.height = .sm
+        component.style = .primary
+        component.color = HexColor(.red)
+        component.gravity = .bottom
+        
+        let dic = FlexMessageComponent.button(component).json
+        assertEqual(in: dic, forKey: "type", value: "button")
+        assertEqual(in: dic, forKey: "flex", value: 1)
+        assertEqual(in: dic, forKey: "margin", value: "lg")
+        assertEqual(in: dic, forKey: "height", value: "sm")
+        assertEqual(in: dic, forKey: "style", value: "primary")
+        assertEqual(in: dic, forKey: "color", value: "#FF0000")
+        assertEqual(in: dic, forKey: "gravity", value: "bottom")
+        XCTAssertNotNil(dic["action"])
     }
     
     func testButtonComponentDecode() {
+        let decoder = JSONDecoder()
+        let result = FlexButtonComponent.samplesData
+            .map { try! decoder.decode(FlexMessageComponent.self, from: $0) }
+            .map { $0.asButtonComponent! }
         
+        XCTAssertEqual(result[0].type, .button)
+        XCTAssertEqual(result[0].action.asURIAction!.label, "Tap me")
+        XCTAssertEqual(result[0].action.asURIAction!.uri.absoluteString, "https://example.com")
+        XCTAssertEqual(result[0].style, .primary)
+        XCTAssertEqual(result[0].color?.color, .blue)
+        XCTAssertNil(result[0].flex)
+        XCTAssertNil(result[0].margin)
+        XCTAssertNil(result[0].gravity)
     }
 
 }

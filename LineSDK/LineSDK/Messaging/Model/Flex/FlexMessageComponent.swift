@@ -34,6 +34,7 @@ enum FlexMessageComponentType: String, Codable {
 
 public enum FlexMessageComponent: Codable {
     case text(FlexTextComponent)
+    case button(FlexButtonComponent)
     
     case unknown
     
@@ -46,16 +47,21 @@ public enum FlexMessageComponent: Codable {
         let type = try? container.decode(FlexMessageComponentType.self, forKey: .type)
         switch type {
         case .text?:
-            let compoenent = try FlexTextComponent(from: decoder)
-            self = .text(compoenent)
+            let component = try FlexTextComponent(from: decoder)
+            self = .text(component)
+        case .button?:
+            let component = try FlexButtonComponent(from: decoder)
+            self = .button(component)
         default: fatalError()
         }
     }
     
     public func encode(to encoder: Encoder) throws {
         switch self {
-        case .text(let compoenent):
-            try compoenent.encode(to: encoder)
+        case .text(let component):
+            try component.encode(to: encoder)
+        case .button(let component):
+            try component.encode(to: encoder)
         case .unknown:
             Log.assertionFailure("Cannot encode unknown component type.")
         }
@@ -64,6 +70,11 @@ public enum FlexMessageComponent: Codable {
     
     public var asTextComponent: FlexTextComponent? {
         if case .text(let component) = self { return component }
+        return nil
+    }
+    
+    public var asButtonComponent: FlexButtonComponent? {
+        if case .button(let component) = self { return component }
         return nil
     }
 }
