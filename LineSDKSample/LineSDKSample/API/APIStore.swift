@@ -64,6 +64,9 @@ class APIStore {
         graphAPIs = [
             .init(title: "Get Friends" ,
                   request: GetFriendsRequest()
+            ),
+            .init(title: "Get Approvers in Friends",
+                  request: GetApproversInFriendsRequest()
             )
         ]
         
