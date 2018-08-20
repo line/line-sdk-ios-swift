@@ -28,6 +28,7 @@ enum MessageType: String, Codable {
     case audio
     case location
     case template
+    case flex
 }
 
 /// Represents a message which LineSDK could send or receive. `Message` is a general wrapper for underlying concrete
@@ -51,6 +52,7 @@ public enum Message: Codable {
     case audio(AudioMessage)
     case location(LocationMessage)
     case template(TemplateMessage)
+    case flex(FlexMessage)
     
     case unknown
     
@@ -81,6 +83,9 @@ public enum Message: Codable {
         case .template?:
             let message = try TemplateMessage(from: decoder)
             self = .template(message)
+        case .flex?:
+            let message = try FlexMessage(from: decoder)
+            self = .flex(message)
         case nil:
             self = .unknown
         }
@@ -99,6 +104,8 @@ public enum Message: Codable {
         case .location(let message):
             try message.encode(to: encoder)
         case .template(let message):
+            try message.encode(to: encoder)
+        case .flex(let message):
             try message.encode(to: encoder)
         case .unknown:
             Log.assertionFailure("Cannot encode unknown message type.")

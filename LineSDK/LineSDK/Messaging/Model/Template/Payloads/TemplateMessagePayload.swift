@@ -92,7 +92,7 @@ public enum TemplateMessagePayload: Codable {
             try message.encode(to: encoder)
         case .imageCarousel(let message):
             try message.encode(to: encoder)
-        default:
+        case .unknown:
             Log.assertionFailure("Cannot encode unknown message type.")
         }
     }

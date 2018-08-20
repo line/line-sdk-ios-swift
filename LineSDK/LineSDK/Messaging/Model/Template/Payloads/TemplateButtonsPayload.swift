@@ -30,9 +30,9 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
     public var defaultAction: TemplateMessageAction?
     
     public var thumbnailImageURL: URL?
-    public var imageAspectRatio: ImageAspectRatio
-    public var imageContentMode: ImageContentMode
-    public var imageBackgroundColor: UIColor
+    public var imageAspectRatio: ImageAspectRatio?
+    public var imageContentMode: ImageContentMode?
+    public var imageBackgroundColor: UIColor?
     
     public var sender: MessageSender?
     
@@ -42,9 +42,9 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
         actions: [TemplateMessageAction] = [],
         defaultAction: TemplateMessageAction? = nil,
         thumbnailImageURL: URL? = nil,
-        imageAspectRatio: ImageAspectRatio = .rectangle,
-        imageContentMode: ImageContentMode = .aspectFill,
-        imageBackgroundColor: UIColor = .white,
+        imageAspectRatio: ImageAspectRatio? = nil,
+        imageContentMode: ImageContentMode? = nil,
+        imageBackgroundColor: UIColor? = nil,
         sender: MessageSender? = nil)
     {
         self.text = text
@@ -109,9 +109,9 @@ extension Message {
         actions: [TemplateMessageAction] = [],
         defaultAction: TemplateMessageAction? = nil,
         thumbnailImageURL: URL? = nil,
-        imageAspectRatio: ImageAspectRatio = .rectangle,
-        imageContentMode: ImageContentMode = .aspectFill,
-        imageBackgroundColor: UIColor = .white,
+        imageAspectRatio: ImageAspectRatio? = nil,
+        imageContentMode: ImageContentMode? = nil,
+        imageBackgroundColor: UIColor? = nil,
         sender: MessageSender? = nil) -> Message
     {
         let payload = TemplateButtonsPayload(

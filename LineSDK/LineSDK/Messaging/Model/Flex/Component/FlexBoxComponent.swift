@@ -1,5 +1,5 @@
 //
-//  MessageProtocols.swift
+//  FlexBoxComponent.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,41 +20,3 @@
 //
 
 import Foundation
-
-protocol MessageTypeCompatible {
-    var type: MessageType { get }
-}
-
-protocol TemplateMessagePayloadTypeCompatible {
-    var type: TemplateMessagePayloadType { get }
-}
-
-protocol TemplateMessageActionTypeCompatible {
-    var type: TemplateMessageActionType { get }
-}
-
-protocol FlexMessageContainerTypeCompatible {
-    var type: FlexMessageContainerType { get }
-}
-
-protocol FlexMessageComponentTypeCompatible {
-    var type: FlexMessageComponentType { get }
-}
-
-func assertHTTPSScheme(url: URL, parameterName: String) throws {
-    try assertParameter(
-        name: parameterName,
-        reason: "HTTPS scheme is required for `\(parameterName)`.")
-    {
-        url.scheme?.lowercased() == "https"
-    }
-}
-
-func assertParameter(
-    name: @autoclosure () -> String,
-    reason: @autoclosure () -> String,
-    unless condition: () -> Bool) throws
-{
-    guard !condition() else { return }
-    throw LineSDKError.generalError(reason: .parameterError(parameterName: name(), description: reason()))
-}

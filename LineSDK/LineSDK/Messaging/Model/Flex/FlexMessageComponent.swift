@@ -1,5 +1,5 @@
 //
-//  MessageProtocols.swift
+//  FlexMessageComponent.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,40 +21,43 @@
 
 import Foundation
 
-protocol MessageTypeCompatible {
-    var type: MessageType { get }
+enum FlexMessageComponentType: String, Codable {
+    case box
+    case text
+    case image
+    case button
+    case filler
+    case icon
+    case separator
+    case spacer
 }
 
-protocol TemplateMessagePayloadTypeCompatible {
-    var type: TemplateMessagePayloadType { get }
-}
-
-protocol TemplateMessageActionTypeCompatible {
-    var type: TemplateMessageActionType { get }
-}
-
-protocol FlexMessageContainerTypeCompatible {
-    var type: FlexMessageContainerType { get }
-}
-
-protocol FlexMessageComponentTypeCompatible {
-    var type: FlexMessageComponentType { get }
-}
-
-func assertHTTPSScheme(url: URL, parameterName: String) throws {
-    try assertParameter(
-        name: parameterName,
-        reason: "HTTPS scheme is required for `\(parameterName)`.")
-    {
-        url.scheme?.lowercased() == "https"
+public enum FlexMessageComponent: Codable {
+    case text(FlexTextComponent)
+    
+    case unknown
+    
+    enum CodingKeys: String, CodingKey {
+        case type
     }
-}
-
-func assertParameter(
-    name: @autoclosure () -> String,
-    reason: @autoclosure () -> String,
-    unless condition: () -> Bool) throws
-{
-    guard !condition() else { return }
-    throw LineSDKError.generalError(reason: .parameterError(parameterName: name(), description: reason()))
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let type = try? container.decode(FlexMessageComponentType.self, forKey: .type)
+        switch type {
+        case .text?:
+            let compoenent = try FlexTextComponent(from: decoder)
+            self = .text(compoenent)
+        default: fatalError()
+        }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        switch self {
+        case .text(let compoenent):
+            try compoenent.encode(to: encoder)
+        case .unknown:
+            Log.assertionFailure("Cannot encode unknown component type.")
+        }
+    }
 }
