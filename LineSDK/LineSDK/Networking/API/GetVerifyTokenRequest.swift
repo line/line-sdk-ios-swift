@@ -32,7 +32,7 @@ public struct GetVerifyTokenRequest: Request {
     
     public let method: HTTPMethod = .get
     public let path = "/oauth2/v2.1/verify"
-    public let authenticate: AuthenticateMethod = .none
+    public let authentication: AuthenticateMethod = .none
     
     public var parameters: Parameters? {
         return [ "access_token": accessToken ]

@@ -30,7 +30,7 @@ struct PostExchangeTokenRequest: Request {
     let method: HTTPMethod = .post
     let path = "/oauth2/v2.1/token"
     let contentType: ContentType = .formUrlEncoded
-    let authenticate: AuthenticateMethod = .none
+    let authentication: AuthenticateMethod = .none
     
     var parameters: [String : Any]? {
         return [

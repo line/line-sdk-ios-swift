@@ -26,7 +26,7 @@ public struct GetUserProfileRequest: Request {
     
     public let method: HTTPMethod = .get
     public let path = "/v2/profile"
-    public let authenticate: AuthenticateMethod = .token
+    public let authentication: AuthenticateMethod = .token
     
     public typealias Response = UserProfile
 }
