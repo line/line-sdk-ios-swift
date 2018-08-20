@@ -17,20 +17,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Io5-9F-XzC">
-                                <rect key="frame" x="168" y="326" width="38" height="30"/>
-                                <state key="normal" title="Login"/>
-                                <connections>
-                                    <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PBL-NV-llt"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="Io5-9F-XzC" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="PWq-kN-UMm"/>
-                            <constraint firstItem="Io5-9F-XzC" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="RRo-cj-IM8"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="YJm-cd-Qb6"/>
@@ -270,7 +257,7 @@
             <objects>
                 <navigationController title="LoginNav" id="IW0-D2-Gk8" customClass="LoginNavigationController" customModule="LineSDKSample" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="User" image="user" id="6Mk-yA-WxR"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="w71-hL-hR8" customClass="LoginNav">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="w71-hL-hR8">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
