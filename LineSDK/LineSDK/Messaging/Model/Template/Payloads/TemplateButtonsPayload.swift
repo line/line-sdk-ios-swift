@@ -32,7 +32,7 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
     public var thumbnailImageURL: URL?
     public var imageAspectRatio: ImageAspectRatio?
     public var imageContentMode: ImageContentMode?
-    public var imageBackgroundColor: UIColor?
+    public var imageBackgroundColor: HexColor?
     
     public var sender: MessageSender?
     
@@ -56,7 +56,7 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
         self.thumbnailImageURL = thumbnailImageURL
         self.imageAspectRatio = imageAspectRatio
         self.imageContentMode = imageContentMode
-        self.imageBackgroundColor = imageBackgroundColor
+        self.imageBackgroundColor = imageBackgroundColor.map(HexColor.init)
     }
     
     public mutating func add(action: MessageAction) {
@@ -74,30 +74,6 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
         case imageContentMode = "imageSize"
         case imageBackgroundColor
         case sender = "sentBy"
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        text = try container.decode(String.self, forKey: .text)
-        title = try container.decodeIfPresent(String.self, forKey: .title)
-        
-        actions = try container.decode([MessageAction].self, forKey: .actions)
-        defaultAction = try container.decodeIfPresent(MessageAction.self, forKey: .defaultAction)
-        
-        thumbnailImageURL = try container.decodeIfPresent(URL.self, forKey: .thumbnailImageURL)
-        imageAspectRatio = try container.decodeIfPresent(ImageAspectRatio.self, forKey: .imageAspectRatio)
-                                ?? .rectangle
-        imageContentMode = try container.decodeIfPresent(ImageContentMode.self, forKey: .imageContentMode)
-                                ?? .aspectFill
-        
-        if let backgroundColorString = try container.decodeIfPresent(String.self, forKey: .imageBackgroundColor) {
-            imageBackgroundColor = UIColor(rgb: backgroundColorString)
-        } else {
-            imageBackgroundColor = .white
-        }
-        
-        sender = try container.decodeIfPresent(MessageSender.self, forKey: .sender)
     }
 }
 

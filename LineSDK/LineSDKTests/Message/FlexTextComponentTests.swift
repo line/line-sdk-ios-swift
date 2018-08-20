@@ -69,7 +69,7 @@ class FlexTextComponentTests: XCTestCase {
         component.wrap = true
         component.maxLines = 5
         component.weight = .bold
-        component.color = .red
+        component.color = HexColor(.red)
         component.action = MessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
         
         let dic = FlexMessageComponent.text(component).json
@@ -96,7 +96,7 @@ class FlexTextComponentTests: XCTestCase {
         XCTAssertEqual(result[0].text, "Hello, World!")
         XCTAssertEqual(result[0].size, .xl)
         XCTAssertEqual(result[0].weight, .bold)
-        XCTAssertEqual(result[0].color, .blue)
+        XCTAssertEqual(result[0].color, HexColor(.blue))
         XCTAssertNil(result[0].align)
         XCTAssertNil(result[0].gravity)
         XCTAssertNil(result[0].wrap)

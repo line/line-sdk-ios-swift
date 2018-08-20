@@ -29,7 +29,7 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
         public var defaultAction: MessageAction?
         
         public let thumbnailImageURL: URL?
-        public var imageBackgroundColor: UIColor?
+        public var imageBackgroundColor: HexColor?
         
         public init(
             text: String,
@@ -37,7 +37,7 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
             actions: [MessageAction] = [],
             defaultAction: MessageAction? = nil,
             thumbnailImageURL: URL? = nil,
-            imageBackgroundColor: UIColor = .white)
+            imageBackgroundColor: UIColor? = nil)
         {
             self.text = text
             self.title = title
@@ -46,7 +46,7 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
             self.defaultAction = defaultAction
             
             self.thumbnailImageURL = thumbnailImageURL
-            self.imageBackgroundColor = imageBackgroundColor
+            self.imageBackgroundColor = imageBackgroundColor.map(HexColor.init)
         }
         
         enum CodingKeys: String, CodingKey {
@@ -56,20 +56,6 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
             case defaultAction
             case thumbnailImageURL = "thumbnailImageUrl"
             case imageBackgroundColor
-        }
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            text = try container.decode(String.self, forKey: .text)
-            title = try container.decodeIfPresent(String.self, forKey: .title)
-            actions = try container.decode([MessageAction].self, forKey: .actions)
-            defaultAction = try container.decodeIfPresent(MessageAction.self, forKey: .defaultAction)
-            thumbnailImageURL = try container.decodeIfPresent(URL.self, forKey: .thumbnailImageURL)
-            if let backgroundColorString = try container.decodeIfPresent(String.self, forKey: .imageBackgroundColor) {
-                imageBackgroundColor = UIColor(rgb: backgroundColorString)
-            } else {
-                imageBackgroundColor = .white
-            }
         }
     }
     

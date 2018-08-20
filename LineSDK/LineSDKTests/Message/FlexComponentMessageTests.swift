@@ -23,7 +23,6 @@ import XCTest
 @testable import LineSDK
 
 class FlexComponentMessageTests: XCTestCase {
-    
     func testMarginDeccode() {
         
         typealias Property = FlexMessageComponent.Margin

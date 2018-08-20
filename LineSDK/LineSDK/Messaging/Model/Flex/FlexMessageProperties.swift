@@ -23,60 +23,34 @@ import Foundation
 
 extension FlexMessageComponent {
     
-    public enum Margin: String, Codable {
-        
+    public enum Margin: String, DefaultEnumCodable {
         case none, xs, sm, md, lg, xl, xxl
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawValue = try container.decode(String.self)
-            self = Margin(rawValue: rawValue) ?? .none
-        }
+        public static let defaultCase: FlexMessageComponent.Margin = .none
     }
 
-    public enum Size: String, Codable {
-        
+    public enum Size: String, DefaultEnumCodable {
         case xxs, xs, sm, md, lg, xl, xl2 = "xxl", xl3 = "3xl", xl4 = "4xl", xl5 = "5xl"
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawValue = try container.decode(String.self)
-            self = Size(rawValue: rawValue) ?? .md
-        }
+        public static let defaultCase: FlexMessageComponent.Size = .md
     }
     
-    public enum Align: String, Codable {
-        
+    public enum Align: String, DefaultEnumCodable {
         case start, end, center
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawValue = try container.decode(String.self)
-            self = Align(rawValue: rawValue) ?? .start
-        }
+        public static let defaultCase: FlexMessageComponent.Align = .start
     }
     
-    public enum Gravity: String, Codable {
-        
+    public enum Gravity: String, DefaultEnumCodable {
         case top, bottom, center
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawValue = try container.decode(String.self)
-            self = Gravity(rawValue: rawValue) ?? .top
-        }
+        public static let defaultCase: FlexMessageComponent.Gravity = .top
     }
     
-    public enum Weight: String, Codable {
-        
+    public enum Weight: String, DefaultEnumCodable {
         case regular, bold
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.singleValueContainer()
-            let rawValue = try container.decode(String.self)
-            self = Weight(rawValue: rawValue) ?? .regular
-        }
-        
+        public static let defaultCase: FlexMessageComponent.Weight = .regular
+    }
+    
+    public enum Height: String, DefaultEnumCodable {
+        case sm, md
+        public static let defaultCase: FlexMessageComponent.Height = .md
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  FlexTextComponent.swift
+//  HexColor.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,22 +19,37 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible {
-    let type = FlexMessageComponentType.text
+import Foundation
+
+public struct HexColor: Codable {
     
-    public var text: String
-    public var flex: UInt?
-    public var margin: FlexMessageComponent.Margin?
-    public var size: FlexMessageComponent.Size?
-    public var align: FlexMessageComponent.Align?
-    public var gravity: FlexMessageComponent.Gravity?
-    public var wrap: Bool?
-    public var maxLines: UInt?
-    public var weight: FlexMessageComponent.Weight?
-    public var color: HexColor?
-    public var action: MessageAction?
+    public let rawValue: String
+    public let color: UIColor
     
-    public init(text: String) {
-        self.text = text
+    public init(_ color: UIColor) {
+        self.color = color
+        self.rawValue = color.hexString()
+    }
+    
+    public init(rawValue: String, default: UIColor) {
+        self.color = UIColor(rgb: rawValue, default: `default`)
+        self.rawValue = self.color.hexString()
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self.init(rawValue: rawValue, default: .white)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(rawValue)
+    }
+}
+
+extension HexColor: Equatable {
+    public static func == (lhs: HexColor, rhs: HexColor) -> Bool {
+        return lhs.rawValue.lowercased() == rhs.rawValue.lowercased()
     }
 }

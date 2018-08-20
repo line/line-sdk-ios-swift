@@ -113,8 +113,8 @@ class TemplateButtonsPayloadTests: XCTestCase {
         XCTAssertEqual(result[0].text, "text")
         XCTAssertEqual(result[0].actions.count, 2)
         XCTAssertNil(result[0].defaultAction)
-        XCTAssertEqual(result[0].imageAspectRatio, .rectangle)
-        XCTAssertEqual(result[0].imageContentMode, .aspectFill)
+        XCTAssertNil(result[0].imageAspectRatio)
+        XCTAssertNil(result[0].imageContentMode)
         
         XCTAssertEqual(result[0].actions[0].asURIAction!.label, "CALL")
         XCTAssertEqual(result[0].actions[0].asURIAction!.uri, URL(string: "tel:818055475287")!)
@@ -123,11 +123,11 @@ class TemplateButtonsPayloadTests: XCTestCase {
         
         XCTAssertEqual(result[1].imageAspectRatio, .rectangle)
         XCTAssertEqual(result[1].imageContentMode, .aspectFill)
-        XCTAssertEqual(result[1].imageBackgroundColor, UIColor(hex6: 0xff12ee))
+        XCTAssertEqual(result[1].imageBackgroundColor, HexColor(rawValue: "#ff12ee", default: .white))
         
         XCTAssertEqual(result[2].imageAspectRatio, .square)
         XCTAssertEqual(result[2].imageContentMode, .aspectFit)
-        XCTAssertEqual(result[2].imageBackgroundColor, .white)
+        XCTAssertEqual(result[2].imageBackgroundColor, HexColor(.white))
     }
     
     func testMessageWrapper() {

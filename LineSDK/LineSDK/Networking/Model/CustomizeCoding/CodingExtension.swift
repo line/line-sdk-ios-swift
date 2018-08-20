@@ -42,15 +42,6 @@ extension Encodable {
     }
 }
 
-
-extension UIColor: Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        let stringValue = hexString()
-        try container.encode(stringValue)
-    }
-}
-
 extension UIColor {
     
     convenience init(hex3: UInt16, alpha: CGFloat = 1) {
@@ -126,3 +117,17 @@ extension UIColor {
         }
     }
 }
+
+public protocol DefaultEnumCodable: RawRepresentable, Codable {
+    static var defaultCase: Self { get }
+}
+
+public extension DefaultEnumCodable where Self.RawValue: Decodable {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(RawValue.self)
+        self = Self.init(rawValue: rawValue) ?? Self.defaultCase
+    }
+}
+
+

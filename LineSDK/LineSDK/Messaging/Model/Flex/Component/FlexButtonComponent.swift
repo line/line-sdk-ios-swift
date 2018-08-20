@@ -1,5 +1,5 @@
 //
-//  FlexTextComponent.swift
+//  FlexButtonComponent.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,22 +19,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible {
-    let type = FlexMessageComponentType.text
+public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
     
-    public var text: String
+    public enum Style: String, DefaultEnumCodable {
+        case link, primary, secondary
+        public static let defaultCase: FlexButtonComponent.Style = .link
+    }
+    
+    let type = FlexMessageComponentType.button
+    
+    public var action: MessageAction
     public var flex: UInt?
     public var margin: FlexMessageComponent.Margin?
-    public var size: FlexMessageComponent.Size?
-    public var align: FlexMessageComponent.Align?
-    public var gravity: FlexMessageComponent.Gravity?
-    public var wrap: Bool?
-    public var maxLines: UInt?
-    public var weight: FlexMessageComponent.Weight?
+    public var height: FlexMessageComponent.Height?
+    public var style: Style?
     public var color: HexColor?
-    public var action: MessageAction?
-    
-    public init(text: String) {
-        self.text = text
-    }
+    public var gravity: FlexMessageComponent.Gravity?
 }

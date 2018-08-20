@@ -26,26 +26,18 @@ enum TemplateMessagePayloadType: String, Codable {
     case imageCarousel = "image_carousel"
 }
 
-public enum ImageAspectRatio: String, Codable {
+public enum ImageAspectRatio: String, DefaultEnumCodable {
     case rectangle
     case square
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self = ImageAspectRatio(rawValue: rawValue) ?? .rectangle
-    }
+    public static let defaultCase: ImageAspectRatio = .rectangle
 }
 
-public enum ImageContentMode: String, Codable {
+public enum ImageContentMode: String, DefaultEnumCodable {
     case aspectFill = "cover"
     case aspectFit = "contain"
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self = ImageContentMode(rawValue: rawValue) ?? .aspectFill
-    }
+    public static let defaultCase: ImageContentMode = .aspectFill
 }
 
 public enum TemplateMessagePayload: Codable {
