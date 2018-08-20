@@ -34,7 +34,7 @@ struct StubRequestSimple: Request, ResponseDataStub {
     
     let method: HTTPMethod = .get
     let path: String = ""
-    let authenticate: AuthenticateMethod = .none
+    let authentication: AuthenticateMethod = .none
     
     static let success = "{\"foo\": \"bar\"}"
 }
@@ -47,7 +47,7 @@ struct StubRequestWithAdapters: Request {
     
     let method: HTTPMethod = .post
     let path: String = "/api/test"
-    let authenticate: AuthenticateMethod = .none
+    let authentication: AuthenticateMethod = .none
     
     var adapters: [RequestAdapter] {
         return [
@@ -68,7 +68,7 @@ struct StubRequestWithSingleTerminatorPipeline: Request, ResponseDataStub {
     
     let method: HTTPMethod = .get
     let path: String = ""
-    let authenticate: AuthenticateMethod = .none
+    let authentication: AuthenticateMethod = .none
     
     var pipelines: [ResponsePipeline] {
         return [.terminator(JSONParsePipeline(JSONDecoder()))]
@@ -104,7 +104,7 @@ struct StubRequestWithContinuesPipeline: Request, ResponseDataStub {
     
     let method: HTTPMethod = .get
     let path: String = ""
-    let authenticate: AuthenticateMethod = .none
+    let authentication: AuthenticateMethod = .none
     
     var pipelines: [ResponsePipeline] {
         return [
@@ -150,7 +150,7 @@ struct StubRequestWithContinusDataResponsePipeline: Request, ResponseDataStub {
     
     let method: HTTPMethod = .get
     let path: String = ""
-    let authenticate: AuthenticateMethod = .none
+    let authentication: AuthenticateMethod = .none
     
     var pipelines: [ResponsePipeline] {
         return [
@@ -188,7 +188,7 @@ struct StubRequestWithStopPipeline: Request, ResponseDataStub {
     
     let method: HTTPMethod = .get
     let path: String = ""
-    let authenticate: AuthenticateMethod = .none
+    let authentication: AuthenticateMethod = .none
     
     var pipelines: [ResponsePipeline] {
         return [
@@ -232,7 +232,7 @@ struct StubRequestWithRestartPipeline: Request, ResponseDataStub {
     
     let method: HTTPMethod = .get
     let path: String = ""
-    let authenticate: AuthenticateMethod = .none
+    let authentication: AuthenticateMethod = .none
     
     var pipelines: [ResponsePipeline] {
         return [
@@ -270,7 +270,7 @@ struct StubRequestWithRestartAnotherPipeline: Request, ResponseDataStub {
     
     let method: HTTPMethod = .get
     let path: String = ""
-    let authenticate: AuthenticateMethod = .none
+    let authentication: AuthenticateMethod = .none
     
     var pipelines: [ResponsePipeline] {
         return [

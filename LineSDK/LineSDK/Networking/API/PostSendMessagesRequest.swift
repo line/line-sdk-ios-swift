@@ -33,7 +33,7 @@ public struct PostSendMessagesRequest: Request {
     
     public let method: HTTPMethod = .post
     public let path = "/message/v3/send"
-    public let authenticate: AuthenticateMethod = .token
+    public let authentication: AuthenticateMethod = .token
     
     public var parameters: [String: Any]? {
         return [
