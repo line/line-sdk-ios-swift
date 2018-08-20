@@ -24,7 +24,7 @@ import Foundation
 /// `Session` takes the responsibility of sending a `Request` through `URLSession` for LINE APIs.
 /// It respects `adapters` and `pipelines` properties of `Request`, to create proper request and handle the response
 /// in a designed way.
-public class Session: LazySingleton {
+public class Session {
     
     /// The result of response `handle` method could give.
     ///
@@ -48,6 +48,9 @@ public class Session: LazySingleton {
     }
     
     static var _shared: Session?
+    public static var shared: Session {
+        return guardSharedProperty(_shared)
+    }
     
     let baseURL: URL
     let session: URLSession

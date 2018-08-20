@@ -84,9 +84,9 @@ public class LoginManager {
         defer { setup = true }
         
         let config = LoginConfiguration(channelID: channelID, universalLinkURL: universalLinkURL)
-        LoginConfiguration.shared = config
-        AccessTokenStore.shared = AccessTokenStore(configuration: config)
-        Session.shared = Session(configuration: config)
+        LoginConfiguration._shared = config
+        AccessTokenStore._shared = AccessTokenStore(configuration: config)
+        Session._shared = Session(configuration: config)
     }
     
     /// Login to LINE service.

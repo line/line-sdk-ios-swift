@@ -68,3 +68,11 @@ extension UIApplication {
         }
     }
 }
+
+func guardSharedProperty<T>(_ input: T?) -> T {
+    guard let shared = input else {
+        Log.fatalError("Use \(T.self) before setup. " +
+            "Please call `LoginManager.setup` before you do any other things in LineSDK.")
+    }
+    return shared
+}
