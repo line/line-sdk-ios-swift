@@ -56,6 +56,6 @@ public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible {
             color = nil
         }
         
-        action = try container.decodeIfPresent(MessageAction.self, forKey: .size)
+        action = try container.decodeIfPresent(MessageAction.self, forKey: .action)
     }
 }

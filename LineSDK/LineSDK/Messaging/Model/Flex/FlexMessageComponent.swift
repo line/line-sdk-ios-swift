@@ -60,4 +60,10 @@ public enum FlexMessageComponent: Codable {
             Log.assertionFailure("Cannot encode unknown component type.")
         }
     }
+    
+    
+    public var asTextComponent: FlexTextComponent? {
+        if case .text(let component) = self { return component }
+        return nil
+    }
 }
