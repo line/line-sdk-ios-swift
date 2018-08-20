@@ -38,11 +38,4 @@ public struct User: Decodable {
         case displayName
         case pictureUrl
     }
-
-    public init(from decoder: Decoder) throws {
-        let map = try decoder.container(keyedBy: CodingKeys.self)
-        userId = try map.decode(String.self, forKey: .userId)
-        displayName = try map.decode(String.self, forKey: .displayName)
-        pictureUrl = try? map.decode(URL.self, forKey: .pictureUrl)
-    }
 }

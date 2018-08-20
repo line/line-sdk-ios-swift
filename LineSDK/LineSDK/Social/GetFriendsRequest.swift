@@ -58,16 +58,13 @@ public struct GetFriendsRequest: Request {
         return param
     }
 
-    public typealias Response = GetFriendsResult
-}
+    public struct Response: Decodable {
 
-/// Response of `GetFriendsRequest`
-public struct GetFriendsResult: Decodable {
+        /// An array of `User` of current user's friends.
+        public let friends: [User]
 
-    /// An array of `User` of current user's friends.
-    public let friends: [User]
-
-    /// If there are more objects in the subsequent pages, use this value as the index in the next page request.
-    /// This field is omitted when there is no more objects in subsequent pages.
-    public let pageToken: String?
+        /// If there are more objects in the subsequent pages, use this value as the index in the next page request.
+        /// This field is omitted when there is no more objects in subsequent pages.
+        public let pageToken: String?
+    }
 }
