@@ -188,6 +188,15 @@ extension LineSDKAPI {
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
     }
 
+    /// Returns a list of the user's friends who have already approved the channel,
+    /// regardless each user's privacy filter setting. This API returns a maximum of 200 users per request.
+    ///
+    /// - Parameters:
+    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion block,
+    ///                pass it here to get the following page of the list.
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: The closure to be executed when the approver list is returned.
     public static func getApproversInFriends(
         pageToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,

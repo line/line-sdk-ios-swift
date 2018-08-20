@@ -21,6 +21,9 @@
 
 import Foundation
 
+/// Represents the request getting the list of the user's friends who have already approved the channel,
+/// regardless each user's privacy filter setting.
+/// This API returns a maximum of 200 users per request.
 public struct GetApproversInFriendsRequest: Request {
 
     public init(pageToken: String? = nil) {
@@ -43,7 +46,7 @@ public struct GetApproversInFriendsRequest: Request {
 
     public struct Response: Decodable {
 
-        /// An array of `User` of current user's friends.
+        /// An array of `User` of current user's friends who have already approved the channel.
         public let friends: [User]
 
         /// If there are more objects in the subsequent pages, use this value as the index in the next page request.
