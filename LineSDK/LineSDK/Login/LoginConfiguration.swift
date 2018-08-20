@@ -21,9 +21,12 @@
 
 import Foundation
 
-struct LoginConfiguration: LazySingleton {
+struct LoginConfiguration {
     
     static var _shared: LoginConfiguration?
+    public static var shared: LoginConfiguration {
+        return guardSharedProperty(_shared)
+    }
     
     let channelID: String
     let universalLinkURL: URL?

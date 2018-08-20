@@ -45,7 +45,7 @@ extension LineSDKNotificationKey {
 }
 
 /// Represents the storage of `AccessToken`.
-public class AccessTokenStore: LazySingleton {
+public class AccessTokenStore {
     
     // In case we might do migration later on the token,
     // we need a way to identifier the token store version.
@@ -106,6 +106,9 @@ public class AccessTokenStore: LazySingleton {
     }
     
     static var _shared: AccessTokenStore?
+    public static var shared: AccessTokenStore {
+        return guardSharedProperty(_shared)
+    }
     
     let configuration: LoginConfiguration
     let keychainStore: KeychainStore
