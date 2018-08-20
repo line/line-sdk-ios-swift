@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TemplateMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,33 +19,4 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
-import LineSDK
-
-extension Notification.Name {
-    static let userDidLogin = Notification.Name("com.linecorp.linesdk_sample.userDidLogin")
-}
-
-class LoginViewController: UIViewController, IndicatorDisplay {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    @IBAction func login(_ sender: Any) {
-        showIndicator()
-        LoginManager.shared.login(permissions: [.profile, .friends, .groups, .messageWrite], in: self) {
-            result in
-            self.hideIndicator()
-            switch result {
-            case .success(let login):
-                UIAlertController.present(in: self, successResult: "\(login)") {
-                    NotificationCenter.default.post(name: .userDidLogin, object: login)
-                }
-            case .failure(let error):
-                UIAlertController.present(in: self, error: error)
-            }
-        }
-    }
-}
+import Foundation

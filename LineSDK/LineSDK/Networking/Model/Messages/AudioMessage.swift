@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  AudioMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,33 +19,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
-import LineSDK
-
-extension Notification.Name {
-    static let userDidLogin = Notification.Name("com.linecorp.linesdk_sample.userDidLogin")
-}
-
-class LoginViewController: UIViewController, IndicatorDisplay {
+public struct AudioMessage: Codable, MessageTypeCompatible {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    let type = MessageType.audio
+    
+    public let originalContentURL: URL
+    public var duration: TimeInterval? {
+        return durationInMilliseconds.map { TimeInterval($0) / 1000 }
     }
     
-    @IBAction func login(_ sender: Any) {
-        showIndicator()
-        LoginManager.shared.login(permissions: [.profile, .friends, .groups, .messageWrite], in: self) {
-            result in
-            self.hideIndicator()
-            switch result {
-            case .success(let login):
-                UIAlertController.present(in: self, successResult: "\(login)") {
-                    NotificationCenter.default.post(name: .userDidLogin, object: login)
-                }
-            case .failure(let error):
-                UIAlertController.present(in: self, error: error)
-            }
-        }
+    private let durationInMilliseconds: Int?
+    
+    public init(originalContentURL: URL, duration: TimeInterval?) throws {
+        try assertHTTPSScheme(url: originalContentURL, parameterName: "originalContentURL")
+        self.originalContentURL = originalContentURL
+        self.durationInMilliseconds = duration.map { Int($0 * 1000) }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case type
+        case originalContentURL = "originalContentUrl"
+        case durationInMilliseconds = "duration"
+    }
+}
+
+extension Message {
+    public static func audioMessage(originalContentURL: URL, duration: TimeInterval?) throws -> Message {
+        let message = try AudioMessage(originalContentURL: originalContentURL, duration: duration)
+        return .audio(message)
     }
 }

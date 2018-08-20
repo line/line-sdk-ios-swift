@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PostMultisendMessagesRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,33 +19,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
-import LineSDK
+import Foundation
 
-extension Notification.Name {
-    static let userDidLogin = Notification.Name("com.linecorp.linesdk_sample.userDidLogin")
-}
-
-class LoginViewController: UIViewController, IndicatorDisplay {
+public struct PostMultisendMessagesRequest: Request {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    public let userIDs: [String]
+    public let messages: [Message]
+    
+    public init(userIDs: [String], messages: [Message]) {
+        self.userIDs = userIDs
+        self.messages = messages
     }
     
-    @IBAction func login(_ sender: Any) {
-        showIndicator()
-        LoginManager.shared.login(permissions: [.profile, .friends, .groups, .messageWrite], in: self) {
-            result in
-            self.hideIndicator()
-            switch result {
-            case .success(let login):
-                UIAlertController.present(in: self, successResult: "\(login)") {
-                    NotificationCenter.default.post(name: .userDidLogin, object: login)
-                }
-            case .failure(let error):
-                UIAlertController.present(in: self, error: error)
-            }
+    public let method: HTTPMethod = .post
+    public let path = "/message/v3/multisend"
+    public let authenticate: AuthenticateMethod = .token
+    
+    public var parameters: [String: Any]? {
+        return [
+            "to": userIDs,
+            "messages": try! messages.toJSON()
+        ]
+    }
+    
+    public struct Response: Decodable {
+        
+        public struct SendingResult: Decodable {
+            public let to: String
+            public let status: MessageSendingStatus
         }
+        
+        public let results: [SendingResult]
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TextMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,33 +19,28 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
-import LineSDK
-
-extension Notification.Name {
-    static let userDidLogin = Notification.Name("com.linecorp.linesdk_sample.userDidLogin")
-}
-
-class LoginViewController: UIViewController, IndicatorDisplay {
+public struct TextMessage: Codable, MessageTypeCompatible {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    let type = MessageType.text
+    
+    public let text: String
+    public let sender: MessageSender?
+    
+    public init(text: String, sender: MessageSender? = nil) {
+        self.text = text
+        self.sender = sender
     }
     
-    @IBAction func login(_ sender: Any) {
-        showIndicator()
-        LoginManager.shared.login(permissions: [.profile, .friends, .groups, .messageWrite], in: self) {
-            result in
-            self.hideIndicator()
-            switch result {
-            case .success(let login):
-                UIAlertController.present(in: self, successResult: "\(login)") {
-                    NotificationCenter.default.post(name: .userDidLogin, object: login)
-                }
-            case .failure(let error):
-                UIAlertController.present(in: self, error: error)
-            }
-        }
+    enum CodingKeys: String, CodingKey {
+        case type
+        case text
+        case sender = "sentBy"
+    }
+}
+
+extension Message {
+    public static func textMessage(text: String, sender: MessageSender? = nil) -> Message {
+        let message = TextMessage(text: text, sender: sender)
+        return .text(message)
     }
 }

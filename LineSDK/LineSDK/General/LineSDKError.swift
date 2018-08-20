@@ -97,8 +97,10 @@ public enum LineSDKError: Error {
     /// The underlying reason for why `.generalError` happens.
     ///
     /// - conversionError: Cannot convert target `string` to valid data under `encoding`.
+    /// - parameterError: Method invoked with an invalid parameter.
     public enum GeneralErrorReason {
         case conversionError(string: String, encoding: String.Encoding)
+        case parameterError(parameterName: String, description: String)
     }
     
     case requestFailed(reason: RequestErrorReason)
@@ -243,6 +245,8 @@ extension LineSDKError.GeneralErrorReason {
         switch self {
         case .conversionError(let text, let encoding):
             return "Cannot convert target \"\(text)\" to valid data under \(encoding) encoding."
+        case .parameterError(let parameterName, let reason):
+            return "Method invoked with an invalid parameter \"\(parameterName)\". Reason: \(reason)"
         }
     }
 }

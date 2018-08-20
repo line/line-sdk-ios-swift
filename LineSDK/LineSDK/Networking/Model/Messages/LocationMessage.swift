@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LocationMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,33 +19,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
-import LineSDK
-
-extension Notification.Name {
-    static let userDidLogin = Notification.Name("com.linecorp.linesdk_sample.userDidLogin")
+public struct LocationMessage: Codable, MessageTypeCompatible {
+    
+    public typealias LocationDegrees = Double
+    
+    let type = MessageType.location
+    
+    public let title: String
+    public let address: String
+    public let latitude: LocationDegrees
+    public let longitude: LocationDegrees
+    
+    public init(title: String, address: String, latitude: LocationDegrees, longitude: LocationDegrees) {
+        self.title = title
+        self.address = address
+        self.latitude = latitude
+        self.longitude = longitude
+    }
 }
 
-class LoginViewController: UIViewController, IndicatorDisplay {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-    
-    @IBAction func login(_ sender: Any) {
-        showIndicator()
-        LoginManager.shared.login(permissions: [.profile, .friends, .groups, .messageWrite], in: self) {
-            result in
-            self.hideIndicator()
-            switch result {
-            case .success(let login):
-                UIAlertController.present(in: self, successResult: "\(login)") {
-                    NotificationCenter.default.post(name: .userDidLogin, object: login)
-                }
-            case .failure(let error):
-                UIAlertController.present(in: self, error: error)
-            }
-        }
+extension Message {
+    public static func locationMessage(
+        title: String,
+        address: String,
+        latitude: LocationMessage.LocationDegrees,
+        longitude: LocationMessage.LocationDegrees) -> Message
+    {
+        let message = LocationMessage(title: title, address: address, latitude: latitude, longitude: longitude)
+        return .location(message)
     }
 }
