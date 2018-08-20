@@ -43,7 +43,7 @@ class LineSDKAPITests: XCTestCase {
     func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
         let expect = expectation(description: "\(#file)_\(#line)")
 
-        if request.authenticate == .token {
+        if request.authentication == .token {
             setupTestToken()
         }
         

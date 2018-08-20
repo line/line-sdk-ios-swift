@@ -123,7 +123,7 @@ public protocol Request {
     var parameters: Parameters? { get }
     
     /// `AuthenticateMethod` should be used for this request.
-    var authenticate: AuthenticateMethod { get }
+    var authentication: AuthenticateMethod { get }
     
     /// `ContentType` of HTTP body data for this request. Default is `.json`.
     var contentType: ContentType { get }
@@ -184,7 +184,7 @@ public extension Request {
         contentType.adapter.map { adapters.append($0) }
         
         // Token adapter
-        authenticate.adapter.map { adapters.append($0) }
+        authentication.adapter.map { adapters.append($0) }
         
         return adapters
     }
@@ -193,7 +193,7 @@ public extension Request {
         var pipelines: [ResponsePipeline] = []
         
         // Token refresh pipeline
-        authenticate.refreshTokenPipeline.map { pipelines.append($0) }
+        authentication.refreshTokenPipeline.map { pipelines.append($0) }
         
         pipelines.append(contentsOf: [
             .redirector(BadHTTPStatusRedirector(valid: 200..<300)),
