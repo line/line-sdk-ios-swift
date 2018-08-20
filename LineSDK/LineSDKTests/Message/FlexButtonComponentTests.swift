@@ -1,5 +1,5 @@
 //
-//  FlexButtonComponent.swift
+//  FlexButtonComponentTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,24 +19,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
+import XCTest
+@testable import LineSDK
+
+class FlexButtonComponentTests: XCTestCase {
     
-    public enum Style: String, DefaultEnumCodable {
-        case link, primary, secondary
-        public static let defaultCase: FlexButtonComponent.Style = .link
+    func testButtonComponentEncode() {
+        
     }
     
-    let type = FlexMessageComponentType.button
-    
-    public var action: MessageAction
-    public var flex: UInt?
-    public var margin: FlexMessageComponent.Margin?
-    public var height: FlexMessageComponent.Height?
-    public var style: Style?
-    public var color: HexColor?
-    public var gravity: FlexMessageComponent.Gravity?
-    
-    public init(action: MessageAction) {
-        self.action = action
+    func testButtonComponentDecode() {
+        
     }
+
 }

@@ -38,6 +38,8 @@
 		4B6A0FF1212A99AD00B3ED1F /* FlexTextComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */; };
 		4B6A0FF3212AA15D00B3ED1F /* FlexButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF2212AA15D00B3ED1F /* FlexButtonComponent.swift */; };
 		4B6A0FF5212AA82500B3ED1F /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF4212AA82500B3ED1F /* HexColor.swift */; };
+		4B6A0FF7212AACCF00B3ED1F /* FlexButtonComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF6212AACCF00B3ED1F /* FlexButtonComponentTests.swift */; };
+		4B6A0FF9212AACEC00B3ED1F /* HexColorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF8212AACEC00B3ED1F /* HexColorTests.swift */; };
 		4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A7025210956B600D71C66 /* KeychainStore.swift */; };
 		4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */; };
 		4B6A70312109793500D71C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A70302109793500D71C66 /* AppDelegate.swift */; };
@@ -171,6 +173,8 @@
 		4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponentTests.swift; sourceTree = "<group>"; };
 		4B6A0FF2212AA15D00B3ED1F /* FlexButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexButtonComponent.swift; sourceTree = "<group>"; };
 		4B6A0FF4212AA82500B3ED1F /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
+		4B6A0FF6212AACCF00B3ED1F /* FlexButtonComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexButtonComponentTests.swift; sourceTree = "<group>"; };
+		4B6A0FF8212AACEC00B3ED1F /* HexColorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorTests.swift; sourceTree = "<group>"; };
 		4B6A7025210956B600D71C66 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStoreTests.swift; sourceTree = "<group>"; };
 		4B6A702E2109793500D71C66 /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,6 +293,7 @@
 		4B15EEF9211D5BE800866E6C /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				4B6A0FF8212AACEC00B3ED1F /* HexColorTests.swift */,
 				4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */,
 				4B9A3032212111BE00174C6F /* ImageMessageTests.swift */,
 				4B9A303621211CC100174C6F /* VideoMessageTests.swift */,
@@ -301,6 +306,7 @@
 				4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */,
 				4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */,
 				4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */,
+				4B6A0FF6212AACCF00B3ED1F /* FlexButtonComponentTests.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -866,6 +872,7 @@
 				4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */,
 				4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */,
 				4B95F3FF21251BB300AD3A81 /* PostSendMessagesRequestTests.swift in Sources */,
+				4B6A0FF9212AACEC00B3ED1F /* HexColorTests.swift in Sources */,
 				DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */,
 				4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */,
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
@@ -874,6 +881,7 @@
 				DBDCFD342126CB6300E8327A /* GetApproversInFriendsTests.swift in Sources */,
 				4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */,
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
+				4B6A0FF7212AACCF00B3ED1F /* FlexButtonComponentTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
 				4B9A305621215DED00174C6F /* TemplateConfirmPayloadTests.swift in Sources */,
 				4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */,
