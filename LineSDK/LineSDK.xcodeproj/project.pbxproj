@@ -72,7 +72,7 @@
 		4B9A3047212139C000174C6F /* TemplateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3046212139C000174C6F /* TemplateMessage.swift */; };
 		4B9A304921213CE100174C6F /* TemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304821213CE100174C6F /* TemplateButtonsPayload.swift */; };
 		4B9A304B21213DBB00174C6F /* TemplateMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */; };
-		4B9A304E2121405300174C6F /* TemplateMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304D2121405300174C6F /* TemplateMessageAction.swift */; };
+		4B9A304E2121405300174C6F /* MessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304D2121405300174C6F /* MessageAction.swift */; };
 		4B9A30502121429C00174C6F /* TemplateButtonsPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304F2121429C00174C6F /* TemplateButtonsPayloadTests.swift */; };
 		4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */; };
 		4B9A305421215A1A00174C6F /* TemplateConfirmPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305321215A1A00174C6F /* TemplateConfirmPayload.swift */; };
@@ -207,7 +207,7 @@
 		4B9A3046212139C000174C6F /* TemplateMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessage.swift; sourceTree = "<group>"; };
 		4B9A304821213CE100174C6F /* TemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessagePayload.swift; sourceTree = "<group>"; };
-		4B9A304D2121405300174C6F /* TemplateMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageAction.swift; sourceTree = "<group>"; };
+		4B9A304D2121405300174C6F /* MessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAction.swift; sourceTree = "<group>"; };
 		4B9A304F2121429C00174C6F /* TemplateButtonsPayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateButtonsPayloadTests.swift; sourceTree = "<group>"; };
 		4B9A3051212142CA00174C6F /* TemplateMessageActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageActionTests.swift; sourceTree = "<group>"; };
 		4B9A305321215A1A00174C6F /* TemplateConfirmPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateConfirmPayload.swift; sourceTree = "<group>"; };
@@ -468,7 +468,6 @@
 			isa = PBXGroup;
 			children = (
 				4B95F400212528BA00AD3A81 /* Payloads */,
-				4B9A304C2121404000174C6F /* Actions */,
 			);
 			path = Template;
 			sourceTree = "<group>";
@@ -476,7 +475,7 @@
 		4B9A304C2121404000174C6F /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				4B9A304D2121405300174C6F /* TemplateMessageAction.swift */,
+				4B9A304D2121405300174C6F /* MessageAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -535,6 +534,7 @@
 		4BF53531212A79D900EA602A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4B9A304C2121404000174C6F /* Actions */,
 				4B15EEF5211D46FF00866E6C /* Message.swift */,
 				4B9A303A212121FC00174C6F /* MessageProtocols.swift */,
 				4B15EEF7211D473400866E6C /* MessageSender.swift */,
@@ -781,7 +781,7 @@
 				4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */,
 				4B9A30582121613500174C6F /* TemplateCarouselPayload.swift in Sources */,
 				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
-				4B9A304E2121405300174C6F /* TemplateMessageAction.swift in Sources */,
+				4B9A304E2121405300174C6F /* MessageAction.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
 				4BF53539212A7C9100EA602A /* FlexMessage.swift in Sources */,
 				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,

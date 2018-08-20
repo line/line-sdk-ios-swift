@@ -67,8 +67,8 @@ extension TemplateCarouselPayload: MessageSample {
 class TemplateCarouselPayloadTests: XCTestCase {
     
     func testTemplateCarouselPayloadEncoding() {
-        let uriAction = TemplateMessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
-        let action = TemplateMessageAction.URI(uriAction)
+        let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
+        let action = MessageAction.URI(uriAction)
         var column = TemplateCarouselPayload.Column(
             text: "hello",
             actions: [action],

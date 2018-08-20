@@ -54,15 +54,15 @@ extension TemplateImageCarouselPayload: MessageSample {
 
 class TemplateImageCarouselPayloadTests: XCTestCase {
     func testTemplateImageCarouselMessageEncoding() {
-        let uriAction = TemplateMessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
-        let action = TemplateMessageAction.URI(uriAction)
+        let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
+        let action = MessageAction.URI(uriAction)
         
         var column = TemplateImageCarouselPayload.Column(imageURL: URL(string: "https://sample.com")!, action: action)
         var message = TemplateImageCarouselPayload(columns: [column])
         
         column.imageURL = URL(string: "https://another-sample.com")!
         
-        let anotherAction = TemplateMessageURIAction(label: "OK", uri: URL(string: "scheme://action-2")!)
+        let anotherAction = MessageURIAction(label: "OK", uri: URL(string: "scheme://action-2")!)
         column.action = .URI(anotherAction)
         message.add(column: column)
         

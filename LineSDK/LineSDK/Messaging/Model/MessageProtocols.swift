@@ -30,7 +30,7 @@ protocol TemplateMessagePayloadTypeCompatible {
 }
 
 protocol TemplateMessageActionTypeCompatible {
-    var type: TemplateMessageActionType { get }
+    var type: MessageActionType { get }
 }
 
 protocol FlexMessageContainerTypeCompatible {

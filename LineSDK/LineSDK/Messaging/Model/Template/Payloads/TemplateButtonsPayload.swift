@@ -26,8 +26,8 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
     public var text: String
     public var title: String?
     
-    public var actions: [TemplateMessageAction]
-    public var defaultAction: TemplateMessageAction?
+    public var actions: [MessageAction]
+    public var defaultAction: MessageAction?
     
     public var thumbnailImageURL: URL?
     public var imageAspectRatio: ImageAspectRatio?
@@ -39,8 +39,8 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
     public init(
         text: String,
         title: String? = nil,
-        actions: [TemplateMessageAction] = [],
-        defaultAction: TemplateMessageAction? = nil,
+        actions: [MessageAction] = [],
+        defaultAction: MessageAction? = nil,
         thumbnailImageURL: URL? = nil,
         imageAspectRatio: ImageAspectRatio? = nil,
         imageContentMode: ImageContentMode? = nil,
@@ -59,7 +59,7 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
         self.imageBackgroundColor = imageBackgroundColor
     }
     
-    public mutating func add(action: TemplateMessageAction) {
+    public mutating func add(action: MessageAction) {
         actions.append(action)
     }
     
@@ -82,8 +82,8 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
         text = try container.decode(String.self, forKey: .text)
         title = try container.decodeIfPresent(String.self, forKey: .title)
         
-        actions = try container.decode([TemplateMessageAction].self, forKey: .actions)
-        defaultAction = try container.decodeIfPresent(TemplateMessageAction.self, forKey: .defaultAction)
+        actions = try container.decode([MessageAction].self, forKey: .actions)
+        defaultAction = try container.decodeIfPresent(MessageAction.self, forKey: .defaultAction)
         
         thumbnailImageURL = try container.decodeIfPresent(URL.self, forKey: .thumbnailImageURL)
         imageAspectRatio = try container.decodeIfPresent(ImageAspectRatio.self, forKey: .imageAspectRatio)
@@ -106,8 +106,8 @@ extension Message {
         altText: String,
         text: String,
         title: String? = nil,
-        actions: [TemplateMessageAction] = [],
-        defaultAction: TemplateMessageAction? = nil,
+        actions: [MessageAction] = [],
+        defaultAction: MessageAction? = nil,
         thumbnailImageURL: URL? = nil,
         imageAspectRatio: ImageAspectRatio? = nil,
         imageContentMode: ImageContentMode? = nil,

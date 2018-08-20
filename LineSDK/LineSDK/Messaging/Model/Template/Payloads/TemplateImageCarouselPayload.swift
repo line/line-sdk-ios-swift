@@ -22,9 +22,9 @@
 public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeCompatible {
     public struct Column: Codable {
         public var imageURL: URL
-        public var action: TemplateMessageAction
+        public var action: MessageAction
         
-        public init(imageURL: URL, action: TemplateMessageAction)
+        public init(imageURL: URL, action: MessageAction)
         {
             self.imageURL = imageURL
             self.action = action

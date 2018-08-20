@@ -25,8 +25,8 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
         public var text: String
         public var title: String?
         
-        public var actions: [TemplateMessageAction]
-        public var defaultAction: TemplateMessageAction?
+        public var actions: [MessageAction]
+        public var defaultAction: MessageAction?
         
         public let thumbnailImageURL: URL?
         public var imageBackgroundColor: UIColor?
@@ -34,8 +34,8 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
         public init(
             text: String,
             title: String? = nil,
-            actions: [TemplateMessageAction] = [],
-            defaultAction: TemplateMessageAction? = nil,
+            actions: [MessageAction] = [],
+            defaultAction: MessageAction? = nil,
             thumbnailImageURL: URL? = nil,
             imageBackgroundColor: UIColor = .white)
         {
@@ -62,8 +62,8 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
             let container = try decoder.container(keyedBy: CodingKeys.self)
             text = try container.decode(String.self, forKey: .text)
             title = try container.decodeIfPresent(String.self, forKey: .title)
-            actions = try container.decode([TemplateMessageAction].self, forKey: .actions)
-            defaultAction = try container.decodeIfPresent(TemplateMessageAction.self, forKey: .defaultAction)
+            actions = try container.decode([MessageAction].self, forKey: .actions)
+            defaultAction = try container.decodeIfPresent(MessageAction.self, forKey: .defaultAction)
             thumbnailImageURL = try container.decodeIfPresent(URL.self, forKey: .thumbnailImageURL)
             if let backgroundColorString = try container.decodeIfPresent(String.self, forKey: .imageBackgroundColor) {
                 imageBackgroundColor = UIColor(rgb: backgroundColorString)

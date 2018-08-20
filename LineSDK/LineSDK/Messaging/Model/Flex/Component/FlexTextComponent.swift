@@ -32,7 +32,7 @@ public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible {
     public var maxLines: UInt?
     public var weight: FlexMessageComponent.Weight?
     public var color: UIColor?
-    public var action: TemplateMessageAction?
+    public var action: MessageAction?
     
     public init(text: String) {
         self.text = text
@@ -56,6 +56,6 @@ public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible {
             color = nil
         }
         
-        action = try container.decodeIfPresent(TemplateMessageAction.self, forKey: .size)
+        action = try container.decodeIfPresent(MessageAction.self, forKey: .size)
     }
 }

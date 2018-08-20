@@ -23,18 +23,18 @@ public struct TemplateConfirmPayload: Codable, TemplateMessagePayloadTypeCompati
     let type = TemplateMessagePayloadType.confirm
     public var text: String
     
-    public var confirmAction: TemplateMessageAction {
+    public var confirmAction: MessageAction {
         get { return actions[0] }
         set { actions[0] = newValue }
     }
-    public var cancelAction: TemplateMessageAction {
+    public var cancelAction: MessageAction {
         get { return actions[1] }
         set { actions[1] = newValue }
     }
     
-    var actions: [TemplateMessageAction]
+    var actions: [MessageAction]
     
-    public init(text: String, confirmAction: TemplateMessageAction, cancelAction: TemplateMessageAction) {
+    public init(text: String, confirmAction: MessageAction, cancelAction: MessageAction) {
         self.text = text
         self.actions = [confirmAction, cancelAction]
     }
@@ -44,8 +44,8 @@ extension Message {
     public static func templateConfirmMessage(
         altText: String,
         text: String,
-        confirmAction: TemplateMessageAction,
-        cancelAction: TemplateMessageAction) -> Message
+        confirmAction: MessageAction,
+        cancelAction: MessageAction) -> Message
     {
         let payload = TemplateConfirmPayload(text: text, confirmAction: confirmAction, cancelAction: cancelAction)
         let message = TemplateMessage(altText: altText, payload: .confirm(payload))

@@ -74,8 +74,8 @@ extension TemplateButtonsPayload: MessageSample {
 class TemplateButtonsPayloadTests: XCTestCase {
     
     func testTemplateButtonsPayloadEncoding() {
-        let uriAction = TemplateMessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
-        let action = TemplateMessageAction.URI(uriAction)
+        let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
+        let action = MessageAction.URI(uriAction)
         
         var message = TemplateButtonsPayload(
             text: "hello",
@@ -94,7 +94,6 @@ class TemplateButtonsPayloadTests: XCTestCase {
         assertEqual(in: dic, forKey: "text", value: "hello")
         assertEqual(in: dic, forKey: "title", value: "world")
         assertEqual(in: dic, forKey: "thumbnailImageUrl", value: "https://sample.com")
-        assertEqual(in: dic, forKey: "imageAspectRatio", value: "rectangle")
         assertEqual(in: dic, forKey: "imageSize", value: "contain")
         assertEqual(in: dic, forKey: "imageBackgroundColor", value: "#FF0000")
         
@@ -132,7 +131,7 @@ class TemplateButtonsPayloadTests: XCTestCase {
     }
     
     func testMessageWrapper() {
-        let action = TemplateMessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
+        let action = MessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
         let message = Message.templateButtonsMessage(altText: "alt", text: "Buntton", actions: [action])
         XCTAssertNotNil(message.asTemplateMessage?.payload.asButtonsPayload)
     }
