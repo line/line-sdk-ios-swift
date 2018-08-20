@@ -262,23 +262,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4B15EEF2211D431900866E6C /* Messages */ = {
-			isa = PBXGroup;
-			children = (
-				4B15EEF5211D46FF00866E6C /* Message.swift */,
-				4B9A303A212121FC00174C6F /* MessageProtocols.swift */,
-				4B15EEF7211D473400866E6C /* MessageSender.swift */,
-				4B15EEF3211D466D00866E6C /* TextMessage.swift */,
-				4B9A303021210FE700174C6F /* ImageMessage.swift */,
-				4B9A30342121182400174C6F /* VideoMessage.swift */,
-				4B9A303821211EC400174C6F /* AudioMessage.swift */,
-				4B9A303E2121277400174C6F /* LocationMessage.swift */,
-				4B9A3046212139C000174C6F /* TemplateMessage.swift */,
-				4B9A3045212139AE00174C6F /* Template */,
-			);
-			path = Messages;
-			sourceTree = "<group>";
-		};
 		4B15EEF9211D5BE800866E6C /* Message */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,13 +282,7 @@
 		4B4525792101A4DE00A39D4F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4B15EEF2211D431900866E6C /* Messages */,
 				4BCD27912113EC4300B90D8F /* CustomizeCoding */,
-				4B45257A2101A4E900A39D4F /* OneTimePassword.swift */,
-				4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */,
-				4B4F0B7F21080D69006D17F5 /* AccessToken.swift */,
-				4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */,
-				4B4F0B8321084755006D17F5 /* UserProfile.swift */,
 				4B414D5B210EF12C00FD19BC /* APIError.swift */,
 				4BD191B721116C4C00E2C481 /* Unit.swift */,
 			);
@@ -389,6 +366,7 @@
 				4BBAFC432101BB8200E7BFF6 /* General */,
 				4B9058CE210072B9004D717F /* Login */,
 				DBE4E36E211D6C2600184D66 /* Social */,
+				4BF53530212A79C800EA602A /* Messaging */,
 				4B9058CD210072B0004D717F /* Networking */,
 				4B9058CF210072C3004D717F /* Utils */,
 				4B90587B21006E5C004D717F /* LineSDK.h */,
@@ -414,27 +392,11 @@
 			path = LineSDKTests;
 			sourceTree = "<group>";
 		};
-		4B9058CC2100729F004D717F /* API */ = {
-			isa = PBXGroup;
-			children = (
-				4B45257721019FCC00A39D4F /* PostOTPRequest.swift */,
-				4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */,
-				4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */,
-				4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */,
-				4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */,
-				4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */,
-				4B9B9AA62123C6E400325B9B /* PostSendMessagesRequest.swift */,
-				4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */,
-			);
-			path = API;
-			sourceTree = "<group>";
-		};
 		4B9058CD210072B0004D717F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				4B45257C2101A77300A39D4F /* Client */,
 				4B4525792101A4DE00A39D4F /* Model */,
-				4B9058CC2100729F004D717F /* API */,
 				4BD191B3211154DF00E2C481 /* LineSDKAPI.swift */,
 			);
 			path = Networking;
@@ -443,6 +405,8 @@
 		4B9058CE210072B9004D717F /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				4BF53534212A7A0700EA602A /* Request */,
+				4BF53533212A79FA00EA602A /* Model */,
 				4B9058D321007394004D717F /* LoginConfiguration.swift */,
 				4B9058D5210073E6004D717F /* LoginManager.swift */,
 				4B6508B7211812CE001796E0 /* LoginManagerOption.swift */,
@@ -538,6 +502,66 @@
 				4BCD27922113EC6C00B90D8F /* CodingExtension.swift */,
 			);
 			path = CustomizeCoding;
+			sourceTree = "<group>";
+		};
+		4BF53530212A79C800EA602A /* Messaging */ = {
+			isa = PBXGroup;
+			children = (
+				4BF53532212A79DD00EA602A /* Request */,
+				4BF53531212A79D900EA602A /* Model */,
+			);
+			path = Messaging;
+			sourceTree = "<group>";
+		};
+		4BF53531212A79D900EA602A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4B15EEF5211D46FF00866E6C /* Message.swift */,
+				4B9A303A212121FC00174C6F /* MessageProtocols.swift */,
+				4B15EEF7211D473400866E6C /* MessageSender.swift */,
+				4B15EEF3211D466D00866E6C /* TextMessage.swift */,
+				4B9A303021210FE700174C6F /* ImageMessage.swift */,
+				4B9A30342121182400174C6F /* VideoMessage.swift */,
+				4B9A303821211EC400174C6F /* AudioMessage.swift */,
+				4B9A303E2121277400174C6F /* LocationMessage.swift */,
+				4B9A3046212139C000174C6F /* TemplateMessage.swift */,
+				4B9A3045212139AE00174C6F /* Template */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4BF53532212A79DD00EA602A /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				4B9B9AA62123C6E400325B9B /* PostSendMessagesRequest.swift */,
+				4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		4BF53533212A79FA00EA602A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4B45257A2101A4E900A39D4F /* OneTimePassword.swift */,
+				4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */,
+				4B4F0B7F21080D69006D17F5 /* AccessToken.swift */,
+				4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */,
+				4B4F0B8321084755006D17F5 /* UserProfile.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4BF53534212A7A0700EA602A /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				4B45257721019FCC00A39D4F /* PostOTPRequest.swift */,
+				4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */,
+				4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */,
+				4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */,
+				4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */,
+				4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */,
+			);
+			path = Request;
 			sourceTree = "<group>";
 		};
 		DBE4E36E211D6C2600184D66 /* Social */ = {
