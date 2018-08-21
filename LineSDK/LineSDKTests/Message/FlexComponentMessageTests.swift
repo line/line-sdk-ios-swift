@@ -22,7 +22,23 @@
 import XCTest
 @testable import LineSDK
 
+fileprivate enum Enum: String, DefaultEnumCodable {
+    case a
+    case b
+    case hello = "c"
+    static let defaultCase: Enum = .a
+}
+
 class FlexComponentMessageTests: XCTestCase {
+    
+    func testDefaultEnumCodable() {
+        let values = ["\"a\"", "\"b\"", "\"c\"", "\"hello\""]
+        let string = "[\(values.joined(separator: ","))]"
+        let decoder = JSONDecoder()
+        let results = try! decoder.decode([Enum].self, from: string.data(using: .utf8)!)
+        XCTAssertEqual(results, [.a, .b, .hello, .a])
+    }
+    
     func testMarginDeccode() {
         
         typealias Property = FlexMessageComponent.Margin
@@ -40,12 +56,12 @@ class FlexComponentMessageTests: XCTestCase {
         typealias Property = FlexMessageComponent.Size
         
         let margins = ["\"xxs\"", "\"xs\"", "\"sm\"", "\"md\"", "\"lg\"", "\"xl\"",
-                       "\"xxl\"", "\"3xl\"", "\"4xl\"", "\"5xl\"", "\"6xl\""]
+                       "\"xxl\"", "\"3xl\"", "\"4xl\"", "\"5xl\"", "\"full\"", "\"6xl\""]
         let string = "[\(margins.joined(separator: ","))]"
         
         let decoder = JSONDecoder()
         let results = try! decoder.decode([Property].self, from: string.data(using: .utf8)!)
-        XCTAssertEqual(results, [.xxs, .xs, .sm, .md, .lg, .xl, .xl2, .xl3, .xl4, .xl5, .md])
+        XCTAssertEqual(results, [.xxs, .xs, .sm, .md, .lg, .xl, .xl2, .xl3, .xl4, .xl5, .full, .md])
     }
     
     func testAlignDeccode() {

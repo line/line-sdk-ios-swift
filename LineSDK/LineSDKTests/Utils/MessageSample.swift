@@ -37,8 +37,8 @@ func assertEqual<T: Equatable>(
     in dic: [String: Any],
     forKey key: String,
     value: T,
-    file: String = #file,
-    line: Int = #line)
+    file: StaticString = #file,
+    line: UInt = #line)
 {
     guard let dicValue = dic[key] else {
         XCTFail("Value for key '\(key)' does not exist")
@@ -50,17 +50,21 @@ func assertEqual<T: Equatable>(
     
     switch value.self {
     case is String:
-        XCTAssertEqual(dicValue as? String, value as? String, failingDescription)
+        XCTAssertEqual(dicValue as? String, value as? String, failingDescription, file: file, line: line)
     case is Bool:
-        XCTAssertEqual((dic[key] as? NSNumber)?.boolValue, value as? Bool, failingDescription)
+        let boolValue = (dic[key] as? NSNumber)?.boolValue
+        XCTAssertEqual(boolValue, value as? Bool, failingDescription, file: file, line: line)
     case is Int:
-        XCTAssertEqual((dic[key] as? NSNumber)?.intValue, value as? Int, failingDescription)
+        let intValue = (dic[key] as? NSNumber)?.intValue
+        XCTAssertEqual(intValue, value as? Int, failingDescription, file: file, line: line)
     case is Float:
-        XCTAssertEqual((dic[key] as? NSNumber)?.floatValue, value as? Float, failingDescription)
+        let floatValue = (dic[key] as? NSNumber)?.floatValue
+        XCTAssertEqual(floatValue, value as? Float, failingDescription, file: file, line: line)
     case is Double:
-        XCTAssertEqual((dic[key] as? NSNumber)?.doubleValue, value as? Double, failingDescription)
+        let doubleValue = (dic[key] as? NSNumber)?.doubleValue
+        XCTAssertEqual(doubleValue, value as? Double, failingDescription, file: file, line: line)
     default:
-        XCTFail("Type comparison not implemented yet.")
+        XCTFail("Type comparison for \(T.self) not implemented yet.", file: file, line: line)
     }
 }
 
