@@ -1,5 +1,5 @@
 //
-//  FlexImageComponent.swift
+//  FlexFillerComponent.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,22 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible {
-    let type: FlexMessageComponentType = .image
-    
-    public var url: URL
-    public var flex: UInt?
-    public var margin: FlexMessageComponent.Margin?
-    public var align: FlexMessageComponent.Align?
-    public var gravity: FlexMessageComponent.Gravity?
-    public var size: FlexMessageComponent.Size?
-    public var aspectRatio: FlexMessageComponent.AspectRatio?
-    public var aspectMode: FlexMessageComponent.AspectMode?
-    public var backgroundColor: HexColor?
-    public var action: MessageAction?
-    
-    public init(url: URL) throws {
-        try assertHTTPSScheme(url: url, parameterName: "url")
-        self.url = url
-    }
+public struct FlexFillerComponent: Codable, FlexMessageComponentTypeCompatible {
+    let type: FlexMessageComponentType = .filler
+    public init() {}
 }

@@ -1,5 +1,5 @@
 //
-//  FlexImageComponent.swift
+//  FlexFillerComponentTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,22 +19,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible {
-    let type: FlexMessageComponentType = .image
-    
-    public var url: URL
-    public var flex: UInt?
-    public var margin: FlexMessageComponent.Margin?
-    public var align: FlexMessageComponent.Align?
-    public var gravity: FlexMessageComponent.Gravity?
-    public var size: FlexMessageComponent.Size?
-    public var aspectRatio: FlexMessageComponent.AspectRatio?
-    public var aspectMode: FlexMessageComponent.AspectMode?
-    public var backgroundColor: HexColor?
-    public var action: MessageAction?
-    
-    public init(url: URL) throws {
-        try assertHTTPSScheme(url: url, parameterName: "url")
-        self.url = url
+import XCTest
+@testable import LineSDK
+
+extension FlexFillerComponent: MessageSample {
+    static var samples: [String] {
+        return [
+        """
+        {
+          "type": "filler"
+        }
+        """
+        ]
     }
+}
+
+class FlexFillerComponentTests: XCTestCase {
+    
+    func testFillerComponentEncode() {
+        let component = FlexFillerComponent()
+        let dic = FlexMessageComponent.filler(component).json
+        XCTAssertEqual(dic.count, 1)
+        assertEqual(in: dic, forKey: "type", value: "filler")
+    }
+    
+    func testFillerComponentDecode() {
+        let decoder = JSONDecoder()
+        let result = FlexFillerComponent.samplesData
+            .map { try! decoder.decode(FlexMessageComponent.self, from: $0) }
+            .map { $0.asFillerComponent! }
+        XCTAssertEqual(result[0].type, .filler)
+    }
+    
 }

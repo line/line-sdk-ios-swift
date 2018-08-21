@@ -36,6 +36,7 @@ public enum FlexMessageComponent: Codable {
     case text(FlexTextComponent)
     case button(FlexButtonComponent)
     case image(FlexImageComponent)
+    case filler(FlexFillerComponent)
     
     case unknown
     
@@ -47,6 +48,8 @@ public enum FlexMessageComponent: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try? container.decode(FlexMessageComponentType.self, forKey: .type)
         switch type {
+        case .box?:
+            fatalError()
         case .text?:
             let component = try FlexTextComponent(from: decoder)
             self = .text(component)
@@ -56,7 +59,13 @@ public enum FlexMessageComponent: Codable {
         case .image?:
             let component = try FlexImageComponent(from: decoder)
             self = .image(component)
-        default: fatalError()
+        case .filler?:
+            let component = try FlexFillerComponent(from: decoder)
+            self = .filler(component)
+        case .icon?: fatalError()
+        case .separator?: fatalError()
+        case .spacer?: fatalError()
+        case nil: fatalError()
         }
     }
     
@@ -67,6 +76,8 @@ public enum FlexMessageComponent: Codable {
         case .button(let component):
             try component.encode(to: encoder)
         case .image(let component):
+            try component.encode(to: encoder)
+        case .filler(let component):
             try component.encode(to: encoder)
         case .unknown:
             Log.assertionFailure("Cannot encode unknown component type.")
@@ -86,6 +97,11 @@ public enum FlexMessageComponent: Codable {
     
     public var asImageComponent: FlexImageComponent? {
         if case .image(let component) = self { return component }
+        return nil
+    }
+    
+    public var asFillerComponent: FlexFillerComponent? {
+        if case .filler(let component) = self { return component }
         return nil
     }
 }
