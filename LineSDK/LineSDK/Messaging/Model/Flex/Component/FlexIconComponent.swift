@@ -32,3 +32,7 @@ public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
         self.url = url
     }
 }
+
+extension FlexIconComponent {
+    public var component: FlexMessageComponent { return .icon(self) }
+}

@@ -38,6 +38,10 @@ public struct LocationMessage: Codable, MessageTypeCompatible {
     }
 }
 
+extension LocationMessage {
+    public var message: Message { return .location(self) }
+}
+
 extension Message {
     public static func locationMessage(
         title: String,
@@ -45,7 +49,10 @@ extension Message {
         latitude: LocationMessage.LocationDegrees,
         longitude: LocationMessage.LocationDegrees) -> Message
     {
-        let message = LocationMessage(title: title, address: address, latitude: latitude, longitude: longitude)
-        return .location(message)
+        return LocationMessage(
+            title: title,
+            address: address,
+            latitude: latitude,
+            longitude: longitude).message
     }
 }

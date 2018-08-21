@@ -40,6 +40,10 @@ public struct TemplateConfirmPayload: Codable, TemplateMessagePayloadTypeCompati
     }
 }
 
+extension TemplateConfirmPayload {
+    public var payload: TemplateMessagePayload { return .confirm(self) }
+}
+
 extension Message {
     public static func templateConfirmMessage(
         altText: String,
@@ -47,8 +51,10 @@ extension Message {
         confirmAction: MessageAction,
         cancelAction: MessageAction) -> Message
     {
-        let payload = TemplateConfirmPayload(text: text, confirmAction: confirmAction, cancelAction: cancelAction)
-        let message = TemplateMessage(altText: altText, payload: .confirm(payload))
-        return .template(message)
+        let payload = TemplateConfirmPayload(
+            text: text,
+            confirmAction: confirmAction,
+            cancelAction: cancelAction).payload
+        return payload.messageWithAltText(altText)
     }
 }

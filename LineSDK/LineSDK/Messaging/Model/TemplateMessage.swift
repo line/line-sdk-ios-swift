@@ -32,3 +32,7 @@ public struct TemplateMessage: Codable, MessageTypeCompatible {
         case payload = "template"
     }
 }
+
+extension TemplateMessage {
+    public var message: Message { return .template(self) }
+}

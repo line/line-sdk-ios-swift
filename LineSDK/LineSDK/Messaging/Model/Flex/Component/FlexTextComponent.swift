@@ -23,7 +23,7 @@ public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible {
     let type = FlexMessageComponentType.text
     
     public var text: String
-    public var flex: UInt?
+    public var flex: FlexMessageComponent.Ratio?
     public var margin: FlexMessageComponent.Margin?
     public var size: FlexMessageComponent.Size?
     public var align: FlexMessageComponent.Align?
@@ -37,4 +37,8 @@ public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible {
     public init(text: String) {
         self.text = text
     }
+}
+
+extension FlexTextComponent {
+    public var component: FlexMessageComponent { return .text(self) }
 }

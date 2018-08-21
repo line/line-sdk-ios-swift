@@ -22,6 +22,15 @@
 import Foundation
 
 extension FlexMessageComponent {
+
+    public typealias Ratio = UInt
+    
+    public enum Layout: String, DefaultEnumCodable {
+        case horizontal, vertical, baseline
+        public static let defaultCase: Layout = .vertical
+    }
+    
+    public typealias Spacing = Margin
     
     public enum Margin: String, DefaultEnumCodable {
         case none, xs, sm, md, lg, xl, xxl

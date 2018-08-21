@@ -29,7 +29,7 @@ public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
     let type = FlexMessageComponentType.button
     
     public var action: MessageAction
-    public var flex: UInt?
+    public var flex: FlexMessageComponent.Ratio?
     public var margin: FlexMessageComponent.Margin?
     public var height: FlexMessageComponent.Height?
     public var style: Style?
@@ -39,4 +39,8 @@ public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
     public init(action: MessageAction) {
         self.action = action
     }
+}
+
+extension FlexButtonComponent {
+    public var component: FlexMessageComponent { return .button(self) }
 }

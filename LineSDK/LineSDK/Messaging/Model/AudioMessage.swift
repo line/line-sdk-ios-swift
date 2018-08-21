@@ -43,9 +43,12 @@ public struct AudioMessage: Codable, MessageTypeCompatible {
     }
 }
 
+extension AudioMessage {
+    public var message: Message { return .audio(self) }
+}
+
 extension Message {
     public static func audioMessage(originalContentURL: URL, duration: TimeInterval?) throws -> Message {
-        let message = try AudioMessage(originalContentURL: originalContentURL, duration: duration)
-        return .audio(message)
+        return try AudioMessage(originalContentURL: originalContentURL, duration: duration).message
     }
 }

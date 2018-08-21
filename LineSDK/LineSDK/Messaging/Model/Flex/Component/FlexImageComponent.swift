@@ -23,7 +23,7 @@ public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible {
     let type: FlexMessageComponentType = .image
     
     public var url: URL
-    public var flex: UInt?
+    public var flex: FlexMessageComponent.Ratio?
     public var margin: FlexMessageComponent.Margin?
     public var align: FlexMessageComponent.Align?
     public var gravity: FlexMessageComponent.Gravity?
@@ -37,4 +37,8 @@ public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible {
         try assertHTTPSScheme(url: url, parameterName: "url")
         self.url = url
     }
+}
+
+extension FlexImageComponent {
+    public var component: FlexMessageComponent { return .image(self) }
 }

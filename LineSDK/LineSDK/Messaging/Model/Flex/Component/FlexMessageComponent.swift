@@ -33,6 +33,7 @@ enum FlexMessageComponentType: String, Codable {
 }
 
 public enum FlexMessageComponent: Codable {
+    case box(FlexBoxComponent)
     case text(FlexTextComponent)
     case button(FlexButtonComponent)
     case image(FlexImageComponent)
@@ -52,7 +53,8 @@ public enum FlexMessageComponent: Codable {
         let type = try? container.decode(FlexMessageComponentType.self, forKey: .type)
         switch type {
         case .box?:
-            fatalError()
+            let component = try FlexBoxComponent(from: decoder)
+            self = .box(component)
         case .text?:
             let component = try FlexTextComponent(from: decoder)
             self = .text(component)
@@ -81,6 +83,8 @@ public enum FlexMessageComponent: Codable {
     
     public func encode(to encoder: Encoder) throws {
         switch self {
+        case .box(let component):
+            try component.encode(to: encoder)
         case .text(let component):
             try component.encode(to: encoder)
         case .button(let component):
@@ -100,6 +104,10 @@ public enum FlexMessageComponent: Codable {
         }
     }
     
+    public var asComponent: FlexBoxComponent? {
+        if case .box(let component) = self { return component }
+        return nil
+    }
     
     public var asTextComponent: FlexTextComponent? {
         if case .text(let component) = self { return component }

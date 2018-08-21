@@ -41,14 +41,17 @@ public struct VideoMessage: Codable, MessageTypeCompatible {
     }
 }
 
+extension VideoMessage {
+    public var message: Message { return .video(self) }
+}
+
 extension Message {
     public static func videoMessage(
         originalContentURL: URL,
         previewImageURL: URL) throws -> Message
     {
-        let message = try VideoMessage(
+        return try VideoMessage(
             originalContentURL: originalContentURL,
-            previewImageURL: previewImageURL)
-        return .video(message)
+            previewImageURL: previewImageURL).message
     }
 }

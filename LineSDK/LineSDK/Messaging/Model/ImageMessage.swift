@@ -56,6 +56,10 @@ public struct ImageMessage: Codable, MessageTypeCompatible {
     }
 }
 
+extension ImageMessage {
+    public var message: Message { return .image(self) }
+}
+
 extension Message {
     public static func imageMessage(
         originalContentURL: URL,
@@ -64,12 +68,11 @@ extension Message {
         fileExtension: String? = nil,
         sender: MessageSender? = nil) throws -> Message
     {
-        let message = try ImageMessage(
+        return try ImageMessage(
             originalContentURL: originalContentURL,
             previewImageURL: previewImageURL,
             animated: animated,
             fileExtension: fileExtension,
-            sender: sender)
-        return .image(message)
+            sender: sender).message
     }
 }

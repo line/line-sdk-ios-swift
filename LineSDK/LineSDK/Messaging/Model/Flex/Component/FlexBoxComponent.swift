@@ -19,4 +19,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+public struct FlexBoxComponent: Codable, FlexMessageComponentTypeCompatible {
+    let type: FlexMessageComponentType = .box
+    
+    public let layout: FlexMessageComponent.Layout
+    public var contents: [FlexMessageComponent]
+    
+    public var flex: FlexMessageComponent.Ratio?
+    public var spacing: FlexMessageComponent.Spacing?
+    public var margin: FlexMessageComponent.Margin?
+    public var action: MessageAction?
+    
+    public init(layout: FlexMessageComponent.Layout, contents: [FlexMessageComponent] = []) {
+        self.layout = layout
+        self.contents = contents
+    }
+    
+    mutating func addComponent(_ component: FlexMessageComponent) {
+        contents.append(component)
+    }
+    
+    mutating func removeFisrtComponent(
+        where condition: (FlexMessageComponent) throws -> Bool) rethrows -> FlexMessageComponent?
+    {
+        guard let index = try contents.index(where: condition) else {
+            return nil
+        }
+        return contents.remove(at: index)
+    }
+}
+
+extension FlexBoxComponent {
+    public var component: FlexMessageComponent { return .box(self) }
+}

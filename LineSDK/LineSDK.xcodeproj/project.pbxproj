@@ -35,6 +35,7 @@
 		4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */; };
 		4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */; };
 		4B5EE2DF212BAFA00009DF2E /* FlexSpacerComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2DE212BAFA00009DF2E /* FlexSpacerComponentTests.swift */; };
+		4B5EE2E1212BB53F0009DF2E /* FlexBoxComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E0212BB53F0009DF2E /* FlexBoxComponentTests.swift */; };
 		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
 		4B6508B8211812CE001796E0 /* LoginManagerOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOption.swift */; };
 		4B6A0FF1212A99AD00B3ED1F /* FlexTextComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */; };
@@ -180,6 +181,7 @@
 		4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequest.swift; sourceTree = "<group>"; };
 		4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSpacerComponent.swift; sourceTree = "<group>"; };
 		4B5EE2DE212BAFA00009DF2E /* FlexSpacerComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSpacerComponentTests.swift; sourceTree = "<group>"; };
+		4B5EE2E0212BB53F0009DF2E /* FlexBoxComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBoxComponentTests.swift; sourceTree = "<group>"; };
 		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
 		4B6508B7211812CE001796E0 /* LoginManagerOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerOption.swift; sourceTree = "<group>"; };
 		4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponentTests.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				4BEB4923212BA0A300BA946A /* FlexIconCompomentTests.swift */,
 				4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */,
 				4B5EE2DE212BAFA00009DF2E /* FlexSpacerComponentTests.swift */,
+				4B5EE2E0212BB53F0009DF2E /* FlexBoxComponentTests.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -920,6 +923,7 @@
 				4B6A0FF7212AACCF00B3ED1F /* FlexButtonComponentTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
 				4B9A305621215DED00174C6F /* TemplateConfirmPayloadTests.swift in Sources */,
+				4B5EE2E1212BB53F0009DF2E /* FlexBoxComponentTests.swift in Sources */,
 				4B5EE2DF212BAFA00009DF2E /* FlexSpacerComponentTests.swift in Sources */,
 				4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */,
 				4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */,

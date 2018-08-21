@@ -110,3 +110,9 @@ public enum TemplateMessagePayload: Codable {
     }
     
 }
+
+extension TemplateMessagePayload {
+    public func messageWithAltText(_ text: String) -> Message {
+        return TemplateMessage(altText: text, payload: self).message
+    }
+}

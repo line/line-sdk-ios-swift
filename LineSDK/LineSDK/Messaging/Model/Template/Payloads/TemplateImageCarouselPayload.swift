@@ -52,13 +52,16 @@ public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeC
     }
 }
 
+extension TemplateImageCarouselPayload {
+    public var payload: TemplateMessagePayload { return .imageCarousel(self) }
+}
+
 extension Message {
     public static func templateImageCarouselMessage(
         altText: String,
         columns: [TemplateImageCarouselPayload.Column] = []) -> Message
     {
-        let payload = TemplateImageCarouselPayload(columns: columns)
-        let message = TemplateMessage(altText: altText, payload: .imageCarousel(payload))
-        return .template(message)
+        let payload = TemplateImageCarouselPayload(columns: columns).payload
+        return payload.messageWithAltText(altText)
     }
 }

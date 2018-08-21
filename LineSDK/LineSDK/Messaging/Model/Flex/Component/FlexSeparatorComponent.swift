@@ -30,3 +30,7 @@ public struct FlexSeparatorComponent: Codable, FlexMessageComponentTypeCompatibl
         self.color = color
     }
 }
+
+extension FlexSeparatorComponent {
+    public var component: FlexMessageComponent { return .separator(self) }
+}

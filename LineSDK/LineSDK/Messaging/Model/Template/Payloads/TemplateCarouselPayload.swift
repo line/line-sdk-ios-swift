@@ -99,6 +99,10 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
     }
 }
 
+extension TemplateCarouselPayload {
+    public var payload: TemplateMessagePayload { return .carousel(self) }
+}
+
 extension Message {
     public static func templateCarouselMessage(
         altText: String,
@@ -109,8 +113,7 @@ extension Message {
         let payload = TemplateCarouselPayload(
             columns: columns,
             imageAspectRatio: imageAspectRatio,
-            imageContentMode: imageContentMode)
-        let message = TemplateMessage(altText: altText, payload: .carousel(payload))
-        return .template(message)
+            imageContentMode: imageContentMode).payload
+        return payload.messageWithAltText(altText)
     }
 }

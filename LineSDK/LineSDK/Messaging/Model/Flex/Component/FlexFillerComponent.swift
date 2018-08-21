@@ -23,3 +23,7 @@ public struct FlexFillerComponent: Codable, FlexMessageComponentTypeCompatible {
     let type: FlexMessageComponentType = .filler
     public init() {}
 }
+
+extension FlexFillerComponent {
+    public var component: FlexMessageComponent { return .filler(self) }
+}

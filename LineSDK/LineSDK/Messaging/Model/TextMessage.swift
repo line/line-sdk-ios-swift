@@ -38,9 +38,12 @@ public struct TextMessage: Codable, MessageTypeCompatible {
     }
 }
 
+extension TextMessage {
+    public var message: Message { return .text(self) }
+}
+
 extension Message {
     public static func textMessage(text: String, sender: MessageSender? = nil) -> Message {
-        let message = TextMessage(text: text, sender: sender)
-        return .text(message)
+        return TextMessage(text: text, sender: sender).message
     }
 }

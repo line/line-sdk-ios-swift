@@ -77,6 +77,10 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
     }
 }
 
+extension TemplateButtonsPayload {
+    public var payload: TemplateMessagePayload { return .buttons(self) }
+}
+
 extension Message {
     public static func templateButtonsMessage(
         altText: String,
@@ -99,8 +103,7 @@ extension Message {
             imageAspectRatio: imageAspectRatio,
             imageContentMode: imageContentMode,
             imageBackgroundColor: imageBackgroundColor,
-            sender: sender)
-        let message = TemplateMessage(altText: altText, payload: .buttons(payload))
-        return .template(message)
+            sender: sender).payload
+        return payload.messageWithAltText(altText)
     }
 }
