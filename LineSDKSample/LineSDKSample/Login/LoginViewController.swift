@@ -26,26 +26,49 @@ extension Notification.Name {
     static let userDidLogin = Notification.Name("com.linecorp.linesdk_sample.userDidLogin")
 }
 
-class LoginViewController: UIViewController, IndicatorDisplay {
+class LoginViewController: UIViewController, IndicatorDisplay, LoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let loginBtn = LoginButton()
+        loginBtn.delegate = self
+
+        // You could set the permissions you need or use default permissions
+        loginBtn.permissions = [.profile, .friends, .groups, .messageWrite]
+        
+        view.addSubview(loginBtn)
+        loginBtn.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: loginBtn,
+                           attribute: .centerX,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .centerX,
+                           multiplier: 1,
+                           constant: 0).isActive = true
+        NSLayoutConstraint(item: loginBtn,
+                           attribute: .centerY,
+                           relatedBy: .equal,
+                           toItem: view,
+                           attribute: .centerY,
+                           multiplier: 1,
+                           constant: 0).isActive = true
     }
-    
-    @IBAction func login(_ sender: Any) {
-        showIndicator()
-        LoginManager.shared.login(permissions: [.profile, .friends, .groups, .messageWrite], in: self) {
-            result in
-            self.hideIndicator()
-            switch result {
-            case .success(let login):
-                UIAlertController.present(in: self, successResult: "\(login)") {
-                    NotificationCenter.default.post(name: .userDidLogin, object: login)
-                }
-            case .failure(let error):
-                UIAlertController.present(in: self, error: error)
-            }
+
+    func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
+        hideIndicator()
+        UIAlertController.present(in: self, successResult: "\(loginResult)") {
+            NotificationCenter.default.post(name: .userDidLogin, object: loginResult)
         }
     }
+
+    func loginButton(_ button: LoginButton, didFailLogin error: Error) {
+        hideIndicator()
+        UIAlertController.present(in: self, error: error)
+    }
+
+    func loginButtonDidStartLogin(_ button: LoginButton) {
+        showIndicator()
+    }
+
 }
