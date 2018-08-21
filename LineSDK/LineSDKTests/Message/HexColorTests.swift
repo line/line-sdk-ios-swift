@@ -65,4 +65,11 @@ class HexColorTests: XCTestCase {
         XCTAssertEqual(result[2].color, .blue)
         XCTAssertEqual(result[3].color, .white)
     }
+    
+    func testHexColorGreySpace() {
+        let c = UIColor.gray
+        XCTAssertEqual(c.cgColor.colorSpace?.model, CGColorSpaceCreateDeviceGray().model)
+        let hex = HexColor(c)
+        XCTAssertEqual(hex.rawValue, "#7F7F7F")
+    }
 }

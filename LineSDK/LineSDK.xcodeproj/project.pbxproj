@@ -112,6 +112,8 @@
 		4BEB4920212B9F6900BA946A /* FlexFillerComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491F212B9F6900BA946A /* FlexFillerComponentTests.swift */; };
 		4BEB4922212BA05500BA946A /* FlexIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4921212BA05500BA946A /* FlexIconComponent.swift */; };
 		4BEB4924212BA0A300BA946A /* FlexIconCompomentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4923212BA0A300BA946A /* FlexIconCompomentTests.swift */; };
+		4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */; };
+		4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */; };
 		4BF53539212A7C9100EA602A /* FlexMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53538212A7C9100EA602A /* FlexMessage.swift */; };
@@ -258,6 +260,8 @@
 		4BEB491F212B9F6900BA946A /* FlexFillerComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexFillerComponentTests.swift; sourceTree = "<group>"; };
 		4BEB4921212BA05500BA946A /* FlexIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexIconComponent.swift; sourceTree = "<group>"; };
 		4BEB4923212BA0A300BA946A /* FlexIconCompomentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexIconCompomentTests.swift; sourceTree = "<group>"; };
+		4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponent.swift; sourceTree = "<group>"; };
+		4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponentTests.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageContainer.swift; sourceTree = "<group>"; };
 		4BF53538212A7C9100EA602A /* FlexMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessage.swift; sourceTree = "<group>"; };
@@ -322,6 +326,7 @@
 				4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */,
 				4BEB491F212B9F6900BA946A /* FlexFillerComponentTests.swift */,
 				4BEB4923212BA0A300BA946A /* FlexIconCompomentTests.swift */,
+				4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -644,6 +649,7 @@
 				4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */,
 				4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */,
 				4BEB4921212BA05500BA946A /* FlexIconComponent.swift */,
+				4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -840,6 +846,7 @@
 				DBE4E36D211D6C1A00184D66 /* User.swift in Sources */,
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
 				4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */,
+				4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */,
 				4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */,
 				4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
@@ -890,6 +897,7 @@
 				4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */,
 				4B9A303D2121238D00174C6F /* AudioMessageTests.swift in Sources */,
 				4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */,
+				4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */,
 				4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */,
 				4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */,
 				4B95F3FF21251BB300AD3A81 /* PostSendMessagesRequestTests.swift in Sources */,
