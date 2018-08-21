@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  GetGroupsRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,15 +21,30 @@
 
 import Foundation
 
-/// Represents an `User` object which LineSDK used in `friend list` or `approvers in friend list`.
-public struct User: Decodable {
+public struct GetGroupsRequest: Request {
 
-    /// Identifier of the user
-    public let userId: String
+    public init(pageToken: String? = nil) {
+        self.pageToken = pageToken
+    }
 
-    /// User's display name
-    public let displayName: String
+    let pageToken: String?
 
-    /// Profile image URL. Not included in the response if the user doesn't have a profile image.
-    public let pictureUrl: URL?
+    public let method: HTTPMethod = .get
+    public let path = "/graph/v2/groups"
+    public let authentication: AuthenticateMethod = .token
+
+    public var parameters: [String : Any]? {
+        var param: [String : Any] = [:]
+        if let pageToken = pageToken {
+            param["pageToken"] = pageToken
+        }
+        return param
+    }
+
+    public struct Response: Decodable {
+
+        public let groups: [Group]
+
+        public let pageToken: String?
+    }
 }

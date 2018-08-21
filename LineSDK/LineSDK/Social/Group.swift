@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  Group.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,15 +21,11 @@
 
 import Foundation
 
-/// Represents an `User` object which LineSDK used in `friend list` or `approvers in friend list`.
-public struct User: Decodable {
+public struct Group: Decodable {
 
-    /// Identifier of the user
-    public let userId: String
+    public let groupId: String
 
-    /// User's display name
-    public let displayName: String
+    public let groupName: String
 
-    /// Profile image URL. Not included in the response if the user doesn't have a profile image.
     public let pictureUrl: URL?
 }

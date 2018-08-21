@@ -139,6 +139,9 @@
 		DBE4E36D211D6C1A00184D66 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36C211D6C1A00184D66 /* User.swift */; };
 		DBE4E370211D6CF500184D66 /* GetFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */; };
 		DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */; };
+		DBF20274212C114D00780358 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20273212C114D00780358 /* Group.swift */; };
+		DBF20276212C11A600780358 /* GetGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20275212C11A600780358 /* GetGroupsRequest.swift */; };
+		DBF20278212C137D00780358 /* GetApproversInGroupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +299,9 @@
 		DBE4E36C211D6C1A00184D66 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendsRequest.swift; sourceTree = "<group>"; };
 		DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFriendsRequestTests.swift; sourceTree = "<group>"; };
+		DBF20273212C114D00780358 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		DBF20275212C11A600780358 /* GetGroupsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGroupsRequest.swift; sourceTree = "<group>"; };
+		DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInGroupRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -693,8 +699,11 @@
 			isa = PBXGroup;
 			children = (
 				DBE4E36C211D6C1A00184D66 /* User.swift */,
+				DBF20273212C114D00780358 /* Group.swift */,
 				DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */,
+				DBF20275212C11A600780358 /* GetGroupsRequest.swift */,
 				DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */,
+				DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */,
 			);
 			path = Social;
 			sourceTree = "<group>";
@@ -867,6 +876,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBF20276212C11A600780358 /* GetGroupsRequest.swift in Sources */,
 				4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */,
 				4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */,
 				4B9A305C21216D2E00174C6F /* TemplateImageCarouselPayload.swift in Sources */,
@@ -931,6 +941,7 @@
 				DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */,
 				4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */,
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
+				DBF20274212C114D00780358 /* Group.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
 				4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,
@@ -940,6 +951,7 @@
 				4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
 				4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */,
+				DBF20278212C137D00780358 /* GetApproversInGroupRequest.swift in Sources */,
 				4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

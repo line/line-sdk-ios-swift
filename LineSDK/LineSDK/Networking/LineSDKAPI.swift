@@ -205,6 +205,25 @@ extension LineSDKAPI {
         let request = GetApproversInFriendsRequest(pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
     }
+
+    public static func getGroups(
+        pageToken: String? = nil,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<GetGroupsRequest.Response>) -> Void)
+    {
+        let request = GetGroupsRequest(pageToken: pageToken)
+        Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
+    }
+
+    public static func getApproversInGroup(
+        groupID: String,
+        pageToken: String? = nil,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<GetApproversInGroupRequest.Response>) -> Void)
+    {
+        let request = GetApproversInGroupRequest(groupID: groupID, pageToken: pageToken)
+        Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
+    }
 }
 
 
