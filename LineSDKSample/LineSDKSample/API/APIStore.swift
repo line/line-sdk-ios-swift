@@ -72,7 +72,8 @@ class APIStore {
         
         messagingAPIs = [
             .sendTextMessage,
-            .multiSendTextMessage
+            .multiSendTextMessage,
+            .sendFlexMessage
         ]
     }
     
@@ -173,6 +174,27 @@ extension APIItem {
         
         return APIItem(title: "Multisend text message to first five friends", path: mock.path, avaliable: true, block: block)
     }
+    
+    static var sendFlexMessage: APIItem {
+        let mock = PostSendMessagesRequest(chatID: "", messages: [])
+        let block: AnyResultBlock = { arg in
+            let (sender, handler) = arg
+            let controller = sender as! UIViewController
+            
+            selectUserFromFriendList(in: controller) { result in
+                switch result {
+                case .success(let chatID):
+                    selectFlexMessage(in: controller) { message in
+                        let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [message])
+                        Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
+                    }
+                case .failure(let error):
+                    handler(.failure(error))
+                }
+            }
+        }
+        return APIItem(title: "Send flex message to a friend", path: mock.path, avaliable: true, block: block)
+    }
 }
 
 func selectUserFromFriendList(in viewController: UIViewController, handler: @escaping (Result<String>) -> Void) {
@@ -200,6 +222,24 @@ func selectUserFromFriendList(in viewController: UIViewController, handler: @esc
         case .failure(let error):
             handler(.failure(error))
         }
-        
     }
 }
+
+func selectFlexMessage(in viewController: UIViewController, handler: @escaping (Message) -> Void) {
+    let alert = UIAlertController(title: "Message", message: nil, preferredStyle: .actionSheet)
+
+    alert.addAction(.init(title: "Simple Bubble", style: .default) { _ in
+        let simpleBubble: Message = {
+            var box = FlexBoxComponent(layout: .vertical)
+            box.addComponent(FlexTextComponent(text: "Hello"))
+            box.addComponent(FlexTextComponent(text: "World"))
+            return FlexBubbleContainer(body: box).messageWithAltText("this is a flex message")
+        }()
+        handler(simpleBubble)
+    })
+    
+    viewController.present(alert, animated: true)
+
+}
+
+
