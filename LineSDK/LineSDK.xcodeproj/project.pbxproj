@@ -33,6 +33,8 @@
 		4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8121083CDB006D17F5 /* Constant.swift */; };
 		4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8321084755006D17F5 /* UserProfile.swift */; };
 		4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */; };
+		4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */; };
+		4B5EE2DF212BAFA00009DF2E /* FlexSpacerComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2DE212BAFA00009DF2E /* FlexSpacerComponentTests.swift */; };
 		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
 		4B6508B8211812CE001796E0 /* LoginManagerOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOption.swift */; };
 		4B6A0FF1212A99AD00B3ED1F /* FlexTextComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */; };
@@ -176,6 +178,8 @@
 		4B4F0B8121083CDB006D17F5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		4B4F0B8321084755006D17F5 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequest.swift; sourceTree = "<group>"; };
+		4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSpacerComponent.swift; sourceTree = "<group>"; };
+		4B5EE2DE212BAFA00009DF2E /* FlexSpacerComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSpacerComponentTests.swift; sourceTree = "<group>"; };
 		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
 		4B6508B7211812CE001796E0 /* LoginManagerOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerOption.swift; sourceTree = "<group>"; };
 		4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponentTests.swift; sourceTree = "<group>"; };
@@ -327,6 +331,7 @@
 				4BEB491F212B9F6900BA946A /* FlexFillerComponentTests.swift */,
 				4BEB4923212BA0A300BA946A /* FlexIconCompomentTests.swift */,
 				4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */,
+				4B5EE2DE212BAFA00009DF2E /* FlexSpacerComponentTests.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -650,6 +655,7 @@
 				4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */,
 				4BEB4921212BA05500BA946A /* FlexIconComponent.swift */,
 				4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */,
+				4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -874,6 +880,7 @@
 				4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */,
 				4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */,
 				DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */,
+				4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */,
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
 				4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */,
@@ -913,6 +920,7 @@
 				4B6A0FF7212AACCF00B3ED1F /* FlexButtonComponentTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
 				4B9A305621215DED00174C6F /* TemplateConfirmPayloadTests.swift in Sources */,
+				4B5EE2DF212BAFA00009DF2E /* FlexSpacerComponentTests.swift in Sources */,
 				4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */,
 				4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */,
 				4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */,

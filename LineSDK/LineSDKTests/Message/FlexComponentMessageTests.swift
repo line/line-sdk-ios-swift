@@ -61,7 +61,7 @@ class FlexComponentMessageTests: XCTestCase {
         
         let decoder = JSONDecoder()
         let results = try! decoder.decode([Property].self, from: string.data(using: .utf8)!)
-        XCTAssertEqual(results, [.xxs, .xs, .sm, .md, .lg, .xl, .xl2, .xl3, .xl4, .xl5, .full, .md])
+        XCTAssertEqual(results, [.xxs, .xs, .sm, .md, .lg, .xl, .xxl, .xl3, .xl4, .xl5, .full, .md])
     }
     
     func testAlignDeccode() {

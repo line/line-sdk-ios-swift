@@ -39,6 +39,7 @@ public enum FlexMessageComponent: Codable {
     case filler(FlexFillerComponent)
     case icon(FlexIconComponent)
     case separator(FlexSeparatorComponent)
+    case spacer(FlexSpacerComponent)
     
     case unknown
     
@@ -70,8 +71,11 @@ public enum FlexMessageComponent: Codable {
         case .separator?:
             let component = try FlexSeparatorComponent(from: decoder)
             self = .separator(component)
-        case .spacer?: fatalError()
-        case nil: fatalError()
+        case .spacer?:
+            let component = try FlexSpacerComponent(from: decoder)
+            self = .spacer(component)
+        case nil:
+            self = .unknown
         }
     }
     
@@ -88,6 +92,8 @@ public enum FlexMessageComponent: Codable {
         case .icon(let component):
             try component.encode(to: encoder)
         case .separator(let component):
+            try component.encode(to: encoder)
+        case .spacer(let component):
             try component.encode(to: encoder)
         case .unknown:
             Log.assertionFailure("Cannot encode unknown component type.")
@@ -122,6 +128,11 @@ public enum FlexMessageComponent: Codable {
     
     public var asSeparatorComponent: FlexSeparatorComponent? {
         if case .separator(let component) = self { return component }
+        return nil
+    }
+    
+    public var asSpacerComponent: FlexSpacerComponent? {
+        if case .spacer(let component) = self { return component }
         return nil
     }
 }

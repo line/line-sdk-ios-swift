@@ -29,7 +29,7 @@ extension FlexMessageComponent {
     }
 
     public enum Size: String, DefaultEnumCodable {
-        case xxs, xs, sm, md, lg, xl, xl2 = "xxl", xl3 = "3xl", xl4 = "4xl", xl5 = "5xl", full
+        case xxs, xs, sm, md, lg, xl, xxl, xl3 = "3xl", xl4 = "4xl", xl5 = "5xl", full
         public static let defaultCase: Size = .md
     }
     
