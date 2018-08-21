@@ -53,3 +53,9 @@ extension HexColor: Equatable {
         return lhs.rawValue.lowercased() == rhs.rawValue.lowercased()
     }
 }
+
+extension HexColor: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value, default: .white)
+    }
+}

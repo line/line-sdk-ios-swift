@@ -77,7 +77,7 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
     }
 }
 
-extension TemplateButtonsPayload {
+extension TemplateButtonsPayload: TemplateMessageConvertible {
     public var payload: TemplateMessagePayload { return .buttons(self) }
 }
 

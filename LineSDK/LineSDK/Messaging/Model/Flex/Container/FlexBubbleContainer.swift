@@ -20,5 +20,46 @@
 //
 
 public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
+    
+    public struct Style: Codable {
+        var header: FlexBlockStyle?
+        var hero: FlexBlockStyle?
+        var body: FlexBlockStyle?
+        var footer: FlexBlockStyle?
+    }
+    
     let type = FlexMessageContainerType.bubble
+    
+    public var header: FlexBoxComponent?
+    public var hero: FlexImageComponent?
+    public var body: FlexBoxComponent?
+    public var footer: FlexBoxComponent?
+    public var styles: Style?
+    
+    public init(
+        header: FlexBoxComponent? = nil,
+        hero: FlexImageComponent? = nil,
+        body: FlexBoxComponent? = nil,
+        footer: FlexBoxComponent? = nil,
+        styles: Style? = nil)
+    {
+        self.header = header
+        self.hero = hero
+        self.body = body
+        self.footer = footer
+        self.styles = styles
+    }
+}
+
+extension FlexBubbleContainer: FlexMessageConvertible {
+    public var container: FlexMessageContainer { return .bubble(self) }
+}
+
+extension Message {
+    public static func flexBubbleMessage(
+        altText: String,
+        container: FlexBubbleContainer) -> Message
+    {
+        return container.messageWithAltText(altText)
+    }
 }

@@ -29,6 +29,6 @@ public struct FlexSpacerComponent: Codable, FlexMessageComponentTypeCompatible {
     }
 }
 
-extension FlexSpacerComponent {
+extension FlexSpacerComponent: FlexMessageComponentConvertible {
     public var component: FlexMessageComponent { return .spacer(self) }
 }

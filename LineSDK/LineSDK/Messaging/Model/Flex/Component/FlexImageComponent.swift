@@ -39,6 +39,6 @@ public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible {
     }
 }
 
-extension FlexImageComponent {
+extension FlexImageComponent: FlexMessageComponentConvertible {
     public var component: FlexMessageComponent { return .image(self) }
 }

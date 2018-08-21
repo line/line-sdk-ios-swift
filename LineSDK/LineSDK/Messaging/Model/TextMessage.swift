@@ -38,7 +38,7 @@ public struct TextMessage: Codable, MessageTypeCompatible {
     }
 }
 
-extension TextMessage {
+extension TextMessage: MessageConvertible {
     public var message: Message { return .text(self) }
 }
 

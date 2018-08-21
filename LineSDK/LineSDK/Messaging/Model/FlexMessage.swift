@@ -26,3 +26,7 @@ public struct FlexMessage: Codable, MessageTypeCompatible {
     public let altText: String
     public let contents: FlexMessageContainer
 }
+
+extension FlexMessage {
+    public var message: Message { return .flex(self) }
+}

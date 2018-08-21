@@ -33,6 +33,6 @@ public struct TemplateMessage: Codable, MessageTypeCompatible {
     }
 }
 
-extension TemplateMessage {
+extension TemplateMessage: MessageConvertible {
     public var message: Message { return .template(self) }
 }

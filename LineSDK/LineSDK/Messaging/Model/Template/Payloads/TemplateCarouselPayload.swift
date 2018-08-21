@@ -99,7 +99,7 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
     }
 }
 
-extension TemplateCarouselPayload {
+extension TemplateCarouselPayload: TemplateMessageConvertible {
     public var payload: TemplateMessagePayload { return .carousel(self) }
 }
 

@@ -41,6 +41,6 @@ public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
     }
 }
 
-extension FlexButtonComponent {
+extension FlexButtonComponent: FlexMessageComponentConvertible {
     public var component: FlexMessageComponent { return .button(self) }
 }

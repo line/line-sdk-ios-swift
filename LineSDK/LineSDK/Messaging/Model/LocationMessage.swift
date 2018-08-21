@@ -38,7 +38,7 @@ public struct LocationMessage: Codable, MessageTypeCompatible {
     }
 }
 
-extension LocationMessage {
+extension LocationMessage: MessageConvertible {
     public var message: Message { return .location(self) }
 }
 

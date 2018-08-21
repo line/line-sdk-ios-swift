@@ -31,6 +31,6 @@ public struct FlexSeparatorComponent: Codable, FlexMessageComponentTypeCompatibl
     }
 }
 
-extension FlexSeparatorComponent {
+extension FlexSeparatorComponent: FlexMessageComponentConvertible {
     public var component: FlexMessageComponent { return .separator(self) }
 }

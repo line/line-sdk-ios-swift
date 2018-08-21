@@ -1,5 +1,5 @@
 //
-//  FlexTextComponent.swift
+//  FlexBlockStyle.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,26 +19,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible {
-    let type = FlexMessageComponentType.text
+public struct FlexBlockStyle: Codable {
+    public var backgroundColor: HexColor?
+    public var separator: Bool?
+    public var separatorColor: HexColor?
     
-    public var text: String
-    public var flex: FlexMessageComponent.Ratio?
-    public var margin: FlexMessageComponent.Margin?
-    public var size: FlexMessageComponent.Size?
-    public var align: FlexMessageComponent.Align?
-    public var gravity: FlexMessageComponent.Gravity?
-    public var wrap: Bool?
-    public var maxLines: UInt?
-    public var weight: FlexMessageComponent.Weight?
-    public var color: HexColor?
-    public var action: MessageAction?
-    
-    public init(text: String) {
-        self.text = text
+    public init(backgroundColor: HexColor? = nil, separator: Bool? = nil, separatorColor: HexColor? = nil) {
+        self.backgroundColor = backgroundColor
+        self.separator = separator
+        self.separatorColor = separatorColor
     }
-}
-
-extension FlexTextComponent: FlexMessageComponentConvertible {
-    public var component: FlexMessageComponent { return .text(self) }
 }

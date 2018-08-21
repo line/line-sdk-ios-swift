@@ -43,7 +43,7 @@ public struct AudioMessage: Codable, MessageTypeCompatible {
     }
 }
 
-extension AudioMessage {
+extension AudioMessage: MessageConvertible {
     public var message: Message { return .audio(self) }
 }
 

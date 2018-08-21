@@ -52,7 +52,7 @@ public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeC
     }
 }
 
-extension TemplateImageCarouselPayload {
+extension TemplateImageCarouselPayload: TemplateMessageConvertible {
     public var payload: TemplateMessagePayload { return .imageCarousel(self) }
 }
 

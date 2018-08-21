@@ -21,5 +21,37 @@
 
 public struct FlexCarouselContainer: Codable, FlexMessageContainerTypeCompatible {
     let type = FlexMessageContainerType.carousel
-    let contents: [FlexBubbleContainer]
+    public var contents: [FlexBubbleContainer]
+    
+    public init(contents: [FlexBubbleContainer] = []) {
+        self.contents = contents
+    }
+    
+    public mutating func addBubble(_ value: FlexBubbleContainer) {
+        contents.append(value)
+    }
+    
+    public mutating func removeFirstBubble(
+        where condition: (FlexBubbleContainer) throws -> Bool) rethrows -> FlexBubbleContainer?
+    {
+        guard let index = try contents.index(where: condition) else {
+            return nil
+        }
+        
+        return contents.remove(at: index)
+    }
+    
+}
+
+extension FlexCarouselContainer: FlexMessageConvertible {
+    public var container: FlexMessageContainer { return .carousel(self) }
+}
+
+extension Message {
+    public static func flexCarouselMessage(
+        altText: String,
+        container: FlexCarouselContainer) -> Message
+    {
+        return container.messageWithAltText(altText)
+    }
 }

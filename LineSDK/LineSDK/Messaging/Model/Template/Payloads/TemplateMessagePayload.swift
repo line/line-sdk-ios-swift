@@ -108,11 +108,8 @@ public enum TemplateMessagePayload: Codable {
         if case .imageCarousel(let message) = self { return message }
         return nil
     }
-    
 }
 
-extension TemplateMessagePayload {
-    public func messageWithAltText(_ text: String) -> Message {
-        return TemplateMessage(altText: text, payload: self).message
-    }
+extension TemplateMessagePayload: TemplateMessageConvertible {
+    public var payload: TemplateMessagePayload { return self }
 }

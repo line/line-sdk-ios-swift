@@ -33,6 +33,6 @@ public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
     }
 }
 
-extension FlexIconComponent {
+extension FlexIconComponent: FlexMessageComponentConvertible {
     public var component: FlexMessageComponent { return .icon(self) }
 }

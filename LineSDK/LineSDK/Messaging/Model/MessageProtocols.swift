@@ -21,6 +21,38 @@
 
 import Foundation
 
+public protocol MessageConvertible {
+    var message: Message { get }
+}
+
+public protocol AltTextMessageConvertible {
+    func messageWithAltText(_ text: String) -> Message
+}
+
+public protocol TemplateMessageConvertible: AltTextMessageConvertible {
+    var payload: TemplateMessagePayload { get }
+}
+
+public extension TemplateMessageConvertible {
+    func messageWithAltText(_ text: String) -> Message {
+        return TemplateMessage(altText: text, payload: payload).message
+    }
+}
+
+public protocol FlexMessageConvertible: AltTextMessageConvertible {
+    var container: FlexMessageContainer { get }
+}
+
+public extension FlexMessageConvertible {
+    public func messageWithAltText(_ text: String) -> Message {
+        return FlexMessage(altText: text, contents: container).message
+    }
+}
+
+public protocol FlexMessageComponentConvertible {
+    var component: FlexMessageComponent { get }
+}
+
 protocol MessageTypeCompatible {
     var type: MessageType { get }
 }

@@ -142,3 +142,7 @@ public enum Message: Codable {
         return nil
     }
 }
+
+extension Message: MessageConvertible {
+    public var message: Message { return self }
+}

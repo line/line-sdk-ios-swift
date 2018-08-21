@@ -24,6 +24,6 @@ public struct FlexFillerComponent: Codable, FlexMessageComponentTypeCompatible {
     public init() {}
 }
 
-extension FlexFillerComponent {
+extension FlexFillerComponent: FlexMessageComponentConvertible {
     public var component: FlexMessageComponent { return .filler(self) }
 }

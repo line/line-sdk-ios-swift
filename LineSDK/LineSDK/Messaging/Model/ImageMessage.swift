@@ -56,7 +56,7 @@ public struct ImageMessage: Codable, MessageTypeCompatible {
     }
 }
 
-extension ImageMessage {
+extension ImageMessage: MessageConvertible {
     public var message: Message { return .image(self) }
 }
 

@@ -30,25 +30,26 @@ public struct FlexBoxComponent: Codable, FlexMessageComponentTypeCompatible {
     public var margin: FlexMessageComponent.Margin?
     public var action: MessageAction?
     
-    public init(layout: FlexMessageComponent.Layout, contents: [FlexMessageComponent] = []) {
+    public init(layout: FlexMessageComponent.Layout, contents: [FlexMessageComponentConvertible] = []) {
         self.layout = layout
-        self.contents = contents
+        self.contents = contents.map { $0.component }
     }
     
-    mutating func addComponent(_ component: FlexMessageComponent) {
-        contents.append(component)
+    public mutating func addComponent(_ value: FlexMessageComponentConvertible) {
+        contents.append(value.component)
     }
     
-    mutating func removeFisrtComponent(
+    public mutating func removeFisrtComponent(
         where condition: (FlexMessageComponent) throws -> Bool) rethrows -> FlexMessageComponent?
     {
         guard let index = try contents.index(where: condition) else {
             return nil
         }
+        
         return contents.remove(at: index)
     }
 }
 
-extension FlexBoxComponent {
+extension FlexBoxComponent: FlexMessageComponentConvertible {
     public var component: FlexMessageComponent { return .box(self) }
 }

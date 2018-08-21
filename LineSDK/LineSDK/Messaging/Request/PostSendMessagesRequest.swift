@@ -26,9 +26,9 @@ public struct PostSendMessagesRequest: Request {
     public let chatID: String
     public let messages: [Message]
     
-    public init(chatID: String, messages: [Message]) {
+    public init(chatID: String, messages: [MessageConvertible]) {
         self.chatID = chatID
-        self.messages = messages
+        self.messages = messages.map { $0.message }
     }
     
     public let method: HTTPMethod = .post

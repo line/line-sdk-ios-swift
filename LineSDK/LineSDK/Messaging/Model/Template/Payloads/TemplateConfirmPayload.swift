@@ -40,7 +40,7 @@ public struct TemplateConfirmPayload: Codable, TemplateMessagePayloadTypeCompati
     }
 }
 
-extension TemplateConfirmPayload {
+extension TemplateConfirmPayload: TemplateMessageConvertible {
     public var payload: TemplateMessagePayload { return .confirm(self) }
 }
 

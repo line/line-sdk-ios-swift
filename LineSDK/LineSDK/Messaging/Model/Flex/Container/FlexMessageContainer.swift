@@ -61,4 +61,18 @@ public enum FlexMessageContainer: Codable {
             Log.assertionFailure("Cannot encode unknown container type.")
         }
     }
+    
+    public var asBubbleContainer: FlexBubbleContainer? {
+        if case .bubble(let container) = self { return container }
+        return nil
+    }
+    
+    public var asCarouselContainer: FlexCarouselContainer? {
+        if case .carousel(let container) = self { return container }
+        return nil
+    }
+}
+
+extension FlexMessageContainer: FlexMessageConvertible {
+    public var container: FlexMessageContainer { return self }
 }

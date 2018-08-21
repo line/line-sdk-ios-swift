@@ -41,7 +41,7 @@ public struct VideoMessage: Codable, MessageTypeCompatible {
     }
 }
 
-extension VideoMessage {
+extension VideoMessage: MessageConvertible {
     public var message: Message { return .video(self) }
 }
 

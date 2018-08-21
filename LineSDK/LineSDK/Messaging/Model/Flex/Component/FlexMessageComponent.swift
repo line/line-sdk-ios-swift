@@ -104,7 +104,7 @@ public enum FlexMessageComponent: Codable {
         }
     }
     
-    public var asComponent: FlexBoxComponent? {
+    public var asBoxComponent: FlexBoxComponent? {
         if case .box(let component) = self { return component }
         return nil
     }
@@ -143,4 +143,8 @@ public enum FlexMessageComponent: Codable {
         if case .spacer(let component) = self { return component }
         return nil
     }
+}
+
+extension FlexMessageComponent: FlexMessageComponentConvertible {
+    public var component: FlexMessageComponent { return self }
 }

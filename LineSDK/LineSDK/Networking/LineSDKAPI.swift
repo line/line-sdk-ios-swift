@@ -230,7 +230,7 @@ extension LineSDKAPI {
     ///   the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
     ///
     public static func sendMessages(
-        _ messages: [Message],
+        _ messages: [MessageConvertible],
         to chatID: String,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<PostSendMessagesRequest.Response>) -> Void)

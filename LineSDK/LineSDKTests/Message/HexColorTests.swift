@@ -72,4 +72,12 @@ class HexColorTests: XCTestCase {
         let hex = HexColor(c)
         XCTAssertEqual(hex.rawValue, "#7F7F7F")
     }
+    
+    func testHexColorStringLiteral() {
+        let color: HexColor = "#ff0000"
+        XCTAssertEqual(color, HexColor(.red))
+        
+        let invalidColor: HexColor = "hello"
+        XCTAssertEqual(invalidColor, HexColor(.white))
+    }
 }
