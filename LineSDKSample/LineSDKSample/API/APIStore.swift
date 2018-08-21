@@ -96,7 +96,7 @@ class APIStore {
 
 struct APIItem {
     
-    typealias AnyResultBlock = ((Any, (Result<Any>) -> Void)) -> Void
+    typealias AnyResultBlock = ((UIViewController, (Result<Any>) -> Void)) -> Void
     
     let block: AnyResultBlock
     
@@ -119,8 +119,8 @@ struct APIItem {
         self.avaliable = avaliable
     }
     
-    func execute(with sender: Any, handler: @escaping (Result<Any>) -> Void) -> Void {
-        block((sender, handler))
+    func execute(with controller: UIViewController, handler: @escaping (Result<Any>) -> Void) -> Void {
+        block((controller, handler))
     }
 }
 
@@ -128,9 +128,7 @@ extension APIItem {
     static var sendTextMessage: APIItem {
         let mock = PostSendMessagesRequest(chatID: "", messages: [])
         let block: AnyResultBlock = { arg in
-            let (sender, handler) = arg
-            let controller = sender as! UIViewController
-            
+            let (controller, handler) = arg
             selectUserFromFriendList(in: controller) { result in
                 switch result {
                 case .success(let chatID):
@@ -178,9 +176,7 @@ extension APIItem {
     static var sendFlexMessage: APIItem {
         let mock = PostSendMessagesRequest(chatID: "", messages: [])
         let block: AnyResultBlock = { arg in
-            let (sender, handler) = arg
-            let controller = sender as! UIViewController
-            
+            let (controller, handler) = arg
             selectUserFromFriendList(in: controller) { result in
                 switch result {
                 case .success(let chatID):
