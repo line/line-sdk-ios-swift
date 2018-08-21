@@ -60,7 +60,7 @@ class APIResultViewController: UITableViewController, IndicatorDisplay, CellCopy
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        apiItem?.execute { result in
+        apiItem?.execute(with: self) { result in
             self.result = result
         }
     }

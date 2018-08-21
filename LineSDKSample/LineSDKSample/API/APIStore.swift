@@ -95,7 +95,7 @@ class APIStore {
 
 struct APIItem {
     
-    typealias AnyResultBlock = (@escaping (Result<Any>) -> Void) -> Void
+    typealias AnyResultBlock = ((Any, (Result<Any>) -> Void)) -> Void
     
     let block: AnyResultBlock
     
@@ -105,7 +105,7 @@ struct APIItem {
     let avaliable: Bool
     
     init<T: Request>(title: String, request: T, avaliable: Bool = true) {
-        self.init(title: title, path: request.path, avaliable: avaliable) { handler in
+        self.init(title: title, path: request.path, avaliable: avaliable) { (controller, handler) in
             Session.shared.send(request) { result in handler(result.map { $0 as Any }) }
         }
     }
@@ -118,28 +118,21 @@ struct APIItem {
         self.avaliable = avaliable
     }
     
-    func execute(handler: @escaping (Result<Any>) -> Void) -> Void {
-        block(handler)
+    func execute(with sender: Any, handler: @escaping (Result<Any>) -> Void) -> Void {
+        block((sender, handler))
     }
 }
 
 extension APIItem {
     static var sendTextMessage: APIItem {
         let mock = PostSendMessagesRequest(chatID: "", messages: [])
-        let block: AnyResultBlock = { handler in
-            let getFriends = GetFriendsRequest()
-            Session.shared.send(getFriends) { res in
-                switch res {
-                case .success(let value):
-                    guard !value.friends.isEmpty else {
-                        let error = LineSDKError.generalError(
-                            reason: .parameterError(
-                                parameterName: "friends",
-                                description: "You need at least one friend to use this API."))
-                        handler(.failure(error))
-                        return
-                    }
-                    let chatID = value.friends[0].userId
+        let block: AnyResultBlock = { arg in
+            let (sender, handler) = arg
+            let controller = sender as! UIViewController
+            
+            selectUserFromFriendList(in: controller) { result in
+                switch result {
+                case .success(let chatID):
                     let message = Message.textMessage(text: "Hello")
                     let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [message])
                     Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
@@ -149,12 +142,13 @@ extension APIItem {
             }
         }
         
-        return APIItem(title: "Send text message to first friend", path: mock.path, avaliable: true, block: block)
+        return APIItem(title: "Send text message to a friend", path: mock.path, avaliable: true, block: block)
     }
     
     static var multiSendTextMessage: APIItem {
         let mock = PostMultisendMessagesRequest(userIDs: [], messages: [])
-        let block: AnyResultBlock = { handler in
+        let block: AnyResultBlock = { arg in
+            let (_, handler) = arg
             let getFriends = GetFriendsRequest()
             Session.shared.send(getFriends) { res in
                 switch res {
@@ -178,5 +172,34 @@ extension APIItem {
         }
         
         return APIItem(title: "Multisend text message to first five friends", path: mock.path, avaliable: true, block: block)
+    }
+}
+
+func selectUserFromFriendList(in viewController: UIViewController, handler: @escaping (Result<String>) -> Void) {
+    let getFriends = GetFriendsRequest()
+    Session.shared.send(getFriends) { res in
+        
+        switch res {
+        case .success(let value):
+            guard !value.friends.isEmpty else {
+                let error = LineSDKError.generalError(
+                    reason: .parameterError(
+                        parameterName: "friends",
+                        description: "You need at least one friend to use this API."))
+                handler(.failure(error))
+                return
+            }
+            
+            let alert = UIAlertController(title: "Friends", message: nil, preferredStyle: .actionSheet)
+            value.friends.prefix(5).forEach { friend in
+                alert.addAction(.init(title: friend.displayName, style: .default) { _ in
+                    handler(.success(friend.userId))
+                    })
+            }
+            viewController.present(alert, animated: true)
+        case .failure(let error):
+            handler(.failure(error))
+        }
+        
     }
 }
