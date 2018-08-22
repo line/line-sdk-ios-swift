@@ -142,6 +142,8 @@
 		DBF20274212C114D00780358 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20273212C114D00780358 /* Group.swift */; };
 		DBF20276212C11A600780358 /* GetGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20275212C11A600780358 /* GetGroupsRequest.swift */; };
 		DBF20278212C137D00780358 /* GetApproversInGroupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */; };
+		DBF2027B212D58FC00780358 /* GetGroupsRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF2027A212D58FC00780358 /* GetGroupsRequestTests.swift */; };
+		DBF2027D212D5B5200780358 /* GetApproversInGroupRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF2027C212D5B5200780358 /* GetApproversInGroupRequestTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -302,6 +304,8 @@
 		DBF20273212C114D00780358 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		DBF20275212C11A600780358 /* GetGroupsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGroupsRequest.swift; sourceTree = "<group>"; };
 		DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInGroupRequest.swift; sourceTree = "<group>"; };
+		DBF2027A212D58FC00780358 /* GetGroupsRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGroupsRequestTests.swift; sourceTree = "<group>"; };
+		DBF2027C212D5B5200780358 /* GetApproversInGroupRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInGroupRequestTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -406,6 +410,8 @@
 				4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */,
 				DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */,
 				DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */,
+				DBF2027A212D58FC00780358 /* GetGroupsRequestTests.swift */,
+				DBF2027C212D5B5200780358 /* GetApproversInGroupRequestTests.swift */,
 				4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */,
 				4BD191B12111452E00E2C481 /* PostRefreshTokenRequestTests.swift */,
 				4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */,
@@ -982,6 +988,7 @@
 				4B6A0FF7212AACCF00B3ED1F /* FlexButtonComponentTests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
 				4B9A305621215DED00174C6F /* TemplateConfirmPayloadTests.swift in Sources */,
+				DBF2027D212D5B5200780358 /* GetApproversInGroupRequestTests.swift in Sources */,
 				4B5EE2E1212BB53F0009DF2E /* FlexBoxComponentTests.swift in Sources */,
 				4B5EE2DF212BAFA00009DF2E /* FlexSpacerComponentTests.swift in Sources */,
 				4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */,
@@ -1011,6 +1018,7 @@
 				4B9A30502121429C00174C6F /* TemplateButtonsPayloadTests.swift in Sources */,
 				4BEB4924212BA0A300BA946A /* FlexIconCompomentTests.swift in Sources */,
 				4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */,
+				DBF2027B212D58FC00780358 /* GetGroupsRequestTests.swift in Sources */,
 				4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
