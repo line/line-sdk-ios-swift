@@ -19,48 +19,69 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a template payload with an image, title, text, and multiple action buttons.
+/// The message bubble size is the same with a regular message. It may include an image at most.
 public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompatible {
     
     let type = TemplateMessagePayloadType.buttons
     
+    /// Message text in the chat bubble.
     public var text: String
+    
+    /// Message title of chat bubble.
     public var title: String?
     
+    /// Actions to perform when tapped.
     public var actions: [MessageAction]
+    
+    /// Action when image is tapped. Set for the entire image, title, and text area of the chat bubble.
+    /// To set the `defaultAction` with any `MessageActionConvertible` type, use `setDefaultAction` method.
     public var defaultAction: MessageAction?
     
+    /// An image to display in the chat bubble. It should start with "https".
     public var thumbnailImageURL: URL?
-    public var imageAspectRatio: ImageAspectRatio?
-    public var imageContentMode: ImageContentMode?
+    
+    /// Aspect ratio of the image. Specify to `.rectangle` or `.square`. If not specified, `.rectangle` will be used.
+    public var imageAspectRatio: TemplateMessagePayload.ImageAspectRatio?
+    
+    /// Size of the image. Specify to `.aspectFill` or `.aspectFit`. If not specified, `.aspectFill` will be used.
+    public var imageContentMode: TemplateMessagePayload.ImageContentMode?
+    
+    /// Background color of image. If not specified, white color will be used.
     public var imageBackgroundColor: HexColor?
     
+    /// Message agent who sends this message on behalf of the sender.
     public var sender: MessageSender?
     
+    /// Creates a buttons payload with given information.
+    ///
+    /// - Parameters:
+    ///   - title: Message title of chat bubble.
+    ///   - text: Message text in the chat bubble.
+    ///   - actions: Actions to perform when tapped. Default is empty.
     public init(
-        text: String,
         title: String? = nil,
-        actions: [MessageAction] = [],
-        defaultAction: MessageAction? = nil,
-        thumbnailImageURL: URL? = nil,
-        imageAspectRatio: ImageAspectRatio? = nil,
-        imageContentMode: ImageContentMode? = nil,
-        imageBackgroundColor: UIColor? = nil,
-        sender: MessageSender? = nil)
+        text: String,
+        actions: [MessageActionConvertible] = [])
     {
         self.text = text
         self.title = title
         
-        self.actions = actions
-        self.defaultAction = defaultAction
-        
-        self.thumbnailImageURL = thumbnailImageURL
-        self.imageAspectRatio = imageAspectRatio
-        self.imageContentMode = imageContentMode
-        self.imageBackgroundColor = imageBackgroundColor.map(HexColor.init)
+        self.actions = actions.map { $0.action }
     }
     
-    public mutating func add(action: MessageAction) {
-        actions.append(action)
+    /// Appends an action to current `actions` list.
+    ///
+    /// - Parameter action: The action to append.
+    public mutating func addAction(_ value: MessageActionConvertible) {
+        actions.append(value.action)
+    }
+    
+    /// Set the default action of this payload.
+    ///
+    /// - Parameter value: The action to set.
+    public mutating func setDefaultAction(_ value: MessageActionConvertible?) {
+        defaultAction = value?.action
     }
     
     enum CodingKeys: String, CodingKey {
@@ -78,32 +99,6 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
 }
 
 extension TemplateButtonsPayload: TemplateMessageConvertible {
+    /// Returns a converted `TemplateMessagePayload` which wraps this `TemplateButtonsPayload`.
     public var payload: TemplateMessagePayload { return .buttons(self) }
-}
-
-extension Message {
-    public static func templateButtonsMessage(
-        altText: String,
-        text: String,
-        title: String? = nil,
-        actions: [MessageAction] = [],
-        defaultAction: MessageAction? = nil,
-        thumbnailImageURL: URL? = nil,
-        imageAspectRatio: ImageAspectRatio? = nil,
-        imageContentMode: ImageContentMode? = nil,
-        imageBackgroundColor: UIColor? = nil,
-        sender: MessageSender? = nil) -> Message
-    {
-        let payload = TemplateButtonsPayload(
-            text: text,
-            title: title,
-            actions: actions,
-            defaultAction: defaultAction,
-            thumbnailImageURL: thumbnailImageURL,
-            imageAspectRatio: imageAspectRatio,
-            imageContentMode: imageContentMode,
-            imageBackgroundColor: imageBackgroundColor,
-            sender: sender).payload
-        return payload.messageWithAltText(altText)
-    }
 }

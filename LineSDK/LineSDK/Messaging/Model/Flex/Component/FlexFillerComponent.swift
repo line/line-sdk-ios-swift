@@ -19,11 +19,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents an invisible component to fill extra space between components.
+/// The filler's `flex` is fixed to 1. The `spacing` property of the parent box will be ignored for fillers.
 public struct FlexFillerComponent: Codable, FlexMessageComponentTypeCompatible {
     let type: FlexMessageComponentType = .filler
+    
+    /// Creates a filler component.
     public init() {}
 }
 
 extension FlexFillerComponent: FlexMessageComponentConvertible {
+    /// Returns a converted `FlexMessageComponent` which wraps this `FlexFillerComponent`.
     public var component: FlexMessageComponent { return .filler(self) }
 }

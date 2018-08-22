@@ -64,13 +64,13 @@ class FlexImageComponentTests: XCTestCase {
         var component = try! FlexImageComponent(url: url)
         component.flex = 1
         component.margin = .lg
-        component.align = .center
+        component.alignment = .center
         component.gravity = .bottom
         component.size = .full
         component.aspectRatio = .ratio_3x1
         component.aspectMode = .fill
         component.backgroundColor = HexColor(.red)
-        component.action = .URIAction(label: "hello", uri: url)
+        component.setAction(MessageURIAction(label: "hello", uri: url))
         
         let dic = FlexMessageComponent.image(component).json
         assertEqual(in: dic, forKey: "type", value: "image")

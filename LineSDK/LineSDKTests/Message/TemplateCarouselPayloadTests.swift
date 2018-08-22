@@ -69,13 +69,12 @@ class TemplateCarouselPayloadTests: XCTestCase {
     func testTemplateCarouselPayloadEncoding() {
         let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
         let action = MessageAction.URI(uriAction)
-        var column = TemplateCarouselPayload.Column(
-            text: "hello",
-            actions: [action],
-            defaultAction: action,
-            thumbnailImageURL: nil,
-            imageBackgroundColor: .red)
-        var message = TemplateCarouselPayload(columns: [column], imageAspectRatio: .square, imageContentMode: .aspectFill)
+        var column = TemplateCarouselPayload.Column(text: "hello", actions: [action])
+        column.defaultAction = action
+        column.imageBackgroundColor = HexColor(.red)
+        var message = TemplateCarouselPayload(columns: [column])
+        message.imageAspectRatio = .square
+        message.imageContentMode = .aspectFill
         
         column.text = "world"
         column.title = "a title"
@@ -108,8 +107,8 @@ class TemplateCarouselPayloadTests: XCTestCase {
             .map { try! decoder.decode(TemplateMessagePayload.self, from: $0) }
             .map { $0.asCarouselPayload! }
         XCTAssertEqual(result[0].type, .carousel)
-        XCTAssertEqual(result[0].imageAspectRatio, .rectangle)
-        XCTAssertEqual(result[0].imageContentMode, .aspectFill)
+        XCTAssertNil(result[0].imageAspectRatio)
+        XCTAssertNil(result[0].imageContentMode)
         
         XCTAssertEqual(result[0].columns.count, 2)
         
@@ -120,11 +119,5 @@ class TemplateCarouselPayloadTests: XCTestCase {
         XCTAssertEqual(result[0].columns[1].text, "text 2")
         XCTAssertNil(result[0].columns[1].title)
         XCTAssertEqual(result[0].columns[1].actions.count, 2)
-    }
-    
-    func testMessageWrapper() {
-        let column = TemplateCarouselPayload.Column(text: "Hello")
-        let message = Message.templateCarouselMessage(altText: "altText", columns: [column])
-        XCTAssertNotNil(message.asTemplateMessage?.payload.asCarouselPayload)
     }
 }

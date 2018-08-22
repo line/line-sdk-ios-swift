@@ -64,13 +64,13 @@ class FlexTextComponentTests: XCTestCase {
         component.flex = 0
         component.margin = .xl
         component.size = .xl5
-        component.align = .center
+        component.alignment = .center
         component.gravity = .bottom
-        component.wrap = true
+        component.wrapping = true
         component.maxLines = 5
         component.weight = .bold
         component.color = HexColor(.red)
-        component.action = MessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
+        component.setAction(MessageURIAction(label: "action", uri: URL(string: "https://sample.com")!))
         
         let dic = FlexMessageComponent.text(component).json
         assertEqual(in: dic, forKey: "text", value: "world")
@@ -97,16 +97,16 @@ class FlexTextComponentTests: XCTestCase {
         XCTAssertEqual(result[0].size, .xl)
         XCTAssertEqual(result[0].weight, .bold)
         XCTAssertEqual(result[0].color, HexColor(.blue))
-        XCTAssertNil(result[0].align)
+        XCTAssertNil(result[0].alignment)
         XCTAssertNil(result[0].gravity)
-        XCTAssertNil(result[0].wrap)
+        XCTAssertNil(result[0].wrapping)
         
         XCTAssertEqual(result[1].type, .text)
         XCTAssertEqual(result[1].text, "HIHI")
         XCTAssertEqual(result[1].flex, 2)
         XCTAssertEqual(result[1].gravity, .center)
         XCTAssertEqual(result[1].maxLines, 3)
-        XCTAssertEqual(result[1].wrap, false)
+        XCTAssertEqual(result[1].wrapping, false)
         XCTAssertNil(result[1].color)
     }
 }

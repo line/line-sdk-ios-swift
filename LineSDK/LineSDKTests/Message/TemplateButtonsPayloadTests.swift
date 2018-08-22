@@ -77,17 +77,13 @@ class TemplateButtonsPayloadTests: XCTestCase {
         let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
         let action = MessageAction.URI(uriAction)
         
-        var message = TemplateButtonsPayload(
-            text: "hello",
-            title: "world",
-            actions: [action],
-            defaultAction: action,
-            thumbnailImageURL: URL(string: "https://sample.com"),
-            imageContentMode: .aspectFit,
-            imageBackgroundColor: .red,
-            sender: nil)
+        var message = TemplateButtonsPayload(title: "world", text: "hello", actions: [action])
+        message.defaultAction = action
+        message.thumbnailImageURL = URL(string: "https://sample.com")
+        message.imageContentMode = .aspectFit
+        message.imageBackgroundColor = HexColor(.red)
         
-        message.add(action: .URI(uriAction))
+        message.addAction(uriAction)
         
         let dic = TemplateMessagePayload.buttons(message).json
         assertEqual(in: dic, forKey: "type", value: "buttons")
@@ -128,11 +124,5 @@ class TemplateButtonsPayloadTests: XCTestCase {
         XCTAssertEqual(result[2].imageAspectRatio, .square)
         XCTAssertEqual(result[2].imageContentMode, .aspectFit)
         XCTAssertEqual(result[2].imageBackgroundColor, HexColor(.white))
-    }
-    
-    func testMessageWrapper() {
-        let action = MessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
-        let message = Message.templateButtonsMessage(altText: "alt", text: "Buntton", actions: [action])
-        XCTAssertNotNil(message.asTemplateMessage?.payload.asButtonsPayload)
     }
 }

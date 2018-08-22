@@ -66,7 +66,7 @@ class FlexComponentMessageTests: XCTestCase {
     
     func testAlignDeccode() {
         
-        typealias Property = FlexMessageComponent.Align
+        typealias Property = FlexMessageComponent.Alignment
         
         let margins = ["\"start\"", "\"end\"", "\"center\"", "\"none\""]
         let string = "[\(margins.joined(separator: ","))]"

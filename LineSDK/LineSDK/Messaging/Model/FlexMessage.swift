@@ -19,14 +19,35 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
-
+/// Represents a flexible message which consists of an alternative text and a flex container.
+/// Flex messages are messages with a customizable layout. You can customize the layout freely by combining
+/// multiple elements.
+///
+/// To create a `FlexMessage`, firstly you need to create a certain container, and then pass it with an `altText`
+/// to initializer.
+///
+/// For more information, see https://developers.line.me/en/docs/messaging-api/message-types/#flex-messages .
 public struct FlexMessage: Codable, MessageTypeCompatible {
     let type = MessageType.flex
-    public let altText: String
-    public let contents: FlexMessageContainer
+    
+    /// An alternate text to show in LINE push notification or chat preview.
+    public var altText: String
+    
+    /// The content of this flex message.
+    public var contents: FlexMessageContainer
+    
+    /// Creates a flex message with given information.
+    ///
+    /// - Parameters:
+    ///   - altText: An alternate text to show in LINE push notification or chat preview.
+    ///   - container: The content of this flex message.
+    public init(altText: String, container: FlexMessageConvertible) {
+        self.altText = altText
+        self.contents = container.container
+    }
 }
 
 extension FlexMessage {
+    /// Returns a converted `Message` which wraps this `FlexMessage`.
     public var message: Message { return .flex(self) }
 }

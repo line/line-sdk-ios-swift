@@ -19,17 +19,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a message containing an audio URL.
 public struct AudioMessage: Codable, MessageTypeCompatible {
     
     let type = MessageType.audio
     
-    public let originalContentURL: URL
+    /// Audio URL. It should start with "https".
+    public var originalContentURL: URL
+    
+    /// Play time in seconds. Highly recommended to specify.
+    /// LINE clients show the play time on the audio mesage. If not specified, "00:00" is shown.
     public var duration: TimeInterval? {
-        return durationInMilliseconds.map { TimeInterval($0) / 1000 }
+        get {
+            return durationInMilliseconds.map { TimeInterval($0) / 1000 }
+        }
+        set {
+            durationInMilliseconds = newValue.map { Int($0 * 1000) }
+        }
     }
     
-    private let durationInMilliseconds: Int?
+    var durationInMilliseconds: Int?
     
+    /// Creates an audio message with given information.
+    ///
+    /// - Parameters:
+    ///   - originalContentURL: Audio URL. It should start with "https".
+    ///   - duration: Play time in seconds. Highly recommended to specify.
+    ///               LINE clients show the play time on the audio mesage. If not specified, "00:00" is shown.
+    /// - Throws: An error if something wrong during creating the message. It's usually due to you provided invalid
+    ///           parameter.
+    ///
     public init(originalContentURL: URL, duration: TimeInterval?) throws {
         try assertHTTPSScheme(url: originalContentURL, parameterName: "originalContentURL")
         self.originalContentURL = originalContentURL
@@ -44,11 +63,6 @@ public struct AudioMessage: Codable, MessageTypeCompatible {
 }
 
 extension AudioMessage: MessageConvertible {
+    /// Returns a converted `Message` which wraps this `AudioMessage`.
     public var message: Message { return .audio(self) }
-}
-
-extension Message {
-    public static func audioMessage(originalContentURL: URL, duration: TimeInterval?) throws -> Message {
-        return try AudioMessage(originalContentURL: originalContentURL, duration: duration).message
-    }
 }

@@ -19,20 +19,55 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible {
+/// Represents an image component in a flex message.
+public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible, MessageActionContainer {
     let type: FlexMessageComponentType = .image
     
+    /// Image URL. It should start with "https".
     public var url: URL
+    
+    /// The ratio of the width or height of this box within the parent box. The default value for the horizontal parent
+    /// box is 1, and the default value for the vertical parent box is 0.
     public var flex: FlexMessageComponent.Ratio?
+    
+    /// Minimum space between this component and the previous component in the parent box.
+    /// If not specified, the `spacing` of parent box will be used.
+    /// If this component is the first component in the parent box, this margin property will be ignored.
     public var margin: FlexMessageComponent.Margin?
-    public var align: FlexMessageComponent.Align?
+    
+    /// Horizontal alignment style. If not specified, `.start` will be used.
+    public var alignment: FlexMessageComponent.Alignment?
+    
+    /// Vertical alignment style. If not specified, `.top` will be used.
+    /// If the `layout` property of the parent box is `.baseline`, the `gravity` property will be ignored.
     public var gravity: FlexMessageComponent.Gravity?
+    
+    /// Maximum size of the image width. If not specified, `.md` will be used.
     public var size: FlexMessageComponent.Size?
+    
+    /// Aspect ratio for the image. Width versus height. If not specified, `.ratio_1x1` will be used.
     public var aspectRatio: FlexMessageComponent.AspectRatio?
+    
+    /// Aspect scaling mode for the image. If not specified, `.fit` will be used.
     public var aspectMode: FlexMessageComponent.AspectMode?
+    
+    /// Background color of the image.
     public var backgroundColor: HexColor?
+    
+    /// An action to perform when the box tapped.
+    /// Use `setAction` method if you want to set a `MessageActionConvertible` as the action of current component.
     public var action: MessageAction?
     
+    enum CodingKeys: String, CodingKey {
+        case type, url, flex, margin, gravity, size, aspectRatio, aspectMode, backgroundColor, action
+        case alignment = "align"
+    }
+    
+    /// Creates an image component with given information.
+    ///
+    /// - Parameter url: Image URL. It should start with "https".
+    /// - Throws: An error if something wrong during creating the message. It's usually due to you provided invalid
+    ///           parameter.
     public init(url: URL) throws {
         try assertHTTPSScheme(url: url, parameterName: "url")
         self.url = url
@@ -40,5 +75,6 @@ public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible {
 }
 
 extension FlexImageComponent: FlexMessageComponentConvertible {
+    /// Returns a converted `FlexMessageComponent` which wraps this `FlexImageComponent`.
     public var component: FlexMessageComponent { return .image(self) }
 }

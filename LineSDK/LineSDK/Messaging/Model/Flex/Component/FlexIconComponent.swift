@@ -19,14 +19,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents an icon component. It is used to embed into a baseline layout and its flex is fixed to 0.
 public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
     let type: FlexMessageComponentType = .icon
     
+    /// Icon URL. It should start with "https".
     public var url: URL
+    
+    /// Minimum space between this component and the previous component in the parent box.
+    /// If not specified, the `spacing` of parent box will be used.
+    /// If this component is the first component in the parent box, this margin property will be ignored.
     public var margin: FlexMessageComponent.Margin?
+    
+    /// Font size used for the text. You cannot specify a `.full` size. If not specified, `.md` will be used.
     public var size: FlexMessageComponent.Size?
+    
+    /// Aspect ratio for the image. Width versus height.
+    /// You can choose from `.ratio_1x1`, `.ratio_2x1` and `ratio_3x1`. If not specified, `.ratio_1x1` will be used.
     public var aspectRatio: FlexMessageComponent.AspectRatio?
     
+    /// Creates an icon component with given information.
+    ///
+    /// - Parameter url: Icon URL. It should start with "https".
+    /// - Throws: An error if something wrong during creating the message. It's usually due to you provided invalid
+    ///           parameter.
     public init(url: URL) throws {
         try assertHTTPSScheme(url: url, parameterName: "url")
         self.url = url
@@ -34,5 +50,6 @@ public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
 }
 
 extension FlexIconComponent: FlexMessageComponentConvertible {
+    /// Returns a converted `FlexMessageComponent` which wraps this `FlexIconComponent`.
     public var component: FlexMessageComponent { return .icon(self) }
 }

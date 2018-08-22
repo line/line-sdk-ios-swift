@@ -92,9 +92,15 @@ class AudioMessageTests: XCTestCase {
         }
     }
     
-    func testMessageWrapper() {
-        let contentURL = URL(string: "https://sample.com/original.png")!
-        let message = try? Message.audioMessage(originalContentURL: contentURL, duration: 100)
-        XCTAssertNotNil(message?.asAudioMessage)
+    
+    func testDurationChange() {
+        let contentURL = URL(string: "https://example.com/example.mp3")!
+        var audioMessage = try! AudioMessage(originalContentURL: contentURL, duration: 3.0)
+        XCTAssertEqual(audioMessage.durationInMilliseconds, 3000)
+        XCTAssertEqual(audioMessage.duration, 3.0)
+        
+        audioMessage.duration = 1.5
+        XCTAssertEqual(audioMessage.duration, 1.5)
+        XCTAssertEqual(audioMessage.durationInMilliseconds, 1500)
     }
 }

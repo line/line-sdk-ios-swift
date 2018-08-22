@@ -19,13 +19,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a message containing an video URL and a preview image URL.
 public struct VideoMessage: Codable, MessageTypeCompatible {
     
     let type = MessageType.video
     
-    public let originalContentURL: URL
-    public let previewImageURL: URL
+    /// Video URL. It should start with "https". A very wide or tall video may be cropped when played in some
+    /// environments.
+    public var originalContentURL: URL
     
+    /// Preview image URL. It should start with "https".
+    public var previewImageURL: URL
+    
+    /// Creates a video message with given information.
+    ///
+    /// - Parameters:
+    ///   - originalContentURL: Video URL. It should start with "https". A very wide or tall video may be cropped when
+    ///                         played in some environments.
+    ///   - previewImageURL: Preview image URL. It should start with "https".
+    /// - Throws: An error if something wrong during creating the message. It's usually due to you provided invalid
+    ///           parameter.
+    ///
     public init(originalContentURL: URL, previewImageURL: URL) throws {
         try assertHTTPSScheme(url: originalContentURL, parameterName: "originalContentURL")
         try assertHTTPSScheme(url: previewImageURL, parameterName: "previewImageURL")
@@ -42,16 +56,6 @@ public struct VideoMessage: Codable, MessageTypeCompatible {
 }
 
 extension VideoMessage: MessageConvertible {
+    /// Returns a converted `Message` which wraps this `VideoMessage`.
     public var message: Message { return .video(self) }
-}
-
-extension Message {
-    public static func videoMessage(
-        originalContentURL: URL,
-        previewImageURL: URL) throws -> Message
-    {
-        return try VideoMessage(
-            originalContentURL: originalContentURL,
-            previewImageURL: previewImageURL).message
-    }
 }

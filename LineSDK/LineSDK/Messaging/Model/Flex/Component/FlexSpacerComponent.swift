@@ -19,16 +19,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents some spacing in a box component.
+/// This is an invisible component that places a fixed-size space at the beginning or end of the box.
 public struct FlexSpacerComponent: Codable, FlexMessageComponentTypeCompatible {
     let type: FlexMessageComponentType = .spacer
     
+    /// Size of the space.
+    /// You can specify one from: `[.xs, .sm, .md, .lg, .xl, .xxl]`.
     public var size: FlexMessageComponent.Size?
     
+    /// Creates a spacer component with given information.
+    ///
+    /// - Parameter size: Size of the space.
+    ///                   You can specify one from: `[.xs, .sm, .md, .lg, .xl, .xxl]`.
     public init(size: FlexMessageComponent.Size?) {
         self.size = size
     }
 }
 
 extension FlexSpacerComponent: FlexMessageComponentConvertible {
+/// Returns a converted `FlexMessageComponent` which wraps this `FlexSpacerComponent`.
     public var component: FlexMessageComponent { return .spacer(self) }
 }

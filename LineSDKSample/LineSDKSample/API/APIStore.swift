@@ -132,7 +132,7 @@ extension APIItem {
             selectUserFromFriendList(in: controller) { result in
                 switch result {
                 case .success(let chatID):
-                    let message = Message.textMessage(text: "Hello")
+                    let message = TextMessage(text: "Hello")
                     let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [message])
                     Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
                 case .failure(let error):
@@ -161,7 +161,7 @@ extension APIItem {
                         return
                     }
                     let userIDs = value.friends.prefix(5).map { $0.userId }
-                    let message = Message.textMessage(text: "Hello")
+                    let message = TextMessage(text: "Hello")
                     let sendMessage = PostMultisendMessagesRequest(userIDs: userIDs, messages: [message])
                     Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
                 case .failure(let error):

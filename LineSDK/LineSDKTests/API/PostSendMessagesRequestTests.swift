@@ -28,7 +28,7 @@ extension PostSendMessagesRequest: ResponseDataStub {
 
 class PostSendMessagesRequestTests: LineSDKAPITests {
     
-    let message = Message.textMessage(text: "hello")
+    let message = TextMessage(text: "hello")
     
     func testSuccessOK() {
         PostSendMessagesRequest.success =

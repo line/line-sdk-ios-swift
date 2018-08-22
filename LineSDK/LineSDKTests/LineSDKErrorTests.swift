@@ -50,4 +50,23 @@ class LineSDKErrorTests: XCTestCase {
         XCTAssertTrue(userCancelled.isUserCancelled)
         XCTAssertFalse(otherError.isUserCancelled)
     }
+    
+    func testIsResponseError() {
+        let err = APIError(InternalAPIError(message: "321"))
+        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 123, error: err, raw: "raw"))
+        XCTAssertTrue(error.isResponseError(statusCode: 123))
+        XCTAssertFalse(error.isResponseError(statusCode: 321))
+    }
+    
+    func testIsBadRequest() {
+        let err = APIError(InternalAPIError(message: "Bad request"))
+        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 400, error: err, raw: "raw"))
+        XCTAssertTrue(error.isBadRequest)
+    }
+    
+    func testIsPermission() {
+        let err = APIError(InternalAPIError(message: "Not enough permission"))
+        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 403, error: err, raw: "raw"))
+        XCTAssertTrue(error.isPermissionError)
+    }
 }

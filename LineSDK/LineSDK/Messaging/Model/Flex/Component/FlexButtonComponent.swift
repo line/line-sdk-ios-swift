@@ -19,28 +19,60 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a button component in a flex message.
+/// A button component contains a interactive button. When the user taps the button, a bound action is performed.
 public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
     
+    /// Represents possible styles of a button component.
+    ///
+    /// - link: HTML link style
+    /// - primary: Style for dark color buttons.
+    /// - secondary: Style for light color buttons
     public enum Style: String, DefaultEnumCodable {
         case link, primary, secondary
+        /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
+        /// `.link` will be used.
         public static let defaultCase: FlexButtonComponent.Style = .link
     }
     
     let type = FlexMessageComponentType.button
     
+    /// An action to perform when the button tapped.
+    /// Use `setAction` method if you want to set a `MessageActionConvertible` as the action of current component.
     public var action: MessageAction
+    
+    /// The ratio of the width or height of this box within the parent box. The default value for the horizontal parent
+    /// box is 1, and the default value for the vertical parent box is 0.
     public var flex: FlexMessageComponent.Ratio?
+    
+    /// Minimum space between this component and the previous component in the parent box.
+    /// If not specified, the `spacing` of parent box will be used.
+    /// If this component is the first component in the parent box, this margin property will be ignored.
     public var margin: FlexMessageComponent.Margin?
+    
+    /// Height of the button.
     public var height: FlexMessageComponent.Height?
+    
+    /// Styles of the button.
     public var style: Style?
+    
+    /// Character color when the `style` property is `.link`. Background color when the `style` property is `.primary`
+    /// or `.secondary`.
     public var color: HexColor?
+    
+    /// Vertical alignment style. If not specified, `.top` will be used.
+    /// If the `layout` property of the parent box is `.baseline`, the `gravity` property will be ignored.
     public var gravity: FlexMessageComponent.Gravity?
     
-    public init(action: MessageAction) {
-        self.action = action
+    /// Creates a button component with given information.
+    ///
+    /// - Parameter action: An action to perform when the button tapped.
+    public init(action: MessageActionConvertible) {
+        self.action = action.action
     }
 }
 
 extension FlexButtonComponent: FlexMessageComponentConvertible {
+    /// Returns a converted `FlexMessageComponent` which wraps this `FlexButtonComponent`.
     public var component: FlexMessageComponent { return .button(self) }
 }

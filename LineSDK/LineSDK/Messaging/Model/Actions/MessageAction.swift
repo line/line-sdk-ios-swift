@@ -25,7 +25,7 @@ enum MessageActionType: String, Codable {
     case URI = "uri"
 }
 
-public enum MessageAction: Codable {
+public enum MessageAction: Codable, MessageActionConvertible {
     case URI(MessageURIAction)
     case unknown
     
@@ -58,9 +58,11 @@ public enum MessageAction: Codable {
         if case .URI(let action) = self  { return action }
         return nil
     }
+    
+    public var action: MessageAction { return self }
 }
 
-public struct MessageURIAction: Codable, TemplateMessageActionTypeCompatible {
+public struct MessageURIAction: Codable, TemplateMessageActionTypeCompatible, MessageActionConvertible {
     let type = MessageActionType.URI
     public let label: String
     public let uri: URL
@@ -69,11 +71,6 @@ public struct MessageURIAction: Codable, TemplateMessageActionTypeCompatible {
         self.label = label
         self.uri = uri
     }
-}
-
-extension MessageAction {
-    public static func URIAction(label: String, uri: URL) -> MessageAction {
-        let action = MessageURIAction(label: label, uri: uri)
-        return .URI(action)
-    }
+    
+    public var action: MessageAction { return .URI(self) }
 }

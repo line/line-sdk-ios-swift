@@ -23,6 +23,7 @@
 		4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1E521104F3B00A45510 /* ViewControllerCompatibleTest.swift */; };
 		4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5B210EF12C00FD19BC /* APIError.swift */; };
 		4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5D210F077700FD19BC /* RequestStubs.swift */; };
+		4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */; };
 		4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256A2101810D00A39D4F /* LoginProcess.swift */; };
 		4B45256D2101829F00A39D4F /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256C2101829F00A39D4F /* Helpers.swift */; };
 		4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256E210188C300A39D4F /* LoginPermission.swift */; };
@@ -174,6 +175,7 @@
 		4B39D1E521104F3B00A45510 /* ViewControllerCompatibleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerCompatibleTest.swift; sourceTree = "<group>"; };
 		4B414D5B210EF12C00FD19BC /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4B414D5D210F077700FD19BC /* RequestStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStubs.swift; sourceTree = "<group>"; };
+		4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageProperties.swift; sourceTree = "<group>"; };
 		4B45256A2101810D00A39D4F /* LoginProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcess.swift; sourceTree = "<group>"; };
 		4B45256C2101829F00A39D4F /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		4B45256E210188C300A39D4F /* LoginPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPermission.swift; sourceTree = "<group>"; };
@@ -519,6 +521,7 @@
 			isa = PBXGroup;
 			children = (
 				4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */,
+				4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */,
 				4B9A304821213CE100174C6F /* TemplateButtonsPayload.swift */,
 				4B9A305321215A1A00174C6F /* TemplateConfirmPayload.swift */,
 				4B9A30572121613500174C6F /* TemplateCarouselPayload.swift */,
@@ -934,6 +937,7 @@
 				4BFD605C212A8775009E9838 /* FlexTextComponent.swift in Sources */,
 				4B9A305421215A1A00174C6F /* TemplateConfirmPayload.swift in Sources */,
 				4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */,
+				4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
 				4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */,
 				4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */,

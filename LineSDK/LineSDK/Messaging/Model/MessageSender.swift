@@ -21,11 +21,27 @@
 
 import Foundation
 
+/// Represents a message sender of a certain type of `Message`.
+/// - Note: Some message types have footer area which shows the agent information who sends the message on behalf of
+///         the sender user. The information includes an icon image, a text label and a link URL to move page when
+///         tapped.
 public struct MessageSender: Codable {
-    public let label: String
-    public let iconURL: URL
-    public let linkURL: URL?
     
+    /// A text label to present some text.
+    public var label: String
+    
+    /// The icon of this sender. It should start with "https".
+    public var iconURL: URL
+    
+    /// The link URL to move page when tapped. It should start with "https" or should be a LINE scheme URL.
+    public var linkURL: URL?
+    
+    /// Creates a message sender from given information.
+    ///
+    /// - Parameters:
+    ///   - label: A text label to present some text.
+    ///   - iconURL: The icon of this sender. It should start with "https".
+    ///   - linkURL: The link URL to move page when tapped. It should start with "https" or should be a LINE scheme URL.
     public init(label: String, iconURL: URL, linkURL: URL?) {
         self.label = label
         self.iconURL = iconURL

@@ -19,13 +19,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a message containing only text.
 public struct TextMessage: Codable, MessageTypeCompatible {
     
     let type = MessageType.text
     
-    public let text: String
-    public let sender: MessageSender?
+    /// Text content of message. You can include either Unicode emoji or LINE original
+    /// emoji (Unicode codepoint table for LINE original emoji) as well.
+    public var text: String
     
+    /// Message agent who sends this message on behalf of the sender.
+    public var sender: MessageSender?
+    
+    /// Creates a text message with given information.
+    ///
+    /// - Parameters:
+    ///   - text: Text content of message. You can include either Unicode emoji or LINE original
+    ///           emoji (Unicode codepoint table for LINE original emoji) as well.
+    ///   - sender: Message agent who sends this message on behalf of the sender.
     public init(text: String, sender: MessageSender? = nil) {
         self.text = text
         self.sender = sender
@@ -39,11 +50,6 @@ public struct TextMessage: Codable, MessageTypeCompatible {
 }
 
 extension TextMessage: MessageConvertible {
+    /// Returns a converted `Message` which wraps this `TextMessage`.
     public var message: Message { return .text(self) }
-}
-
-extension Message {
-    public static func textMessage(text: String, sender: MessageSender? = nil) -> Message {
-        return TextMessage(text: text, sender: sender).message
-    }
 }

@@ -19,12 +19,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
-
+/// Represents a template message which consists of an alternative text and a template payload.
+/// Template messages are messages with predefined layouts which you can customize.
+///
+/// To create a `TemplateMessage`, firstly you need to create a certain payload, and then pass it with an `altText`
+/// to initializer.
+///
+/// For more information, see https://developers.line.me/en/docs/messaging-api/message-types/#template-messages .
 public struct TemplateMessage: Codable, MessageTypeCompatible {
     let type = MessageType.template
-    public let altText: String
-    public let payload: TemplateMessagePayload
+    
+    /// An alternate text to show in LINE push notification or chat preview.
+    public var altText: String
+    
+    /// The content of this template message.
+    public var payload: TemplateMessagePayload
+    
+    /// Creates a template message with given information.
+    ///
+    /// - Parameters:
+    ///   - altText: An alternate text to show in LINE push notification or chat preview.
+    ///   - payload: The content of this template message.
+    public init(altText: String, payload: TemplateMessageConvertible) {
+        self.altText = altText
+        self.payload = payload.payload
+    }
     
     enum CodingKeys: String, CodingKey {
         case type
@@ -34,5 +53,6 @@ public struct TemplateMessage: Codable, MessageTypeCompatible {
 }
 
 extension TemplateMessage: MessageConvertible {
+    /// Returns a converted `Message` which wraps this `TemplateMessage`.
     public var message: Message { return .template(self) }
 }

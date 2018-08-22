@@ -44,7 +44,7 @@ extension FlexButtonComponent: MessageSample {
 class FlexButtonComponentTests: XCTestCase {
     
     func testButtonComponentEncode() {
-        let action = MessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
+        let action = MessageURIAction(label: "action", uri: URL(string: "https://sample.com")!)
         let component = FlexButtonComponent(action: action)
         let dic = FlexMessageComponent.button(component).json
         
@@ -63,7 +63,7 @@ class FlexButtonComponentTests: XCTestCase {
     }
     
     func testButtonComponentFullEncode() {
-        let action = MessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
+        let action = MessageURIAction(label: "action", uri: URL(string: "https://sample.com")!)
         var component = FlexButtonComponent(action: action)
         component.flex = 1
         component.margin = .lg

@@ -26,6 +26,11 @@ enum FlexMessageContainerType: String, Codable {
     case carousel
 }
 
+/// Represents a flex message container which acts as the content of a `FlexMessage`.
+///
+/// - bubble: Represents the type of bubble container. A `FlexBubbleContainer` value is associated.
+/// - carousel: Represents the type of carousel container. A `FlexCarouselContainer` value is associated.
+/// - unknown: A container type is not defined in LineSDK yet.
 public enum FlexMessageContainer: Codable {
     case bubble(FlexBubbleContainer)
     case carousel(FlexCarouselContainer)
@@ -36,6 +41,10 @@ public enum FlexMessageContainer: Codable {
         case type
     }
     
+    /// Creates a container from decoder.
+    ///
+    /// - Parameter decoder: The decoder.
+    /// - Throws: An error if decoder fails to decode data to destination container type.
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try? container.decode(FlexMessageContainerType.self, forKey: .type)
@@ -51,6 +60,10 @@ public enum FlexMessageContainer: Codable {
         }
     }
     
+    /// Encodes this `FlexMessageContainer` to an encoder.
+    ///
+    /// - Parameter encoder: The encoder.
+    /// - Throws: An error if it fails to encode data to destination encoder.
     public func encode(to encoder: Encoder) throws {
         switch self {
         case .bubble(let container):
@@ -62,11 +75,15 @@ public enum FlexMessageContainer: Codable {
         }
     }
     
+    /// Tries to convert current `FlexMessageContainer` to a concrete `FlexBubbleContainer`.
+    /// `nil` will be returned if the underlying container is not a `FlexBubbleContainer`.
     public var asBubbleContainer: FlexBubbleContainer? {
         if case .bubble(let container) = self { return container }
         return nil
     }
     
+    /// Tries to convert current `FlexMessageContainer` to a concrete `FlexCarouselContainer`.
+    /// `nil` will be returned if the underlying container is not a `FlexCarouselContainer`.
     public var asCarouselContainer: FlexCarouselContainer? {
         if case .carousel(let container) = self { return container }
         return nil
@@ -74,5 +91,6 @@ public enum FlexMessageContainer: Codable {
 }
 
 extension FlexMessageContainer: FlexMessageConvertible {
+    /// Returns `self` for `FlexMessageConvertible` conformation.
     public var container: FlexMessageContainer { return self }
 }

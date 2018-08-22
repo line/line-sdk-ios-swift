@@ -19,11 +19,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a style for a block in a flex message.
 public struct FlexBlockStyle: Codable {
+    
+    /// Background color of the block. White color will be used if not specified.
     public var backgroundColor: HexColor?
+    
+    /// Whether a separator should be placed above the block.
+    /// The value `true` will be ignored for the first block in a container because you cannot place a separator
+    /// above the first block. `false` if not specified.
     public var separator: Bool?
+    
+    /// Color of the separator. White color will be used if not specified.
     public var separatorColor: HexColor?
     
+    /// Creates a block style with given information.
+    ///
+    /// - Parameters:
+    ///   - backgroundColor: Background color of the block. White color will be used if not specified.
+    ///   - separator: Whether a separator should be placed above the block.
+    ///   - separatorColor: olor of the separator. White color will be used if not specified.
     public init(backgroundColor: HexColor? = nil, separator: Bool? = nil, separatorColor: HexColor? = nil) {
         self.backgroundColor = backgroundColor
         self.separator = separator

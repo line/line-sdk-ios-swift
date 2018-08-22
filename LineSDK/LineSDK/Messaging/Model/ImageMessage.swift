@@ -19,16 +19,40 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a message containing an image URL and a preview image URL.
 public struct ImageMessage: Codable, MessageTypeCompatible {
     
     let type = MessageType.image
     
-    public let originalContentURL: URL
-    public let previewImageURL: URL
-    public let animated: Bool?
-    public let fileExtension: String?
-    public let sender: MessageSender?
+    /// Image URL. It should start with "https".
+    public var originalContentURL: URL
+
+    /// Preview image URL. It should start with "https".
+    public var previewImageURL: URL
     
+    /// A flag to indicate whether the image in provided `originalContentURL` is animated or not.
+    /// You should set it to `true` if the image is an animated one.
+    public var animated: Bool?
+    
+    /// The image file extension. Required if `animated` is set to `true`.
+    /// Currently, only "gif" extension is supported and will be rendered as animated image in LINE client.
+    public var fileExtension: String?
+    
+    /// Message agent who sends this message on behalf of the sender.
+    public var sender: MessageSender?
+    
+    /// Creates an image message with given information.
+    ///
+    /// - Parameters:
+    ///   - originalContentURL: Image URL. It should start with "https".
+    ///   - previewImageURL: Preview image URL. It should start with "https".
+    ///   - animated: A flag to indicate whether the image in provided `originalContentURL` is animated or not.
+    ///               You should set it to `true` if the image is an animated one.
+    ///   - fileExtension: The image file extension. Required if `animated` is set to `true`.
+    ///   - sender: Message agent who sends this message on behalf of the sender.
+    /// - Throws: An error if something wrong during creating the message. It's usually due to you provided invalid
+    ///           parameter.
+    ///
     public init(
         originalContentURL: URL,
         previewImageURL: URL,
@@ -57,22 +81,6 @@ public struct ImageMessage: Codable, MessageTypeCompatible {
 }
 
 extension ImageMessage: MessageConvertible {
+    /// Returns a converted `Message` which wraps this `ImageMessage`.
     public var message: Message { return .image(self) }
-}
-
-extension Message {
-    public static func imageMessage(
-        originalContentURL: URL,
-        previewImageURL: URL,
-        animated: Bool? = nil,
-        fileExtension: String? = nil,
-        sender: MessageSender? = nil) throws -> Message
-    {
-        return try ImageMessage(
-            originalContentURL: originalContentURL,
-            previewImageURL: previewImageURL,
-            animated: animated,
-            fileExtension: fileExtension,
-            sender: sender).message
-    }
 }
