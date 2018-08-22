@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// Represents the request of returning a list of groups that the user belongs to.
+/// This API returns a maximum of 200 groups per request.
 public struct GetGroupsRequest: Request {
 
     public init(pageToken: String? = nil) {
@@ -43,8 +45,11 @@ public struct GetGroupsRequest: Request {
 
     public struct Response: Decodable {
 
+        /// An array of `Group` that the user belongs to.
         public let groups: [Group]
 
+        /// If there are more objects in the subsequent pages, use this value as the index in the next page request.
+        /// This field is omitted when there is no more objects in subsequent pages.
         public let pageToken: String?
     }
 }

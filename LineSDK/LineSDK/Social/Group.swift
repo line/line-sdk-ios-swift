@@ -21,11 +21,15 @@
 
 import Foundation
 
+/// Represents an `Group` object which LineSDK used in `group list` or `approvers in given group`.
 public struct Group: Decodable {
 
+    /// Identifier of the group
     public let groupId: String
 
+    /// The group's display name
     public let groupName: String
 
+    /// The URL of the group picture
     public let pictureUrl: URL?
 }
