@@ -53,10 +53,15 @@ public struct GetApproversInGroupRequest: Request {
     public struct Response: Decodable {
 
         /// An array of `User` who've already approved the channel.
-        public let friends: [User]
+        public let users: [User]
 
         /// If there are more objects in the subsequent pages, use this value as the index in the next page request.
         /// This field is omitted when there is no more objects in subsequent pages.
         public let pageToken: String?
+
+        enum CodingKeys: String, CodingKey {
+            case users = "friends"
+            case pageToken
+        }
     }
 }
