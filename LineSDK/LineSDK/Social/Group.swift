@@ -25,11 +25,17 @@ import Foundation
 public struct Group: Decodable {
 
     /// Identifier of the group
-    public let groupId: String
+    public let groupID: String
 
     /// The group's display name
     public let groupName: String
 
     /// The URL of the group picture
-    public let pictureUrl: URL?
+    public let pictureURL: URL?
+
+    enum CodingKeys: String, CodingKey {
+        case groupID = "groupId"
+        case groupName
+        case pictureURL = "pictureUrl"
+    }
 }

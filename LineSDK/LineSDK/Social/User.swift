@@ -32,4 +32,10 @@ public struct User: Decodable {
 
     /// Profile image URL. Not included in the response if the user doesn't have a profile image.
     public let pictureUrl: URL?
+
+    enum CodingKeys: String, CodingKey {
+        case userId
+        case displayName
+        case pictureUrl
+    }
 }
