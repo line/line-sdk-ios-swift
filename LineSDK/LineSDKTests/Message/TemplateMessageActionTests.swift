@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-extension TemplateMessageURIAction: MessageSample {
+extension MessageURIAction: MessageSample {
     static var samples: [String] {
         return [
         """
@@ -39,7 +39,7 @@ extension TemplateMessageURIAction: MessageSample {
 class TemplateMessageActionTests: XCTestCase {
 
     func testURIActionEncoding() {
-        let action = TemplateMessageURIAction(label: "123", uri: URL(string: "line://hello")!)
+        let action = MessageURIAction(label: "123", uri: URL(string: "line://hello")!)
         let dic = action.json
         
         assertEqual(in: dic, forKey: "type", value: "uri")
@@ -49,8 +49,8 @@ class TemplateMessageActionTests: XCTestCase {
     
     func testURIActionDecoding() {
         let decoder = JSONDecoder()
-        let result = TemplateMessageURIAction.samplesData
-            .map { try! decoder.decode(TemplateMessageAction.self, from: $0) }
+        let result = MessageURIAction.samplesData
+            .map { try! decoder.decode(MessageAction.self, from: $0) }
             .map { $0.asURIAction! }
         
         XCTAssertEqual(result[0].type, .URI)

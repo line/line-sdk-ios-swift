@@ -153,6 +153,25 @@ extension LineSDKError {
         }
         return false
     }
+    
+    /// Returns whether the `LineSDKError` represents a bad request error.
+    public var isBadRequest: Bool {
+        return isResponseError(statusCode: 400)
+    }
+    
+    /// Returns whether the `LineSDKError` represents a permission granting issue. Usually, it means you do not have
+    /// enough permission to invoke a LINE API.
+    public var isPermissionError: Bool {
+        return isResponseError(statusCode: 403)
+    }
+    
+    /// Returns whether the `LineSDKError` represents a response failing with specified HTTP status code.
+    public func isResponseError(statusCode: Int) -> Bool {
+        if case .responseFailed(.invalidHTTPStatusAPIError(code: statusCode, error: _, raw: _)) = self {
+            return true
+        }
+        return false
+    }
 }
 
 // MARK: - Error Description

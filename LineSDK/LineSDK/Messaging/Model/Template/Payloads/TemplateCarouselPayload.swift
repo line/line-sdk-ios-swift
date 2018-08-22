@@ -19,34 +19,57 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a template payload with multiple `Column`s which can be cycled like a carousel.
+/// The columns will be shown in order by scrolling horizontally.
 public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompatible {
     
+    /// A column of `TemplateCarouselPayload`. It contains a certain title, text, thumbnail image and some actions.
     public struct Column: Codable {
+        
+        /// Message text of the column.
         public var text: String
+        
+        /// Message title of the column.
         public var title: String?
         
-        public var actions: [TemplateMessageAction]
-        public var defaultAction: TemplateMessageAction?
+        /// Actions to perform when tapped.
+        public var actions: [MessageAction]
         
-        public let thumbnailImageURL: URL?
-        public var imageBackgroundColor: UIColor?
+        /// Action when image is tapped. Set for the entire image, title, and text area of the column.
+        /// To set the `defaultAction` with any `MessageActionConvertible` type, use `setDefaultAction` method.
+        public var defaultAction: MessageAction? = nil
         
-        public init(
-            text: String,
-            title: String? = nil,
-            actions: [TemplateMessageAction] = [],
-            defaultAction: TemplateMessageAction? = nil,
-            thumbnailImageURL: URL? = nil,
-            imageBackgroundColor: UIColor = .white)
-        {
+        /// An image to display in the chat bubble. It should start with "https".
+        public let thumbnailImageURL: URL? = nil
+        
+        /// Background color of image. If not specified, white color will be used.
+        public var imageBackgroundColor: HexColor? = nil
+        
+        /// Creates a column with given information.
+        ///
+        /// - Parameters:
+        ///   - title: Message title of the column.
+        ///   - text: Message text of the column.
+        ///   - actions: Actions to perform when tapped.
+        ///
+        public init(title: String? = nil, text: String, actions: [MessageActionConvertible] = []) {
             self.text = text
             self.title = title
-            
-            self.actions = actions
-            self.defaultAction = defaultAction
-            
-            self.thumbnailImageURL = thumbnailImageURL
-            self.imageBackgroundColor = imageBackgroundColor
+            self.actions = actions.map { $0.action }
+        }
+        
+        /// Appends an action to current `actions` list.
+        ///
+        /// - Parameter action: The action to append.
+        public mutating func addAction(_ value: MessageActionConvertible) {
+            actions.append(value.action)
+        }
+        
+        /// Set the default action of this payload.
+        ///
+        /// - Parameter value: The action to set.
+        public mutating func setDefaultAction(_ value: MessageActionConvertible?) {
+            defaultAction = value?.action
         }
         
         enum CodingKeys: String, CodingKey {
@@ -57,43 +80,32 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
             case thumbnailImageURL = "thumbnailImageUrl"
             case imageBackgroundColor
         }
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            text = try container.decode(String.self, forKey: .text)
-            title = try container.decodeIfPresent(String.self, forKey: .title)
-            actions = try container.decode([TemplateMessageAction].self, forKey: .actions)
-            defaultAction = try container.decodeIfPresent(TemplateMessageAction.self, forKey: .defaultAction)
-            thumbnailImageURL = try container.decodeIfPresent(URL.self, forKey: .thumbnailImageURL)
-            if let backgroundColorString = try container.decodeIfPresent(String.self, forKey: .imageBackgroundColor) {
-                imageBackgroundColor = UIColor(rgb: backgroundColorString)
-            } else {
-                imageBackgroundColor = .white
-            }
-        }
     }
     
     let type = TemplateMessagePayloadType.carousel
-    public var columns: [Column]
-    public var imageAspectRatio: ImageAspectRatio
-    public var imageContentMode: ImageContentMode
     
-    public init(
-        columns: [Column],
-        imageAspectRatio: ImageAspectRatio = .rectangle,
-        imageContentMode: ImageContentMode = .aspectFill)
-    {
+    /// Array of columns. You could set at most 10 columns in the payload. Line SDK does not check the elements count
+    /// in a payload. However, it would cause an API response error if more columns contained in the payload.
+    public var columns: [Column]
+    
+    /// Aspect ratio of the image. Specify to `.rectangle` or `.square`. If not specified, `.rectangle` will be used.
+    public var imageAspectRatio: TemplateMessagePayload.ImageAspectRatio? = nil
+    
+    /// Size of the image. Specify to `.aspectFill` or `.aspectFit`. If not specified, `.aspectFill` will be used.
+    public var imageContentMode: TemplateMessagePayload.ImageContentMode? = nil
+    
+    /// Creates a carousel payload with given information.
+    ///
+    /// - Parameter columns: Columns to display in the template message.
+    public init(columns: [Column]) {
         self.columns = columns
-        self.imageAspectRatio = imageAspectRatio
-        self.imageContentMode = imageContentMode
     }
     
+    /// Appends a column to the `columns`.
+    ///
+    /// - Parameter column: The column to append.
     public mutating func add(column: Column) {
         columns.append(column)
-    }
-    
-    public mutating func replaceColumn(at index: Int, with column: Column) {
-        columns[index] = column
     }
     
     enum CodingKeys: String, CodingKey {
@@ -102,29 +114,9 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
         case imageAspectRatio
         case imageContentMode = "imageSize"
     }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        columns = try container.decode([Column].self, forKey: .columns)
-        imageAspectRatio = try container.decodeIfPresent(ImageAspectRatio.self, forKey: .imageAspectRatio)
-            ?? .rectangle
-        imageContentMode = try container.decodeIfPresent(ImageContentMode.self, forKey: .imageContentMode)
-            ?? .aspectFill
-    }
 }
 
-extension Message {
-    public static func templateCarouselMessage(
-        altText: String,
-        columns: [TemplateCarouselPayload.Column],
-        imageAspectRatio: ImageAspectRatio = .rectangle,
-        imageContentMode: ImageContentMode = .aspectFill) -> Message
-    {
-        let payload = TemplateCarouselPayload(
-            columns: columns,
-            imageAspectRatio: imageAspectRatio,
-            imageContentMode: imageContentMode)
-        let message = TemplateMessage(altText: altText, payload: .carousel(payload))
-        return .template(message)
-    }
+extension TemplateCarouselPayload: TemplateMessageConvertible {
+    /// Returns a converted `TemplateMessagePayload` which wraps this `TemplateCarouselPayload`.
+    public var payload: TemplateMessagePayload { return .carousel(self) }
 }

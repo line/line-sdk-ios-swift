@@ -52,8 +52,8 @@ class TemplateConfirmPayloadTests: XCTestCase {
     func testTemplateConfirmPayloadEncoding() {
         let message = TemplateConfirmPayload(
             text: "123",
-            confirmAction: .URI(.init(label: "OK", uri: URL(string: "https://sample.com")!)),
-            cancelAction: .URI(.init(label: "Cancel", uri: URL(string: "https://cancel.com")!)))
+            confirmAction: MessageURIAction(label: "OK", uri: URL(string: "https://sample.com")!),
+            cancelAction: MessageURIAction(label: "Cancel", uri: URL(string: "https://cancel.com")!))
         let dic = TemplateMessagePayload.confirm(message).json
         assertEqual(in: dic, forKey: "type", value: "confirm")
         assertEqual(in: dic, forKey: "text", value: "123")
@@ -80,14 +80,5 @@ class TemplateConfirmPayloadTests: XCTestCase {
         XCTAssertEqual(result[0].actions.count, 2)
         XCTAssertEqual(result[0].actions[0].asURIAction!.label, "Yes")
         XCTAssertEqual(result[0].actions[1].asURIAction!.label, "No")
-    }
-    
-    func testMessageWrapper() {
-        let message = Message.templateConfirmMessage(
-            altText: "alt",
-            text: "confirm",
-            confirmAction: .URIAction(label: "ok", uri: URL(string: "url://ok")!),
-            cancelAction: .URIAction(label: "cancel", uri: URL(string: "url://cancel")!))
-        XCTAssertNotNil(message.asTemplateMessage?.payload.asConfirmPayload)
     }
 }

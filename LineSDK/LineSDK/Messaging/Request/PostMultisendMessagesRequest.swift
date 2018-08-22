@@ -21,14 +21,25 @@
 
 import Foundation
 
+/// Represents the request of sending some messages to multiple users on behalf of the current authorized user.
+/// This request requires you have the `.messageWrite` permission, otherwise, you would get a 403 permission
+/// grant error.
 public struct PostMultisendMessagesRequest: Request {
     
+    /// An array of user IDs to where messages will be sent. Up to 10 elements.
     public let userIDs: [String]
+    
+    /// `Messages`s will be sent. Up to 5 elements.
     public let messages: [Message]
     
-    public init(userIDs: [String], messages: [Message]) {
+    /// Creates a request consisted of given `chatID` and `messages`.
+    ///
+    /// - Parameters:
+    ///   - userIDs: An array of users' ID to where messages will be sent.
+    ///   - messages: `Messages`s will be sent. Up to 5 elements.
+    public init(userIDs: [String], messages: [MessageConvertible]) {
         self.userIDs = userIDs
-        self.messages = messages
+        self.messages = messages.map { $0.message }
     }
     
     public let method: HTTPMethod = .post
@@ -42,13 +53,19 @@ public struct PostMultisendMessagesRequest: Request {
         ]
     }
     
+    /// Server response of `PostMultisendMessagesRequest`.
     public struct Response: Decodable {
         
+        /// Represents a result pair of message sending behavior
         public struct SendingResult: Decodable {
+            /// The destination user ID of this result.
             public let to: String
+            /// Represents the sending status.
             public let status: MessageSendingStatus
         }
         
+        /// Represents sending results of this request. Each `SendingResult` in this array represents a result for a
+        /// specified user in `userIDs` of request. If a server error
         public let results: [SendingResult]
     }
 }

@@ -54,15 +54,15 @@ extension TemplateImageCarouselPayload: MessageSample {
 
 class TemplateImageCarouselPayloadTests: XCTestCase {
     func testTemplateImageCarouselMessageEncoding() {
-        let uriAction = TemplateMessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
-        let action = TemplateMessageAction.URI(uriAction)
+        let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
+        let action = MessageAction.URI(uriAction)
         
-        var column = TemplateImageCarouselPayload.Column(imageURL: URL(string: "https://sample.com")!, action: action)
+        var column = try! TemplateImageCarouselPayload.Column(imageURL: URL(string: "https://sample.com")!, action: action)
         var message = TemplateImageCarouselPayload(columns: [column])
         
         column.imageURL = URL(string: "https://another-sample.com")!
         
-        let anotherAction = TemplateMessageURIAction(label: "OK", uri: URL(string: "scheme://action-2")!)
+        let anotherAction = MessageURIAction(label: "OK", uri: URL(string: "scheme://action-2")!)
         column.action = .URI(anotherAction)
         message.add(column: column)
         
@@ -95,17 +95,9 @@ class TemplateImageCarouselPayloadTests: XCTestCase {
         XCTAssertEqual(result[0].columns.count, 2)
         
         XCTAssertEqual(result[0].columns[0].imageURL, URL(string: "https://image-1.com/"))
-        XCTAssertEqual(result[0].columns[0].action.asURIAction?.label, "action 1")
+        XCTAssertEqual(result[0].columns[0].action?.asURIAction?.label, "action 1")
         
         XCTAssertEqual(result[0].columns[1].imageURL, URL(string: "https://image-2.com/"))
-        XCTAssertEqual(result[0].columns[1].action.asURIAction?.label, "action 2")
-    }
-    
-    func testMessageWrapper() {
-        let column = TemplateImageCarouselPayload.Column(
-            imageURL: URL(string: "https://sample.com")!,
-            action: .URIAction(label: "open", uri: URL(string: "open://")!))
-        let message = Message.templateImageCarouselMessage(altText: "alt", columns: [column])
-        XCTAssertNotNil(message.asTemplateMessage?.payload.asImageCarouselPayload)
+        XCTAssertEqual(result[0].columns[1].action?.asURIAction?.label, "action 2")
     }
 }

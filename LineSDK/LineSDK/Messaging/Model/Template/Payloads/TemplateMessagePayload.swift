@@ -26,28 +26,13 @@ enum TemplateMessagePayloadType: String, Codable {
     case imageCarousel = "image_carousel"
 }
 
-public enum ImageAspectRatio: String, Codable {
-    case rectangle
-    case square
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self = ImageAspectRatio(rawValue: rawValue) ?? .rectangle
-    }
-}
-
-public enum ImageContentMode: String, Codable {
-    case aspectFill = "cover"
-    case aspectFit = "contain"
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self = ImageContentMode(rawValue: rawValue) ?? .aspectFill
-    }
-}
-
+/// Represents a template payload which acts as the content of a `TemplateMessage`.
+///
+/// - buttons: Represents the type of buttons payload. A `TemplateButtonsPayload` value is associated.
+/// - confirm: Represents the type of confirm payload. A `TemplateConfirmPayload` value is associated.
+/// - carousel: Represents the type of carousel payload. A `TemplateCarouselPayload` value is associated.
+/// - imageCarousel: Represents the type of imageCarousel payload. A `TemplateImageCarouselPayload` value is associated.
+/// - unknown: A payload type is not defined in LineSDK yet.
 public enum TemplateMessagePayload: Codable {
     
     case buttons(TemplateButtonsPayload)
@@ -61,6 +46,10 @@ public enum TemplateMessagePayload: Codable {
         case type
     }
     
+    /// Creates a payload from decoder.
+    ///
+    /// - Parameter decoder: The decoder.
+    /// - Throws: An error if decoder fails to decode data to destination payload type.
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try? container.decode(TemplateMessagePayloadType.self, forKey: .type)
@@ -82,6 +71,10 @@ public enum TemplateMessagePayload: Codable {
         }
     }
     
+    /// Encodes this `TemplateMessagePayload` to an encoder.
+    ///
+    /// - Parameter encoder: The encoder.
+    /// - Throws: An error if it fails to encode data to destination encoder.
     public func encode(to encoder: Encoder) throws {
         switch self {
         case .buttons(let message):
@@ -92,29 +85,41 @@ public enum TemplateMessagePayload: Codable {
             try message.encode(to: encoder)
         case .imageCarousel(let message):
             try message.encode(to: encoder)
-        default:
+        case .unknown:
             Log.assertionFailure("Cannot encode unknown message type.")
         }
     }
     
+    /// Tries to convert current `TemplateMessagePayload` to a concrete `TemplateButtonsPayload`.
+    /// `nil` will be returned if the underlying payload is not a `TemplateButtonsPayload`.
     public var asButtonsPayload: TemplateButtonsPayload? {
         if case .buttons(let message) = self { return message }
         return nil
     }
     
+    /// Tries to convert current `TemplateMessagePayload` to a concrete `TemplateConfirmPayload`.
+    /// `nil` will be returned if the underlying payload is not a `TemplateConfirmPayload`.
     public var asConfirmPayload: TemplateConfirmPayload? {
         if case .confirm(let message) = self { return message }
         return nil
     }
     
+    /// Tries to convert current `TemplateMessagePayload` to a concrete `TemplateCarouselPayload`.
+    /// `nil` will be returned if the underlying payload is not a `TemplateCarouselPayload`.
     public var asCarouselPayload: TemplateCarouselPayload? {
         if case .carousel(let message) = self { return message }
         return nil
     }
     
+    /// Tries to convert current `TemplateMessagePayload` to a concrete `TemplateImageCarouselPayload`.
+    /// `nil` will be returned if the underlying payload is not a `TemplateImageCarouselPayload`.
     public var asImageCarouselPayload: TemplateImageCarouselPayload? {
         if case .imageCarousel(let message) = self { return message }
         return nil
     }
-    
+}
+
+extension TemplateMessagePayload: TemplateMessageConvertible {
+    /// Returns `self` for `TemplateMessageConvertible` conformation.
+    public var payload: TemplateMessagePayload { return self }
 }

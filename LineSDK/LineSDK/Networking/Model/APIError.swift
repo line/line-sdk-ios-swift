@@ -22,12 +22,12 @@
 import Foundation
 
 struct InternalAuthError: Decodable {
-    public let error: String
-    public let errorDescription: String?
+    let error: String
+    let errorDescription: String?
 }
 
 struct InternalAPIError: Decodable {
-    public let message: String
+    let message: String
 }
 
 /// Represents API error happens when interacting with LINE APIs.

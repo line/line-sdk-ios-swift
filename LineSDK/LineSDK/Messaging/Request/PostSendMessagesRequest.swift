@@ -21,14 +21,25 @@
 
 import Foundation
 
+/// Represents the request of sending some messages to a certain chat destination on behalf of the current
+/// authorized user. This request requires you have the `.messageWrite` permission, otherwise, you would get a 403
+/// permission grant error.
 public struct PostSendMessagesRequest: Request {
     
+    /// A chat ID to send messages to. It could be an ID of user, room, group or square chat ID.
     public let chatID: String
+    
+    /// `Messages`s will be sent. Up to 5 elements.
     public let messages: [Message]
     
-    public init(chatID: String, messages: [Message]) {
+    /// Creates a request consisted of given `chatID` and `messages`.
+    ///
+    /// - Parameters:
+    ///   - chatID: The chat ID to where messages will be sent.
+    ///   - messages: `Messages`s will be sent. Up to 5 elements.
+    public init(chatID: String, messages: [MessageConvertible]) {
         self.chatID = chatID
-        self.messages = messages
+        self.messages = messages.map { $0.message }
     }
     
     public let method: HTTPMethod = .post
@@ -42,11 +53,21 @@ public struct PostSendMessagesRequest: Request {
         ]
     }
     
+    /// Server response of `PostSendMessagesRequest`.
     public struct Response: Decodable {
+        /// Represents the sending status.
         public let status: MessageSendingStatus
     }
 }
 
+/// Represents whether the message sending succeeded or discarded.
+///
+/// - ok: Messages are delivered successfully.
+/// - discarded: Messages are delivered but the receiver discarded them. This is due to receiver has turned off the
+///              1-to-1 messages in settings for the channel message or unapproved channel message. This `discarded`
+///              status does not apply for messages sent to room, group or square chat.
+/// - unknown: Server returns an unknown status code, which is bound to the associated value in this case.
+///
 public enum MessageSendingStatus: Decodable {
     case ok
     case discarded
@@ -62,6 +83,7 @@ public enum MessageSendingStatus: Decodable {
         }
     }
     
+    /// Returns whether this status representing an `.ok` result.
     public var isOK: Bool {
         if case .ok = self {
             return true

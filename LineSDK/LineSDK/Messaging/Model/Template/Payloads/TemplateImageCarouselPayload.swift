@@ -19,17 +19,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a template payload with multiple `Column`s with image which can be cycled like a carousel.
+/// The columns with image will be shown in order by scrolling horizontally.
 public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeCompatible {
-    public struct Column: Codable {
+    
+    /// A column of `TemplateCarouselPayload`. It contains a certain title, text, thumbnail image and some actions.
+    public struct Column: Codable, MessageActionContainer {
+        
+        /// Image URL. It should start with "https".
         public var imageURL: URL
-        public var action: TemplateMessageAction
         
-        public init(imageURL: URL, action: TemplateMessageAction)
-        {
+        /// An action to perform when image tapped.
+        /// Use `setAction` method if you want to set a `MessageActionConvertible` as the action of current payload.
+        public var action: MessageAction? = nil
+        
+        /// Creates a column with given information.
+        ///
+        /// - Parameters:
+        ///   - imageURL: Image URL. It should start with "https".
+        ///   - action: An action to perform when image tapped.
+        /// - Throws: An error if something wrong during creating the message. It's usually due to you provided invalid
+        ///           parameter.
+        public init(imageURL: URL, action: MessageActionConvertible?) throws {
+            try assertHTTPSScheme(url: imageURL, parameterName: "imageURL")
             self.imageURL = imageURL
-            self.action = action
+            setAction(action)
         }
-        
+
         enum CodingKeys: String, CodingKey {
             case imageURL = "imageUrl"
             case action
@@ -37,28 +53,27 @@ public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeC
     }
     
     let type = TemplateMessagePayloadType.imageCarousel
+    
+    /// Array of columns. You could set at most 10 columns in the payload. Line SDK does not check the elements count
+    /// in a payload. However, it would cause an API response error if more columns contained in the payload.
     public var columns: [Column]
     
+    /// Creates an image carousel payload with given information.
+    ///
+    /// - Parameter columns: Columns to display in the template message.
     public init (columns: [Column] = []) {
         self.columns = columns
     }
     
+    /// Appends a column to the `columns`.
+    ///
+    /// - Parameter column: The column to append.
     public mutating func add(column: Column) {
         columns.append(column)
     }
-    
-    public mutating func replaceColumn(at index: Int, with column: Column) {
-        columns[index] = column
-    }
 }
 
-extension Message {
-    public static func templateImageCarouselMessage(
-        altText: String,
-        columns: [TemplateImageCarouselPayload.Column] = []) -> Message
-    {
-        let payload = TemplateImageCarouselPayload(columns: columns)
-        let message = TemplateMessage(altText: altText, payload: .imageCarousel(payload))
-        return .template(message)
-    }
+extension TemplateImageCarouselPayload: TemplateMessageConvertible {
+    /// Returns a converted `TemplateMessagePayload` which wraps this `TemplateImageCarouselPayload`.
+    public var payload: TemplateMessagePayload { return .imageCarousel(self) }
 }

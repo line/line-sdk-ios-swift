@@ -1,5 +1,5 @@
 //
-//  TemplateMessageAction.swift
+//  MessageAction.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,12 +21,12 @@
 
 import Foundation
 
-enum TemplateMessageActionType: String, Codable {
+enum MessageActionType: String, Codable {
     case URI = "uri"
 }
 
-public enum TemplateMessageAction: Codable {
-    case URI(TemplateMessageURIAction)
+public enum MessageAction: Codable, MessageActionConvertible {
+    case URI(MessageURIAction)
     case unknown
     
     enum CodingKeys: String, CodingKey {
@@ -35,10 +35,10 @@ public enum TemplateMessageAction: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let type = try? container.decode(TemplateMessageActionType.self, forKey: .type)
+        let type = try? container.decode(MessageActionType.self, forKey: .type)
         switch type {
         case .URI?:
-            let message = try TemplateMessageURIAction(from: decoder)
+            let message = try MessageURIAction(from: decoder)
             self = .URI(message)
         case nil:
             self = .unknown
@@ -54,14 +54,16 @@ public enum TemplateMessageAction: Codable {
         }
     }
     
-    public var asURIAction: TemplateMessageURIAction? {
+    public var asURIAction: MessageURIAction? {
         if case .URI(let action) = self  { return action }
         return nil
     }
+    
+    public var action: MessageAction { return self }
 }
 
-public struct TemplateMessageURIAction: Codable, TemplateMessageActionTypeCompatible {
-    let type = TemplateMessageActionType.URI
+public struct MessageURIAction: Codable, TemplateMessageActionTypeCompatible, MessageActionConvertible {
+    let type = MessageActionType.URI
     public let label: String
     public let uri: URL
     
@@ -69,11 +71,6 @@ public struct TemplateMessageURIAction: Codable, TemplateMessageActionTypeCompat
         self.label = label
         self.uri = uri
     }
-}
-
-extension TemplateMessageAction {
-    public static func URIAction(label: String, uri: URL) -> TemplateMessageAction {
-        let action = TemplateMessageURIAction(label: label, uri: uri)
-        return .URI(action)
-    }
+    
+    public var action: MessageAction { return .URI(self) }
 }

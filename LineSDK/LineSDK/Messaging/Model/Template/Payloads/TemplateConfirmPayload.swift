@@ -19,36 +19,57 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a template payload with a text and two action button.
+/// Use this template if you want users to answer between "Yes" or "No".
 public struct TemplateConfirmPayload: Codable, TemplateMessagePayloadTypeCompatible {
     let type = TemplateMessagePayloadType.confirm
+    
+    /// Message text in the chat bubble.
     public var text: String
     
-    public var confirmAction: TemplateMessageAction {
+    /// Positive confirm action of the payload.
+    /// To set the `confirmAction` with any `MessageActionConvertible` type, use `setConfirmAction` method.
+    public var confirmAction: MessageAction {
         get { return actions[0] }
         set { actions[0] = newValue }
     }
-    public var cancelAction: TemplateMessageAction {
+    
+    /// Negative cancel action of the payload.
+    /// To set the `cancelAction` with any `MessageActionConvertible` type, use `setCancelAction` method.
+    public var cancelAction: MessageAction {
         get { return actions[1] }
         set { actions[1] = newValue }
     }
     
-    var actions: [TemplateMessageAction]
+    var actions: [MessageAction]
     
-    public init(text: String, confirmAction: TemplateMessageAction, cancelAction: TemplateMessageAction) {
+    /// Creates a confirm payload with given information.
+    ///
+    /// - Parameters:
+    ///   - text: Message text in the chat bubble.
+    ///   - confirmAction: Positive confirm action of the payload.
+    ///   - cancelAction: Negative cancel action of the payload.
+    public init(text: String, confirmAction: MessageActionConvertible, cancelAction: MessageActionConvertible) {
         self.text = text
-        self.actions = [confirmAction, cancelAction]
+        self.actions = [confirmAction.action, cancelAction.action]
+    }
+    
+    /// Sets the `confirmAction` with a `MessageActionConvertible` type.
+    ///
+    /// - Parameter value: The action needs to be set.
+    public mutating func setConfirmAction(_ value: MessageActionConvertible) {
+        confirmAction = value.action
+    }
+    
+    /// Sets the `cancelAction` with a `MessageActionConvertible` type.
+    ///
+    /// - Parameter value: The action needs to be set.
+    public mutating func setCancelAction(_ value: MessageActionConvertible) {
+        cancelAction = value.action
     }
 }
 
-extension Message {
-    public static func templateConfirmMessage(
-        altText: String,
-        text: String,
-        confirmAction: TemplateMessageAction,
-        cancelAction: TemplateMessageAction) -> Message
-    {
-        let payload = TemplateConfirmPayload(text: text, confirmAction: confirmAction, cancelAction: cancelAction)
-        let message = TemplateMessage(altText: altText, payload: .confirm(payload))
-        return .template(message)
-    }
+extension TemplateConfirmPayload: TemplateMessageConvertible {
+    /// Returns a converted `TemplateMessagePayload` which wraps this `TemplateConfirmPayload`.
+    public var payload: TemplateMessagePayload { return .confirm(self) }
 }

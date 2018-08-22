@@ -19,17 +19,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents a message containing an address and location.
 public struct LocationMessage: Codable, MessageTypeCompatible {
     
+    /// Represents a location latitude or longitude degrees.
     public typealias LocationDegrees = Double
     
     let type = MessageType.location
     
-    public let title: String
-    public let address: String
-    public let latitude: LocationDegrees
-    public let longitude: LocationDegrees
+    /// Title name of the location.
+    public var title: String
     
+    /// Address of the location.
+    public var address: String
+    
+    /// Latitude value of the location.
+    public var latitude: LocationDegrees
+    
+    /// Longitude value of the location.
+    public var longitude: LocationDegrees
+    
+    /// Creates a location message with given information.
+    ///
+    /// - Parameters:
+    ///   - title: Title name of the location.
+    ///   - address: Address of the location.
+    ///   - latitude: Latitude value of the location.
+    ///   - longitude: Longitude value of the location.
     public init(title: String, address: String, latitude: LocationDegrees, longitude: LocationDegrees) {
         self.title = title
         self.address = address
@@ -38,14 +54,7 @@ public struct LocationMessage: Codable, MessageTypeCompatible {
     }
 }
 
-extension Message {
-    public static func locationMessage(
-        title: String,
-        address: String,
-        latitude: LocationMessage.LocationDegrees,
-        longitude: LocationMessage.LocationDegrees) -> Message
-    {
-        let message = LocationMessage(title: title, address: address, latitude: latitude, longitude: longitude)
-        return .location(message)
-    }
+extension LocationMessage: MessageConvertible {
+    /// Returns a converted `Message` which wraps this `LocationMessage`.
+    public var message: Message { return .location(self) }
 }

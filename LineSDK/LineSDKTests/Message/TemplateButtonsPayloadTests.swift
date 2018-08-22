@@ -74,27 +74,22 @@ extension TemplateButtonsPayload: MessageSample {
 class TemplateButtonsPayloadTests: XCTestCase {
     
     func testTemplateButtonsPayloadEncoding() {
-        let uriAction = TemplateMessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
-        let action = TemplateMessageAction.URI(uriAction)
+        let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
+        let action = MessageAction.URI(uriAction)
         
-        var message = TemplateButtonsPayload(
-            text: "hello",
-            title: "world",
-            actions: [action],
-            defaultAction: action,
-            thumbnailImageURL: URL(string: "https://sample.com"),
-            imageContentMode: .aspectFit,
-            imageBackgroundColor: .red,
-            sender: nil)
+        var message = TemplateButtonsPayload(title: "world", text: "hello", actions: [action])
+        message.defaultAction = action
+        message.thumbnailImageURL = URL(string: "https://sample.com")
+        message.imageContentMode = .aspectFit
+        message.imageBackgroundColor = HexColor(.red)
         
-        message.add(action: .URI(uriAction))
+        message.addAction(uriAction)
         
         let dic = TemplateMessagePayload.buttons(message).json
         assertEqual(in: dic, forKey: "type", value: "buttons")
         assertEqual(in: dic, forKey: "text", value: "hello")
         assertEqual(in: dic, forKey: "title", value: "world")
         assertEqual(in: dic, forKey: "thumbnailImageUrl", value: "https://sample.com")
-        assertEqual(in: dic, forKey: "imageAspectRatio", value: "rectangle")
         assertEqual(in: dic, forKey: "imageSize", value: "contain")
         assertEqual(in: dic, forKey: "imageBackgroundColor", value: "#FF0000")
         
@@ -114,8 +109,8 @@ class TemplateButtonsPayloadTests: XCTestCase {
         XCTAssertEqual(result[0].text, "text")
         XCTAssertEqual(result[0].actions.count, 2)
         XCTAssertNil(result[0].defaultAction)
-        XCTAssertEqual(result[0].imageAspectRatio, .rectangle)
-        XCTAssertEqual(result[0].imageContentMode, .aspectFill)
+        XCTAssertNil(result[0].imageAspectRatio)
+        XCTAssertNil(result[0].imageContentMode)
         
         XCTAssertEqual(result[0].actions[0].asURIAction!.label, "CALL")
         XCTAssertEqual(result[0].actions[0].asURIAction!.uri, URL(string: "tel:818055475287")!)
@@ -124,16 +119,10 @@ class TemplateButtonsPayloadTests: XCTestCase {
         
         XCTAssertEqual(result[1].imageAspectRatio, .rectangle)
         XCTAssertEqual(result[1].imageContentMode, .aspectFill)
-        XCTAssertEqual(result[1].imageBackgroundColor, UIColor(hex6: 0xff12ee))
+        XCTAssertEqual(result[1].imageBackgroundColor, HexColor(rawValue: "#ff12ee", default: .white))
         
         XCTAssertEqual(result[2].imageAspectRatio, .square)
         XCTAssertEqual(result[2].imageContentMode, .aspectFit)
-        XCTAssertEqual(result[2].imageBackgroundColor, .white)
-    }
-    
-    func testMessageWrapper() {
-        let action = TemplateMessageAction.URIAction(label: "action", uri: URL(string: "https://sample.com")!)
-        let message = Message.templateButtonsMessage(altText: "alt", text: "Buntton", actions: [action])
-        XCTAssertNotNil(message.asTemplateMessage?.payload.asButtonsPayload)
+        XCTAssertEqual(result[2].imageBackgroundColor, HexColor(.white))
     }
 }
