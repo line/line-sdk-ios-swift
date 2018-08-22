@@ -67,7 +67,11 @@ class APIStore {
             ),
             .init(title: "Get Approvers in Friends",
                   request: GetApproversInFriendsRequest()
-            )
+            ),
+            .init(title: "Get Groups",
+                  request: GetGroupsRequest()
+            ),
+            .getApproversInGroup
         ]
         
         messagingAPIs = [
@@ -191,6 +195,25 @@ extension APIItem {
         }
         return APIItem(title: "Send flex message to a friend", path: mock.path, avaliable: true, block: block)
     }
+
+    static var getApproversInGroup: APIItem {
+        let path = GetApproversInGroupRequest(groupID: "[groupID]").path
+        let block: AnyResultBlock = { arg in
+            let (controller, handler) = arg
+            selectGroupFromGroupList(in: controller, handler: { result in
+                switch result {
+                case .success(let groupID):
+                    let request = GetApproversInGroupRequest(groupID: groupID)
+                    Session.shared.send(request) { response in
+                        handler(response.map { $0 as Any })
+                    }
+                case .failure(let error):
+                    handler(.failure(error))
+                }
+            })
+        }
+        return APIItem(title: "Get Approvers in given Group", path: path, avaliable: true, block: block)
+    }
 }
 
 func selectUserFromFriendList(in viewController: UIViewController, handler: @escaping (Result<String>) -> Void) {
@@ -212,6 +235,34 @@ func selectUserFromFriendList(in viewController: UIViewController, handler: @esc
             value.friends.prefix(5).forEach { friend in
                 alert.addAction(.init(title: friend.displayName, style: .default) { _ in
                     handler(.success(friend.userId))
+                    })
+            }
+            viewController.present(alert, animated: true)
+        case .failure(let error):
+            handler(.failure(error))
+        }
+    }
+}
+
+func selectGroupFromGroupList(in viewController: UIViewController, handler: @escaping (Result<String>) -> Void) {
+    let request = GetGroupsRequest()
+    Session.shared.send(request) { res in
+
+        switch res {
+        case .success(let value):
+            guard !value.groups.isEmpty else {
+                let error = LineSDKError.generalError(
+                    reason: .parameterError(
+                        parameterName: "groups",
+                        description: "You need at least one group to use this API."))
+                handler(.failure(error))
+                return
+            }
+
+            let alert = UIAlertController(title: "Groups", message: nil, preferredStyle: .actionSheet)
+            value.groups.prefix(5).forEach { group in
+                alert.addAction(.init(title: group.groupName, style: .default) { _ in
+                    handler(.success(group.groupID))
                     })
             }
             viewController.present(alert, animated: true)
