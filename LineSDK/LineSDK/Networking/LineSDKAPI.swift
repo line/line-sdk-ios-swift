@@ -167,8 +167,9 @@ public struct LineSDKAPI {
 
 extension LineSDKAPI {
 
-    /// Returns a friend list of the user. Unless already having granted the channel,
+    /// Gets a friend list of the user. Unless already having granted the channel,
     /// users who've configured the privacy filter are excluded from the list.
+    /// This API returns a maximum of 200 users per request.
     ///
     /// - Parameters:
     ///   - sort: Sorting method for the returned freind list.
@@ -188,8 +189,9 @@ extension LineSDKAPI {
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
     }
 
-    /// Returns a list of the user's friends who have already approved the channel,
-    /// regardless each user's privacy filter setting. This API returns a maximum of 200 users per request.
+    /// Gets a list of the user's friends who have already approved the channel,
+    /// regardless each user's privacy filter setting.
+    /// This API returns a maximum of 200 users per request.
     ///
     /// - Parameters:
     ///   - pageToken: If a `pageToken` value is included in the previous API call's completion block,
@@ -203,6 +205,45 @@ extension LineSDKAPI {
         completionHandler completion: @escaping (Result<GetApproversInFriendsRequest.Response>) -> Void)
     {
         let request = GetApproversInFriendsRequest(pageToken: pageToken)
+        Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
+    }
+
+    /// Gets a list of groups that the user belongs to.
+    /// This API returns a maximum of 200 groups per request.
+    ///
+    /// - Parameters:
+    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion,
+    ///                pass it here to get the following page of the list.
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: The closure to be executed when the list is returned.
+    public static func getGroups(
+        pageToken: String? = nil,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<GetGroupsRequest.Response>) -> Void)
+    {
+        let request = GetGroupsRequest(pageToken: pageToken)
+        Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
+    }
+
+    /// Gets a list of users in the specified group who've already approved the channel.
+    /// Note that this API does not take friendship status into account.
+    /// This API returns a maximum of 200 users per request.
+    ///
+    /// - Parameters:
+    ///   - groupID: The specified group identifier
+    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion block,
+    ///                pass it here to get the following page of the list.
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: The closure to be executed when the list is returned.
+    public static func getApproversInGroup(
+        groupID: String,
+        pageToken: String? = nil,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<GetApproversInGroupRequest.Response>) -> Void)
+    {
+        let request = GetApproversInGroupRequest(groupID: groupID, pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
     }
 }
