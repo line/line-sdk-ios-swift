@@ -1,5 +1,5 @@
 //
-//  UserProfile.swift
+//  LineSDKObjC.h
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,27 +19,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+#import <UIKit/UIKit.h>
 
-/// Response of `GetUserProfileRequest`.
-public struct UserProfile: Decodable {
-    
-    /// User ID of current authorized user.
-    public let userID: String
-    
-    /// Display name of current authorized user.
-    public let displayName: String
-    
-    /// Picture URL of current authorized user. `nil` if the user does not set a picture as avatar.
-    public let pictureURL: URL?
-    
-    /// Status message of current authorized user. `nil` if the user does not set a status message.
-    public let statusMessage: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case userID = "userId"
-        case displayName
-        case pictureURL = "pictureUrl"
-        case statusMessage
-    }
-}
+//! Project version number for LineSDKObjC.
+FOUNDATION_EXPORT double LineSDKObjCVersionNumber;
+
+//! Project version string for LineSDKObjC.
+FOUNDATION_EXPORT const unsigned char LineSDKObjCVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <LineSDKObjC/PublicHeader.h>
+
+

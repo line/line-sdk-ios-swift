@@ -1,5 +1,5 @@
 //
-//  UserProfile.swift
+//  LineSDKAccessTokenStore.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,27 +19,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import LineSDK
 
-/// Response of `GetUserProfileRequest`.
-public struct UserProfile: Decodable {
-    
-    /// User ID of current authorized user.
-    public let userID: String
-    
-    /// Display name of current authorized user.
-    public let displayName: String
-    
-    /// Picture URL of current authorized user. `nil` if the user does not set a picture as avatar.
-    public let pictureURL: URL?
-    
-    /// Status message of current authorized user. `nil` if the user does not set a status message.
-    public let statusMessage: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case userID = "userId"
-        case displayName
-        case pictureURL = "pictureUrl"
-        case statusMessage
-    }
+@objc extension NSNotification {
+    public static let LineSDKAccessTokenDidUpdate = Notification.Name.LineSDKAccessTokenDidUpdate
+    public static let LineSDKAccessTokenDidRemove = Notification.Name.LineSDKAccessTokenDidRemove
 }
+
+@objc extension NSNotification {
+    public static let LineSDKOldAccessTokenKey = LineSDKNotificationKey.oldAccessToken
+    public static let LineSDKNewAccessTokenKey = LineSDKNotificationKey.newAccessToken
+}
+
+@objcMembers
+public class LineSDKAccessTokenStore: NSObject {
+    
+    let _value: AccessTokenStore
+    init(_ value: AccessTokenStore) { _value = value }
+    
+    public static let sharedStore = LineSDKAccessTokenStore(AccessTokenStore.shared)
+    
+    public var currentToken: LineSDKAccessToken? { return _value.current.map { .init($0) } }
+}
+

@@ -1,5 +1,5 @@
 //
-//  UserProfile.swift
+//  LineSDKAccessToken.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,27 +19,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import LineSDK
 
-/// Response of `GetUserProfileRequest`.
-public struct UserProfile: Decodable {
+@objcMembers
+public class LineSDKAccessToken: NSObject {
+    let _value: AccessToken
+    init(_ value: AccessToken) { _value = value }
     
-    /// User ID of current authorized user.
-    public let userID: String
-    
-    /// Display name of current authorized user.
-    public let displayName: String
-    
-    /// Picture URL of current authorized user. `nil` if the user does not set a picture as avatar.
-    public let pictureURL: URL?
-    
-    /// Status message of current authorized user. `nil` if the user does not set a status message.
-    public let statusMessage: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case userID = "userId"
-        case displayName
-        case pictureURL = "pictureUrl"
-        case statusMessage
-    }
+    public var value: String { return _value.value }
+    public var createdAt: Date { return _value.createdAt }
+    public var IDToken: String? { return _value.IDToken }
+    public var refreshToken: String { return _value.refreshToken }
+    public var permissions: [LineSDKLoginPermission] { return _value.permissions.map { .init($0) } }
+    public var expiresAt: Date { return _value.expiresAt }
 }

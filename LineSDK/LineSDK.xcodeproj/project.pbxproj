@@ -105,6 +105,15 @@
 		4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */; };
 		4BBAFC4B2101CE8100E7BFF6 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
 		4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */; };
+		4BBEA996212EAF9F00858627 /* LineSDKObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4BBEA994212EAF9F00858627 /* LineSDKObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4BBEA9A3212EAFBB00858627 /* LineSDKObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEA992212EAF9F00858627 /* LineSDKObjC.framework */; };
+		4BBEA9AC212EAFE400858627 /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B90587821006E5C004D717F /* LineSDK.framework */; };
+		4BBEA9B0212EB03200858627 /* LineSDKLoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */; };
+		4BBEA9B2212EB24200858627 /* LineSDKLoginPermissionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9B1212EB24200858627 /* LineSDKLoginPermissionTests.m */; };
+		4BBEA9B4212EB35000858627 /* LineSDKAccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9B3212EB35000858627 /* LineSDKAccessTokenStore.swift */; };
+		4BBEA9B6212EB41000858627 /* LineSDKAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9B5212EB41000858627 /* LineSDKAccessToken.swift */; };
+		4BBEA9B8212EB75E00858627 /* LineSDKAccessTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9B7212EB75E00858627 /* LineSDKAccessTokenTests.m */; };
+		4BBEA9BA212EB7CD00858627 /* LineSDKAccessTokenStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9B9212EB7CD00858627 /* LineSDKAccessTokenStoreTests.m */; };
 		4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */; };
 		4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */; };
 		4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27922113EC6C00B90D8F /* CodingExtension.swift */; };
@@ -155,6 +164,20 @@
 			remoteInfo = TestHost;
 		};
 		4B90588321006E5D004D717F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B90586F21006E5C004D717F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4B90587721006E5C004D717F;
+			remoteInfo = LineSDK;
+		};
+		4BBEA9A4212EAFBB00858627 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4B90586F21006E5C004D717F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4BBEA991212EAF9F00858627;
+			remoteInfo = LineSDKObjC;
+		};
+		4BBEA9A9212EAFDF00858627 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4B90586F21006E5C004D717F /* Project object */;
 			proxyType = 1;
@@ -267,6 +290,17 @@
 		4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenStore.swift; sourceTree = "<group>"; };
 		4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resource.bundle; sourceTree = "<group>"; };
 		4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantTests.swift; sourceTree = "<group>"; };
+		4BBEA992212EAF9F00858627 /* LineSDKObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LineSDKObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BBEA994212EAF9F00858627 /* LineSDKObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineSDKObjC.h; sourceTree = "<group>"; };
+		4BBEA995212EAF9F00858627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BBEA99E212EAFBB00858627 /* LineSDKObjCInterfaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineSDKObjCInterfaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BBEA9A2212EAFBB00858627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKLoginPermission.swift; sourceTree = "<group>"; };
+		4BBEA9B1212EB24200858627 /* LineSDKLoginPermissionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKLoginPermissionTests.m; sourceTree = "<group>"; };
+		4BBEA9B3212EB35000858627 /* LineSDKAccessTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAccessTokenStore.swift; sourceTree = "<group>"; };
+		4BBEA9B5212EB41000858627 /* LineSDKAccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAccessToken.swift; sourceTree = "<group>"; };
+		4BBEA9B7212EB75E00858627 /* LineSDKAccessTokenTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKAccessTokenTests.m; sourceTree = "<group>"; };
+		4BBEA9B9212EB7CD00858627 /* LineSDKAccessTokenStoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKAccessTokenStoreTests.m; sourceTree = "<group>"; };
 		4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyTokenRequest.swift; sourceTree = "<group>"; };
 		4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenVerifyResult.swift; sourceTree = "<group>"; };
 		4BCD27922113EC6C00B90D8F /* CodingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodingExtension.swift; sourceTree = "<group>"; };
@@ -328,6 +362,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B90588221006E5D004D717F /* LineSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BBEA98E212EAF9F00858627 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BBEA9AC212EAFE400858627 /* LineSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BBEA99B212EAFBB00858627 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BBEA9A3212EAFBB00858627 /* LineSDKObjC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +489,10 @@
 				4B90587A21006E5C004D717F /* LineSDK */,
 				4B90588521006E5D004D717F /* LineSDKTests */,
 				4B6A702F2109793500D71C66 /* TestHost */,
+				4BBEA993212EAF9F00858627 /* LineSDKObjC */,
+				4BBEA99F212EAFBB00858627 /* LineSDKObjCInterfaceTests */,
 				4B90587921006E5C004D717F /* Products */,
+				4BBEA9AB212EAFE400858627 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -449,6 +502,8 @@
 				4B90587821006E5C004D717F /* LineSDK.framework */,
 				4B90588121006E5D004D717F /* LineSDKTests.xctest */,
 				4B6A702E2109793500D71C66 /* TestHost.app */,
+				4BBEA992212EAF9F00858627 /* LineSDKObjC.framework */,
+				4BBEA99E212EAFBB00858627 /* LineSDKObjCInterfaceTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -592,6 +647,52 @@
 			path = General;
 			sourceTree = "<group>";
 		};
+		4BBEA993212EAF9F00858627 /* LineSDKObjC */ = {
+			isa = PBXGroup;
+			children = (
+				4BBEA9AD212EAFFB00858627 /* Login */,
+				4BBEA994212EAF9F00858627 /* LineSDKObjC.h */,
+				4BBEA995212EAF9F00858627 /* Info.plist */,
+			);
+			path = LineSDKObjC;
+			sourceTree = "<group>";
+		};
+		4BBEA99F212EAFBB00858627 /* LineSDKObjCInterfaceTests */ = {
+			isa = PBXGroup;
+			children = (
+				4BBEA9B1212EB24200858627 /* LineSDKLoginPermissionTests.m */,
+				4BBEA9B7212EB75E00858627 /* LineSDKAccessTokenTests.m */,
+				4BBEA9B9212EB7CD00858627 /* LineSDKAccessTokenStoreTests.m */,
+				4BBEA9A2212EAFBB00858627 /* Info.plist */,
+			);
+			path = LineSDKObjCInterfaceTests;
+			sourceTree = "<group>";
+		};
+		4BBEA9AB212EAFE400858627 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4BBEA9AD212EAFFB00858627 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4BBEA9AE212EB01C00858627 /* Model */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		4BBEA9AE212EB01C00858627 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */,
+				4BBEA9B3212EB35000858627 /* LineSDKAccessTokenStore.swift */,
+				4BBEA9B5212EB41000858627 /* LineSDKAccessToken.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		4BCD27912113EC4300B90D8F /* CustomizeCoding */ = {
 			isa = PBXGroup;
 			children = (
@@ -725,6 +826,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4BBEA98F212EAF9F00858627 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BBEA996212EAF9F00858627 /* LineSDKObjC.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -782,6 +891,43 @@
 			productReference = 4B90588121006E5D004D717F /* LineSDKTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		4BBEA991212EAF9F00858627 /* LineSDKObjC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4BBEA999212EAF9F00858627 /* Build configuration list for PBXNativeTarget "LineSDKObjC" */;
+			buildPhases = (
+				4BBEA98D212EAF9F00858627 /* Sources */,
+				4BBEA98E212EAF9F00858627 /* Frameworks */,
+				4BBEA98F212EAF9F00858627 /* Headers */,
+				4BBEA990212EAF9F00858627 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4BBEA9AA212EAFDF00858627 /* PBXTargetDependency */,
+			);
+			name = LineSDKObjC;
+			productName = LineSDKObjC;
+			productReference = 4BBEA992212EAF9F00858627 /* LineSDKObjC.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		4BBEA99D212EAFBB00858627 /* LineSDKObjCInterfaceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4BBEA9A6212EAFBB00858627 /* Build configuration list for PBXNativeTarget "LineSDKObjCInterfaceTests" */;
+			buildPhases = (
+				4BBEA99A212EAFBB00858627 /* Sources */,
+				4BBEA99B212EAFBB00858627 /* Frameworks */,
+				4BBEA99C212EAFBB00858627 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4BBEA9A5212EAFBB00858627 /* PBXTargetDependency */,
+			);
+			name = LineSDKObjCInterfaceTests;
+			productName = LineSDKObjCInterfaceTests;
+			productReference = 4BBEA99E212EAFBB00858627 /* LineSDKObjCInterfaceTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -802,6 +948,13 @@
 					4B90588021006E5D004D717F = {
 						CreatedOnToolsVersion = 9.4.1;
 						TestTargetID = 4B6A702D2109793500D71C66;
+					};
+					4BBEA991212EAF9F00858627 = {
+						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 0940;
+					};
+					4BBEA99D212EAFBB00858627 = {
+						CreatedOnToolsVersion = 9.4.1;
 					};
 				};
 			};
@@ -838,6 +991,8 @@
 				4B90587721006E5C004D717F /* LineSDK */,
 				4B90588021006E5D004D717F /* LineSDKTests */,
 				4B6A702D2109793500D71C66 /* TestHost */,
+				4BBEA991212EAF9F00858627 /* LineSDKObjC */,
+				4BBEA99D212EAFBB00858627 /* LineSDKObjCInterfaceTests */,
 			);
 		};
 /* End PBXProject section */
@@ -861,6 +1016,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4B90587F21006E5D004D717F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BBEA990212EAF9F00858627 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BBEA99C212EAFBB00858627 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1023,6 +1192,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4BBEA98D212EAF9F00858627 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BBEA9B4212EB35000858627 /* LineSDKAccessTokenStore.swift in Sources */,
+				4BBEA9B6212EB41000858627 /* LineSDKAccessToken.swift in Sources */,
+				4BBEA9B0212EB03200858627 /* LineSDKLoginPermission.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BBEA99A212EAFBB00858627 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BBEA9B2212EB24200858627 /* LineSDKLoginPermissionTests.m in Sources */,
+				4BBEA9BA212EB7CD00858627 /* LineSDKAccessTokenStoreTests.m in Sources */,
+				4BBEA9B8212EB75E00858627 /* LineSDKAccessTokenTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1035,6 +1224,16 @@
 			isa = PBXTargetDependency;
 			target = 4B90587721006E5C004D717F /* LineSDK */;
 			targetProxy = 4B90588321006E5D004D717F /* PBXContainerItemProxy */;
+		};
+		4BBEA9A5212EAFBB00858627 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4BBEA991212EAF9F00858627 /* LineSDKObjC */;
+			targetProxy = 4BBEA9A4212EAFBB00858627 /* PBXContainerItemProxy */;
+		};
+		4BBEA9AA212EAFDF00858627 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4B90587721006E5C004D717F /* LineSDK */;
+			targetProxy = 4BBEA9A9212EAFDF00858627 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1286,6 +1485,95 @@
 			};
 			name = Release;
 		};
+		4BBEA997212EAF9F00858627 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = LineSDKObjC/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjC;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4BBEA998212EAF9F00858627 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = LineSDKObjC/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjC;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4BBEA9A7212EAFBB00858627 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LineSDKObjCInterfaceTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjCInterfaceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4BBEA9A8212EAFBB00858627 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LineSDKObjCInterfaceTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjCInterfaceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1321,6 +1609,24 @@
 			buildConfigurations = (
 				4B90589021006E5D004D717F /* Debug */,
 				4B90589121006E5D004D717F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4BBEA999212EAF9F00858627 /* Build configuration list for PBXNativeTarget "LineSDKObjC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BBEA997212EAF9F00858627 /* Debug */,
+				4BBEA998212EAF9F00858627 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4BBEA9A6212EAFBB00858627 /* Build configuration list for PBXNativeTarget "LineSDKObjCInterfaceTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BBEA9A7212EAFBB00858627 /* Debug */,
+				4BBEA9A8212EAFBB00858627 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
