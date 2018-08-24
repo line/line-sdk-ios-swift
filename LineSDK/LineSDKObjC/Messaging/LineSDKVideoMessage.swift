@@ -1,5 +1,5 @@
 //
-//  LineSDKHexColor.swift
+//  LineSDKVideoMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,17 +22,29 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKHexColor: NSObject {
-    let _value: HexColor
-    init(_ value: HexColor) { _value = value }
+public class LineSDKVideoMessage: LineSDKMessage {
     
-    public var rawValue: String { return _value.rawValue }
-    public var color: UIColor { return _value.color }
+    public let originalContentURL: URL
+    public let previewImageURL: URL
     
-    public convenience init(_ color: UIColor) { self.init(.init(color)) }
-    public convenience init(rawValue: String, defaultColor color: UIColor) { self.init(.init(rawValue: rawValue, default: color)) }
+    init(_ value: VideoMessage) {
+        originalContentURL = value.originalContentURL
+        previewImageURL = value.previewImageURL
+    }
     
-    public func isEqualsToColor(_ another: LineSDKHexColor) -> Bool {
-        return _value == another._value
+    public convenience init?(originalContentURL: URL, previewImageURL: URL) {
+        guard let value = try? VideoMessage(
+            originalContentURL: originalContentURL, previewImageURL: previewImageURL) else
+        {
+            return nil
+        }
+        self.init(value)
+    }
+    
+    override func toMessage() -> Message {
+        return .video(try! .init(
+            originalContentURL: originalContentURL,
+            previewImageURL: previewImageURL
+        ))
     }
 }

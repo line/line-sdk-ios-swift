@@ -1,5 +1,5 @@
 //
-//  LineSDKHexColor.swift
+//  LineSDKLocationMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,17 +22,26 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKHexColor: NSObject {
-    let _value: HexColor
-    init(_ value: HexColor) { _value = value }
+public class LineSDKLocationMessage: LineSDKMessage {
+
+    public var title: String
+    public var address: String
+    public var latitude: Double
+    public var longitude: Double
     
-    public var rawValue: String { return _value.rawValue }
-    public var color: UIColor { return _value.color }
+    init(_ value: LocationMessage) {
+        title = value.title
+        address = value.address
+        latitude = value.latitude
+        longitude = value.longitude
+    }
     
-    public convenience init(_ color: UIColor) { self.init(.init(color)) }
-    public convenience init(rawValue: String, defaultColor color: UIColor) { self.init(.init(rawValue: rawValue, default: color)) }
+    public convenience init(title: String, address: String, latitude: Double, longitude: Double) {
+        self.init(.init(title: title, address: address, latitude: latitude, longitude: longitude))
+    }
     
-    public func isEqualsToColor(_ another: LineSDKHexColor) -> Bool {
-        return _value == another._value
+    override func toMessage() -> Message {
+        return .location(.init(title: title, address: address, latitude: latitude, longitude: longitude))
     }
 }
+

@@ -27,7 +27,7 @@ public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeC
     public struct Column: Codable, MessageActionContainer {
         
         /// Image URL. It should start with "https".
-        public var imageURL: URL
+        public let imageURL: URL
         
         /// An action to perform when image tapped.
         /// Use `setAction` method if you want to set a `MessageActionConvertible` as the action of current payload.

@@ -101,4 +101,15 @@
                              completionHandler:^(LineSDKGetApproversInGroupResponse *result, NSError * error) {}];
 }
 
+- (void)_testSendMessagesInterface {
+    LineSDKTextMessage *message = [[LineSDKTextMessage alloc] initWithText:@"hello" sender:nil];
+    [LineSDKAPI sendMessages:@[message]
+                          to:@"123"
+           completionHandler:^(LineSDKPostSendMessagesResponse *response, NSError *error) {}];
+    [LineSDKAPI sendMessages:@[message]
+                          to:@"123"
+               callbackQueue:[LineSDKCallbackQueue asyncMain]
+           completionHandler:^(LineSDKPostSendMessagesResponse *response, NSError *error) {}];
+}
+
 @end

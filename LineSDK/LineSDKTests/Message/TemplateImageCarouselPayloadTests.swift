@@ -57,14 +57,19 @@ class TemplateImageCarouselPayloadTests: XCTestCase {
         let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
         let action = MessageAction.URI(uriAction)
         
-        var column = try! TemplateImageCarouselPayload.Column(imageURL: URL(string: "https://sample.com")!, action: action)
+        let column = try! TemplateImageCarouselPayload.Column(
+            imageURL: URL(string: "https://sample.com")!,
+            action: action
+        )
         var message = TemplateImageCarouselPayload(columns: [column])
         
-        column.imageURL = URL(string: "https://another-sample.com")!
-        
+        var anotherColumn = try! TemplateImageCarouselPayload.Column(
+            imageURL: URL(string: "https://another-sample.com")!,
+            action: action
+        )
         let anotherAction = MessageURIAction(label: "OK", uri: URL(string: "scheme://action-2")!)
-        column.action = .URI(anotherAction)
-        message.add(column: column)
+        anotherColumn.action = .URI(anotherAction)
+        message.add(column: anotherColumn)
         
         let dic = TemplateMessagePayload.imageCarousel(message).json
         assertEqual(in: dic, forKey: "type", value: "image_carousel")

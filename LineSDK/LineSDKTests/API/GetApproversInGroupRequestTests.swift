@@ -48,7 +48,7 @@ class GetApproversInGroupRequestTests: APITests {
         }
         """
         runTestSuccess(for: r) { response in
-            XCTAssertEqual(response.users.first?.userId, "aaaa")
+            XCTAssertEqual(response.users.first?.userID, "aaaa")
         }
     }
 }

@@ -81,4 +81,34 @@ class PostSendMessagesRequestTests: APITests {
             }
         }
     }
+    
+    func testSendingStatusEquatable() {
+        let value1 = MessageSendingStatus.ok
+        let value2 = MessageSendingStatus.ok
+        XCTAssertEqual(value1, value2)
+        
+        let value3 = MessageSendingStatus.discarded
+        let value4 = MessageSendingStatus.discarded
+        XCTAssertEqual(value3, value4)
+        
+        let value5 = MessageSendingStatus.unknown("1")
+        let value6 = MessageSendingStatus.unknown("1")
+        XCTAssertEqual(value5, value6)
+        
+        let value7 = MessageSendingStatus.unknown("2")
+        XCTAssertNotEqual(value1, value3)
+        XCTAssertNotEqual(value1, value5)
+        XCTAssertNotEqual(value3, value5)
+        XCTAssertNotEqual(value5, value7)
+    }
+    
+    func testSendingStatusIsOK() {
+        let value1 = MessageSendingStatus.ok
+        let value2 = MessageSendingStatus.discarded
+        let value3 = MessageSendingStatus.unknown("1")
+        
+        XCTAssertTrue(value1.isOK)
+        XCTAssertFalse(value2.isOK)
+        XCTAssertFalse(value3.isOK)
+    }
 }

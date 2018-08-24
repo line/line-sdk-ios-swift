@@ -310,7 +310,7 @@ extension API {
     ///   of [SendingResult]`. See `SendingResult` for more.
     ///
     public static func multiSendMessages(
-        _ messages: [Message],
+        _ messages: [MessageConvertible],
         to userIDs: [String],
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<PostMultisendMessagesRequest.Response>) -> Void)

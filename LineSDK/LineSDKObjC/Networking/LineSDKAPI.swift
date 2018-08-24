@@ -196,6 +196,24 @@ public class LineSDKAPI: NSObject {
         }
     }
     
-
+    // - MARK: sendMessages
+    public static func sendMessages(
+        _ messages: [LineSDKMessage],
+        to chatID: String,
+        completionHandler completion: @escaping (LineSDKPostSendMessagesResponse?, Error?) -> Void)
+    {
+        sendMessages(messages, to: chatID, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+    
+    public static func sendMessages(
+        _ messages: [LineSDKMessage],
+        to chatID: String,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKPostSendMessagesResponse?, Error?) -> Void)
+    {
+        API.sendMessages(messages.map { $0.toMessage() }, to: chatID, callbackQueue: queue._value) { result in
+            completion(result.value.map { .init($0) }, result.error)
+        }
+    }
 }
 

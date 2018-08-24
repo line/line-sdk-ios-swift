@@ -149,6 +149,7 @@
     XCTAssertNil(color.color);
     XCTAssertNotNil([[LineSDKHexColor alloc] init:[UIColor redColor]]);
     XCTAssertNotNil([[LineSDKHexColor alloc] initWithRawValue:@"#123123" defaultColor:[UIColor whiteColor]]);
+    XCTAssertFalse([color isEqualsToColor:color]);
 }
 
 - (void)testAPIErrorInterface {
@@ -211,6 +212,118 @@
     XCTAssertEqual(LineSDKGetFriendsRequestSortNone, 0);
     XCTAssertEqual(LineSDKGetFriendsRequestSortMid, 1);
     XCTAssertEqual(LineSDKGetFriendsRequestSortName, 2);
+}
+
+- (void)testMessageSendingStatusInterface {
+    LineSDKMessageSendingStatus *status = nil;
+    XCTAssertFalse(status.isOK);
+    XCTAssertTrue([[LineSDKMessageSendingStatus statusOK] isOK]);
+    XCTAssertFalse([[LineSDKMessageSendingStatus statusDiscarded] isOK]);
+}
+
+- (void)testPostSendMessagesResponseInterface {
+    LineSDKPostSendMessagesResponse *response = nil;
+    XCTAssertNil(response.status);
+}
+
+- (void)testPostMultisendMessagesResponseSendingResultInterface {
+    LineSDKPostMultisendMessagesResponseSendingResult *result = nil;
+    XCTAssertNil(result.to);
+    XCTAssertNil(result.status);
+}
+
+- (void)testPostMultisendMessagesResponseInterface {
+    LineSDKPostMultisendMessagesResponse *response = nil;
+    XCTAssertNil(response.result);
+}
+
+- (void)testMessageSenderInterface {
+    LineSDKMessageSender *sender = [
+                [LineSDKMessageSender alloc] initWithLabel:@"123"
+                                    iconURL:[NSURL URLWithString:@"https://sample.com"]
+                                    linkURL:[NSURL URLWithString:@"https://sample.com"]];
+    [sender setLabel:@"456"];
+    XCTAssertEqual([sender label], @"456");
+    
+    sender.iconURL = [NSURL URLWithString:@"https://example.com"];
+    sender.linkURL = [NSURL URLWithString:@"https://example.com"];
+    XCTAssertNotNil(sender.iconURL);
+    XCTAssertNotNil(sender.linkURL);
+}
+
+- (void)testTextMessageInterface {
+    LineSDKMessageSender *sender = [
+                [LineSDKMessageSender alloc] initWithLabel:@"123"
+                                    iconURL:[NSURL URLWithString:@"https://sample.com"]
+                                    linkURL:[NSURL URLWithString:@"https://sample.com"]];
+    LineSDKTextMessage *message = [[LineSDKTextMessage alloc] initWithText:@"hello" sender:sender];
+    message.sender.label = @"456";
+    XCTAssertEqual([message.sender label], @"456");
+    
+    message.text = @"hello";
+    XCTAssertEqual([message text], @"hello");
+    
+    LineSDKTextMessage *converted = [message textMessage];
+    XCTAssertEqual(converted.text, message.text);
+}
+
+- (void)testImageMessageInterface {
+    LineSDKMessageSender *sender = [
+                                    [LineSDKMessageSender alloc] initWithLabel:@"123"
+                                    iconURL:[NSURL URLWithString:@"https://sample.com"]
+                                    linkURL:[NSURL URLWithString:@"https://sample.com"]];
+    
+    NSURL *url = [NSURL URLWithString:@"https://example.com"];
+    LineSDKImageMessage *message1 = [[LineSDKImageMessage alloc]
+                                     initWithOriginalContentURL:url
+                                     previewImageURL:url];
+    LineSDKImageMessage *message2 = [[LineSDKImageMessage alloc]
+                                     initWithOriginalContentURL:url
+                                     previewImageURL:url
+                                     animated:true
+                                     fileExtension:@"abc" sender:sender];
+    
+    XCTAssertNotNil([message1 originalContentURL]);
+    XCTAssertNotNil([message1 previewImageURL]);
+    XCTAssertFalse([message1 animated]);
+    XCTAssertNil([message1 fileExtension]);
+    XCTAssertNil([message1 sender]);
+    XCTAssertNotNil([message2 fileExtension]);
+
+    LineSDKImageMessage *converted = [message1 imageMessage];
+    XCTAssertEqual(message1.originalContentURL, converted.originalContentURL);
+    
+    message2.sender.label = @"456";
+    XCTAssertEqual([message2.sender label], @"456");
+}
+
+- (void)testVideoMessageInterface {
+    NSURL *url = [NSURL URLWithString:@"https://example.com"];
+    LineSDKVideoMessage *message = [[LineSDKVideoMessage alloc] initWithOriginalContentURL:url previewImageURL:url];
+    XCTAssertNotNil([message originalContentURL]);
+    XCTAssertNotNil([message previewImageURL]);
+    
+    LineSDKVideoMessage *converted = [message videoMessage];
+    XCTAssertEqual(message.originalContentURL, converted.originalContentURL);
+}
+
+- (void)testLocationMessageInterface {
+    LineSDKLocationMessage *message = [[LineSDKLocationMessage alloc]
+                                       initWithTitle:@"a"
+                                             address:@"b"
+                                            latitude:0
+                                           longitude:1];
+    [message setTitle:@"123"];
+    [message setAddress:@"456"];
+    [message setLatitude:100];
+    [message setLongitude:200];
+    XCTAssertEqual(message.title, @"123");
+    XCTAssertEqual(message.address, @"456");
+    XCTAssertEqual(message.latitude, 100);
+    XCTAssertEqual(message.longitude, 200);
+    
+    LineSDKLocationMessage *converted = [message locationMessage];
+    XCTAssertEqual(message.title, converted.title);
 }
 
 @end

@@ -49,7 +49,7 @@ class GetFriendsRequestTests: APITests {
         """
         runTestSuccess(for: r) { response in
             XCTAssertEqual(response.friends.count, 2)
-            XCTAssertEqual(response.friends.first?.userId, "aaaa")
+            XCTAssertEqual(response.friends.first?.userID, "aaaa")
         }
     }
 
@@ -72,7 +72,7 @@ class GetFriendsRequestTests: APITests {
         """
         runTestSuccess(for: r) { response in
             XCTAssertEqual(response.friends.count, 1)
-            XCTAssertEqual(response.friends.first?.userId, "bbbb")
+            XCTAssertEqual(response.friends.first?.userID, "bbbb")
             XCTAssertEqual(response.pageToken, "foo")
         }
 
@@ -91,7 +91,7 @@ class GetFriendsRequestTests: APITests {
         """
         runTestSuccess(for: r) { response in
             XCTAssertEqual(response.friends.count, 1)
-            XCTAssertEqual(response.friends.first?.userId, "cccc")
+            XCTAssertEqual(response.friends.first?.userID, "cccc")
             XCTAssertNil(response.pageToken)
         }
     }

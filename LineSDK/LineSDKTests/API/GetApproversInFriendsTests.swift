@@ -47,7 +47,7 @@ class GetApproversInFriendsRequestTests: APITests {
           }
         """
         runTestSuccess(for: r) { response in
-            XCTAssertEqual(response.friends.first?.userId, "aaaa")
+            XCTAssertEqual(response.friends.first?.userID, "aaaa")
         }
     }
 }
