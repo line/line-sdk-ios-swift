@@ -24,6 +24,7 @@ import LineSDK
 @objcMembers
 public class LineSDKAPI: NSObject {
     
+    // - MARK: refreshAccessToken
     public static func refreshAccessToken(
         completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void)
     {
@@ -47,6 +48,7 @@ public class LineSDKAPI: NSObject {
         }
     }
     
+    // - MARK: revokeAccessToken
     public static func revokeAccessToken(
         completionHandler completion: @escaping (Error?) -> Void)
     {
@@ -70,6 +72,7 @@ public class LineSDKAPI: NSObject {
         }
     }
     
+    // - MARK: verifyAccessToken
     public static func verifyAccessToken(
         completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
     {
@@ -93,6 +96,7 @@ public class LineSDKAPI: NSObject {
         }
     }
     
+    // - MARK: getProfile
     public static func getProfile(
         completionHandler completion: @escaping (LineSDKUserProfile?, Error?) -> Void)
     {
@@ -107,5 +111,91 @@ public class LineSDKAPI: NSObject {
             completion(result.value.map { .init($0) }, result.error)
         }
     }
+    
+    // - MARK: getFriends
+    public static func getFriends(
+        pageToken: String?,
+        completionHandler completion: @escaping (LineSDKGetFriendsResponse?, Error?) -> Void)
+    {
+        getFriends(sort: .none, pageToken: pageToken, completionHandler: completion)
+    }
+    
+    public static func getFriends(
+        sort: LineSDKGetFriendsRequestSort,
+        pageToken: String?,
+        completionHandler completion: @escaping (LineSDKGetFriendsResponse?, Error?) -> Void)
+    {
+        getFriends(sort: sort, pageToken: pageToken, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+    
+    public static func getFriends(
+        sort: LineSDKGetFriendsRequestSort,
+        pageToken: String?,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKGetFriendsResponse?, Error?) -> Void)
+    {
+        API.getFriends(sort: sort._value, pageToken: pageToken, callbackQueue: queue._value) { result in
+            completion(result.value.map { .init($0) }, result.error)
+        }
+    }
+    
+    // - MARK: getApproversInFriends
+    public static func getApproversInFriends(
+        pageToken: String?,
+        completionHandler completion: @escaping (LineSDKGetApproversInFriendsResponse?, Error?) -> Void)
+    {
+        getApproversInFriends(pageToken: pageToken, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+    
+    public static func getApproversInFriends(
+        pageToken: String?,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKGetApproversInFriendsResponse?, Error?) -> Void)
+    {
+        API.getApproversInFriends(pageToken: pageToken, callbackQueue: queue._value) { result in
+            completion(result.value.map { .init($0) }, result.error)
+        }
+    }
+    
+    // - MARK: getGroups
+    public static func getGroups(
+        pageToken: String?,
+        completionHandler completion: @escaping (LineSDKGetGroupsResponse?, Error?) -> Void)
+    {
+        getGroups(pageToken: pageToken, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+    
+    public static func getGroups(
+        pageToken: String?,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKGetGroupsResponse?, Error?) -> Void)
+    {
+        API.getGroups(pageToken: pageToken, callbackQueue: queue._value) { result in
+            completion(result.value.map { .init($0) }, result.error)
+        }
+    }
+    
+    // - MARK: getApproversInGroups
+    public static func getApproversInGroup(
+        groupID: String,
+        pageToken: String?,
+        completionHandler completion: @escaping (LineSDKGetApproversInGroupResponse?, Error?) -> Void)
+    {
+        getApproversInGroup(
+            groupID: groupID, pageToken: pageToken, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+    
+    public static func getApproversInGroup(
+        groupID: String,
+        pageToken: String?,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKGetApproversInGroupResponse?, Error?) -> Void)
+    {
+        API.getApproversInGroup(groupID: groupID, pageToken: pageToken, callbackQueue: queue._value) { result in
+            completion(result.value.map { .init($0) }, result.error)
+        }
+    }
+    
+
 }
 

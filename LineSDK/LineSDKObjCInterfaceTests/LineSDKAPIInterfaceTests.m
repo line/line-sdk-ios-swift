@@ -32,25 +32,73 @@
 
 - (void)_testRefreshAccessTokenInterface {
     [LineSDKAPI refreshAccessTokenWithCompletionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
-    [LineSDKAPI refreshAccessToken:nil completionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
-    [LineSDKAPI refreshAccessToken:nil callbackQueue:[LineSDKCallbackQueue asyncMain] completionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
+    [LineSDKAPI refreshAccessToken:nil
+                 completionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
+    [LineSDKAPI refreshAccessToken:nil
+                     callbackQueue:[LineSDKCallbackQueue asyncMain]
+                 completionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
 }
 
 - (void)_testRevokeAccessTokenInterface {
     [LineSDKAPI revokeAccessTokenWithCompletionHandler:^(NSError * error) {}];
-    [LineSDKAPI revokeAccessToken:nil completionHandler:^(NSError * error) {}];
-    [LineSDKAPI revokeAccessToken:nil callbackQueue:[LineSDKCallbackQueue asyncMain] completionHandler:^(NSError * error) {}];
+    [LineSDKAPI revokeAccessToken:nil
+                completionHandler:^(NSError * error) {}];
+    [LineSDKAPI revokeAccessToken:nil
+                    callbackQueue:[LineSDKCallbackQueue asyncMain]
+                completionHandler:^(NSError * error) {}];
 }
 
 - (void)_testVerifyAccessTokenInterface {
     [LineSDKAPI verifyAccessTokenWithCompletionHandler:^(LineSDKAccessTokenVerifyResult *result, NSError * error) {}];
-    [LineSDKAPI verifyAccessToken:nil completionHandler:^(LineSDKAccessTokenVerifyResult *result, NSError * error) {}];
-    [LineSDKAPI verifyAccessToken:nil callbackQueue:[LineSDKCallbackQueue asyncMain] completionHandler:^(LineSDKAccessTokenVerifyResult *result, NSError * error) {}];
+    [LineSDKAPI verifyAccessToken:nil
+                completionHandler:^(LineSDKAccessTokenVerifyResult *result, NSError * error) {}];
+    [LineSDKAPI verifyAccessToken:nil
+                    callbackQueue:[LineSDKCallbackQueue asyncMain]
+                completionHandler:^(LineSDKAccessTokenVerifyResult *result, NSError * error) {}];
 }
 
 - (void)_testGetProfileInterface {
     [LineSDKAPI getProfileWithCompletionHandler:^(LineSDKUserProfile *result, NSError * error) {}];
-    [LineSDKAPI getProfileWithCallbackQueue:[LineSDKCallbackQueue asyncMain] completionHandler:^(LineSDKUserProfile *result, NSError * error) {}];
+    [LineSDKAPI getProfileWithCallbackQueue:[LineSDKCallbackQueue asyncMain]
+                          completionHandler:^(LineSDKUserProfile *result, NSError * error) {}];
+}
+
+- (void)_testGetFriendsInterfale {
+    [LineSDKAPI getFriendsWithPageToken:nil
+                      completionHandler:^(LineSDKGetFriendsResponse *result, NSError *error) {}];
+    [LineSDKAPI getFriendsWithSort:LineSDKGetFriendsRequestSortName
+                         pageToken:nil
+                 completionHandler:^(LineSDKGetFriendsResponse *result, NSError *error) {}];
+    [LineSDKAPI getFriendsWithSort:LineSDKGetFriendsRequestSortName
+                         pageToken:nil
+                     callbackQueue:[LineSDKCallbackQueue asyncMain]
+                 completionHandler:^(LineSDKGetFriendsResponse *result, NSError *error) {}];
+}
+
+- (void)_testGetApproversInFriendsInterface {
+    [LineSDKAPI getApproversInFriendsWithPageToken:nil
+                                 completionHandler:^(LineSDKGetApproversInFriendsResponse *result, NSError *error) {}];
+    [LineSDKAPI getApproversInFriendsWithPageToken:nil
+                                     callbackQueue:[LineSDKCallbackQueue asyncMain]
+                                 completionHandler:^(LineSDKGetApproversInFriendsResponse *result, NSError *error) {}];
+}
+
+- (void)_testGetGroupsInterface {
+    [LineSDKAPI getGroupsWithPageToken:nil
+                      completionHandler:^(LineSDKGetGroupsResponse *result, NSError *error) {}];
+    [LineSDKAPI getGroupsWithPageToken:nil
+                         callbackQueue:[LineSDKCallbackQueue asyncMain]
+                     completionHandler:^(LineSDKGetGroupsResponse *result, NSError *error) {}];
+}
+
+- (void)_testGetApproversInGroupInterface {
+    [LineSDKAPI getApproversInGroupWithGroupID:@""
+                                     pageToken:nil
+                             completionHandler:^(LineSDKGetApproversInGroupResponse *result, NSError * error) {}];
+    [LineSDKAPI getApproversInGroupWithGroupID:@""
+                                     pageToken:nil
+                                 callbackQueue:[LineSDKCallbackQueue asyncMain]
+                             completionHandler:^(LineSDKGetApproversInGroupResponse *result, NSError * error) {}];
 }
 
 @end

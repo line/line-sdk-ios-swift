@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  LineSDKUser.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,23 +19,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import LineSDK
 
-/// Represents an `User` object which LineSDK used in `friend list` or `approvers in friend list`.
-public struct User: Decodable {
-
-    /// Identifier of the user
-    public let userID: String
-
-    /// User's display name
-    public let displayName: String
-
-    /// Profile image URL. Not included in the response if the user doesn't have a profile image.
-    public let pictureURL: URL?
-
-    enum CodingKeys: String, CodingKey {
-        case userID = "userId"
-        case displayName
-        case pictureURL = "pictureUrl"
-    }
+@objcMembers
+public class LineSDKUser: NSObject {
+    let _value: User
+    init(_ value: User) { _value = value }
+    
+    public var userID: String { return _value.userID }
+    public var displayName: String { return _value.displayName }
+    public var pictureURL: URL? { return _value.pictureURL }
 }

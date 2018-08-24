@@ -168,6 +168,51 @@
     NSOperationQueue *oq = [NSOperationQueue mainQueue];
     XCTAssertNotNil([LineSDKCallbackQueue callbackQueueWithOperationQueue:oq]);
 }
+
+- (void)testUserInterface {
+    LineSDKUser *user = nil;
+    XCTAssertNil(user.userID);
+    XCTAssertNil(user.displayName);
+    XCTAssertNil(user.pictureURL);
+}
+
+- (void)testGroupInterface {
+    LineSDKGroup *group = nil;
+    XCTAssertNil(group.groupID);
+    XCTAssertNil(group.groupName);
+    XCTAssertNil(group.pictureURL);
+}
+
+- (void)testGetFriendsResponseInterface {
+    LineSDKGetFriendsResponse *response = nil;
+    XCTAssertNil(response.friends);
+    XCTAssertNil(response.pageToken);
+}
+
+- (void)testGetGroupsResponseInterface {
+    LineSDKGetGroupsResponse *response = nil;
+    XCTAssertNil(response.groups);
+    XCTAssertNil(response.pageToken);
+}
+
+- (void)testGetApproversInFriendsResponseInterface {
+    LineSDKGetApproversInFriendsResponse *response = nil;
+    XCTAssertNil(response.friends);
+    XCTAssertNil(response.pageToken);
+}
+
+- (void)testGetApproversInGroupResponseInterface {
+    LineSDKGetApproversInGroupResponse *response = nil;
+    XCTAssertNil(response.users);
+    XCTAssertNil(response.pageToken);
+}
+
+- (void)testGetFriendsSortInterface {
+    XCTAssertEqual(LineSDKGetFriendsRequestSortNone, 0);
+    XCTAssertEqual(LineSDKGetFriendsRequestSortMid, 1);
+    XCTAssertEqual(LineSDKGetFriendsRequestSortName, 2);
+}
+
 @end
 
 

@@ -124,6 +124,9 @@
 		4BBEA9B6212EB41000858627 /* LineSDKAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9B5212EB41000858627 /* LineSDKAccessToken.swift */; };
 		4BC9B2D9212FADD60071C736 /* LinsSDKCallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2D8212FADD60071C736 /* LinsSDKCallbackQueue.swift */; };
 		4BC9B2DB212FB0210071C736 /* LineSDKAPIInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2DA212FB0210071C736 /* LineSDKAPIInterfaceTests.m */; };
+		4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2DD212FB7230071C736 /* LineSDKUser.swift */; };
+		4BC9B2E0212FB7B60071C736 /* LineSDKGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2DF212FB7B60071C736 /* LineSDKGroup.swift */; };
+		4BC9B2E2212FB8390071C736 /* LineSDKGraphResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2E1212FB8390071C736 /* LineSDKGraphResponse.swift */; };
 		4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */; };
 		4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */; };
 		4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27922113EC6C00B90D8F /* CodingExtension.swift */; };
@@ -321,6 +324,9 @@
 		4BBEA9B5212EB41000858627 /* LineSDKAccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAccessToken.swift; sourceTree = "<group>"; };
 		4BC9B2D8212FADD60071C736 /* LinsSDKCallbackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinsSDKCallbackQueue.swift; sourceTree = "<group>"; };
 		4BC9B2DA212FB0210071C736 /* LineSDKAPIInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKAPIInterfaceTests.m; sourceTree = "<group>"; };
+		4BC9B2DD212FB7230071C736 /* LineSDKUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKUser.swift; sourceTree = "<group>"; };
+		4BC9B2DF212FB7B60071C736 /* LineSDKGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKGroup.swift; sourceTree = "<group>"; };
+		4BC9B2E1212FB8390071C736 /* LineSDKGraphResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKGraphResponse.swift; sourceTree = "<group>"; };
 		4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetVerifyTokenRequest.swift; sourceTree = "<group>"; };
 		4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenVerifyResult.swift; sourceTree = "<group>"; };
 		4BCD27922113EC6C00B90D8F /* CodingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodingExtension.swift; sourceTree = "<group>"; };
@@ -696,9 +702,10 @@
 		4BBEA993212EAF9F00858627 /* LineSDKObjC */ = {
 			isa = PBXGroup;
 			children = (
-				4BC9B2D7212FAD9E0071C736 /* Utils */,
 				4BBEA9AD212EAFFB00858627 /* Login */,
+				4BC9B2DC212FB7100071C736 /* Social */,
 				4B2D14FB212F9FA5000DD5BE /* Networking */,
+				4BC9B2D7212FAD9E0071C736 /* Utils */,
 				4BBEA994212EAF9F00858627 /* LineSDKObjC.h */,
 				4BBEA995212EAF9F00858627 /* Info.plist */,
 			);
@@ -753,6 +760,16 @@
 				4BC9B2D8212FADD60071C736 /* LinsSDKCallbackQueue.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		4BC9B2DC212FB7100071C736 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				4BC9B2DD212FB7230071C736 /* LineSDKUser.swift */,
+				4BC9B2DF212FB7B60071C736 /* LineSDKGroup.swift */,
+				4BC9B2E1212FB8390071C736 /* LineSDKGraphResponse.swift */,
+			);
+			path = Social;
 			sourceTree = "<group>";
 		};
 		4BCD27912113EC4300B90D8F /* CustomizeCoding */ = {
@@ -1262,7 +1279,10 @@
 				4BC9B2D9212FADD60071C736 /* LinsSDKCallbackQueue.swift in Sources */,
 				4B2D14FA212F9F7B000DD5BE /* LineSDKGetUserProfileRequest.swift in Sources */,
 				4B2D1505212FABD2000DD5BE /* LineSDKAPI.swift in Sources */,
+				4BC9B2E0212FB7B60071C736 /* LineSDKGroup.swift in Sources */,
 				4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */,
+				4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */,
+				4BC9B2E2212FB8390071C736 /* LineSDKGraphResponse.swift in Sources */,
 				4B2D14E3212F8EDA000DD5BE /* LineSDKUserProfile.swift in Sources */,
 				4B2D14EF212F9468000DD5BE /* LineSDKLoginManagerOption.swift in Sources */,
 				4B2D1503212FAB5A000DD5BE /* APIError.swift in Sources */,
