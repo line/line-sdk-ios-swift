@@ -26,7 +26,7 @@ extension PostRevokeTokenRequest: ResponseDataStub {
     static let success = ""
 }
 
-class PostRevokeTokenRequestTests: LineSDKAPITests {
+class PostRevokeTokenRequestTests: APITests {
     func testSuccess() {
         let request = PostRevokeTokenRequest(channelID: "123", accessToken: "123")
         runTestSuccess(for: request) { _ in }
@@ -52,7 +52,7 @@ class PostRevokeTokenRequestTests: LineSDKAPITests {
         Session._shared = Session(configuration: config, delegate: stub)
         setupTestToken()
         
-        LineSDKAPI.revokeAccessToken {result in
+        API.revokeAccessToken {result in
             XCTAssertNotNil(result.value)
             expect.fulfill()
         }

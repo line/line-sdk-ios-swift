@@ -38,7 +38,7 @@ extension PostOTPRequest: ResponseDataStub {
     """
 }
 
-class PostOTPRequestTests: LineSDKAPITests {
+class PostOTPRequestTests: APITests {
         
     func testSuccess() {
         let request = PostOTPRequest(channelID: config.channelID)
@@ -53,8 +53,8 @@ class PostOTPRequestTests: LineSDKAPITests {
         let session = Session.stub(configuration: config, string: PostOTPRequest.fail, statusCode: 400)
         session.send(PostOTPRequest(channelID: config.channelID)) { result in
             
-            guard let e = result.error as? LineSDKError else {
-                XCTFail("Error should be a LineSDKError")
+            guard let e = result.error as? SDKError else {
+                XCTFail("Error should be a SDKError")
                 return
             }
             

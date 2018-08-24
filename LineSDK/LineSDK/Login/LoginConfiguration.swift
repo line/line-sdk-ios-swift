@@ -24,7 +24,7 @@ import Foundation
 struct LoginConfiguration {
     
     static var _shared: LoginConfiguration?
-    public static var shared: LoginConfiguration {
+    static var shared: LoginConfiguration {
         return guardSharedProperty(_shared)
     }
     

@@ -119,7 +119,7 @@ public class LoginProcess {
     
     /// Stops this login process. The login process will fail with a `.forceStopped` error.
     public func stop() {
-        invokeFailure(error: LineSDKError.authorizeFailed(reason: .forceStopped))
+        invokeFailure(error: SDKError.authorizeFailed(reason: .forceStopped))
     }
     
     // App switching observer should only work when external app switching happens during login process.
@@ -131,7 +131,7 @@ public class LoginProcess {
             // There is some (UI or main thread) bugs on earlier iOS system that users cannot pop up an alert
             // at this time. So we wait for a while before report the cancel event to framework users.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                self.invokeFailure(error: LineSDKError.authorizeFailed(reason: .userCancelled))
+                self.invokeFailure(error: SDKError.authorizeFailed(reason: .userCancelled))
             }
         }
         appSwitchingObserver = observer
@@ -225,7 +225,7 @@ public class LoginProcess {
             }
         }
         webLoginFlow.onCancel.delegate(on: self) { (self, _) in
-            self.invokeFailure(error: LineSDKError.authorizeFailed(reason: .userCancelled))
+            self.invokeFailure(error: SDKError.authorizeFailed(reason: .userCancelled))
         }
         
         webLoginFlow.start(in: presentingViewController)
@@ -235,12 +235,12 @@ public class LoginProcess {
         guard configuration.isValidUniversalLinkURL(url: url) ||
               configuration.isValidCustomizeURL(url: url) else
         {
-            invokeFailure(error: LineSDKError.authorizeFailed(reason: .callbackURLSchemeNotMatching))
+            invokeFailure(error: SDKError.authorizeFailed(reason: .callbackURLSchemeNotMatching))
             return false
         }
         
         guard let sourceApp = sourceApplication, configuration.isValidSourceApplication(appID: sourceApp) else {
-            invokeFailure(error: LineSDKError.authorizeFailed(reason: .invalidSourceApplication))
+            invokeFailure(error: SDKError.authorizeFailed(reason: .invalidSourceApplication))
             return false
         }
         
@@ -398,7 +398,7 @@ class WebLoginFlow: NSObject {
             self.safariViewController = safariViewController
             
             guard let presenting = viewController ?? .topMost else {
-                self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .malformedHierarchy)))
+                self.onNext.call(.error(SDKError.authorizeFailed(reason: .malformedHierarchy)))
                 return
             }
             presenting.present(safariViewController, animated: true) {
@@ -410,7 +410,7 @@ class WebLoginFlow: NSObject {
                     if opened {
                         self.onNext.call(.externalSafari)
                     } else {
-                        self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)))
+                        self.onNext.call(.error(SDKError.authorizeFailed(reason: .exhaustedLoginFlow)))
                     }
                 }
             } else {
@@ -418,7 +418,7 @@ class WebLoginFlow: NSObject {
                 if opened {
                     self.onNext.call(.externalSafari)
                 } else {
-                    self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)))
+                    self.onNext.call(.error(SDKError.authorizeFailed(reason: .exhaustedLoginFlow)))
                 }
             }
         }

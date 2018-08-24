@@ -26,7 +26,7 @@ extension GetGroupsRequest: ResponseDataStub {
     static var success = ""
 }
 
-class GetGroupsRequestTests: LineSDKAPITests {
+class GetGroupsRequestTests: APITests {
 
     func testSuccess() {
 

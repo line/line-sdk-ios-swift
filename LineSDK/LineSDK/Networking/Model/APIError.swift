@@ -32,7 +32,7 @@ struct InternalAPIError: Decodable {
 
 /// Represents API error happens when interacting with LINE APIs.
 /// If server returns an error in a known format, the error will be parsed to an `APIError` and
-/// an `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` as its reason will be thrown out.
+/// an `SDKError.responseFailed` with `.invalidHTTPStatusAPIError` as its reason will be thrown out.
 ///
 public struct APIError {
     

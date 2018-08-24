@@ -1,5 +1,5 @@
 //
-//  LineSDKAccessTokenTests.m
+//  LineSDKLoginResult.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,23 +19,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <XCTest/XCTest.h>
-@import LineSDKObjC;
+import LineSDK
 
-@interface LineSDKAccessTokenTests : XCTestCase
-
-@end
-
-@implementation LineSDKAccessTokenTests
-
-- (void)testInterface {
-    LineSDKAccessToken* token = nil;
-    XCTAssertNil(token.value);
-    XCTAssertNil(token.createdAt);
-    XCTAssertNil(token.IDToken);
-    XCTAssertNil(token.refreshToken);
-    XCTAssertNil(token.permissions);
-    XCTAssertNil(token.expiresAt);
+@objcMembers
+public class LineSDKLoginResult: NSObject {
+    let _value: LoginResult
+    init(_ value: LoginResult) { _value = value }
+    
+    public var accessToken: LineSDKAccessToken { return .init(_value.accessToken) }
+    public var permissions: Set<LineSDKLoginPermission> { return Set(_value.permissions.map { .init($0) }) }
+    public var userProfile: LineSDKUserProfile? { return _value.userProfile.map { .init($0) } }
 }
-
-@end

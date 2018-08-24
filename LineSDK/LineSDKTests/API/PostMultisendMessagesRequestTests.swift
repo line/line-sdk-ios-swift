@@ -26,7 +26,7 @@ extension PostMultisendMessagesRequest: ResponseDataStub {
     static var success = ""
 }
 
-class PostMultisendMessagesRequestTests: LineSDKAPITests {
+class PostMultisendMessagesRequestTests: APITests {
     
     let message = TextMessage(text: "hello")
     

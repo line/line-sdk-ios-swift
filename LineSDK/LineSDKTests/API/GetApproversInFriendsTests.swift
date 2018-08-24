@@ -26,7 +26,7 @@ extension GetApproversInFriendsRequest: ResponseDataStub {
     static var success = ""
 }
 
-class GetApproversInFriendsRequestTests: LineSDKAPITests {
+class GetApproversInFriendsRequestTests: APITests {
 
     func testSuccess() {
         let r = GetApproversInFriendsRequest()

@@ -126,14 +126,14 @@ protocol FlexMessageComponentTypeCompatible {
     var type: FlexMessageComponentType { get }
 }
 
-/// Asserts if a parameter meets a give `condition`. If fails, a `LineSDKError.generalError` with
+/// Asserts if a parameter meets a give `condition`. If fails, a `SDKError.generalError` with
 /// `.parameterError` as its reason will be thrown.
 ///
 /// - Parameters:
 ///   - name: The name of input parameter. It will be used as the `parameterName` in `.parameterError`.
 ///   - reason: The description of the error. It will be used as the `description` in `.parameterError`.
 ///   - condition: Assertion condition to check.
-/// - Throws: A `LineSDKError.generalError` with `.parameterError` as its reason, if condition does not
+/// - Throws: A `SDKError.generalError` with `.parameterError` as its reason, if condition does not
 ///           pass the assertion.
 ///
 func assertParameter(
@@ -142,7 +142,7 @@ func assertParameter(
     unless condition: () -> Bool) throws
 {
     guard !condition() else { return }
-    throw LineSDKError.generalError(reason: .parameterError(parameterName: name(), description: reason()))
+    throw SDKError.generalError(reason: .parameterError(parameterName: name(), description: reason()))
 }
 
 /// Asserts if `url` contains a scheme of "https".
@@ -150,7 +150,7 @@ func assertParameter(
 /// - Parameters:
 ///   - url: Input URL to assert.
 ///   - parameterName: The name of input parameter. It will be used as the `parameterName` in `.parameterError`.
-/// - Throws: A `LineSDKError.generalError` with `.parameterError` as its reason, if condition does not
+/// - Throws: A `SDKError.generalError` with `.parameterError` as its reason, if condition does not
 ///           pass the assertion.
 func assertHTTPSScheme(url: URL, parameterName: String) throws {
     try assertParameter(

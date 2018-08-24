@@ -33,7 +33,7 @@ extension GetUserProfileRequest: ResponseDataStub {
     """
 }
 
-class GetUserProfileRequestTests: LineSDKAPITests {
+class GetUserProfileRequestTests: APITests {
 
     func testSuccess() {
         let r = GetUserProfileRequest()

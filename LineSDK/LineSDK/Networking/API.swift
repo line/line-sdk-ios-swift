@@ -1,5 +1,5 @@
 //
-//  LineSDKAPI.swift
+//  API.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -24,14 +24,14 @@ import Foundation
 /// Utility class for calling the LINE APIs.
 ///
 /// - Note:
-/// For most of APIs, using interfaces in `LineSDKAPI` is equivalent with
+/// For most of APIs, using interfaces in `API` is equivalent with
 /// using underlying `Request` and sending it by a `Session`. However, some methods in `LineSDKAPI` provide useful
 /// side effects like operating on keychain or redirecting final result in a more reasonable way.
 ///
 /// Unless you know the detail or want to extend LineSDK to send arbitrary unimplemented LINE API,
 /// using `LineSDKAPI` to interact with LINE's APIs are highly recommended.
 ///
-public struct LineSDKAPI {
+public struct API {
     /// Refreshes the access token with a provided `refreshToken`.
     ///
     /// - Parameters:
@@ -51,7 +51,7 @@ public struct LineSDKAPI {
         completionHandler completion: @escaping (Result<AccessToken>) -> Void)
     {
         guard let token = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
-            queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
+            queue.execute { completion(.failure(SDKError.requestFailed(reason: .lackOfAccessToken))) }
             return
         }
         let request = PostRefreshTokenRequest(channelID: LoginConfiguration.shared.channelID, refreshToken: token)
@@ -110,7 +110,7 @@ public struct LineSDKAPI {
             case .success(_):
                 handleSuccessResult()
             case .failure(let error):
-                guard let sdkError = error as? LineSDKError,
+                guard let sdkError = error as? SDKError,
                       case .responseFailed(reason: .invalidHTTPStatusAPIError(let code, _, _)) = sdkError else
                 {
                     completion(.failure(error))
@@ -139,7 +139,7 @@ public struct LineSDKAPI {
         completionHandler completion: @escaping (Result<AccessTokenVerifyResult>) -> Void)
     {
         guard let token = token ?? AccessTokenStore.shared.current?.value else {
-            queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
+            queue.execute { completion(.failure(SDKError.requestFailed(reason: .lackOfAccessToken))) }
             return
         }
         let request = GetVerifyTokenRequest(accessToken: token)
@@ -165,7 +165,7 @@ public struct LineSDKAPI {
 
 // MARK: - Social API
 
-extension LineSDKAPI {
+extension API {
 
     /// Gets a friend list of the user. Unless already having granted the channel,
     /// users who've configured the privacy filter are excluded from the list.
@@ -251,7 +251,7 @@ extension LineSDKAPI {
 
 // MARK: - Messaging API
 
-extension LineSDKAPI {
+extension API {
     
     /// Sends messages to a certain chat destination on behalf of the current authorized user.
     ///
@@ -264,8 +264,8 @@ extension LineSDKAPI {
     ///
     /// - Note:
     ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
-    ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
-    ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
+    ///   a `SDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
+    ///   HTTP status code. You could use `SDKError.isPermissionError` to check for this eroor.
     ///   Please confirm your channel permissions before you use this API.
     ///
     ///   You could send at most 5 messages to a user in a single call. Line SDK does not check the elements count in
@@ -296,8 +296,8 @@ extension LineSDKAPI {
     ///
     /// - Note:
     ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
-    ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
-    ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
+    ///   a `SDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
+    ///   HTTP status code. You could use `SDKError.isPermissionError` to check for this eroor.
     ///   Please confirm your channel permissions before you use this API.
     ///
     ///   You could send at most 5 messages, and to at most 10 users in a single call. Line SDK does not check the

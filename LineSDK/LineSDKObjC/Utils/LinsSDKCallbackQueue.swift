@@ -1,5 +1,5 @@
 //
-//  LineSDKAPITests.swift
+//  LinsSDKCallbackQueue.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,39 +19,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-@testable import LineSDK
+import LineSDK
 
-func setupTestToken() {
-    let token = try! JSONDecoder().decode(AccessToken.self, from: PostExchangeTokenRequest.successData)
-    try! AccessTokenStore.shared.setCurrentToken(token)
-}
-
-class LineSDKAPITests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
+@objcMembers
+public class LineSDKCallbackQueue: NSObject {
+    let _value: CallbackQueue
+    init(_ value: CallbackQueue) {
+        _value = value
     }
     
-    override func tearDown() {
-        LoginManager.shared.reset()
-        super.tearDown()
+    public static let asyncMain = LineSDKCallbackQueue(.asyncMain)
+    public static let currentMainOrAsync = LineSDKCallbackQueue(.currentMainOrAsync)
+    public static let untouch = LineSDKCallbackQueue(.untouch)
+    public static func callbackQueue(dispatchQueue: DispatchQueue) -> LineSDKCallbackQueue {
+        return LineSDKCallbackQueue(.dispatch(dispatchQueue))
     }
-    
-    let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
-    func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
-        let expect = expectation(description: "\(#file)_\(#line)")
-
-        if request.authentication == .token {
-            setupTestToken()
-        }
-        
-        let session = Session.stub(configuration: config, string: T.success)
-        session.send(request) { result in
-            verifier(result.value!)
-            expect.fulfill()
-        }
-        waitForExpectations(timeout: 1.0, handler: nil)
+    public static func callbackQueue(operationQueue: OperationQueue) -> LineSDKCallbackQueue {
+        return LineSDKCallbackQueue(.operation(operationQueue))
     }
 }

@@ -157,7 +157,7 @@ extension APIItem {
                 switch res {
                 case .success(let value):
                     guard !value.friends.isEmpty else {
-                        let error = LineSDKError.generalError(
+                        let error = SDKError.generalError(
                             reason: .parameterError(
                                 parameterName: "friends",
                                 description: "You need at least one friend to use this API."))
@@ -223,7 +223,7 @@ func selectUserFromFriendList(in viewController: UIViewController, handler: @esc
         switch res {
         case .success(let value):
             guard !value.friends.isEmpty else {
-                let error = LineSDKError.generalError(
+                let error = SDKError.generalError(
                     reason: .parameterError(
                         parameterName: "friends",
                         description: "You need at least one friend to use this API."))
@@ -251,7 +251,7 @@ func selectGroupFromGroupList(in viewController: UIViewController, handler: @esc
         switch res {
         case .success(let value):
             guard !value.groups.isEmpty else {
-                let error = LineSDKError.generalError(
+                let error = SDKError.generalError(
                     reason: .parameterError(
                         parameterName: "groups",
                         description: "You need at least one group to use this API."))

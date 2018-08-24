@@ -86,7 +86,7 @@ class RefreshTokenPipelineTests: XCTestCase {
                     reason: .invalidHTTPStatusAPIError(
                         let code,
                         let e,
-                        let message)) = error as! LineSDKError else
+                        let message)) = error as! SDKError else
                 {
                     XCTFail("Error type is not correct.")
                     return
@@ -116,7 +116,7 @@ class RefreshTokenPipelineTests: XCTestCase {
             switch action {
             case .stop(let error):
                 guard case .requestFailed(
-                    reason: .lackOfAccessToken) = error as! LineSDKError else
+                    reason: .lackOfAccessToken) = error as! SDKError else
                 {
                     XCTFail("Error type is not correct.")
                     return

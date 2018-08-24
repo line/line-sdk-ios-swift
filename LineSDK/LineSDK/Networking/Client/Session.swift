@@ -113,7 +113,7 @@ public class Session {
         sessionTask.onResult.delegate(on: self) { (self, value) in
             switch value {
             case (_, _, let error?):
-                let error = LineSDKError.responseFailed(reason: .URLSessionError(error))
+                let error = SDKError.responseFailed(reason: .URLSessionError(error))
                 callbackQueue.execute { completion?(.failure(error)) }
             case (let data?, let response as HTTPURLResponse, _):
                 do {
@@ -150,7 +150,7 @@ public class Session {
                     callbackQueue.execute { completion?(.failure(error)) }
                 }
             default:
-                let error = LineSDKError.responseFailed(reason: .nonHTTPURLResponse)
+                let error = SDKError.responseFailed(reason: .nonHTTPURLResponse)
                 callbackQueue.execute { completion?(.failure(error)) }
             }
         }
@@ -266,7 +266,7 @@ public class Session {
                 let value = try terminator.parse(request: request, data: data)
                 try done(.value(value))
             } catch {
-                throw LineSDKError.responseFailed(reason: .dataParsingFailed(T.Response.self, data, error))
+                throw SDKError.responseFailed(reason: .dataParsingFailed(T.Response.self, data, error))
             }
         }
     }

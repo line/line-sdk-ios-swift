@@ -1,5 +1,5 @@
 //
-//  GetApproversInGroupRequestTests.swift
+//  LineSDKGetUserProfileRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,36 +19,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-@testable import LineSDK
+import LineSDK
 
-extension GetApproversInGroupRequest: ResponseDataStub {
-    static var success = ""
-}
-
-class GetApproversInGroupRequestTests: APITests {
-
-    func testSuccess() {
-
-        let r = GetApproversInGroupRequest(groupID: "")
-        GetApproversInGroupRequest.success =
-        """
-        {
-            "friends": [
-                {
-                    "displayName": "Brown",
-                    "pictureUrl": "https://example.com/abc",
-                    "userId": "aaaa"
-                },
-                {
-                    "displayName": "Sally",
-                    "userId": "cccc"
-                }
-            ]
-        }
-        """
-        runTestSuccess(for: r) { response in
-            XCTAssertEqual(response.users.first?.userId, "aaaa")
-        }
-    }
+@objcMembers
+public class LineSDKGetUserProfileRequest: NSObject {
+    let _value: GetUserProfileRequest
+    init(_ value: GetUserProfileRequest) { _value = value }
+    
+    
 }

@@ -1,5 +1,5 @@
 //
-//  LineSDKErrorTests.swift
+//  SDKErrorTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,30 +22,30 @@
 import XCTest
 @testable import LineSDK
 
-class LineSDKErrorTests: XCTestCase {
+class SDKErrorTests: XCTestCase {
     
     func testErrorClassifying() {
-        let requestError = LineSDKError.requestFailed(reason: .missingURL)
+        let requestError = SDKError.requestFailed(reason: .missingURL)
         XCTAssertTrue(requestError.isRequestError)
         XCTAssertFalse(requestError.isResponseError)
         
-        let responseError = LineSDKError.responseFailed(reason: .nonHTTPURLResponse)
+        let responseError = SDKError.responseFailed(reason: .nonHTTPURLResponse)
         XCTAssertTrue(responseError.isResponseError)
         XCTAssertFalse(responseError.isAuthorizeError)
         
-        let authError = LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)
+        let authError = SDKError.authorizeFailed(reason: .exhaustedLoginFlow)
         XCTAssertTrue(authError.isAuthorizeError)
         XCTAssertFalse(authError.isGeneralError)
         
-        let generalError = LineSDKError.generalError(reason: .conversionError(string: "123", encoding: .utf8))
+        let generalError = SDKError.generalError(reason: .conversionError(string: "123", encoding: .utf8))
         XCTAssertTrue(generalError.isGeneralError)
         XCTAssertFalse(generalError.isRequestError)
         
     }
     
     func testUserCancelError() {
-        let userCancelled = LineSDKError.authorizeFailed(reason: .userCancelled)
-        let otherError = LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)
+        let userCancelled = SDKError.authorizeFailed(reason: .userCancelled)
+        let otherError = SDKError.authorizeFailed(reason: .exhaustedLoginFlow)
         
         XCTAssertTrue(userCancelled.isUserCancelled)
         XCTAssertFalse(otherError.isUserCancelled)
@@ -53,20 +53,20 @@ class LineSDKErrorTests: XCTestCase {
     
     func testIsResponseError() {
         let err = APIError(InternalAPIError(message: "321"))
-        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 123, error: err, raw: "raw"))
+        let error = SDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 123, error: err, raw: "raw"))
         XCTAssertTrue(error.isResponseError(statusCode: 123))
         XCTAssertFalse(error.isResponseError(statusCode: 321))
     }
     
     func testIsBadRequest() {
         let err = APIError(InternalAPIError(message: "Bad request"))
-        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 400, error: err, raw: "raw"))
+        let error = SDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 400, error: err, raw: "raw"))
         XCTAssertTrue(error.isBadRequest)
     }
     
     func testIsPermission() {
         let err = APIError(InternalAPIError(message: "Not enough permission"))
-        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 403, error: err, raw: "raw"))
+        let error = SDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 403, error: err, raw: "raw"))
         XCTAssertTrue(error.isPermissionError)
     }
 }

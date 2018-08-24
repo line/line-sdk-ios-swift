@@ -92,7 +92,7 @@ public class LoginManager {
     /// Login to LINE service.
     ///
     /// - Parameters:
-    ///   - permissions: The set of permissions which are required by client app.
+    ///   - permissions: The set of permissions which are required by client app. Default is `[.profile]`.
     ///   - viewController: The view controller from which LineSDK should present its login view controller.
     ///                     If `nil`, the most top view controller in current view controller hierarchy will be used.
     ///   - options: The options used during login process. See `LoginManagerOption` for more.
@@ -110,15 +110,15 @@ public class LoginManager {
     ///   The access token will be issued if user authorized your app. This token will be stored to keychain of your
     ///   app automatically for later use. A refresh token will be stored as well, and all API invocation will try to
     ///   refresh the access token if necessary, so basically you do not need to worry about it. However, if you would
-    ///   like to refresh the access token manually, use `LineSDKAPI.refreshAccessToken(with:)`.
+    ///   like to refresh the access token manually, use `API.refreshAccessToken(with:)`.
     ///
     @discardableResult
     public func login(
-        permissions: Set<LoginPermission> = [],
+        permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
         options: [LoginManagerOption] = [],
-        completionHandler completion: @escaping (Result<LoginResult>) -> Void) -> LoginProcess? {
-        
+        completionHandler completion: @escaping (Result<LoginResult>) -> Void) -> LoginProcess?
+    {
         lock.lock()
         defer { lock.unlock() }
         
@@ -186,7 +186,7 @@ public class LoginManager {
     ///
     /// - Parameter completion: The completion closure to be executed when logout action finishes.
     public func logout(completionHandler completion: @escaping (Result<()>) -> Void) {
-        LineSDKAPI.revokeAccessToken(completionHandler: completion)
+        API.revokeAccessToken(completionHandler: completion)
     }
     
     /// Asks this `LoginManager` to handle a url callback from either LINE client app or web login flow.

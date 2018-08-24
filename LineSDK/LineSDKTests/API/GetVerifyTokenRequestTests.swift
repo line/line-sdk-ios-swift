@@ -34,7 +34,7 @@ extension GetVerifyTokenRequest: ResponseDataStub {
     """
 }
 
-class GetVerifyTokenRequestTests: LineSDKAPITests {
+class GetVerifyTokenRequestTests: APITests {
     
     func testSuccess() {
         let r = GetVerifyTokenRequest(accessToken: "123")

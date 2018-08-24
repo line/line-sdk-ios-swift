@@ -1,5 +1,5 @@
 //
-//  GetApproversInGroupRequestTests.swift
+//  LineSDKHexColor.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,36 +19,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-@testable import LineSDK
+import LineSDK
 
-extension GetApproversInGroupRequest: ResponseDataStub {
-    static var success = ""
-}
-
-class GetApproversInGroupRequestTests: APITests {
-
-    func testSuccess() {
-
-        let r = GetApproversInGroupRequest(groupID: "")
-        GetApproversInGroupRequest.success =
-        """
-        {
-            "friends": [
-                {
-                    "displayName": "Brown",
-                    "pictureUrl": "https://example.com/abc",
-                    "userId": "aaaa"
-                },
-                {
-                    "displayName": "Sally",
-                    "userId": "cccc"
-                }
-            ]
-        }
-        """
-        runTestSuccess(for: r) { response in
-            XCTAssertEqual(response.users.first?.userId, "aaaa")
-        }
+@objcMembers
+public class LineSDKHexColor: NSObject {
+    let _value: HexColor
+    init(_ value: HexColor) { _value = value }
+    
+    public var rawValue: String { return _value.rawValue }
+    public var color: UIColor { return _value.color }
+    
+    public convenience init(_ color: UIColor) { self.init(.init(color)) }
+    public convenience init(rawValue: String, defaultColor color: UIColor) { self.init(.init(rawValue: rawValue, default: color)) }
+    
+    func equalsToColor(_ another: LineSDKHexColor) -> Bool {
+        return _value == another._value
     }
 }

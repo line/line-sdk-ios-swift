@@ -45,7 +45,7 @@ class UserProfileViewController: UIViewController, IndicatorDisplay {
 
         if needsLoadProfile {
             showIndicator()
-            LineSDKAPI.getProfile { result in
+            API.getProfile { result in
                 self.hideIndicator()
                 switch result {
                 case .success(let profile):

@@ -1,5 +1,5 @@
 //
-//  LineSDKAccessTokenStoreTests.m
+//  APIError.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,25 +19,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <XCTest/XCTest.h>
-@import LineSDKObjC;
+import LineSDK
 
-@interface LineSDKAccessTokenStoreTests : XCTestCase
-
-@end
-
-@implementation LineSDKAccessTokenStoreTests
-
-- (void)testInterface {
-    LineSDKAccessTokenStore *store = nil;
-    XCTAssertNil(store.currentToken);
+@objcMembers
+public class LineSDKAPIError: NSObject {
+    let _value: APIError
+    init(_ value: APIError) { _value = value }
+    
+    public var error: String { return _value.error }
+    public var detail: String? { return _value.detail }
 }
-
-- (void)testNotificationDefinition {
-    XCTAssertNotNil(NSNotification.LineSDKAccessTokenDidUpdate);
-    XCTAssertNotNil(NSNotification.LineSDKAccessTokenDidRemove);
-    XCTAssertNotNil(NSNotification.LineSDKOldAccessTokenKey);
-    XCTAssertNotNil(NSNotification.LineSDKNewAccessTokenKey);
-}
-
-@end

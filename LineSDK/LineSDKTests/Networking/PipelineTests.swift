@@ -67,7 +67,7 @@ class PipelineTests: XCTestCase {
         try! pipeline.redirect(request: request, data: data, response: response) { action in
             switch action {
             case .stop(let error):
-                if let sdkError = error as? LineSDKError,
+                if let sdkError = error as? SDKError,
                    case .responseFailed(reason:
                     .invalidHTTPStatusAPIError(code: let code, error: let authErr, raw: let raw)) = sdkError
                 {
@@ -95,7 +95,7 @@ class PipelineTests: XCTestCase {
         try! pipeline.redirect(request: request, data: data, response: response) { action in
             switch action {
             case .stop(let error):
-                if let sdkError = error as? LineSDKError,
+                if let sdkError = error as? SDKError,
                     case .responseFailed(reason:
                         .invalidHTTPStatusAPIError(code: let code, error: let apiErr, raw: let raw)) = sdkError
                 {
@@ -122,7 +122,7 @@ class PipelineTests: XCTestCase {
         try! pipeline.redirect(request: request, data: data, response: response) { action in
             switch action {
             case .stop(let err):
-                if let sdkError = err as? LineSDKError,
+                if let sdkError = err as? SDKError,
                     case .responseFailed(reason:
                         .invalidHTTPStatusAPIError(let code, let e, let raw)) = sdkError
                 {

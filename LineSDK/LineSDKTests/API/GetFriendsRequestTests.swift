@@ -26,7 +26,7 @@ extension GetFriendsRequest: ResponseDataStub {
     static var success = ""
 }
 
-class GetFriendsRequestTests: LineSDKAPITests {
+class GetFriendsRequestTests: APITests {
 
     func testSuccess() {
 
