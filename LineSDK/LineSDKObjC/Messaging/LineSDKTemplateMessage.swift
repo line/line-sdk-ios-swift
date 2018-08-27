@@ -49,12 +49,9 @@ public class LineSDKTemplateMessagePayload: NSObject {
     static func converted(from value: TemplateMessagePayload) -> LineSDKTemplateMessagePayload {
         switch value {
         case .buttons(let payload): return LineSDKTemplateButtonsPayload(payload)
-        case .confirm(_):
-            fatalError()
-        case .carousel(_):
-            fatalError()
-        case .imageCarousel(_):
-            fatalError()
+        case .confirm(let payload): return LineSDKTemplateConfirmPayload(payload)
+        case .carousel(let payload): return LineSDKTemplateCarouselPayload(payload)
+        case .imageCarousel(let payload): return LineSDKTemplateImageCarouselPayload(payload)
         case .unknown:
             Log.fatalError("Cannot create ObjC compatible type for \(value).")
         }
@@ -62,6 +59,18 @@ public class LineSDKTemplateMessagePayload: NSObject {
     
     public var buttonsPayload: LineSDKTemplateButtonsPayload? {
         return toTemplateMessagePayload().asButtonsPayload.map { .init($0) }
+    }
+    
+    public var confirmPayload: LineSDKTemplateConfirmPayload? {
+        return toTemplateMessagePayload().asConfirmPayload.map { .init($0) }
+    }
+    
+    public var carouselPayload: LineSDKTemplateCarouselPayload? {
+        return toTemplateMessagePayload().asCarouselPayload.map { .init($0) }
+    }
+    
+    public var imageCarouselPayload: LineSDKTemplateImageCarouselPayload? {
+        return toTemplateMessagePayload().asImageCarouselPayload.map { .init($0) }
     }
     
     func toTemplateMessagePayload() -> TemplateMessagePayload {

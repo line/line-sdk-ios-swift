@@ -1,5 +1,5 @@
 //
-//  LineSDKTemplateButtonsPayload.swift
+//  LineSDKTemplateCarouselPayload.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,17 +22,13 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKTemplateButtonsPayload: LineSDKTemplateMessagePayload {
-    
+public class LineSDKTemplateCarouselPayloadColumn: NSObject {
     public var text: String
     public var title: String?
     public var actions: [LineSDKMessageAction]
     public var defaultAction: LineSDKMessageAction?
     public var thumbnailImageURL: URL?
-    public var imageAspectRatio: LineSDKTemplateMessagePayloadImageAspectRatio = .none
-    public var imageContentMode: LineSDKTemplateMessagePayloadImageContentMode = .none
     public var imageBackgroundColor: LineSDKHexColor?
-    public var sender: LineSDKMessageSender?
     
     public init(title: String?, text: String, actions: [LineSDKMessageAction]) {
         self.title = title
@@ -40,26 +36,49 @@ public class LineSDKTemplateButtonsPayload: LineSDKTemplateMessagePayload {
         self.actions = actions
     }
     
-    convenience init(_ value: TemplateButtonsPayload) {
+    convenience init(_ value: TemplateCarouselPayload.Column) {
         self.init(title: value.title, text: value.text, actions: value.actions.map { $0.converted })
         defaultAction = value.defaultAction.map { $0.converted }
         thumbnailImageURL = value.thumbnailImageURL
-        imageAspectRatio = .init(value.imageAspectRatio)
-        imageContentMode = .init(value.imageContentMode)
         imageBackgroundColor = value.imageBackgroundColor.map { .init($0) }
-        sender = value.sender.map { .init($0) }
     }
-
-    override func toTemplateMessagePayload() -> TemplateMessagePayload {
-        var payload = TemplateButtonsPayload(title: title, text: text, actions: actions.map { $0.toAction() })
-        payload.defaultAction = defaultAction?.toAction()
-        payload.thumbnailImageURL = thumbnailImageURL
-        payload.imageAspectRatio = imageAspectRatio._value
-        payload.imageContentMode = imageContentMode._value
-        payload.imageBackgroundColor = imageBackgroundColor?._value
-        payload.sender = sender?._value
-        
-        return .buttons(payload)
+    
+    public func addAction(_ value: LineSDKMessageAction) {
+        actions.append(value)
+    }
+    
+    func toColumn() -> TemplateCarouselPayload.Column {
+        var colum = TemplateCarouselPayload.Column(title: title, text: text, actions: actions.map {$0.toAction() })
+        colum.defaultAction = defaultAction?.toAction()
+        colum.thumbnailImageURL = thumbnailImageURL
+        colum.imageBackgroundColor = imageBackgroundColor?._value
+        return colum
     }
 }
 
+@objcMembers
+public class LineSDKTemplateCarouselPayload: LineSDKTemplateMessagePayload {
+    
+    public var columns: [LineSDKTemplateCarouselPayloadColumn]
+    public var imageAspectRatio: LineSDKTemplateMessagePayloadImageAspectRatio = .none
+    public var imageContentMode: LineSDKTemplateMessagePayloadImageContentMode = .none
+    
+    convenience init(_ value: TemplateCarouselPayload) {
+        self.init(columns: value.columns.map { .init($0) })
+        imageAspectRatio = .init(value.imageAspectRatio)
+        imageContentMode = .init(value.imageContentMode)
+    }
+    
+    public init(columns: [LineSDKTemplateCarouselPayloadColumn]) {
+        self.columns = columns
+    }
+    
+    override func toTemplateMessagePayload() -> TemplateMessagePayload {
+        let payload = TemplateCarouselPayload(columns: columns.map { $0.toColumn() })
+        return .carousel(payload)
+    }
+    
+    public func addColumn(_ column: LineSDKTemplateCarouselPayloadColumn) {
+        columns.append(column)
+    }
+}

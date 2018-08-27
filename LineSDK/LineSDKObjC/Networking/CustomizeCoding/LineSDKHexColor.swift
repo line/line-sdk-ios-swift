@@ -24,13 +24,21 @@ import LineSDK
 @objcMembers
 public class LineSDKHexColor: NSObject {
     let _value: HexColor
-    init(_ value: HexColor) { _value = value }
-    
+
     public var rawValue: String { return _value.rawValue }
     public var color: UIColor { return _value.color }
     
-    public convenience init(_ color: UIColor) { self.init(.init(color)) }
-    public convenience init(rawValue: String, defaultColor color: UIColor) { self.init(.init(rawValue: rawValue, default: color)) }
+    init(_ value: HexColor) {
+        _value = value
+    }
+    
+    public init(_ color: UIColor) {
+        _value = .init(color)
+    }
+    
+    public init(rawValue: String, defaultColor color: UIColor) {
+        _value = .init(rawValue: rawValue, default: color)
+    }
     
     public func isEqualsToColor(_ another: LineSDKHexColor) -> Bool {
         return _value == another._value

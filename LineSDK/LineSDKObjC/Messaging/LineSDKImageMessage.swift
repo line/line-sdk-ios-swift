@@ -29,15 +29,16 @@ public class LineSDKImageMessage: LineSDKMessage {
     public var fileExtension: String?
     public var sender: LineSDKMessageSender?
     
-    init(_ value: ImageMessage) {
-        originalContentURL = value.originalContentURL
-        previewImageURL = value.previewImageURL
-        animated = value.animated ?? false
-        fileExtension = value.fileExtension
-        sender = value.sender.map { .init($0) }
+    convenience init(_ value: ImageMessage) {
+        self.init(
+            originalContentURL: value.originalContentURL,
+            previewImageURL: value.previewImageURL,
+            animated: value.animated ?? false,
+            fileExtension: value.fileExtension,
+            sender: value.sender.map { .init($0) })
     }
     
-    public convenience init?(originalContentURL: URL, previewImageURL: URL) {
+    public convenience init(originalContentURL: URL, previewImageURL: URL) {
         self.init(
             originalContentURL: originalContentURL,
             previewImageURL: previewImageURL,
@@ -46,23 +47,18 @@ public class LineSDKImageMessage: LineSDKMessage {
             sender: nil)
     }
     
-    public convenience init?(
+    public init(
         originalContentURL: URL,
         previewImageURL: URL,
         animated: Bool,
         fileExtension: String?,
         sender: LineSDKMessageSender?)
     {
-        guard let value = try? ImageMessage(
-            originalContentURL: originalContentURL,
-            previewImageURL: previewImageURL,
-            animated: animated,
-            fileExtension: fileExtension,
-            sender: sender?._value) else
-        {
-            return nil
-        }
-        self.init(value)
+        self.originalContentURL = originalContentURL
+        self.previewImageURL = previewImageURL
+        self.animated = animated
+        self.fileExtension = fileExtension
+        self.sender = sender
     }
     
     override func toMessage() -> Message {

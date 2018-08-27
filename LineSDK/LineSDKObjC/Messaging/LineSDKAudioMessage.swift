@@ -27,18 +27,13 @@ public class LineSDKAudioMessage: LineSDKMessage {
     public let originalContentURL: URL
     public let duration: TimeInterval
     
-    init(_ value: AudioMessage) {
-        originalContentURL = value.originalContentURL
-        duration = value.duration ?? 0
+    convenience init(_ value: AudioMessage) {
+        self.init(originalContentURL: value.originalContentURL, duration: value.duration ?? 0)
     }
     
-    public convenience init?(originalContentURL: URL, duration: TimeInterval) {
-        guard let value = try? AudioMessage(
-            originalContentURL: originalContentURL, duration: duration) else
-        {
-            return nil
-        }
-        self.init(value)
+    public init(originalContentURL: URL, duration: TimeInterval) {
+        self.originalContentURL = originalContentURL
+        self.duration = duration
     }
     
     override func toMessage() -> Message {

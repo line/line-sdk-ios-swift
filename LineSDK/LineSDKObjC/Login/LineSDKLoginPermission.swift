@@ -24,9 +24,11 @@ import LineSDK
 @objcMembers
 public class LineSDKLoginPermission: NSObject {
     let _value: LoginPermission
-    init(_ value: LoginPermission) { _value = value }
-    public convenience init(rawValue: String) {
-        self.init(.init(rawValue: rawValue))
+    convenience init(_ value: LoginPermission) {
+        self.init(rawValue: value.rawValue)
+    }
+    public init(rawValue: String) {
+        _value = .init(rawValue: rawValue)
     }
 
     public static let openID                         = LineSDKLoginPermission(.openID)

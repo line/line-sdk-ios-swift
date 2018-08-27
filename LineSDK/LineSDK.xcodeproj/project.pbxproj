@@ -148,6 +148,9 @@
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
+		4BDD2C182133A26900DD563D /* LineSDKTemplateConfirmPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C172133A26900DD563D /* LineSDKTemplateConfirmPayload.swift */; };
+		4BDD2C1A2133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C192133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift */; };
+		4BDD2C1C2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1B2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift */; };
 		4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */; };
 		4BEB491C212B992B00BA946A /* FlexImageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */; };
 		4BEB491E212B9E5500BA946A /* FlexFillerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */; };
@@ -359,6 +362,9 @@
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4BDD2C152133970800DD563D /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		4BDD2C172133A26900DD563D /* LineSDKTemplateConfirmPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateConfirmPayload.swift; sourceTree = "<group>"; };
+		4BDD2C192133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateCarouselPayload.swift; sourceTree = "<group>"; };
+		4BDD2C1B2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateImageCarouselPayload.swift; sourceTree = "<group>"; };
 		4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponent.swift; sourceTree = "<group>"; };
 		4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponentTests.swift; sourceTree = "<group>"; };
 		4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexFillerComponent.swift; sourceTree = "<group>"; };
@@ -781,6 +787,9 @@
 			isa = PBXGroup;
 			children = (
 				4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */,
+				4BDD2C172133A26900DD563D /* LineSDKTemplateConfirmPayload.swift */,
+				4BDD2C192133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift */,
+				4BDD2C1B2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift */,
 			);
 			path = Template;
 			sourceTree = "<group>";
@@ -1334,12 +1343,15 @@
 			files = (
 				4BBEA9B4212EB35000858627 /* LineSDKAccessTokenStore.swift in Sources */,
 				4BC9B2D9212FADD60071C736 /* LinsSDKCallbackQueue.swift in Sources */,
+				4BDD2C1C2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift in Sources */,
 				4BC4B3E1212FF39D00750794 /* LineSDKTemplateMessage.swift in Sources */,
 				4B2D14FA212F9F7B000DD5BE /* LineSDKGetUserProfileRequest.swift in Sources */,
 				4B2D1505212FABD2000DD5BE /* LineSDKAPI.swift in Sources */,
 				4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */,
+				4BDD2C182133A26900DD563D /* LineSDKTemplateConfirmPayload.swift in Sources */,
 				4BC9B2E0212FB7B60071C736 /* LineSDKGroup.swift in Sources */,
 				4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */,
+				4BDD2C1A2133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift in Sources */,
 				4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */,
 				4BC4B3D7212FD76C00750794 /* LineSDKMessage.swift in Sources */,
 				4BC9B2E2212FB8390071C736 /* LineSDKGraphResponse.swift in Sources */,

@@ -54,21 +54,28 @@ public class LineSDKMessage: NSObject {
 @objcMembers
 public class LineSDKMessageSender: NSObject {
     var _value: MessageSender
-    init(_ value: MessageSender) { _value = value }
+    
     public var label: String {
         get { return _value.label }
         set { _value.label = newValue }
     }
+    
     public var iconURL: URL {
         get { return _value.iconURL }
         set { _value.iconURL = newValue }
     }
+    
     public var linkURL: URL? {
         get { return _value.linkURL }
         set { _value.linkURL = newValue }
     }
-    public convenience init(label: String, iconURL: URL, linkURL: URL?) {
-        self.init(.init(label: label, iconURL: iconURL, linkURL: linkURL))
+    
+    init(_ value: MessageSender) {
+        _value = value
+    }
+    
+    public init(label: String, iconURL: URL, linkURL: URL?) {
+        _value = .init(label: label, iconURL: iconURL, linkURL: linkURL)
     }
 }
 

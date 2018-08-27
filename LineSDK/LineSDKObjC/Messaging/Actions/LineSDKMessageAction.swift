@@ -21,15 +21,17 @@
 
 import LineSDK
 
-@objcMembers
-public class LineSDKMessageAction: NSObject {
-    
-    static func converted(from value: MessageAction) -> LineSDKMessageAction {
-        switch value {
+extension MessageAction {
+    var converted: LineSDKMessageAction {
+        switch self {
         case .URI(let action): return LineSDKMessageURIAction(action)
-        case .unknown: Log.fatalError("Cannot create ObjC compatible type for \(value).")
+        case .unknown: Log.fatalError("Cannot create ObjC compatible type for \(self).")
         }
     }
+}
+
+@objcMembers
+public class LineSDKMessageAction: NSObject {
     
     public var URIAction: LineSDKMessageURIAction? {
         return toAction().asURIAction.map { .init($0) }
@@ -44,14 +46,13 @@ public class LineSDKMessageURIAction: LineSDKMessageAction {
     public var label: String
     public var uri: URL
     
-    init(_ value: MessageURIAction) {
-        label = value.label
-        uri = value.uri
+    convenience init(_ value: MessageURIAction) {
+        self.init(label: value.label, uri: value.uri)
     }
     
-    public convenience init(label: String, uri: URL) {
-        let action = MessageURIAction(label: label, uri: uri)
-        self.init(action)
+    public init(label: String, uri: URL) {
+        self.label = label
+        self.uri = uri
     }
     
     override func toAction() -> MessageAction {

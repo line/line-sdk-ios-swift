@@ -27,18 +27,13 @@ public class LineSDKVideoMessage: LineSDKMessage {
     public let originalContentURL: URL
     public let previewImageURL: URL
     
-    init(_ value: VideoMessage) {
-        originalContentURL = value.originalContentURL
-        previewImageURL = value.previewImageURL
+    convenience init(_ value: VideoMessage) {
+        self.init(originalContentURL: value.originalContentURL, previewImageURL: value.previewImageURL)
     }
     
-    public convenience init?(originalContentURL: URL, previewImageURL: URL) {
-        guard let value = try? VideoMessage(
-            originalContentURL: originalContentURL, previewImageURL: previewImageURL) else
-        {
-            return nil
-        }
-        self.init(value)
+    public init(originalContentURL: URL, previewImageURL: URL) {
+        self.originalContentURL = originalContentURL
+        self.previewImageURL = previewImageURL
     }
     
     override func toMessage() -> Message {

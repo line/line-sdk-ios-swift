@@ -1,5 +1,5 @@
 //
-//  LineSDKTextMessage.swift
+//  LineSDKTemplateConfirmPayload.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,25 +22,33 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKTextMessage: LineSDKMessage {
-    
+public class LineSDKTemplateConfirmPayload: LineSDKTemplateMessagePayload {
     public var text: String
-    public var sender: LineSDKMessageSender?
+    public var confirmAction: LineSDKMessageAction
+    public var cancelAction: LineSDKMessageAction
     
-    convenience init(_ value: TextMessage) {
-        self.init(text: value.text, sender: value.sender.map { .init($0) })
-    }
-    
-    public convenience init(text: String) {
-        self.init(text: text, sender: nil)
-    }
-    
-    public init(text: String, sender: LineSDKMessageSender?) {
+    public init(
+        text: String,
+        confirmAction: LineSDKMessageAction,
+        cancelAction: LineSDKMessageAction)
+    {
         self.text = text
-        self.sender = sender
+        self.confirmAction = confirmAction
+        self.cancelAction = cancelAction
     }
     
-    override func toMessage() -> Message {
-        return .text(.init(text: text, sender: sender?._value))
+    convenience init(_ value: TemplateConfirmPayload) {
+        self.init(
+            text: value.text,
+            confirmAction: value.confirmAction.converted,
+            cancelAction: value.cancelAction.converted)
+    }
+    
+    override func toTemplateMessagePayload() -> TemplateMessagePayload {
+        let payload = TemplateConfirmPayload(
+            text: text,
+            confirmAction: confirmAction.toAction(),
+            cancelAction: cancelAction.toAction())
+        return .confirm(payload)
     }
 }

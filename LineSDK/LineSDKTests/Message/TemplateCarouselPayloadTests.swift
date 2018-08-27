@@ -78,7 +78,7 @@ class TemplateCarouselPayloadTests: XCTestCase {
         
         column.text = "world"
         column.title = "a title"
-        message.add(column: column)
+        message.addColumn(column)
         
         let dic = TemplateMessagePayload.carousel(message).json
         assertEqual(in: dic, forKey: "type", value: "carousel")

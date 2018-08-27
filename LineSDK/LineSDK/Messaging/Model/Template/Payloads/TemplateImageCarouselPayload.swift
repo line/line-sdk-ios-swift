@@ -68,7 +68,7 @@ public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeC
     /// Appends a column to the `columns`.
     ///
     /// - Parameter column: The column to append.
-    public mutating func add(column: Column) {
+    public mutating func addColumn(_ column: Column) {
         columns.append(column)
     }
 }

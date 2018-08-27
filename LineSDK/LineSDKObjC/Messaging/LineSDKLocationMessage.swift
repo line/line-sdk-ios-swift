@@ -29,15 +29,15 @@ public class LineSDKLocationMessage: LineSDKMessage {
     public var latitude: Double
     public var longitude: Double
     
-    init(_ value: LocationMessage) {
-        title = value.title
-        address = value.address
-        latitude = value.latitude
-        longitude = value.longitude
+    convenience init(_ value: LocationMessage) {
+        self.init(title: value.title, address: value.address, latitude: value.latitude, longitude: value.longitude)
     }
     
-    public convenience init(title: String, address: String, latitude: Double, longitude: Double) {
-        self.init(.init(title: title, address: address, latitude: latitude, longitude: longitude))
+    public init(title: String, address: String, latitude: Double, longitude: Double) {
+        self.title = title
+        self.address = address
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
     override func toMessage() -> Message {

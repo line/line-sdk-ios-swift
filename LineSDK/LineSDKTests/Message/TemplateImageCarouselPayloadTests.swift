@@ -69,7 +69,7 @@ class TemplateImageCarouselPayloadTests: XCTestCase {
         )
         let anotherAction = MessageURIAction(label: "OK", uri: URL(string: "scheme://action-2")!)
         anotherColumn.action = .URI(anotherAction)
-        message.add(column: anotherColumn)
+        message.addColumn(anotherColumn)
         
         let dic = TemplateMessagePayload.imageCarousel(message).json
         assertEqual(in: dic, forKey: "type", value: "image_carousel")

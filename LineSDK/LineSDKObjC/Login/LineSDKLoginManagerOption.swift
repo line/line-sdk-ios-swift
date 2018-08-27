@@ -24,9 +24,11 @@ import LineSDK
 @objcMembers
 public class LineSDKLoginManagerOption: NSObject {
     let _value: LoginManagerOption
-    init(_ value: LoginManagerOption) { _value = value }
-    public convenience init(rawValue: Int) {
-        self.init(.init(rawValue: rawValue))
+    convenience init(_ value: LoginManagerOption) {
+        self.init(rawValue: value.rawValue)
+    }
+    public init(rawValue: Int) {
+        _value = .init(rawValue: rawValue)
     }
     
     public static let onlyWebLogin = LineSDKLoginManagerOption(.onlyWebLogin)
