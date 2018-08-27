@@ -47,9 +47,9 @@ public class LineSDKTemplateCarouselPayloadColumn: NSObject {
         actions.append(value)
     }
     
-    func toColumn() -> TemplateCarouselPayload.Column {
-        var colum = TemplateCarouselPayload.Column(title: title, text: text, actions: actions.map {$0.toAction() })
-        colum.defaultAction = defaultAction?.toAction()
+    var unwrapped: TemplateCarouselPayload.Column {
+        var colum = TemplateCarouselPayload.Column(title: title, text: text, actions: actions.map {$0.unwrapped })
+        colum.defaultAction = defaultAction?.unwrapped
         colum.thumbnailImageURL = thumbnailImageURL
         colum.imageBackgroundColor = imageBackgroundColor?._value
         return colum
@@ -73,8 +73,8 @@ public class LineSDKTemplateCarouselPayload: LineSDKTemplateMessagePayload {
         self.columns = columns
     }
     
-    override func toTemplateMessagePayload() -> TemplateMessagePayload {
-        let payload = TemplateCarouselPayload(columns: columns.map { $0.toColumn() })
+    override var unwrapped: TemplateMessagePayload {
+        let payload = TemplateCarouselPayload(columns: columns.map { $0.unwrapped })
         return .carousel(payload)
     }
     

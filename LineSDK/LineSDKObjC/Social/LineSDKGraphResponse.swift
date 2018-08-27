@@ -63,7 +63,7 @@ public enum LineSDKGetFriendsRequestSort: Int {
     case mid
     case name
     
-    var _value: GetFriendsRequest.Sort? {
+    var unwrapped: GetFriendsRequest.Sort? {
         switch self {
         case .none: return nil
         case .mid: return .mid

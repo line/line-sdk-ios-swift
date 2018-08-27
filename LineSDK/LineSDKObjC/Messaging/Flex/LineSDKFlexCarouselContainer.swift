@@ -1,5 +1,5 @@
 //
-//  LineSDKTemplateConfirmPayload.swift
+//  LineSDKFlexCarouselContainer.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,33 +22,22 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKTemplateConfirmPayload: LineSDKTemplateMessagePayload {
-    public var text: String
-    public var confirmAction: LineSDKMessageAction
-    public var cancelAction: LineSDKMessageAction
-    
-    public init(
-        text: String,
-        confirmAction: LineSDKMessageAction,
-        cancelAction: LineSDKMessageAction)
-    {
-        self.text = text
-        self.confirmAction = confirmAction
-        self.cancelAction = cancelAction
+public class LineSDKFlexCarouselContainer: LineSDKFlexMessageContainer {
+    public var contents: [LineSDKFlexBubbleContainer]
+    public init(contents: [LineSDKFlexBubbleContainer]) {
+        self.contents = contents
     }
     
-    convenience init(_ value: TemplateConfirmPayload) {
-        self.init(
-            text: value.text,
-            confirmAction: value.confirmAction.converted,
-            cancelAction: value.cancelAction.converted)
+    convenience init(_ value: FlexCarouselContainer) {
+        self.init(contents: value.contents.map { .init($0) })
     }
     
-    override var unwrapped: TemplateMessagePayload {
-        let payload = TemplateConfirmPayload(
-            text: text,
-            confirmAction: confirmAction.unwrapped,
-            cancelAction: cancelAction.unwrapped)
-        return .confirm(payload)
+    public func addBubble(_ value: LineSDKFlexBubbleContainer) {
+        contents.append(value)
+    }
+    
+    override var unwrapped: FlexMessageContainer {
+        let container = FlexCarouselContainer(contents: contents.map { $0.bubble })
+        return .carousel(container)
     }
 }

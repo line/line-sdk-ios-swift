@@ -39,6 +39,9 @@ public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
         
         /// Style of the footer block.
         public var footer: FlexBlockStyle?
+        
+        /// Creates an empty style value for editing.
+        public init() {}
     }
     
     /// Represents the text direction inside a buddle.

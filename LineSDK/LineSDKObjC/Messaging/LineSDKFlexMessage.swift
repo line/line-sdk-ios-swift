@@ -1,5 +1,5 @@
 //
-//  LineSDKTemplateConfirmPayload.swift
+//  LineSDKFlexMessage.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,33 +22,24 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKTemplateConfirmPayload: LineSDKTemplateMessagePayload {
-    public var text: String
-    public var confirmAction: LineSDKMessageAction
-    public var cancelAction: LineSDKMessageAction
+public class LineSDKFlexMessage: LineSDKMessage {
     
-    public init(
-        text: String,
-        confirmAction: LineSDKMessageAction,
-        cancelAction: LineSDKMessageAction)
-    {
-        self.text = text
-        self.confirmAction = confirmAction
-        self.cancelAction = cancelAction
-    }
-    
-    convenience init(_ value: TemplateConfirmPayload) {
-        self.init(
-            text: value.text,
-            confirmAction: value.confirmAction.converted,
-            cancelAction: value.cancelAction.converted)
-    }
-    
-    override var unwrapped: TemplateMessagePayload {
-        let payload = TemplateConfirmPayload(
-            text: text,
-            confirmAction: confirmAction.unwrapped,
-            cancelAction: cancelAction.unwrapped)
-        return .confirm(payload)
-    }
+//    public var altText: String
+//    public var contents: LineSDKFlexMessageContainer
+//
+//    init(_ value: FlexMessage) {
+//        altText = value.altText
+//        contents = .converted(from: value.payload)
+//    }
+//
+//    public init(altText: String, payload: LineSDKTemplateMessagePayload) {
+//        self.altText = altText
+//        self.payload = payload
+//    }
+//
+//    override func toMessage() -> Message {
+//        let value = TemplateMessage(altText: altText, payload: payload.toTemplateMessagePayload())
+//        return .template(value)
+//    }
 }
+

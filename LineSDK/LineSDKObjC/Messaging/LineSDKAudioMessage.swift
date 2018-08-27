@@ -28,15 +28,21 @@ public class LineSDKAudioMessage: LineSDKMessage {
     public let duration: TimeInterval
     
     convenience init(_ value: AudioMessage) {
-        self.init(originalContentURL: value.originalContentURL, duration: value.duration ?? 0)
+        self.init(originalContentURL: value.originalContentURL, duration: value.duration ?? 0)!
     }
     
-    public init(originalContentURL: URL, duration: TimeInterval) {
-        self.originalContentURL = originalContentURL
-        self.duration = duration
+    public init?(originalContentURL: URL, duration: TimeInterval) {
+        do {
+            _ = try AudioMessage(originalContentURL: originalContentURL, duration: duration)
+            self.originalContentURL = originalContentURL
+            self.duration = duration
+        } catch {
+            Log.assertionFailure("An error happened: \(error)")
+            return nil
+        }
     }
     
-    override func toMessage() -> Message {
+    override var unwrapped: Message {
         return .audio(try! .init(originalContentURL: originalContentURL, duration: duration))
     }
 }

@@ -1,5 +1,5 @@
 //
-//  LineSDKTemplateConfirmPayload.swift
+//  LineSDKFlexMessageContainer.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,33 +22,17 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKTemplateConfirmPayload: LineSDKTemplateMessagePayload {
-    public var text: String
-    public var confirmAction: LineSDKMessageAction
-    public var cancelAction: LineSDKMessageAction
+public class LineSDKFlexMessageContainer: NSObject {
     
-    public init(
-        text: String,
-        confirmAction: LineSDKMessageAction,
-        cancelAction: LineSDKMessageAction)
-    {
-        self.text = text
-        self.confirmAction = confirmAction
-        self.cancelAction = cancelAction
+    public var bubbleContainer: LineSDKFlexBubbleContainer? {
+        return unwrapped.asBubbleContainer.map { .init($0) }
     }
     
-    convenience init(_ value: TemplateConfirmPayload) {
-        self.init(
-            text: value.text,
-            confirmAction: value.confirmAction.converted,
-            cancelAction: value.cancelAction.converted)
+    public var carouselContainer: LineSDKFlexCarouselContainer? {
+        return unwrapped.asCarouselContainer.map { .init($0) }
     }
     
-    override var unwrapped: TemplateMessagePayload {
-        let payload = TemplateConfirmPayload(
-            text: text,
-            confirmAction: confirmAction.unwrapped,
-            cancelAction: cancelAction.unwrapped)
-        return .confirm(payload)
+    var unwrapped: FlexMessageContainer {
+        Log.fatalError("Not implemented in subclass: \(type(of: self))")
     }
 }

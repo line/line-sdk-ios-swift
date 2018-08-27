@@ -28,15 +28,21 @@ public class LineSDKVideoMessage: LineSDKMessage {
     public let previewImageURL: URL
     
     convenience init(_ value: VideoMessage) {
-        self.init(originalContentURL: value.originalContentURL, previewImageURL: value.previewImageURL)
+        self.init(originalContentURL: value.originalContentURL, previewImageURL: value.previewImageURL)!
     }
     
-    public init(originalContentURL: URL, previewImageURL: URL) {
-        self.originalContentURL = originalContentURL
-        self.previewImageURL = previewImageURL
+    public init?(originalContentURL: URL, previewImageURL: URL) {
+        do {
+            _ = try VideoMessage(originalContentURL: originalContentURL, previewImageURL: previewImageURL)
+            self.originalContentURL = originalContentURL
+            self.previewImageURL = previewImageURL
+        } catch {
+            Log.assertionFailure("An error happened: \(error)")
+            return nil
+        }   
     }
     
-    override func toMessage() -> Message {
+    override var unwrapped: Message {
         return .video(try! .init(
             originalContentURL: originalContentURL,
             previewImageURL: previewImageURL

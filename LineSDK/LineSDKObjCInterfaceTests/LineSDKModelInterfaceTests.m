@@ -481,5 +481,120 @@
     XCTAssertEqual([payload imageCarouselPayload].columns.count, payload.columns.count);
 }
 
+- (void)testFlexBlockStyleInterface {
+    LineSDKHexColor *color = [[LineSDKHexColor alloc] init:[UIColor redColor]];
+    LineSDKFlexBlockStyle *style = [[LineSDKFlexBlockStyle alloc]
+                                    initWithBackgroundColor:color
+                                                  separator:NO
+                                             separatorColor:color];
+    style.backgroundColor = nil;
+    style.separatorColor = [[LineSDKHexColor alloc] init:[UIColor blueColor]];
+    style.separator = YES;
+    
+    XCTAssertNil([style.backgroundColor color]);
+    XCTAssertEqual([style.separatorColor color], [UIColor blueColor]);
+    XCTAssertTrue(style.separator);
+}
+
+- (void)testFlexBubbleContainerStyleInterface {
+    LineSDKHexColor *color = [[LineSDKHexColor alloc] init:[UIColor redColor]];
+    LineSDKFlexBlockStyle *style = [[LineSDKFlexBlockStyle alloc]
+                                    initWithBackgroundColor:color
+                                    separator:NO
+                                    separatorColor:color];
+    LineSDKFlexBubbleContainerStyle *containerStyle = [[LineSDKFlexBubbleContainerStyle alloc] init];
+    containerStyle.header = style;
+    containerStyle.hero = style;
+    containerStyle.body = style;
+    containerStyle.footer = style;
+    
+    style.backgroundColor = [[LineSDKHexColor alloc] init:[UIColor blueColor]];;
+    
+    XCTAssertEqual([containerStyle.header.backgroundColor color], [UIColor blueColor]);
+    XCTAssertEqual([containerStyle.hero.backgroundColor color], [UIColor blueColor]);
+    XCTAssertEqual([containerStyle.body.backgroundColor color], [UIColor blueColor]);
+    XCTAssertEqual([containerStyle.footer.backgroundColor color], [UIColor blueColor]);
+}
+
+- (void)testFlexMessageComponentLayoutInterface {
+    XCTAssertEqual(LineSDKFlexMessageComponentLayoutNone, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentLayoutHorizontal, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentLayoutVertical, 2);
+    XCTAssertEqual(LineSDKFlexMessageComponentLayoutBaseline, 3);
+}
+
+- (void)testFlexMessageComponentMarginInterface {
+    XCTAssertEqual(LineSDKFlexMessageComponentMarginNone, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentMarginXs, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentMarginSm, 2);
+    XCTAssertEqual(LineSDKFlexMessageComponentMarginMd, 3);
+    XCTAssertEqual(LineSDKFlexMessageComponentMarginLg, 4);
+    XCTAssertEqual(LineSDKFlexMessageComponentMarginXl, 5);
+    XCTAssertEqual(LineSDKFlexMessageComponentMarginXxl, 6);
+}
+
+- (void)testFlexMessageComponentSizeInterface {
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeNone, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeXxs, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeXs, 2);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeSm, 3);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeMd, 4);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeLg, 5);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeXl, 6);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeXxl, 7);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeXl3, 8);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeXl4, 9);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeXl5, 10);
+    XCTAssertEqual(LineSDKFlexMessageComponentSizeFull, 11);
+}
+
+- (void)testFlexMessageComponenetAlignment {
+    XCTAssertEqual(LineSDKFlexMessageComponentAlignmentNone, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentAlignmentStart, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentAlignmentEnd, 2);
+    XCTAssertEqual(LineSDKFlexMessageComponentAlignmentCenter, 3);
+}
+
+- (void)testFlexMessageComponenetGravity {
+    XCTAssertEqual(LineSDKFlexMessageComponentGravityNone, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentGravityTop, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentGravityBottom, 2);
+    XCTAssertEqual(LineSDKFlexMessageComponentGravityCenter, 3);
+}
+
+- (void)testFlexMessageComponenetWeight {
+    XCTAssertEqual(LineSDKFlexMessageComponentWeightNone, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentWeightRegular, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentWeightBold, 2);
+}
+
+- (void)testFlexMessageComponenetHeight {
+    XCTAssertEqual(LineSDKFlexMessageComponentHeightNone, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentHeightSm, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentHeightMd, 2);
+}
+
+- (void)testFlexMessageComponentAspectRatio {
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioNone, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_1x1, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_1_51x1, 2);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_1_91x1, 3);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_4x3, 4);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_16x9, 5);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_20x13, 6);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_2x1, 7);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_3x1, 8);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_3x4, 9);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_9x16, 10);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_1x2, 11);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_1x3, 12);
+}
+
+- (void)testFlexMessageComponenetAspectMode {
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectModeNone, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectModeFill, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentAspectModeFit, 2);
+}
 @end
+
 

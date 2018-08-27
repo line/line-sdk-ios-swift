@@ -40,7 +40,7 @@ public class LineSDKTextMessage: LineSDKMessage {
         self.sender = sender
     }
     
-    override func toMessage() -> Message {
+    override var unwrapped: Message {
         return .text(.init(text: text, sender: sender?._value))
     }
 }

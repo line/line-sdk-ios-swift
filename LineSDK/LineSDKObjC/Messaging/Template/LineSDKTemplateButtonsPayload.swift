@@ -50,12 +50,12 @@ public class LineSDKTemplateButtonsPayload: LineSDKTemplateMessagePayload {
         sender = value.sender.map { .init($0) }
     }
 
-    override func toTemplateMessagePayload() -> TemplateMessagePayload {
-        var payload = TemplateButtonsPayload(title: title, text: text, actions: actions.map { $0.toAction() })
-        payload.defaultAction = defaultAction?.toAction()
+    override var unwrapped: TemplateMessagePayload {
+        var payload = TemplateButtonsPayload(title: title, text: text, actions: actions.map { $0.unwrapped })
+        payload.defaultAction = defaultAction?.unwrapped
         payload.thumbnailImageURL = thumbnailImageURL
-        payload.imageAspectRatio = imageAspectRatio._value
-        payload.imageContentMode = imageContentMode._value
+        payload.imageAspectRatio = imageAspectRatio.unwrapped
+        payload.imageContentMode = imageContentMode.unwrapped
         payload.imageBackgroundColor = imageBackgroundColor?._value
         payload.sender = sender?._value
         

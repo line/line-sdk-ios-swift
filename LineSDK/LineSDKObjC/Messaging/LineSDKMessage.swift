@@ -25,30 +25,30 @@ import LineSDK
 public class LineSDKMessage: NSObject {
 
     public var textMessage: LineSDKTextMessage? {
-        return toMessage().asTextMessage.map { .init($0) }
+        return unwrapped.asTextMessage.map { .init($0) }
     }
     
     public var imageMessage: LineSDKImageMessage? {
-        return toMessage().asImageMessage.map { .init($0) }
+        return unwrapped.asImageMessage.map { .init($0) }
     }
     
     public var videoMessage: LineSDKVideoMessage? {
-        return toMessage().asVideoMessage.map { .init($0) }
+        return unwrapped.asVideoMessage.map { .init($0) }
     }
     
     public var audioMessage: LineSDKAudioMessage? {
-        return toMessage().asAudioMessage.map { .init($0) }
+        return unwrapped.asAudioMessage.map { .init($0) }
     }
     
     public var locationMessage: LineSDKLocationMessage? {
-        return toMessage().asLocationMessage.map { .init($0) }
+        return unwrapped.asLocationMessage.map { .init($0) }
     }
     
     public var templateMessage: LineSDKTemplateMessage? {
-        return toMessage().asTemplateMessage.map { .init($0) }
+        return unwrapped.asTemplateMessage.map { .init($0) }
     }
     
-    func toMessage() -> Message { Log.fatalError("Not implemented in subclass: \(type(of: self))") }
+    var unwrapped: Message { Log.fatalError("Not implemented in subclass: \(type(of: self))") }
 }
 
 @objcMembers

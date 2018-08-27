@@ -35,10 +35,10 @@ public class LineSDKImageMessage: LineSDKMessage {
             previewImageURL: value.previewImageURL,
             animated: value.animated ?? false,
             fileExtension: value.fileExtension,
-            sender: value.sender.map { .init($0) })
+            sender: value.sender.map { .init($0) })!
     }
     
-    public convenience init(originalContentURL: URL, previewImageURL: URL) {
+    public convenience init?(originalContentURL: URL, previewImageURL: URL) {
         self.init(
             originalContentURL: originalContentURL,
             previewImageURL: previewImageURL,
@@ -47,27 +47,33 @@ public class LineSDKImageMessage: LineSDKMessage {
             sender: nil)
     }
     
-    public init(
+    public init?(
         originalContentURL: URL,
         previewImageURL: URL,
         animated: Bool,
         fileExtension: String?,
         sender: LineSDKMessageSender?)
     {
-        self.originalContentURL = originalContentURL
-        self.previewImageURL = previewImageURL
-        self.animated = animated
-        self.fileExtension = fileExtension
-        self.sender = sender
+        do {
+            _ = try ImageMessage(originalContentURL: originalContentURL, previewImageURL: previewImageURL)
+            self.originalContentURL = originalContentURL
+            self.previewImageURL = previewImageURL
+            self.animated = animated
+            self.fileExtension = fileExtension
+            self.sender = sender
+        } catch {
+            Log.assertionFailure("An error happened: \(error)")
+            return nil
+        }
     }
     
-    override func toMessage() -> Message {
+    override var unwrapped: Message {
         return .image(try! .init(
             originalContentURL: originalContentURL,
             previewImageURL: previewImageURL,
             animated: animated,
             fileExtension: fileExtension,
             sender: sender?._value
-        ))
+            ))
     }
 }

@@ -34,10 +34,10 @@ extension MessageAction {
 public class LineSDKMessageAction: NSObject {
     
     public var URIAction: LineSDKMessageURIAction? {
-        return toAction().asURIAction.map { .init($0) }
+        return unwrapped.asURIAction.map { .init($0) }
     }
     
-    func toAction() -> MessageAction { Log.fatalError("Not implemented in subclass: \(type(of: self))") }
+    var unwrapped: MessageAction { Log.fatalError("Not implemented in subclass: \(type(of: self))") }
 }
 
 @objcMembers
@@ -55,7 +55,7 @@ public class LineSDKMessageURIAction: LineSDKMessageAction {
         self.uri = uri
     }
     
-    override func toAction() -> MessageAction {
+    override var unwrapped: MessageAction {
         return .URI(MessageURIAction(label: label, uri: uri))
     }
 }

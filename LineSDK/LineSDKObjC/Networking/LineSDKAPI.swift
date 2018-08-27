@@ -134,7 +134,7 @@ public class LineSDKAPI: NSObject {
         callbackQueue queue: LineSDKCallbackQueue,
         completionHandler completion: @escaping (LineSDKGetFriendsResponse?, Error?) -> Void)
     {
-        API.getFriends(sort: sort._value, pageToken: pageToken, callbackQueue: queue._value) { result in
+        API.getFriends(sort: sort.unwrapped, pageToken: pageToken, callbackQueue: queue._value) { result in
             completion(result.value.map { .init($0) }, result.error)
         }
     }
@@ -211,7 +211,7 @@ public class LineSDKAPI: NSObject {
         callbackQueue queue: LineSDKCallbackQueue,
         completionHandler completion: @escaping (LineSDKPostSendMessagesResponse?, Error?) -> Void)
     {
-        API.sendMessages(messages.map { $0.toMessage() }, to: chatID, callbackQueue: queue._value) { result in
+        API.sendMessages(messages.map { $0.unwrapped }, to: chatID, callbackQueue: queue._value) { result in
             completion(result.value.map { .init($0) }, result.error)
         }
     }

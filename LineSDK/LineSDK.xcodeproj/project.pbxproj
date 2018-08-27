@@ -151,6 +151,11 @@
 		4BDD2C182133A26900DD563D /* LineSDKTemplateConfirmPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C172133A26900DD563D /* LineSDKTemplateConfirmPayload.swift */; };
 		4BDD2C1A2133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C192133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift */; };
 		4BDD2C1C2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1B2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift */; };
+		4BDD2C1E2133C15300DD563D /* LineSDKFlexMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1D2133C15300DD563D /* LineSDKFlexMessage.swift */; };
+		4BDD2C212133C1CD00DD563D /* LineSDKFlexMessageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C202133C1CD00DD563D /* LineSDKFlexMessageContainer.swift */; };
+		4BDD2C232133C61F00DD563D /* LineSDKFlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C222133C61F00DD563D /* LineSDKFlexBubbleContainer.swift */; };
+		4BDD2C252133CA1800DD563D /* LineSDKFlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C242133CA1800DD563D /* LineSDKFlexCarouselContainer.swift */; };
+		4BDD2C282133D2B300DD563D /* LineSDKFlexMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C272133D2B300DD563D /* LineSDKFlexMessageComponent.swift */; };
 		4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */; };
 		4BEB491C212B992B00BA946A /* FlexImageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */; };
 		4BEB491E212B9E5500BA946A /* FlexFillerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */; };
@@ -365,6 +370,11 @@
 		4BDD2C172133A26900DD563D /* LineSDKTemplateConfirmPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateConfirmPayload.swift; sourceTree = "<group>"; };
 		4BDD2C192133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateCarouselPayload.swift; sourceTree = "<group>"; };
 		4BDD2C1B2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateImageCarouselPayload.swift; sourceTree = "<group>"; };
+		4BDD2C1D2133C15300DD563D /* LineSDKFlexMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKFlexMessage.swift; sourceTree = "<group>"; };
+		4BDD2C202133C1CD00DD563D /* LineSDKFlexMessageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKFlexMessageContainer.swift; sourceTree = "<group>"; };
+		4BDD2C222133C61F00DD563D /* LineSDKFlexBubbleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKFlexBubbleContainer.swift; sourceTree = "<group>"; };
+		4BDD2C242133CA1800DD563D /* LineSDKFlexCarouselContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKFlexCarouselContainer.swift; sourceTree = "<group>"; };
+		4BDD2C272133D2B300DD563D /* LineSDKFlexMessageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKFlexMessageComponent.swift; sourceTree = "<group>"; };
 		4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponent.swift; sourceTree = "<group>"; };
 		4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponentTests.swift; sourceTree = "<group>"; };
 		4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexFillerComponent.swift; sourceTree = "<group>"; };
@@ -818,6 +828,7 @@
 			children = (
 				4BDD2C1021338B8600DD563D /* Actions */,
 				4BC4B3E2212FF42F00750794 /* Template */,
+				4BDD2C1F2133C1A100DD563D /* Flex */,
 				4BC9B2E6212FCA130071C736 /* LineSDKMessagingResponse.swift */,
 				4BC4B3D6212FD76C00750794 /* LineSDKMessage.swift */,
 				4BC4B3D8212FEB9000750794 /* LineSDKTextMessage.swift */,
@@ -826,6 +837,7 @@
 				4BC4B3E3212FF86100750794 /* LineSDKAudioMessage.swift */,
 				4BC4B3DE212FEF8600750794 /* LineSDKLocationMessage.swift */,
 				4BC4B3E0212FF39D00750794 /* LineSDKTemplateMessage.swift */,
+				4BDD2C1D2133C15300DD563D /* LineSDKFlexMessage.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -845,6 +857,25 @@
 				4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */,
 			);
 			path = Actions;
+			sourceTree = "<group>";
+		};
+		4BDD2C1F2133C1A100DD563D /* Flex */ = {
+			isa = PBXGroup;
+			children = (
+				4BDD2C262133D0FE00DD563D /* Component */,
+				4BDD2C202133C1CD00DD563D /* LineSDKFlexMessageContainer.swift */,
+				4BDD2C222133C61F00DD563D /* LineSDKFlexBubbleContainer.swift */,
+				4BDD2C242133CA1800DD563D /* LineSDKFlexCarouselContainer.swift */,
+			);
+			path = Flex;
+			sourceTree = "<group>";
+		};
+		4BDD2C262133D0FE00DD563D /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				4BDD2C272133D2B300DD563D /* LineSDKFlexMessageComponent.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		4BF53530212A79C800EA602A /* Messaging */ = {
@@ -1355,16 +1386,21 @@
 				4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */,
 				4BC4B3D7212FD76C00750794 /* LineSDKMessage.swift in Sources */,
 				4BC9B2E2212FB8390071C736 /* LineSDKGraphResponse.swift in Sources */,
+				4BDD2C252133CA1800DD563D /* LineSDKFlexCarouselContainer.swift in Sources */,
 				4B2D14E3212F8EDA000DD5BE /* LineSDKUserProfile.swift in Sources */,
 				4B2D14EF212F9468000DD5BE /* LineSDKLoginManagerOption.swift in Sources */,
 				4BC4B3D9212FEB9000750794 /* LineSDKTextMessage.swift in Sources */,
+				4BDD2C1E2133C15300DD563D /* LineSDKFlexMessage.swift in Sources */,
 				4BC9B2E7212FCA130071C736 /* LineSDKMessagingResponse.swift in Sources */,
 				4BC4B3DB212FEBA600750794 /* LineSDKImageMessage.swift in Sources */,
 				4B2D1503212FAB5A000DD5BE /* APIError.swift in Sources */,
 				4BC4B3DF212FEF8600750794 /* LineSDKLocationMessage.swift in Sources */,
+				4BDD2C282133D2B300DD563D /* LineSDKFlexMessageComponent.swift in Sources */,
 				4BBEA9B6212EB41000858627 /* LineSDKAccessToken.swift in Sources */,
 				4BC4B3DD212FED4300750794 /* LineSDKVideoMessage.swift in Sources */,
 				4BC4B3E4212FF86100750794 /* LineSDKAudioMessage.swift in Sources */,
+				4BDD2C212133C1CD00DD563D /* LineSDKFlexMessageContainer.swift in Sources */,
+				4BDD2C232133C61F00DD563D /* LineSDKFlexBubbleContainer.swift in Sources */,
 				4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */,
 				4BDD2C162133970800DD563D /* Log.swift in Sources */,
 				4B2D1501212FA9EE000DD5BE /* LineSDKHexColor.swift in Sources */,

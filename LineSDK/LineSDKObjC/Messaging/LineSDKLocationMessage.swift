@@ -40,7 +40,7 @@ public class LineSDKLocationMessage: LineSDKMessage {
         self.longitude = longitude
     }
     
-    override func toMessage() -> Message {
+    override var unwrapped: Message {
         return .location(.init(title: title, address: address, latitude: latitude, longitude: longitude))
     }
 }

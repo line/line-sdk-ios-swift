@@ -29,7 +29,7 @@ public class LineSDKTemplateMessage: LineSDKMessage {
     
     init(_ value: TemplateMessage) {
         altText = value.altText
-        payload = .converted(from: value.payload)
+        payload = value.payload.converted
     }
     
     public init(altText: String, payload: LineSDKTemplateMessagePayload) {
@@ -37,43 +37,45 @@ public class LineSDKTemplateMessage: LineSDKMessage {
         self.payload = payload
     }
     
-    override func toMessage() -> Message {
-        let value = TemplateMessage(altText: altText, payload: payload.toTemplateMessagePayload())
+    override var unwrapped: Message {
+        let value = TemplateMessage(altText: altText, payload: payload.unwrapped)
         return .template(value)
+    }
+}
+
+extension TemplateMessagePayload {
+    var converted: LineSDKTemplateMessagePayload {
+        switch self {
+        case .buttons(let payload): return LineSDKTemplateButtonsPayload(payload)
+        case .confirm(let payload): return LineSDKTemplateConfirmPayload(payload)
+        case .carousel(let payload): return LineSDKTemplateCarouselPayload(payload)
+        case .imageCarousel(let payload): return LineSDKTemplateImageCarouselPayload(payload)
+        case .unknown:
+            Log.fatalError("Cannot create ObjC compatible type for \(self).")
+        }
     }
 }
 
 @objcMembers
 public class LineSDKTemplateMessagePayload: NSObject {
 
-    static func converted(from value: TemplateMessagePayload) -> LineSDKTemplateMessagePayload {
-        switch value {
-        case .buttons(let payload): return LineSDKTemplateButtonsPayload(payload)
-        case .confirm(let payload): return LineSDKTemplateConfirmPayload(payload)
-        case .carousel(let payload): return LineSDKTemplateCarouselPayload(payload)
-        case .imageCarousel(let payload): return LineSDKTemplateImageCarouselPayload(payload)
-        case .unknown:
-            Log.fatalError("Cannot create ObjC compatible type for \(value).")
-        }
-    }
-    
     public var buttonsPayload: LineSDKTemplateButtonsPayload? {
-        return toTemplateMessagePayload().asButtonsPayload.map { .init($0) }
+        return unwrapped.asButtonsPayload.map { .init($0) }
     }
     
     public var confirmPayload: LineSDKTemplateConfirmPayload? {
-        return toTemplateMessagePayload().asConfirmPayload.map { .init($0) }
+        return unwrapped.asConfirmPayload.map { .init($0) }
     }
     
     public var carouselPayload: LineSDKTemplateCarouselPayload? {
-        return toTemplateMessagePayload().asCarouselPayload.map { .init($0) }
+        return unwrapped.asCarouselPayload.map { .init($0) }
     }
     
     public var imageCarouselPayload: LineSDKTemplateImageCarouselPayload? {
-        return toTemplateMessagePayload().asImageCarouselPayload.map { .init($0) }
+        return unwrapped.asImageCarouselPayload.map { .init($0) }
     }
     
-    func toTemplateMessagePayload() -> TemplateMessagePayload {
+    var unwrapped: TemplateMessagePayload {
         Log.fatalError("Not implemented in subclass: \(type(of: self))")
     }
 }
@@ -84,7 +86,7 @@ public enum LineSDKTemplateMessagePayloadImageAspectRatio: Int {
     case rectangle
     case square
     
-    var _value: TemplateMessagePayload.ImageAspectRatio? {
+    var unwrapped: TemplateMessagePayload.ImageAspectRatio? {
         switch self {
         case .none: return nil
         case .rectangle: return .rectangle
@@ -107,7 +109,7 @@ public enum LineSDKTemplateMessagePayloadImageContentMode: Int {
     case aspectFill
     case aspectFit
     
-    var _value: TemplateMessagePayload.ImageContentMode? {
+    var unwrapped: TemplateMessagePayload.ImageContentMode? {
         switch self {
         case .none: return nil
         case .aspectFill: return .aspectFill

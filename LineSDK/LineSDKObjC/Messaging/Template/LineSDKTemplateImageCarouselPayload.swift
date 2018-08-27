@@ -27,16 +27,22 @@ public class LineSDKTemplateImageCarouselPayloadColumn: NSObject {
     public var aciton: LineSDKMessageAction?
     
     public init?(imageURL: URL, aciton: LineSDKMessageAction?) {
-        self.imageURL = imageURL
-        self.aciton = aciton
+        do {
+            _ = try TemplateImageCarouselPayload.Column(imageURL: imageURL, action: aciton?.unwrapped)
+            self.imageURL = imageURL
+            self.aciton = aciton
+        } catch {
+            Log.assertionFailure("An error happened: \(error)")
+            return nil
+        }
     }
     
     convenience init(_ value: TemplateImageCarouselPayload.Column) {
         self.init(imageURL: value.imageURL, aciton: value.action?.converted)!
     }
 
-    func toColumn() -> TemplateImageCarouselPayload.Column {
-        return try! TemplateImageCarouselPayload.Column(imageURL: imageURL, action: aciton?.toAction() )
+    var unwrapped: TemplateImageCarouselPayload.Column {
+        return try! TemplateImageCarouselPayload.Column(imageURL: imageURL, action: aciton?.unwrapped)
     }
 }
 
@@ -52,8 +58,8 @@ public class LineSDKTemplateImageCarouselPayload: LineSDKTemplateMessagePayload 
         self.columns = columns
     }
     
-    override func toTemplateMessagePayload() -> TemplateMessagePayload {
-        let payload = TemplateImageCarouselPayload(columns: columns.map { $0.toColumn() })
+    override var unwrapped: TemplateMessagePayload {
+        let payload = TemplateImageCarouselPayload(columns: columns.map { $0.unwrapped })
         return .imageCarousel(payload)
     }
     
