@@ -36,11 +36,19 @@ public class LineSDKMessage: NSObject {
         return toMessage().asVideoMessage.map { .init($0) }
     }
     
+    public var audioMessage: LineSDKAudioMessage? {
+        return toMessage().asAudioMessage.map { .init($0) }
+    }
+    
     public var locationMessage: LineSDKLocationMessage? {
         return toMessage().asLocationMessage.map { .init($0) }
     }
     
-    func toMessage() -> Message { fatalError() }
+    public var templateMessage: LineSDKTemplateMessage? {
+        return toMessage().asTemplateMessage.map { .init($0) }
+    }
+    
+    func toMessage() -> Message { Log.fatalError("Not implemented in subclass: \(type(of: self))") }
 }
 
 @objcMembers

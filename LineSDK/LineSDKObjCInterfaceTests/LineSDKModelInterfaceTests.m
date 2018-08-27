@@ -307,6 +307,16 @@
     XCTAssertEqual(message.originalContentURL, converted.originalContentURL);
 }
 
+- (void)testAudioMessageInterface {
+    NSURL *url = [NSURL URLWithString:@"https://example.com"];
+    LineSDKAudioMessage *message = [[LineSDKAudioMessage alloc] initWithOriginalContentURL:url duration:3.0];
+    XCTAssertNotNil([message originalContentURL]);
+    XCTAssertEqual([message duration], 3.0);
+    
+    LineSDKAudioMessage *converted = [message audioMessage];
+    XCTAssertEqual(message.originalContentURL, converted.originalContentURL);
+}
+
 - (void)testLocationMessageInterface {
     LineSDKLocationMessage *message = [[LineSDKLocationMessage alloc]
                                        initWithTitle:@"a"
@@ -324,6 +334,41 @@
     
     LineSDKLocationMessage *converted = [message locationMessage];
     XCTAssertEqual(message.title, converted.title);
+}
+
+- (void)testMessageActionInterface {
+    LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
+                                       initWithLabel:@"action"
+                                                 uri:[NSURL URLWithString:@"https://sample.com"]];
+    XCTAssertEqual(action.label, @"action");
+    XCTAssertEqual(action.uri.absoluteString, @"https://sample.com");
+    
+    XCTAssertNotEqual([action URIAction], action);
+    XCTAssertEqual([action URIAction].label, action.label);
+    
+}
+
+- (void)testTemplateMessagePayloadInterface {
+    LineSDKTemplateMessagePayload *payload = nil;
+    
+}
+
+- (void)testTemplateButtonsPayloadInterface {
+    LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
+                                       initWithLabel:@"action"
+                                                 uri:[NSURL URLWithString:@"https://sample.com"]];
+    LineSDKTemplateButtonsPayload *payload = [[LineSDKTemplateButtonsPayload alloc]
+                                              initWithTitle:@"title"
+                                                       text:@"text"
+                                              actions:@[action]];
+    XCTAssertEqual(payload.title, @"title");
+    XCTAssertEqual(payload.imageAspectRatio, LineSDKTemplateMessagePayloadImageAspectRatioNone);
+    XCTAssertNil(payload.imageBackgroundColor);
+    
+    XCTAssertEqual([payload buttonsPayload].text, payload.text);
+    [payload setText:@"123"];
+    [payload setImageAspectRatio:LineSDKTemplateMessagePayloadImageAspectRatioRectangle];
+    XCTAssertEqual([payload imageAspectRatio], 1);
 }
 
 @end
