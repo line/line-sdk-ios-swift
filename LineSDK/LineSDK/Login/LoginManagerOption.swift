@@ -35,5 +35,14 @@ public struct LoginManagerOption: OptionSet {
     }
     
     /// Skipping LINE client app auth flow. Only use web login flow to login.
-    public static let onlyWebLogin = LoginManagerOption(rawValue: 1)
+    public static let onlyWebLogin = LoginManagerOption(rawValue: 1 << 0)
+    
+    public static let botPromptNormal = LoginManagerOption(rawValue: 1 << 1)
+    public static let botPromptAggressive = LoginManagerOption(rawValue: 1 << 2)
+    
+    var botPrompt: LoginProcess.BotPrompt? {
+        if contains(.botPromptAggressive) { return .aggressive }
+        if contains(.botPromptNormal) { return .normal }
+        return nil
+    }
 }

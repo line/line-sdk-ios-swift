@@ -27,6 +27,21 @@ import SafariServices
 /// which will run serially. If a previous flow succeeded in auth the user, later flows will not be executed.
 public class LoginProcess {
     
+    enum BotPrompt: String {
+        case normal
+        case aggressive
+    }
+    
+    struct FlowParameter {
+        let channelID: String
+        let universalLinkURL: URL?
+        let scopes: Set<LoginPermission>
+        let otp: OneTimePassword
+        let processID: String
+        let nonce: String?
+        let botPrompt: BotPrompt?
+    }
+    
     /// Observes application switching to foreground.
     /// - Note:
     /// If the app switching happens during login process, we want to
@@ -60,6 +75,7 @@ public class LoginProcess {
     
     let configuration: LoginConfiguration
     let scopes: Set<LoginPermission>
+    let options: LoginManagerOption
     
     // Flows of login process. A flow will be `nil` until it is running, so we could tell which one should take
     // responsibility to handle a url callback response.
@@ -87,25 +103,43 @@ public class LoginProcess {
     /// A UUID string of current process. Used to verify with server `state` response.
     let processID: String
     
+    /// A string used to prevent replay attacks. This value is returned in an ID token.
+    let tokenIDNonce: String?
+    
     var otp: OneTimePassword!
+    var flowParameter: FlowParameter!
     
     let onSucceed = Delegate<AccessToken, Void>()
     let onFail = Delegate<Error, Void>()
     
-    init(configuration: LoginConfiguration, scopes: Set<LoginPermission>, viewController: UIViewController?) {
+    init(
+        configuration: LoginConfiguration,
+        scopes: Set<LoginPermission>,
+        options: LoginManagerOption,
+        viewController: UIViewController?)
+    {
         self.configuration = configuration
         self.processID = UUID().uuidString
         self.scopes = scopes
+        self.options = options
         self.presentingViewController = viewController
+        
+        if scopes.contains(.openID) {
+            tokenIDNonce = UUID().uuidString
+        } else {
+            tokenIDNonce = nil
+        }
     }
     
-    func start(_ options: [LoginManagerOption]) {
+    func start() {
         let otpRequest = PostOTPRequest(channelID: configuration.channelID)
         Session.shared.send(otpRequest) { result in
             switch result {
             case .success(let otp):
                 self.otp = otp
-                if options.contains(.onlyWebLogin) {
+                self.prepareLoginFlowParameter()
+                
+                if self.options.contains(.onlyWebLogin) {
                     self.startWebLoginFlow()
                 } else {
                     self.startAppUniversalLinkFlow()
@@ -116,10 +150,21 @@ public class LoginProcess {
         }
     }
     
-    
     /// Stops this login process. The login process will fail with a `.forceStopped` error.
     public func stop() {
         invokeFailure(error: LineSDKError.authorizeFailed(reason: .forceStopped))
+    }
+    
+    // Prepare a flow parameter for later use. Requires `otp` not nil.
+    func prepareLoginFlowParameter() {
+        flowParameter = FlowParameter(
+            channelID: configuration.channelID,
+            universalLinkURL: configuration.universalLinkURL,
+            scopes: scopes,
+            otp: otp,
+            processID: processID,
+            nonce: tokenIDNonce,
+            botPrompt: options.botPrompt)
     }
     
     // App switching observer should only work when external app switching happens during login process.
@@ -140,12 +185,7 @@ public class LoginProcess {
     }
     
     private func startAppUniversalLinkFlow() {
-        let appUniversalLinkFlow = AppUniversalLinkFlow(
-            channelID: configuration.channelID,
-            universalLinkURL: configuration.universalLinkURL,
-            scopes: scopes,
-            otp: otp,
-            processID: processID)
+        let appUniversalLinkFlow = AppUniversalLinkFlow(parameter: flowParameter)
         appUniversalLinkFlow.onNext.delegate(on: self) { [unowned appUniversalLinkFlow] (self, started) in
             // Can handle app universal link flow. Store the flow for later resuming use.
             if started {
@@ -185,12 +225,7 @@ public class LoginProcess {
     }
     
     private func startAppAuthSchemeFlow() {
-        let appAuthSchemeFlow = AppAuthSchemeFlow(
-            channelID: configuration.channelID,
-            universalLinkURL: configuration.universalLinkURL,
-            scopes: scopes,
-            otp: otp,
-            processID: processID)
+        let appAuthSchemeFlow = AppAuthSchemeFlow(parameter: flowParameter)
         appAuthSchemeFlow.onNext.delegate(on: self) { [unowned appAuthSchemeFlow] (self, started) in
             if started {
                 self.setupAppSwitchingObserver()
@@ -204,12 +239,7 @@ public class LoginProcess {
     }
     
     private func startWebLoginFlow() {
-        let webLoginFlow = WebLoginFlow(
-            channelID: configuration.channelID,
-            universalLinkURL: configuration.universalLinkURL,
-            scopes: scopes,
-            otp: otp,
-            processID: processID)
+        let webLoginFlow = WebLoginFlow(parameter: flowParameter)
         webLoginFlow.onNext.delegate(on: self) { [unowned webLoginFlow] (self, result) in
             switch result {
             case .safariViewController:
@@ -297,19 +327,9 @@ class AppUniversalLinkFlow {
     let url: URL
     let onNext = Delegate<Bool, Void>()
     
-    init(
-        channelID: String,
-        universalLinkURL: URL?,
-        scopes: Set<LoginPermission>,
-        otp: OneTimePassword, processID: String)
-    {
+    init(parameter: LoginProcess.FlowParameter) {
         let universalURLBase = URL(string: Constant.lineWebAuthUniversalURL)!
-        url = universalURLBase.appendedLoginQuery(
-            channelID: channelID,
-            universalLinkURL: universalLinkURL,
-            scopes: scopes,
-            otpID: otp.otpId,
-            state: processID)
+        url = universalURLBase.appendedLoginQuery(parameter)
     }
     
     func start() {
@@ -329,20 +349,8 @@ class AppAuthSchemeFlow {
     let url: URL
     let onNext = Delegate<Bool, Void>()
     
-    init(
-        channelID: String,
-        universalLinkURL: URL?,
-        scopes: Set<LoginPermission>,
-        otp: OneTimePassword,
-        processID: String)
-    {
-        url = Constant.lineAppAuthURLv2
-                .appendedURLSchemeQuery(
-                    channelID: channelID,
-                    universalLinkURL: universalLinkURL,
-                    scopes: scopes,
-                    otpID: otp.otpId,
-                    state: processID)
+    init(parameter: LoginProcess.FlowParameter) {
+        url = Constant.lineAppAuthURLv2.appendedURLSchemeQuery(parameter)
     }
     
     func start() {
@@ -372,20 +380,9 @@ class WebLoginFlow: NSObject {
     
     weak var safariViewController: UIViewController?
     
-    init(
-        channelID: String,
-        universalLinkURL: URL?,
-        scopes: Set<LoginPermission>,
-        otp: OneTimePassword,
-        processID: String)
-    {
+    init(parameter: LoginProcess.FlowParameter) {
         let webLoginURLBase = URL(string: Constant.lineWebAuthURL)!
-        url = webLoginURLBase.appendedLoginQuery(
-            channelID: channelID,
-            universalLinkURL: universalLinkURL,
-            scopes: scopes,
-            otpID: otp.otpId,
-            state: processID)
+         url = webLoginURLBase.appendedLoginQuery(parameter)
     }
     
     func start(in viewController: UIViewController?) {
@@ -439,64 +436,48 @@ extension WebLoginFlow: SFSafariViewControllerDelegate {
 
 // Helpers for creating urls for login process
 extension String {
-    static func returnUri(
-        channelID: String,
-        universalLinkURL: URL?,
-        scopes: Set<LoginPermission>,
-        otpID: String,
-        state: String)-> String
-    {
+    
+    static func returnUri(_ parameter: LoginProcess.FlowParameter) -> String {
         var universalLinkQuery = ""
-        if let url = universalLinkURL {
+        if let url = parameter.universalLinkURL {
             universalLinkQuery = "&optional_redirect_uri=\(url.absoluteString)"
         }
+        
+        var nonceQuery = ""
+        if let nonce = parameter.nonce {
+            nonceQuery = "&nonce=\(nonce)"
+        }
+        
+        var botPromptQuery = ""
+        if let botPrompt = parameter.botPrompt {
+            botPromptQuery = "&bot_prompt=\(botPrompt.rawValue)"
+        }
+        
         let result =
             "/oauth2/v2.1/authorize/consent?response_type=code&sdk_ver=\(Constant.SDKVersion)" +
-            "&client_id=\(channelID)&scope=\((scopes.map { $0.rawValue }).joined(separator: " "))" +
-            "&otpId=\(otpID)&state=\(state)&redirect_uri=\(Constant.thirdPartyAppReturnURL)" +
-            universalLinkQuery
+            "&client_id=\(parameter.channelID)&scope=\((parameter.scopes.map { $0.rawValue }).joined(separator: " "))" +
+            "&otpId=\(parameter.otp.otpId)&state=\(parameter.processID)&redirect_uri=\(Constant.thirdPartyAppReturnURL)" +
+            universalLinkQuery + nonceQuery + botPromptQuery
         
         return result
     }
 }
 
 extension URL {
-    func appendedLoginQuery(
-        channelID: String,
-        universalLinkURL: URL?,
-        scopes: Set<LoginPermission>,
-        otpID: String,
-        state: String) -> URL
-    {
-        let returnUri = String.returnUri(
-            channelID: channelID,
-            universalLinkURL: universalLinkURL,
-            scopes: scopes,
-            otpID: otpID,
-            state: state)
+    func appendedLoginQuery(_ flowParameters: LoginProcess.FlowParameter) -> URL {
+        let returnUri = String.returnUri(flowParameters)
         let parameters: [String: Any] = [
             "returnUri": returnUri,
-            "loginChannelId": channelID
+            "loginChannelId": flowParameters.channelID
         ]
         let encoder = URLQueryEncoder(parameters: parameters, allowed: .urlHostAllowed)
         return encoder.encoded(for: self)
     }
     
-    func appendedURLSchemeQuery(
-        channelID: String,
-        universalLinkURL: URL?,
-        scopes: Set<LoginPermission>,
-        otpID: String,
-        state: String,
-        appID: String? = nil) -> URL
-    {
-        let returnUri = String.returnUri(
-            channelID: channelID,
-            universalLinkURL: universalLinkURL,
-            scopes: scopes,
-            otpID: otpID,
-            state: state)
-        let loginUrl = "\(Constant.lineWebAuthUniversalURL)?returnUri=\(returnUri)&loginChannelId=\(channelID)"
+    func appendedURLSchemeQuery(_ flowParameters: LoginProcess.FlowParameter) -> URL {
+        let returnUri = String.returnUri(flowParameters)
+        let loginUrl =
+            "\(Constant.lineWebAuthUniversalURL)?returnUri=\(returnUri)&loginChannelId=\(flowParameters.channelID)"
         let parameters = [
             "loginUrl": "\(loginUrl)"
         ]

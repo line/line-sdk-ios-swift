@@ -34,4 +34,6 @@ public class LineSDKLoginManagerOption: NSObject {
     var unwrapped: LoginManagerOption { return _value }
     
     public static let onlyWebLogin = LineSDKLoginManagerOption(.onlyWebLogin)
+    public static let botPromptNormal = LineSDKLoginManagerOption(.botPromptNormal)
+    public static let botPromptAggressive = LineSDKLoginManagerOption(.botPromptAggressive)
 }

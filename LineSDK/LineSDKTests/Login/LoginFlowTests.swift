@@ -26,15 +26,19 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
     
     var window: UIWindow!
 
+    let parameter = LoginProcess.FlowParameter(
+        channelID: "123",
+        universalLinkURL: nil,
+        scopes: [.profile, .openID],
+        otp: .init(otpId: "321", otp: "aaa"),
+        processID: "abc",
+        nonce: "kkk",
+        botPrompt: .normal)
+    
     func testLoginQueryURLEncode() {
+        
         let baseURL = URL(string: Constant.lineWebAuthUniversalURL)!
-        let result = baseURL.appendedLoginQuery(
-            channelID: "123",
-            universalLinkURL: nil,
-            scopes: [.profile, .openID],
-            otpID: "321",
-            state: "abc"
-        )
+        let result = baseURL.appendedLoginQuery(parameter)
         
         let urlString = result.absoluteString.removingPercentEncoding
         XCTAssertNotNil(urlString)
@@ -60,13 +64,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
     
     func testURLSchemeQueryEncode() {
         let baseURL = Constant.lineAppAuthURLv2
-        let result = baseURL.appendedURLSchemeQuery(
-            channelID: "123",
-            universalLinkURL: nil,
-            scopes: [.profile, .openID],
-            otpID: "321",
-            state: "abc"
-        )
+        let result = baseURL.appendedURLSchemeQuery(parameter)
         
         let urlString = result.absoluteString.removingPercentEncoding
         XCTAssertNotNil(urlString)
@@ -88,15 +86,8 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
     
     func testAppUniversalLinkFlow() {
         let expect = expectation(description: "\(#file)_\(#line)")
-        let otp = OneTimePassword(otpId: "otpId", otp: "otp")
-        let flow = AppUniversalLinkFlow(
-            channelID: "123",
-            universalLinkURL: URL(string: "https://sample.com/auth"),
-            scopes: [.profile, .openID],
-            otp: otp,
-            processID: "321"
-        )
         
+        let flow = AppUniversalLinkFlow(parameter: parameter)
         let universal = URL(string: Constant.lineWebAuthUniversalURL)!
         let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
         XCTAssertEqual(components?.scheme, "https")
@@ -113,15 +104,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
     
     func testAppAuthSchemeFlow() {
         let expect = expectation(description: "\(#file)_\(#line)")
-        let otp = OneTimePassword(otpId: "otpId", otp: "otp")
-        let flow = AppAuthSchemeFlow(
-            channelID: "123",
-            universalLinkURL: nil,
-            scopes: [.profile, .openID],
-            otp: otp,
-            processID: "321"
-        )
-        
+        let flow = AppAuthSchemeFlow(parameter: parameter)
         let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
         XCTAssertEqual(components?.scheme, Constant.lineAuthV2Scheme)
         XCTAssertEqual(components?.host, "authorize")
@@ -136,15 +119,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
     
     func testWebLoginFlow() {
         let expect = expectation(description: "\(#file)_\(#line)")
-        let otp = OneTimePassword(otpId: "otpId", otp: "otp")
-        let flow = WebLoginFlow(
-            channelID: "123",
-            universalLinkURL: nil,
-            scopes: [.profile, .openID],
-            otp: otp,
-            processID: "321"
-        )
-        
+        let flow = WebLoginFlow(parameter: parameter)
         let webURL = URL(string: Constant.lineWebAuthURL)!
         let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
         XCTAssertEqual(components?.scheme, "https")

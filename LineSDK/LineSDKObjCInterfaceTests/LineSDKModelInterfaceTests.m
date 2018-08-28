@@ -107,6 +107,9 @@
 
 - (void)testLoginManagerOptionInterface {
     XCTAssertNotNil(LineSDKLoginManagerOption.onlyWebLogin);
+    XCTAssertNotNil(LineSDKLoginManagerOption.botPromptNormal);
+    XCTAssertNotNil(LineSDKLoginManagerOption.botPromptAggressive);
+    
     XCTAssertNotNil([[LineSDKLoginManagerOption alloc] initWithRawValue:1]);
 }
 

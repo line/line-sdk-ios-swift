@@ -116,7 +116,7 @@ public class LoginManager {
     public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
-        options: [LoginManagerOption] = [],
+        options: LoginManagerOption = [],
         completionHandler completion: @escaping (Result<LoginResult>) -> Void) -> LoginProcess?
     {
         lock.lock()
@@ -131,8 +131,9 @@ public class LoginManager {
         let process = LoginProcess(
             configuration: LoginConfiguration.shared,
             scopes: permissions,
+            options: options,
             viewController: viewController)
-        process.start(options)
+        process.start()
         process.onSucceed.delegate(on: self) { [unowned process] (self, token) in
             self.currentProcess = nil
             self.postLogin(token, process: process, completionHandler: completion)
