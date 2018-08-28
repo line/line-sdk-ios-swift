@@ -112,6 +112,7 @@
 		4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E449210ED82B00355F03 /* AdapterTests.swift */; };
 		4BA8E44C210EDB5100355F03 /* ParameterEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E44B210EDB5100355F03 /* ParameterEncoderTests.swift */; };
 		4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E44D210EE79B00355F03 /* PipelineTests.swift */; };
+		4BB2E6612135188900885687 /* LineSDKMessagingModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */; };
 		4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
 		4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */; };
 		4BBAFC4B2101CE8100E7BFF6 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
@@ -337,6 +338,7 @@
 		4BA8E449210ED82B00355F03 /* AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterTests.swift; sourceTree = "<group>"; };
 		4BA8E44B210EDB5100355F03 /* ParameterEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoderTests.swift; sourceTree = "<group>"; };
 		4BA8E44D210EE79B00355F03 /* PipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineTests.swift; sourceTree = "<group>"; };
+		4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKMessagingModelTests.m; sourceTree = "<group>"; };
 		4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
 		4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenStore.swift; sourceTree = "<group>"; };
 		4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resource.bundle; sourceTree = "<group>"; };
@@ -773,6 +775,7 @@
 			children = (
 				4BBEA9A2212EAFBB00858627 /* Info.plist */,
 				4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */,
+				4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */,
 				4BC9B2DA212FB0210071C736 /* LineSDKAPIInterfaceTests.m */,
 			);
 			path = LineSDKObjCInterfaceTests;
@@ -1448,6 +1451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B2D14ED212F931D000DD5BE /* LineSDKModelInterfaceTests.m in Sources */,
+				4BB2E6612135188900885687 /* LineSDKMessagingModelTests.m in Sources */,
 				4BC9B2DB212FB0210071C736 /* LineSDKAPIInterfaceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
