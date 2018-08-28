@@ -24,13 +24,13 @@ import LineSDK
 @objcMembers
 public class LineSDKTemplateImageCarouselPayloadColumn: NSObject {
     public var imageURL: URL
-    public var aciton: LineSDKMessageAction?
+    public var action: LineSDKMessageAction?
     
-    public init?(imageURL: URL, aciton: LineSDKMessageAction?) {
+    public init?(imageURL: URL, action: LineSDKMessageAction?) {
         do {
-            _ = try TemplateImageCarouselPayload.Column(imageURL: imageURL, action: aciton?.unwrapped)
+            _ = try TemplateImageCarouselPayload.Column(imageURL: imageURL, action: action?.unwrapped)
             self.imageURL = imageURL
-            self.aciton = aciton
+            self.action = action
         } catch {
             Log.assertionFailure("An error happened: \(error)")
             return nil
@@ -38,11 +38,11 @@ public class LineSDKTemplateImageCarouselPayloadColumn: NSObject {
     }
     
     convenience init(_ value: TemplateImageCarouselPayload.Column) {
-        self.init(imageURL: value.imageURL, aciton: value.action?.wrapped)!
+        self.init(imageURL: value.imageURL, action: value.action?.wrapped)!
     }
 
     var unwrapped: TemplateImageCarouselPayload.Column {
-        return try! TemplateImageCarouselPayload.Column(imageURL: imageURL, action: aciton?.unwrapped)
+        return try! TemplateImageCarouselPayload.Column(imageURL: imageURL, action: action?.unwrapped)
     }
 }
 

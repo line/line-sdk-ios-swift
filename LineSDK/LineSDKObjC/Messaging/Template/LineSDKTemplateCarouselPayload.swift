@@ -48,11 +48,11 @@ public class LineSDKTemplateCarouselPayloadColumn: NSObject {
     }
     
     var unwrapped: TemplateCarouselPayload.Column {
-        var colum = TemplateCarouselPayload.Column(title: title, text: text, actions: actions.map {$0.unwrapped })
-        colum.defaultAction = defaultAction?.unwrapped
-        colum.thumbnailImageURL = thumbnailImageURL
-        colum.imageBackgroundColor = imageBackgroundColor?.unwrapped
-        return colum
+        var column = TemplateCarouselPayload.Column(title: title, text: text, actions: actions.map {$0.unwrapped })
+        column.defaultAction = defaultAction?.unwrapped
+        column.thumbnailImageURL = thumbnailImageURL
+        column.imageBackgroundColor = imageBackgroundColor?.unwrapped
+        return column
     }
 }
 

@@ -414,22 +414,22 @@
     LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"action"
                                        uri:[NSURL URLWithString:@"https://sample.com"]];
-    LineSDKTemplateCarouselPayloadColumn *colum = [[LineSDKTemplateCarouselPayloadColumn alloc]
+    LineSDKTemplateCarouselPayloadColumn *column = [[LineSDKTemplateCarouselPayloadColumn alloc]
                                                    initWithTitle:@"title"
                                                             text:@"text"
                                                          actions:@[action]];
-    XCTAssertEqual([colum text], @"text");
-    XCTAssertEqual([colum title], @"title");
-    XCTAssertNil([colum defaultAction]);
-    XCTAssertNil([colum thumbnailImageURL]);
-    XCTAssertNil([colum imageBackgroundColor]);
-    XCTAssertEqual([colum actions].count, 1);
+    XCTAssertEqual([column text], @"text");
+    XCTAssertEqual([column title], @"title");
+    XCTAssertNil([column defaultAction]);
+    XCTAssertNil([column thumbnailImageURL]);
+    XCTAssertNil([column imageBackgroundColor]);
+    XCTAssertEqual([column actions].count, 1);
     
-    [colum addAction:action];
-    [colum setDefaultAction:action];
+    [column addAction:action];
+    [column setDefaultAction:action];
     
-    XCTAssertEqual([colum actions].count, 2);
-    XCTAssertNotNil([colum defaultAction]);
+    XCTAssertEqual([column actions].count, 2);
+    XCTAssertNotNil([column defaultAction]);
 }
 
 - (void)testTemplateCarouselPayloadInterface {
@@ -460,9 +460,9 @@
                                        uri:[NSURL URLWithString:@"https://sample.com"]];
     LineSDKTemplateImageCarouselPayloadColumn *column = [[LineSDKTemplateImageCarouselPayloadColumn alloc]
                                                         initWithImageURL:[NSURL URLWithString:@"https://image.com"]
-                                                                  aciton:action];
+                                                                  action:action];
     XCTAssertEqual([column imageURL].absoluteString, @"https://image.com");
-    XCTAssertNotNil(column.aciton);
+    XCTAssertNotNil(column.action);
 }
 
 - (void)testTemplateImageCarouselPayloadInterface {
@@ -471,7 +471,7 @@
                                        uri:[NSURL URLWithString:@"https://sample.com"]];
     LineSDKTemplateImageCarouselPayloadColumn *column = [[LineSDKTemplateImageCarouselPayloadColumn alloc]
                                                         initWithImageURL:[NSURL URLWithString:@"https://image.com"]
-                                                        aciton:action];
+                                                        action:action];
     LineSDKTemplateImageCarouselPayload *payload = [[LineSDKTemplateImageCarouselPayload alloc] initWithColumns:@[column]];
     XCTAssertEqual(payload.columns.count, 1);
     
@@ -676,7 +676,7 @@
     XCTAssertEqual([component iconComponent].size, component.size);
 }
 
-- (void)testFlextBoxComponentInterface {
+- (void)testFlexBoxComponentInterface {
     LineSDKFlexTextComponent *text = [[LineSDKFlexTextComponent alloc] initWithText:@"Hello World"];
     LineSDKFlexBoxComponent *box = [[LineSDKFlexBoxComponent alloc]
                                     initWithLayout:LineSDKFlexMessageComponentLayoutHorizontal contents:@[text]];
