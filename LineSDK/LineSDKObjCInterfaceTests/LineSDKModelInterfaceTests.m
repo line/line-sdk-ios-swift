@@ -734,6 +734,11 @@
     XCTAssertEqual([message flexMessage].altText, message.altText);
 }
 
+-(void)testErrorDomain {
+    NSLog(@"%@", [LineSDKError errorDomain]);
+    XCTAssertTrue([[LineSDKError errorDomain] isEqualToString:@"LineSDKError"]);
+}
+
 @end
 
 

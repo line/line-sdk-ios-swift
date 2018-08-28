@@ -16,6 +16,7 @@
 		4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF7211D473400866E6C /* MessageSender.swift */; };
 		4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */; };
 		4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFC211D628000866E6C /* MessageSample.swift */; };
+		4B2422EF2134FBE8007200C2 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2422EE2134FBE8007200C2 /* LineSDKError.swift */; };
 		4B2D14E3212F8EDA000DD5BE /* LineSDKUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */; };
 		4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */; };
 		4B2D14ED212F931D000DD5BE /* LineSDKModelInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */; };
@@ -235,6 +236,7 @@
 		4B15EEF7211D473400866E6C /* MessageSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSender.swift; sourceTree = "<group>"; };
 		4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTests.swift; sourceTree = "<group>"; };
 		4B15EEFC211D628000866E6C /* MessageSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSample.swift; sourceTree = "<group>"; };
+		4B2422EE2134FBE8007200C2 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
 		4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKUserProfile.swift; sourceTree = "<group>"; };
 		4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAccessTokenVerifyResult.swift; sourceTree = "<group>"; };
 		4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKModelInterfaceTests.m; sourceTree = "<group>"; };
@@ -489,6 +491,14 @@
 				4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */,
 			);
 			path = Message;
+			sourceTree = "<group>";
+		};
+		4B2422ED2134FBD6007200C2 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				4B2422EE2134FBE8007200C2 /* LineSDKError.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 		4B2D14FB212F9FA5000DD5BE /* Networking */ = {
@@ -746,6 +756,7 @@
 		4BBEA993212EAF9F00858627 /* LineSDKObjC */ = {
 			isa = PBXGroup;
 			children = (
+				4B2422ED2134FBD6007200C2 /* General */,
 				4BBEA9AD212EAFFB00858627 /* Login */,
 				4BC9B2DC212FB7100071C736 /* Social */,
 				4BC9B2E5212FC9E30071C736 /* Messaging */,
@@ -1426,6 +1437,7 @@
 				4B2D1501212FA9EE000DD5BE /* LineSDKHexColor.swift in Sources */,
 				4B2D14F1212F95B3000DD5BE /* LineSDKLoginResult.swift in Sources */,
 				4B2D14F3212F96A7000DD5BE /* LineSDKLoginProcess.swift in Sources */,
+				4B2422EF2134FBE8007200C2 /* LineSDKError.swift in Sources */,
 				4BBEA9B0212EB03200858627 /* LineSDKLoginPermission.swift in Sources */,
 				4B2D14F5212F97A6000DD5BE /* LineSDKLoginManager.swift in Sources */,
 			);
