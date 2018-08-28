@@ -38,7 +38,8 @@ struct PostExchangeTokenRequest: Request {
             "grant_type": "authorization_code",
             "code": code,
             "otp": otpValue,
-            "redirect_uri": redirectURI
+            "redirect_uri": redirectURI,
+            "client_version": Constant.SDKVersionString
         ]
     }
     

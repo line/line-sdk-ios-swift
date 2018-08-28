@@ -29,5 +29,4 @@ class ConstantTests: XCTestCase {
         let numbers = version.components(separatedBy: ".")
         XCTAssertEqual(numbers.count, 3)
     }
-
 }

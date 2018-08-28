@@ -31,6 +31,10 @@ struct Constant {
         return version
     }()
     
+    static var SDKVersionString: String {
+        return "LINE SDK iOS v\(SDKVersion)"
+    }
+    
     static var thirdPartyAppReturnScheme: String {
         guard let appID = Bundle.main.bundleIdentifier else {
             Log.fatalError("You need to specify a bundle ID in your app's Info.plist")
