@@ -41,6 +41,6 @@ public class LineSDKTextMessage: LineSDKMessage {
     }
     
     override var unwrapped: Message {
-        return .text(.init(text: text, sender: sender?._value))
+        return .text(.init(text: text, sender: sender?.unwrapped))
     }
 }

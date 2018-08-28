@@ -42,9 +42,9 @@ public class LineSDKLoginManager: NSObject {
         completionHandler completion: @escaping (LineSDKLoginResult?, Error?) -> Void) -> LineSDKLoginProcess?
     {
         let process = _value.login(
-            permissions: Set((permissions ?? [.profile]).map { $0._value }),
+            permissions: Set((permissions ?? [.profile]).map { $0.unwrapped }),
             in: viewController,
-            options: (options ?? []).map { $0._value })
+            options: (options ?? []).map { $0.unwrapped })
         {
             result in
             completion(result.value.map { .init($0) }, result.error)

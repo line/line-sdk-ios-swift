@@ -23,12 +23,36 @@ import LineSDK
 
 @objcMembers
 public class LineSDKFlexBubbleContainer: LineSDKFlexMessageContainer {
-    init(_ value: FlexBubbleContainer) {
+    
+    public var header: LineSDKFlexBoxComponent?
+    public var hero: LineSDKFlexImageComponent?
+    public var body: LineSDKFlexBoxComponent?
+    public var footer: LineSDKFlexBoxComponent?
+    
+    public var style: LineSDKFlexBubbleContainerStyle?
+    public var direction: LineSDKFlexBubbleContainerDirection = .none
+    
+    public override init() { }
+    
+    convenience init(_ value: FlexBubbleContainer) {
+        self.init()
+        header = value.header.map { .init($0) }
+        hero = value.hero.map { .init($0) }
+        body = value.body.map { .init($0) }
+        footer = value.footer.map { .init($0) }
         
+        style = value.styles.map { .init($0) }
+        direction = .init(value.direction)
     }
     
     override var unwrapped: FlexMessageContainer {
-        var container = FlexBubbleContainer(header: nil, hero: nil, body: nil, footer: nil, styles: nil)
+        var container = FlexBubbleContainer(
+            header: header?.component,
+            hero: hero?.component,
+            body: body?.component,
+            footer: footer?.component,
+            styles: style?.unwrapped)
+        container.direction = direction.unwrapped
         return .bubble(container)
     }
     
@@ -69,7 +93,7 @@ public enum LineSDKFlexBubbleContainerDirection: Int {
     case leftToRight
     case rightToLeft
     
-    var _value: FlexBubbleContainer.Direction? {
+    var unwrapped: FlexBubbleContainer.Direction? {
         switch self {
         case .none: return nil
         case .leftToRight: return .leftToRight
@@ -108,8 +132,8 @@ public class LineSDKFlexBlockStyle: NSObject {
     
     var unwrapped: FlexBlockStyle {
         return FlexBlockStyle(
-            backgroundColor: backgroundColor?._value,
+            backgroundColor: backgroundColor?.unwrapped,
             separator: separator,
-            separatorColor: separatorColor?._value)
+            separatorColor: separatorColor?.unwrapped)
     }
 }

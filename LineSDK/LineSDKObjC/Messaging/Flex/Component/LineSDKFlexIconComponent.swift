@@ -1,5 +1,5 @@
 //
-//  LineSDKLoginManagerOption.swift
+//  LineSDKFlexIconComponent.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,16 +22,34 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKLoginManagerOption: NSObject {
-    let _value: LoginManagerOption
-    convenience init(_ value: LoginManagerOption) {
-        self.init(rawValue: value.rawValue)
-    }
-    public init(rawValue: Int) {
-        _value = .init(rawValue: rawValue)
+public class LineSDKFlexIconComponent: LineSDKFlexMessageComponent {
+    public let url: URL
+    public var margin: LineSDKFlexMessageComponentMargin = .none
+    public var size: LineSDKFlexMessageComponentSize = .none
+    public var aspectRatio: LineSDKFlexMessageComponentAspectRatio = .none
+    
+    public init?(iconURL: URL) {
+        do {
+            _ = try FlexIconComponent(url: iconURL)
+            self.url = iconURL
+        } catch {
+            Log.assertionFailure("An error happened: \(error)")
+            return nil
+        }
     }
     
-    var unwrapped: LoginManagerOption { return _value }
+    convenience init(_ value: FlexIconComponent) {
+        self.init(iconURL: value.url)!
+        margin = .init(value.margin)
+        size = .init(value.size)
+        aspectRatio = .init(value.aspectRatio)
+    }
     
-    public static let onlyWebLogin = LineSDKLoginManagerOption(.onlyWebLogin)
+    override var unwrapped: FlexMessageComponent {
+        var component = try! FlexIconComponent(url: url)
+        component.margin = margin.unwrapped
+        component.size = size.unwrapped
+        component.aspectRatio = aspectRatio.unwrapped
+        return .icon(component)
+    }
 }

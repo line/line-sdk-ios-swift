@@ -73,7 +73,7 @@ public class LineSDKImageMessage: LineSDKMessage {
             previewImageURL: previewImageURL,
             animated: animated,
             fileExtension: fileExtension,
-            sender: sender?._value
+            sender: sender?.unwrapped
             ))
     }
 }

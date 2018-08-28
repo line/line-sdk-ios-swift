@@ -29,7 +29,7 @@ public class LineSDKTemplateMessage: LineSDKMessage {
     
     init(_ value: TemplateMessage) {
         altText = value.altText
-        payload = value.payload.converted
+        payload = value.payload.wrapped
     }
     
     public init(altText: String, payload: LineSDKTemplateMessagePayload) {
@@ -44,7 +44,7 @@ public class LineSDKTemplateMessage: LineSDKMessage {
 }
 
 extension TemplateMessagePayload {
-    var converted: LineSDKTemplateMessagePayload {
+    var wrapped: LineSDKTemplateMessagePayload {
         switch self {
         case .buttons(let payload): return LineSDKTemplateButtonsPayload(payload)
         case .confirm(let payload): return LineSDKTemplateConfirmPayload(payload)

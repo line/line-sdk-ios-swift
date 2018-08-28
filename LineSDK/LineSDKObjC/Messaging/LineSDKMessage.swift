@@ -48,6 +48,10 @@ public class LineSDKMessage: NSObject {
         return unwrapped.asTemplateMessage.map { .init($0) }
     }
     
+    public var flexMessage: LineSDKFlexMessage? {
+        return unwrapped.asFlexMessage.map { .init($0) }
+    }
+    
     var unwrapped: Message { Log.fatalError("Not implemented in subclass: \(type(of: self))") }
 }
 
@@ -77,6 +81,8 @@ public class LineSDKMessageSender: NSObject {
     public init(label: String, iconURL: URL, linkURL: URL?) {
         _value = .init(label: label, iconURL: iconURL, linkURL: linkURL)
     }
+    
+    var unwrapped: MessageSender { return _value }
 }
 
 

@@ -24,22 +24,21 @@ import LineSDK
 @objcMembers
 public class LineSDKFlexMessage: LineSDKMessage {
     
-//    public var altText: String
-//    public var contents: LineSDKFlexMessageContainer
-//
-//    init(_ value: FlexMessage) {
-//        altText = value.altText
-//        contents = .converted(from: value.payload)
-//    }
-//
-//    public init(altText: String, payload: LineSDKTemplateMessagePayload) {
-//        self.altText = altText
-//        self.payload = payload
-//    }
-//
-//    override func toMessage() -> Message {
-//        let value = TemplateMessage(altText: altText, payload: payload.toTemplateMessagePayload())
-//        return .template(value)
-//    }
+    public var altText: String
+    public var contents: LineSDKFlexMessageContainer
+
+    init(_ value: FlexMessage) {
+        altText = value.altText
+        contents = value.contents.wrapped
+    }
+
+    public init(altText: String, container: LineSDKFlexMessageContainer) {
+        self.altText = altText
+        self.contents = container
+    }
+
+    override var unwrapped: Message {
+        return .flex(.init(altText: altText, container: contents.unwrapped))
+    }
 }
 

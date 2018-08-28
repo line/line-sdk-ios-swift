@@ -66,4 +66,6 @@ public class LineSDKLoginPermission: NSObject {
     public static func squareChatMessageWrite(squareID: String, chatID: String) -> LineSDKLoginPermission {
         return LineSDKLoginPermission(.init(rawValue: "square_chat_message.write:\(squareID)/\(chatID)"))
     }
+    
+    var unwrapped: LoginPermission { return _value }
 }

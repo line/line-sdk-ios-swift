@@ -38,7 +38,7 @@ public class LineSDKTemplateImageCarouselPayloadColumn: NSObject {
     }
     
     convenience init(_ value: TemplateImageCarouselPayload.Column) {
-        self.init(imageURL: value.imageURL, aciton: value.action?.converted)!
+        self.init(imageURL: value.imageURL, aciton: value.action?.wrapped)!
     }
 
     var unwrapped: TemplateImageCarouselPayload.Column {

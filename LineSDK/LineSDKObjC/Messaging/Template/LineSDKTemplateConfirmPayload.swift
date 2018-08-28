@@ -40,8 +40,8 @@ public class LineSDKTemplateConfirmPayload: LineSDKTemplateMessagePayload {
     convenience init(_ value: TemplateConfirmPayload) {
         self.init(
             text: value.text,
-            confirmAction: value.confirmAction.converted,
-            cancelAction: value.cancelAction.converted)
+            confirmAction: value.confirmAction.wrapped,
+            cancelAction: value.cancelAction.wrapped)
     }
     
     override var unwrapped: TemplateMessagePayload {

@@ -517,10 +517,9 @@
 }
 
 - (void)testFlexMessageComponentLayoutInterface {
-    XCTAssertEqual(LineSDKFlexMessageComponentLayoutNone, 0);
-    XCTAssertEqual(LineSDKFlexMessageComponentLayoutHorizontal, 1);
-    XCTAssertEqual(LineSDKFlexMessageComponentLayoutVertical, 2);
-    XCTAssertEqual(LineSDKFlexMessageComponentLayoutBaseline, 3);
+    XCTAssertEqual(LineSDKFlexMessageComponentLayoutHorizontal, 0);
+    XCTAssertEqual(LineSDKFlexMessageComponentLayoutVertical, 1);
+    XCTAssertEqual(LineSDKFlexMessageComponentLayoutBaseline, 2);
 }
 
 - (void)testFlexMessageComponentMarginInterface {
@@ -548,27 +547,27 @@
     XCTAssertEqual(LineSDKFlexMessageComponentSizeFull, 11);
 }
 
-- (void)testFlexMessageComponenetAlignment {
+- (void)testFlexMessageComponentAlignment {
     XCTAssertEqual(LineSDKFlexMessageComponentAlignmentNone, 0);
     XCTAssertEqual(LineSDKFlexMessageComponentAlignmentStart, 1);
     XCTAssertEqual(LineSDKFlexMessageComponentAlignmentEnd, 2);
     XCTAssertEqual(LineSDKFlexMessageComponentAlignmentCenter, 3);
 }
 
-- (void)testFlexMessageComponenetGravity {
+- (void)testFlexMessageComponentGravity {
     XCTAssertEqual(LineSDKFlexMessageComponentGravityNone, 0);
     XCTAssertEqual(LineSDKFlexMessageComponentGravityTop, 1);
     XCTAssertEqual(LineSDKFlexMessageComponentGravityBottom, 2);
     XCTAssertEqual(LineSDKFlexMessageComponentGravityCenter, 3);
 }
 
-- (void)testFlexMessageComponenetWeight {
+- (void)testFlexMessageComponentWeight {
     XCTAssertEqual(LineSDKFlexMessageComponentWeightNone, 0);
     XCTAssertEqual(LineSDKFlexMessageComponentWeightRegular, 1);
     XCTAssertEqual(LineSDKFlexMessageComponentWeightBold, 2);
 }
 
-- (void)testFlexMessageComponenetHeight {
+- (void)testFlexMessageComponentHeight {
     XCTAssertEqual(LineSDKFlexMessageComponentHeightNone, 0);
     XCTAssertEqual(LineSDKFlexMessageComponentHeightSm, 1);
     XCTAssertEqual(LineSDKFlexMessageComponentHeightMd, 2);
@@ -590,11 +589,151 @@
     XCTAssertEqual(LineSDKFlexMessageComponentAspectRatioRatio_1x3, 12);
 }
 
-- (void)testFlexMessageComponenetAspectMode {
+- (void)testFlexMessageComponentAspectMode {
     XCTAssertEqual(LineSDKFlexMessageComponentAspectModeNone, 0);
     XCTAssertEqual(LineSDKFlexMessageComponentAspectModeFill, 1);
     XCTAssertEqual(LineSDKFlexMessageComponentAspectModeFit, 2);
 }
+
+- (void)testFlexTextComponentInterface {
+    LineSDKFlexTextComponent *component = [[LineSDKFlexTextComponent alloc] initWithText:@"text"];
+    component.flex = @3;
+    component.margin = LineSDKFlexMessageComponentMarginXs;
+    component.size = LineSDKFlexMessageComponentSizeLg;
+    component.alignment = LineSDKFlexMessageComponentAlignmentEnd;
+    component.gravity = LineSDKFlexMessageComponentGravityBottom;
+    component.wrapping = YES;
+    component.maxLines = nil;
+    component.weight = LineSDKFlexMessageComponentWeightBold;
+    component.color = nil;
+    component.action = nil;
+    XCTAssertEqual(component.text, @"text");
+    XCTAssertEqual([component textComponent].text, @"text");
+}
+
+- (void)testFlexButtonComponentInterface {
+    LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
+                                       initWithLabel:@"action"
+                                       uri:[NSURL URLWithString:@"https://sample.com"]];
+    LineSDKFlexButtonComponent *component = [[LineSDKFlexButtonComponent alloc] initWithAction:action];
+    component.flex = @3;
+    component.margin = LineSDKFlexMessageComponentMarginSm;
+    component.height = LineSDKFlexMessageComponentHeightSm;
+    component.style = LineSDKFlexButtonComponentStylePrimary;
+    component.color = [[LineSDKHexColor alloc] init:[UIColor redColor]];
+    component.gravity = LineSDKFlexMessageComponentGravityCenter;
+    XCTAssertEqual(component.action.URIAction.label, @"action");
+    XCTAssertEqual([component buttonComponent].action.URIAction.label, @"action");
+}
+
+- (void)testFlexImageComponentInterface {
+    LineSDKFlexImageComponent *component = [[LineSDKFlexImageComponent alloc]
+                                            initWithImageURL:[NSURL URLWithString:@"https://sample.com"]];
+    component.flex = @3;
+    component.margin = LineSDKFlexMessageComponentMarginXs;
+    component.size = LineSDKFlexMessageComponentSizeLg;
+    component.alignment = LineSDKFlexMessageComponentAlignmentEnd;
+    component.gravity = LineSDKFlexMessageComponentGravityBottom;
+    component.size = LineSDKFlexMessageComponentSizeLg;
+    component.aspectRatio = LineSDKFlexMessageComponentAspectRatioRatio_1x3;
+    component.aspectMode = LineSDKFlexMessageComponentAspectModeFill;
+    component.backgroundColor = nil;
+    XCTAssertEqual(component.url.absoluteString, @"https://sample.com");
+    XCTAssertEqual([component imageComponent].url.absoluteString, @"https://sample.com");
+}
+
+- (void)testFlexFillerComponentInterface {
+    LineSDKFlexFillerComponent *component = [[LineSDKFlexFillerComponent alloc] init];
+    XCTAssertNotNil([component fillerComponent]);
+}
+
+- (void)testFlexSeparatorComponentInterface {
+    LineSDKHexColor *color = [[LineSDKHexColor alloc] init:[UIColor redColor]];
+    LineSDKFlexSeparatorComponent *component = [[LineSDKFlexSeparatorComponent alloc]
+                                                initWithMargin:LineSDKFlexMessageComponentMarginLg
+                                                         color:color];
+    component.margin = LineSDKFlexMessageComponentMarginMd;
+    component.color = nil;
+    XCTAssertEqual(component.margin, LineSDKFlexMessageComponentMarginMd);
+    XCTAssertEqual([component separatorComponent].margin, component.margin);
+}
+
+- (void)testFlexSpacerComponentInterface {
+    LineSDKFlexSpacerComponent *component = [[LineSDKFlexSpacerComponent alloc]
+                                             initWithSize:LineSDKFlexMessageComponentSizeMd];
+    component.size = LineSDKFlexMessageComponentSizeXl5;
+    XCTAssertEqual(component.size, LineSDKFlexMessageComponentSizeXl5);
+    XCTAssertEqual([component spacerComponent].size, component.size);
+}
+
+- (void)testFlexIconComponentInterface {
+    LineSDKFlexIconComponent *component = [[LineSDKFlexIconComponent alloc]
+                                           initWithIconURL:[NSURL URLWithString:@"https://sample.com"]];
+    component.margin = LineSDKFlexMessageComponentMarginMd;
+    component.size = LineSDKFlexMessageComponentSizeMd;
+    component.aspectRatio = LineSDKFlexMessageComponentAspectRatioRatio_2x1;
+    XCTAssertEqual(component.size, LineSDKFlexMessageComponentSizeMd);
+    XCTAssertEqual([component iconComponent].size, component.size);
+}
+
+- (void)testFlextBoxComponentInterface {
+    LineSDKFlexTextComponent *text = [[LineSDKFlexTextComponent alloc] initWithText:@"Hello World"];
+    LineSDKFlexBoxComponent *box = [[LineSDKFlexBoxComponent alloc]
+                                    initWithLayout:LineSDKFlexMessageComponentLayoutHorizontal contents:@[text]];
+    box.flex = @1;
+    box.spacing = LineSDKFlexMessageComponentSpacingSm;
+    box.margin = LineSDKFlexMessageComponentMarginLg;
+    box.action = [[LineSDKMessageURIAction alloc]
+                  initWithLabel:@"action" uri:[NSURL URLWithString:@"https://hello.com"]];
+    
+    XCTAssertEqual(box.contents.count, 1);
+    XCTAssertEqual([box boxComponent].contents.count, [box boxComponent].contents.count);
+    
+}
+
+- (void)testFlexBubbleContainerInterface {
+    LineSDKFlexImageComponent *image = [[LineSDKFlexImageComponent alloc]
+                                        initWithImageURL:[NSURL URLWithString:@"https://sample.com"]];
+    LineSDKFlexBoxComponent *box = [[LineSDKFlexBoxComponent alloc]
+                                    initWithLayout:LineSDKFlexMessageComponentLayoutHorizontal contents:@[image]];
+    LineSDKFlexBubbleContainer *container = [[LineSDKFlexBubbleContainer alloc] init];
+    container.header = box;
+    container.hero = image;
+    container.body = box;
+    container.footer = box;
+    container.direction = LineSDKFlexBubbleContainerDirectionRightToLeft;
+    
+    XCTAssertEqual([container bubbleContainer].direction, container.direction);
+}
+
+- (void)testFlexCarouselContainerInterface {
+    LineSDKFlexImageComponent *image = [[LineSDKFlexImageComponent alloc]
+                                        initWithImageURL:[NSURL URLWithString:@"https://sample.com"]];
+    LineSDKFlexBoxComponent *box = [[LineSDKFlexBoxComponent alloc]
+                                    initWithLayout:LineSDKFlexMessageComponentLayoutHorizontal contents:@[image]];
+    LineSDKFlexBubbleContainer *bubble = [[LineSDKFlexBubbleContainer alloc] init];
+    bubble.body = box;
+    LineSDKFlexCarouselContainer *carousel =  [[LineSDKFlexCarouselContainer alloc]
+                                               initWithContents:@[bubble, bubble, bubble]];
+    XCTAssertEqual(carousel.contents.count, 3);
+    XCTAssertEqual([carousel carouselContainer].contents.count, 3);
+}
+
+-(void)testFlexMessageInterface {
+    LineSDKFlexImageComponent *image = [[LineSDKFlexImageComponent alloc]
+                                        initWithImageURL:[NSURL URLWithString:@"https://sample.com"]];
+    LineSDKFlexBoxComponent *box = [[LineSDKFlexBoxComponent alloc]
+                                    initWithLayout:LineSDKFlexMessageComponentLayoutHorizontal contents:@[image]];
+    LineSDKFlexBubbleContainer *container = [[LineSDKFlexBubbleContainer alloc] init];
+    container.header = box;
+    
+    LineSDKFlexMessage *message = [[LineSDKFlexMessage alloc] initWithAltText:@"alt" container:container];
+    message.altText = @"hello";
+    message.contents = container;
+    XCTAssertEqual(message.altText, @"hello");
+    XCTAssertEqual([message flexMessage].altText, message.altText);
+}
+
 @end
 
 

@@ -1,5 +1,5 @@
 //
-//  LineSDKLoginManagerOption.swift
+//  LineSDKFlexSeparatorComponent.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,16 +22,21 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKLoginManagerOption: NSObject {
-    let _value: LoginManagerOption
-    convenience init(_ value: LoginManagerOption) {
-        self.init(rawValue: value.rawValue)
-    }
-    public init(rawValue: Int) {
-        _value = .init(rawValue: rawValue)
+public class LineSDKFlexSeparatorComponent: LineSDKFlexMessageComponent {
+    public var margin: LineSDKFlexMessageComponentMargin = .none
+    public var color: LineSDKHexColor?
+    
+    public init(margin: LineSDKFlexMessageComponentMargin, color: LineSDKHexColor?) {
+        self.margin = margin
+        self.color = color
     }
     
-    var unwrapped: LoginManagerOption { return _value }
+    convenience init(_ value: FlexSeparatorComponent) {
+        self.init(margin: .init(value.margin), color: value.color.map { .init($0) })
+    }
     
-    public static let onlyWebLogin = LineSDKLoginManagerOption(.onlyWebLogin)
+    override var unwrapped: FlexMessageComponent {
+        let component = FlexSeparatorComponent(margin: margin.unwrapped, color: color?.unwrapped)
+        return .separator(component)
+    }
 }

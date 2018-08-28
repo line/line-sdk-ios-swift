@@ -21,23 +21,106 @@
 
 import LineSDK
 
+extension FlexMessageComponent {
+    var wrapped: LineSDKFlexMessageComponent {
+        switch self {
+        case .box(let component): return LineSDKFlexBoxComponent(component)
+        case .text(let component): return LineSDKFlexTextComponent(component)
+        case .button(let component): return LineSDKFlexButtonComponent(component)
+        case .image(let component): return LineSDKFlexImageComponent(component)
+        case .filler(let component): return LineSDKFlexFillerComponent(component)
+        case .icon(let component): return LineSDKFlexIconComponent(component)
+        case .separator(let component): return LineSDKFlexSeparatorComponent(component)
+        case .spacer(let component): return LineSDKFlexSpacerComponent(component)
+        case .unknown: Log.fatalError("Cannot create ObjC compatible type for \(self).")
+        }
+    }
+}
+
+@objcMembers
+public class LineSDKFlexMessageComponent: NSObject {
+    
+    public var boxComponent: LineSDKFlexBoxComponent? {
+        return unwrapped.asBoxComponent.map { .init($0) }
+    }
+    
+    public var textComponent: LineSDKFlexTextComponent? {
+        return unwrapped.asTextComponent.map { .init($0) }
+    }
+    
+    public var buttonComponent: LineSDKFlexButtonComponent? {
+        return unwrapped.asButtonComponent.map { .init($0) }
+    }
+    
+    public var imageComponent: LineSDKFlexImageComponent? {
+        return unwrapped.asImageComponent.map { .init($0) }
+    }
+    
+    public var fillerComponent: LineSDKFlexFillerComponent? {
+        return unwrapped.asFillerComponent.map { .init($0) }
+    }
+    
+    public var iconComponent: LineSDKFlexIconComponent? {
+        return unwrapped.asIconComponent.map { .init($0) }
+    }
+    
+    public var separatorComponent: LineSDKFlexSeparatorComponent? {
+        return unwrapped.asSeparatorComponent.map { .init($0) }
+    }
+    
+    public var spacerComponent: LineSDKFlexSpacerComponent? {
+        return unwrapped.asSpacerComponent.map { .init($0) }
+    }
+    
+    var unwrapped: FlexMessageComponent {
+        Log.fatalError("Not implemented in subclass: \(type(of: self))")
+    }
+}
+
 @objc
 public enum LineSDKFlexMessageComponentLayout: Int {
-    case none, horizontal, vertical, baseline
-    var unwrapped: FlexMessageComponent.Layout? {
+    case horizontal, vertical, baseline
+    var unwrapped: FlexMessageComponent.Layout {
         switch self {
         case .horizontal: return .horizontal
         case .vertical: return .vertical
         case .baseline: return .baseline
+        }
+    }
+    
+    init(_ value: FlexMessageComponent.Layout) {
+        switch value {
+        case .horizontal: self = .horizontal
+        case .vertical: self = .vertical
+        case .baseline: self = .baseline
+        }
+    }
+}
+
+@objc
+public enum LineSDKFlexMessageComponentSpacing: Int {
+    case none, xs, sm, md, lg, xl, xxl
+    var unwrapped: FlexMessageComponent.Margin? {
+        switch self {
+        case .xs: return .xs
+        case .sm: return .sm
+        case .md: return .md
+        case .lg: return .lg
+        case .xl: return .xl
+        case .xxl: return .xxl
         case .none: return nil
         }
     }
     
-    init(_ value: FlexMessageComponent.Layout?) {
+    init(_ value: FlexMessageComponent.Margin?) {
         switch value {
-        case .horizontal?: self = .horizontal
-        case .vertical?: self = .vertical
-        case .baseline?: self = .baseline
+        case .none?: self = .none
+        case .xs?: self = .xs
+        case .sm?: self = .sm
+        case .md?: self = .md
+        case .lg?: self = .lg
+        case .xl?: self = .xl
+        case .xxl?: self = .xxl
         case nil: self = .none
         }
     }

@@ -21,6 +21,16 @@
 
 import LineSDK
 
+extension FlexMessageContainer {
+    var wrapped: LineSDKFlexMessageContainer {
+        switch self {
+        case .bubble(let container): return LineSDKFlexBubbleContainer(container)
+        case .carousel(let container): return LineSDKFlexCarouselContainer(container)
+        case .unknown: Log.fatalError("Cannot create ObjC compatible type for \(self).")
+        }
+    }
+}
+
 @objcMembers
 public class LineSDKFlexMessageContainer: NSObject {
     

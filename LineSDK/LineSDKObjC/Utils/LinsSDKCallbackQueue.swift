@@ -37,4 +37,6 @@ public class LineSDKCallbackQueue: NSObject {
     public static func callbackQueue(operationQueue: OperationQueue) -> LineSDKCallbackQueue {
         return LineSDKCallbackQueue(.operation(operationQueue))
     }
+    
+    var unwrapped: CallbackQueue { return _value }
 }

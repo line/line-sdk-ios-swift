@@ -41,8 +41,8 @@ public class LineSDKTemplateButtonsPayload: LineSDKTemplateMessagePayload {
     }
     
     convenience init(_ value: TemplateButtonsPayload) {
-        self.init(title: value.title, text: value.text, actions: value.actions.map { $0.converted })
-        defaultAction = value.defaultAction.map { $0.converted }
+        self.init(title: value.title, text: value.text, actions: value.actions.map { $0.wrapped })
+        defaultAction = value.defaultAction.map { $0.wrapped }
         thumbnailImageURL = value.thumbnailImageURL
         imageAspectRatio = .init(value.imageAspectRatio)
         imageContentMode = .init(value.imageContentMode)
@@ -56,8 +56,8 @@ public class LineSDKTemplateButtonsPayload: LineSDKTemplateMessagePayload {
         payload.thumbnailImageURL = thumbnailImageURL
         payload.imageAspectRatio = imageAspectRatio.unwrapped
         payload.imageContentMode = imageContentMode.unwrapped
-        payload.imageBackgroundColor = imageBackgroundColor?._value
-        payload.sender = sender?._value
+        payload.imageBackgroundColor = imageBackgroundColor?.unwrapped
+        payload.sender = sender?.unwrapped
         
         return .buttons(payload)
     }

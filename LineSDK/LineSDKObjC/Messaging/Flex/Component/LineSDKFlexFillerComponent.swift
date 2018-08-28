@@ -1,5 +1,5 @@
 //
-//  LineSDKLoginManagerOption.swift
+//  LineSDKFlexFillerComponent.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,16 +22,13 @@
 import LineSDK
 
 @objcMembers
-public class LineSDKLoginManagerOption: NSObject {
-    let _value: LoginManagerOption
-    convenience init(_ value: LoginManagerOption) {
-        self.init(rawValue: value.rawValue)
-    }
-    public init(rawValue: Int) {
-        _value = .init(rawValue: rawValue)
-    }
+public class LineSDKFlexFillerComponent: LineSDKFlexMessageComponent {
     
-    var unwrapped: LoginManagerOption { return _value }
+    public override init() {}
     
-    public static let onlyWebLogin = LineSDKLoginManagerOption(.onlyWebLogin)
+    init(_ value: FlexFillerComponent) {}
+    
+    override var unwrapped: FlexMessageComponent {
+        return .filler(.init())
+    }
 }

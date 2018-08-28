@@ -43,4 +43,6 @@ public class LineSDKHexColor: NSObject {
     public func isEqualsToColor(_ another: LineSDKHexColor) -> Bool {
         return _value == another._value
     }
+    
+    var unwrapped: HexColor { return _value }
 }

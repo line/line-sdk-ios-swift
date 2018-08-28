@@ -37,8 +37,8 @@ public class LineSDKTemplateCarouselPayloadColumn: NSObject {
     }
     
     convenience init(_ value: TemplateCarouselPayload.Column) {
-        self.init(title: value.title, text: value.text, actions: value.actions.map { $0.converted })
-        defaultAction = value.defaultAction.map { $0.converted }
+        self.init(title: value.title, text: value.text, actions: value.actions.map { $0.wrapped })
+        defaultAction = value.defaultAction.map { $0.wrapped }
         thumbnailImageURL = value.thumbnailImageURL
         imageBackgroundColor = value.imageBackgroundColor.map { .init($0) }
     }
@@ -51,7 +51,7 @@ public class LineSDKTemplateCarouselPayloadColumn: NSObject {
         var colum = TemplateCarouselPayload.Column(title: title, text: text, actions: actions.map {$0.unwrapped })
         colum.defaultAction = defaultAction?.unwrapped
         colum.thumbnailImageURL = thumbnailImageURL
-        colum.imageBackgroundColor = imageBackgroundColor?._value
+        colum.imageBackgroundColor = imageBackgroundColor?.unwrapped
         return colum
     }
 }

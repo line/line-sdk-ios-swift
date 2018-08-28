@@ -22,7 +22,7 @@
 import LineSDK
 
 extension MessageAction {
-    var converted: LineSDKMessageAction {
+    var wrapped: LineSDKMessageAction {
         switch self {
         case .URI(let action): return LineSDKMessageURIAction(action)
         case .unknown: Log.fatalError("Cannot create ObjC compatible type for \(self).")

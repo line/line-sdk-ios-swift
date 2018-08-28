@@ -36,6 +36,8 @@ public class LineSDKMessageSendingStatus: NSObject {
     public var isOK: Bool {
         return _value.isOK
     }
+    
+    var unwrapped: MessageSendingStatus { return _value }
 }
 
 @objcMembers
