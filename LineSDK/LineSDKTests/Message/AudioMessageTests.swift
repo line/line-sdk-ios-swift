@@ -84,7 +84,7 @@ class AudioMessageTests: XCTestCase {
         let contentURL = URL(string: "http://example.com/example.mp3")!
         XCTAssertThrowsError(try AudioMessage(originalContentURL: contentURL, duration: nil)) {
             error in
-            guard case .generalError(.parameterError(let name, _))? = error as? SDKError else {
+            guard case .generalError(.parameterError(let name, _))? = error as? LineSDKError else {
                 XCTFail("The error should be a `.parameterError`")
                 return
             }

@@ -33,7 +33,7 @@ struct URLQueryEncoder: RequestAdapter {
     func adapted(_ request: URLRequest) throws -> URLRequest {
         
         guard let url = request.url else {
-            throw SDKError.requestFailed(reason: .missingURL)
+            throw LineSDKError.requestFailed(reason: .missingURL)
         }
         
         var request = request
@@ -62,7 +62,7 @@ struct JSONParameterEncoder: RequestAdapter {
             let data = try JSONSerialization.data(withJSONObject: parameters, options: [])
             request.httpBody = data
         } catch {
-            throw SDKError.requestFailed(reason: .jsonEncodingFailed(error))
+            throw LineSDKError.requestFailed(reason: .jsonEncodingFailed(error))
         }
         
         return request

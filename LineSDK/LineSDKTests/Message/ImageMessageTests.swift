@@ -129,7 +129,7 @@ class ImageMessageTests: XCTestCase {
                 previewImageURL: previewImageURL))
         {
             error in
-            guard case .generalError(.parameterError(let name, _))? = error as? SDKError else {
+            guard case .generalError(.parameterError(let name, _))? = error as? LineSDKError else {
                 XCTFail("The error should be a `.parameterError`")
                 return
             }
@@ -143,7 +143,7 @@ class ImageMessageTests: XCTestCase {
                 previewImageURL: previewImageURL))
         {
             error in
-            guard case .generalError(.parameterError(let name, _))? = error as? SDKError else {
+            guard case .generalError(.parameterError(let name, _))? = error as? LineSDKError else {
                 XCTFail("The error should be a `.parameterError`")
                 return
             }

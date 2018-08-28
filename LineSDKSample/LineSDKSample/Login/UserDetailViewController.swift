@@ -61,9 +61,9 @@ class UserDetailViewController: UITableViewController, CellCopyable {
         case 1:
             content = ("Status Message", profile?.statusMessage ?? "N/A")
         case 2:
-            content = ("UserID", profile?.userId ?? "N/A")
+            content = ("UserID", profile?.userID ?? "N/A")
         case 3:
-            content = ("Avatar URL", profile?.pictureUrl?.absoluteString ?? "N/A")
+            content = ("Avatar URL", profile?.pictureURL?.absoluteString ?? "N/A")
         default:
             fatalError("Not Implemented yet.")
         }

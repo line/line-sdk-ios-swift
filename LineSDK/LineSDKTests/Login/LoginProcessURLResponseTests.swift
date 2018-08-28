@@ -36,8 +36,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .malformedRedirectURL(let url, let message)) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .malformedRedirectURL(let url, let message)) = e else {
                 XCTFail("Should be .malformedRedirectURL error")
                 return
             }
@@ -52,8 +52,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .userCancelled) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .userCancelled) = e else {
                 XCTFail("Should be .userCancelled error")
                 return
             }
@@ -66,8 +66,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .userCancelled) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .userCancelled) = e else {
                 XCTFail("Should be .userCancelled error")
                 return
             }
@@ -80,8 +80,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .lineClientError(let code, let message)) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .lineClientError(let code, let message)) = e else {
                 XCTFail("Should be .lineClientError error")
                 return
             }
@@ -96,8 +96,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .invalidLineURLResultCode(let code)) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .invalidLineURLResultCode(let code)) = e else {
                 XCTFail("Should be .invalidLineURLResultCode error")
                 return
             }
@@ -117,8 +117,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .malformedRedirectURL(let url, let message)) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .malformedRedirectURL(let url, let message)) = e else {
                 XCTFail("Should be .malformedRedirectURL error")
                 return
             }
@@ -133,8 +133,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "hello")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .responseStateValueNotMatching(let expected, let got)) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .responseStateValueNotMatching(let expected, let got)) = e else {
                 XCTFail("Should be .responseStateValueNotMatching error")
                 return
             }
@@ -149,8 +149,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .userCancelled) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .userCancelled) = e else {
                 XCTFail("Should be .userCancelled error")
                 return
             }
@@ -163,8 +163,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .webLoginError(let error, let errorDescription)) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .webLoginError(let error, let errorDescription)) = e else {
                 XCTFail("Should be .webLoginError error")
                 return
             }
@@ -179,8 +179,8 @@ class LoginProcessURLResponseTests: XCTestCase {
             _ = try LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
             XCTFail("Should not init response")
         } catch {
-            let e = error as! SDKError
-            guard case SDKError.authorizeFailed(reason: .webLoginError(let error, let errorDescription)) = e else {
+            let e = error as! LineSDKError
+            guard case LineSDKError.authorizeFailed(reason: .webLoginError(let error, let errorDescription)) = e else {
                 XCTFail("Should be .webLoginError error")
                 return
             }

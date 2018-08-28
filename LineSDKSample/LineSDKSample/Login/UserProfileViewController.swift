@@ -67,7 +67,7 @@ class UserProfileViewController: UIViewController, IndicatorDisplay {
             return
         }
         
-        if let imageURL = userProfile.pictureUrl {
+        if let imageURL = userProfile.pictureURL {
             DispatchQueue(label: "profile_image_download").async {
                 if let imageData = try? Data(contentsOf: imageURL),
                    let image = UIImage(data: imageData)

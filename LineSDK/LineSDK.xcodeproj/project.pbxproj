@@ -111,7 +111,7 @@
 		4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E449210ED82B00355F03 /* AdapterTests.swift */; };
 		4BA8E44C210EDB5100355F03 /* ParameterEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E44B210EDB5100355F03 /* ParameterEncoderTests.swift */; };
 		4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E44D210EE79B00355F03 /* PipelineTests.swift */; };
-		4BBAFC452101BB9E00E7BFF6 /* SDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* SDKError.swift */; };
+		4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
 		4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */; };
 		4BBAFC4B2101CE8100E7BFF6 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
 		4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */; };
@@ -335,7 +335,7 @@
 		4BA8E449210ED82B00355F03 /* AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterTests.swift; sourceTree = "<group>"; };
 		4BA8E44B210EDB5100355F03 /* ParameterEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoderTests.swift; sourceTree = "<group>"; };
 		4BA8E44D210EE79B00355F03 /* PipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineTests.swift; sourceTree = "<group>"; };
-		4BBAFC442101BB9E00E7BFF6 /* SDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKError.swift; sourceTree = "<group>"; };
+		4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
 		4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenStore.swift; sourceTree = "<group>"; };
 		4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resource.bundle; sourceTree = "<group>"; };
 		4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantTests.swift; sourceTree = "<group>"; };
@@ -738,7 +738,7 @@
 		4BBAFC432101BB8200E7BFF6 /* General */ = {
 			isa = PBXGroup;
 			children = (
-				4BBAFC442101BB9E00E7BFF6 /* SDKError.swift */,
+				4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1256,7 +1256,7 @@
 				DBE4E370211D6CF500184D66 /* GetFriendsRequest.swift in Sources */,
 				4B6A0FF5212AA82500B3ED1F /* HexColor.swift in Sources */,
 				4B15EEF6211D46FF00866E6C /* Message.swift in Sources */,
-				4BBAFC452101BB9E00E7BFF6 /* SDKError.swift in Sources */,
+				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
 				4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */,
 				4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,

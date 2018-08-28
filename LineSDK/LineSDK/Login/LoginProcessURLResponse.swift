@@ -46,11 +46,11 @@ struct LoginProcessURLResponse {
 
     init(from url: URL, validatingWith state: String) throws {
         guard let urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-            throw SDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
+            throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
         }
         
         guard let items = urlComponent.queryItems else {
-            throw SDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
+            throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
         }
         
         // If the items contains a "resultCode" key, we recognize it as response from LINE url scheme auth
@@ -78,23 +78,23 @@ struct LoginProcessURLResponse {
         }
         
         guard let code = LineAppURLResultCode(rawValue: codeString) else {
-            throw SDKError.authorizeFailed(reason: .invalidLineURLResultCode(codeString))
+            throw LineSDKError.authorizeFailed(reason: .invalidLineURLResultCode(codeString))
         }
         
         switch code {
         case .success:
             guard let token = token else {
-                throw SDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: message))
+                throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: message))
             }
             requestToken = token
         case .cancelled:
-            throw SDKError.authorizeFailed(reason: .userCancelled)
+            throw LineSDKError.authorizeFailed(reason: .userCancelled)
         case .disallowed:
             // Disallowed happens when user reject the auth in the confirm screen.
             // However, here we do not make `.cancelled` and `.disallowed` distinct.
-            throw SDKError.authorizeFailed(reason: .userCancelled)
+            throw LineSDKError.authorizeFailed(reason: .userCancelled)
         default:
-            throw SDKError.authorizeFailed(reason: .lineClientError(code: code.rawValue, message: message))
+            throw LineSDKError.authorizeFailed(reason: .lineClientError(code: code.rawValue, message: message))
         }
     }
     
@@ -116,28 +116,28 @@ struct LoginProcessURLResponse {
         
         // Check whether we have correct state code, to ensure we are handling the corresponding response.
         guard validatingState == state else {
-            throw SDKError.authorizeFailed(
+            throw LineSDKError.authorizeFailed(
                 reason: .responseStateValueNotMatching(expected: validatingState, got: state)
             )
         }
         
         if let error = error {
             guard let typedError = LineWebURLResultError(rawValue: error) else {
-                throw SDKError.authorizeFailed(
+                throw LineSDKError.authorizeFailed(
                     reason: .webLoginError(error: error, description: errorDescription)
                 )
             }
             switch typedError {
             case .accessDenied:
-                throw SDKError.authorizeFailed(reason: .userCancelled)
+                throw LineSDKError.authorizeFailed(reason: .userCancelled)
             case .serverError:
-                throw SDKError.authorizeFailed(
+                throw LineSDKError.authorizeFailed(
                     reason: .webLoginError(error: error, description: errorDescription)
                 )
             }
         } else {
             guard let token = token else {
-                throw SDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
+                throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
             }
             requestToken = token
         }

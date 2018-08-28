@@ -51,7 +51,7 @@ public struct API {
         completionHandler completion: @escaping (Result<AccessToken>) -> Void)
     {
         guard let token = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
-            queue.execute { completion(.failure(SDKError.requestFailed(reason: .lackOfAccessToken))) }
+            queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
             return
         }
         let request = PostRefreshTokenRequest(channelID: LoginConfiguration.shared.channelID, refreshToken: token)
@@ -110,7 +110,7 @@ public struct API {
             case .success(_):
                 handleSuccessResult()
             case .failure(let error):
-                guard let sdkError = error as? SDKError,
+                guard let sdkError = error as? LineSDKError,
                       case .responseFailed(reason: .invalidHTTPStatusAPIError(let code, _, _)) = sdkError else
                 {
                     completion(.failure(error))
@@ -139,7 +139,7 @@ public struct API {
         completionHandler completion: @escaping (Result<AccessTokenVerifyResult>) -> Void)
     {
         guard let token = token ?? AccessTokenStore.shared.current?.value else {
-            queue.execute { completion(.failure(SDKError.requestFailed(reason: .lackOfAccessToken))) }
+            queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
             return
         }
         let request = GetVerifyTokenRequest(accessToken: token)
@@ -264,8 +264,8 @@ extension API {
     ///
     /// - Note:
     ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
-    ///   a `SDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
-    ///   HTTP status code. You could use `SDKError.isPermissionError` to check for this eroor.
+    ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
+    ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
     ///   Please confirm your channel permissions before you use this API.
     ///
     ///   You could send at most 5 messages to a user in a single call. Line SDK does not check the elements count in
@@ -296,8 +296,8 @@ extension API {
     ///
     /// - Note:
     ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
-    ///   a `SDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
-    ///   HTTP status code. You could use `SDKError.isPermissionError` to check for this eroor.
+    ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
+    ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
     ///   Please confirm your channel permissions before you use this API.
     ///
     ///   You could send at most 5 messages, and to at most 10 users in a single call. Line SDK does not check the

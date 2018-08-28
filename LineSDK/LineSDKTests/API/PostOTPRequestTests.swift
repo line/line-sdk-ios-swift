@@ -53,8 +53,8 @@ class PostOTPRequestTests: APITests {
         let session = Session.stub(configuration: config, string: PostOTPRequest.fail, statusCode: 400)
         session.send(PostOTPRequest(channelID: config.channelID)) { result in
             
-            guard let e = result.error as? SDKError else {
-                XCTFail("Error should be a SDKError")
+            guard let e = result.error as? LineSDKError else {
+                XCTFail("Error should be a LineSDKError")
                 return
             }
             

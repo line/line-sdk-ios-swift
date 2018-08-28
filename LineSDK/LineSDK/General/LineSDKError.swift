@@ -1,5 +1,5 @@
 //
-//  SDKError.swift
+//  LineSDKError.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// `SDKError` is the error type returned by LineSDK. It encompasses a few different types of errors, each with
+/// `LineSDKError` is the error type returned by LineSDK. It encompasses a few different types of errors, each with
 /// their own associated reasons.
 ///
 /// You could switch over the error to know the detail reason and associated information for each error. Or you could
@@ -31,7 +31,7 @@ import Foundation
 /// - responseFailed: Returned when something wrong happens during handling response.
 /// - authorizeFailed: Returned when something wrong happens during user authorizing process.
 /// - generalError: Other general errors might happen in LineSDK.
-public enum SDKError: Error {
+public enum LineSDKError: Error {
     
     /// The underlying reason for why `.requestFailed` happens.
     ///
@@ -110,8 +110,8 @@ public enum SDKError: Error {
 }
 
 // MARK: - Classifies the Error
-extension SDKError {
-    /// Returns whether the `SDKError` is a request error.
+extension LineSDKError {
+    /// Returns whether the `LineSDKError` is a request error.
     public var isRequestError: Bool {
         if case .requestFailed = self {
             return true
@@ -119,7 +119,7 @@ extension SDKError {
         return false
     }
     
-    /// Returns whether the `SDKError` is a response error.
+    /// Returns whether the `LineSDKError` is a response error.
     public var isResponseError: Bool {
         if case .responseFailed = self {
             return true
@@ -127,7 +127,7 @@ extension SDKError {
         return false
     }
     
-    /// Returns whether the `SDKError` is an authorization error.
+    /// Returns whether the `LineSDKError` is an authorization error.
     public var isAuthorizeError: Bool {
         if case .authorizeFailed = self {
             return true
@@ -135,7 +135,7 @@ extension SDKError {
         return false
     }
     
-    /// Returns whether the `SDKError` is a general error.
+    /// Returns whether the `LineSDKError` is a general error.
     public var isGeneralError: Bool {
         if case .generalError = self {
             return true
@@ -145,8 +145,8 @@ extension SDKError {
 }
 
 // MARK: - Convenience Properties
-extension SDKError {
-    /// Returns whether the `SDKError` is an authorization error with `.userCancelled` as its reason.
+extension LineSDKError {
+    /// Returns whether the `LineSDKError` is an authorization error with `.userCancelled` as its reason.
     public var isUserCancelled: Bool {
         if case .authorizeFailed(.userCancelled) = self {
             return true
@@ -154,18 +154,18 @@ extension SDKError {
         return false
     }
     
-    /// Returns whether the `SDKError` represents a bad request error.
+    /// Returns whether the `LineSDKError` represents a bad request error.
     public var isBadRequest: Bool {
         return isResponseError(statusCode: 400)
     }
     
-    /// Returns whether the `SDKError` represents a permission granting issue. Usually, it means you do not have
+    /// Returns whether the `LineSDKError` represents a permission granting issue. Usually, it means you do not have
     /// enough permission to invoke a LINE API.
     public var isPermissionError: Bool {
         return isResponseError(statusCode: 403)
     }
     
-    /// Returns whether the `SDKError` represents a response failing with specified HTTP status code.
+    /// Returns whether the `LineSDKError` represents a response failing with specified HTTP status code.
     public func isResponseError(statusCode: Int) -> Bool {
         if case .responseFailed(.invalidHTTPStatusAPIError(code: statusCode, error: _, raw: _)) = self {
             return true
@@ -175,7 +175,7 @@ extension SDKError {
 }
 
 // MARK: - Error Description
-extension SDKError: LocalizedError {
+extension LineSDKError: LocalizedError {
     /// Describes why an error happens in human-readable text.
     public var errorDescription: String? {
         switch self {
@@ -187,7 +187,7 @@ extension SDKError: LocalizedError {
     }
 }
 
-extension SDKError.RequestErrorReason {
+extension LineSDKError.RequestErrorReason {
     var errorDescription: String? {
         switch self {
         case .missingURL:
@@ -200,7 +200,7 @@ extension SDKError.RequestErrorReason {
     }
 }
 
-extension SDKError.ResponseErrorReason {
+extension LineSDKError.ResponseErrorReason {
     var errorDescription: String? {
         switch self {
         case .URLSessionError(let error):
@@ -224,7 +224,7 @@ extension SDKError.ResponseErrorReason {
     }
 }
 
-extension SDKError.AuthorizeErrorReason {
+extension LineSDKError.AuthorizeErrorReason {
     var errorDescription: String? {
         switch self {
         case .exhaustedLoginFlow:
@@ -259,7 +259,7 @@ extension SDKError.AuthorizeErrorReason {
     }
 }
 
-extension SDKError.GeneralErrorReason {
+extension LineSDKError.GeneralErrorReason {
     var errorDescription: String? {
         switch self {
         case .conversionError(let text, let encoding):

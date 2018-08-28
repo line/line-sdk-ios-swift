@@ -77,8 +77,8 @@ class SessionTests: XCTestCase {
                 }
             }
         } catch {
-            guard let sdkError = error as? SDKError,
-                case SDKError.responseFailed(reason: .dataParsingFailed) = sdkError else
+            guard let sdkError = error as? LineSDKError,
+                case LineSDKError.responseFailed(reason: .dataParsingFailed) = sdkError else
             {
                 XCTFail(".dataParsingFailed should be thrown")
                 return
@@ -302,7 +302,7 @@ class SessionTests: XCTestCase {
         let expect = expectation(description: "\(#file)_\(#line)")
         let session = Session.stub(configuration: configuration, error: ErrorStub.testError)
         session.send(StubRequestSimple()) { result in
-            guard let e = result.error as? SDKError,
+            guard let e = result.error as? LineSDKError,
                   case .responseFailed(reason: .URLSessionError(ErrorStub.testError)) = e
             else {
                 XCTFail("Request should fail with .testError")

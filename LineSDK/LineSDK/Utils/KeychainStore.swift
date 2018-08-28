@@ -117,7 +117,7 @@ extension KeychainStore {
     
     func set(_ string: String, for key: String) throws {
         guard let data = string.data(using: .utf8, allowLossyConversion: false) else {
-            throw SDKError.generalError(reason: .conversionError(string: string, encoding: .utf8))
+            throw LineSDKError.generalError(reason: .conversionError(string: string, encoding: .utf8))
         }
         try set(data, for: key)
     }
@@ -157,7 +157,7 @@ extension KeychainStore {
         }
     }
     
-    func keychainError(_ status: OSStatus) -> SDKError {
+    func keychainError(_ status: OSStatus) -> LineSDKError {
         return .authorizeFailed(reason: .keychainOperation(status: status))
     }
 }
@@ -183,7 +183,7 @@ extension KeychainStore {
         switch status {
         case errSecSuccess:
             guard let data = result as? Data else {
-                throw SDKError.authorizeFailed(reason: .invalidDataInKeychain)
+                throw LineSDKError.authorizeFailed(reason: .invalidDataInKeychain)
             }
             return data
         case errSecItemNotFound: return nil

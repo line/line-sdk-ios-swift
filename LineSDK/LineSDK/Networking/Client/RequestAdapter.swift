@@ -41,7 +41,7 @@ struct TokenAdapter: RequestAdapter {
     
     func adapted(_ request: URLRequest) throws -> URLRequest {
         guard let token = token else {
-            throw SDKError.requestFailed(reason: .lackOfAccessToken)
+            throw LineSDKError.requestFailed(reason: .lackOfAccessToken)
         }
         var request = request
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")

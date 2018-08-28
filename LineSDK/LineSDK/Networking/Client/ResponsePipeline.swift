@@ -156,7 +156,7 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
             // First, try to parse the error into a auth related error
             let error = try decoder.decode(InternalAuthError.self, from: data)
             try closure(.stop(
-                SDKError.responseFailed(
+                LineSDKError.responseFailed(
                     reason: .invalidHTTPStatusAPIError(code: response.statusCode, error: .init(error), raw: raw))
                 )
             )
@@ -165,14 +165,14 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
                 // If failed to parse to a auth error, then try APIError format.
                 let error = try decoder.decode(InternalAPIError.self, from: data)
                 try closure(.stop(
-                    SDKError.responseFailed(
+                    LineSDKError.responseFailed(
                         reason: .invalidHTTPStatusAPIError(code: response.statusCode, error: .init(error), raw: raw))
                     )
                 )
             } catch {
                 // An unknown error response format, let framework user decide what to do.
                 try closure(.stop(
-                    SDKError.responseFailed(
+                    LineSDKError.responseFailed(
                         reason: .invalidHTTPStatusAPIError(code: response.statusCode, error: nil, raw: raw))
                     )
                 )

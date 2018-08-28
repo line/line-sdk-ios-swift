@@ -157,14 +157,14 @@ extension APIItem {
                 switch res {
                 case .success(let value):
                     guard !value.friends.isEmpty else {
-                        let error = SDKError.generalError(
+                        let error = LineSDKError.generalError(
                             reason: .parameterError(
                                 parameterName: "friends",
                                 description: "You need at least one friend to use this API."))
                         handler(.failure(error))
                         return
                     }
-                    let userIDs = value.friends.prefix(5).map { $0.userId }
+                    let userIDs = value.friends.prefix(5).map { $0.userID }
                     let message = TextMessage(text: "Hello")
                     let sendMessage = PostMultisendMessagesRequest(userIDs: userIDs, messages: [message])
                     Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
@@ -223,7 +223,7 @@ func selectUserFromFriendList(in viewController: UIViewController, handler: @esc
         switch res {
         case .success(let value):
             guard !value.friends.isEmpty else {
-                let error = SDKError.generalError(
+                let error = LineSDKError.generalError(
                     reason: .parameterError(
                         parameterName: "friends",
                         description: "You need at least one friend to use this API."))
@@ -234,7 +234,7 @@ func selectUserFromFriendList(in viewController: UIViewController, handler: @esc
             let alert = UIAlertController(title: "Friends", message: nil, preferredStyle: .actionSheet)
             value.friends.prefix(5).forEach { friend in
                 alert.addAction(.init(title: friend.displayName, style: .default) { _ in
-                    handler(.success(friend.userId))
+                    handler(.success(friend.userID))
                     })
             }
             viewController.present(alert, animated: true)
@@ -251,7 +251,7 @@ func selectGroupFromGroupList(in viewController: UIViewController, handler: @esc
         switch res {
         case .success(let value):
             guard !value.groups.isEmpty else {
-                let error = SDKError.generalError(
+                let error = LineSDKError.generalError(
                     reason: .parameterError(
                         parameterName: "groups",
                         description: "You need at least one group to use this API."))
