@@ -28,6 +28,7 @@ class LoginProcessURLResponseTests: XCTestCase {
         let urlString = "\(Constant.thirdPartyAppReturnURL)?resultCode=SUCCESS&resultMessage=abc&requestToken=123"
         let response = try! LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "state")
         XCTAssertEqual(response.requestToken, "123")
+        XCTAssertNil(response.friendshipStatusChanged)
     }
     
     func testInitFromClientResponseWithoutToken() {
@@ -106,9 +107,24 @@ class LoginProcessURLResponseTests: XCTestCase {
     }
     
     func testInitFromWebResponse() {
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=abc&friendship_status_changed=true"
+        let response = try! LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
+        XCTAssertEqual(response.requestToken, "123")
+        XCTAssertEqual(response.friendshipStatusChanged, true)
+    }
+    
+    func testInitFromWebResponseWithoutFriendShipStatusChanged() {
         let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=abc"
         let response = try! LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
         XCTAssertEqual(response.requestToken, "123")
+        XCTAssertNil(response.friendshipStatusChanged)
+    }
+    
+    func testInitFromWebResponseWithInvalidFriendShipStatusChanged() {
+        let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=abc&friendship_status_changed=hello"
+        let response = try! LoginProcessURLResponse(from: URL(string: urlString)!, validatingWith: "abc")
+        XCTAssertEqual(response.requestToken, "123")
+        XCTAssertNil(response.friendshipStatusChanged)
     }
     
     func testInitFromWebResponseWithoutToken() {

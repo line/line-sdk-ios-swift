@@ -134,9 +134,13 @@ public class LoginManager {
             options: options,
             viewController: viewController)
         process.start()
-        process.onSucceed.delegate(on: self) { [unowned process] (self, token) in
+        process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
             self.currentProcess = nil
-            self.postLogin(token, process: process, completionHandler: completion)
+            self.postLogin(
+                token: result.token,
+                response: result.response,
+                process: process,
+                completionHandler: completion)
         }
         process.onFail.delegate(on: self) { (self, error) in
             self.currentProcess = nil
@@ -152,10 +156,12 @@ public class LoginManager {
     ///
     /// - Parameters:
     ///   - token: The access token retrieved from auth server.
+    ///   - response: The URL response object created when a login callback URL opened by SDK.
     ///   - process: The related login process initialized by `login` method.
     ///   - completion: The completion closure to be executed when the whole login process finishes.
     func postLogin(
-        _ token: AccessToken,
+        token: AccessToken,
+        response: LoginProcessURLResponse,
         process: LoginProcess,
         completionHandler completion: @escaping (Result<LoginResult>) -> Void) {
         // Store token
@@ -171,14 +177,16 @@ public class LoginManager {
                 let result = LoginResult.init(
                     accessToken: token,
                     permissions: Set(token.permissions),
-                    userProfile: profileResult.value)
+                    userProfile: profileResult.value,
+                    friendshipStatusChanged: response.friendshipStatusChanged)
                 completion(.success(result))
             }
         } else {
             let result = LoginResult.init(
                 accessToken: token,
                 permissions: Set(token.permissions),
-                userProfile: nil)
+                userProfile: nil,
+                friendshipStatusChanged: response.friendshipStatusChanged)
             completion(.success(result))
         }
     }

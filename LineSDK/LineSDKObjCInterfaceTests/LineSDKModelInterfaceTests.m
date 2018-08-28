@@ -138,7 +138,10 @@
                           options:nil
                 completionHandler:^(LineSDKLoginResult *result, NSError *error)
     {
-        
+        XCTAssertNil([result accessToken]);
+        XCTAssertNil([result permissions]);
+        XCTAssertNil([result userProfile]);
+        XCTAssertNil([result friendshipStatusChanged]);
     }];
     [manager logoutWithCompletionHandler:^(NSError *error) {
         

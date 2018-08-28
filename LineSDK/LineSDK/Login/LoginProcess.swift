@@ -109,7 +109,7 @@ public class LoginProcess {
     var otp: OneTimePassword!
     var flowParameter: FlowParameter!
     
-    let onSucceed = Delegate<AccessToken, Void>()
+    let onSucceed = Delegate<(token: AccessToken, response: LoginProcessURLResponse), Void>()
     let onFail = Delegate<Error, Void>()
     
     init(
@@ -286,7 +286,7 @@ public class LoginProcess {
                 redirectURI: Constant.thirdPartyAppReturnURL)
             Session.shared.send(tokenExchangeRequest) { tokenResult in
                 switch tokenResult {
-                case .success(let token): self.invokeSuccess(result: token)
+                case .success(let token): self.invokeSuccess(result: token, response: response)
                 case .failure(let error): self.invokeFailure(error: error)
                 }
             }
@@ -311,9 +311,9 @@ public class LoginProcess {
         webLoginFlow = nil
     }
     
-    private func invokeSuccess(result: AccessToken) {
+    private func invokeSuccess(result: AccessToken, response: LoginProcessURLResponse) {
         resetFlows()
-        onSucceed.call(result)
+        onSucceed.call((result, response))
     }
     
     private func invokeFailure(error: Error) {
