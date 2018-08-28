@@ -68,7 +68,7 @@ public struct PostSendMessagesRequest: Request {
 ///              status does not apply for messages sent to room, group or square chat.
 /// - unknown: Server returns an unknown status code, which is bound to the associated value in this case.
 ///
-public enum MessageSendingStatus: Decodable {
+public enum MessageSendingStatus: Decodable, Equatable {
     case ok
     case discarded
     case unknown(String)

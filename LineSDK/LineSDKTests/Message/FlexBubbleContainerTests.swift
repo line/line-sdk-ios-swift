@@ -121,10 +121,11 @@ class FlexBubbleContainerTests: XCTestCase {
         }()
         
         container.styles = {
-            let headerStyle = FlexBlockStyle(backgroundColor: "#00ffff")
-            let heroStyle = FlexBlockStyle(separator: true, separatorColor: "#000000")
-            let footerStyle = FlexBlockStyle(backgroundColor: "#00ffff", separator: true, separatorColor: "#000000")
-            return FlexBubbleContainer.Style(header: headerStyle, hero: heroStyle, body: nil, footer: footerStyle)
+            var style = FlexBubbleContainer.Style()
+            style.header = FlexBlockStyle(backgroundColor: "#00ffff")
+            style.hero = FlexBlockStyle(separator: true, separatorColor: "#000000")
+            style.footer = FlexBlockStyle(backgroundColor: "#00ffff", separator: true, separatorColor: "#000000")
+            return style
         }()
         
         let dic = FlexMessageContainer.bubble(container).json

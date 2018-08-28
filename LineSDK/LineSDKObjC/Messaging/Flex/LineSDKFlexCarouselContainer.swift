@@ -1,5 +1,5 @@
 //
-//  LineSDKAPITests.swift
+//  LineSDKFlexCarouselContainer.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,39 +19,25 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-@testable import LineSDK
+import LineSDK
 
-func setupTestToken() {
-    let token = try! JSONDecoder().decode(AccessToken.self, from: PostExchangeTokenRequest.successData)
-    try! AccessTokenStore.shared.setCurrentToken(token)
-}
-
-class LineSDKAPITests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
+@objcMembers
+public class LineSDKFlexCarouselContainer: LineSDKFlexMessageContainer {
+    public var contents: [LineSDKFlexBubbleContainer]
+    public init(contents: [LineSDKFlexBubbleContainer]) {
+        self.contents = contents
     }
     
-    override func tearDown() {
-        LoginManager.shared.reset()
-        super.tearDown()
+    convenience init(_ value: FlexCarouselContainer) {
+        self.init(contents: value.contents.map { .init($0) })
     }
     
-    let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
-    func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
-        let expect = expectation(description: "\(#file)_\(#line)")
-
-        if request.authentication == .token {
-            setupTestToken()
-        }
-        
-        let session = Session.stub(configuration: config, string: T.success)
-        session.send(request) { result in
-            verifier(result.value!)
-            expect.fulfill()
-        }
-        waitForExpectations(timeout: 1.0, handler: nil)
+    public func addBubble(_ value: LineSDKFlexBubbleContainer) {
+        contents.append(value)
+    }
+    
+    override var unwrapped: FlexMessageContainer {
+        let container = FlexCarouselContainer(contents: contents.map { $0.bubble })
+        return .carousel(container)
     }
 }

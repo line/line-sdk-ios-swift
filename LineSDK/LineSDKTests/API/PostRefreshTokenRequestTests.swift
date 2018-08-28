@@ -40,7 +40,7 @@ extension PostRefreshTokenRequest: ResponseDataStub {
     }
 }
 
-class PostRefreshTokenRequestTests: LineSDKAPITests {
+class PostRefreshTokenRequestTests: APITests {
     
     func testSuccess() {
         let request = PostRefreshTokenRequest(channelID: "abc", refreshToken: "123123")

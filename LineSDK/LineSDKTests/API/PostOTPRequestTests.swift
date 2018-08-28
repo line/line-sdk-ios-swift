@@ -38,7 +38,7 @@ extension PostOTPRequest: ResponseDataStub {
     """
 }
 
-class PostOTPRequestTests: LineSDKAPITests {
+class PostOTPRequestTests: APITests {
         
     func testSuccess() {
         let request = PostOTPRequest(channelID: config.channelID)

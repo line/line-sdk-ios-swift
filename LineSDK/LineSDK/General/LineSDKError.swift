@@ -25,7 +25,8 @@ import Foundation
 /// their own associated reasons.
 ///
 /// You could switch over the error to know the detail reason and associated information for each error. Or you could
-/// access the `localizedDescription` property to get a human-readable text description.
+/// access the `localizedDescription` property to get a human-readable text description. Access `errorCode` to get a
+/// fixed error code to identify the error type quickly. All `LineSDKError`s are under the "LineSDKError" error domain.
 ///
 /// - requestFailed: Returned when something wrong happens while constructing a request.
 /// - responseFailed: Returned when something wrong happens during handling response.
@@ -35,9 +36,10 @@ public enum LineSDKError: Error {
     
     /// The underlying reason for why `.requestFailed` happens.
     ///
-    /// - missingURL: `URL` is missing while encoding a request.
-    /// - lackOfAccessToken: The request requires an access token, but there is no one.
+    /// - missingURL: `URL` is missing while encoding a request. Code 1001.
+    /// - lackOfAccessToken: The request requires an access token, but there is no one. Code 1002.
     /// - jsonEncodingFailed: The request requires a JSON body, but provided data cannot be encoded to valid JSON.
+    ///                       Code 1003.
     public enum RequestErrorReason {
         case missingURL
         case lackOfAccessToken
@@ -46,13 +48,13 @@ public enum LineSDKError: Error {
     
     /// The underlying reason for why `.responseFailed` happens.
     ///
-    /// - URLSessionError: Error happens in the underlying `URLSession`.
-    /// - nonHTTPURLResponse: The response is not a valid `HTTPURLResponse`.
-    /// - dataParsingFailed: Cannot parse received data to an instance of target type.
+    /// - URLSessionError: Error happens in the underlying `URLSession`. Code 2001.
+    /// - nonHTTPURLResponse: The response is not a valid `HTTPURLResponse`. Code 2002.
+    /// - dataParsingFailed: Cannot parse received data to an instance of target type. Code 2003.
     /// - invalidHTTPStatusAPIError: Received response contains an invalid HTTP status code. If the response data
     ///                              can be converted to an `APIError` object, it will be associated as the `error`
     ///                              to indicate what is going wrong. Otherwise, the `error` will be `nil`. In both
-    ///                              cases, `raw` will contain the plain error text.
+    ///                              cases, `raw` will contain the plain error text. Code 2004.
     public enum ResponseErrorReason {
         case URLSessionError(Error)
         case nonHTTPURLResponse
@@ -62,22 +64,25 @@ public enum LineSDKError: Error {
     
     /// The underlying reason for why `.authorizeFailed` happens.
     ///
-    /// - exhaustedLoginFlow: There is no other login methods left. The login process cannot be completed.
+    /// - exhaustedLoginFlow: There is no other login methods left. The login process cannot be completed. Code 3001.
     /// - malformedHierarchy: The view hierarchy or view controller hierarchy is malformed and LineSDK cannot present
-    ///                       its login view controller.
-    /// - userCancelled: User cancelled or interrupted the login process.
-    /// - forceStopped: `stop` method is called on the login process.
+    ///                       its login view controller. Code 3002.
+    /// - userCancelled: User cancelled or interrupted the login process. Code 3003.
+    /// - forceStopped: `stop` method is called on the login process. Code 3004.
     /// - callbackURLSchemeNotMatching: The received `URL` while opening app does not match the URL scheme defined.
-    /// - invalidSourceApplication: The source application is invalid to finish auth process.
+    ///                                 Code 3005.
+    /// - invalidSourceApplication: The source application is invalid to finish auth process. Code 3006.
     /// - malformedRedirectURL: The received `URL` while opening app is not a valid one, or does not contain all
-    ///                         necessary information.
-    /// - invalidLineURLResultCode: An unknown `resultCode` in the opening app `URL`.
-    /// - lineClientError: An error happens in the LINE client app while auth process.
+    ///                         necessary information. Code 3007.
+    /// - invalidLineURLResultCode: An unknown `resultCode` in the opening app `URL`. Code 3008.
+    /// - lineClientError: An error happens in the LINE client app while auth process. Code 3009.
     /// - responseStateValueNotMatching: Invalid `state` verification. Received URL response is not from the
-    ///                                  original auth request.
-    /// - webLoginError: An error happens in the web login flow while auth process.
+    ///                                  original auth request. Code 3010.
+    /// - webLoginError: An error happens in the web login flow while auth process. Code 3011.
     /// - keychainOperation: An error happens in keychain access which prevents LineSDK loads or writes to keychain.
+    ///                      Code 3012.
     /// - invalidDataInKeychain: The retrieved auth information from keychain cannot be converted to valid data.
+    ///                          Code 3013.
     public enum AuthorizeErrorReason {
         case exhaustedLoginFlow
         case malformedHierarchy
@@ -187,7 +192,34 @@ extension LineSDKError: LocalizedError {
     }
 }
 
+// MARK: - NSError Compatibility
+extension LineSDK.LineSDKError: CustomNSError {
+    public var errorCode: Int {
+        switch self {
+        case .requestFailed(reason: let reason): return reason.errorCode
+        case .responseFailed(reason: let reason): return reason.errorCode
+        case .authorizeFailed(reason: let reason): return reason.errorCode
+        case .generalError(reason: let reason): return reason.errorCode
+        }
+    }
+    
+    public var errorUserInfo: [String : Any] {
+        switch self {
+        case .requestFailed(reason: let reason): return reason.errorUserInfo
+        case .responseFailed(reason: let reason): return reason.errorUserInfo
+        case .authorizeFailed(reason: let reason): return reason.errorUserInfo
+        case .generalError(reason: let reason): return reason.errorUserInfo
+        }
+    }
+    
+    public static var errorDomain: String {
+        return "LineSDKError"
+    }
+}
+
+// MARK: - Private Definition
 extension LineSDKError.RequestErrorReason {
+
     var errorDescription: String? {
         switch self {
         case .missingURL:
@@ -197,6 +229,25 @@ extension LineSDKError.RequestErrorReason {
         case .jsonEncodingFailed(let error):
             return "The request requires a JSON body, but provided data cannot be encoded to valid JSON. \(error)"
         }
+    }
+    
+    var errorCode: Int {
+        switch self {
+        case .missingURL: return 1001
+        case .lackOfAccessToken: return 1002
+        case .jsonEncodingFailed(_): return 1003
+        }
+    }
+    
+    var errorUserInfo: [String: Any] {
+        var userInfo: [LineSDKErrorUserInfoKey: Any] = [:]
+        switch self {
+        case .missingURL: break
+        case .lackOfAccessToken: break
+        case .jsonEncodingFailed(let error):
+            userInfo[.underlyingError] = error
+        }
+        return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }
 }
 
@@ -221,6 +272,34 @@ extension LineSDKError.ResponseErrorReason {
                 return "HTTP status code is not valid in response. Code: \(code), raw data: \(raw ?? "nil")"
             }
         }
+    }
+    
+    var errorCode: Int {
+        switch self {
+        case .URLSessionError(_): return 2001
+        case .nonHTTPURLResponse: return 2002
+        case .dataParsingFailed(_, _, _): return 2003
+        case .invalidHTTPStatusAPIError(_, _, _): return 2004
+        }
+    }
+    
+    var errorUserInfo: [String: Any] {
+        var userInfo: [LineSDKErrorUserInfoKey: Any] = [:]
+        switch self {
+        case .URLSessionError(let error):
+            userInfo[.underlyingError] = error
+        case .nonHTTPURLResponse:
+            break
+        case .dataParsingFailed(let type, let data, let error):
+            userInfo[.underlyingError] = error
+            userInfo[.type] = type
+            userInfo[.data] = data
+        case .invalidHTTPStatusAPIError(let code, let error, let raw):
+            userInfo[.statusCode] = code
+            if let error = error { userInfo[.APIError] = error }
+            if let raw = raw { userInfo[.raw] = raw }
+        }
+        return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }
 }
 
@@ -257,6 +336,53 @@ extension LineSDKError.AuthorizeErrorReason {
             return "The retrieved auth information from keychain cannot be converted to valid data."
         }
     }
+    
+    var errorCode: Int {
+        switch self {
+        case .exhaustedLoginFlow: return 3001
+        case .malformedHierarchy: return 3002
+        case .userCancelled: return 3003
+        case .forceStopped: return 3004
+        case .callbackURLSchemeNotMatching: return 3005
+        case .invalidSourceApplication: return 3006
+        case .malformedRedirectURL(_, _): return 3007
+        case .invalidLineURLResultCode(_): return 3008
+        case .lineClientError(_, _): return 3009
+        case .responseStateValueNotMatching(_, _): return 3010
+        case .webLoginError(_, _): return 3011
+        case .keychainOperation(_): return 3012
+        case .invalidDataInKeychain: return 3013
+        }
+    }
+    
+    var errorUserInfo: [String: Any] {
+        var userInfo: [LineSDKErrorUserInfoKey: Any] = [:]
+        switch self {
+        case .exhaustedLoginFlow: break
+        case .malformedHierarchy: break
+        case .userCancelled: break
+        case .forceStopped: break
+        case .callbackURLSchemeNotMatching: break
+        case .invalidSourceApplication: break
+        case .malformedRedirectURL(let url, let message):
+            userInfo[.url] = url
+            if let message = message { userInfo[.message] = message }
+        case .invalidLineURLResultCode(let code):
+            userInfo[.resultCode] = code
+        case .lineClientError(let code, let message):
+            userInfo[.resultCode] = code
+            if let message = message { userInfo[.message] = message }
+        case .responseStateValueNotMatching(_, _):
+            userInfo = [:]
+        case .webLoginError(let error, let message):
+            userInfo[.underlyingError] = error
+            if let message = message { userInfo[.message] = message }
+        case .keychainOperation(let status):
+            userInfo[.status] = status
+        case .invalidDataInKeychain: break
+        }
+        return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
+    }
 }
 
 extension LineSDKError.GeneralErrorReason {
@@ -268,5 +394,42 @@ extension LineSDKError.GeneralErrorReason {
             return "Method invoked with an invalid parameter \"\(parameterName)\". Reason: \(reason)"
         }
     }
+    
+    var errorCode: Int {
+        switch self {
+        case .conversionError(_, _): return 4001
+        case .parameterError(_, _): return 4002
+        }
+    }
+    
+    var errorUserInfo: [String: Any] {
+        var userInfo: [LineSDKErrorUserInfoKey: Any] = [:]
+        switch self {
+        case .conversionError(let text, let encoding):
+            userInfo[.text] = text
+            userInfo[.encoding] = encoding
+        case .parameterError(let parameterName, let reason):
+            userInfo[.parameterName] = parameterName
+            userInfo[.reason] = reason
+        }
+        return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
+    }
+}
+
+public enum LineSDKErrorUserInfoKey: String {
+    case underlyingError
+    case statusCode
+    case resultCode
+    case type
+    case data
+    case APIError
+    case raw
+    case url
+    case message
+    case status
+    case text
+    case encoding
+    case parameterName
+    case reason
 }
 

@@ -26,7 +26,7 @@ extension GetApproversInGroupRequest: ResponseDataStub {
     static var success = ""
 }
 
-class GetApproversInGroupRequestTests: LineSDKAPITests {
+class GetApproversInGroupRequestTests: APITests {
 
     func testSuccess() {
 
@@ -48,7 +48,7 @@ class GetApproversInGroupRequestTests: LineSDKAPITests {
         }
         """
         runTestSuccess(for: r) { response in
-            XCTAssertEqual(response.users.first?.userId, "aaaa")
+            XCTAssertEqual(response.users.first?.userID, "aaaa")
         }
     }
 }

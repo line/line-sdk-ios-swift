@@ -24,7 +24,7 @@ public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
     let type: FlexMessageComponentType = .icon
     
     /// Icon URL. It should start with "https".
-    public var url: URL
+    public let url: URL
     
     /// Minimum space between this component and the previous component in the parent box.
     /// If not specified, the `spacing` of parent box will be used.

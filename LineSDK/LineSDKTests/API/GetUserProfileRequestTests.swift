@@ -33,12 +33,15 @@ extension GetUserProfileRequest: ResponseDataStub {
     """
 }
 
-class GetUserProfileRequestTests: LineSDKAPITests {
+class GetUserProfileRequestTests: APITests {
 
     func testSuccess() {
         let r = GetUserProfileRequest()
         runTestSuccess(for: r) { profile in
-            XCTAssertEqual(profile.userId, "abcd")
+            XCTAssertEqual(profile.userID, "abcd")
+            XCTAssertEqual(profile.displayName, "Brown")
+            XCTAssertEqual(profile.pictureURL, URL(string: "https://example.com/abc")!)
+            XCTAssertEqual(profile.statusMessage, "Hello, LINE!")
         }
     }
 }

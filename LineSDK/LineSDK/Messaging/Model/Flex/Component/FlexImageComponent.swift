@@ -24,7 +24,7 @@ public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible, M
     let type: FlexMessageComponentType = .image
     
     /// Image URL. It should start with "https".
-    public var url: URL
+    public let url: URL
     
     /// The ratio of the width or height of this box within the parent box. The default value for the horizontal parent
     /// box is 1, and the default value for the vertical parent box is 0.

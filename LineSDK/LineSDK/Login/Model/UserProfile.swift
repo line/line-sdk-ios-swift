@@ -25,14 +25,21 @@ import Foundation
 public struct UserProfile: Decodable {
     
     /// User ID of current authorized user.
-    public let userId: String
+    public let userID: String
     
     /// Display name of current authorized user.
     public let displayName: String
     
     /// Picture URL of current authorized user. `nil` if the user does not set a picture as avatar.
-    public let pictureUrl: URL?
+    public let pictureURL: URL?
     
     /// Status message of current authorized user. `nil` if the user does not set a status message.
     public let statusMessage: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case userID = "userId"
+        case displayName
+        case pictureURL = "pictureUrl"
+        case statusMessage
+    }
 }

@@ -26,7 +26,7 @@ extension GetApproversInFriendsRequest: ResponseDataStub {
     static var success = ""
 }
 
-class GetApproversInFriendsRequestTests: LineSDKAPITests {
+class GetApproversInFriendsRequestTests: APITests {
 
     func testSuccess() {
         let r = GetApproversInFriendsRequest()
@@ -47,7 +47,7 @@ class GetApproversInFriendsRequestTests: LineSDKAPITests {
           }
         """
         runTestSuccess(for: r) { response in
-            XCTAssertEqual(response.friends.first?.userId, "aaaa")
+            XCTAssertEqual(response.friends.first?.userID, "aaaa")
         }
     }
 }

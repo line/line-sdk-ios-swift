@@ -39,7 +39,7 @@ extension PostExchangeTokenRequest: ResponseDataStub {
     """
 }
 
-class PostExchangeTokenRequestTests: LineSDKAPITests {
+class PostExchangeTokenRequestTests: APITests {
 
     func testSuccess() {
         let request = PostExchangeTokenRequest(

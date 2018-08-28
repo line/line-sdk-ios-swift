@@ -27,6 +27,11 @@ platform :ios do
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 6s"],
+        scheme: "LineSDKObjC"
+    )
+    run_tests(
+        workspace: "LineSDK.xcworkspace",
+        devices: ["iPhone 6s"],
         scheme: "LineSDKSample"
     )
   end

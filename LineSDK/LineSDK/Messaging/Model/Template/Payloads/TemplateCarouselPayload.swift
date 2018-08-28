@@ -40,7 +40,7 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
         public var defaultAction: MessageAction? = nil
         
         /// An image to display in the chat bubble. It should start with "https".
-        public let thumbnailImageURL: URL? = nil
+        public var thumbnailImageURL: URL? = nil
         
         /// Background color of image. If not specified, white color will be used.
         public var imageBackgroundColor: HexColor? = nil
@@ -104,7 +104,7 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
     /// Appends a column to the `columns`.
     ///
     /// - Parameter column: The column to append.
-    public mutating func add(column: Column) {
+    public mutating func addColumn(_ column: Column) {
         columns.append(column)
     }
     

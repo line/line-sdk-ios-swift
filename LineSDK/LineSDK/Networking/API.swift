@@ -1,5 +1,5 @@
 //
-//  LineSDKAPI.swift
+//  API.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -24,14 +24,14 @@ import Foundation
 /// Utility class for calling the LINE APIs.
 ///
 /// - Note:
-/// For most of APIs, using interfaces in `LineSDKAPI` is equivalent with
+/// For most of APIs, using interfaces in `API` is equivalent with
 /// using underlying `Request` and sending it by a `Session`. However, some methods in `LineSDKAPI` provide useful
 /// side effects like operating on keychain or redirecting final result in a more reasonable way.
 ///
 /// Unless you know the detail or want to extend LineSDK to send arbitrary unimplemented LINE API,
 /// using `LineSDKAPI` to interact with LINE's APIs are highly recommended.
 ///
-public struct LineSDKAPI {
+public struct API {
     /// Refreshes the access token with a provided `refreshToken`.
     ///
     /// - Parameters:
@@ -165,7 +165,7 @@ public struct LineSDKAPI {
 
 // MARK: - Social API
 
-extension LineSDKAPI {
+extension API {
 
     /// Gets a friend list of the user. Unless already having granted the channel,
     /// users who've configured the privacy filter are excluded from the list.
@@ -251,7 +251,7 @@ extension LineSDKAPI {
 
 // MARK: - Messaging API
 
-extension LineSDKAPI {
+extension API {
     
     /// Sends messages to a certain chat destination on behalf of the current authorized user.
     ///
@@ -310,7 +310,7 @@ extension LineSDKAPI {
     ///   of [SendingResult]`. See `SendingResult` for more.
     ///
     public static func multiSendMessages(
-        _ messages: [Message],
+        _ messages: [MessageConvertible],
         to userIDs: [String],
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<PostMultisendMessagesRequest.Response>) -> Void)

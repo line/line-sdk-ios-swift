@@ -25,10 +25,10 @@ public struct ImageMessage: Codable, MessageTypeCompatible {
     let type = MessageType.image
     
     /// Image URL. It should start with "https".
-    public var originalContentURL: URL
+    public let originalContentURL: URL
 
     /// Preview image URL. It should start with "https".
-    public var previewImageURL: URL
+    public let previewImageURL: URL
     
     /// A flag to indicate whether the image in provided `originalContentURL` is animated or not.
     /// You should set it to `true` if the image is an animated one.

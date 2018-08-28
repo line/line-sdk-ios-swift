@@ -25,7 +25,7 @@ public struct AudioMessage: Codable, MessageTypeCompatible {
     let type = MessageType.audio
     
     /// Audio URL. It should start with "https".
-    public var originalContentURL: URL
+    public let originalContentURL: URL
     
     /// Play time in seconds. Highly recommended to specify.
     /// LINE clients show the play time on the audio mesage. If not specified, "00:00" is shown.

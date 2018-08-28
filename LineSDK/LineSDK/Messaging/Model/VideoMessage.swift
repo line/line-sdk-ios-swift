@@ -26,10 +26,10 @@ public struct VideoMessage: Codable, MessageTypeCompatible {
     
     /// Video URL. It should start with "https". A very wide or tall video may be cropped when played in some
     /// environments.
-    public var originalContentURL: URL
+    public let originalContentURL: URL
     
     /// Preview image URL. It should start with "https".
-    public var previewImageURL: URL
+    public let previewImageURL: URL
     
     /// Creates a video message with given information.
     ///

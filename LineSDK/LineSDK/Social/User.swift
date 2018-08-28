@@ -25,17 +25,17 @@ import Foundation
 public struct User: Decodable {
 
     /// Identifier of the user
-    public let userId: String
+    public let userID: String
 
     /// User's display name
     public let displayName: String
 
     /// Profile image URL. Not included in the response if the user doesn't have a profile image.
-    public let pictureUrl: URL?
+    public let pictureURL: URL?
 
     enum CodingKeys: String, CodingKey {
-        case userId
+        case userID = "userId"
         case displayName
-        case pictureUrl
+        case pictureURL = "pictureUrl"
     }
 }
