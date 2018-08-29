@@ -137,8 +137,6 @@ class FlexBubbleContainerTests: XCTestCase {
         XCTAssertNotNil(dic["body"])
         XCTAssertNotNil(dic["footer"])
         XCTAssertNotNil(dic["styles"])
-        
-        print(FlexMessageContainer.bubble(container).json)
     }
     
     func testBubbleContainerDecode() {

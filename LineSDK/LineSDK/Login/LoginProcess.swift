@@ -314,13 +314,9 @@ class AppUniversalLinkFlow {
     }
     
     func start() {
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [UIApplicationOpenURLOptionUniversalLinksOnly: true]) {
-                opened in
-                self.onNext.call(opened)
-            }
-        } else {
-            self.onNext.call(false)
+        UIApplication.shared.open(url, options: [UIApplicationOpenURLOptionUniversalLinksOnly: true]) {
+            opened in
+            self.onNext.call(opened)
         }
     }
 }
@@ -347,13 +343,8 @@ class AppAuthSchemeFlow {
     }
     
     func start() {
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:]) {
-                opened in
-                self.onNext.call(opened)
-            }
-        } else {
-            let opened = UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url, options: [:]) {
+            opened in
             self.onNext.call(opened)
         }
     }
@@ -390,38 +381,19 @@ class WebLoginFlow: NSObject {
     }
     
     func start(in viewController: UIViewController?) {
-        if #available(iOS 9.0, *) {
-            let safariViewController = SFSafariViewController(url: url)
-            safariViewController.modalPresentationStyle = .overFullScreen
-            safariViewController.modalTransitionStyle = .coverVertical
-            safariViewController.delegate = self
-            
-            self.safariViewController = safariViewController
-            
-            guard let presenting = viewController ?? .topMost else {
-                self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .malformedHierarchy)))
-                return
-            }
-            presenting.present(safariViewController, animated: true) {
-                self.onNext.call(.safariViewController)
-            }
-        } else {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:]) { opened in
-                    if opened {
-                        self.onNext.call(.externalSafari)
-                    } else {
-                        self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)))
-                    }
-                }
-            } else {
-                let opened = UIApplication.shared.openURL(url)
-                if opened {
-                    self.onNext.call(.externalSafari)
-                } else {
-                    self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .exhaustedLoginFlow)))
-                }
-            }
+        let safariViewController = SFSafariViewController(url: url)
+        safariViewController.modalPresentationStyle = .overFullScreen
+        safariViewController.modalTransitionStyle = .coverVertical
+        safariViewController.delegate = self
+        
+        self.safariViewController = safariViewController
+        
+        guard let presenting = viewController ?? .topMost else {
+            self.onNext.call(.error(LineSDKError.authorizeFailed(reason: .malformedHierarchy)))
+            return
+        }
+        presenting.present(safariViewController, animated: true) {
+            self.onNext.call(.safariViewController)
         }
     }
     
@@ -430,7 +402,6 @@ class WebLoginFlow: NSObject {
     }
 }
 
-@available(iOS 9.0, *)
 extension WebLoginFlow: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         // This happens when user tap "Cancel" in the SFSafariViewController.

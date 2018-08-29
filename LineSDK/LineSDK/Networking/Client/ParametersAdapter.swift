@@ -123,33 +123,8 @@ private func escape(_ string: String, allowed: CharacterSet = .urlQueryAllowed) 
     
     var allowedCharacterSet = allowed
     allowedCharacterSet.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
-    
-    var escaped = ""
 
-    // Crashes due to internal bug in iOS 7 ~ iOS 8.2.
-    // References:
-    //   - https://github.com/Alamofire/Alamofire/issues/206
-    //   - https://github.com/AFNetworking/AFNetworking/issues/3028
-    if #available(iOS 8.3, *) {
-        escaped = string.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? string
-    } else {
-        let batchSize = 50
-        var index = string.startIndex
-        
-        while index != string.endIndex {
-            let startIndex = index
-            let endIndex = string.index(index, offsetBy: batchSize, limitedBy: string.endIndex) ?? string.endIndex
-            let range = startIndex..<endIndex
-            
-            let substring = string[range]
-            
-            escaped += substring.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? String(substring)
-            
-            index = endIndex
-        }
-    }
-    
-    return escaped
+    return string.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? string
 }
 
 extension NSNumber {

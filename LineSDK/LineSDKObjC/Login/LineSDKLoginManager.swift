@@ -56,22 +56,11 @@ public class LineSDKLoginManager: NSObject {
         _value.logout { result in completion(result.error) }
     }
     
-    @available(iOS 9.0, *)
     public func application(
         _ app: UIApplication,
         open url: URL,
         options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool
     {
         return _value.application(app, open: url, options: options)
-    }
-    
-    @available(iOS, deprecated:9.0, message: "Use application(_:open:options:) instead.")
-    public func application(
-        _ application: UIApplication,
-        open url: URL,
-        sourceApplication: String?,
-        annotation: Any) -> Bool
-    {
-        return _value.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 }
