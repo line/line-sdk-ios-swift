@@ -43,6 +43,7 @@ enum LineWebURLResultError: String {
 struct LoginProcessURLResponse {
     
     let requestToken: String
+    let friendshipStatusChanged: Bool?
 
     init(from url: URL, validatingWith state: String) throws {
         guard let urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
@@ -96,11 +97,14 @@ struct LoginProcessURLResponse {
         default:
             throw LineSDKError.authorizeFailed(reason: .lineClientError(code: code.rawValue, message: message))
         }
+        
+        friendshipStatusChanged = nil
     }
     
     init(webURL url: URL, queryItems items: [URLQueryItem], validatingState: String) throws {
         var state: String?
         var token: String?
+        var friendChanged: String?
         var error: String?
         var errorDescription: String?
         
@@ -108,6 +112,7 @@ struct LoginProcessURLResponse {
             switch item.name {
             case "code": token = item.value
             case "state": state = item.value
+            case "friendship_status_changed": friendChanged = item.value
             case "error": error = item.value
             case "error_description": errorDescription = item.value
             default: break
@@ -140,6 +145,11 @@ struct LoginProcessURLResponse {
                 throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
             }
             requestToken = token
+            if let friendChanged = friendChanged {
+                friendshipStatusChanged = Bool(friendChanged.lowercased())
+            } else {
+                friendshipStatusChanged = nil
+            }
         }
     }
 }

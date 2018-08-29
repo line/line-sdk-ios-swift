@@ -30,4 +30,10 @@ public struct LoginResult {
     /// A `UserProfile` value contains basic user information like user id, display name and avatar URL.
     /// Only exists when `.profile` permission contained.
     public let userProfile: UserProfile?
+    /// Whether the friendship status between the user and the bot changes during login. This value is only non-`nil`
+    /// if the `.botPromptNormal` or `.botPromptAggressive` specified as `LoginManagerOption` when user login. The
+    /// consent screen with the option to add your bot as friend is displayed to the user, and you could check whether
+    /// the user added your bot as a friend or not. For more information, see Linking a bot with your LINE Login channel.
+    /// https://developers.line.me/en/docs/line-login/web/link-a-bot/
+    public let friendshipStatusChanged: Bool?
 }

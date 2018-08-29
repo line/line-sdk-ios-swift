@@ -106,8 +106,11 @@
 }
 
 - (void)testLoginManagerOptionInterface {
-    XCTAssertNotNil(LineSDKLoginManagerOption.onlyWebLogin);
-    XCTAssertNotNil([[LineSDKLoginManagerOption alloc] initWithRawValue:1]);
+    XCTAssertNotNil(LineSDKLoginManagerOptions.onlyWebLogin);
+    XCTAssertNotNil(LineSDKLoginManagerOptions.botPromptNormal);
+    XCTAssertNotNil(LineSDKLoginManagerOptions.botPromptAggressive);
+    
+    XCTAssertNotNil([[LineSDKLoginManagerOptions alloc] initWithRawValue:1]);
 }
 
 - (void)testLoginResultInterface {
@@ -135,7 +138,10 @@
                           options:nil
                 completionHandler:^(LineSDKLoginResult *result, NSError *error)
     {
-        
+        XCTAssertNil([result accessToken]);
+        XCTAssertNil([result permissions]);
+        XCTAssertNil([result userProfile]);
+        XCTAssertNil([result friendshipStatusChanged]);
     }];
     [manager logoutWithCompletionHandler:^(NSError *error) {
         

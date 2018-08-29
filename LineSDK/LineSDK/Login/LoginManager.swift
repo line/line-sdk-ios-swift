@@ -95,7 +95,7 @@ public class LoginManager {
     ///   - permissions: The set of permissions which are required by client app. Default is `[.profile]`.
     ///   - viewController: The view controller from which LineSDK should present its login view controller.
     ///                     If `nil`, the most top view controller in current view controller hierarchy will be used.
-    ///   - options: The options used during login process. See `LoginManagerOption` for more.
+    ///   - options: The options used during login process. See `LoginManagerOptions` for more.
     ///   - completion: The completion closure to be executed when login action finishes.
     /// - Returns: A `LoginProcess` object which indicates this started login process.
     ///
@@ -116,7 +116,7 @@ public class LoginManager {
     public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
-        options: [LoginManagerOption] = [],
+        options: LoginManagerOptions = [],
         completionHandler completion: @escaping (Result<LoginResult>) -> Void) -> LoginProcess?
     {
         lock.lock()
@@ -131,11 +131,16 @@ public class LoginManager {
         let process = LoginProcess(
             configuration: LoginConfiguration.shared,
             scopes: permissions,
+            options: options,
             viewController: viewController)
-        process.start(options)
-        process.onSucceed.delegate(on: self) { [unowned process] (self, token) in
+        process.start()
+        process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
             self.currentProcess = nil
-            self.postLogin(token, process: process, completionHandler: completion)
+            self.postLogin(
+                token: result.token,
+                response: result.response,
+                process: process,
+                completionHandler: completion)
         }
         process.onFail.delegate(on: self) { (self, error) in
             self.currentProcess = nil
@@ -151,10 +156,12 @@ public class LoginManager {
     ///
     /// - Parameters:
     ///   - token: The access token retrieved from auth server.
+    ///   - response: The URL response object created when a login callback URL opened by SDK.
     ///   - process: The related login process initialized by `login` method.
     ///   - completion: The completion closure to be executed when the whole login process finishes.
     func postLogin(
-        _ token: AccessToken,
+        token: AccessToken,
+        response: LoginProcessURLResponse,
         process: LoginProcess,
         completionHandler completion: @escaping (Result<LoginResult>) -> Void) {
         // Store token
@@ -170,14 +177,16 @@ public class LoginManager {
                 let result = LoginResult.init(
                     accessToken: token,
                     permissions: Set(token.permissions),
-                    userProfile: profileResult.value)
+                    userProfile: profileResult.value,
+                    friendshipStatusChanged: response.friendshipStatusChanged)
                 completion(.success(result))
             }
         } else {
             let result = LoginResult.init(
                 accessToken: token,
                 permissions: Set(token.permissions),
-                userProfile: nil)
+                userProfile: nil,
+                friendshipStatusChanged: response.friendshipStatusChanged)
             completion(.success(result))
         }
     }

@@ -37,14 +37,17 @@ public class LineSDKLoginManager: NSObject {
     @discardableResult
     public func login(
         permissions: Set<LineSDKLoginPermission>?,
-        inViewController viewController: UIViewController? = nil,
-        options: [LineSDKLoginManagerOption]?,
+        inViewController viewController: UIViewController?,
+        options: [LineSDKLoginManagerOptions]?,
         completionHandler completion: @escaping (LineSDKLoginResult?, Error?) -> Void) -> LineSDKLoginProcess?
     {
+        let options: LoginManagerOptions = (options ?? []).reduce([]) { (result, option) in
+            result.union(option.unwrapped)
+        }
         let process = _value.login(
             permissions: Set((permissions ?? [.profile]).map { $0.unwrapped }),
             in: viewController,
-            options: (options ?? []).map { $0.unwrapped })
+            options: options)
         {
             result in
             completion(result.value.map { .init($0) }, result.error)
