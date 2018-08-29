@@ -170,10 +170,11 @@ public class LoginProcess {
                             self.startWebLoginFlow()
                         }
                     ]
-                    let showed = UIAlertController.presentAlert(in: self.presentingViewController,
-                                                                title: "Earlier LINE app detected",
-                                                                message: "You are using an earlier LINE app which does not support login with LINE client.",
-                                                                actions: actions)
+                    let showed = UIAlertController.presentAlert(
+                        in: self.presentingViewController,
+                        title: "Earlier LINE app detected",
+                        message: "You are using an earlier LINE app which does not support login with LINE client.",
+                        actions: actions)
                     if !showed {
                         self.startWebLoginFlow()
                     }
