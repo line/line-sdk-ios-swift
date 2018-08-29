@@ -32,7 +32,7 @@ public class LoginProcess {
         case aggressive
     }
     
-    struct FlowParameter {
+    struct FlowParameters {
         let channelID: String
         let universalLinkURL: URL?
         let scopes: Set<LoginPermission>
@@ -75,7 +75,7 @@ public class LoginProcess {
     
     let configuration: LoginConfiguration
     let scopes: Set<LoginPermission>
-    let options: LoginManagerOption
+    let options: LoginManagerOptions
     
     // Flows of login process. A flow will be `nil` until it is running, so we could tell which one should take
     // responsibility to handle a url callback response.
@@ -107,7 +107,6 @@ public class LoginProcess {
     let tokenIDNonce: String?
     
     var otp: OneTimePassword!
-    var flowParameter: FlowParameter!
     
     let onSucceed = Delegate<(token: AccessToken, response: LoginProcessURLResponse), Void>()
     let onFail = Delegate<Error, Void>()
@@ -115,7 +114,7 @@ public class LoginProcess {
     init(
         configuration: LoginConfiguration,
         scopes: Set<LoginPermission>,
-        options: LoginManagerOption,
+        options: LoginManagerOptions,
         viewController: UIViewController?)
     {
         self.configuration = configuration
@@ -137,12 +136,18 @@ public class LoginProcess {
             switch result {
             case .success(let otp):
                 self.otp = otp
-                self.prepareLoginFlowParameter()
-                
+                let parameters = FlowParameters(
+                    channelID: self.configuration.channelID,
+                    universalLinkURL: self.configuration.universalLinkURL,
+                    scopes: self.scopes,
+                    otp: otp,
+                    processID: self.processID,
+                    nonce: self.tokenIDNonce,
+                    botPrompt: self.options.botPrompt)
                 if self.options.contains(.onlyWebLogin) {
-                    self.startWebLoginFlow()
+                    self.startWebLoginFlow(parameters)
                 } else {
-                    self.startAppUniversalLinkFlow()
+                    self.startAppUniversalLinkFlow(parameters)
                 }
             case .failure(let error):
                 self.invokeFailure(error: error)
@@ -153,18 +158,6 @@ public class LoginProcess {
     /// Stops this login process. The login process will fail with a `.forceStopped` error.
     public func stop() {
         invokeFailure(error: LineSDKError.authorizeFailed(reason: .forceStopped))
-    }
-    
-    // Prepare a flow parameter for later use. Requires `otp` not nil.
-    func prepareLoginFlowParameter() {
-        flowParameter = FlowParameter(
-            channelID: configuration.channelID,
-            universalLinkURL: configuration.universalLinkURL,
-            scopes: scopes,
-            otp: otp,
-            processID: processID,
-            nonce: tokenIDNonce,
-            botPrompt: options.botPrompt)
     }
     
     // App switching observer should only work when external app switching happens during login process.
@@ -184,8 +177,8 @@ public class LoginProcess {
         observer.startObserving()
     }
     
-    private func startAppUniversalLinkFlow() {
-        let appUniversalLinkFlow = AppUniversalLinkFlow(parameter: flowParameter)
+    private func startAppUniversalLinkFlow(_ parameters: FlowParameters) {
+        let appUniversalLinkFlow = AppUniversalLinkFlow(parameter: parameters)
         appUniversalLinkFlow.onNext.delegate(on: self) { [unowned appUniversalLinkFlow] (self, started) in
             // Can handle app universal link flow. Store the flow for later resuming use.
             if started {
@@ -194,7 +187,7 @@ public class LoginProcess {
             } else {
                 // LINE universal link handling failed for some reason. Fallback to LINE v2 auth
                 if self.canUseLineAuthV2 {
-                    self.startAppAuthSchemeFlow()
+                    self.startAppAuthSchemeFlow(parameters)
                 } else {
                     // No lineauth2 scheme supported. Make user to choose
                     // install/upgrade LINE, or continue login with web.
@@ -207,7 +200,7 @@ public class LoginProcess {
                             self.setupAppSwitchingObserver()
                         },
                         .init(title: "Continue Login", style: .default) { _ in
-                            self.startWebLoginFlow()
+                            self.startWebLoginFlow(parameters)
                         }
                     ]
                     let showed = UIAlertController.presentAlert(in: self.presentingViewController,
@@ -215,7 +208,7 @@ public class LoginProcess {
                                                                 message: "You are using an earlier LINE app which does not support login with LINE client.",
                                                                 actions: actions)
                     if !showed {
-                        self.startWebLoginFlow()
+                        self.startWebLoginFlow(parameters)
                     }
                 }
             }
@@ -224,22 +217,22 @@ public class LoginProcess {
         appUniversalLinkFlow.start()
     }
     
-    private func startAppAuthSchemeFlow() {
-        let appAuthSchemeFlow = AppAuthSchemeFlow(parameter: flowParameter)
+    private func startAppAuthSchemeFlow(_ parameters: FlowParameters) {
+        let appAuthSchemeFlow = AppAuthSchemeFlow(parameter: parameters)
         appAuthSchemeFlow.onNext.delegate(on: self) { [unowned appAuthSchemeFlow] (self, started) in
             if started {
                 self.setupAppSwitchingObserver()
                 self.appAuthSchemeFlow = appAuthSchemeFlow
             } else {
-                self.startWebLoginFlow()
+                self.startWebLoginFlow(parameters)
             }
         }
         
         appAuthSchemeFlow.start()
     }
     
-    private func startWebLoginFlow() {
-        let webLoginFlow = WebLoginFlow(parameter: flowParameter)
+    private func startWebLoginFlow(_ parameters: FlowParameters) {
+        let webLoginFlow = WebLoginFlow(parameter: parameters)
         webLoginFlow.onNext.delegate(on: self) { [unowned webLoginFlow] (self, result) in
             switch result {
             case .safariViewController:
@@ -327,7 +320,7 @@ class AppUniversalLinkFlow {
     let url: URL
     let onNext = Delegate<Bool, Void>()
     
-    init(parameter: LoginProcess.FlowParameter) {
+    init(parameter: LoginProcess.FlowParameters) {
         let universalURLBase = URL(string: Constant.lineWebAuthUniversalURL)!
         url = universalURLBase.appendedLoginQuery(parameter)
     }
@@ -349,7 +342,7 @@ class AppAuthSchemeFlow {
     let url: URL
     let onNext = Delegate<Bool, Void>()
     
-    init(parameter: LoginProcess.FlowParameter) {
+    init(parameter: LoginProcess.FlowParameters) {
         url = Constant.lineAppAuthURLv2.appendedURLSchemeQuery(parameter)
     }
     
@@ -380,7 +373,7 @@ class WebLoginFlow: NSObject {
     
     weak var safariViewController: UIViewController?
     
-    init(parameter: LoginProcess.FlowParameter) {
+    init(parameter: LoginProcess.FlowParameters) {
         let webLoginURLBase = URL(string: Constant.lineWebAuthURL)!
          url = webLoginURLBase.appendedLoginQuery(parameter)
     }
@@ -437,7 +430,7 @@ extension WebLoginFlow: SFSafariViewControllerDelegate {
 // Helpers for creating urls for login process
 extension String {
     
-    static func returnUri(_ parameter: LoginProcess.FlowParameter) -> String {
+    static func returnUri(_ parameter: LoginProcess.FlowParameters) -> String {
         var universalLinkQuery = ""
         if let url = parameter.universalLinkURL {
             universalLinkQuery = "&optional_redirect_uri=\(url.absoluteString)"
@@ -464,7 +457,7 @@ extension String {
 }
 
 extension URL {
-    func appendedLoginQuery(_ flowParameters: LoginProcess.FlowParameter) -> URL {
+    func appendedLoginQuery(_ flowParameters: LoginProcess.FlowParameters) -> URL {
         let returnUri = String.returnUri(flowParameters)
         let parameters: [String: Any] = [
             "returnUri": returnUri,
@@ -474,7 +467,7 @@ extension URL {
         return encoder.encoded(for: self)
     }
     
-    func appendedURLSchemeQuery(_ flowParameters: LoginProcess.FlowParameter) -> URL {
+    func appendedURLSchemeQuery(_ flowParameters: LoginProcess.FlowParameters) -> URL {
         let returnUri = String.returnUri(flowParameters)
         let loginUrl =
             "\(Constant.lineWebAuthUniversalURL)?returnUri=\(returnUri)&loginChannelId=\(flowParameters.channelID)"

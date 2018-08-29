@@ -38,10 +38,10 @@ public class LineSDKLoginManager: NSObject {
     public func login(
         permissions: Set<LineSDKLoginPermission>?,
         inViewController viewController: UIViewController?,
-        options: [LineSDKLoginManagerOption]?,
+        options: [LineSDKLoginManagerOptions]?,
         completionHandler completion: @escaping (LineSDKLoginResult?, Error?) -> Void) -> LineSDKLoginProcess?
     {
-        let options: LoginManagerOption = (options ?? []).reduce([]) { (result, option) in
+        let options: LoginManagerOptions = (options ?? []).reduce([]) { (result, option) in
             result.union(option.unwrapped)
         }
         let process = _value.login(

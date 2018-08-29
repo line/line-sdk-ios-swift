@@ -1,5 +1,5 @@
 //
-//  LoginManagerOption.swift
+//  LineSDKLoginManagerOptions.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,30 +19,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import LineSDK
 
-/// Represents the possible options when login to LINE with `LoginManager`
-public struct LoginManagerOption: OptionSet {
-    
-    /// Raw value of the option
-    public let rawValue: Int
-    
-    /// Initializes an option from raw value.
-    ///
-    /// - Parameter rawValue: Underlying raw value of option.
+@objcMembers
+public class LineSDKLoginManagerOptions: NSObject {
+    let _value: LoginManagerOptions
+    convenience init(_ value: LoginManagerOptions) {
+        self.init(rawValue: value.rawValue)
+    }
     public init(rawValue: Int) {
-        self.rawValue = rawValue
+        _value = .init(rawValue: rawValue)
     }
     
-    /// Skipping LINE client app auth flow. Only use web login flow to login.
-    public static let onlyWebLogin = LoginManagerOption(rawValue: 1 << 0)
+    var unwrapped: LoginManagerOptions { return _value }
     
-    public static let botPromptNormal = LoginManagerOption(rawValue: 1 << 1)
-    public static let botPromptAggressive = LoginManagerOption(rawValue: 1 << 2)
-    
-    var botPrompt: LoginProcess.BotPrompt? {
-        if contains(.botPromptAggressive) { return .aggressive }
-        if contains(.botPromptNormal) { return .normal }
-        return nil
-    }
+    public static let onlyWebLogin = LineSDKLoginManagerOptions(.onlyWebLogin)
+    public static let botPromptNormal = LineSDKLoginManagerOptions(.botPromptNormal)
+    public static let botPromptAggressive = LineSDKLoginManagerOptions(.botPromptAggressive)
 }

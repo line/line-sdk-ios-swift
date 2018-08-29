@@ -26,7 +26,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
     
     var window: UIWindow!
 
-    let parameter = LoginProcess.FlowParameter(
+    let parameter = LoginProcess.FlowParameters(
         channelID: "123",
         universalLinkURL: nil,
         scopes: [.profile, .openID],

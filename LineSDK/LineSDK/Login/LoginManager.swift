@@ -95,7 +95,7 @@ public class LoginManager {
     ///   - permissions: The set of permissions which are required by client app. Default is `[.profile]`.
     ///   - viewController: The view controller from which LineSDK should present its login view controller.
     ///                     If `nil`, the most top view controller in current view controller hierarchy will be used.
-    ///   - options: The options used during login process. See `LoginManagerOption` for more.
+    ///   - options: The options used during login process. See `LoginManagerOptions` for more.
     ///   - completion: The completion closure to be executed when login action finishes.
     /// - Returns: A `LoginProcess` object which indicates this started login process.
     ///
@@ -116,7 +116,7 @@ public class LoginManager {
     public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
-        options: LoginManagerOption = [],
+        options: LoginManagerOptions = [],
         completionHandler completion: @escaping (Result<LoginResult>) -> Void) -> LoginProcess?
     {
         lock.lock()

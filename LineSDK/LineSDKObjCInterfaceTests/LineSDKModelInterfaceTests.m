@@ -106,11 +106,11 @@
 }
 
 - (void)testLoginManagerOptionInterface {
-    XCTAssertNotNil(LineSDKLoginManagerOption.onlyWebLogin);
-    XCTAssertNotNil(LineSDKLoginManagerOption.botPromptNormal);
-    XCTAssertNotNil(LineSDKLoginManagerOption.botPromptAggressive);
+    XCTAssertNotNil(LineSDKLoginManagerOptions.onlyWebLogin);
+    XCTAssertNotNil(LineSDKLoginManagerOptions.botPromptNormal);
+    XCTAssertNotNil(LineSDKLoginManagerOptions.botPromptAggressive);
     
-    XCTAssertNotNil([[LineSDKLoginManagerOption alloc] initWithRawValue:1]);
+    XCTAssertNotNil([[LineSDKLoginManagerOptions alloc] initWithRawValue:1]);
 }
 
 - (void)testLoginResultInterface {
