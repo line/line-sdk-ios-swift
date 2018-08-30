@@ -152,8 +152,8 @@ extension SecKey {
 }
 
 extension String {
-    /// Returns a base64 encoded string with PEM markers stripped.
-    func markerStrippedPEMBase64() throws -> String {
+    /// Returns a base64 encoded string with markers stripped.
+    func markerStrippedBase64() throws -> String {
         var lines = components(separatedBy: "\n").filter { line in
             return !line.hasPrefix(RSA.Constant.beginMarker) && !line.hasPrefix(RSA.Constant.endMarker)
         }
