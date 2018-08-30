@@ -3,7 +3,7 @@ default_platform(:ios)
 platform :ios do
 
   before_all do
-    xcversion(version: "9.4.1")
+    xcversion(version: "10.0")
   end
 
   desc "Switch to Beta environment"

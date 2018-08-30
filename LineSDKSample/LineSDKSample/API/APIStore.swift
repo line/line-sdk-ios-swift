@@ -57,7 +57,7 @@ class APIStore {
             .init(
                 title: "Verify Token",
                 request: GetVerifyTokenRequest(accessToken: AccessTokenStore.shared.current?.value ?? ""),
-                avaliable: AccessTokenStore.shared.current != nil
+                available: AccessTokenStore.shared.current != nil
             )
         ]
         
@@ -107,20 +107,20 @@ struct APIItem {
     let path: String
     let title: String
     
-    let avaliable: Bool
+    let available: Bool
     
-    init<T: Request>(title: String, request: T, avaliable: Bool = true) {
-        self.init(title: title, path: request.path, avaliable: avaliable) { (controller, handler) in
+    init<T: Request>(title: String, request: T, available: Bool = true) {
+        self.init(title: title, path: request.path, available: available) { (controller, handler) in
             Session.shared.send(request) { result in handler(result.map { $0 as Any }) }
         }
     }
     
-    init(title: String, path: String, avaliable: Bool = true, block: @escaping AnyResultBlock) {
+    init(title: String, path: String, available: Bool = true, block: @escaping AnyResultBlock) {
         self.title = title
         self.path = path
         
         self.block = block
-        self.avaliable = avaliable
+        self.available = available
     }
     
     func execute(with controller: UIViewController, handler: @escaping (Result<Any>) -> Void) -> Void {
@@ -145,7 +145,7 @@ extension APIItem {
             }
         }
         
-        return APIItem(title: "Send text message to a friend", path: mock.path, avaliable: true, block: block)
+        return APIItem(title: "Send text message to a friend", path: mock.path, available: true, block: block)
     }
     
     static var multiSendTextMessage: APIItem {
@@ -174,7 +174,7 @@ extension APIItem {
             }
         }
         
-        return APIItem(title: "Multisend text message to first five friends", path: mock.path, avaliable: true, block: block)
+        return APIItem(title: "Multisend text message to first five friends", path: mock.path, available: true, block: block)
     }
     
     static var sendFlexMessage: APIItem {
@@ -193,7 +193,7 @@ extension APIItem {
                 }
             }
         }
-        return APIItem(title: "Send flex message to a friend", path: mock.path, avaliable: true, block: block)
+        return APIItem(title: "Send flex message to a friend", path: mock.path, available: true, block: block)
     }
 
     static var getApproversInGroup: APIItem {
@@ -212,7 +212,7 @@ extension APIItem {
                 }
             })
         }
-        return APIItem(title: "Get Approvers in given Group", path: path, avaliable: true, block: block)
+        return APIItem(title: "Get Approvers in given Group", path: path, available: true, block: block)
     }
 }
 

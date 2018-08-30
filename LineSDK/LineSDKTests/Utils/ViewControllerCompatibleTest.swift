@@ -30,11 +30,7 @@ extension ViewControllerCompatibleTest {
     
     func setupViewController() -> UIViewController {
         let rootViewController =  UIViewController()
-        if #available(iOS 9.0, *) {
-            rootViewController.loadViewIfNeeded()
-        } else {
-            _ = rootViewController.view
-        }
+        rootViewController.loadViewIfNeeded()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = rootViewController

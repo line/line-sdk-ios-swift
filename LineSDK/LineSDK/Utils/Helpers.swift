@@ -45,7 +45,7 @@ extension UIAlertController {
     static func presentAlert(in viewController: UIViewController?,
                              title: String?,
                              message: String?,
-                             style: UIAlertControllerStyle = .alert,
+                             style: UIAlertController.Style = .alert,
                              actions: [UIAlertAction]) -> Bool
     {
         guard let presenting = viewController ?? .topMost else {
@@ -61,11 +61,7 @@ extension UIAlertController {
 extension UIApplication {
     func openLINEInAppStore() {
         let url = URL(string: "https://itunes.apple.com/app/id443904275?mt=8")!
-        if #available(iOS 10.0, *) {
-            open(url, options: [:], completionHandler: nil)
-        } else {
-            openURL(url)
-        }
+        open(url, options: [:], completionHandler: nil)
     }
 }
 

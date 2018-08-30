@@ -28,7 +28,7 @@ extension UIAlertController {
         in viewController: UIViewController,
         title: String?,
         message: String?,
-        style: UIAlertControllerStyle = .alert,
+        style: UIAlertController.Style = .alert,
         actions: [UIAlertAction]) -> Bool
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: style)
@@ -42,7 +42,7 @@ extension UIAlertController {
         in viewController: UIViewController,
         title: String?,
         textViewMessage: String?,
-        style: UIAlertControllerStyle = .alert,
+        style: UIAlertController.Style = .alert,
         actions: [UIAlertAction]) -> Bool
     {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: style)

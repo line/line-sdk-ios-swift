@@ -210,41 +210,13 @@ public class LoginManager {
     ///            it will be handled and `true` is returned.
     /// - Note: This method has the same method signature as in `UIApplicationDelegate`. You can just pass in all
     ///         arguments without modifying anything.
-    @available(iOS 9.0, *)
     public func application(
         _ app: UIApplication,
         open url: URL,
-        options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
     {
-        let sourceApplication = options[.sourceApplication] as? String
-        let annotation = options[.annotation] as Any
-        return application(app, open: url, sourceApplication: sourceApplication, annotation: annotation)
-    }
-    
-    
-    /// Asks this `LoginManager` to handle a url callback from either LINE client app or web login flow.
-    ///
-    /// - Parameters:
-    ///   - application: The singleton app object.
-    ///   - url: The URL resource to open. This resource should be the URL iOS system pass to you in
-    ///          related `UIApplicationDelegate` methods.
-    ///   - sourceApplication: The source application bundle ID.
-    ///   - annotation: A property list supplied by the source app to communicate information to the receiving app.
-    /// - Returns: Whether the `url` is successfully handled or not. If the input `url` is a valid login callback url,
-    ///            it will be handled and `true` is returned.
-    /// - Note: This method has the same method signature as in `UIApplicationDelegate`. You can just pass in all
-    ///         arguments without modifying anything.
-    @available(iOS, deprecated:9.0, message: "Use application(_:open:options:) instead.")
-    public func application(
-        _ application: UIApplication,
-        open url: URL,
-        sourceApplication: String?,
-        annotation: Any) -> Bool
-    {
-        // Not in login process. Ignore.
         guard let currentProcess = currentProcess else { return false }
-        
+        let sourceApplication = options[.sourceApplication] as? String
         return currentProcess.resumeOpenURL(url: url, sourceApplication: sourceApplication)
     }
-
 }

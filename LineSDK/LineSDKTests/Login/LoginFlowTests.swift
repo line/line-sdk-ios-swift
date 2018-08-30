@@ -128,26 +128,14 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         
         let rootViewController = setupViewController()
 
-        if #available(iOS 9.0, *) {
-            flow.onNext.delegate(on: self) { [unowned flow] (self, next) in
-                expect.fulfill()
-                self.resetViewController()
-                switch next {
-                case .safariViewController:
-                    XCTAssertEqual(rootViewController.presentedViewController, flow.safariViewController)
-                default:
-                    XCTFail("Should present a safari web view controller.")
-                }
-            }
-        } else {
-            flow.onNext.delegate(on: self) { (self, next) in
-                expect.fulfill()
-                switch next {
-                case .externalSafari:
-                    break
-                default:
-                    XCTFail("Should open in external Safari.")
-                }
+        flow.onNext.delegate(on: self) { [unowned flow] (self, next) in
+            expect.fulfill()
+            self.resetViewController()
+            switch next {
+            case .safariViewController:
+                XCTAssertEqual(rootViewController.presentedViewController, flow.safariViewController)
+            default:
+                XCTFail("Should present a safari web view controller.")
             }
         }
         
@@ -163,7 +151,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
         observer.startObserving()
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
@@ -176,7 +164,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
         observer.startObserving()
         observer.valid = false
-        DispatchQueue.main.async { NotificationCenter.default.post(name: .UIApplicationDidBecomeActive, object: nil) }
+        DispatchQueue.main.async { NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil) }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { expect.fulfill() }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
@@ -190,7 +178,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
         observer.startObserving()
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             XCTAssertNil(ref)
