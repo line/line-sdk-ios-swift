@@ -28,6 +28,10 @@ public enum CryptoError: Error {
         case invalidX509Header(data: Data, index: Int, reason: String)
         case createKeyFailed(data: Data, reason: String)
         case invalidPEMKey(string: String, reason: String)
+        case encryptingError(reason: String)
+        case decryptingError(reason: String)
+        case signingError(reason: String)
+        case verifyingError(reason: String)
     }
     
     public enum GeneralErrorReason {

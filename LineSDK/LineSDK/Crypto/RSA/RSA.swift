@@ -20,49 +20,84 @@
 //
 
 import Foundation
+import CommonCrypto
 
 struct RSA {}
 
-protocol RSADataType {
+protocol RSAData {
     var raw: Data { get }
     init(raw: Data)
+    func digest(using algorithm: RSA.Algorithm) throws -> Data
 }
 
-/// Data Types of RSA related domain.
-extension RSA {
-    struct PlainData: RSADataType {
-        let raw: Data
-        func encrypted(with key: String, using algorithm: RSA.Algorithm) throws -> EncryptedData {
-            throw NSError()
-        }
-        
-        func signed(with key: String, algorithm: RSA.Algorithm) throws -> SignedData {
-            throw NSError()
-        }
-    }
-    
-    struct EncryptedData: RSADataType {
-        let raw: Data
-        func decrypted(with key: String, using algorithm: RSA.Algorithm) throws -> PlainData {
-            throw NSError()
-        }
-    }
-    
-    struct SignedData: RSADataType {
-        let raw: Data
-        func verify(with key: String, signature: SignedData, algorithm: RSA.Algorithm) throws -> Bool {
-            throw NSError()
-        }
-    }
-}
 
 // Some convenience methods.
-extension RSADataType {
+extension RSAData {
     init(base64Encoded string: String) throws {
         guard let data = Data(base64Encoded: string) else {
             throw CryptoError.generalError(reason: .base64ConversionFailed(string: string))
         }
         self.init(raw: data)
     }
+    
+    func digest(using algorithm: RSA.Algorithm) throws -> Data {
+        return try raw.digest(using: algorithm)
+    }
 }
 
+/// Data Types of RSA related domain.
+extension RSA {
+    struct PlainData: RSAData {
+        let raw: Data
+        func encrypted(with key: PublicKey, using algorithm: RSA.Algorithm) throws -> EncryptedData {
+            var error: Unmanaged<CFError>?
+            guard let data = SecKeyCreateEncryptedData(
+                key.key, algorithm.encryptionAlgorithm, raw as CFData, &error) else
+            {
+                throw CryptoError.rsaFailed(reason: .encryptingError(reason: "\(String(describing: error))"))
+            }
+            
+            return EncryptedData(raw: data as Data)
+        }
+        
+        func signed(with key: PrivateKey, algorithm: RSA.Algorithm) throws -> SignedData {
+            var error: Unmanaged<CFError>?
+            guard let data = SecKeyCreateSignature(
+                key.key, algorithm.signatureAlgorithm, raw as CFData, &error) else
+            {
+                throw CryptoError.rsaFailed(reason: .signingError(reason: "\(String(describing: error))"))
+            }
+            
+            return SignedData(raw: data as Data)
+        }
+    }
+    
+    struct EncryptedData: RSAData {
+        let raw: Data
+        func decrypted(with key: PrivateKey, using algorithm: RSA.Algorithm) throws -> PlainData {
+            var error: Unmanaged<CFError>?
+            guard let data = SecKeyCreateDecryptedData(
+                key.key, algorithm.encryptionAlgorithm, raw as CFData, &error) else
+            {
+                throw CryptoError.rsaFailed(reason: .decryptingError(reason: "\(String(describing: error))"))
+            }
+            
+            return PlainData(raw: data as Data)
+        }
+    }
+    
+    struct SignedData: RSAData {
+        let raw: Data
+        func verify(with key: PublicKey, signature: SignedData, algorithm: RSA.Algorithm) throws -> Bool {
+            var error: Unmanaged<CFError>?
+            let result = SecKeyVerifySignature(
+                key.key, algorithm.signatureAlgorithm, raw as CFData, signature.raw as CFData, &error)
+                
+            guard error == nil else {
+                throw CryptoError.rsaFailed(reason: .verifyingError(reason: "\(String(describing: error))"))
+            }
+            
+            return result
+        }
+    }
+}

@@ -1,5 +1,5 @@
 //
-//  RSADigest.swift
+//  RSAAlgorithm.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //

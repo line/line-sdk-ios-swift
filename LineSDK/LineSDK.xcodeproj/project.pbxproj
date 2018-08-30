@@ -18,7 +18,7 @@
 		4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFC211D628000866E6C /* MessageSample.swift */; };
 		4B2422EF2134FBE8007200C2 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2422EE2134FBE8007200C2 /* LineSDKError.swift */; };
 		4B25A815213687A400C74B87 /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A814213687A400C74B87 /* RSA.swift */; };
-		4B25A8172136888600C74B87 /* RSADigest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A8162136888600C74B87 /* RSADigest.swift */; };
+		4B25A8172136888600C74B87 /* RSAAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A8162136888600C74B87 /* RSAAlgorithm.swift */; };
 		4B2D14E3212F8EDA000DD5BE /* LineSDKUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */; };
 		4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */; };
 		4B2D14ED212F931D000DD5BE /* LineSDKModelInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */; };
@@ -244,7 +244,7 @@
 		4B15EEFC211D628000866E6C /* MessageSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSample.swift; sourceTree = "<group>"; };
 		4B2422EE2134FBE8007200C2 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
 		4B25A814213687A400C74B87 /* RSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSA.swift; sourceTree = "<group>"; };
-		4B25A8162136888600C74B87 /* RSADigest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSADigest.swift; sourceTree = "<group>"; };
+		4B25A8162136888600C74B87 /* RSAAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAAlgorithm.swift; sourceTree = "<group>"; };
 		4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKUserProfile.swift; sourceTree = "<group>"; };
 		4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAccessTokenVerifyResult.swift; sourceTree = "<group>"; };
 		4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKModelInterfaceTests.m; sourceTree = "<group>"; };
@@ -526,7 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				4B25A814213687A400C74B87 /* RSA.swift */,
-				4B25A8162136888600C74B87 /* RSADigest.swift */,
+				4B25A8162136888600C74B87 /* RSAAlgorithm.swift */,
 				4BF45A832137810600CCD28E /* RSAKey.swift */,
 				4BF45A85213783D000CCD28E /* RSAHelpers.swift */,
 			);
@@ -1306,7 +1306,7 @@
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
 				4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */,
 				4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */,
-				4B25A8172136888600C74B87 /* RSADigest.swift in Sources */,
+				4B25A8172136888600C74B87 /* RSAAlgorithm.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
 				4B15EEF4211D466D00866E6C /* TextMessage.swift in Sources */,
 				4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */,
