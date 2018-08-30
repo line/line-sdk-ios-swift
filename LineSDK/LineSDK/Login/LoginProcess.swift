@@ -48,7 +48,7 @@ public class LoginProcess {
         
         func startObserving() {
             token = NotificationCenter.default
-                .addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: nil)
+                .addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil)
             {
                 [weak self] _ in
                 guard let `self` = self else { return }
@@ -314,7 +314,7 @@ class AppUniversalLinkFlow {
     }
     
     func start() {
-        UIApplication.shared.open(url, options: [UIApplicationOpenURLOptionUniversalLinksOnly: true]) {
+        UIApplication.shared.open(url, options: [.universalLinksOnly: true]) {
             opened in
             self.onNext.call(opened)
         }
@@ -479,13 +479,13 @@ extension URL {
 
 extension UIWindow {
     static func findKeyWindow() -> UIWindow? {
-        if let window = UIApplication.shared.keyWindow, window.windowLevel == UIWindowLevelNormal {
+        if let window = UIApplication.shared.keyWindow, window.windowLevel == .normal {
             // A key window of main app exists, go ahead and use it
             return window
         }
         
         // Otherwise, try to find a normal level window
-        let window = UIApplication.shared.windows.first { $0.windowLevel == UIWindowLevelNormal }
+        let window = UIApplication.shared.windows.first { $0.windowLevel == .normal }
         guard let result = window else {
             Log.print("Cannot find a valid UIWindow at normal level. Current windows: \(UIApplication.shared.windows)")
             return nil

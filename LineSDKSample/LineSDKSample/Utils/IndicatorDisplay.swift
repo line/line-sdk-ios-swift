@@ -41,7 +41,7 @@ extension IndicatorDisplay where Self: UIViewController {
         
         let holderView = IndicatorHolderView()
         
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let indicator = UIActivityIndicatorView(style: .whiteLarge)
         indicator.color = .gray
         holderView.addSubview(indicator)
         

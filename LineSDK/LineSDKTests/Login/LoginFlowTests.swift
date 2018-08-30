@@ -176,7 +176,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
         observer.startObserving()
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
@@ -189,7 +189,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
         observer.startObserving()
         observer.valid = false
-        DispatchQueue.main.async { NotificationCenter.default.post(name: .UIApplicationDidBecomeActive, object: nil) }
+        DispatchQueue.main.async { NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil) }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { expect.fulfill() }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
@@ -203,7 +203,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
         observer.startObserving()
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .UIApplicationDidBecomeActive, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             XCTAssertNil(ref)

@@ -45,7 +45,7 @@ extension UIAlertController {
     static func presentAlert(in viewController: UIViewController?,
                              title: String?,
                              message: String?,
-                             style: UIAlertControllerStyle = .alert,
+                             style: UIAlertController.Style = .alert,
                              actions: [UIAlertAction]) -> Bool
     {
         guard let presenting = viewController ?? .topMost else {

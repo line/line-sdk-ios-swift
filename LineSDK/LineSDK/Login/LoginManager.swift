@@ -204,7 +204,7 @@ public class LoginManager {
     public func application(
         _ app: UIApplication,
         open url: URL,
-        options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
     {
         guard let currentProcess = currentProcess else { return false }
         let sourceApplication = options[.sourceApplication] as? String

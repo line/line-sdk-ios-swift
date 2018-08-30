@@ -119,7 +119,7 @@ public class LoginButton: UIButton {
 
     func updateButtonStyle() {
         let bundle = Bundle(for: LoginButton.self)
-        let imagesPairs: [(String, UIControlState)]
+        let imagesPairs: [(String, UIControl.State)]
         switch buttonSize {
         case .small:
             imagesPairs = [
@@ -137,11 +137,11 @@ public class LoginButton: UIButton {
             setBackgroundImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: state)
         }
         
-        titleEdgeInsets = UIEdgeInsetsMake(
-            CGFloat(buttonSize.constant.bubbleWidth / 2),
-            CGFloat(buttonSize.constant.iconWidth + buttonSize.constant.separatorWidth + buttonSize.constant.leftPadding),
-            CGFloat(buttonSize.constant.bubbleWidth / 2),
-            CGFloat(buttonSize.constant.rightPadding)
+        titleEdgeInsets = UIEdgeInsets(
+            top: CGFloat(buttonSize.constant.bubbleWidth / 2),
+            left: CGFloat(buttonSize.constant.iconWidth + buttonSize.constant.separatorWidth + buttonSize.constant.leftPadding),
+            bottom: CGFloat(buttonSize.constant.bubbleWidth / 2),
+            right: CGFloat(buttonSize.constant.rightPadding)
         )
         
         setTitle(buttonText, for: .normal)
