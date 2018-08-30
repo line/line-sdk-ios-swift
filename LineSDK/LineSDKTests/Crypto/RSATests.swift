@@ -79,4 +79,31 @@ class RSATests: XCTestCase {
         let result = String(data: decrypted.raw, encoding: .utf8)
         XCTAssertEqual(result, "hello")
     }
+    
+    func testVerify() {
+        let publicKey = try! RSA.PublicKey(pem: """
+            -----BEGIN PUBLIC KEY-----
+            MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugd
+            UWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQs
+            HUfQrSDv+MuSUMAe8jzKE4qW+jK+xQU9a03GUnKHkkle+Q0pX/g6jXZ7r1/xAK5D
+            o2kQ+X5xK9cipRgEKwIDAQAB
+            -----END PUBLIC KEY-----
+            """)
+        
+        let plainData = try! RSA.PlainData(
+            string: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiw" +
+                    "ibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0")
+        
+        let signed = try! RSA.SignedData(
+            base64Encoded: "TCYt5XsITJX1CxPCT8yAV+TVkIEq/PbChOMqsLfRoPsnsgw5WEuts01mq+pQy7UJiN5mgRx" +
+                           "D+WUcX16dUEMGlv50aqzpqh4Qktb3rk+BuQy72IFLOqV0G/zS245+kronKb78cPN25DGlcT" +
+                           "wLtjPAYuNzVBAh4vGHSrQyHUdBBPM=")
+        do {
+            let result = try plainData.verify(with: publicKey, signature: signed, algorithm: .sha256)
+            XCTAssertTrue(result)
+        } catch {
+            XCTFail("\(error)")
+        }
+        
+    }
 }

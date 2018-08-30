@@ -39,13 +39,6 @@ extension RSAData {
         }
         self.init(raw: data)
     }
-    
-    init(string: String, encoding: String.Encoding = .utf8) throws {
-        guard let data = string.data(using: encoding) else {
-            throw CryptoError.generalError(reason: .stringConversionFailed(String: string, encoding: encoding))
-        }
-        self.init(raw: data)
-    }
 
     func digest(using algorithm: RSA.Algorithm) throws -> Data {
         return try raw.digest(using: algorithm)
@@ -56,6 +49,15 @@ extension RSAData {
 extension RSA {
     struct PlainData: RSAData {
         let raw: Data
+        
+        init(raw: Data) { self.raw = raw }
+        
+        init(string: String, encoding: String.Encoding = .utf8) throws {
+            guard let data = string.data(using: encoding) else {
+                throw CryptoError.generalError(reason: .stringConversionFailed(String: string, encoding: encoding))
+            }
+            self.init(raw: data)
+        }
         
         func encrypted(with key: PublicKey, using algorithm: RSA.Algorithm) throws -> EncryptedData {
             var error: Unmanaged<CFError>?

@@ -174,3 +174,33 @@ extension RSA {
         static let endMarker = "-----END"
     }
 }
+
+extension String {
+    // Returns the data of `self` (which is a base64 string), with URL related characters decoded.
+    var base64URLDecoded: Data? {
+        let paddingLength = 4 - count % 4
+        // Filling = for %4 padding.
+        let padding = (paddingLength < 4) ? String(repeating: "=", count: paddingLength) : ""
+        let base64EncodedString = self
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+            + padding
+        
+        return Data(base64Encoded: base64EncodedString)
+    }
+}
+
+extension Data {
+    // Encode `self` with URL escaping considered.
+    var base64URLEncoded: String? {
+        // Normalize the base 64 string.
+        let base64Data = base64EncodedData()
+        guard let base64Encoded = String(data: base64Data, encoding: .utf8) else {
+            return nil
+        }
+        return base64Encoded
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+    }
+}
