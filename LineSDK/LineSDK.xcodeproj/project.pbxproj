@@ -69,6 +69,15 @@
 		4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */; };
 		4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */; };
 		4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB721103D4B00EDDD1E /* ResponseDataStub.swift */; };
+		4B7D8C252137B9FA00C6855A /* public_base_64_newline in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C1D2137B9FA00C6855A /* public_base_64_newline */; };
+		4B7D8C262137B9FA00C6855A /* public_base_64_header in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C1E2137B9FA00C6855A /* public_base_64_header */; };
+		4B7D8C272137B9FA00C6855A /* test_private.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C1F2137B9FA00C6855A /* test_private.pem */; };
+		4B7D8C282137B9FA00C6855A /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C202137B9FA00C6855A /* public.pem */; };
+		4B7D8C292137B9FA00C6855A /* public_base_64 in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C212137B9FA00C6855A /* public_base_64 */; };
+		4B7D8C2A2137B9FA00C6855A /* private.pem in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C222137B9FA00C6855A /* private.pem */; };
+		4B7D8C2B2137B9FA00C6855A /* public.der in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C232137B9FA00C6855A /* public.der */; };
+		4B7D8C2C2137B9FA00C6855A /* test_public.cer in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C242137B9FA00C6855A /* test_public.cer */; };
+		4B7D8C2E2137BD8900C6855A /* private.der in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C2D2137BD8900C6855A /* private.der */; };
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
 		4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8A965621100A5800760219 /* LoginConfigurationTests.swift */; };
@@ -179,6 +188,8 @@
 		4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
 		4BF45A842137810600CCD28E /* RSAKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A832137810600CCD28E /* RSAKey.swift */; };
 		4BF45A86213783D000CCD28E /* RSAHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* RSAHelpers.swift */; };
+		4BF45A892137B29300CCD28E /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A882137B29300CCD28E /* RSATests.swift */; };
+		4BF45A8B2137B2C500CCD28E /* RSAKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */; };
 		4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */; };
 		4BF53539212A7C9100EA602A /* FlexMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53538212A7C9100EA602A /* FlexMessage.swift */; };
 		4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */; };
@@ -297,6 +308,15 @@
 		4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerTests.swift; sourceTree = "<group>"; };
 		4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOTPRequestTests.swift; sourceTree = "<group>"; };
 		4B792FB721103D4B00EDDD1E /* ResponseDataStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataStub.swift; sourceTree = "<group>"; };
+		4B7D8C1D2137B9FA00C6855A /* public_base_64_newline */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public_base_64_newline; sourceTree = "<group>"; };
+		4B7D8C1E2137B9FA00C6855A /* public_base_64_header */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public_base_64_header; sourceTree = "<group>"; };
+		4B7D8C1F2137B9FA00C6855A /* test_private.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_private.pem; sourceTree = "<group>"; };
+		4B7D8C202137B9FA00C6855A /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public.pem; sourceTree = "<group>"; };
+		4B7D8C212137B9FA00C6855A /* public_base_64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public_base_64; sourceTree = "<group>"; };
+		4B7D8C222137B9FA00C6855A /* private.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = private.pem; sourceTree = "<group>"; };
+		4B7D8C232137B9FA00C6855A /* public.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = public.der; sourceTree = "<group>"; };
+		4B7D8C242137B9FA00C6855A /* test_public.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_public.cer; sourceTree = "<group>"; };
+		4B7D8C2D2137BD8900C6855A /* private.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = private.der; sourceTree = "<group>"; };
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
 		4B8A965621100A5800760219 /* LoginConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurationTests.swift; sourceTree = "<group>"; };
@@ -412,6 +432,8 @@
 		4BF45A8121377DCF00CCD28E /* CryptoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoError.swift; sourceTree = "<group>"; };
 		4BF45A832137810600CCD28E /* RSAKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAKey.swift; sourceTree = "<group>"; };
 		4BF45A85213783D000CCD28E /* RSAHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAHelpers.swift; sourceTree = "<group>"; };
+		4BF45A882137B29300CCD28E /* RSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
+		4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAKeyTests.swift; sourceTree = "<group>"; };
 		4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageContainer.swift; sourceTree = "<group>"; };
 		4BF53538212A7C9100EA602A /* FlexMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessage.swift; sourceTree = "<group>"; };
 		4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBubbleContainer.swift; sourceTree = "<group>"; };
@@ -671,6 +693,7 @@
 				4B792FB421103CFD00EDDD1E /* API */,
 				4B8A9655211009A400760219 /* Login */,
 				4BA8E446210ED7F900355F03 /* Networking */,
+				4BF45A872137B27F00CCD28E /* Crypto */,
 				4BA8E443210ED26100355F03 /* Utils */,
 				4B90588621006E5D004D717F /* LineSDKTests.swift */,
 				4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */,
@@ -934,6 +957,32 @@
 				4BDD2C352133F32F00DD563D /* LineSDKSpacerComponent.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		4BF45A872137B27F00CCD28E /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				4BF45A8C2137B35B00CCD28E /* SampleKeys */,
+				4BF45A882137B29300CCD28E /* RSATests.swift */,
+				4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */,
+			);
+			path = Crypto;
+			sourceTree = "<group>";
+		};
+		4BF45A8C2137B35B00CCD28E /* SampleKeys */ = {
+			isa = PBXGroup;
+			children = (
+				4B7D8C2D2137BD8900C6855A /* private.der */,
+				4B7D8C222137B9FA00C6855A /* private.pem */,
+				4B7D8C212137B9FA00C6855A /* public_base_64 */,
+				4B7D8C1E2137B9FA00C6855A /* public_base_64_header */,
+				4B7D8C1D2137B9FA00C6855A /* public_base_64_newline */,
+				4B7D8C232137B9FA00C6855A /* public.der */,
+				4B7D8C202137B9FA00C6855A /* public.pem */,
+				4B7D8C1F2137B9FA00C6855A /* test_private.pem */,
+				4B7D8C242137B9FA00C6855A /* test_public.cer */,
+			);
+			path = SampleKeys;
 			sourceTree = "<group>";
 		};
 		4BF53530212A79C800EA602A /* Messaging */ = {
@@ -1255,6 +1304,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B7D8C252137B9FA00C6855A /* public_base_64_newline in Resources */,
+				4B7D8C2B2137B9FA00C6855A /* public.der in Resources */,
+				4B7D8C282137B9FA00C6855A /* public.pem in Resources */,
+				4B7D8C272137B9FA00C6855A /* test_private.pem in Resources */,
+				4B7D8C2C2137B9FA00C6855A /* test_public.cer in Resources */,
+				4B7D8C262137B9FA00C6855A /* public_base_64_header in Resources */,
+				4B7D8C2A2137B9FA00C6855A /* private.pem in Resources */,
+				4B7D8C2E2137BD8900C6855A /* private.der in Resources */,
+				4B7D8C292137B9FA00C6855A /* public_base_64 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1385,6 +1443,7 @@
 				4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */,
 				4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */,
 				4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */,
+				4BF45A892137B29300CCD28E /* RSATests.swift in Sources */,
 				4B95F3FF21251BB300AD3A81 /* PostSendMessagesRequestTests.swift in Sources */,
 				4B6A0FF9212AACEC00B3ED1F /* HexColorTests.swift in Sources */,
 				DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */,
@@ -1421,6 +1480,7 @@
 				4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */,
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4B5EE2E6212BD53E0009DF2E /* FlexBubbleContainerTests.swift in Sources */,
+				4BF45A8B2137B2C500CCD28E /* RSAKeyTests.swift in Sources */,
 				4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */,
 				4B9A305E21216F2500174C6F /* TemplateImageCarouselPayloadTests.swift in Sources */,
 				4B6A0FF1212A99AD00B3ED1F /* FlexTextComponentTests.swift in Sources */,

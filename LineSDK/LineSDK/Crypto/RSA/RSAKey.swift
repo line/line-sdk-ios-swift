@@ -25,6 +25,29 @@ import CommonCrypto
 protocol RSAKey {
     var key: SecKey { get }
     init(key: SecKey)
+    init(der data: Data) throws
+}
+
+extension RSAKey {
+    /// Creates a public key with a base64-encoded string representing DER data.
+    ///
+    /// - Parameter base64Encoded: Base64-encoded DER data.
+    /// - Throws: Any possible error while creating the key.
+    init(base64Encoded string: String) throws {
+        guard let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters) else {
+            throw CryptoError.generalError(reason: .base64ConversionFailed(string: string))
+        }
+        try self.init(der: data)
+    }
+    
+    /// Creates a public key with a given PEM encoded string.
+    ///
+    /// - Parameter string: The PEM encoded string.
+    /// - Throws: Any possible error while creating the key.
+    init(pem string: String) throws {
+        let base64String = try string.markerStrippedBase64()
+        try self.init(base64Encoded: base64String)
+    }
 }
 
 extension RSA {
@@ -47,32 +70,12 @@ extension RSA {
         /// - Throws: Any possible error while creating the key.
         init(certificate data: Data) throws {
             guard let string = String(data: data, encoding: .utf8) else {
-                throw CryptoError.generalError(reason: .stringConversionFailed(data: data, encoding: .utf8))
+                throw CryptoError.generalError(reason: .dataConversionFailed(data: data, encoding: .utf8))
             }
             
             let certString = try string.markerStrippedBase64()
             let base64Data = Data(base64Encoded: certString)!
             self.key = try SecKey.createPublicKey(certificateData: base64Data)
-        }
-        
-        /// Creates a public key with a base64-encoded string representing DER data.
-        ///
-        /// - Parameter base64Encoded: Base64-encoded DER data.
-        /// - Throws: Any possible error while creating the key.
-        init(base64Encoded string: String) throws {
-            guard let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters) else {
-                throw CryptoError.generalError(reason: .base64ConversionFailed(string: string))
-            }
-            try self.init(der: data)
-        }
-        
-        /// Creates a public key with a given PEM encoded string.
-        ///
-        /// - Parameter string: The PEM encoded string.
-        /// - Throws: Any possible error while creating the key.
-        init(pem string: String) throws {
-            let base64String = try string.markerStrippedBase64()
-            try self.init(base64Encoded: base64String)
         }
     }
     
@@ -87,26 +90,6 @@ extension RSA {
         init(der data: Data) throws {
             let keyData = try data.x509HeaserStripped()
             self.key = try SecKey.createKey(derData: keyData, keyClass: .privateKey)
-        }
-        
-        /// Creates a private key with a base64-encoded string representing DER data.
-        ///
-        /// - Parameter base64Encoded: Base64-encoded DER data.
-        /// - Throws: Any possible error while creating the key.
-        init(base64Encoded string: String) throws {
-            guard let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters) else {
-                throw CryptoError.generalError(reason: .base64ConversionFailed(string: string))
-            }
-            try self.init(der: data)
-        }
-        
-        /// Creates a private key with a given PEM encoded string.
-        ///
-        /// - Parameter string: The PEM encoded string.
-        /// - Throws: Any possible error while creating the key.
-        init(pem string: String) throws {
-            let base64String = try string.markerStrippedBase64()
-            try self.init(base64Encoded: base64String)
         }
     }
 }

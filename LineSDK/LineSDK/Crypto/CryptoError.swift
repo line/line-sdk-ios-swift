@@ -36,7 +36,8 @@ public enum CryptoError: Error {
     
     public enum GeneralErrorReason {
         case base64ConversionFailed(string: String)
-        case stringConversionFailed(data: Data, encoding: String.Encoding)
+        case dataConversionFailed(data: Data, encoding: String.Encoding)
+        case stringConversionFailed(String: String, encoding: String.Encoding)
         case operationNotSupported(reason: String)
     }
     

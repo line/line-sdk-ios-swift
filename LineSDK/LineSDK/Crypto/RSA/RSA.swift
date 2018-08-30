@@ -24,7 +24,7 @@ import CommonCrypto
 
 struct RSA {}
 
-protocol RSAData {
+protocol RSAData: Equatable {
     var raw: Data { get }
     init(raw: Data)
     func digest(using algorithm: RSA.Algorithm) throws -> Data
@@ -40,6 +40,13 @@ extension RSAData {
         self.init(raw: data)
     }
     
+    init(string: String, encoding: String.Encoding = .utf8) throws {
+        guard let data = string.data(using: encoding) else {
+            throw CryptoError.generalError(reason: .stringConversionFailed(String: string, encoding: encoding))
+        }
+        self.init(raw: data)
+    }
+
     func digest(using algorithm: RSA.Algorithm) throws -> Data {
         return try raw.digest(using: algorithm)
     }
@@ -49,6 +56,7 @@ extension RSAData {
 extension RSA {
     struct PlainData: RSAData {
         let raw: Data
+        
         func encrypted(with key: PublicKey, using algorithm: RSA.Algorithm) throws -> EncryptedData {
             var error: Unmanaged<CFError>?
             guard let data = SecKeyCreateEncryptedData(
@@ -70,6 +78,18 @@ extension RSA {
             
             return SignedData(raw: data as Data)
         }
+        
+        func verify(with key: PublicKey, signature: SignedData, algorithm: RSA.Algorithm) throws -> Bool {
+            var error: Unmanaged<CFError>?
+            let result = SecKeyVerifySignature(
+                key.key, algorithm.signatureAlgorithm, raw as CFData, signature.raw as CFData, &error)
+            
+            guard error == nil else {
+                throw CryptoError.rsaFailed(reason: .verifyingError(reason: "\(String(describing: error))"))
+            }
+            
+            return result
+        }
     }
     
     struct EncryptedData: RSAData {
@@ -88,16 +108,5 @@ extension RSA {
     
     struct SignedData: RSAData {
         let raw: Data
-        func verify(with key: PublicKey, signature: SignedData, algorithm: RSA.Algorithm) throws -> Bool {
-            var error: Unmanaged<CFError>?
-            let result = SecKeyVerifySignature(
-                key.key, algorithm.signatureAlgorithm, raw as CFData, signature.raw as CFData, &error)
-                
-            guard error == nil else {
-                throw CryptoError.rsaFailed(reason: .verifyingError(reason: "\(String(describing: error))"))
-            }
-            
-            return result
-        }
     }
 }
