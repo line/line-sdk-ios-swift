@@ -36,6 +36,16 @@ Generate documentation
 fastlane ios change_log
 ```
 
+### ios lint
+```
+fastlane ios lint
+```
+
+### ios ensure_latest_carthage
+```
+fastlane ios ensure_latest_carthage
+```
+
 
 ----
 
