@@ -25,7 +25,7 @@
 		4B2D14F3212F96A7000DD5BE /* LineSDKLoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14F2212F96A7000DD5BE /* LineSDKLoginProcess.swift */; };
 		4B2D14F5212F97A6000DD5BE /* LineSDKLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14F4212F97A6000DD5BE /* LineSDKLoginManager.swift */; };
 		4B2D1501212FA9EE000DD5BE /* LineSDKHexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D1500212FA9EE000DD5BE /* LineSDKHexColor.swift */; };
-		4B2D1503212FAB5A000DD5BE /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D1502212FAB5A000DD5BE /* APIError.swift */; };
+		4B2D1503212FAB5A000DD5BE /* LineSDKAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D1502212FAB5A000DD5BE /* LineSDKAPIError.swift */; };
 		4B2D1505212FABD2000DD5BE /* LineSDKAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D1504212FABD2000DD5BE /* LineSDKAPI.swift */; };
 		4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */; };
 		4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */; };
@@ -246,7 +246,7 @@
 		4B2D14F2212F96A7000DD5BE /* LineSDKLoginProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKLoginProcess.swift; sourceTree = "<group>"; };
 		4B2D14F4212F97A6000DD5BE /* LineSDKLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKLoginManager.swift; sourceTree = "<group>"; };
 		4B2D1500212FA9EE000DD5BE /* LineSDKHexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKHexColor.swift; sourceTree = "<group>"; };
-		4B2D1502212FAB5A000DD5BE /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIError.swift; path = LineSDKObjC/Networking/APIError.swift; sourceTree = SOURCE_ROOT; };
+		4B2D1502212FAB5A000DD5BE /* LineSDKAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LineSDKAPIError.swift; path = LineSDKObjC/Networking/LineSDKAPIError.swift; sourceTree = SOURCE_ROOT; };
 		4B2D1504212FABD2000DD5BE /* LineSDKAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAPI.swift; sourceTree = "<group>"; };
 		4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTokenExchangeRequestTests.swift; sourceTree = "<group>"; };
 		4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequestTests.swift; sourceTree = "<group>"; };
@@ -507,7 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				4B2D14FF212FA9CA000DD5BE /* CustomizeCoding */,
-				4B2D1502212FAB5A000DD5BE /* APIError.swift */,
+				4B2D1502212FAB5A000DD5BE /* LineSDKAPIError.swift */,
 				4B2D1504212FABD2000DD5BE /* LineSDKAPI.swift */,
 			);
 			path = Networking;
@@ -1426,7 +1426,7 @@
 				4BDD2C2C2133F2D400DD563D /* LineSDKFlexButtonComponent.swift in Sources */,
 				4BDD2C342133F32200DD563D /* LineSDKFlexSeparatorComponent.swift in Sources */,
 				4BDD2C362133F32F00DD563D /* LineSDKSpacerComponent.swift in Sources */,
-				4B2D1503212FAB5A000DD5BE /* APIError.swift in Sources */,
+				4B2D1503212FAB5A000DD5BE /* LineSDKAPIError.swift in Sources */,
 				4BC4B3DF212FEF8600750794 /* LineSDKLocationMessage.swift in Sources */,
 				4BDD2C282133D2B300DD563D /* LineSDKFlexMessageComponent.swift in Sources */,
 				4BDD2C2E2133F2EA00DD563D /* LineSDKFlexImageComponent.swift in Sources */,

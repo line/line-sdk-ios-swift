@@ -47,4 +47,14 @@ platform :ios do
     stamp_changelog(section_identifier: target_version)
   end
 
+  lane :lint do
+    ensure_latest_carthage
+    carthage(command: "build", no_skip_current: true)
+    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec")
+  end
+
+  lane :ensure_latest_carthage do
+    Actions.sh("brew update || brew update")
+    Actions.sh("brew outdated carthage || brew upgrade carthage")
+  end
 end
