@@ -1,5 +1,5 @@
 //
-//  CryptoError.swift
+//  JWKSet.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,31 +21,7 @@
 
 import Foundation
 
-public enum CryptoError: Error {
+struct JWKSet {
+    let keys: [String: JWK]
     
-    public enum RSAErrorReason {
-        case invalidDERKey(data: Data, reason: String)
-        case invalidX509Header(data: Data, index: Int, reason: String)
-        case createKeyFailed(data: Data, reason: String)
-        case invalidPEMKey(string: String, reason: String)
-        case encryptingError(reason: String)
-        case decryptingError(reason: String)
-        case signingError(reason: String)
-        case verifyingError(reason: String)
-    }
-    
-    public enum JSONWebKeyErrorReason {
-        case unsupportedKeyType(String)
-    }
-    
-    public enum GeneralErrorReason {
-        case base64ConversionFailed(string: String)
-        case dataConversionFailed(data: Data, encoding: String.Encoding)
-        case stringConversionFailed(String: String, encoding: String.Encoding)
-        case operationNotSupported(reason: String)
-    }
-    
-    case rsaFailed(reason: RSAErrorReason)
-    case jsonWebKeyFailed(reason: JSONWebKeyErrorReason)
-    case generalError(reason: GeneralErrorReason)
 }

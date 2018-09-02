@@ -1,5 +1,5 @@
 //
-//  CryptoError.swift
+//  JWK.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,33 +19,37 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+// A partitial implementation for JSON Web Key (JWK)
+// Only RSA is required for LineSDK, ref: https://tools.ietf.org/html/rfc7517
+
 import Foundation
 
-public enum CryptoError: Error {
+enum JWKKeyType: String, Decodable {
+    case rsa = "RSA"
+}
+
+enum JWK: Decodable {
+    case rsa(RSAJSONWebKey)
     
-    public enum RSAErrorReason {
-        case invalidDERKey(data: Data, reason: String)
-        case invalidX509Header(data: Data, index: Int, reason: String)
-        case createKeyFailed(data: Data, reason: String)
-        case invalidPEMKey(string: String, reason: String)
-        case encryptingError(reason: String)
-        case decryptingError(reason: String)
-        case signingError(reason: String)
-        case verifyingError(reason: String)
+    enum CodingKeys: String, CodingKey {
+        case type = "kty"
     }
     
-    public enum JSONWebKeyErrorReason {
-        case unsupportedKeyType(String)
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let keyType = try container.decode(String.self, forKey: .type)
+        switch JWKKeyType(rawValue: keyType) {
+        case .rsa?:
+            let key = try RSAJSONWebKey(from: decoder)
+            self = .rsa(key)
+        case nil:
+            throw CryptoError.jsonWebKeyFailed(reason: .unsupportedKeyType(keyType))
+        }
     }
-    
-    public enum GeneralErrorReason {
-        case base64ConversionFailed(string: String)
-        case dataConversionFailed(data: Data, encoding: String.Encoding)
-        case stringConversionFailed(String: String, encoding: String.Encoding)
-        case operationNotSupported(reason: String)
-    }
-    
-    case rsaFailed(reason: RSAErrorReason)
-    case jsonWebKeyFailed(reason: JSONWebKeyErrorReason)
-    case generalError(reason: GeneralErrorReason)
+}
+
+struct RSAJSONWebKey: Decodable {
+    let keyType = JWKKeyType.rsa
+    let modulus: String
+    let exponent: String
 }
