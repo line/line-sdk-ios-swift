@@ -21,7 +21,34 @@
 
 import Foundation
 
-struct JWKSet {
-    let keys: [String: JWK]
+struct JWKSet: Decodable {
     
+    struct Dummy: Decodable {}
+    
+    let keys: [JWK]
+    
+    enum CodingKeys: String, CodingKey {
+        case keys
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        var nestedContainer = try container.nestedUnkeyedContainer(forKey: .keys)
+        var supportedKeys = [JWK]()
+        while !nestedContainer.isAtEnd {
+            do {
+                let key = try nestedContainer.decode(JWK.self)
+                supportedKeys.append(key)
+            } catch {
+                // Failing decoding will not increase container's currentIndex. Let it decode successfully.
+                _ = try nestedContainer.decode(Dummy.self)
+                Log.print("\(error)")
+            }
+        }
+        keys = supportedKeys
+    }
+    
+    func getKeyByID(_ keyID: String) -> JWK? {
+        return keys.first { $0.keyID == keyID }
+    }
 }

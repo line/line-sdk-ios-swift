@@ -38,7 +38,7 @@ let unsupportedKey = """
 {
   "kty": "oct",
   "use": "sig",
-  "kid": "123",
+  "kid": "456",
   "k": "abc",
   "alg": "HS256"
 }
@@ -69,4 +69,11 @@ class JWKTests: XCTestCase {
         }
     }
     
+    func testJWKSetGetKey() {
+        let set = "{\"keys\": [\(sampleRSAKey), \(unsupportedKey)]}"
+        let decoder = JSONDecoder()
+        let keySets = try! decoder.decode(JWKSet.self, from: Data(set.utf8))
+        XCTAssertEqual(keySets.keys.count, 1)
+        XCTAssertNotNil(keySets.getKeyByID("123"))
+    }
 }
