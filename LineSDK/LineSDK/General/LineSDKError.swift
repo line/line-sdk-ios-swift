@@ -83,6 +83,12 @@ public enum LineSDKError: Error {
     ///                      Code 3012.
     /// - invalidDataInKeychain: The retrieved auth information from keychain cannot be converted to valid data.
     ///                          Code 3013.
+    /// - lackOfIDToken: The authorization contains openID permission, but ID token cannot be found or parsed in
+    ///                  server response. Code 3014.
+    /// - JWTPublicKeyNotFound: Public key not found for a give key ID or the key ID does not exist. Code 3015.
+    /// - cryptoError: Something wrong happened inside LineSDK crypto part. This usually indicates a malformed
+    ///                certificate or key error, or an unsupport algorithm is used. See `CryptoError` for more.
+    ///                Code 3016.
     public enum AuthorizeErrorReason {
         case exhaustedLoginFlow
         case malformedHierarchy
@@ -97,6 +103,9 @@ public enum LineSDKError: Error {
         case webLoginError(error: String, description: String?)
         case keychainOperation(status: OSStatus)
         case invalidDataInKeychain
+        case lackOfIDToken(raw: String?)
+        case JWTPublicKeyNotFound(keyID: String?)
+        case cryptoError(error: CryptoError)
     }
     
     /// The underlying reason for why `.generalError` happens.
@@ -334,6 +343,13 @@ extension LineSDKError.AuthorizeErrorReason {
             return "Writing or loading token failed. Keychain operation error: \(status)"
         case .invalidDataInKeychain:
             return "The retrieved auth information from keychain cannot be converted to valid data."
+        case .lackOfIDToken(let raw):
+            return "Authorization permission contains .openID, but no ID Token can be found or parsed in response. " +
+                   "Raw: \(String(describing: raw))"
+        case .JWTPublicKeyNotFound(let keyID):
+            return "Cannot find a JWT public key in JWKs for Key ID: \(keyID ?? "nil")"
+        case .cryptoError(let error):
+            return "CryptoError: \(error.errorDescription ?? "nil")"
         }
     }
     
@@ -345,13 +361,16 @@ extension LineSDKError.AuthorizeErrorReason {
         case .forceStopped: return 3004
         case .callbackURLSchemeNotMatching: return 3005
         case .invalidSourceApplication: return 3006
-        case .malformedRedirectURL(_, _): return 3007
-        case .invalidLineURLResultCode(_): return 3008
-        case .lineClientError(_, _): return 3009
-        case .responseStateValueNotMatching(_, _): return 3010
-        case .webLoginError(_, _): return 3011
-        case .keychainOperation(_): return 3012
+        case .malformedRedirectURL: return 3007
+        case .invalidLineURLResultCode: return 3008
+        case .lineClientError: return 3009
+        case .responseStateValueNotMatching: return 3010
+        case .webLoginError: return 3011
+        case .keychainOperation: return 3012
         case .invalidDataInKeychain: return 3013
+        case .lackOfIDToken: return 3014
+        case .JWTPublicKeyNotFound: return 3015
+        case .cryptoError(let error): return error.errorCode
         }
     }
     
@@ -380,6 +399,12 @@ extension LineSDKError.AuthorizeErrorReason {
         case .keychainOperation(let status):
             userInfo[.status] = status
         case .invalidDataInKeychain: break
+        case .lackOfIDToken(let raw):
+            if let raw = raw { userInfo[.raw] = raw }
+        case .JWTPublicKeyNotFound(let keyID):
+            if let keyID = keyID { userInfo[.raw] = keyID }
+        case .cryptoError(let error):
+            userInfo[.underlyingError] = error
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }

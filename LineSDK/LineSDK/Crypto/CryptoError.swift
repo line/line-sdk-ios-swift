@@ -57,3 +57,11 @@ public enum CryptoError: Error {
     case JWKFailed(reason: JWKErrorReason)
     case generalError(reason: GeneralErrorReason)
 }
+
+extension CryptoError: LocalizedError {
+    
+}
+
+extension CryptoError: CustomNSError {
+    
+}

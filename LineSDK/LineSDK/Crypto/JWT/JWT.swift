@@ -22,14 +22,20 @@
 import Foundation
 
 /// Represents a JSON Web Token Object. Use this struct to get values/verify.
-public struct JWT {
+public struct JWT: Equatable {
+    public static func == (lhs: JWT, rhs: JWT) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+    
     let header: Header
     public let payload: Payload
     let signature: Data
     
+    let rawValue: String
     let rawComponents: [String]
     
     init(text: String) throws {
+        rawValue = text
         rawComponents = text.components(separatedBy: ".")
         guard rawComponents.count == 3 else {
             throw CryptoError.JWTFailed(reason: .malformedJWTFormat(string: text))
@@ -53,7 +59,8 @@ public struct JWT {
         }
         try self.init(text: text)
     }
-    
+
+    @discardableResult
     func verify(with key: JWTSignKey) throws -> Bool {
         guard let alg = JWA.Algorithm(rawValue: header.algorithm) else {
             throw CryptoError.JWTFailed(reason: .unsupportedHeaderAlgorithm(name: header.algorithm))

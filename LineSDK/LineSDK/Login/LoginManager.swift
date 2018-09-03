@@ -151,8 +151,8 @@ public class LoginManager {
         return currentProcess
     }
     
-    /// Actions after auth process finishes. We do something like storing token and getting user profile before we
-    /// inform framework users every thing is done.
+    /// Actions after auth process finishes. We do something like storing token, getting user profile and ID token
+    /// verification before we can inform framework users every thing is done.
     ///
     /// - Parameters:
     ///   - token: The access token retrieved from auth server.
@@ -172,20 +172,50 @@ public class LoginManager {
             return
         }
         
+        let group = DispatchGroup()
+        
+        var profile: UserProfile?
+        var webToken: JWK?
+        // Any possible errors will be held here.
+        var errors: [Error] = []
+        
         if token.permissions.contains(.profile) {
-            Session.shared.send(GetUserProfileRequest()) { profileResult in
-                let result = LoginResult.init(
-                    accessToken: token,
-                    permissions: Set(token.permissions),
-                    userProfile: profileResult.value,
-                    friendshipStatusChanged: response.friendshipStatusChanged)
-                completion(.success(result))
+            getUserProfile(in: group) { result in
+                profile = result.value
+                result.error.map { errors.append($0) }
             }
-        } else {
+        }
+        
+        if token.permissions.contains(.openID) {
+            getJWK(for: token, in: group) { result in
+                webToken = result.value
+                result.error.map { errors.append($0) }
+            }
+        }
+
+        group.notify(queue: .main) {    
+            guard errors.isEmpty else {
+                completion(.failure(errors[0]))
+                return
+            }
+            
+            if let key = webToken {
+                do {
+                    try self.verifyIDToken(token.IDToken!, key: key, process: process, userID: profile?.userID)
+                } catch {
+                    if let cryptoError = error as? CryptoError {
+                        completion(.failure(LineSDKError.authorizeFailed(reason: .cryptoError(error: cryptoError))))
+                    } else {
+                        completion(.failure(error))
+                    }
+                    return
+                }
+            }
+            
             let result = LoginResult.init(
                 accessToken: token,
                 permissions: Set(token.permissions),
-                userProfile: nil,
+                userProfile: profile,
                 friendshipStatusChanged: response.friendshipStatusChanged)
             completion(.success(result))
         }
@@ -218,5 +248,71 @@ public class LoginManager {
         guard let currentProcess = currentProcess else { return false }
         let sourceApplication = options[.sourceApplication] as? String
         return currentProcess.resumeOpenURL(url: url, sourceApplication: sourceApplication)
+    }
+}
+
+extension LoginManager {
+    func getUserProfile(in group: DispatchGroup, handler: @escaping (Result<UserProfile>) -> Void) {
+        
+        group.enter()
+        
+        Session.shared.send(GetUserProfileRequest()) { profileResult in
+            handler(profileResult)
+            group.leave()
+        }
+    }
+    
+    func getJWK(for token: AccessToken, in group: DispatchGroup, handler: @escaping (Result<JWK>) -> Void) {
+        
+        group.enter()
+        
+        guard let IDToken = token.IDToken else {
+            handler(.failure(LineSDKError.authorizeFailed(reason: .lackOfIDToken(raw: token.IDTokenRaw))))
+            group.leave()
+            return
+        }
+        Session.shared.send(GetDiscoveryDocumentRequest()) { documentResult in
+            switch documentResult {
+            case .success(let document):
+                let jwkSetURL = document.jwksURI
+                Session.shared.send(GetJWKSetRequest(url: jwkSetURL)) { jwkSetResult in
+                    switch jwkSetResult {
+                    case .success(let jwkSet):
+                        guard let keyID = IDToken.header.keyID, let key = jwkSet.getKeyByID(keyID) else {
+                            handler(.failure(LineSDKError.authorizeFailed(
+                                reason: .JWTPublicKeyNotFound(keyID: IDToken.header.keyID))))
+                            group.leave()
+                            return
+                        }
+                        handler(.success(key))
+                        group.leave()
+                    case .failure(let err):
+                        handler(.failure(err))
+                        group.leave()
+                    }
+                }
+            case .failure(let err):
+                handler(.failure(err))
+                group.leave()
+            }
+        }
+    }
+    
+    func verifyIDToken(_ token: JWT, key: JWK, process: LoginProcess, userID: String?) throws {
+        let rsaKey = try RSA.PublicKey(key)
+        try token.verify(with: rsaKey)
+        
+        let payload = token.payload
+        try payload.verify(keyPath: \.issuer, expected: "https://access.line.me")
+        
+        if let userID = userID {
+            try payload.verify(keyPath: \.subject, expected: userID)
+        }
+        try payload.verify(keyPath: \.audience, expected: process.configuration.channelID)
+        
+        let now = Date()
+        try payload.verify(keyPath: \.expiration, laterThan: now)
+        try payload.verify(keyPath: \.issueAt, earlierThan: now)
+        try payload.verify(keyPath: \.nonce, expected: process.tokenIDNonce!)
     }
 }
