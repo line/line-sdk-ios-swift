@@ -24,32 +24,91 @@
 
 import Foundation
 
-enum JWKKeyType: String, Decodable {
-    case rsa = "RSA"
+struct JWA {
+    enum Algorithm: String, Decodable {
+        case RS256
+        case RS384
+        case RS512
+    }
 }
 
-enum JWK: Decodable {
-    case rsa(RSAJSONWebKey)
+struct JWK: Decodable {
+    
+    enum KeyType: String, Decodable {
+        case rsa = "RSA"
+    }
+    
+    enum PublicKeyUse: String, Decodable {
+        case signature = "sig"
+        case encryption = "enc"
+    }
     
     enum CodingKeys: String, CodingKey {
-        case type = "kty"
+        case keyType = "kty"
+        case keyUse = "use"
+        case keyID = "kid"
+        case algorithm = "alg"
     }
+
+    let keyType: KeyType
+    let keyUse: PublicKeyUse?
+    let keyID: String?
+    let algorithm: JWA.Algorithm?
+    
+    let parameters: KeyParameters
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let keyType = try container.decode(String.self, forKey: .type)
-        switch JWKKeyType(rawValue: keyType) {
-        case .rsa?:
-            let key = try RSAJSONWebKey(from: decoder)
-            self = .rsa(key)
-        case nil:
-            throw CryptoError.jsonWebKeyFailed(reason: .unsupportedKeyType(keyType))
+        let keyTypeString = try container.decode(String.self, forKey: .keyType)
+        guard let keyType = KeyType(rawValue: keyTypeString) else {
+            throw CryptoError.JWKFailed(reason: .unsupportedKeyType(keyTypeString))
         }
+        
+        self.keyType = keyType
+        keyUse = try container.decodeIfPresent(PublicKeyUse.self, forKey: .keyUse)
+        keyID = try container.decodeIfPresent(String.self, forKey: .keyID)
+        algorithm = try container.decodeIfPresent(JWA.Algorithm.self, forKey: .algorithm)
+        
+        let singleContainer = try decoder.singleValueContainer()
+        parameters = try singleContainer.decode(KeyParameters.self)
     }
+    
 }
 
-struct RSAJSONWebKey: Decodable {
-    let keyType = JWKKeyType.rsa
-    let modulus: String
-    let exponent: String
+extension JWK {
+    struct RSAParameters: Decodable {
+        let modulus: String
+        let exponent: String
+        
+        enum CodingKeys: String, CodingKey {
+            case modulus = "n"
+            case exponent = "e"
+        }
+    }
+
+}
+
+extension JWK {
+    enum KeyParameters: Decodable {
+        
+        enum CodingKeys: String, CodingKey {
+            case keyType = "kty"
+        }
+        
+        case rsa(RSAParameters)
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let keyType = try container.decode(KeyType.self, forKey: .keyType)
+            switch keyType {
+            case .rsa:
+                self = .rsa(try RSAParameters(from: decoder))
+            }
+        }
+        
+        var asRSA: RSAParameters? {
+            if case .rsa(let parameters) = self { return parameters }
+            return nil
+        }
+    }
 }

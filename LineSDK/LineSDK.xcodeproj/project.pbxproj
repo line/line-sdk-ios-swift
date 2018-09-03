@@ -198,6 +198,7 @@
 		4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */; };
 		4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
+		4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09EE213CCE7700F4594D /* JWKTests.swift */; };
 		4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */; };
 		4BFD605C212A8775009E9838 /* FlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605B212A8775009E9838 /* FlexTextComponent.swift */; };
 		4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */; };
@@ -447,6 +448,7 @@
 		4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBubbleContainer.swift; sourceTree = "<group>"; };
 		4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexCarouselContainer.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
+		4BFC09EE213CCE7700F4594D /* JWKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKTests.swift; sourceTree = "<group>"; };
 		4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBoxComponent.swift; sourceTree = "<group>"; };
 		4BFD605B212A8775009E9838 /* FlexTextComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponent.swift; sourceTree = "<group>"; };
 		4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexComponentMessageTests.swift; sourceTree = "<group>"; };
@@ -558,9 +560,9 @@
 		4B25A811213684F000C74B87 /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
-				D1A591252138D26100AC080D /* JWK */,
 				4BF45A8121377DCF00CCD28E /* CryptoError.swift */,
 				4B1C44632137E0AF0094C1D4 /* JWT */,
+				D1A591252138D26100AC080D /* JWK */,
 				4B25A8122136850900C74B87 /* RSA */,
 			);
 			path = Crypto;
@@ -987,6 +989,7 @@
 				4BF45A8C2137B35B00CCD28E /* SampleKeys */,
 				4BF45A882137B29300CCD28E /* RSATests.swift */,
 				4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */,
+				4BFC09EE213CCE7700F4594D /* JWKTests.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -1507,6 +1510,7 @@
 				4B39D1E421104DBA00A45510 /* APITests.swift in Sources */,
 				4B9A305A2121639600174C6F /* TemplateCarouselPayloadTests.swift in Sources */,
 				4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */,
+				4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */,
 				4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */,
 				4B5EE2E8212BE0D00009DF2E /* FlexCarouselContainerTests.swift in Sources */,
 				4BCD27952113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift in Sources */,

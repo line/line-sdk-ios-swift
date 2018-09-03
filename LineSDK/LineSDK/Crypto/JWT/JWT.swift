@@ -32,7 +32,7 @@ struct JWT {
         }
         let components = text.components(separatedBy: ".")
         guard components.count == 3 else {
-            throw CryptoError.jwtFailed(reason: .malformedJWTFormat(string: text))
+            throw CryptoError.JWTFailed(reason: .malformedJWTFormat(string: text))
         }
         header = Header(raw: components[0])
         payload = Payload(raw: components[1])
