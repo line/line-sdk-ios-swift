@@ -1,5 +1,5 @@
 //
-//  CryptoError.swift
+//  JWTHelpers.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,32 +21,32 @@
 
 import Foundation
 
-public enum CryptoError: Error {
-    
-    public enum RSAErrorReason {
-        case invalidDERKey(data: Data, reason: String)
-        case invalidX509Header(data: Data, index: Int, reason: String)
-        case createKeyFailed(data: Data, reason: String)
-        case invalidPEMKey(string: String, reason: String)
-        case encryptingError(reason: String)
-        case decryptingError(reason: String)
-        case signingError(reason: String)
-        case verifyingError(reason: String)
+extension String {
+    // Returns the data of `self` (which is a base64 string), with URL related characters decoded.
+    var base64URLDecoded: Data? {
+        let paddingLength = 4 - count % 4
+        // Filling = for %4 padding.
+        let padding = (paddingLength < 4) ? String(repeating: "=", count: paddingLength) : ""
+        let base64EncodedString = self
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+            + padding
+        
+        return Data(base64Encoded: base64EncodedString)
     }
-    
-    public enum JWTErrorReason {
-        case malformedJWTFormat(string: String)
+}
+
+extension Data {
+    // Encode `self` with URL escaping considered.
+    var base64URLEncoded: String? {
+        // Normalize the base 64 string.
+        let base64Data = base64EncodedData()
+        guard let base64Encoded = String(data: base64Data, encoding: .utf8) else {
+            return nil
+        }
+        return base64Encoded
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
     }
-    
-    public enum GeneralErrorReason {
-        case base64ConversionFailed(string: String)
-        case dataConversionFailed(data: Data, encoding: String.Encoding)
-        case stringConversionFailed(String: String, encoding: String.Encoding)
-        case operationNotSupported(reason: String)
-        case decodingFailed(string: String, type: Any.Type)
-    }
-    
-    case rsaFailed(reason: RSAErrorReason)
-    case jwtFailed(reason: JWTErrorReason)
-    case generalError(reason: GeneralErrorReason)
 }
