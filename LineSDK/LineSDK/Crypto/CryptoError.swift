@@ -33,9 +33,13 @@ public enum CryptoError: Error {
         case signingError(reason: String)
         case verifyingError(reason: String)
     }
-    
+
     public enum JWTErrorReason {
         case malformedJWTFormat(string: String)
+    }    
+
+    public enum JSONWebKeyErrorReason {
+        case unsupportedKeyType(String)
     }
     
     public enum GeneralErrorReason {
@@ -48,5 +52,6 @@ public enum CryptoError: Error {
     
     case rsaFailed(reason: RSAErrorReason)
     case jwtFailed(reason: JWTErrorReason)
+    case jsonWebKeyFailed(reason: JSONWebKeyErrorReason)
     case generalError(reason: GeneralErrorReason)
 }
