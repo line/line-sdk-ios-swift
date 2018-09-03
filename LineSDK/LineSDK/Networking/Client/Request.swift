@@ -116,6 +116,9 @@ public protocol Request {
     /// `HTTPMethod` used for this request.
     var method: HTTPMethod { get }
     
+    /// The base URL of current request.
+    var baseURL: URL { get }
+    
     /// API entry path for this request.
     var path: String { get }
     
@@ -158,9 +161,19 @@ public protocol Request {
     
     /// Timeout interval by second of current request before receiving a response. Default is 30 seconds.
     var timeout: TimeInterval { get }
+    
+    /// Cache policy of this request. Default is .reloadIgnoringLocalCacheData for general API request.
+    var cachePolicy: NSURLRequest.CachePolicy { get }
 }
 
 public extension Request {
+    
+    var baseURL: URL {
+        return URL(string: "https://\(Constant.APIHost)")!
+    }
+    
+    var cachePolicy: NSURLRequest.CachePolicy { return .reloadIgnoringLocalCacheData }
+    
     var adapters: [RequestAdapter] {
         
         // Default header, UA etc

@@ -1,5 +1,5 @@
 //
-//  URLsBeta.swift
+//  GetJWKSetRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,12 +21,18 @@
 
 import Foundation
 
-extension Constant {
-    static let APIHost = "api.line.me"
-    static let thirdPartySchemePrefix = "line3rdp"
-    static let lineAuthScheme = "lineauth"
-    static let lineAuthV2Scheme = "lineauth2"
-    static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
-    static let lineWebAuthURL = "https://access.line.me/oauth2/v2.1/login"
-    static let openIDDiscoveryDocumentURL = "https://access.line.me/.well-known/openid-configuration"
+struct GetJWKSetRequest: Request {
+    
+    typealias Response = JWKSet
+    
+    let baseURL: URL
+    init(url: URL) {
+        baseURL = url
+    }
+    
+    // The JWK set getting request should respect server cache policy.
+    let cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy
+    let method = HTTPMethod.get
+    let authentication = AuthenticateMethod.none
+    let path = ""
 }

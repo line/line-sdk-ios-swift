@@ -50,3 +50,7 @@ extension Data {
             .replacingOccurrences(of: "=", with: "")
     }
 }
+
+protocol JWTSignKey {
+    var RSAKey: RSA.PublicKey? { get }
+}

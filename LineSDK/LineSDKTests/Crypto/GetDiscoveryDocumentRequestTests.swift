@@ -1,5 +1,5 @@
 //
-//  URLsBeta.swift
+//  GetDiscoveryDocumentRequestTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,14 +19,32 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import XCTest
+@testable import LineSDK
 
-extension Constant {
-    static let APIHost = "api.line.me"
-    static let thirdPartySchemePrefix = "line3rdp"
-    static let lineAuthScheme = "lineauth"
-    static let lineAuthV2Scheme = "lineauth2"
-    static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
-    static let lineWebAuthURL = "https://access.line.me/oauth2/v2.1/login"
-    static let openIDDiscoveryDocumentURL = "https://access.line.me/.well-known/openid-configuration"
+extension GetDiscoveryDocumentRequest: ResponseDataStub {
+    static let success = """
+    {
+      "issuer": "https://access.line.me",
+      "authorization_endpoint": "https://access.line-beta.me/oauth2/v2.1/authorize",
+      "token_endpoint": "https://api.line-beta.me/oauth2/v2.1/token",
+      "jwks_uri": "https://api.line-beta.me/oauth2/v2.1/certs",
+      "response_types_supported": [ "code" ],
+      "subject_types_supported": [ "pairwise" ],
+      "id_token_signing_alg_values_supported": [ "RS256" ]
+    }
+    """
+}
+
+class GetDiscoveryDocumentRequestTests: APITests {
+    
+    func testSuccess() {
+        let r = GetDiscoveryDocumentRequest()
+        runTestSuccess(for: r) { document in
+            XCTAssertEqual(document.issuer, "https://access.line.me")
+            XCTAssertEqual(document.jwksURI.absoluteString, "https://api.line-beta.me/oauth2/v2.1/certs")
+            XCTAssertEqual(document.signingAlgorithms, ["RS256"])
+        }
+    }
+
 }

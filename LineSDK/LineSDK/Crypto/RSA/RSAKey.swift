@@ -94,3 +94,10 @@ extension RSA {
     }
 }
 
+// This should be in the same file with JWTSignKey protocol definition.
+// See https://bugs.swift.org/browse/SR-631 & https://github.com/apple/swift/pull/18168
+extension RSA.PublicKey: JWTSignKey {
+    var RSAKey: RSA.PublicKey? {
+        return self
+    }
+}

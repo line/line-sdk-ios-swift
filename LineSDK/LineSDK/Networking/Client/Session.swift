@@ -52,7 +52,6 @@ public class Session {
         return guardSharedProperty(_shared)
     }
     
-    let baseURL: URL
     let session: URLSession
     let delegate: SessionDelegateType
     
@@ -62,7 +61,6 @@ public class Session {
     }
     
     init(configuration: LoginConfiguration, delegate: SessionDelegateType) {
-        baseURL = URL(string: "https://\(configuration.APIHost)")!
         self.delegate = delegate
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: delegate, delegateQueue: nil)
     }
@@ -171,7 +169,7 @@ public class Session {
     /// - Returns: Configured request.
     /// - Throws: Any error might happen during creating the request.
     func create<T: Request>(_ request: T) throws -> URLRequest {
-        let url = baseURL.appendingPathComponent(request.path)
+        let url = request.baseURL.appendingPathComponent(request.path)
         let urlRequest = URLRequest(
             url: url,
             cachePolicy: .reloadIgnoringLocalCacheData,

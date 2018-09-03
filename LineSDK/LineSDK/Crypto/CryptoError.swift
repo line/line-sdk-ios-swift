@@ -36,6 +36,8 @@ public enum CryptoError: Error {
 
     public enum JWTErrorReason {
         case malformedJWTFormat(string: String)
+        case unsupportedHeaderAlgorithm(name: String)
+        case claimVerifyingFailed(key: String, got: String, description: String)
     }    
 
     public enum JWKErrorReason {

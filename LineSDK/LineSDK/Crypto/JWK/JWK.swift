@@ -29,6 +29,14 @@ struct JWA {
         case RS256
         case RS384
         case RS512
+        
+        var rsaAlgorithm: RSA.Algorithm {
+            switch self {
+            case .RS256: return .sha256
+            case .RS384: return .sha384
+            case .RS512: return .sha512
+            }
+        }
     }
 }
 
