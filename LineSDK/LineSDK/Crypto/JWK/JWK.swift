@@ -73,6 +73,12 @@ struct JWK: Decodable {
         parameters = try singleContainer.decode(KeyParameters.self)
     }
     
+    func getKeyData() throws -> Data {
+        switch parameters {
+        case .rsa(let rsaParams):
+            return try rsaParams.getKeyData()
+        }
+    }
 }
 
 extension JWK {
@@ -84,8 +90,31 @@ extension JWK {
             case modulus = "n"
             case exponent = "e"
         }
+        
+        // Get public key DER data from modulus and exponent
+        func getKeyData() throws -> Data {
+            guard let decodedModulusData = modulus.base64URLDecoded else {
+                throw CryptoError.generalError(reason: .base64ConversionFailed(string: modulus))
+            }
+            guard let decodedExponentData = exponent.base64URLDecoded else {
+                throw CryptoError.generalError(reason: .base64ConversionFailed(string: exponent))
+            }
+            
+            var modulusBytes = [UInt8](decodedModulusData)
+            // Make sure the modulusBytes starts with 0x00
+            if let firstByte = modulusBytes.first, firstByte != 0x00 {
+                modulusBytes.insert(0x00, at: 0)
+            }
+            
+            let modulusEncoded = modulusBytes.encode(as: .integer)
+            
+            let exponentBytes = [UInt8](decodedExponentData)
+            let exponentEncoded = exponentBytes.encode(as: .integer)
+            
+            let sequenceEncoded = (modulusEncoded + exponentEncoded).encode(as: .sequence)
+            return Data(bytes: sequenceEncoded)
+        }
     }
-
 }
 
 extension JWK {
@@ -111,4 +140,49 @@ extension JWK {
             return nil
         }
     }
+}
+
+// MARK: Array Extension for Encoding
+// Inspired by: https://github.com/henrinormak/Heimdall/blob/master/Heimdall/Heimdall.swift
+extension Array where Element == UInt8 {
+    
+    func encode(as type: ASN1Type) -> [UInt8] {
+        var tlvTriplet: [UInt8] = []
+        tlvTriplet.append(type.byte)
+        tlvTriplet.append(contentsOf: lengthField(of: self))
+        tlvTriplet.append(contentsOf: self)
+        
+        return tlvTriplet
+    }
+    
+}
+
+// MARK: Freestanding Helper Function
+private func lengthField(of valueField: [UInt8]) -> [UInt8] {
+    var count = valueField.count
+    
+    if count < 128 {
+        return [ UInt8(count) ]
+    }
+    
+    // The number of bytes needed to encode count.
+    let lengthBytesCount = Int((log2(Double(count)) / 8) + 1)
+    
+    // The first byte in the length field encoding the number of remaining bytes.
+    let firstLengthFieldByte = UInt8(128 + lengthBytesCount)
+    
+    var lengthField: [UInt8] = []
+    for _ in 0..<lengthBytesCount {
+        // Take the last 8 bits of count.
+        let lengthByte = UInt8(count & 0xff)
+        // Add them to the length field.
+        lengthField.insert(lengthByte, at: 0)
+        // Delete the last 8 bits of count.
+        count = count >> 8
+    }
+    
+    // Include the first byte.
+    lengthField.insert(firstLengthFieldByte, at: 0)
+    
+    return lengthField
 }

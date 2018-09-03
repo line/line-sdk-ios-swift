@@ -199,6 +199,7 @@
 		4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
 		4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09EE213CCE7700F4594D /* JWKTests.swift */; };
+		4BFC09F1213CDFC300F4594D /* JWKDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */; };
 		4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */; };
 		4BFD605C212A8775009E9838 /* FlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605B212A8775009E9838 /* FlexTextComponent.swift */; };
 		4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */; };
@@ -449,6 +450,7 @@
 		4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexCarouselContainer.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
 		4BFC09EE213CCE7700F4594D /* JWKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKTests.swift; sourceTree = "<group>"; };
+		4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKDataTests.swift; sourceTree = "<group>"; };
 		4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBoxComponent.swift; sourceTree = "<group>"; };
 		4BFD605B212A8775009E9838 /* FlexTextComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponent.swift; sourceTree = "<group>"; };
 		4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexComponentMessageTests.swift; sourceTree = "<group>"; };
@@ -990,6 +992,7 @@
 				4BF45A882137B29300CCD28E /* RSATests.swift */,
 				4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */,
 				4BFC09EE213CCE7700F4594D /* JWKTests.swift */,
+				4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -1529,6 +1532,7 @@
 				4BEB4924212BA0A300BA946A /* FlexIconCompomentTests.swift in Sources */,
 				4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */,
 				DBF2027B212D58FC00780358 /* GetGroupsRequestTests.swift in Sources */,
+				4BFC09F1213CDFC300F4594D /* JWKDataTests.swift in Sources */,
 				4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

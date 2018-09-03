@@ -38,7 +38,7 @@ extension Data {
         
         // Check the first byte
         var index = 0
-        guard bytes[index] == 0x30 else {
+        guard bytes[index] == ASN1Type.sequence.byte else {
             throw CryptoError.RSAFailed(
                 reason: .invalidDERKey(
                     data: self,
@@ -57,7 +57,7 @@ extension Data {
         
         // If the target == 0x02, it is an INTEGER. There is no X509 header contained. We could just return the
         // input DER data as is.
-        if bytes[index] == 0x02 { return self }
+        if bytes[index] == ASN1Type.integer.byte { return self }
         
         // Handle X.509 key now. PKCS #1 rsaEncryption szOID_RSA_RSA, it should look like this:
         // 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00
@@ -172,5 +172,20 @@ extension RSA {
     struct Constant {
         static let beginMarker = "-----BEGIN"
         static let endMarker = "-----END"
+    }
+}
+
+/// Possible ASN.1 types.
+/// See https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One
+/// for more information.
+enum ASN1Type {
+    case sequence
+    case integer
+    
+    var byte: UInt8 {
+        switch self {
+        case .sequence: return 0x30
+        case .integer: return 0x02
+        }
     }
 }
