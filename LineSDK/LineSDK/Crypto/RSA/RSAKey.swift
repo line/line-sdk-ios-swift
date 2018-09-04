@@ -51,6 +51,7 @@ extension RSAKey {
 }
 
 extension RSA {
+    
     struct PublicKey: RSAKey {
         let key: SecKey
         init(key: SecKey) { self.key = key }

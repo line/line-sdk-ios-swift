@@ -21,12 +21,16 @@
 
 import Foundation
 
+// The Discovery Document describes the surface for a particular version of an API.
+// In LineSDK, we use Discovery Document to find JWKs for the purpose of ID Token verification.
+// See http://openid.net/specs/openid-connect-discovery-1_0.html
 struct GetDiscoveryDocumentRequest: Request {
     
     typealias Response = DiscoveryDocument
     
     // The discovery document request should respect server cache policy.
     let cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy
+    
     let method = HTTPMethod.get
     let authentication = AuthenticateMethod.none
     let baseURL = URL(string: Constant.openIDDiscoveryDocumentURL)!
@@ -36,11 +40,9 @@ struct GetDiscoveryDocumentRequest: Request {
 struct DiscoveryDocument: Decodable {
     let issuer: String
     let jwksURI: URL
-    let signingAlgorithms: [String]
-    
+
     enum CodingKeys: String, CodingKey {
         case issuer
         case jwksURI = "jwks_uri"
-        case signingAlgorithms = "id_token_signing_alg_values_supported"
     }
 }

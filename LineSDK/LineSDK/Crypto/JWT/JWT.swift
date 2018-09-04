@@ -22,13 +22,19 @@
 import Foundation
 
 /// Represents a JSON Web Token Object. Use this struct to get values/verify.
+/// If your users authorize you with the `.openID` permission, an signed ID Token will be issued with the access token.
+/// LineSDK will verify
 public struct JWT: Equatable {
+    
     public static func == (lhs: JWT, rhs: JWT) -> Bool {
         return lhs.rawValue == rhs.rawValue
     }
     
     let header: Header
+    
+    /// Payload section of this JWT object.
     public let payload: Payload
+    
     let signature: Data
     
     let rawValue: String
@@ -99,6 +105,9 @@ extension JWT {
 }
 
 extension JWT {
+    
+    /// Represents the payload content of a JWT object. You could use the exposed properties to get claims from the
+    /// payload. Or use the subscript to get any unexposed values.
     public struct Payload {
         let values: [String: Any]
         
@@ -138,19 +147,35 @@ extension JWT {
 
 // MARK: - Named getter for claims
 extension JWT.Payload {
+    
+    /// Subcript to get a value from current payload.
+    ///
+    /// - Parameters:
+    ///   - key: The string key of a claim.
+    ///   - type: Indicates what type should be expected under the given `key`. After getting the value from `key`,
+    ///           it will be converted to this type. You can only use JSON compatible types.
     public subscript<T>(key: String, type: T.Type) -> T? {
         return values[key] as? T
     }
     
+    /// Issuer claim of this JWT. In LineSDK, the issuer is always "https://access.line.me".
     public var issuer: String? { return self["iss", String.self] }
+    
+    /// Subject claim of this JWT. In LineSDK, the subject is the `userID` of authorized user.
     public var subject: String? { return self["sub", String.self] }
+    
+    /// Audience claim of this JWT. In LineSDK, the audience is your channel ID.
     public var audience: String? { return self["aud", String.self] }
+    
+    /// When the JWT will expire.
     public var expiration: Date? {
         guard let timeInterval = self["exp", TimeInterval.self] else {
             return nil
         }
         return Date(timeIntervalSince1970: timeInterval)
     }
+    
+    /// When the JWT was issued.
     public var issueAt: Date? {
         guard let timeInterval = self["iat", TimeInterval.self] else {
             return nil
@@ -162,13 +187,20 @@ extension JWT.Payload {
 // MARK: - LINE Related claims
 extension JWT.Payload {
     var nonce: String? { return self["nonce", String.self] }
+    
+    /// User's display name. Not included if the `.profile` permission was not specified in the authorization request.
     public var name: String? { return self["name", String.self] }
+    
+    /// User's profile image URL. Not included if the `.profile` permission was not specified in the authorization
+    /// request.
     public var picture: URL? {
         guard let string = self["picture", String.self] else {
             return nil
         }
         return URL(string: string)
     }
+    
+    /// User's email address. Not included if the `.email` permission was not specified in the authorization request.
     public var email: String? { return self["email", String.self] }
     
 }

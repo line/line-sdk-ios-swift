@@ -43,7 +43,6 @@ class GetDiscoveryDocumentRequestTests: APITests {
         runTestSuccess(for: r) { document in
             XCTAssertEqual(document.issuer, "https://access.line.me")
             XCTAssertEqual(document.jwksURI.absoluteString, "https://api.line-beta.me/oauth2/v2.1/certs")
-            XCTAssertEqual(document.signingAlgorithms, ["RS256"])
         }
     }
 

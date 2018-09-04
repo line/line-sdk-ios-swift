@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// A JSON object that represents a set of JWKs.
 struct JWKSet: Decodable {
     
     struct Dummy: Decodable {}

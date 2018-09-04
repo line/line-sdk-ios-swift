@@ -268,12 +268,13 @@ extension LoginManager {
     func getJWK(for token: AccessToken, in group: DispatchGroup, handler: @escaping (Result<JWK>) -> Void) {
         
         group.enter()
-        
+        // We need a valid ID Token existing to continue.
         guard let IDToken = token.IDToken else {
             handler(.failure(LineSDKError.authorizeFailed(reason: .lackOfIDToken(raw: token.IDTokenRaw))))
             group.leave()
             return
         }
+        // We need a supported verify algorithm to continue
         let algorithm = IDToken.header.algorithm
         guard let _ = JWA.Algorithm(rawValue: algorithm) else {
             let unsupportedError = CryptoError.JWTFailed(reason: .unsupportedHeaderAlgorithm(name: algorithm))
@@ -281,7 +282,7 @@ extension LoginManager {
             group.leave()
             return
         }
-        
+        // Use Discovery Document to find JWKs URI
         Session.shared.send(GetDiscoveryDocumentRequest()) { documentResult in
             switch documentResult {
             case .success(let document):
