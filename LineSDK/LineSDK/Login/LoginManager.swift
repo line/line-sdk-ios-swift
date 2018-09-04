@@ -164,13 +164,6 @@ public class LoginManager {
         response: LoginProcessURLResponse,
         process: LoginProcess,
         completionHandler completion: @escaping (Result<LoginResult>) -> Void) {
-        // Store token
-        do {
-            try AccessTokenStore.shared.setCurrentToken(token)
-        } catch {
-            completion(.failure(error))
-            return
-        }
         
         let group = DispatchGroup()
         
@@ -180,7 +173,8 @@ public class LoginManager {
         var errors: [Error] = []
         
         if token.permissions.contains(.profile) {
-            getUserProfile(in: group) { result in
+            // We need to pass token since it is not stored in keychain yet.
+            getUserProfile(with: token, in: group) { result in
                 profile = result.value
                 result.error.map { errors.append($0) }
             }
@@ -193,7 +187,7 @@ public class LoginManager {
             }
         }
 
-        group.notify(queue: .main) {    
+        group.notify(queue: .main) {
             guard errors.isEmpty else {
                 completion(.failure(errors[0]))
                 return
@@ -212,6 +206,15 @@ public class LoginManager {
                 }
             }
             
+            // Everything goes fine now. Store token.
+            do {
+                try AccessTokenStore.shared.setCurrentToken(token)
+            } catch {
+                completion(.failure(error))
+                return
+            }
+            
+            // Notice result.
             let result = LoginResult.init(
                 accessToken: token,
                 permissions: Set(token.permissions),
@@ -252,11 +255,11 @@ public class LoginManager {
 }
 
 extension LoginManager {
-    func getUserProfile(in group: DispatchGroup, handler: @escaping (Result<UserProfile>) -> Void) {
+    func getUserProfile(with token: AccessToken, in group: DispatchGroup, handler: @escaping (Result<UserProfile>) -> Void) {
         
         group.enter()
         
-        Session.shared.send(GetUserProfileRequest()) { profileResult in
+        Session.shared.send(GetUserProfileRequestInjectedToken(token: token.value)) { profileResult in
             handler(profileResult)
             group.leave()
         }
@@ -271,6 +274,14 @@ extension LoginManager {
             group.leave()
             return
         }
+        let algorithm = IDToken.header.algorithm
+        guard let _ = JWA.Algorithm(rawValue: algorithm) else {
+            let unsupportedError = CryptoError.JWTFailed(reason: .unsupportedHeaderAlgorithm(name: algorithm))
+            handler(.failure(LineSDKError.authorizeFailed(reason: .cryptoError(error: unsupportedError))))
+            group.leave()
+            return
+        }
+        
         Session.shared.send(GetDiscoveryDocumentRequest()) { documentResult in
             switch documentResult {
             case .success(let document):

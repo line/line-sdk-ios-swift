@@ -169,7 +169,7 @@ public class Session {
     /// - Returns: Configured request.
     /// - Throws: Any error might happen during creating the request.
     func create<T: Request>(_ request: T) throws -> URLRequest {
-        let url = request.baseURL.appendingPathComponent(request.path)
+        let url = request.baseURL.appendingPathComponentIfNotEmpty(request.path)
         let urlRequest = URLRequest(
             url: url,
             cachePolicy: .reloadIgnoringLocalCacheData,
@@ -351,5 +351,11 @@ public class SessionTask {
 extension SessionTask {
     func didReceiveData(_ data: Data) {
         mutableData.append(data)
+    }
+}
+
+extension URL {
+    func appendingPathComponentIfNotEmpty(_ path: String) -> URL {
+        return path.isEmpty ? self : appendingPathComponent(path)
     }
 }

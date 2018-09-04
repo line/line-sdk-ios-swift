@@ -39,7 +39,8 @@ struct PostExchangeTokenRequest: Request {
             "code": code,
             "otp": otpValue,
             "redirect_uri": redirectURI,
-            "client_version": Constant.SDKVersionString
+            "client_version": Constant.SDKVersionString,
+            "id_token_key_type": "JWK"
         ]
     }
     

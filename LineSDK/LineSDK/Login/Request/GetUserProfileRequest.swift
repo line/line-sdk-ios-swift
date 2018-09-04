@@ -31,3 +31,29 @@ public struct GetUserProfileRequest: Request {
     public typealias Response = UserProfile
 }
 
+struct GetUserProfileRequestInjectedToken: Request {
+    let wrapped: GetUserProfileRequest
+    let token: String
+    
+    init(token: String) {
+        self.wrapped = GetUserProfileRequest()
+        self.token = token
+    }
+    
+    var method: HTTPMethod { return wrapped.method }
+    var path: String { return wrapped.path }
+    var authentication: AuthenticateMethod { return wrapped.authentication }
+    
+    typealias Response = GetUserProfileRequest.Response
+    
+    // Replace the default token adapter to a newly created one with injected token.
+    var adapters: [RequestAdapter] {
+        let adapters = wrapped.adapters
+        return adapters.map { adapter in
+            guard let _ = adapter as? TokenAdapter else {
+                return adapter
+            }
+            return TokenAdapter(token: token)
+        }
+    }
+}
