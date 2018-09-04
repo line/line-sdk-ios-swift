@@ -96,7 +96,9 @@ class JWTTests: XCTestCase {
         XCTAssertEqual(token.header.tokenType, "JWT")
         
         XCTAssertEqual(token.payload["name", String.self], "John Doe")
+        XCTAssertEqual(token.payload["sub", String.self], "1234567890")
         XCTAssertEqual(token.payload["iat", Int64.self], 1516239022)
+        XCTAssertTrue(token.payload["admin", Bool.self]!)
     }
     
     func testJWTSignatureVerify() {
