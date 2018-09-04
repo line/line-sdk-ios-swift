@@ -69,4 +69,9 @@ class LineSDKErrorTests: XCTestCase {
         let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 403, error: err, raw: "raw"))
         XCTAssertTrue(error.isPermissionError)
     }
+    
+    func testErrorCode() {
+        let error = LineSDKError.requestFailed(reason: .lackOfAccessToken)
+        XCTAssertEqual(error.errorCode, 1002)
+    }
 }

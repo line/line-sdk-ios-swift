@@ -58,7 +58,7 @@ extension RSA {
         
         init(string: String, encoding: String.Encoding = .utf8) throws {
             guard let data = string.data(using: encoding) else {
-                throw CryptoError.generalError(reason: .stringConversionFailed(String: string, encoding: encoding))
+                throw CryptoError.generalError(reason: .stringConversionFailed(string: string, encoding: encoding))
             }
             self.init(raw: data)
         }
@@ -75,7 +75,7 @@ extension RSA {
             guard let data = SecKeyCreateEncryptedData(
                 key.key, algorithm.encryptionAlgorithm, raw as CFData, &error) else
             {
-                throw CryptoError.RSAFailed(reason: .encryptingError(reason: "\(String(describing: error))"))
+                throw CryptoError.RSAFailed(reason: .encryptingError(error?.takeRetainedValue()))
             }
             
             return EncryptedData(raw: data as Data)
@@ -93,7 +93,7 @@ extension RSA {
             guard let data = SecKeyCreateSignature(
                 key.key, algorithm.signatureAlgorithm, raw as CFData, &error) else
             {
-                throw CryptoError.RSAFailed(reason: .signingError(reason: "\(String(describing: error))"))
+                throw CryptoError.RSAFailed(reason: .signingError(error?.takeRetainedValue()))
             }
             
             return SignedData(raw: data as Data)
@@ -113,7 +113,7 @@ extension RSA {
                 key.key, algorithm.signatureAlgorithm, raw as CFData, signature.raw as CFData, &error)
             
             guard error == nil else {
-                throw CryptoError.RSAFailed(reason: .verifyingError(reason: "\(String(describing: error))"))
+                throw CryptoError.RSAFailed(reason: .verifyingError(error?.takeRetainedValue()))
             }
             
             return result
@@ -136,7 +136,7 @@ extension RSA {
             guard let data = SecKeyCreateDecryptedData(
                 key.key, algorithm.encryptionAlgorithm, raw as CFData, &error) else
             {
-                throw CryptoError.RSAFailed(reason: .decryptingError(reason: "\(String(describing: error))"))
+                throw CryptoError.RSAFailed(reason: .decryptingError(error?.takeRetainedValue()))
             }
             
             return PlainData(raw: data as Data)
