@@ -403,28 +403,29 @@ extension WebLoginFlow: SFSafariViewControllerDelegate {
 extension String {
     
     static func returnUri(_ parameter: LoginProcess.FlowParameters) -> String {
-        var universalLinkQuery = ""
+        
+        var parameters: [String: Any] = [
+            "response_type": "code",
+            "sdk_ver": Constant.SDKVersion,
+            "client_id": parameter.channelID,
+            "scope": (parameter.scopes.map { $0.rawValue }).joined(separator: " "),
+            "otpId": parameter.otp.otpId,
+            "state": parameter.processID,
+            "redirect_uri": Constant.thirdPartyAppReturnURL,
+        ]
+        
         if let url = parameter.universalLinkURL {
-            universalLinkQuery = "&optional_redirect_uri=\(url.absoluteString)"
+            parameters["optional_redirect_uri"] = url.absoluteString
         }
-        
-        var nonceQuery = ""
         if let nonce = parameter.nonce {
-            nonceQuery = "&nonce=\(nonce)"
+            parameters["nonce"] = nonce
         }
-        
-        var botPromptQuery = ""
         if let botPrompt = parameter.botPrompt {
-            botPromptQuery = "&bot_prompt=\(botPrompt.rawValue)"
+            parameters["bot_prompt"] = botPrompt.rawValue
         }
-        
-        let result =
-            "/oauth2/v2.1/authorize/consent?response_type=code&sdk_ver=\(Constant.SDKVersion)" +
-            "&client_id=\(parameter.channelID)&scope=\((parameter.scopes.map { $0.rawValue }).joined(separator: " "))" +
-            "&otpId=\(parameter.otp.otpId)&state=\(parameter.processID)&redirect_uri=\(Constant.thirdPartyAppReturnURL)" +
-            universalLinkQuery + nonceQuery + botPromptQuery
-        
-        return result
+        let base = URL(string: "/oauth2/v2.1/authorize/consent")!
+        let encoder = URLQueryEncoder(parameters: parameters, allowed: .urlHostAllowed)
+        return encoder.encoded(for: base).absoluteString
     }
 }
 
