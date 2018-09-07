@@ -77,7 +77,7 @@ class RefreshTokenPipelineTests: XCTestCase {
         setupTestToken()
         
         let request = StubRequestSimple()
-        let response = HTTPURLResponse.responseFromCode(403)
+        let response = HTTPURLResponse.responseFromCode(401)
         try! pipeline.redirect(request: request, data: Data(), response: response) {
             action in
             switch action {
@@ -110,7 +110,7 @@ class RefreshTokenPipelineTests: XCTestCase {
         Session._shared = Session(configuration: LoginConfiguration.shared, delegate: delegate)
         
         let request = StubRequestSimple()
-        let response = HTTPURLResponse.responseFromCode(403)
+        let response = HTTPURLResponse.responseFromCode(401)
         try! pipeline.redirect(request: request, data: Data(), response: response) {
             action in
             switch action {
