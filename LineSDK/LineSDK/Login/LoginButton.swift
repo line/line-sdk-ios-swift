@@ -21,14 +21,21 @@
 
 import UIKit
 
+/// `LoginButtonDelegate` protocol defines methods that allow you to handle different login states if you use
+/// `LoginButton` we provide.
 public protocol LoginButtonDelegate: class {
     func loginButtonDidStartLogin(_ button: LoginButton)
     func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult)
     func loginButton(_ button: LoginButton, didFailLogin error: Error)
 }
 
+/// `LoginButton` is a UIButton which executes login function when user taps on it.
 public class LoginButton: UIButton {
-    
+
+    /// Specifies the size of a `LoginButton`.
+    ///
+    /// - small: the small-sized `LoginButton`.
+    /// - normal: the normal-sized `LoginButton`.
     public enum ButtonSize {
         case small
         case normal
@@ -73,12 +80,16 @@ public class LoginButton: UIButton {
         }
     }
 
+    /// The object confirms to `LoginButtonDelegate` and implements the methods defined in `LoginButtonDelegate`
+    /// to handle different login states.
     public weak var delegate: LoginButtonDelegate?
 
     /// The set of permissions which are parameters of login action.
     /// The default permissions are [.profile].
     public var permissions: Set<LoginPermission> = [.profile]
 
+    /// The size of `LoginButton`. The default button size is normal. The buton will be resized if you change
+    /// this property.
     public var buttonSize: ButtonSize = .normal {
         didSet {
             // update button style after buttonSize is changed
@@ -86,6 +97,7 @@ public class LoginButton: UIButton {
         }
     }
 
+    /// You can set the text of `LoginButton` by changing this property.
     public var buttonText: String? {
         didSet {
             // update button style after buttonText is changed
@@ -103,6 +115,7 @@ public class LoginButton: UIButton {
         setup()
     }
 
+    /// Setup the default style of `LoginButton`.
     func setup() {
         titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 11)
         titleLabel?.textAlignment = .center
@@ -117,6 +130,8 @@ public class LoginButton: UIButton {
         addTarget(self, action:#selector(login), for: .touchUpInside)
     }
 
+    /// This method is called when the style of `LoginButton` is changed. It will update the appearance of button
+    /// to new style you set.
     func updateButtonStyle() {
         let bundle = Bundle(for: LoginButton.self)
         let imagesPairs: [(String, UIControl.State)]
@@ -151,11 +166,13 @@ public class LoginButton: UIButton {
         invalidateIntrinsicContentSize()
     }
 
+    /// Override the getter of intrinsicContentSize to support auto layout.
     override public var intrinsicContentSize: CGSize {
         let titleSize = titleLabel?.intrinsicContentSize ?? .zero
         return buttonSize.sizeForTitleSize(titleSize)
     }
 
+    /// Execute this function to do login action when user taps on `LoginButton`.
     @objc func login() {
         if LoginManager.shared.isAuthorizing {
             // Authorizing process is on-going so not to call login again
