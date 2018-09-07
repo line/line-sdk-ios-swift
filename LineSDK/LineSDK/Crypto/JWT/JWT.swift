@@ -193,7 +193,7 @@ extension JWT.Payload {
     
     /// User's profile image URL. Not included if the `.profile` permission was not specified in the authorization
     /// request.
-    public var picture: URL? {
+    public var pictureURL: URL? {
         guard let string = self["picture", String.self] else {
             return nil
         }

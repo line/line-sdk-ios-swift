@@ -31,19 +31,14 @@ extension String {
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
             + padding
-        
         return Data(base64Encoded: base64EncodedString)
     }
 }
 
 extension Data {
     // Encode `self` with URL escaping considered.
-    var base64URLEncoded: String? {
-        // Normalize the base 64 string.
-        let base64Data = base64EncodedData()
-        guard let base64Encoded = String(data: base64Data, encoding: .utf8) else {
-            return nil
-        }
+    var base64URLEncoded: String {
+        let base64Encoded = base64EncodedString()
         return base64Encoded
             .replacingOccurrences(of: "+", with: "-")
             .replacingOccurrences(of: "/", with: "_")

@@ -61,7 +61,7 @@ extension Data {
         
         // Handle X.509 key now. PKCS #1 rsaEncryption szOID_RSA_RSA, it should look like this:
         // 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00
-        guard Int(bytes[index]) == 0x30 else {
+        guard bytes[index] == 0x30 else {
             throw CryptoError.RSAFailed(
                 reason: .invalidX509Header(
                     data: self, index: index, reason: "Expects byte 0x30, but found \(bytes[index])"

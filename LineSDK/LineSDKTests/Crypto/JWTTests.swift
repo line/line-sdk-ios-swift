@@ -135,6 +135,6 @@ class JWTTests: XCTestCase {
         
         XCTAssertEqual(payload.name, "onevcat")
         XCTAssertEqual(payload.email, "abc@def.com")
-        XCTAssertEqual(payload.picture?.absoluteString, "https://obs-beta.line-apps.com/xxxx")
+        XCTAssertEqual(payload.pictureURL?.absoluteString, "https://obs-beta.line-apps.com/xxxx")
     }
 }
