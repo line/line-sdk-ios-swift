@@ -60,6 +60,6 @@ public class LineSDKJWTPayload: NSObject {
     public var expiration: Date? { return value.expiration }
     public var issueAt: Date? { return value.issueAt }
     public var name: String? { return value.name }
-    public var picture: URL? { return value.picture }
+    public var picture: URL? { return value.pictureURL }
     public var email: String? { return value.email }
 }
