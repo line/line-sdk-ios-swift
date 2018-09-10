@@ -88,6 +88,10 @@ public class LoginButton: UIButton {
     /// The default permissions are [.profile].
     public var permissions: Set<LoginPermission> = [.profile]
 
+    /// The set of options which are parameters of login action.
+    /// The default options are empty.
+    public var options: LoginManagerOptions = []
+
     /// The size of `LoginButton`. The default button size is normal. The buton will be resized if you change
     /// this property.
     public var buttonSize: ButtonSize = .normal {
@@ -180,7 +184,10 @@ public class LoginButton: UIButton {
         }
         delegate?.loginButtonDidStartLogin(self)
         isUserInteractionEnabled = false
-        LoginManager.shared.login(permissions: permissions) {
+        LoginManager.shared.login(
+            permissions: permissions,
+            options: options
+        ) {
             result in
             switch result {
             case .success(let loginResult):
