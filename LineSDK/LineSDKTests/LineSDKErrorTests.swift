@@ -70,6 +70,12 @@ class LineSDKErrorTests: XCTestCase {
         XCTAssertTrue(error.isPermissionError)
     }
     
+    func testIsTokenError() {
+        let err = APIError(InternalAPIError(message: "The access token expired"))
+        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 401, error: err, raw: "raw"))
+        XCTAssertTrue(error.isTokenError)
+    }
+    
     func testErrorCode() {
         let error = LineSDKError.requestFailed(reason: .lackOfAccessToken)
         XCTAssertEqual(error.errorCode, 1002)

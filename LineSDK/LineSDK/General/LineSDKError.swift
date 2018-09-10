@@ -179,6 +179,12 @@ extension LineSDKError {
         return isResponseError(statusCode: 403)
     }
     
+    /// Returns whether the `LineSDKError` represents a token problem. Usually, it means your token is expired or
+    /// malformed.
+    public var isTokenError: Bool {
+        return isResponseError(statusCode: 401)
+    }
+    
     /// Returns whether the `LineSDKError` represents a response failing with specified HTTP status code.
     public func isResponseError(statusCode: Int) -> Bool {
         if case .responseFailed(.invalidHTTPStatusAPIError(code: statusCode, error: _, raw: _)) = self {

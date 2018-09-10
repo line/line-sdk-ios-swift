@@ -110,7 +110,7 @@ public class JSONParsePipeline: ResponsePipelineTerminator {
 class RefreshTokenRedirector: ResponsePipelineRedirector {
     
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool {
-        return response.statusCode == 403
+        return response.statusCode == 401
     }
     
     func redirect<T: Request>(
