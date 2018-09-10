@@ -26,7 +26,7 @@ extension Notification.Name {
     static let userDidLogin = Notification.Name("com.linecorp.linesdk_sample.userDidLogin")
 }
 
-class LoginViewController: UIViewController, IndicatorDisplay, LoginButtonDelegate {
+class LoginViewController: UIViewController, IndicatorDisplay {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,21 +54,24 @@ class LoginViewController: UIViewController, IndicatorDisplay, LoginButtonDelega
                            multiplier: 1,
                            constant: 0).isActive = true
     }
+}
 
+extension LoginViewController: LoginButtonDelegate {
+    
     func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
         hideIndicator()
         UIAlertController.present(in: self, successResult: "\(loginResult)") {
             NotificationCenter.default.post(name: .userDidLogin, object: loginResult)
         }
     }
-
+    
     func loginButton(_ button: LoginButton, didFailLogin error: Error) {
         hideIndicator()
         UIAlertController.present(in: self, error: error)
     }
-
+    
     func loginButtonDidStartLogin(_ button: LoginButton) {
         showIndicator()
     }
-
+    
 }

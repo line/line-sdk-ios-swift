@@ -23,11 +23,9 @@ import Foundation
 
 struct URLQueryEncoder: RequestAdapter {
     let parameters: Parameters
-    let allowed: CharacterSet
     
-    init(parameters: Parameters, allowed: CharacterSet = .urlQueryAllowed) {
+    init(parameters: Parameters) {
         self.parameters = parameters
-        self.allowed = allowed
     }
     
     func adapted(_ request: URLRequest) throws -> URLRequest {
@@ -45,7 +43,11 @@ struct URLQueryEncoder: RequestAdapter {
     
     func encoded(for url: URL) -> URL {
         if var components = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
-            let percentEncodedQuery = (components.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters, allowed: allowed)
+            
+            var allowedCharacterSet = CharacterSet.urlQueryAllowed
+            allowedCharacterSet.remove(charactersIn: "!*'();:@&=+$,/?%#[]")
+            
+            let percentEncodedQuery = (components.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters, allowed: allowedCharacterSet)
             components.percentEncodedQuery = percentEncodedQuery
             return components.url ?? url
         }

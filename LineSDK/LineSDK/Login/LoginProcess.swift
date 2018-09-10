@@ -424,7 +424,7 @@ extension String {
             parameters["bot_prompt"] = botPrompt.rawValue
         }
         let base = URL(string: "/oauth2/v2.1/authorize/consent")!
-        let encoder = URLQueryEncoder(parameters: parameters, allowed: .urlHostAllowed)
+        let encoder = URLQueryEncoder(parameters: parameters)
         return encoder.encoded(for: base).absoluteString
     }
 }
@@ -436,18 +436,17 @@ extension URL {
             "returnUri": returnUri,
             "loginChannelId": flowParameters.channelID
         ]
-        let encoder = URLQueryEncoder(parameters: parameters, allowed: .urlHostAllowed)
+        let encoder = URLQueryEncoder(parameters: parameters)
         return encoder.encoded(for: self)
     }
     
     func appendedURLSchemeQuery(_ flowParameters: LoginProcess.FlowParameters) -> URL {
-        let returnUri = String.returnUri(flowParameters)
-        let loginUrl =
-            "\(Constant.lineWebAuthUniversalURL)?returnUri=\(returnUri)&loginChannelId=\(flowParameters.channelID)"
+        let loginBase = URL(string: Constant.lineWebAuthUniversalURL)!
+        let loginUrl = loginBase.appendedLoginQuery(flowParameters)
         let parameters = [
             "loginUrl": "\(loginUrl)"
         ]
-        let encoder = URLQueryEncoder(parameters: parameters, allowed: .urlHostAllowed)
+        let encoder = URLQueryEncoder(parameters: parameters)
         return encoder.encoded(for: self)
     }
 }
