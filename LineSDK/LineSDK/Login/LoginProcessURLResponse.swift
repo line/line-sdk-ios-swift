@@ -21,17 +21,6 @@
 
 import Foundation
 
-/// Result code from LINE app auth module
-enum LineAppURLResultCode: String {
-    case success = "SUCCESS"
-    case disallowed = "DISALLOWED"
-    case cancelled = "CANCELLED"
-    case invalidParameter = "INVALIDPARAM"
-    case networkError = "NETWORKERROR"
-    case generalError = "GENERALERROR"
-    case loginFailure = "LOGINFAIL"
-}
-
 /// Result code from LINE web auth flow
 enum LineWebURLResultError: String {
     case accessDenied = "access_denied"
@@ -53,52 +42,8 @@ struct LoginProcessURLResponse {
         guard let items = urlComponent.queryItems else {
             throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: nil))
         }
-        
-        // If the items contains a "resultCode" key, we recognize it as response from LINE url scheme auth
-        // Maybe we could remove this, if server/LINE app side could unify the callback flow.
-        let isClientURLResponse = items.contains { $0.name == "resultCode" }
 
-        if isClientURLResponse {
-            try self.init(clientURL:url, queryItems: items)
-        } else {
-            try self.init(webURL: url, queryItems: items, validatingState: state)
-        }
-    }
-    
-    init(clientURL url: URL, queryItems items: [URLQueryItem]) throws {
-        var codeString = ""
-        var message: String?
-        var token: String?
-        for item in items {
-            switch item.name {
-            case "resultCode": codeString = item.value ?? ""
-            case "resultMessage": message = item.value
-            case "requestToken": token = item.value
-            default: break
-            }
-        }
-        
-        guard let code = LineAppURLResultCode(rawValue: codeString) else {
-            throw LineSDKError.authorizeFailed(reason: .invalidLineURLResultCode(codeString))
-        }
-        
-        switch code {
-        case .success:
-            guard let token = token else {
-                throw LineSDKError.authorizeFailed(reason: .malformedRedirectURL(url: url, message: message))
-            }
-            requestToken = token
-        case .cancelled:
-            throw LineSDKError.authorizeFailed(reason: .userCancelled)
-        case .disallowed:
-            // Disallowed happens when user reject the auth in the confirm screen.
-            // However, here we do not make `.cancelled` and `.disallowed` distinct.
-            throw LineSDKError.authorizeFailed(reason: .userCancelled)
-        default:
-            throw LineSDKError.authorizeFailed(reason: .lineClientError(code: code.rawValue, message: message))
-        }
-        
-        friendshipStatusChanged = nil
+        try self.init(webURL: url, queryItems: items, validatingState: state)
     }
     
     init(webURL url: URL, queryItems items: [URLQueryItem], validatingState: String) throws {
