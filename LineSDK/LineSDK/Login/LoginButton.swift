@@ -84,12 +84,14 @@ public class LoginButton: UIButton {
     /// to handle different login states.
     public weak var delegate: LoginButtonDelegate?
 
-    /// The set of permissions which are parameters of login action.
-    /// The default permissions are [.profile].
+    public weak var presentingViewController: UIViewController?
+
+    /// The set of permissions is a parameter of login action.
+    /// The default permissions is [.profile].
     public var permissions: Set<LoginPermission> = [.profile]
 
-    /// The set of options which are parameters of login action.
-    /// The default options are empty.
+    /// The set of options is a parameter of login action.
+    /// The default options is empty.
     public var options: LoginManagerOptions = []
 
     /// The size of `LoginButton`. The default button size is normal. The buton will be resized if you change
@@ -186,6 +188,7 @@ public class LoginButton: UIButton {
         isUserInteractionEnabled = false
         LoginManager.shared.login(
             permissions: permissions,
+            in: presentingViewController,
             options: options
         ) {
             result in
