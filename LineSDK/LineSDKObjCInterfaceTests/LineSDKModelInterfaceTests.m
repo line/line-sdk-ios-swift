@@ -146,6 +146,12 @@
     [manager logoutWithCompletionHandler:^(NSError *error) {
         
     }];
+    
+    BOOL opened = [manager application:[UIApplication sharedApplication]
+                                  open:[NSURL URLWithString:@"https://sample.com"]
+                               options:@{}];
+    XCTAssertFalse(opened);
+    
     XCTAssertNotNil([LineSDKLoginManager sharedManager]);
 }
 
@@ -244,8 +250,8 @@
 }
 
 -(void)testErrorDomain {
-    NSLog(@"%@", [LineSDKError errorDomain]);
-    XCTAssertTrue([[LineSDKError errorDomain] isEqualToString:@"LineSDKError"]);
+    NSLog(@"%@", [LineSDKErrorConstant errorDomain]);
+    XCTAssertTrue([[LineSDKErrorConstant errorDomain] isEqualToString:@"LineSDKError"]);
 }
 
 @end
