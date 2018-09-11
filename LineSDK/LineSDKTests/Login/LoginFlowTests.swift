@@ -35,6 +35,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         nonce: "kkk",
         botPrompt: .normal)
     
+    // Login URL has a double escaped query.
     func testLoginQueryURLEncode() {
         
         let baseURL = URL(string: Constant.lineWebAuthUniversalURL)!
@@ -55,13 +56,18 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
             }
             if (item.name == "returnUri") {
                 hit += 1
+
+                XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
+                
                 // Should be already fully decoded (no double encoding in the url)
-                XCTAssertEqual(item.value, item.value?.removingPercentEncoding)
+                XCTAssertEqual(item.value?.removingPercentEncoding,
+                               item.value?.removingPercentEncoding?.removingPercentEncoding)
             }
         }
         XCTAssertEqual(hit, 2)
     }
     
+    // URL Scheme has a triple escaped query.
     func testURLSchemeQueryEncode() {
         let baseURL = Constant.lineAppAuthURLv2
         let result = baseURL.appendedURLSchemeQuery(parameter)
@@ -77,8 +83,13 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         for item in items {
             if (item.name == "loginUrl") {
                 hit += 1
+                XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
+                XCTAssertNotEqual(item.value?.removingPercentEncoding,
+                                  item.value?.removingPercentEncoding?.removingPercentEncoding)
+                
                 // Should be already fully decoded (no double encoding in the url)
-                XCTAssertEqual(item.value, item.value?.removingPercentEncoding)
+                XCTAssertEqual(item.value?.removingPercentEncoding?.removingPercentEncoding,
+                               item.value?.removingPercentEncoding?.removingPercentEncoding?.removingPercentEncoding)
             }
         }
         XCTAssertEqual(hit, 1)

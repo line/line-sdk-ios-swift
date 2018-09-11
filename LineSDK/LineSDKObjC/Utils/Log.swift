@@ -21,19 +21,21 @@
 
 import Foundation
 
+#if !LineSDKCocoaPods
 struct Log {
     static func assertionFailure(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) {
-        Swift.assertionFailure("[LineSDK][ObjC] \(message())", file: file, line: line)
+        Swift.assertionFailure("[LineSDK] \(message())", file: file, line: line)
     }
     
     static func fatalError(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) -> Never {
-        Swift.fatalError("[LineSDK][ObjC] \(message())", file: file, line: line)
+        Swift.fatalError("[LineSDK] \(message())", file: file, line: line)
     }
     
     static func print(_ items: Any...) {
         let s = items.reduce("") { result, next in
             return result + String(describing: next)
         }
-        Swift.print("[LineSDK][ObjC] \(s)")
+        Swift.print("[LineSDK] \(s)")
     }
 }
+#endif

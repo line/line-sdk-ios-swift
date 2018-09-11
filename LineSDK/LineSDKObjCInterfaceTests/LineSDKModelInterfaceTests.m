@@ -146,6 +146,12 @@
     [manager logoutWithCompletionHandler:^(NSError *error) {
         
     }];
+    
+    BOOL opened = [manager application:[UIApplication sharedApplication]
+                                  open:[NSURL URLWithString:@"https://sample.com"]
+                               options:@{}];
+    XCTAssertFalse(opened);
+    
     XCTAssertNotNil([LineSDKLoginManager sharedManager]);
 }
 
@@ -243,9 +249,9 @@
     XCTAssertNil(response.result);
 }
 
-- (void)testErrorDomain {
-    XCTAssertTrue([[LineSDKError errorDomain] isEqualToString:@"LineSDKError"]);
-    XCTAssertTrue([[LineSDKError cryptoErrorDomain] isEqualToString:@"LineSDKError.CryptoError"]);
+-(void)testErrorDomain {
+    NSLog(@"%@", [LineSDKErrorConstant errorDomain]);
+    XCTAssertTrue([[LineSDKErrorConstant errorDomain] isEqualToString:@"LineSDKError"]);
 }
 
 - (void)testJWTInterface {

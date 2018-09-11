@@ -1,5 +1,5 @@
 //
-//  LineSDKError.swift
+//  LineSDKErrorConstant.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -18,11 +18,12 @@
 //  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
+#if !LineSDKCocoaPods
 import LineSDK
+#endif
 
 @objcMembers
-public class LineSDKError: NSObject {
+public class LineSDKErrorConstant: NSObject {
     public static let errorDomain = LineSDK.LineSDKError.errorDomain
     public static let cryptoErrorDomain = LineSDK.CryptoError.errorDomain
     
