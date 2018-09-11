@@ -1,5 +1,5 @@
 //
-//  LineSDKLoginResult.swift
+//  GetDiscoveryDocumentRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,17 +19,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
-import LineSDK
-#endif
+import Foundation
 
-@objcMembers
-public class LineSDKLoginResult: NSObject {
-    let _value: LoginResult
-    init(_ value: LoginResult) { _value = value }
+// The Discovery Document describes the surface for a particular version of an API.
+// In LineSDK, we use Discovery Document to find JWKs for the purpose of ID Token verification.
+// See http://openid.net/specs/openid-connect-discovery-1_0.html
+struct GetDiscoveryDocumentRequest: Request {
     
-    public var accessToken: LineSDKAccessToken { return .init(_value.accessToken) }
-    public var permissions: Set<LineSDKLoginPermission> { return Set(_value.permissions.map { .init($0) }) }
-    public var userProfile: LineSDKUserProfile? { return _value.userProfile.map { .init($0) } }
-    public var friendshipStatusChanged: NSNumber? { return _value.friendshipStatusChanged.map { .init(value: $0) } }
+    typealias Response = DiscoveryDocument
+    
+    // The discovery document request should respect server cache policy.
+    let cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy
+    
+    let method = HTTPMethod.get
+    let authentication = AuthenticateMethod.none
+    let baseURL = URL(string: Constant.openIDDiscoveryDocumentURL)!
+    let path = ""
+}
+
+struct DiscoveryDocument: Decodable {
+    let issuer: String
+    let jwksURI: URL
+
+    enum CodingKeys: String, CodingKey {
+        case issuer
+        case jwksURI = "jwks_uri"
+    }
 }

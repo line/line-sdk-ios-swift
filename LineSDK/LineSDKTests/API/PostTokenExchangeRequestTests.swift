@@ -32,8 +32,8 @@ extension PostExchangeTokenRequest: ResponseDataStub {
         "access_token":"\(successToken)",
         "refresh_token":"abc",
         "token_type":"Bearer",
-        "scope":"profile openid",
-        "id_token": "hello",
+        "scope":"profile",
+        "id_token": "\(LINEIDToken)",
         "expires_in":2592000
     }
     """
@@ -51,9 +51,9 @@ class PostExchangeTokenRequestTests: APITests {
             XCTAssertEqual(token.value, "123")
             XCTAssertEqual(token.refreshToken, "abc")
             XCTAssertEqual(token.tokenType, "Bearer")
-            XCTAssertEqual(token.permissions, [LoginPermission.profile, LoginPermission.openID])
+            XCTAssertEqual(token.permissions, [LoginPermission.profile])
             XCTAssertEqual(token.expiresAt, token.createdAt.addingTimeInterval(token.expiresIn))
-            XCTAssertEqual(token.IDToken, "hello")
+            XCTAssertEqual(token.IDToken?.payload.issuer, "https://access.line.me")
         }
     }
 }

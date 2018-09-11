@@ -50,7 +50,8 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
     public let createdAt: Date
     
     /// ID token bound to this token. Only exists if you have the `.openID` permission for the token.
-    public let IDToken: String?
+    public let IDToken: JWT?
+    let IDTokenRaw: String?
     
     /// Refresh token bound to the access token.
     public let refreshToken: String
@@ -69,7 +70,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
     enum CodingKeys: String, CodingKey {
         case value = "access_token"
         case expiresIn = "expires_in"
-        case IDToken = "id_token"
+        case IDTokenRaw = "id_token"
         case refreshToken = "refresh_token"
         case scope
         case tokenType = "token_type"
@@ -86,7 +87,13 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         // Otherwise, it is the case that loaded from keychain.
         createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt) ?? Date()
         
-        IDToken = try container.decodeIfPresent(String.self, forKey: .IDToken)
+        IDTokenRaw = try container.decodeIfPresent(String.self, forKey: .IDTokenRaw)
+        if let tokenRaw = IDTokenRaw {
+            IDToken = try JWT(text: tokenRaw)
+        } else {
+            IDToken = nil
+        }
+        
         refreshToken = try container.decode(String.self, forKey: .refreshToken)
         permissions = try container.decodeLoginPermissions(forKey: .scope)
         tokenType = try container.decode(String.self, forKey: .tokenType)
@@ -97,7 +104,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         try container.encode(value, forKey: .value)
         try container.encode(expiresIn, forKey: .expiresIn)
         try container.encode(createdAt, forKey: .createdAt)
-        try container.encodeIfPresent(IDToken, forKey: .IDToken)
+        try container.encodeIfPresent(IDTokenRaw, forKey: .IDTokenRaw)
         try container.encode(refreshToken, forKey: .refreshToken)
         
         let scope = permissions.map { $0.rawValue }.joined(separator: " ")

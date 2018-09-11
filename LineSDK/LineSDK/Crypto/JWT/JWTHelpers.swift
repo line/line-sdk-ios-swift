@@ -1,5 +1,5 @@
 //
-//  LineSDKLoginResult.swift
+//  JWTHelpers.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,17 +19,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
-import LineSDK
-#endif
+import Foundation
 
-@objcMembers
-public class LineSDKLoginResult: NSObject {
-    let _value: LoginResult
-    init(_ value: LoginResult) { _value = value }
-    
-    public var accessToken: LineSDKAccessToken { return .init(_value.accessToken) }
-    public var permissions: Set<LineSDKLoginPermission> { return Set(_value.permissions.map { .init($0) }) }
-    public var userProfile: LineSDKUserProfile? { return _value.userProfile.map { .init($0) } }
-    public var friendshipStatusChanged: NSNumber? { return _value.friendshipStatusChanged.map { .init(value: $0) } }
+extension String {
+    // Returns the data of `self` (which is a base64 string), with URL related characters decoded.
+    var base64URLDecoded: Data? {
+        let paddingLength = 4 - count % 4
+        // Filling = for %4 padding.
+        let padding = (paddingLength < 4) ? String(repeating: "=", count: paddingLength) : ""
+        let base64EncodedString = self
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+            + padding
+        return Data(base64Encoded: base64EncodedString)
+    }
+}
+
+extension Data {
+    // Encode `self` with URL escaping considered.
+    var base64URLEncoded: String {
+        let base64Encoded = base64EncodedString()
+        return base64Encoded
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+    }
+}
+
+protocol JWTSignKey {
+    var RSAKey: RSA.PublicKey? { get }
 }

@@ -1,5 +1,5 @@
 //
-//  LineSDKAudioMessage.swift
+//  LineSDKJWT.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -24,27 +24,43 @@ import LineSDK
 #endif
 
 @objcMembers
-public class LineSDKAudioMessage: LineSDKMessage {
-    
-    public let originalContentURL: URL
-    public let duration: TimeInterval
-    
-    convenience init(_ value: AudioMessage) {
-        self.init(originalContentURL: value.originalContentURL, duration: value.duration ?? 0)!
+public class LineSDKJWT: NSObject {
+    public let payload: LineSDKJWTPayload
+    init(_ value: JWT) {
+        payload = LineSDKJWTPayload(value.payload)
     }
     
-    public init?(originalContentURL: URL, duration: TimeInterval) {
-        do {
-            _ = try AudioMessage(originalContentURL: originalContentURL, duration: duration)
-            self.originalContentURL = originalContentURL
-            self.duration = duration
-        } catch {
-            Log.assertionFailure("An error happened: \(error)")
+}
+
+@objcMembers
+public class LineSDKJWTPayload: NSObject {
+    let value: JWT.Payload
+    init(_ value: JWT.Payload) {
+        self.value = value
+    }
+    
+    public func getString(forKey key: String) -> String? {
+        return value[key, String.self]
+    }
+    
+    public func getNumber(forKey key: String) -> NSNumber? {
+        if let value = value[key, Int.self] {
+            return .init(value: value)
+        } else if let value = value[key, Int.self] {
+            return .init(value: value)
+        } else if let value = value[key, Int.self] {
+            return .init(value: value)
+        } else {
             return nil
         }
     }
-    
-    override var unwrapped: Message {
-        return .audio(try! .init(originalContentURL: originalContentURL, duration: duration))
-    }
+
+    public var issuer: String? { return value.issuer }
+    public var subject: String? { return value.subject }
+    public var audience: String? { return value.audience }
+    public var expiration: Date? { return value.expiration }
+    public var issueAt: Date? { return value.issueAt }
+    public var name: String? { return value.name }
+    public var picture: URL? { return value.pictureURL }
+    public var email: String? { return value.email }
 }

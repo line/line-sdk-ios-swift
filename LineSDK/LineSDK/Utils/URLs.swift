@@ -28,4 +28,5 @@ extension Constant {
     static let lineAuthV2Scheme = "lineauth2"
     static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
     static let lineWebAuthURL = "https://access.line.me/oauth2/v2.1/login"
+    static let openIDDiscoveryDocumentURL = "https://access.line.me/.well-known/openid-configuration"
 }

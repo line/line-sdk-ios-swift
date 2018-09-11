@@ -1,5 +1,5 @@
 //
-//  LineSDKLoginResult.swift
+//  GetDiscoveryDocumentRequestTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,17 +19,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
-import LineSDK
-#endif
+import XCTest
+@testable import LineSDK
 
-@objcMembers
-public class LineSDKLoginResult: NSObject {
-    let _value: LoginResult
-    init(_ value: LoginResult) { _value = value }
+extension GetDiscoveryDocumentRequest: ResponseDataStub {
+    static let success = """
+    {
+      "issuer": "https://access.line.me",
+      "authorization_endpoint": "https://access.line-beta.me/oauth2/v2.1/authorize",
+      "token_endpoint": "https://api.line-beta.me/oauth2/v2.1/token",
+      "jwks_uri": "https://api.line-beta.me/oauth2/v2.1/certs",
+      "response_types_supported": [ "code" ],
+      "subject_types_supported": [ "pairwise" ],
+      "id_token_signing_alg_values_supported": [ "RS256" ]
+    }
+    """
+}
+
+class GetDiscoveryDocumentRequestTests: APITests {
     
-    public var accessToken: LineSDKAccessToken { return .init(_value.accessToken) }
-    public var permissions: Set<LineSDKLoginPermission> { return Set(_value.permissions.map { .init($0) }) }
-    public var userProfile: LineSDKUserProfile? { return _value.userProfile.map { .init($0) } }
-    public var friendshipStatusChanged: NSNumber? { return _value.friendshipStatusChanged.map { .init(value: $0) } }
+    func testSuccess() {
+        let r = GetDiscoveryDocumentRequest()
+        runTestSuccess(for: r) { document in
+            XCTAssertEqual(document.issuer, "https://access.line.me")
+            XCTAssertEqual(document.jwksURI.absoluteString, "https://api.line-beta.me/oauth2/v2.1/certs")
+        }
+    }
+
 }

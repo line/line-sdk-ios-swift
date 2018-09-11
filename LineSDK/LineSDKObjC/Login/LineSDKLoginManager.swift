@@ -19,7 +19,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#if !LineSDKCocoaPods
 import LineSDK
+#endif
 
 @objcMembers
 public class LineSDKLoginManager: NSObject {
@@ -62,7 +64,7 @@ public class LineSDKLoginManager: NSObject {
     public func application(
         _ app: UIApplication,
         open url: URL,
-        options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
     {
         return _value.application(app, open: url, options: options)
     }

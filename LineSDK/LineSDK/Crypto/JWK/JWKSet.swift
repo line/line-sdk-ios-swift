@@ -1,5 +1,5 @@
 //
-//  LineSDKLoginResult.swift
+//  JWKSet.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,17 +19,37 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
-import LineSDK
-#endif
+import Foundation
 
-@objcMembers
-public class LineSDKLoginResult: NSObject {
-    let _value: LoginResult
-    init(_ value: LoginResult) { _value = value }
+/// A JSON object that represents a set of JWKs.
+struct JWKSet: Decodable {
     
-    public var accessToken: LineSDKAccessToken { return .init(_value.accessToken) }
-    public var permissions: Set<LineSDKLoginPermission> { return Set(_value.permissions.map { .init($0) }) }
-    public var userProfile: LineSDKUserProfile? { return _value.userProfile.map { .init($0) } }
-    public var friendshipStatusChanged: NSNumber? { return _value.friendshipStatusChanged.map { .init(value: $0) } }
+    struct Dummy: Decodable {}
+    
+    let keys: [JWK]
+    
+    enum CodingKeys: String, CodingKey {
+        case keys
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        var nestedContainer = try container.nestedUnkeyedContainer(forKey: .keys)
+        var supportedKeys = [JWK]()
+        while !nestedContainer.isAtEnd {
+            do {
+                let key = try nestedContainer.decode(JWK.self)
+                supportedKeys.append(key)
+            } catch {
+                // Failing decoding will not increase container's currentIndex. Let it decode successfully.
+                _ = try nestedContainer.decode(Dummy.self)
+                Log.print("\(error)")
+            }
+        }
+        keys = supportedKeys
+    }
+    
+    func getKeyByID(_ keyID: String) -> JWK? {
+        return keys.first { $0.keyID == keyID }
+    }
 }

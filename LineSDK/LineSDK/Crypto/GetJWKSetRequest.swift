@@ -1,5 +1,5 @@
 //
-//  LineSDKLoginResult.swift
+//  GetJWKSetRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,17 +19,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
-import LineSDK
-#endif
+import Foundation
 
-@objcMembers
-public class LineSDKLoginResult: NSObject {
-    let _value: LoginResult
-    init(_ value: LoginResult) { _value = value }
+struct GetJWKSetRequest: Request {
     
-    public var accessToken: LineSDKAccessToken { return .init(_value.accessToken) }
-    public var permissions: Set<LineSDKLoginPermission> { return Set(_value.permissions.map { .init($0) }) }
-    public var userProfile: LineSDKUserProfile? { return _value.userProfile.map { .init($0) } }
-    public var friendshipStatusChanged: NSNumber? { return _value.friendshipStatusChanged.map { .init(value: $0) } }
+    typealias Response = JWKSet
+    
+    let baseURL: URL
+    init(url: URL) {
+        baseURL = url
+    }
+    
+    // The JWK set getting request should respect server cache policy.
+    let cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy
+    let method = HTTPMethod.get
+    let authentication = AuthenticateMethod.none
+    let path = ""
 }

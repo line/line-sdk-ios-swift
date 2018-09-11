@@ -31,15 +31,15 @@ extension Data {
         let count = self.count / MemoryLayout<CUnsignedChar>.size
         
         guard count > 0 else {
-            throw CryptoError.rsaFailed(reason: .invalidDERKey(data: self, reason: "The input key is empty."))
+            throw CryptoError.RSAFailed(reason: .invalidDERKey(data: self, reason: "The input key is empty."))
         }
         
         var bytes = [UInt8](self)
         
         // Check the first byte
         var index = 0
-        guard bytes[index] == 0x30 else {
-            throw CryptoError.rsaFailed(
+        guard bytes[index] == ASN1Type.sequence.byte else {
+            throw CryptoError.RSAFailed(
                 reason: .invalidDERKey(
                     data: self,
                     reason: "The input key is invalid. ASN.1 structure requires 0x30 (SEQUENCE) as its first byte"
@@ -57,12 +57,12 @@ extension Data {
         
         // If the target == 0x02, it is an INTEGER. There is no X509 header contained. We could just return the
         // input DER data as is.
-        if bytes[index] == 0x02 { return self }
+        if bytes[index] == ASN1Type.integer.byte { return self }
         
         // Handle X.509 key now. PKCS #1 rsaEncryption szOID_RSA_RSA, it should look like this:
         // 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00
-        guard Int(bytes[index]) == 0x30 else {
-            throw CryptoError.rsaFailed(
+        guard bytes[index] == 0x30 else {
+            throw CryptoError.RSAFailed(
                 reason: .invalidX509Header(
                     data: self, index: index, reason: "Expects byte 0x30, but found \(bytes[index])"
                 )
@@ -71,7 +71,7 @@ extension Data {
         
         index += 15
         if bytes[index] != 0x03 {
-            throw CryptoError.rsaFailed(
+            throw CryptoError.RSAFailed(
                 reason: .invalidX509Header(
                     data: self, index: index, reason: "Expects byte 0x03, but found \(bytes[index])"
                 )
@@ -87,7 +87,7 @@ extension Data {
         
         // End of header
         guard bytes[index] == 0 else {
-            throw CryptoError.rsaFailed(
+            throw CryptoError.RSAFailed(
                 reason: .invalidX509Header(
                     data: self, index: index, reason: "Expects byte 0x00, but found \(bytes[index])"
                 )
@@ -123,7 +123,7 @@ extension SecKey {
         var error: Unmanaged<CFError>?
         guard let key = SecKeyCreateWithData(data as CFData, attributes as CFDictionary, &error) else {
             let reason = String(describing: error)
-            throw CryptoError.rsaFailed(reason: .createKeyFailed(data: data, reason: reason))
+            throw CryptoError.RSAFailed(reason: .createKeyFailed(data: data, reason: reason))
         }
         
         return key
@@ -131,14 +131,14 @@ extension SecKey {
     
     static func createPublicKey(certificateData data: Data) throws -> SecKey {
         guard let certData = SecCertificateCreateWithData(nil, data as CFData) else {
-            throw CryptoError.rsaFailed(
+            throw CryptoError.RSAFailed(
                 reason: .createKeyFailed(data: data, reason: "The data is not a valid DER-encoded X.509 certificate"))
         }
         
         // Get public key from certData
         if #available(iOS 10.3, *) {
             guard let key = SecCertificateCopyPublicKey(certData) else {
-                throw CryptoError.rsaFailed(
+                throw CryptoError.RSAFailed(
                     reason: .createKeyFailed(data: data, reason: "Cannot copy public key from certificate"))
             }
             return key
@@ -159,7 +159,7 @@ extension String {
         }
         
         guard lines.count != 0 else {
-            throw CryptoError.rsaFailed(reason: .invalidPEMKey(string: self, reason: "Empty PEM key after stripping."))
+            throw CryptoError.RSAFailed(reason: .invalidPEMKey(string: self, reason: "Empty PEM key after stripping."))
         }
         
         // Strip off carriage returns in case.
@@ -175,32 +175,17 @@ extension RSA {
     }
 }
 
-extension String {
-    // Returns the data of `self` (which is a base64 string), with URL related characters decoded.
-    var base64URLDecoded: Data? {
-        let paddingLength = 4 - count % 4
-        // Filling = for %4 padding.
-        let padding = (paddingLength < 4) ? String(repeating: "=", count: paddingLength) : ""
-        let base64EncodedString = self
-            .replacingOccurrences(of: "-", with: "+")
-            .replacingOccurrences(of: "_", with: "/")
-            + padding
-        
-        return Data(base64Encoded: base64EncodedString)
-    }
-}
-
-extension Data {
-    // Encode `self` with URL escaping considered.
-    var base64URLEncoded: String? {
-        // Normalize the base 64 string.
-        let base64Data = base64EncodedData()
-        guard let base64Encoded = String(data: base64Data, encoding: .utf8) else {
-            return nil
+/// Possible ASN.1 types.
+/// See https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One
+/// for more information.
+enum ASN1Type {
+    case sequence
+    case integer
+    
+    var byte: UInt8 {
+        switch self {
+        case .sequence: return 0x30
+        case .integer: return 0x02
         }
-        return base64Encoded
-            .replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
     }
 }

@@ -1,5 +1,5 @@
 //
-//  LineSDKError.swift
+//  LineSDKErrorConstant.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -18,12 +18,14 @@
 //  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
+#if !LineSDKCocoaPods
 import LineSDK
+#endif
 
 @objcMembers
-public class LineSDKError: NSObject {
+public class LineSDKErrorConstant: NSObject {
     public static let errorDomain = LineSDK.LineSDKError.errorDomain
+    public static let cryptoErrorDomain = LineSDK.CryptoError.errorDomain
     
     public static let userInfoKeyUnderlyingError = LineSDKErrorUserInfoKey.underlyingError.rawValue
     public static let userInfoKeyStatusCode = LineSDKErrorUserInfoKey.statusCode.rawValue
@@ -39,4 +41,7 @@ public class LineSDKError: NSObject {
     public static let userInfoKeyEncoding = LineSDKErrorUserInfoKey.encoding.rawValue
     public static let userInfoKeyParameterName = LineSDKErrorUserInfoKey.parameterName.rawValue
     public static let userInfoKeyReason = LineSDKErrorUserInfoKey.reason.rawValue
+    public static let userInfoKeyIndex = LineSDKErrorUserInfoKey.index.rawValue
+    public static let userInfoKeyKey = LineSDKErrorUserInfoKey.key.rawValue
+    public static let userInfoKeyGot = LineSDKErrorUserInfoKey.got.rawValue
 }

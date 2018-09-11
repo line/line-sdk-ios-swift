@@ -19,7 +19,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#if !LineSDKCocoaPods
 import LineSDK
+#endif
 
 @objcMembers
 public class LineSDKAccessToken: NSObject {
@@ -28,7 +30,7 @@ public class LineSDKAccessToken: NSObject {
     
     public var value: String { return _value.value }
     public var createdAt: Date { return _value.createdAt }
-    public var IDToken: String? { return _value.IDToken }
+    public var IDToken: LineSDKJWT? { return _value.IDToken.map { .init($0) } }
     public var refreshToken: String { return _value.refreshToken }
     public var permissions: [LineSDKLoginPermission] { return _value.permissions.map { .init($0) } }
     public var expiresAt: Date { return _value.expiresAt }
