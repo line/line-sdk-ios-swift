@@ -1,5 +1,5 @@
 //
-//  URLsBeta.swift
+//  GetDiscoveryDocumentRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,12 +21,28 @@
 
 import Foundation
 
-extension Constant {
-    static let APIHost = "api.line.me"
-    static let thirdPartySchemePrefix = "line3rdp"
-    static let lineAuthScheme = "lineauth"
-    static let lineAuthV2Scheme = "lineauth2"
-    static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
-    static let lineWebAuthURL = "https://access.line.me/oauth2/v2.1/login"
-    static let openIDDiscoveryDocumentURL = "https://access.line.me/.well-known/openid-configuration"
+// The Discovery Document describes the surface for a particular version of an API.
+// In LineSDK, we use Discovery Document to find JWKs for the purpose of ID Token verification.
+// See http://openid.net/specs/openid-connect-discovery-1_0.html
+struct GetDiscoveryDocumentRequest: Request {
+    
+    typealias Response = DiscoveryDocument
+    
+    // The discovery document request should respect server cache policy.
+    let cachePolicy: NSURLRequest.CachePolicy = .useProtocolCachePolicy
+    
+    let method = HTTPMethod.get
+    let authentication = AuthenticateMethod.none
+    let baseURL = URL(string: Constant.openIDDiscoveryDocumentURL)!
+    let path = ""
+}
+
+struct DiscoveryDocument: Decodable {
+    let issuer: String
+    let jwksURI: URL
+
+    enum CodingKeys: String, CodingKey {
+        case issuer
+        case jwksURI = "jwks_uri"
+    }
 }

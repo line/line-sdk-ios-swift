@@ -1,5 +1,5 @@
 //
-//  URLsBeta.swift
+//  JWKSet.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,12 +21,35 @@
 
 import Foundation
 
-extension Constant {
-    static let APIHost = "api.line.me"
-    static let thirdPartySchemePrefix = "line3rdp"
-    static let lineAuthScheme = "lineauth"
-    static let lineAuthV2Scheme = "lineauth2"
-    static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
-    static let lineWebAuthURL = "https://access.line.me/oauth2/v2.1/login"
-    static let openIDDiscoveryDocumentURL = "https://access.line.me/.well-known/openid-configuration"
+/// A JSON object that represents a set of JWKs.
+struct JWKSet: Decodable {
+    
+    struct Dummy: Decodable {}
+    
+    let keys: [JWK]
+    
+    enum CodingKeys: String, CodingKey {
+        case keys
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        var nestedContainer = try container.nestedUnkeyedContainer(forKey: .keys)
+        var supportedKeys = [JWK]()
+        while !nestedContainer.isAtEnd {
+            do {
+                let key = try nestedContainer.decode(JWK.self)
+                supportedKeys.append(key)
+            } catch {
+                // Failing decoding will not increase container's currentIndex. Let it decode successfully.
+                _ = try nestedContainer.decode(Dummy.self)
+                Log.print("\(error)")
+            }
+        }
+        keys = supportedKeys
+    }
+    
+    func getKeyByID(_ keyID: String) -> JWK? {
+        return keys.first { $0.keyID == keyID }
+    }
 }

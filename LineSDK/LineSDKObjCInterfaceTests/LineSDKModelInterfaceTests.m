@@ -254,6 +254,22 @@
     XCTAssertTrue([[LineSDKErrorConstant errorDomain] isEqualToString:@"LineSDKError"]);
 }
 
+- (void)testJWTInterface {
+    LineSDKJWT *jwt = nil;
+    LineSDKJWTPayload *payload = jwt.payload;
+    XCTAssertNil([payload getStringForKey:@"key"]);
+    XCTAssertNil([payload getNumberForKey:@"key"]);
+    XCTAssertNil(payload.issuer);
+    XCTAssertNil(payload.subject);
+    XCTAssertNil(payload.audience);
+    XCTAssertNil(payload.name);
+    XCTAssertNil(payload.expiration);
+    XCTAssertNil(payload.issueAt);
+    XCTAssertNil(payload.name);
+    XCTAssertNil(payload.picture);
+    XCTAssertNil(payload.email);
+}
+
 @end
 
 
