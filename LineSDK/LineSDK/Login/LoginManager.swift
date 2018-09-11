@@ -42,7 +42,9 @@ public class LoginManager {
         return setup
     }
     
-    /// Returns whether a user was authorized and a token is valid.
+    /// Returns whether a user was authorized and a token is existing locally.
+    /// This does not check whether a token is expired or not.
+    /// To verify a token, use `API.verifyAccessToken` instead.
     public var isAuthorized: Bool {
         return AccessTokenStore.shared.current != nil
     }
