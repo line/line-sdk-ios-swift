@@ -38,9 +38,6 @@ class LoginViewController: UIViewController, IndicatorDisplay {
         // You could set the permissions you need or use default permissions
         loginBtn.permissions = [.profile, .friends, .groups, .messageWrite]
 
-        // You could set the options you need or use default options
-        loginBtn.options = [.onlyWebLogin]
-
         view.addSubview(loginBtn)
         loginBtn.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: loginBtn,
