@@ -141,7 +141,7 @@ This does two things:
 1. Adding a URL scheme `line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)` which will be used for LINE Login to open your app when there is a result of the login event.
 2. Adding a queries scheme for "lineauth2", which will be used to check whether it is possible to log in your user through LINE iOS app.
 
-### Next Step
+## Next Step
 
 Once you installed and configured, you are ready to add LINE Login to your app. See the [Integrating LINE Login Guide][login-guide] for more on that topic.
 

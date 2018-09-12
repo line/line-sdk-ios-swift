@@ -3,7 +3,7 @@ title: "Managing User Identifier and Token"
 description: "Getting user profile and ID Tokens after login with LINE SDK Swift."
 ---
 
-When you user login with `.profile` permission, you could get a `userProfile` object in the login result. This topic was covered in the [Integrating LINE Login Guide][login-guide]. In this guide, we will discuss on how to identify your user after login, as well as using of [OpenID Connect][open-id] to verify user login in a safer way. At last, we will cover on topic of managing the access tokens.
+When you user login with `.profile` permission, you could get a `userProfile` object in the login result. This topic was covered in the [Integrating LINE Login Guide][login-guide]. In this guide, we will discuss how to identify your user after login, as well as using of [OpenID Connect][open-id] to verify user login in a safer way. At last, we will cover on the topic of managing the access tokens.
 
 ## User Profile
 
@@ -36,7 +36,7 @@ You can request users who log in using LINE Login to grant your app the permissi
 
   ![apply email permission](/media/line-login/integrate-login-web/apply-email.png)
 
-2. Agree to the application terms and upload a screenshot of the screen that explains to the user why you need to obtain their email address and what you will use it for.
+2. Agree to the applicable terms and upload a screenshot of the screen that explains to the user why you need to obtain their email address and what you will use it for.
 
 Once your application is accepted, "Applied" is displayed under "Email".
 
@@ -62,7 +62,7 @@ An ID Token itself is a signed [JSON Web Token][jwt]. LINE SDK Swift will valida
 
 ### Treating Users' Data Carefully
 
-You should **never** save any user's sensitive data in plain text in your app or server, or transit them through non-secured HTTP. These data include access token, user ID, user name, and any information in the ID Token. LINE SDK Swift will store user's access token in the keychain. If needed, you could access it after authorized:
+You should **never** save any user's sensitive data in plain text in your app or server, or transit them through non-secured HTTP. These data include access token, user ID, username, and any information in the ID Token. LINE SDK Swift will store user's access token in the keychain. If needed, you could access it after authorized:
 
 ```swift
 if let tokenPayload = AccessTokenStore.shared.current?.IDToken?.payload {
@@ -73,7 +73,7 @@ if let tokenPayload = AccessTokenStore.shared.current?.IDToken?.payload {
 }
 ```
 
-ID Token will be only issued when login. If you need to upgrade the ID Token, you have to ask your user authorize again. However, if you have `.profile` permission, you could call `API.getProfile` to update user's basic information.
+ID Token will be only issued when login. If you need to upgrade the ID Token, you have to ask your user authorize again. However, if you have `.profile` permission, you could call `API.getProfile` to update the user's basic information.
 
 ## Token Refresh
 
@@ -104,7 +104,7 @@ However, we **do not recommend** you to do this yourself. Let LINE SDK Swift to 
 
 ## Logout
 
-As soon as you do not need the authorization (for example, your user logs out from your service, or you have finished to build your own user management system and will not use LINE API anymore in client), you should logout your from LINE as well. To do so, you need to call this to revoke current token and clean the user state:
+As soon as you do not need the authorization (for example, your user logs out from your service, or you have finished building your own user management system and will not use LINE API anymore in the client), you should log out your from LINE as well. To do so, you need to call this to revoke current token and clean the user state:
 
 ```swift
 LoginManager.shared.logout { result in
@@ -119,7 +119,7 @@ LoginManager.shared.logout { result in
 
 ## Next Step
 
-We also have some additional features like [Graph APIs][graph-apis] and [Sending Messages][sending-messages]. However, they are now still in closed alpha, only for internal parter using. They are not yet prepared for public and we do not accept apply for them yet. Please keep an eye on it and we will inform if the state changes in future.
+We also have some additional features like [Graph APIs][graph-apis] and [Sending Messages][sending-messages]. However, they are now <b>still in closed beta</b>, only for the internal partner using. They are not yet prepared for the public and <b>we do not accept applications for them yet</b>. Please keep an eye on it and we will inform you if the state changes in future.
 
 Remember to check the [Error Handling Guide][error-handling] to make sure you provide a good experience to your users when something wrong happens. We provide some guidelines and steps there to describe the best practice of handling errors from LINE SDK Swift.
 

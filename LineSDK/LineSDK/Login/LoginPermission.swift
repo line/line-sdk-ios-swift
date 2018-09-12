@@ -50,38 +50,38 @@ public struct LoginPermission: Hashable {
     /// Whether could write a message as current user.
     public static let messageWrite                   = LoginPermission(rawValue: "message.write")
     
-    public static let phone                          = LoginPermission(rawValue: "phone")
-    public static let birthday                       = LoginPermission(rawValue: "birthday")
-    public static let profilePictureUpdate           = LoginPermission(rawValue: "profile.picture.update")
+    static let phone                          = LoginPermission(rawValue: "phone")
+    static let birthday                       = LoginPermission(rawValue: "birthday")
+    static let profilePictureUpdate           = LoginPermission(rawValue: "profile.picture.update")
     
-    public static let timelinePost                   = LoginPermission(rawValue: "timeline.post")
-    public static let addAssociatedOfficialAccounts  = LoginPermission(rawValue: "add_associated_official_accounts")
+    static let timelinePost                   = LoginPermission(rawValue: "timeline.post")
+    static let addAssociatedOfficialAccounts  = LoginPermission(rawValue: "add_associated_official_accounts")
     
-    public static let profileExtendedName            = LoginPermission(rawValue: "profile.extended.name")
-    public static let profileExtendedNameUpdate      = LoginPermission(rawValue: "profile.extended.name.update")
-    public static let profileExtendedGender          = LoginPermission(rawValue: "profile.extended.gender")
-    public static let profileExtendedGenderUpdate    = LoginPermission(rawValue: "profile.extended.gender.update")
-    public static let profileExtendedAddress         = LoginPermission(rawValue: "profile.extended.address")
-    public static let profileExtendedAddressUpdate   = LoginPermission(rawValue: "profile.extended.address.update")
-    public static let profileExtendedBirthday        = LoginPermission(rawValue: "profile.extended.birthday")
-    public static let profileExtendedBirthdayUpdate  = LoginPermission(rawValue: "profile.extended.birthday.update")
+    static let profileExtendedName            = LoginPermission(rawValue: "profile.extended.name")
+    static let profileExtendedNameUpdate      = LoginPermission(rawValue: "profile.extended.name.update")
+    static let profileExtendedGender          = LoginPermission(rawValue: "profile.extended.gender")
+    static let profileExtendedGenderUpdate    = LoginPermission(rawValue: "profile.extended.gender.update")
+    static let profileExtendedAddress         = LoginPermission(rawValue: "profile.extended.address")
+    static let profileExtendedAddressUpdate   = LoginPermission(rawValue: "profile.extended.address.update")
+    static let profileExtendedBirthday        = LoginPermission(rawValue: "profile.extended.birthday")
+    static let profileExtendedBirthdayUpdate  = LoginPermission(rawValue: "profile.extended.birthday.update")
     
-    public static func chatMessageWrite(_ chatID: String) -> LoginPermission {
+    static func chatMessageWrite(_ chatID: String) -> LoginPermission {
         return LoginPermission(rawValue: "chat_message.write:\(chatID)")
     }
-    public static func squareChatMessageWrite(squareID: String, chatID: String) -> LoginPermission {
+    static func squareChatMessageWrite(squareID: String, chatID: String) -> LoginPermission {
         return LoginPermission(rawValue: "square_chat_message.write:\(squareID)/\(chatID)")
     }
     
-    public static let payHistory                     = LoginPermission(rawValue: "pay.history")
-    public static let payAccount                     = LoginPermission(rawValue: "pay.account")
-    public static let merchant                       = LoginPermission(rawValue: "merchant")
+    static let payHistory                     = LoginPermission(rawValue: "pay.history")
+    static let payAccount                     = LoginPermission(rawValue: "pay.account")
+    static let merchant                       = LoginPermission(rawValue: "merchant")
     
-    public static let gender                         = LoginPermission(rawValue: "gender")
-    public static let birthDate                      = LoginPermission(rawValue: "birthdate")
-    public static let address                        = LoginPermission(rawValue: "address")
-    public static let realName                       = LoginPermission(rawValue: "real_name")
-    public static let botAdd                         = LoginPermission(rawValue: "bot.add")
+    static let gender                         = LoginPermission(rawValue: "gender")
+    static let birthDate                      = LoginPermission(rawValue: "birthdate")
+    static let address                        = LoginPermission(rawValue: "address")
+    static let realName                       = LoginPermission(rawValue: "real_name")
+    static let botAdd                         = LoginPermission(rawValue: "bot.add")
 }
 
 extension LoginPermission: CustomStringConvertible {

@@ -40,27 +40,27 @@
     XCTAssertNotNil([LineSDKLoginPermission friends]);
     XCTAssertNotNil([LineSDKLoginPermission groups]);
     XCTAssertNotNil([LineSDKLoginPermission messageWrite]);
-    XCTAssertNotNil([LineSDKLoginPermission phone]);
-    XCTAssertNotNil([LineSDKLoginPermission birthday]);
-    XCTAssertNotNil([LineSDKLoginPermission profilePictureUpdate]);
-    XCTAssertNotNil([LineSDKLoginPermission timelinePost]);
-    XCTAssertNotNil([LineSDKLoginPermission addAssociatedOfficialAccounts]);
-    XCTAssertNotNil([LineSDKLoginPermission profileExtendedName]);
-    XCTAssertNotNil([LineSDKLoginPermission profileExtendedNameUpdate]);
-    XCTAssertNotNil([LineSDKLoginPermission profileExtendedGender]);
-    XCTAssertNotNil([LineSDKLoginPermission profileExtendedGenderUpdate]);
-    XCTAssertNotNil([LineSDKLoginPermission profileExtendedAddress]);
-    XCTAssertNotNil([LineSDKLoginPermission profileExtendedAddressUpdate]);
-    XCTAssertNotNil([LineSDKLoginPermission profileExtendedBirthday]);
-    XCTAssertNotNil([LineSDKLoginPermission profileExtendedBirthdayUpdate]);
-    XCTAssertNotNil([LineSDKLoginPermission payHistory]);
-    XCTAssertNotNil([LineSDKLoginPermission payAccount]);
-    XCTAssertNotNil([LineSDKLoginPermission merchant]);
-    XCTAssertNotNil([LineSDKLoginPermission gender]);
-    XCTAssertNotNil([LineSDKLoginPermission birthDate]);
-    XCTAssertNotNil([LineSDKLoginPermission address]);
-    XCTAssertNotNil([LineSDKLoginPermission realName]);
-    XCTAssertNotNil([LineSDKLoginPermission botAdd]);
+//    XCTAssertNotNil([LineSDKLoginPermission phone]);
+//    XCTAssertNotNil([LineSDKLoginPermission birthday]);
+//    XCTAssertNotNil([LineSDKLoginPermission profilePictureUpdate]);
+//    XCTAssertNotNil([LineSDKLoginPermission timelinePost]);
+//    XCTAssertNotNil([LineSDKLoginPermission addAssociatedOfficialAccounts]);
+//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedName]);
+//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedNameUpdate]);
+//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedGender]);
+//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedGenderUpdate]);
+//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedAddress]);
+//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedAddressUpdate]);
+//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedBirthday]);
+//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedBirthdayUpdate]);
+//    XCTAssertNotNil([LineSDKLoginPermission payHistory]);
+//    XCTAssertNotNil([LineSDKLoginPermission payAccount]);
+//    XCTAssertNotNil([LineSDKLoginPermission merchant]);
+//    XCTAssertNotNil([LineSDKLoginPermission gender]);
+//    XCTAssertNotNil([LineSDKLoginPermission birthDate]);
+//    XCTAssertNotNil([LineSDKLoginPermission address]);
+//    XCTAssertNotNil([LineSDKLoginPermission realName]);
+//    XCTAssertNotNil([LineSDKLoginPermission botAdd]);
     
     XCTAssertNotNil([[LineSDKLoginPermission alloc] initWithRawValue:@"value"]);
     XCTAssertNotNil([LineSDKLoginPermission chatMessageWrite:@"123"]);
@@ -222,8 +222,7 @@
 
 - (void)testGetFriendsSortInterface {
     XCTAssertEqual(LineSDKGetFriendsRequestSortNone, 0);
-    XCTAssertEqual(LineSDKGetFriendsRequestSortMid, 1);
-    XCTAssertEqual(LineSDKGetFriendsRequestSortName, 2);
+    XCTAssertEqual(LineSDKGetFriendsRequestSortName, 1);
 }
 
 - (void)testMessageSendingStatusInterface {

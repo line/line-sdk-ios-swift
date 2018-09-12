@@ -19,7 +19,9 @@ Once authorized, you could identify your users by accessing their profile in LIN
 
 ### Advanced Features
 
-The features listed below require additional permissions and are NOT provided for the public using yet right now. Please keep an eye on our blog and this documentation. We will inform you as soon as they are prepared.
+<div class="Md108FrameNote">
+  <p><span class="Md07TextBold">Note: </span>The features listed below are now <b>still in closed beta</b>, only for the internal partner using. They are not yet prepared for the public and <b>we do not accept applications for them yet</b>. Please keep an eye on it and we will inform you if the state changes in future.</p>
+</div>
 
 #### Graph APIs
 

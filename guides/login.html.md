@@ -41,7 +41,7 @@ To post-process the results from login actions, you need to setup LINE SDK Swift
     ```
     
     <div class="Md108FrameNote">
-      <p><span class="Md07TextBold">Note: </span>You should make sure to call the setup method <b>before</b> you access any other properties or call any other methods in LINE SDK Swift.</p>
+    <p><span class="Md07TextBold">Note: </span>You should make sure to call the setup method <b>before</b> you access any other properties or call any other methods in LINE SDK Swift.</p>
     </div>
     
 3. Handling Login Result

@@ -173,15 +173,16 @@ extension API {
     ///
     /// - Parameters:
     ///   - sort: Sorting method for the returned freind list.
-    ///           Only a value of `mid` and `name` is supported with `mid` being set by default.
+    ///           Only a value of `name` is supported. If not specified, the sort will be determined by server.
     ///   - pageToken: If a `pageToken` value is included in the previous API call's completion closure,
-    ///                pass it here to get the following page of the user's friend list.
+    ///                pass it here to get the following page of the user's friend list. Otherwise, pass `nil` to get
+    ///                the first page.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be executed when the API finishes.
     public static func getFriends(
         sort: GetFriendsRequest.Sort? = nil,
-        pageToken: String? = nil,
+        pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<GetFriendsRequest.Response>) -> Void)
     {
@@ -194,13 +195,14 @@ extension API {
     /// This API returns a maximum of 200 users per request.
     ///
     /// - Parameters:
-    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion block,
-    ///                pass it here to get the following page of the list.
+    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion closure,
+    ///                pass it here to get the following page of the user's friend list. Otherwise, pass `nil` to get
+    ///                the first page.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The closure to be executed when the approver list is returned.
     public static func getApproversInFriends(
-        pageToken: String? = nil,
+        pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<GetApproversInFriendsRequest.Response>) -> Void)
     {
@@ -212,13 +214,14 @@ extension API {
     /// This API returns a maximum of 200 groups per request.
     ///
     /// - Parameters:
-    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion,
-    ///                pass it here to get the following page of the list.
+    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion closure,
+    ///                pass it here to get the following page of the user's friend list. Otherwise, pass `nil` to get
+    ///                the first page.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The closure to be executed when the list is returned.
     public static func getGroups(
-        pageToken: String? = nil,
+        pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<GetGroupsRequest.Response>) -> Void)
     {
@@ -232,14 +235,15 @@ extension API {
     ///
     /// - Parameters:
     ///   - groupID: The specified group identifier
-    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion block,
-    ///                pass it here to get the following page of the list.
+    ///   - pageToken: If a `pageToken` value is included in the previous API call's completion closure,
+    ///                pass it here to get the following page of the user's friend list. Otherwise, pass `nil` to get
+    ///                the first page.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The closure to be executed when the list is returned.
     public static func getApproversInGroup(
         groupID: String,
-        pageToken: String? = nil,
+        pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<GetApproversInGroupRequest.Response>) -> Void)
     {
