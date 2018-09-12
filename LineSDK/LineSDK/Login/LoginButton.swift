@@ -24,8 +24,14 @@ import UIKit
 /// `LoginButtonDelegate` protocol defines methods that allow you to handle different login states if you use
 /// `LoginButton` we provide.
 public protocol LoginButtonDelegate: class {
+
+    /// This method would be called after login action did start.
     func loginButtonDidStartLogin(_ button: LoginButton)
+
+    /// This method would be called if the login action did succeed.
     func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult)
+
+    /// This method would be called if the login action did fail.
     func loginButton(_ button: LoginButton, didFailLogin error: Error)
 }
 
@@ -80,10 +86,12 @@ public class LoginButton: UIButton {
         }
     }
 
-    /// The object confirms to `LoginButtonDelegate` and implements the methods defined in `LoginButtonDelegate`
+    /// The object conforms to `LoginButtonDelegate` and implements the methods defined in `LoginButtonDelegate`
     /// to handle different login states.
     public weak var delegate: LoginButtonDelegate?
 
+    /// This property would be a parameter of login action which presents the login alert view controller.
+    /// If its value is `nil`, the most top view controller in current view controller hierarchy will be used.
     public weak var presentingViewController: UIViewController?
 
     /// The set of permissions is a parameter of login action.
@@ -103,7 +111,8 @@ public class LoginButton: UIButton {
         }
     }
 
-    /// You can set the text of `LoginButton` by changing this property.
+    /// The text on the `LoginButton`. Its value is a localized string which is `Log in with LINE` in English.
+    /// The buton will be resized if you change this property.
     public var buttonText: String? {
         didSet {
             // update button style after buttonText is changed
@@ -184,7 +193,6 @@ public class LoginButton: UIButton {
             // Authorizing process is on-going so not to call login again
             return
         }
-        delegate?.loginButtonDidStartLogin(self)
         isUserInteractionEnabled = false
         LoginManager.shared.login(
             permissions: permissions,
@@ -200,6 +208,7 @@ public class LoginButton: UIButton {
             }
             self.isUserInteractionEnabled = true
         }
+        delegate?.loginButtonDidStartLogin(self)
     }
 
 }
