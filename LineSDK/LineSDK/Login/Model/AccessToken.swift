@@ -56,7 +56,8 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
     /// Refresh token bound to the access token.
     public let refreshToken: String
     
-    /// Permissions of the token.
+    /// Permissions of the token. However, the `.email` is not contained as a value of the permissions property
+    /// even if the permission has been granted.
     public let permissions: [LoginPermission]
     let tokenType: String
     

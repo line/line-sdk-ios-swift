@@ -47,7 +47,7 @@ public struct FlexMessage: Codable, MessageTypeCompatible {
     }
 }
 
-extension FlexMessage {
+extension FlexMessage: MessageConvertible {
     /// Returns a converted `Message` which wraps this `FlexMessage`.
     public var message: Message { return .flex(self) }
 }

@@ -186,9 +186,29 @@ extension LineSDKError {
     }
     
     /// Returns whether the `LineSDKError` represents a response failing with specified HTTP status code.
+    ///
+    /// - Parameter statusCode: The status code to check whether matches HTTP status error code.
+    /// - Returns: `true` if `self` is a .invalidHTTPStatusAPIError with give `statusCode`. Otherwise, `false`.
     public func isResponseError(statusCode: Int) -> Bool {
         if case .responseFailed(.invalidHTTPStatusAPIError(code: statusCode, error: _, raw: _)) = self {
             return true
+        }
+        return false
+    }
+    
+    /// Returns whether the `LineSDKError` represents a time out error from underlying URL session error.
+    public var isURLSessionTimeout: Bool {
+        return isURLSessionErrorCode(sessionErrorCode: NSURLErrorTimedOut)
+    }
+    
+    /// Returns whether the `LineSDKError` represents a URL session error with specified error code.
+    ///
+    /// - Parameter code: The underlying URL session error code. See `NSURLError` in Foundation.
+    /// - Returns: `true` if `self` is a .URLSessionError with give `code`. Otherwise, `false`.
+    public func isURLSessionErrorCode(sessionErrorCode code: Int) -> Bool {
+        if case .responseFailed(.URLSessionError(let error)) = self {
+            let nsError = error as NSError
+            return nsError.code == code
         }
         return false
     }
@@ -208,7 +228,7 @@ extension LineSDKError: LocalizedError {
 }
 
 // MARK: - NSError Compatibility
-extension LineSDK.LineSDKError: CustomNSError {
+extension LineSDKError: CustomNSError {
     public var errorCode: Int {
         switch self {
         case .requestFailed(reason: let reason): return reason.errorCode

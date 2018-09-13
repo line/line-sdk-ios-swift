@@ -26,12 +26,10 @@ import Foundation
 public struct GetFriendsRequest: Request {
 
     /// Sorting method for the returned freind list.
-    /// Only a value of `mid` and `name` is supported.
+    /// Only a value of `name` is supported.
     ///
-    /// - mid: Sort by `userId`. This is the default server behavior if no `Sort` had been set.
     /// - name: Sort by `displayName`
     public enum Sort: String {
-        case mid
         case name
     }
 

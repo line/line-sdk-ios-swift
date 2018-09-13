@@ -24,8 +24,8 @@ import LineSDK
 
 @objcMembers
 public class LineSDKErrorConstant: NSObject {
-    public static let errorDomain = LineSDK.LineSDKError.errorDomain
-    public static let cryptoErrorDomain = LineSDK.CryptoError.errorDomain
+    public static let errorDomain = LineSDKError.errorDomain
+    public static let cryptoErrorDomain = CryptoError.errorDomain
     
     public static let userInfoKeyUnderlyingError = LineSDKErrorUserInfoKey.underlyingError.rawValue
     public static let userInfoKeyStatusCode = LineSDKErrorUserInfoKey.statusCode.rawValue
