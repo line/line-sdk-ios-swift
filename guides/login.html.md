@@ -91,6 +91,64 @@ If everything goes fine, you could get a `LoginResult` object, in which some com
 
 If an error happens during login process, the `result` will be `.failure`, associated with an `LineSDKError`. Check [Error Handling Guide][error-handling] to know how to get detail information with the errors from SDK, as well as how to handle them correctly.
 
+### Login Button
+
+Besides of creating your own login UI and calling `LoginManager.login` method yourself, LINE SDK Swift also provide a pre-defined login button. `LoginButton` is a subclass of `UIButton`, which follows [LINE Login button design guidelines][login-button-guideline] to style itself. You could add a login button to your app's UI to provide a quick way for user login:
+
+```swift
+// In your view controller
+override func viewDidLoad() {
+    super.viewDidLoad()
+
+    // Create Login Button.
+    let loginBtn = LoginButton()
+    loginBtn.delegate = self
+    
+    // Configuration for permissions and presenting.
+    loginBtn.permissions = [.profile]
+    loginBtn.presentingViewController = self
+    
+    // Add button to view and layout it.
+    view.addSubview(loginBtn)
+    oginBtn.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint(item: loginBtn,
+                       attribute: .centerX,
+                       relatedBy: .equal,
+                       toItem: view,
+                       attribute: .centerX,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+    NSLayoutConstraint(item: loginBtn,
+                       attribute: .centerY,
+                       relatedBy: .equal,
+                       toItem: view,
+                       attribute: .centerY,
+                       multiplier: 1,
+                       constant: 0).isActive = true
+}
+```
+
+Then you need to implement related delegate methods from `LoginButtonDelegate`:
+
+```swift
+extension LoginViewController: LoginButtonDelegate {
+    func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
+        hideIndicator()
+        print("Login Successd.")
+    }
+    
+    func loginButton(_ button: LoginButton, didFailLogin error: Error) {
+        hideIndicator()
+        print("Error: \(error)")
+    }
+    
+    func loginButtonDidStartLogin(_ button: LoginButton) {
+        showIndicator()
+        print("Login Started.")
+    }
+}
+```
+
 ## Using Login Result
 
 ### Token Permissions
@@ -136,4 +194,4 @@ LINE Login supports [OpenID Connect][open-id] protocol and allows you to retriev
 [error-handling]: /docs/ios-sdk-swift/error-handling 
 [open-id]: http://openid.net/connect/
 [managing-access-tokens]: /docs/ios-sdk-swift/managing-access-tokens
-
+[login-button-guideline]: /docs/line-login/login-button
