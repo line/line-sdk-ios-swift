@@ -51,6 +51,7 @@ extension RSAKey {
 }
 
 extension RSA {
+    
     struct PublicKey: RSAKey {
         let key: SecKey
         init(key: SecKey) { self.key = key }
@@ -94,3 +95,17 @@ extension RSA {
     }
 }
 
+extension RSA.PublicKey {
+    init(_ key: JWK) throws {
+        let data = try key.getKeyData()
+        try self.init(der: data)
+    }
+}
+
+// This should be in the same file with JWTSignKey protocol definition.
+// See https://bugs.swift.org/browse/SR-631 & https://github.com/apple/swift/pull/18168
+extension RSA.PublicKey: JWTSignKey {
+    var RSAKey: RSA.PublicKey? {
+        return self
+    }
+}

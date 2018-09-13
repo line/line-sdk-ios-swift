@@ -41,8 +41,6 @@ struct LoginConfiguration {
         self.universalLinkURL = universalLinkURL
     }
     
-    let APIHost = Constant.APIHost
-    
     /// Whether a `url` is a valid  customize URL scheme of current app.
     ///
     /// - Parameter url: The input URL from LINE client or web login flow.

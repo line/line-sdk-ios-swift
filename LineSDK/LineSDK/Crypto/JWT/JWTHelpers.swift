@@ -1,5 +1,5 @@
 //
-//  URLsBeta.swift
+//  JWTHelpers.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,12 +21,31 @@
 
 import Foundation
 
-extension Constant {
-    static let APIHost = "api.line.me"
-    static let thirdPartySchemePrefix = "line3rdp"
-    static let lineAuthScheme = "lineauth"
-    static let lineAuthV2Scheme = "lineauth2"
-    static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
-    static let lineWebAuthURL = "https://access.line.me/oauth2/v2.1/login"
-    static let openIDDiscoveryDocumentURL = "https://access.line.me/.well-known/openid-configuration"
+extension String {
+    // Returns the data of `self` (which is a base64 string), with URL related characters decoded.
+    var base64URLDecoded: Data? {
+        let paddingLength = 4 - count % 4
+        // Filling = for %4 padding.
+        let padding = (paddingLength < 4) ? String(repeating: "=", count: paddingLength) : ""
+        let base64EncodedString = self
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+            + padding
+        return Data(base64Encoded: base64EncodedString)
+    }
+}
+
+extension Data {
+    // Encode `self` with URL escaping considered.
+    var base64URLEncoded: String {
+        let base64Encoded = base64EncodedString()
+        return base64Encoded
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+    }
+}
+
+protocol JWTSignKey {
+    var RSAKey: RSA.PublicKey? { get }
 }

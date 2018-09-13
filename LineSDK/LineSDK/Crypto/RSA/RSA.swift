@@ -22,8 +22,11 @@
 import Foundation
 import CommonCrypto
 
+/// Namespace for RSA related things.
 struct RSA {}
 
+/// Define a data type under RSA domain. All RSA data types just behave as a container for raw data, but with
+/// different operation.
 protocol RSAData: Equatable {
     var raw: Data { get }
     init(raw: Data)
@@ -47,6 +50,7 @@ extension RSAData {
 
 /// Data Types of RSA related domain.
 extension RSA {
+    /// Represents unencrypted data. The plain data could be encrypted or signed.
     struct PlainData: RSAData {
         let raw: Data
         
@@ -54,54 +58,85 @@ extension RSA {
         
         init(string: String, encoding: String.Encoding = .utf8) throws {
             guard let data = string.data(using: encoding) else {
-                throw CryptoError.generalError(reason: .stringConversionFailed(String: string, encoding: encoding))
+                throw CryptoError.generalError(reason: .stringConversionFailed(string: string, encoding: encoding))
             }
             self.init(raw: data)
         }
         
+        /// Encrypts the current plain data with an RSA public key, using a given algorithm.
+        ///
+        /// - Parameters:
+        ///   - key: The public key used to encrypt data.
+        ///   - algorithm: The digest algorithm used to encrypt data with `key`.
+        /// - Returns: The encrypted data representation.
+        /// - Throws: A `CryptoError` if something wrong happens.
         func encrypted(with key: PublicKey, using algorithm: RSA.Algorithm) throws -> EncryptedData {
             var error: Unmanaged<CFError>?
             guard let data = SecKeyCreateEncryptedData(
                 key.key, algorithm.encryptionAlgorithm, raw as CFData, &error) else
             {
-                throw CryptoError.rsaFailed(reason: .encryptingError(reason: "\(String(describing: error))"))
+                throw CryptoError.RSAFailed(reason: .encryptingError(error?.takeRetainedValue()))
             }
             
             return EncryptedData(raw: data as Data)
         }
         
+        /// Signs the current plain data with an RSA private key, using a given algorithm.
+        ///
+        /// - Parameters:
+        ///   - key: The private key used to sign data.
+        ///   - algorithm: The digest algorithm used to sign data with `key`.
+        /// - Returns: The signed data representation.
+        /// - Throws: A `CryptoError` if something wrong happens.
         func signed(with key: PrivateKey, algorithm: RSA.Algorithm) throws -> SignedData {
             var error: Unmanaged<CFError>?
             guard let data = SecKeyCreateSignature(
                 key.key, algorithm.signatureAlgorithm, raw as CFData, &error) else
             {
-                throw CryptoError.rsaFailed(reason: .signingError(reason: "\(String(describing: error))"))
+                throw CryptoError.RSAFailed(reason: .signingError(error?.takeRetainedValue()))
             }
             
             return SignedData(raw: data as Data)
         }
         
+        /// Verifies the current plain data with an RSA public key and related signature, using a given algorithm.
+        ///
+        /// - Parameters:
+        ///   - key: The public key used to encrypt data.
+        ///   - signature: The signed data created when signing the plain data with paired private key.
+        ///   - algorithm:
+        /// - Returns: The digest algorithm used to verify data with `key`.
+        /// - Throws: A `CryptoError` if something wrong happens.
         func verify(with key: PublicKey, signature: SignedData, algorithm: RSA.Algorithm) throws -> Bool {
             var error: Unmanaged<CFError>?
             let result = SecKeyVerifySignature(
                 key.key, algorithm.signatureAlgorithm, raw as CFData, signature.raw as CFData, &error)
             
             guard error == nil else {
-                throw CryptoError.rsaFailed(reason: .verifyingError(reason: "\(String(describing: error))"))
+                throw CryptoError.RSAFailed(reason: .verifyingError(error?.takeRetainedValue()))
             }
             
             return result
         }
     }
     
+    /// Represents encrypted data. The encrypted data could be decrypted.
     struct EncryptedData: RSAData {
         let raw: Data
+        
+        /// Decrypts the current encrypted data with an RSA private key, using a given algorithm.
+        ///
+        /// - Parameters:
+        ///   - key: The private key used to decrypt data.
+        ///   - algorithm: The digest algorithm used to decrypt data with `key`.
+        /// - Returns: The plain data representation.
+        /// - Throws: A `CryptoError` if something wrong happens.
         func decrypted(with key: PrivateKey, using algorithm: RSA.Algorithm) throws -> PlainData {
             var error: Unmanaged<CFError>?
             guard let data = SecKeyCreateDecryptedData(
                 key.key, algorithm.encryptionAlgorithm, raw as CFData, &error) else
             {
-                throw CryptoError.rsaFailed(reason: .decryptingError(reason: "\(String(describing: error))"))
+                throw CryptoError.RSAFailed(reason: .decryptingError(error?.takeRetainedValue()))
             }
             
             return PlainData(raw: data as Data)

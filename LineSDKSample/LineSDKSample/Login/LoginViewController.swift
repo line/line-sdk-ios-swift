@@ -36,7 +36,7 @@ class LoginViewController: UIViewController, IndicatorDisplay {
         loginBtn.presentingViewController = self
 
         // You could set the permissions you need or use default permissions
-        loginBtn.permissions = [.profile, .friends, .groups, .messageWrite]
+        loginBtn.permissions = [.profile, .friends, .groups, .messageWrite, .openID]
 
         view.addSubview(loginBtn)
         loginBtn.translatesAutoresizingMaskIntoConstraints = false

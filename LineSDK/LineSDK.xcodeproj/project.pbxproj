@@ -16,6 +16,9 @@
 		4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF7211D473400866E6C /* MessageSender.swift */; };
 		4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */; };
 		4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFC211D628000866E6C /* MessageSample.swift */; };
+		4B1C44652137E0CA0094C1D4 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44642137E0CA0094C1D4 /* JWT.swift */; };
+		4B1C44692137E1EE0094C1D4 /* JWTHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */; };
+		4B1C446B2137E98D0094C1D4 /* JWTCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */; };
 		4B2422EF2134FBE8007200C2 /* LineSDKErrorConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2422EE2134FBE8007200C2 /* LineSDKErrorConstant.swift */; };
 		4B25A815213687A400C74B87 /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A814213687A400C74B87 /* RSA.swift */; };
 		4B25A8172136888600C74B87 /* RSAAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A8162136888600C74B87 /* RSAAlgorithm.swift */; };
@@ -157,6 +160,8 @@
 		4BD191B821116C4C00E2C481 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B721116C4C00E2C481 /* Unit.swift */; };
 		4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */; };
 		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
+		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
+		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
@@ -195,11 +200,20 @@
 		4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */; };
 		4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
+		4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09EE213CCE7700F4594D /* JWKTests.swift */; };
+		4BFC09F1213CDFC300F4594D /* JWKDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */; };
+		4BFC09F3213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F2213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift */; };
+		4BFC09F5213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F4213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift */; };
+		4BFC09F7213CF68000F4594D /* GetJWKSetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */; };
+		4BFC09F9213CFB6000F4594D /* GetJWKSetRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F8213CFB6000F4594D /* GetJWKSetRequestTests.swift */; };
+		4BFC09FB213D029400F4594D /* JWTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09FA213D029400F4594D /* JWTTests.swift */; };
 		4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */; };
 		4BFD605C212A8775009E9838 /* FlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605B212A8775009E9838 /* FlexTextComponent.swift */; };
 		4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */; };
 		4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605F212A8F00009E9838 /* FlexMessageProperties.swift */; };
 		4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */; };
+		D1A591272139489E00AC080D /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
+		D1A591292139495B00AC080D /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
 		DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
 		DBDCFD342126CB6300E8327A /* GetApproversInFriendsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */; };
 		DBE4E36D211D6C1A00184D66 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36C211D6C1A00184D66 /* User.swift */; };
@@ -253,6 +267,9 @@
 		4B15EEF7211D473400866E6C /* MessageSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSender.swift; sourceTree = "<group>"; };
 		4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTests.swift; sourceTree = "<group>"; };
 		4B15EEFC211D628000866E6C /* MessageSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSample.swift; sourceTree = "<group>"; };
+		4B1C44642137E0CA0094C1D4 /* JWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
+		4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTHelpers.swift; sourceTree = "<group>"; };
+		4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTCoder.swift; sourceTree = "<group>"; };
 		4B2422EE2134FBE8007200C2 /* LineSDKErrorConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKErrorConstant.swift; sourceTree = "<group>"; };
 		4B25A814213687A400C74B87 /* RSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSA.swift; sourceTree = "<group>"; };
 		4B25A8162136888600C74B87 /* RSAAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAAlgorithm.swift; sourceTree = "<group>"; };
@@ -401,6 +418,8 @@
 		4BD191B721116C4C00E2C481 /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
 		4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRevokeTokenRequestTests.swift; sourceTree = "<group>"; };
 		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
+		4BD24CF4213E278700606411 /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
+		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4BDD2C152133970800DD563D /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -439,11 +458,20 @@
 		4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBubbleContainer.swift; sourceTree = "<group>"; };
 		4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexCarouselContainer.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
+		4BFC09EE213CCE7700F4594D /* JWKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKTests.swift; sourceTree = "<group>"; };
+		4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKDataTests.swift; sourceTree = "<group>"; };
+		4BFC09F2213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDiscoveryDocumentRequest.swift; sourceTree = "<group>"; };
+		4BFC09F4213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDiscoveryDocumentRequestTests.swift; sourceTree = "<group>"; };
+		4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetJWKSetRequest.swift; sourceTree = "<group>"; };
+		4BFC09F8213CFB6000F4594D /* GetJWKSetRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetJWKSetRequestTests.swift; sourceTree = "<group>"; };
+		4BFC09FA213D029400F4594D /* JWTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTTests.swift; sourceTree = "<group>"; };
 		4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBoxComponent.swift; sourceTree = "<group>"; };
 		4BFD605B212A8775009E9838 /* FlexTextComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponent.swift; sourceTree = "<group>"; };
 		4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexComponentMessageTests.swift; sourceTree = "<group>"; };
 		4BFD605F212A8F00009E9838 /* FlexMessageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageProperties.swift; sourceTree = "<group>"; };
 		4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageComponent.swift; sourceTree = "<group>"; };
+		D1A591262139489E00AC080D /* JWK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWK.swift; sourceTree = "<group>"; };
+		D1A591282139495B00AC080D /* JWKSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKSet.swift; sourceTree = "<group>"; };
 		DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsRequest.swift; sourceTree = "<group>"; };
 		DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsTests.swift; sourceTree = "<group>"; };
 		DBE4E36C211D6C1A00184D66 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -527,6 +555,16 @@
 			path = Message;
 			sourceTree = "<group>";
 		};
+		4B1C44632137E0AF0094C1D4 /* JWT */ = {
+			isa = PBXGroup;
+			children = (
+				4B1C44642137E0CA0094C1D4 /* JWT.swift */,
+				4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */,
+				4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */,
+			);
+			path = JWT;
+			sourceTree = "<group>";
+		};
 		4B2422ED2134FBD6007200C2 /* General */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,6 +577,10 @@
 			isa = PBXGroup;
 			children = (
 				4BF45A8121377DCF00CCD28E /* CryptoError.swift */,
+				4BFC09F2213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift */,
+				4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */,
+				4B1C44632137E0AF0094C1D4 /* JWT */,
+				D1A591252138D26100AC080D /* JWK */,
 				4B25A8122136850900C74B87 /* RSA */,
 			);
 			path = Crypto;
@@ -860,6 +902,7 @@
 			children = (
 				4BBEA9B3212EB35000858627 /* LineSDKAccessTokenStore.swift */,
 				4BBEA9B5212EB41000858627 /* LineSDKAccessToken.swift */,
+				4BD24CF6213E517800606411 /* LineSDKJWT.swift */,
 				4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */,
 				4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */,
 			);
@@ -965,6 +1008,11 @@
 				4BF45A8C2137B35B00CCD28E /* SampleKeys */,
 				4BF45A882137B29300CCD28E /* RSATests.swift */,
 				4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */,
+				4BFC09EE213CCE7700F4594D /* JWKTests.swift */,
+				4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */,
+				4BFC09F4213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift */,
+				4BFC09F8213CFB6000F4594D /* GetJWKSetRequestTests.swift */,
+				4BFC09FA213D029400F4594D /* JWTTests.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -1083,6 +1131,16 @@
 				4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		D1A591252138D26100AC080D /* JWK */ = {
+			isa = PBXGroup;
+			children = (
+				D1A591262139489E00AC080D /* JWK.swift */,
+				4BD24CF4213E278700606411 /* JWA.swift */,
+				D1A591282139495B00AC080D /* JWKSet.swift */,
+			);
+			path = JWK;
 			sourceTree = "<group>";
 		};
 		DBE4E36E211D6C2600184D66 /* Social */ = {
@@ -1346,6 +1404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBF20276212C11A600780358 /* GetGroupsRequest.swift in Sources */,
+				4BFC09F3213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift in Sources */,
 				4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */,
 				4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */,
 				4B9A305C21216D2E00174C6F /* TemplateImageCarouselPayload.swift in Sources */,
@@ -1355,18 +1414,22 @@
 				4B9A304E2121405300174C6F /* MessageAction.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
 				4BF53539212A7C9100EA602A /* FlexMessage.swift in Sources */,
+				D1A591272139489E00AC080D /* JWK.swift in Sources */,
 				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,
 				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
 				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,
+				4B1C446B2137E98D0094C1D4 /* JWTCoder.swift in Sources */,
 				DBE4E370211D6CF500184D66 /* GetFriendsRequest.swift in Sources */,
 				4B6A0FF5212AA82500B3ED1F /* HexColor.swift in Sources */,
 				4B15EEF6211D46FF00866E6C /* Message.swift in Sources */,
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
+				4BD24CF5213E278700606411 /* JWA.swift in Sources */,
 				4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */,
 				4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */,
 				4B25A8172136888600C74B87 /* RSAAlgorithm.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
 				4B15EEF4211D466D00866E6C /* TextMessage.swift in Sources */,
+				D1A591292139495B00AC080D /* JWKSet.swift in Sources */,
 				4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */,
 				4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */,
 				4B9A303F2121277400174C6F /* LocationMessage.swift in Sources */,
@@ -1386,6 +1449,7 @@
 				4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
 				4B9A3047212139C000174C6F /* TemplateMessage.swift in Sources */,
+				4B1C44652137E0CA0094C1D4 /* JWT.swift in Sources */,
 				4B9058D8210078FB004D717F /* Result.swift in Sources */,
 				4B9A30352121182400174C6F /* VideoMessage.swift in Sources */,
 				4B9A304921213CE100174C6F /* TemplateButtonsPayload.swift in Sources */,
@@ -1407,12 +1471,14 @@
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
 				4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */,
 				4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */,
+				4B1C44692137E1EE0094C1D4 /* JWTHelpers.swift in Sources */,
 				4B5EE2E4212BCE1A0009DF2E /* FlexBlockStyle.swift in Sources */,
 				4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */,
 				4B25A815213687A400C74B87 /* RSA.swift in Sources */,
 				DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */,
 				4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */,
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
+				4BFC09F7213CF68000F4594D /* GetJWKSetRequest.swift in Sources */,
 				DBF20274212C114D00780358 /* Group.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
 				4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */,
@@ -1468,9 +1534,12 @@
 				4B95F4042125364500AD3A81 /* PostMultisendMessagesRequestTests.swift in Sources */,
 				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
 				4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */,
+				4BFC09F9213CFB6000F4594D /* GetJWKSetRequestTests.swift in Sources */,
+				4BFC09FB213D029400F4594D /* JWTTests.swift in Sources */,
 				4B39D1E421104DBA00A45510 /* APITests.swift in Sources */,
 				4B9A305A2121639600174C6F /* TemplateCarouselPayloadTests.swift in Sources */,
 				4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */,
+				4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */,
 				4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */,
 				4B5EE2E8212BE0D00009DF2E /* FlexCarouselContainerTests.swift in Sources */,
 				4BCD27952113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift in Sources */,
@@ -1481,6 +1550,7 @@
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4B5EE2E6212BD53E0009DF2E /* FlexBubbleContainerTests.swift in Sources */,
 				4BF45A8B2137B2C500CCD28E /* RSAKeyTests.swift in Sources */,
+				4BFC09F5213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift in Sources */,
 				4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */,
 				4B9A305E21216F2500174C6F /* TemplateImageCarouselPayloadTests.swift in Sources */,
 				4B6A0FF1212A99AD00B3ED1F /* FlexTextComponentTests.swift in Sources */,
@@ -1489,6 +1559,7 @@
 				4BEB4924212BA0A300BA946A /* FlexIconCompomentTests.swift in Sources */,
 				4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */,
 				DBF2027B212D58FC00780358 /* GetGroupsRequestTests.swift in Sources */,
+				4BFC09F1213CDFC300F4594D /* JWKDataTests.swift in Sources */,
 				4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1503,6 +1574,7 @@
 				4BC4B3E1212FF39D00750794 /* LineSDKTemplateMessage.swift in Sources */,
 				4B2D1505212FABD2000DD5BE /* LineSDKAPI.swift in Sources */,
 				4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */,
+				4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */,
 				4BDD2C182133A26900DD563D /* LineSDKTemplateConfirmPayload.swift in Sources */,
 				4BC9B2E0212FB7B60071C736 /* LineSDKGroup.swift in Sources */,
 				4BDD2C382133F34300DD563D /* LineSDKFlexBoxComponent.swift in Sources */,
