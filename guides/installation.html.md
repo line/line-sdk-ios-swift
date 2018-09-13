@@ -3,8 +3,6 @@ title: "Installation"
 description: "How to integrate LINE SDK Swift into your project"
 ---
 
-<!--TODO onevcat: Update repo URL-->
-
 This guide explains how to install LINE SDK Swift into your iOS project and make necessary configuration. To make your app compatible with latest iOS and get full support, we strongly suggest you follow this installation guide and use the latest version of LINE SDK Swift.
 
 ## Requirements

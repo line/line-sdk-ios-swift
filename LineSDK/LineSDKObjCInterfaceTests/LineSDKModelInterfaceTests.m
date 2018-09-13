@@ -40,31 +40,6 @@
     XCTAssertNotNil([LineSDKLoginPermission friends]);
     XCTAssertNotNil([LineSDKLoginPermission groups]);
     XCTAssertNotNil([LineSDKLoginPermission messageWrite]);
-//    XCTAssertNotNil([LineSDKLoginPermission phone]);
-//    XCTAssertNotNil([LineSDKLoginPermission birthday]);
-//    XCTAssertNotNil([LineSDKLoginPermission profilePictureUpdate]);
-//    XCTAssertNotNil([LineSDKLoginPermission timelinePost]);
-//    XCTAssertNotNil([LineSDKLoginPermission addAssociatedOfficialAccounts]);
-//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedName]);
-//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedNameUpdate]);
-//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedGender]);
-//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedGenderUpdate]);
-//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedAddress]);
-//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedAddressUpdate]);
-//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedBirthday]);
-//    XCTAssertNotNil([LineSDKLoginPermission profileExtendedBirthdayUpdate]);
-//    XCTAssertNotNil([LineSDKLoginPermission payHistory]);
-//    XCTAssertNotNil([LineSDKLoginPermission payAccount]);
-//    XCTAssertNotNil([LineSDKLoginPermission merchant]);
-//    XCTAssertNotNil([LineSDKLoginPermission gender]);
-//    XCTAssertNotNil([LineSDKLoginPermission birthDate]);
-//    XCTAssertNotNil([LineSDKLoginPermission address]);
-//    XCTAssertNotNil([LineSDKLoginPermission realName]);
-//    XCTAssertNotNil([LineSDKLoginPermission botAdd]);
-    
-    XCTAssertNotNil([[LineSDKLoginPermission alloc] initWithRawValue:@"value"]);
-    XCTAssertNotNil([LineSDKLoginPermission chatMessageWrite:@"123"]);
-    XCTAssertNotNil([LineSDKLoginPermission squareChatMessageWriteWithSquareID:@"123" chatID:@"456"]);
 }
 
 - (void)testAccessTokenInterface {
@@ -249,8 +224,8 @@
 }
 
 -(void)testErrorDomain {
-    NSLog(@"%@", [LineSDKErrorConstant errorDomain]);
     XCTAssertTrue([[LineSDKErrorConstant errorDomain] isEqualToString:@"LineSDKError"]);
+    XCTAssertTrue([[LineSDKErrorConstant cryptoErrorDomain] isEqualToString:@"LineSDKError.CryptoError"]);
 }
 
 - (void)testJWTInterface {

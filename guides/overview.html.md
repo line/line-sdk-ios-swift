@@ -44,9 +44,9 @@ To get started, please move to the ["Installation" guide][installation].
 
 ## Terms
 
-<!--TODO onevcat: Update repo URL-->
-
-LINE SDK Swift is an open-source project. Please visit our repository to check the provided code and samples there.
+LINE SDK Swift is an open-source project. Please visit [our repository][repository] to check the provided code and samples.
 
 [using-objc]: /docs/ios-sdk-swift/using-objc
 [installation]: /docs/ios-sdk-swift/installation
+[repository]: https://github.com/line/line-sdk-swift
+<!--TODO onevcat: Update repo URL-->

@@ -27,7 +27,7 @@ To post-process the results from login actions, you need to setup LINE SDK Swift
     ```swift
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Add this to your "didFinishLaunching" delegate method.
-        LoginManager.shared.setup(channelID: "44", universalLinkURL: nil)
+        LoginManager.shared.setup(channelID: "YOUR_CHANNEL_ID", universalLinkURL: nil)
         
         return true
     }
@@ -37,7 +37,7 @@ To post-process the results from login actions, you need to setup LINE SDK Swift
     
     ```swift
     let link = URL(string: "https://yourdomain.com/line-login")
-    LoginManager.shared.setup(channelID: "44", universalLinkURL: link)
+    LoginManager.shared.setup(channelID: "YOUR_CHANNEL_ID", universalLinkURL: link)
     ```
     
     <div class="Md108FrameNote">
