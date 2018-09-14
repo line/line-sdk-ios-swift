@@ -10,6 +10,7 @@
 		3F75522F2123D215004AC047 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F75522E2123D214004AC047 /* Assets.xcassets */; };
 		3F75523121244502004AC047 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75523021244502004AC047 /* LoginButton.swift */; };
 		3F946A212126D13A009914ED /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F946A202126D13A009914ED /* Default-568h@2x.png */; };
+		3FE8E370214A6E70009E91BD /* LineSDKLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */; };
 		4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */; };
 		4B15EEF4211D466D00866E6C /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF3211D466D00866E6C /* TextMessage.swift */; };
 		4B15EEF6211D46FF00866E6C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF5211D46FF00866E6C /* Message.swift */; };
@@ -261,6 +262,7 @@
 		3F75522E2123D214004AC047 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F75523021244502004AC047 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		3F946A202126D13A009914ED /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKLoginButton.swift; sourceTree = "<group>"; };
 		4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSDKErrorTests.swift; sourceTree = "<group>"; };
 		4B15EEF3211D466D00866E6C /* TextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
 		4B15EEF5211D46FF00866E6C /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -893,6 +895,7 @@
 				4B2D14F0212F95B3000DD5BE /* LineSDKLoginResult.swift */,
 				4B2D14F2212F96A7000DD5BE /* LineSDKLoginProcess.swift */,
 				4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */,
+				3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1612,6 +1615,7 @@
 				4B2D14F3212F96A7000DD5BE /* LineSDKLoginProcess.swift in Sources */,
 				4B2422EF2134FBE8007200C2 /* LineSDKErrorConstant.swift in Sources */,
 				4BBEA9B0212EB03200858627 /* LineSDKLoginPermission.swift in Sources */,
+				3FE8E370214A6E70009E91BD /* LineSDKLoginButton.swift in Sources */,
 				4B2D14F5212F97A6000DD5BE /* LineSDKLoginManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

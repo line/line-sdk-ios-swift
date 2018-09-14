@@ -36,7 +36,7 @@ public protocol LoginButtonDelegate: class {
 }
 
 /// `LoginButton` is a UIButton which executes login function when user taps on it.
-public class LoginButton: UIButton {
+open class LoginButton: UIButton {
 
     /// Specifies the size of a `LoginButton`.
     ///
@@ -182,13 +182,13 @@ public class LoginButton: UIButton {
     }
 
     /// Override the getter of intrinsicContentSize to support auto layout.
-    override public var intrinsicContentSize: CGSize {
+    override open var intrinsicContentSize: CGSize {
         let titleSize = titleLabel?.intrinsicContentSize ?? .zero
         return buttonSize.sizeForTitleSize(titleSize)
     }
 
     /// Execute this function to do login action when user taps on `LoginButton`.
-    @objc func login() {
+    @objc open func login() {
         if LoginManager.shared.isAuthorizing {
             // Authorizing process is on-going so not to call login again
             return
