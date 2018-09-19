@@ -32,50 +32,37 @@ import LineSDK
 @objcMembers
 public class LineSDKLoginButton: LoginButton {
 
-    @objc public enum LineSDKButtonSize: Int, RawRepresentable {
+    @objc public enum LineSDKLoginButtonSize: Int {
         case small
         case normal
-
-        public typealias RawValue = LoginButton.ButtonSize
-        public var rawValue: RawValue {
+        
+        init(_ value: LoginButton.ButtonSize) {
+            switch value {
+            case .normal: self = .normal
+            case .small: self = .small
+            }
+        }
+        
+        var unwrapped: LoginButton.ButtonSize {
             switch self {
-            case .small:
-                return LoginButton.ButtonSize.small
-            case .normal:
-                return LoginButton.ButtonSize.normal
-            }
-        }
-
-        public init?(rawValue: RawValue) {
-            switch rawValue {
-            case LoginButton.ButtonSize.small:
-                self = .small
-            case LoginButton.ButtonSize.normal:
-                self = .normal
+            case .small: return .small
+            case .normal: return .normal
             }
         }
     }
-
-    public override init() {
-        super.init()
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
+    
     public weak var loginDelegate: LineSDKLoginButtonDelegate?
     public weak var buttonPresentingViewController: UIViewController?
 
     public var loginPermissions: Set<LineSDKLoginPermission> = [.profile]
     public var loginManagerOptions: [LineSDKLoginManagerOptions]?
 
-    public var buttonSizeValue: LineSDKButtonSize {
+    public var buttonSizeValue: LineSDKLoginButtonSize {
         set {
-            buttonSize = newValue.rawValue
+            buttonSize = newValue.unwrapped
         }
         get {
-            return LineSDKButtonSize(rawValue: buttonSize) ?? .normal
+            return LineSDKLoginButtonSize(buttonSize)
         }
     }
 
