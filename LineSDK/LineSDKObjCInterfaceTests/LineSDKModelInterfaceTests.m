@@ -244,6 +244,19 @@
     XCTAssertNil(payload.email);
 }
 
+- (void)testLoginButtonInterface {
+    LineSDKLoginButton *button = [[LineSDKLoginButton alloc] init];
+    
+    button.buttonPresentingViewController = nil;
+    button.loginDelegate = nil;
+    button.loginPermissions = [NSSet setWithObject:[LineSDKLoginPermission profile]];
+    button.loginManagerOptions = @[[LineSDKLoginManagerOptions onlyWebLogin]];
+    button.buttonSizeValue = LineSDKLoginButtonSizeSmall;
+    button.buttonTextValue = @"Hello";
+    button = nil;
+    [button login];
+}
+
 @end
 
 
