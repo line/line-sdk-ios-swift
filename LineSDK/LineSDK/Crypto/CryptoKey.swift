@@ -113,10 +113,12 @@ extension Crypto {
     }
 }
 
-// This should be in the same file with JWTSignKey protocol definition.
-// See https://bugs.swift.org/browse/SR-631 & https://github.com/apple/swift/pull/18168
-extension Crypto.RSAPublicKey: JWTSignKey {
-    var publicKey: CryptoPublicKey? {
-        return self
+extension JWK {
+    func getPublicKey() throws -> CryptoPublicKey {
+        let data = try getKeyData()
+        switch keyType {
+        case .rsa: return try Crypto.RSAPublicKey(der: data)
+        case .ec: return try Crypto.ECDSAPublicKey(der: data)
+        }
     }
 }

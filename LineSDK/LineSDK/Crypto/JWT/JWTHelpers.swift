@@ -45,7 +45,3 @@ extension Data {
             .replacingOccurrences(of: "=", with: "")
     }
 }
-
-protocol JWTSignKey {
-    var publicKey: CryptoPublicKey? { get }
-}
