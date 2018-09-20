@@ -26,6 +26,7 @@ class ECDSAKeyTests: XCTestCase {
 
     func testCreatingFromPEM() {
         let keyString = """
+        -----BEGIN PUBLIC KEY-----
         MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJrcJv7WmUDazFvBba3WDzo2fzb/z
         pj8ydffUZ7h+dNSMB6zKponPpCAsTrj9ejNcJBNC5sNP4+1c+JXZ6OuKKA==
         -----END PUBLIC KEY-----
