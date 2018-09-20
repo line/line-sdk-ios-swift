@@ -26,16 +26,15 @@ class ECDSAKeyTests: XCTestCase {
 
     func testCreatingFromPEM() {
         let keyString = """
-        -----BEGIN PUBLIC KEY-----
-        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEEVs/o5+uQbTjL3chynL4wXgUg2R9
-        q9UU8I5mEovUf86QZ7kOBIjJwqnzD1omageEHWwHdBO6B+dFabmdT9POxg==
+        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJrcJv7WmUDazFvBba3WDzo2fzb/z
+        pj8ydffUZ7h+dNSMB6zKponPpCAsTrj9ejNcJBNC5sNP4+1c+JXZ6OuKKA==
         -----END PUBLIC KEY-----
         """
         do {
-            let k = try Crypto.RSAPublicKey(pem: keyString)
+            let k = try Crypto.ECDSAPublicKey(pem: keyString)
             print(k)
         } catch {
-//            XCTFail("\(error)")
+            XCTFail("\(error)")
         }
     }
 }

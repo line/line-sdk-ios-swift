@@ -67,8 +67,8 @@ extension Crypto {
         /// - Parameter data: The DER data from which to create the public key.
         /// - Throws: Any possible error while creating the key.
         init(der data: Data) throws {
-            let keyData = try data.x509HeaserStripped()
-            self.key = try SecKey.createKey(derData: keyData, keyClass: .publicKey)
+            let keyData = try data.x509HeaserStrippedForRSA()
+            self.key = try SecKey.createKey(derData: keyData, keyClass: .publicKey, keyType: .rsa)
         }
         
         /// Creates a public key from a certificate data.
@@ -95,8 +95,20 @@ extension Crypto {
         /// - Parameter data: The DER data from which to create the private key.
         /// - Throws: Any possible error while creating the key.
         init(der data: Data) throws {
-            let keyData = try data.x509HeaserStripped()
-            self.key = try SecKey.createKey(derData: keyData, keyClass: .privateKey)
+            let keyData = try data.x509HeaserStrippedForRSA()
+            self.key = try SecKey.createKey(derData: keyData, keyClass: .privateKey, keyType: .rsa)
+        }
+    }
+}
+
+extension Crypto {
+    struct ECDSAPublicKey: CryptoPublicKey {
+        let key: SecKey
+        init(key: SecKey) { self.key = key }
+        
+        init(der data: Data) throws {
+            let keyData = try data.x509HeaserStrippedForEC()
+            self.key = try SecKey.createKey(derData: keyData, keyClass: .publicKey, keyType: .ec)
         }
     }
 }
