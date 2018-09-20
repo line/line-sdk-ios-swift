@@ -1,5 +1,5 @@
 //
-//  JWTHelpers.swift
+//  CryptoAlgorithm.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,32 +20,24 @@
 //
 
 import Foundation
+import CommonCrypto
 
-extension String {
-    // Returns the data of `self` (which is a base64 string), with URL related characters decoded.
-    var base64URLDecoded: Data? {
-        let paddingLength = 4 - count % 4
-        // Filling = for %4 padding.
-        let padding = (paddingLength < 4) ? String(repeating: "=", count: paddingLength) : ""
-        let base64EncodedString = self
-            .replacingOccurrences(of: "-", with: "+")
-            .replacingOccurrences(of: "_", with: "/")
-            + padding
-        return Data(base64Encoded: base64EncodedString)
-    }
+typealias CryptoDigest = (
+    _ data: UnsafeRawPointer?,
+    _ length: CC_LONG,
+    _ md: UnsafeMutablePointer<UInt8>?) -> UnsafeMutablePointer<UInt8>?
+
+protocol CryptoAlgorithm {
+    var length: CC_LONG { get }
+    var signatureAlgorithm: SecKeyAlgorithm { get }
+    var encryptionAlgorithm: SecKeyAlgorithm { get }
+    var digest: CryptoDigest { get }
 }
 
 extension Data {
-    // Encode `self` with URL escaping considered.
-    var base64URLEncoded: String {
-        let base64Encoded = base64EncodedString()
-        return base64Encoded
-            .replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
+    func digest(using algorithm: CryptoAlgorithm) throws -> Data {
+        var hash = [UInt8](repeating: 0, count: Int(algorithm.length))
+        withUnsafeBytes { _ = algorithm.digest($0, CC_LONG(count), &hash) }
+        return Data(bytes: hash)
     }
-}
-
-protocol JWTSignKey {
-    var publicKey: CryptoPublicKey? { get }
 }

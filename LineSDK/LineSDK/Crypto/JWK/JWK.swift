@@ -29,6 +29,7 @@ struct JWK: Decodable {
     
     enum KeyType: String, Decodable {
         case rsa = "RSA"
+        case ec = "EC"
     }
     
     enum PublicKeyUse: String, Decodable {
@@ -40,13 +41,12 @@ struct JWK: Decodable {
         case keyType = "kty"
         case keyUse = "use"
         case keyID = "kid"
-        case algorithm = "alg"
     }
 
     let keyType: KeyType
     let keyUse: PublicKeyUse?
     let keyID: String?
-    let algorithm: JWA.Algorithm?
+
     let parameters: Parameters
     
     init(from decoder: Decoder) throws {
@@ -59,7 +59,6 @@ struct JWK: Decodable {
         self.keyType = keyType
         keyUse = try container.decodeIfPresent(PublicKeyUse.self, forKey: .keyUse)
         keyID = try container.decodeIfPresent(String.self, forKey: .keyID)
-        algorithm = try container.decodeIfPresent(JWA.Algorithm.self, forKey: .algorithm)
         
         let singleContainer = try decoder.singleValueContainer()
         parameters = try singleContainer.decode(Parameters.self)
@@ -69,6 +68,8 @@ struct JWK: Decodable {
         switch parameters {
         case .rsa(let rsaParams):
             return try rsaParams.getKeyData()
+        case .ec(let ecParames):
+            return try ecParames.getKeyData()
         }
     }
 }

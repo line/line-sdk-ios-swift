@@ -71,16 +71,14 @@ public struct JWT: Equatable {
         guard let alg = JWA.Algorithm(rawValue: header.algorithm) else {
             throw CryptoError.JWTFailed(reason: .unsupportedHeaderAlgorithm(name: header.algorithm))
         }
-        switch alg {
-        case .RS256, .RS384, .RS512:
-            let plainText = try RSA.PlainData(string: plainSegment)
-            let signData = RSA.SignedData(raw: signature)
-            guard let key = key.RSAKey else {
-                return false
-            }
-            let result = try plainText.verify(with: key, signature: signData, algorithm: alg.rsaAlgorithm)
-            return result
+        
+        let plainText = try Crypto.PlainData(string: plainSegment)
+        let signData = Crypto.SignedData(raw: signature)
+        guard let key = key.publicKey else {
+            return false
         }
+        let result = try plainText.verify(with: key, signature: signData, algorithm: alg.algorithm)
+        return result
     }
 }
 

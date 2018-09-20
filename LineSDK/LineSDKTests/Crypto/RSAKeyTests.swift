@@ -36,7 +36,7 @@ class RSAKeyTests: XCTestCase {
         let path = getFileURL(forResource: "public_base_64", ofType: "")
         let text = try! String(contentsOf: path)
         do {
-            _ = try RSA.PublicKey(base64Encoded: text)
+            _ = try Crypto.RSAPublicKey(base64Encoded: text)
         } catch {
             XCTFail("\(error)")
         }
@@ -46,7 +46,7 @@ class RSAKeyTests: XCTestCase {
         let path = getFileURL(forResource: "public_base_64_newline", ofType: "")
         let text = try! String(contentsOf: path)
         do {
-            _ = try RSA.PublicKey(base64Encoded: text)
+            _ = try Crypto.RSAPublicKey(base64Encoded: text)
         } catch {
             XCTFail("\(error)")
         }
@@ -56,7 +56,7 @@ class RSAKeyTests: XCTestCase {
         let path = getFileURL(forResource: "public_base_64_header", ofType: "")
         let text = try! String(contentsOf: path)
         do {
-            _ = try RSA.PublicKey(pem: text)
+            _ = try Crypto.RSAPublicKey(pem: text)
         } catch {
             XCTFail("\(error)")
         }
@@ -66,17 +66,17 @@ class RSAKeyTests: XCTestCase {
         let path = getFileURL(forResource: "public", ofType: "pem")
         let text = try! String(contentsOf: path)
         do {
-            _ = try RSA.PublicKey(pem: text)
+            _ = try Crypto.RSAPublicKey(pem: text)
         }  catch {
             XCTFail("\(error)")
         }
     }
     
-    func testCreatingPublicKeyFromDERData() {
+    func testCreatingRSAPublicKeyFromDERData() {
         let path = getFileURL(forResource: "public", ofType: "der")
         let data = try! Data(contentsOf: path)
         do {
-            _ = try RSA.PublicKey(der: data)
+            _ = try Crypto.RSAPublicKey(der: data)
         }  catch {
             XCTFail("\(error)")
         }
@@ -86,17 +86,17 @@ class RSAKeyTests: XCTestCase {
         let path = getFileURL(forResource: "private", ofType: "der")
         let data = try! Data(contentsOf: path)
         do {
-            _ = try RSA.PrivateKey(der: data)
+            _ = try Crypto.RSAPrivateKey(der: data)
         }  catch {
             XCTFail("\(error)")
         }
     }
     
-    func testCreatingPublicKeyFromCertificate() {
+    func testCreatingRSAPublicKeyFromCertificate() {
         let path = getFileURL(forResource: "test_public", ofType: "cer")
         let data = try! Data(contentsOf: path)
         do {
-            _ = try RSA.PublicKey(certificate: data)
+            _ = try Crypto.RSAPublicKey(certificate: data)
         }  catch {
             XCTFail("\(error)")
         }

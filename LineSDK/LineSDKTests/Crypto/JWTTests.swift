@@ -105,7 +105,7 @@ class JWTTests: XCTestCase {
         let data = Data(sample.utf8)
         let token = try! JWT(data: data)
         
-        let key = try! RSA.PublicKey(pem: pubKey)
+        let key = try! Crypto.RSAPublicKey(pem: pubKey)
         let result = try! token.verify(with: key)
         XCTAssertTrue(result)
     }

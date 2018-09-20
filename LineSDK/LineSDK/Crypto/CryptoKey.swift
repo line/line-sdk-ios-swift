@@ -1,5 +1,5 @@
 //
-//  RSAKey.swift
+//  CryptoKey.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,15 +20,17 @@
 //
 
 import Foundation
-import CommonCrypto
 
-protocol RSAKey {
+protocol CryptoKey {
     var key: SecKey { get }
     init(key: SecKey)
     init(der data: Data) throws
 }
 
-extension RSAKey {
+protocol CryptoPublicKey: CryptoKey {}
+protocol CryptoPrivateKey: CryptoKey {}
+
+extension CryptoKey {
     /// Creates a public key with a base64-encoded string representing DER data.
     ///
     /// - Parameter base64Encoded: Base64-encoded DER data.
@@ -48,11 +50,15 @@ extension RSAKey {
         let base64String = try string.markerStrippedBase64()
         try self.init(base64Encoded: base64String)
     }
+    
+    init(_ key: JWK) throws {
+        let data = try key.getKeyData()
+        try self.init(der: data)
+    }
 }
 
-extension RSA {
-    
-    struct PublicKey: RSAKey {
+extension Crypto {
+    struct RSAPublicKey: CryptoPublicKey {
         let key: SecKey
         init(key: SecKey) { self.key = key }
         
@@ -80,7 +86,7 @@ extension RSA {
         }
     }
     
-    struct PrivateKey: RSAKey {
+    struct RSAPrivateKey: CryptoPrivateKey {
         let key: SecKey
         init(key: SecKey) { self.key = key }
         
@@ -95,17 +101,10 @@ extension RSA {
     }
 }
 
-extension RSA.PublicKey {
-    init(_ key: JWK) throws {
-        let data = try key.getKeyData()
-        try self.init(der: data)
-    }
-}
-
 // This should be in the same file with JWTSignKey protocol definition.
 // See https://bugs.swift.org/browse/SR-631 & https://github.com/apple/swift/pull/18168
-extension RSA.PublicKey: JWTSignKey {
-    var RSAKey: RSA.PublicKey? {
+extension Crypto.RSAPublicKey: JWTSignKey {
+    var publicKey: CryptoPublicKey? {
         return self
     }
 }

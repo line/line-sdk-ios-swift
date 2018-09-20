@@ -313,7 +313,7 @@ extension LoginManager {
     }
     
     func verifyIDToken(_ token: JWT, key: JWK, process: LoginProcess, userID: String?) throws {
-        let rsaKey = try RSA.PublicKey(key)
+        let rsaKey = try Crypto.RSAPublicKey(key)
         try token.verify(with: rsaKey)
         
         let payload = token.payload

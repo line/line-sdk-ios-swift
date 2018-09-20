@@ -53,12 +53,12 @@ class JWKDataTests: XCTestCase {
         let key1 = keySet.getKeyByID("b863b534069bfc0207197bcf831320d1cdc2cee2")
         XCTAssertNotNil(key1)
         let data1 = try! key1!.getKeyData()
-        _ = try! RSA.PublicKey(der: data1)
+        _ = try! Crypto.RSAPublicKey(der: data1)
         
         let key2 = keySet.getKeyByID("55b854edf35f093b4708f72dec4f15149836e8ac")
         XCTAssertNotNil(key1)
         let data2 = try! key2!.getKeyData()
-        _ = try! RSA.PublicKey(der: data2)
+        _ = try! Crypto.RSAPublicKey(der: data2)
         
     }
 }

@@ -50,11 +50,11 @@ class JWKTests: XCTestCase {
         let decoder = JSONDecoder()
         let key = try! decoder.decode(JWK.self, from: Data(sampleRSAKey.utf8))
         XCTAssertEqual(key.keyType, .rsa)
-        XCTAssertEqual(key.algorithm, .RS256)
         XCTAssertEqual(key.keyUse, .signature)
         XCTAssertEqual(key.keyID, "123")
         XCTAssertEqual(key.parameters.asRSA!.exponent, "AQAB")
         XCTAssertEqual(key.parameters.asRSA!.modulus, "abc")
+        XCTAssertEqual(key.parameters.asRSA!.algorithm, .RS256)
     }
     
     func testUnsupportedKey() {
