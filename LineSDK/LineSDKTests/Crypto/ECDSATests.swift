@@ -33,7 +33,8 @@ class ECDSATests: XCTestCase {
         """)
         
         let plainData = try! Crypto.PlainData(
-            string: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMX0")
+            string: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiw" +
+                    "ibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMX0")
         let signed = try! Crypto.SignedData(
             base64Encoded: "dOUxHenonzvseGMHfCurlN4XXhdjTe80JKeuPkfHJjww6ayz9Ahm8G4l1g4/ji3mk8mNyc7ziD+pRGCPklZ8aQ==")
         
