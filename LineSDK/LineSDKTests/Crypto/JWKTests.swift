@@ -33,6 +33,18 @@ let sampleRSAKey = """
 }
 """
 
+let sampleECDSAKey = """
+{
+  "kty": "EC",
+  "use": "sig",
+  "crv": "P-256",
+  "kid": "123",
+  "x": "JrcJv7WmUDazFvBba3WDzo2fzb_zpj8ydffUZ7h-dNQ",
+  "y": "jAesyqaJz6QgLE64_XozXCQTQubDT-PtXPiV2ejriig",
+  "alg": "ES256"
+}
+"""
+
 // HS256 keys are not supported yet (we cannot accept a symmetric algorithm)
 let unsupportedKey = """
 {
@@ -55,6 +67,17 @@ class JWKTests: XCTestCase {
         XCTAssertEqual(key.parameters.asRSA!.exponent, "AQAB")
         XCTAssertEqual(key.parameters.asRSA!.modulus, "abc")
         XCTAssertEqual(key.parameters.asRSA!.algorithm, .RS256)
+    }
+    
+    func testParseECDSAKey() {
+        let decoder = JSONDecoder()
+        let key = try! decoder.decode(JWK.self, from: Data(sampleECDSAKey.utf8))
+        XCTAssertEqual(key.keyType, .ec)
+        XCTAssertEqual(key.keyUse, .signature)
+        XCTAssertEqual(key.keyID, "123")
+        XCTAssertEqual(key.parameters.asEC!.x, "JrcJv7WmUDazFvBba3WDzo2fzb_zpj8ydffUZ7h-dNQ")
+        XCTAssertEqual(key.parameters.asEC!.y, "jAesyqaJz6QgLE64_XozXCQTQubDT-PtXPiV2ejriig")
+        XCTAssertEqual(key.parameters.asEC!.curve, .P256)
     }
     
     func testUnsupportedKey() {

@@ -40,6 +40,15 @@ let keys = """
     "kid": "55b854edf35f093b4708f72dec4f15149836e8ac",
     "e": "AQAB",
     "kty": "RSA"
+  },
+  {
+    "kty":"EC",
+    "alg":"ES256",
+    "use":"sig",
+    "kid":"038513fc01804702e2670334007c8c8cbe744d4a8691b3f5bfe0f251dd2ca475",
+    "crv":"P-256",
+    "x":"GGERLwduXJpu_-Yizvypq5TlJS8VCOxoreD9J6DsZZs",
+    "y":"RLKGzm2JCHmixjsrKysjNKPym8-odN_HSY2rx72qZFM"
   }
   ]
 }
@@ -60,5 +69,9 @@ class JWKDataTests: XCTestCase {
         let data2 = try! key2!.getKeyData()
         _ = try! Crypto.RSAPublicKey(der: data2)
         
+        let key3 = keySet.getKeyByID("038513fc01804702e2670334007c8c8cbe744d4a8691b3f5bfe0f251dd2ca475")
+        XCTAssertNotNil(key3)
+        let data3 = try! key3!.getKeyData()
+        _ = try! Crypto.ECDSAPublicKey(der: data3)
     }
 }

@@ -129,8 +129,12 @@ extension Data {
         
         let indicator = 0x04
         // If the target == 0x04, it is an unpressed indication. There is no X509 header contained.
-        //We could just return the input DER data as is.
-        if self[index] == indicator { return self }
+        //We could just return the DER data containing big int.
+        if self[index] == indicator {
+            let strippedKeyBytes = [UInt8](self[index...self.count - 1])
+            let data = Data(bytes: UnsafePointer<UInt8>(strippedKeyBytes), count: self.count - index)
+            return data
+        }
         
         // Handle X.509 key now. EC Key with OID 1.2.840.10045.2.1 prime field
         // 0x30, 0x13, 0x06, 0x07, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02, 0x21

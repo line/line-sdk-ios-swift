@@ -148,6 +148,11 @@ extension JWA {
         let x: String
         let y: String
         let curve: Curve
+        
+        enum CodingKeys: String, CodingKey {
+            case x, y, curve = "crv"
+        }
+        
         func getKeyData() throws -> Data {
             guard let decodedXData = x.base64URLDecoded else {
                 throw CryptoError.generalError(reason: .base64ConversionFailed(string: x))
@@ -156,19 +161,12 @@ extension JWA {
                 throw CryptoError.generalError(reason: .base64ConversionFailed(string: y))
             }
             
-            var xBytes = [UInt8](decodedXData)
-            
-            // Make sure the xBytes starts with 0x00. If not, append it.
-            if let firstByte = xBytes.first, firstByte != 0x00 {
-                xBytes.insert(0x00, at: 0)
-            }
-            
-            let xEncoded = xBytes.encode(as: .integer)
-            
+            let xBytes = [UInt8](decodedXData)
             let yBytes = [UInt8](decodedYData)
-            let yEncoded = yBytes.encode(as: .integer)
             
-            let sequenceEncoded = (xEncoded + yEncoded).encode(as: .sequence)
+            let uncompressedIndicator: [UInt8] = [0x04]
+            
+            let sequenceEncoded = (uncompressedIndicator + xBytes + yBytes).encode(as: .sequence)
             
             return Data(bytes: sequenceEncoded)
         }
