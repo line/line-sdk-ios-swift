@@ -57,7 +57,7 @@ public enum CryptoError: Error {
         case encryptingError(Error?)
         case decryptingError(Error?)
         case signingError(Error?)
-        case verifyingError(Error?)
+        case verifyingError(Error?, statusCode: Int?)
     }
 
     /// The underlying reason for why a `.JWTFailed` happens.

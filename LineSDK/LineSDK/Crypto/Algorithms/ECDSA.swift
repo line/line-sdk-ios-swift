@@ -27,6 +27,25 @@ struct ECDSA {}
 
 /// ECDRA Digest Algorithms.
 extension ECDSA {
+    enum Curve {
+        case P256, P384, P521
+        
+        var signatureOctetLength: Int {
+            return coordinateOctetLength * 2
+        }
+        
+        var coordinateOctetLength: Int {
+            switch self {
+            case .P256:
+                return 32
+            case .P384:
+                return 48
+            case .P521:
+                return 66
+            }
+        }
+    }
+    
     enum Algorithm: CryptoAlgorithm {
         case sha1, sha224, sha256, sha384, sha512
         
@@ -61,6 +80,15 @@ extension ECDSA {
             case .sha256: return CC_SHA256
             case .sha384: return CC_SHA384
             case .sha512: return CC_SHA512
+            }
+        }
+        
+        var curve: Curve {
+            switch self {
+            case .sha1, .sha224: Log.fatalError("Too simple SHA algorithm. Not supported.")
+            case .sha256: return .P256
+            case .sha384: return .P384
+            case .sha512: return .P521
             }
         }
     }

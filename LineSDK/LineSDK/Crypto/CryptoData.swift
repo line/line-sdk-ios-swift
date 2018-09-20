@@ -103,15 +103,35 @@ extension Crypto {
         /// - Returns: The digest algorithm used to verify data with `key`.
         /// - Throws: A `CryptoError` if something wrong happens.
         func verify(with key: CryptoPublicKey, signature: SignedData, algorithm: CryptoAlgorithm) throws -> Bool {
-            var error: Unmanaged<CFError>?
-            let result = SecKeyVerifySignature(
-                key.key, algorithm.signatureAlgorithm, raw as CFData, signature.raw as CFData, &error)
             
-            guard error == nil else {
-                throw CryptoError.algorithmsFailed(reason: .verifyingError(error?.takeRetainedValue()))
+            // EC algorithm does not work when using iOS 10 SecKeyVerifySignature and related SecKeyAlgorithm.
+            // It might be an issue or an implementation mistake. However, raw verify works fine, we treat them in
+            // different code path
+            if let rsaAlgorithm = algorithm as? RSA.Algorithm {
+                var error: Unmanaged<CFError>?
+                let result = SecKeyVerifySignature(
+                    key.key, rsaAlgorithm.signatureAlgorithm, raw as CFData, signature.raw as CFData, &error)
+                
+                guard error == nil else {
+                    let err = error?.takeRetainedValue()
+                    throw CryptoError.algorithmsFailed(
+                        reason: .verifyingError(err, statusCode: (err as? CustomNSError)?.errorCode))
+                }
+                
+                return result
+            } else if let ecAlgorithm = algorithm as? ECDSA.Algorithm {
+                let digestData = try! raw.digest(using: ecAlgorithm)
+                let digest = [UInt8](digestData)
+                let signatureBytes: [UInt8] = Array(signature.raw)
+                let status = SecKeyRawVerify(
+                    key.key, .sigRaw, digest, digest.count, signatureBytes, ecAlgorithm.curve.signatureOctetLength)
+                if status != 0 {
+                    throw CryptoError.algorithmsFailed(reason: .verifyingError(nil, statusCode: Int(status)))
+                }
+                return true
+            } else {
+                Log.fatalError("Unsupported algorithm: \(algorithm)")
             }
-            
-            return result
         }
     }
     
