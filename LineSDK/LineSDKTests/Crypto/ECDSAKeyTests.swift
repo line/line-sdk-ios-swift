@@ -1,5 +1,5 @@
 //
-//  JWTHelpers.swift
+//  ECDSAKeyTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,29 +19,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import XCTest
+@testable import LineSDK
 
-extension String {
-    // Returns the data of `self` (which is a base64 string), with URL related characters decoded.
-    var base64URLDecoded: Data? {
-        let paddingLength = 4 - count % 4
-        // Filling = for %4 padding.
-        let padding = (paddingLength < 4) ? String(repeating: "=", count: paddingLength) : ""
-        let base64EncodedString = self
-            .replacingOccurrences(of: "-", with: "+")
-            .replacingOccurrences(of: "_", with: "/")
-            + padding
-        return Data(base64Encoded: base64EncodedString)
-    }
-}
+class ECDSAKeyTests: XCTestCase {
 
-extension Data {
-    // Encode `self` with URL escaping considered.
-    var base64URLEncoded: String {
-        let base64Encoded = base64EncodedString()
-        return base64Encoded
-            .replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
+    func testCreatingFromPEM() {
+        let keyString = """
+        -----BEGIN PUBLIC KEY-----
+        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJrcJv7WmUDazFvBba3WDzo2fzb/z
+        pj8ydffUZ7h+dNSMB6zKponPpCAsTrj9ejNcJBNC5sNP4+1c+JXZ6OuKKA==
+        -----END PUBLIC KEY-----
+        """
+        do {
+            let k = try Crypto.ECDSAPublicKey(pem: keyString)
+            print(k)
+        } catch {
+            XCTFail("\(error)")
+        }
     }
 }

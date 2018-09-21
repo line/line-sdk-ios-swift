@@ -1,5 +1,5 @@
 //
-//  JWTHelpers.swift
+//  ECDSATests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,29 +19,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import XCTest
+@testable import LineSDK
 
-extension String {
-    // Returns the data of `self` (which is a base64 string), with URL related characters decoded.
-    var base64URLDecoded: Data? {
-        let paddingLength = 4 - count % 4
-        // Filling = for %4 padding.
-        let padding = (paddingLength < 4) ? String(repeating: "=", count: paddingLength) : ""
-        let base64EncodedString = self
-            .replacingOccurrences(of: "-", with: "+")
-            .replacingOccurrences(of: "_", with: "/")
-            + padding
-        return Data(base64Encoded: base64EncodedString)
-    }
-}
+class ECDSATests: XCTestCase {
 
-extension Data {
-    // Encode `self` with URL escaping considered.
-    var base64URLEncoded: String {
-        let base64Encoded = base64EncodedString()
-        return base64Encoded
-            .replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
+    func testVerify() {
+        let publicKey = try! Crypto.ECDSAPublicKey(pem: """
+        -----BEGIN PUBLIC KEY-----
+        MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEEVs/o5+uQbTjL3chynL4wXgUg2R9
+        q9UU8I5mEovUf86QZ7kOBIjJwqnzD1omageEHWwHdBO6B+dFabmdT9POxg==
+        -----END PUBLIC KEY-----
+        """)
+        
+        let plainData = try! Crypto.PlainData(
+            string: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiw" +
+                    "ibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMX0")
+        let signed = try! Crypto.SignedData(
+            base64Encoded: "dOUxHenonzvseGMHfCurlN4XXhdjTe80JKeuPkfHJjww6ayz9Ahm8G4l1g4/ji3mk8mNyc7ziD+pRGCPklZ8aQ==")
+        
+        do {
+            let result = try plainData.verify(with: publicKey, signature: signed, algorithm: ECDSA.Algorithm.sha256)
+            XCTAssertTrue(result)
+        } catch {
+            XCTFail("\(error)")
+        }
     }
+
 }

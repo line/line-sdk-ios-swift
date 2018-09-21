@@ -1,5 +1,5 @@
 //
-//  RSA.swift
+//  CryptoData.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,38 +20,42 @@
 //
 
 import Foundation
-import CommonCrypto
 
-/// Namespace for RSA related things.
-struct RSA {}
-
-/// Define a data type under RSA domain. All RSA data types just behave as a container for raw data, but with
+/// Defines a data type under crypto domain. All data types just behave as a container for raw data, but with
 /// different operation.
-protocol RSAData: Equatable {
+protocol CryptoData: Equatable {
     var raw: Data { get }
     init(raw: Data)
-    func digest(using algorithm: RSA.Algorithm) throws -> Data
+    func digest(using algorithm: CryptoAlgorithm) throws -> Data
 }
 
-
-// Some convenience methods.
-extension RSAData {
+extension CryptoData {
+    
+    /// Creates a data object in crypto domian for operation from a base64 string.
+    ///
+    /// - Parameter string: The raw data in base64 encoding.
+    /// - Throws: A `CryptoError` if something wrong happens.
     init(base64Encoded string: String) throws {
         guard let data = Data(base64Encoded: string) else {
             throw CryptoError.generalError(reason: .base64ConversionFailed(string: string))
         }
         self.init(raw: data)
     }
-
-    func digest(using algorithm: RSA.Algorithm) throws -> Data {
-        return try raw.digest(using: algorithm)
+    
+    /// Calculates the digest for current data under a given algorithm.
+    ///
+    /// - Parameter algorithm: The crypto algorithm used to calculate the data digest.
+    /// - Returns: A `Data` represents the digest of `self`.
+    func digest(using algorithm: CryptoAlgorithm) -> Data {
+        return raw.digest(using: algorithm)
     }
 }
 
-/// Data Types of RSA related domain.
-extension RSA {
+struct Crypto {}
+/// Data Types of Crypto related domain.
+extension Crypto {
     /// Represents unencrypted data. The plain data could be encrypted or signed.
-    struct PlainData: RSAData {
+    struct PlainData: CryptoData {
         let raw: Data
         
         init(raw: Data) { self.raw = raw }
@@ -70,12 +74,12 @@ extension RSA {
         ///   - algorithm: The digest algorithm used to encrypt data with `key`.
         /// - Returns: The encrypted data representation.
         /// - Throws: A `CryptoError` if something wrong happens.
-        func encrypted(with key: PublicKey, using algorithm: RSA.Algorithm) throws -> EncryptedData {
+        func encrypted(with key: CryptoPublicKey, using algorithm: CryptoAlgorithm) throws -> EncryptedData {
             var error: Unmanaged<CFError>?
             guard let data = SecKeyCreateEncryptedData(
                 key.key, algorithm.encryptionAlgorithm, raw as CFData, &error) else
             {
-                throw CryptoError.RSAFailed(reason: .encryptingError(error?.takeRetainedValue()))
+                throw CryptoError.algorithmsFailed(reason: .encryptingError(error?.takeRetainedValue()))
             }
             
             return EncryptedData(raw: data as Data)
@@ -88,12 +92,12 @@ extension RSA {
         ///   - algorithm: The digest algorithm used to sign data with `key`.
         /// - Returns: The signed data representation.
         /// - Throws: A `CryptoError` if something wrong happens.
-        func signed(with key: PrivateKey, algorithm: RSA.Algorithm) throws -> SignedData {
+        func signed(with key: CryptoPrivateKey, algorithm: CryptoAlgorithm) throws -> SignedData {
             var error: Unmanaged<CFError>?
             guard let data = SecKeyCreateSignature(
                 key.key, algorithm.signatureAlgorithm, raw as CFData, &error) else
             {
-                throw CryptoError.RSAFailed(reason: .signingError(error?.takeRetainedValue()))
+                throw CryptoError.algorithmsFailed(reason: .signingError(error?.takeRetainedValue()))
             }
             
             return SignedData(raw: data as Data)
@@ -104,24 +108,47 @@ extension RSA {
         /// - Parameters:
         ///   - key: The public key used to encrypt data.
         ///   - signature: The signed data created when signing the plain data with paired private key.
-        ///   - algorithm:
+        ///   - algorithm: The digest algorithm used to verify data with `key`.
         /// - Returns: The digest algorithm used to verify data with `key`.
         /// - Throws: A `CryptoError` if something wrong happens.
-        func verify(with key: PublicKey, signature: SignedData, algorithm: RSA.Algorithm) throws -> Bool {
-            var error: Unmanaged<CFError>?
-            let result = SecKeyVerifySignature(
-                key.key, algorithm.signatureAlgorithm, raw as CFData, signature.raw as CFData, &error)
+        func verify(with key: CryptoPublicKey, signature: SignedData, algorithm: CryptoAlgorithm) throws -> Bool {
             
-            guard error == nil else {
-                throw CryptoError.RSAFailed(reason: .verifyingError(error?.takeRetainedValue()))
+            // EC algorithm does not work when using iOS 10 SecKeyVerifySignature and related SecKeyAlgorithm.
+            // Maybe it is due to https://forums.developer.apple.com/thread/83136 (ECDSA signature generated by OpenSSL)
+            // It might be an issue or an implementation mistake. However, raw verify works fine, so we treat them in
+            // different code path.
+            if let rsaAlgorithm = algorithm as? RSA.Algorithm {
+                var error: Unmanaged<CFError>?
+                let result = SecKeyVerifySignature(
+                    key.key, rsaAlgorithm.signatureAlgorithm, raw as CFData, signature.raw as CFData, &error)
+                
+                guard error == nil else {
+                    let err = error?.takeRetainedValue()
+                    throw CryptoError.algorithmsFailed(
+                        reason: .verifyingError(err, statusCode: (err as? CustomNSError)?.errorCode))
+                }
+                
+                return result
+            } else if let ecAlgorithm = algorithm as? ECDSA.Algorithm {
+                let digestData = raw.digest(using: ecAlgorithm)
+                let digest = [UInt8](digestData)
+                let signatureBytes: [UInt8] = Array(signature.raw)
+                let status = SecKeyRawVerify(
+                    key.key, .sigRaw, digest, digest.count, signatureBytes, ecAlgorithm.curve.signatureOctetLength)
+                if status != 0 {
+                    let statusCode = Int(status)
+                    let error = NSError(domain: CryptoError.errorDomain, code: statusCode, userInfo: nil)
+                    throw CryptoError.algorithmsFailed(reason: .verifyingError(error, statusCode: statusCode))
+                }
+                return true
+            } else {
+                Log.fatalError("Unsupported algorithm: \(algorithm)")
             }
-            
-            return result
         }
     }
     
     /// Represents encrypted data. The encrypted data could be decrypted.
-    struct EncryptedData: RSAData {
+    struct EncryptedData: CryptoData {
         let raw: Data
         
         /// Decrypts the current encrypted data with an RSA private key, using a given algorithm.
@@ -131,19 +158,19 @@ extension RSA {
         ///   - algorithm: The digest algorithm used to decrypt data with `key`.
         /// - Returns: The plain data representation.
         /// - Throws: A `CryptoError` if something wrong happens.
-        func decrypted(with key: PrivateKey, using algorithm: RSA.Algorithm) throws -> PlainData {
+        func decrypted(with key: CryptoPrivateKey, using algorithm: CryptoAlgorithm) throws -> PlainData {
             var error: Unmanaged<CFError>?
             guard let data = SecKeyCreateDecryptedData(
                 key.key, algorithm.encryptionAlgorithm, raw as CFData, &error) else
             {
-                throw CryptoError.RSAFailed(reason: .decryptingError(error?.takeRetainedValue()))
+                throw CryptoError.algorithmsFailed(reason: .decryptingError(error?.takeRetainedValue()))
             }
             
             return PlainData(raw: data as Data)
         }
     }
     
-    struct SignedData: RSAData {
+    struct SignedData: CryptoData {
         let raw: Data
     }
 }

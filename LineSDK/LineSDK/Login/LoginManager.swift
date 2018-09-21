@@ -313,8 +313,8 @@ extension LoginManager {
     }
     
     func verifyIDToken(_ token: JWT, key: JWK, process: LoginProcess, userID: String?) throws {
-        let rsaKey = try RSA.PublicKey(key)
-        try token.verify(with: rsaKey)
+        
+        try token.verify(with: key)
         
         let payload = token.payload
         try payload.verify(keyPath: \.issuer, expected: "https://access.line.me")

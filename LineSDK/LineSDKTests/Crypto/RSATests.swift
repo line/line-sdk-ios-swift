@@ -29,9 +29,9 @@ class RSATests: XCTestCase {
         
         let data = text.data(using: .utf8)!
 
-        let data1 = RSA.PlainData(raw: data)
-        let data2 = try! RSA.PlainData(base64Encoded: data.base64EncodedString())
-        let data3 = try! RSA.PlainData(string: text)
+        let data1 = Crypto.PlainData(raw: data)
+        let data2 = try! Crypto.PlainData(base64Encoded: data.base64EncodedString())
+        let data3 = try! Crypto.PlainData(string: text)
         
         XCTAssertEqual(data1, data2)
         XCTAssertEqual(data2, data3)
@@ -39,22 +39,22 @@ class RSATests: XCTestCase {
     
     func testSign() {
         let privateKeyPath = getFileURL(forResource: "test_private", ofType: "pem")
-        let privateKey = try! RSA.PrivateKey(pem: try! String(contentsOf: privateKeyPath))
+        let privateKey = try! Crypto.RSAPrivateKey(pem: try! String(contentsOf: privateKeyPath))
         
         let publicKeyPath = getFileURL(forResource: "test_public", ofType: "cer")
-        let publicKey = try! RSA.PublicKey(certificate: try! Data(contentsOf: publicKeyPath))
+        let publicKey = try! Crypto.RSAPublicKey(certificate: try! Data(contentsOf: publicKeyPath))
         
         let data = "hello".data(using: .utf8)!
-        let plainData = RSA.PlainData(raw: data)
+        let plainData = Crypto.PlainData(raw: data)
         do {
-            let signedData = try plainData.signed(with: privateKey, algorithm: .sha256)
-            let plainData = RSA.PlainData(raw: data)
+            let signedData = try plainData.signed(with: privateKey, algorithm: RSA.Algorithm.sha256)
+            let plainData = Crypto.PlainData(raw: data)
             
-            let result = try plainData.verify(with: publicKey, signature: signedData, algorithm: .sha256)
+            let result = try plainData.verify(with: publicKey, signature: signedData, algorithm: RSA.Algorithm.sha256)
             
             let malformedData = "world".data(using: .utf8)!
-            let wrong = try? RSA.PlainData(raw: malformedData)
-                            .verify(with: publicKey, signature: signedData, algorithm: .sha256)
+            let wrong = try? Crypto.PlainData(raw: malformedData)
+                            .verify(with: publicKey, signature: signedData, algorithm: RSA.Algorithm.sha256)
             
             XCTAssertTrue(result)
             XCTAssertNil(wrong)
@@ -65,23 +65,23 @@ class RSATests: XCTestCase {
     
     func testEncrypt() {
         let privateKeyPath = getFileURL(forResource: "test_private", ofType: "pem")
-        let privateKey = try! RSA.PrivateKey(pem: try! String(contentsOf: privateKeyPath))
+        let privateKey = try! Crypto.RSAPrivateKey(pem: try! String(contentsOf: privateKeyPath))
         
         let publicKeyPath = getFileURL(forResource: "test_public", ofType: "cer")
-        let publicKey = try! RSA.PublicKey(certificate: try! Data(contentsOf: publicKeyPath))
+        let publicKey = try! Crypto.RSAPublicKey(certificate: try! Data(contentsOf: publicKeyPath))
         
         let data = "hello".data(using: .utf8)!
-        let plainData = RSA.PlainData(raw: data)
+        let plainData = Crypto.PlainData(raw: data)
         
-        let encrypted = try! plainData.encrypted(with: publicKey, using: .sha512)
-        let decrypted = try! encrypted.decrypted(with: privateKey, using: .sha512)
+        let encrypted = try! plainData.encrypted(with: publicKey, using: RSA.Algorithm.sha512)
+        let decrypted = try! encrypted.decrypted(with: privateKey, using: RSA.Algorithm.sha512)
         
         let result = String(data: decrypted.raw, encoding: .utf8)
         XCTAssertEqual(result, "hello")
     }
     
     func testVerify() {
-        let publicKey = try! RSA.PublicKey(pem: """
+        let publicKey = try! Crypto.RSAPublicKey(pem: """
             -----BEGIN PUBLIC KEY-----
             MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugd
             UWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQs
@@ -90,16 +90,16 @@ class RSATests: XCTestCase {
             -----END PUBLIC KEY-----
             """)
         
-        let plainData = try! RSA.PlainData(
+        let plainData = try! Crypto.PlainData(
             string: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiw" +
                     "ibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0")
         
-        let signed = try! RSA.SignedData(
+        let signed = try! Crypto.SignedData(
             base64Encoded: "TCYt5XsITJX1CxPCT8yAV+TVkIEq/PbChOMqsLfRoPsnsgw5WEuts01mq+pQy7UJiN5mgRx" +
                            "D+WUcX16dUEMGlv50aqzpqh4Qktb3rk+BuQy72IFLOqV0G/zS245+kronKb78cPN25DGlcT" +
                            "wLtjPAYuNzVBAh4vGHSrQyHUdBBPM=")
         do {
-            let result = try plainData.verify(with: publicKey, signature: signed, algorithm: .sha256)
+            let result = try plainData.verify(with: publicKey, signature: signed, algorithm: RSA.Algorithm.sha256)
             XCTAssertTrue(result)
         } catch {
             XCTFail("\(error)")

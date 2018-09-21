@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        LoginManager.shared.setup(channelID: "44", universalLinkURL: nil)
+        LoginManager.shared.setup(channelID: "1539955650", universalLinkURL: nil)
         
         return true
     }

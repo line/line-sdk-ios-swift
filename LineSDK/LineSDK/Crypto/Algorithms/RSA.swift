@@ -1,5 +1,5 @@
 //
-//  RSAAlgorithm.swift
+//  RSA.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,15 +22,12 @@
 import Foundation
 import CommonCrypto
 
+/// Namespace for RSA related things.
+struct RSA {}
+
 /// RSA Digest Algorithms.
 extension RSA {
-    
-    typealias Digest = (
-        _ data: UnsafeRawPointer?,
-        _ length: CC_LONG,
-        _ md: UnsafeMutablePointer<UInt8>?) -> UnsafeMutablePointer<UInt8>?
-    
-    enum Algorithm {
+    enum Algorithm: CryptoAlgorithm {
         case sha1, sha224, sha256, sha384, sha512
         
         var length: CC_LONG {
@@ -63,7 +60,7 @@ extension RSA {
             }
         }
         
-        var digest: Digest {
+        var digest: CryptoDigest {
             switch self {
             case .sha1:   return CC_SHA1
             case .sha224: return CC_SHA224
@@ -72,13 +69,5 @@ extension RSA {
             case .sha512: return CC_SHA512
             }
         }
-    }
-}
-
-extension Data {
-    func digest(using algorithm: RSA.Algorithm) throws -> Data {
-        var hash = [UInt8](repeating: 0, count: Int(algorithm.length))
-        withUnsafeBytes { _ = algorithm.digest($0, CC_LONG(count), &hash) }
-        return Data(bytes: hash)
     }
 }

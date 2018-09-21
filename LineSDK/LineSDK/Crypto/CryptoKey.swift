@@ -1,5 +1,5 @@
 //
-//  RSAKey.swift
+//  CryptoKey.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,16 +20,22 @@
 //
 
 import Foundation
-import CommonCrypto
 
-protocol RSAKey {
+/// Represents a general key in crypto domain.
+/// Basically it is a wrapper of a native `SecKey`. All keys should be created by some DER raw data, but they could
+/// have its own clustered implementation.
+protocol CryptoKey {
     var key: SecKey { get }
     init(key: SecKey)
     init(der data: Data) throws
 }
 
-extension RSAKey {
-    /// Creates a public key with a base64-encoded string representing DER data.
+protocol CryptoPublicKey: CryptoKey {}
+
+protocol CryptoPrivateKey: CryptoKey {}
+
+extension CryptoKey {
+    /// Creates a key with a base64-encoded string representing DER data.
     ///
     /// - Parameter base64Encoded: Base64-encoded DER data.
     /// - Throws: Any possible error while creating the key.
@@ -40,7 +46,7 @@ extension RSAKey {
         try self.init(der: data)
     }
     
-    /// Creates a public key with a given PEM encoded string.
+    /// Creates a key with a given PEM encoded string.
     ///
     /// - Parameter string: The PEM encoded string.
     /// - Throws: Any possible error while creating the key.
@@ -50,9 +56,12 @@ extension RSAKey {
     }
 }
 
-extension RSA {
+// MARK: - RSA Keys
+extension Crypto {
     
-    struct PublicKey: RSAKey {
+    /// Represents an RSA public key. This key should follow PKCS #1 specifications and with ASN.1 encoded.
+    // RFC8017 & RFC3447
+    struct RSAPublicKey: CryptoPublicKey {
         let key: SecKey
         init(key: SecKey) { self.key = key }
         
@@ -61,8 +70,8 @@ extension RSA {
         /// - Parameter data: The DER data from which to create the public key.
         /// - Throws: Any possible error while creating the key.
         init(der data: Data) throws {
-            let keyData = try data.x509HeaserStripped()
-            self.key = try SecKey.createKey(derData: keyData, keyClass: .publicKey)
+            let keyData = try data.x509HeaserStrippedForRSA()
+            self.key = try SecKey.createKey(derData: keyData, keyClass: .publicKey, keyType: .rsa)
         }
         
         /// Creates a public key from a certificate data.
@@ -80,7 +89,8 @@ extension RSA {
         }
     }
     
-    struct PrivateKey: RSAKey {
+    /// Represents an RSA private key.
+    struct RSAPrivateKey: CryptoPrivateKey {
         let key: SecKey
         init(key: SecKey) { self.key = key }
         
@@ -89,23 +99,42 @@ extension RSA {
         /// - Parameter data: The DER data from which to create the private key.
         /// - Throws: Any possible error while creating the key.
         init(der data: Data) throws {
-            let keyData = try data.x509HeaserStripped()
-            self.key = try SecKey.createKey(derData: keyData, keyClass: .privateKey)
+            let keyData = try data.x509HeaserStrippedForRSA()
+            self.key = try SecKey.createKey(derData: keyData, keyClass: .privateKey, keyType: .rsa)
         }
     }
 }
 
-extension RSA.PublicKey {
-    init(_ key: JWK) throws {
-        let data = try key.getKeyData()
-        try self.init(der: data)
+// MARK: - ECDSA Keys
+// Now only public key support is provided (since we only use public keys to verify a signature).
+extension Crypto {
+    
+    /// Represents an ECDSA public key. The raw data of this key should follow X9.62 for EC parameters encoding or
+    /// it should be just a plain key with uncompressed indication. Compressed EC key is not supported yet.
+    // RFC5480 https://tools.ietf.org/html/rfc5480
+    struct ECDSAPublicKey: CryptoPublicKey {
+        let key: SecKey
+        init(key: SecKey) { self.key = key }
+        
+        init(der data: Data) throws {
+            let keyData = try data.x509HeaserStrippedForEC()
+            self.key = try SecKey.createKey(derData: keyData, keyClass: .publicKey, keyType: .ec)
+        }
     }
 }
 
-// This should be in the same file with JWTSignKey protocol definition.
-// See https://bugs.swift.org/browse/SR-631 & https://github.com/apple/swift/pull/18168
-extension RSA.PublicKey: JWTSignKey {
-    var RSAKey: RSA.PublicKey? {
-        return self
+// MARK: - JWK Related Methods
+extension JWK {
+    
+    /// Helps for converting this `JWK` to a `CryptoPublicKey`.
+    ///
+    /// - Returns: The converted crypto public key, if succeeded.
+    /// - Throws: Any possible error while converting the key.
+    func getPublicKey() throws -> CryptoPublicKey {
+        let data = try getKeyData()
+        switch keyType {
+        case .rsa: return try Crypto.RSAPublicKey(der: data)
+        case .ec: return try Crypto.ECDSAPublicKey(der: data)
+        }
     }
 }

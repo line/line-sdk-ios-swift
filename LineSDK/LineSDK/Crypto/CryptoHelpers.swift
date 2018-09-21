@@ -23,23 +23,21 @@ import Foundation
 import CommonCrypto
 
 extension Data {
-    /// Data with x509 stripped from a provided ASN.1 DER public key.
-    /// The DER data will be returned as is, if no header contained.
-    /// We need to do this on Apple's platform for accepting a key.
-    // http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/
-    func x509HeaserStripped() throws -> Data {
+
+    func x509HeaserStripped(earlyTerminator: UInt8) throws -> Data {
         let count = self.count / MemoryLayout<CUnsignedChar>.size
-        
         guard count > 0 else {
-            throw CryptoError.RSAFailed(reason: .invalidDERKey(data: self, reason: "The input key is empty."))
+            throw CryptoError.algorithmsFailed(reason: .invalidDERKey(data: self, reason: "The input key is empty."))
         }
-        
-        var bytes = [UInt8](self)
         
         // Check the first byte
         var index = 0
-        guard bytes[index] == ASN1Type.sequence.byte else {
-            throw CryptoError.RSAFailed(
+        
+        // If the first byte is already the terminator, just return.
+        if self[index] == earlyTerminator { return self }
+        
+        guard self[index] == ASN1Type.sequence.byte else {
+            throw CryptoError.algorithmsFailed(
                 reason: .invalidDERKey(
                     data: self,
                     reason: "The input key is invalid. ASN.1 structure requires 0x30 (SEQUENCE) as its first byte"
@@ -49,57 +47,72 @@ extension Data {
         
         // octets length
         index += 1
-        if bytes[index] > 0x80 {
-            index += Int(bytes[index]) - 0x80 + 1
+        if self[index] > 0x80 { // 0x80 == 128
+            index += Int(self[index]) - 0x80 + 1
         } else {
             index += 1
         }
         
-        // If the target == 0x02, it is an INTEGER. There is no X509 header contained. We could just return the
-        // input DER data as is.
-        if bytes[index] == ASN1Type.integer.byte { return self }
+        // Check again for the terminator (for RSA, it should be an INTEGER).
+        // There is no X509 header contained anymore. We could just return the input DER data as is.
+        if self[index] == earlyTerminator { return self }
         
         // Handle X.509 key now. PKCS #1 rsaEncryption szOID_RSA_RSA, it should look like this:
         // 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00
-        guard bytes[index] == 0x30 else {
-            throw CryptoError.RSAFailed(
+        guard self[index] == ASN1Type.sequence.byte else {
+            throw CryptoError.algorithmsFailed(
                 reason: .invalidX509Header(
-                    data: self, index: index, reason: "Expects byte 0x30, but found \(bytes[index])"
-                )
-            )
-        }
-        
-        index += 15
-        if bytes[index] != 0x03 {
-            throw CryptoError.RSAFailed(
-                reason: .invalidX509Header(
-                    data: self, index: index, reason: "Expects byte 0x03, but found \(bytes[index])"
+                    data: self, index: index, reason: "Expects byte 0x30, but found \(self[index])"
                 )
             )
         }
         
         index += 1
-        if bytes[index] > 0x80 {
-            index += Int(bytes[index]) - 0x80 + 1
+        index += Int(self[index]) + 1
+        guard self[index] == ASN1Type.bitString.byte else {
+            throw CryptoError.algorithmsFailed(
+                reason: .invalidX509Header(
+                    data: self, index: index, reason: "Expects byte 0x03, but found \(self[index])"
+                )
+            )
+        }
+        
+        index += 1
+        if self[index] > 0x80 {
+            index += Int(self[index]) - 0x80 + 1
         } else {
             index += 1
         }
         
         // End of header
-        guard bytes[index] == 0 else {
-            throw CryptoError.RSAFailed(
+        guard self[index] == 0 else {
+            throw CryptoError.algorithmsFailed(
                 reason: .invalidX509Header(
-                    data: self, index: index, reason: "Expects byte 0x00, but found \(bytes[index])"
+                    data: self, index: index, reason: "Expects byte 0x00, but found \(self[index])"
                 )
             )
         }
         
         index += 1
         
-        let strippedKeyBytes = [UInt8](bytes[index...self.count - 1])
+        let strippedKeyBytes = [UInt8](self[index...self.count - 1])
         let data = Data(bytes: UnsafePointer<UInt8>(strippedKeyBytes), count: self.count - index)
         
         return data
+    }
+    
+    /// Data with x509 stripped from a provided ASN.1 DER EC public key.
+    /// The DER data will be returned as is, if no header contained.
+    func x509HeaserStrippedForEC() throws -> Data {
+        return try x509HeaserStripped(earlyTerminator: ASN1Type.uncompressIndicator.byte)
+    }
+    
+    /// Data with x509 stripped from a provided ASN.1 DER RSA public key.
+    /// The DER data will be returned as is, if no header contained.
+    /// We need to do this on Apple's platform for accepting a key.
+    // http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/
+    func x509HeaserStrippedForRSA() throws -> Data {
+        return try x509HeaserStripped(earlyTerminator: ASN1Type.integer.byte)
     }
 }
 
@@ -108,37 +121,56 @@ extension SecKey {
     enum KeyClass {
         case publicKey
         case privateKey
+        
+        var name: CFString {
+            switch self {
+            case .publicKey: return kSecAttrKeyClassPublic
+            case .privateKey: return kSecAttrKeyClassPrivate
+            }
+        }
+    }
+    
+    enum KeyType {
+        case rsa
+        case ec
+        
+        var name: CFString {
+            switch self {
+            case .rsa: return kSecAttrKeyTypeRSA
+            case .ec: return kSecAttrKeyTypeECSECPrimeRandom
+            }
+        }
     }
     
     // Create a general key from DER raw data.
-    static func createKey(derData data: Data, keyClass: KeyClass) throws -> SecKey {
-        let keyClass = keyClass == .publicKey ? kSecAttrKeyClassPublic : kSecAttrKeyClassPrivate
+    static func createKey(derData data: Data, keyClass: KeyClass, keyType: KeyType) throws -> SecKey {
         let sizeInBits = data.count * MemoryLayout<UInt8>.size
         let attributes: [CFString: Any] = [
-            kSecAttrKeyType: kSecAttrKeyTypeRSA,
-            kSecAttrKeyClass: keyClass,
+            kSecAttrKeyType: keyType.name,
+            kSecAttrKeyClass: keyClass.name,
             kSecAttrKeySizeInBits: NSNumber(value: sizeInBits)
         ]
         
         var error: Unmanaged<CFError>?
         guard let key = SecKeyCreateWithData(data as CFData, attributes as CFDictionary, &error) else {
             let reason = String(describing: error)
-            throw CryptoError.RSAFailed(reason: .createKeyFailed(data: data, reason: reason))
+            throw CryptoError.algorithmsFailed(reason: .createKeyFailed(data: data, reason: reason))
         }
         
         return key
     }
     
+    // Create a public key from some given certificate data.
     static func createPublicKey(certificateData data: Data) throws -> SecKey {
         guard let certData = SecCertificateCreateWithData(nil, data as CFData) else {
-            throw CryptoError.RSAFailed(
+            throw CryptoError.algorithmsFailed(
                 reason: .createKeyFailed(data: data, reason: "The data is not a valid DER-encoded X.509 certificate"))
         }
         
         // Get public key from certData
         if #available(iOS 10.3, *) {
             guard let key = SecCertificateCopyPublicKey(certData) else {
-                throw CryptoError.RSAFailed(
+                throw CryptoError.algorithmsFailed(
                     reason: .createKeyFailed(data: data, reason: "Cannot copy public key from certificate"))
             }
             return key
@@ -159,7 +191,7 @@ extension String {
         }
         
         guard lines.count != 0 else {
-            throw CryptoError.RSAFailed(reason: .invalidPEMKey(string: self, reason: "Empty PEM key after stripping."))
+            throw CryptoError.algorithmsFailed(reason: .invalidPEMKey(string: self, reason: "Empty PEM key after stripping."))
         }
         
         // Strip off carriage returns in case.
@@ -181,11 +213,15 @@ extension RSA {
 enum ASN1Type {
     case sequence
     case integer
+    case bitString
+    case uncompressIndicator
     
     var byte: UInt8 {
         switch self {
         case .sequence: return 0x30
         case .integer: return 0x02
+        case .bitString: return 0x03
+        case .uncompressIndicator: return 0x04
         }
     }
 }

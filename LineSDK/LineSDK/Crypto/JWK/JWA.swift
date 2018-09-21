@@ -25,15 +25,24 @@ import Foundation
 // Only RSA related algorithms are required for LineSDK, ref:  https://tools.ietf.org/html/rfc7518
 struct JWA {
     enum Algorithm: String, Decodable {
+        
         case RS256
         case RS384
         case RS512
         
-        var rsaAlgorithm: RSA.Algorithm {
+        case ES256
+        case ES384
+        case ES512
+        
+        var algorithm: CryptoAlgorithm {
             switch self {
-            case .RS256: return .sha256
-            case .RS384: return .sha384
-            case .RS512: return .sha512
+            case .RS256: return RSA.Algorithm.sha256
+            case .RS384: return RSA.Algorithm.sha384
+            case .RS512: return RSA.Algorithm.sha512
+                
+            case .ES256: return ECDSA.Algorithm.sha256
+            case .ES384: return ECDSA.Algorithm.sha384
+            case .ES512: return ECDSA.Algorithm.sha512
             }
         }
     }
@@ -49,6 +58,7 @@ extension JWA {
         }
         
         case rsa(RSAParameters)
+        case ec(ECDRAParameters)
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -56,11 +66,18 @@ extension JWA {
             switch keyType {
             case .rsa:
                 self = .rsa(try RSAParameters(from: decoder))
+            case .ec:
+                self = .ec(try ECDRAParameters(from: decoder))
             }
         }
         
         var asRSA: RSAParameters? {
             if case .rsa(let parameters) = self { return parameters }
+            return nil
+        }
+        
+        var asEC: ECDRAParameters? {
+            if case .ec(let parameters) = self { return parameters }
             return nil
         }
     }
@@ -69,13 +86,22 @@ extension JWA {
 extension JWA {
     
     struct RSAParameters: Decodable {
+        
+        enum Algorithm: String, Decodable {
+            case RS256
+            case RS384
+            case RS512
+        }
+        
         // Private RSA key is not used in LineSDK, so we only support public key for now.
         let modulus: String
         let exponent: String
+        let algorithm: Algorithm
         
         enum CodingKeys: String, CodingKey {
             case modulus = "n"
             case exponent = "e"
+            case algorithm = "alg"
         }
         
         // Get public key DER data from modulus and exponent.
@@ -108,6 +134,52 @@ extension JWA {
     }
 }
 
+extension JWA {
+    // RFC 5349 https://tools.ietf.org/html/rfc5349
+    // X.509 SPKI
+    struct ECDRAParameters: Decodable {
+
+        let x: String
+        let y: String
+        let curve: ECDSA.Curve
+        
+        enum CodingKeys: String, CodingKey {
+            case x, y, curve = "crv"
+        }
+        
+        func getKeyData() throws -> Data {
+            guard let decodedXData = x.base64URLDecoded else {
+                throw CryptoError.generalError(reason: .base64ConversionFailed(string: x))
+            }
+            guard let decodedYData = y.base64URLDecoded else {
+                throw CryptoError.generalError(reason: .base64ConversionFailed(string: y))
+            }
+            
+            
+            // Make sure X and Y Coordinate not started with 0x00. Some SSL implementation would append 0x00 when to
+            // prevent a big number to be recognized as minus. However, SecKey would expect a non-0x00 started value.
+            // https://stackoverflow.com/questions/4407779/biginteger-to-byte
+            let xBytes: [UInt8]
+            if decodedXData.count == curve.coordinateOctetLength {
+                xBytes = [UInt8](decodedXData)
+            } else {
+                xBytes = [UInt8](decodedXData).dropFirst { $0 == 0x00 }
+            }
+            
+            let yBytes: [UInt8]
+            if decodedYData.count == curve.coordinateOctetLength {
+                yBytes = [UInt8](decodedYData)
+            } else {
+                yBytes = [UInt8](decodedYData).dropFirst { $0 == 0x00 }
+            }
+            
+            let uncompressedIndicator: [UInt8] = [ASN1Type.uncompressIndicator.byte]
+            
+            return Data(bytes: uncompressedIndicator + xBytes + yBytes)
+        }
+    }
+}
+
 // MARK: Array Extension for Encoding
 // Inspired by: https://github.com/henrinormak/Heimdall/blob/master/Heimdall/Heimdall.swift
 extension Array where Element == UInt8 {
@@ -121,6 +193,20 @@ extension Array where Element == UInt8 {
         return tlvTriplet
     }
     
+}
+
+extension Array where Element: Equatable {
+    /// Returns an array containing all but the first element, if `condition` meets. Otherwise, returns `self`.
+    ///
+    /// - Parameter condition: The condition to check when try to drop the first element.
+    /// - Returns: An array without the first element if `condition` returns `true`. Otherwise, `self`.
+    func dropFirst(_ condition: (Element) -> Bool) -> Array {
+        if count == 0 { return self }
+        if condition(self[startIndex]) {
+            return Array(dropFirst())
+        }
+        return self
+    }
 }
 
 // MARK: Freestanding Helper Function

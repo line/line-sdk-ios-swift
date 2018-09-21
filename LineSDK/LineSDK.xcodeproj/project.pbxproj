@@ -22,7 +22,6 @@
 		4B1C446B2137E98D0094C1D4 /* JWTCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */; };
 		4B2422EF2134FBE8007200C2 /* LineSDKErrorConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2422EE2134FBE8007200C2 /* LineSDKErrorConstant.swift */; };
 		4B25A815213687A400C74B87 /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A814213687A400C74B87 /* RSA.swift */; };
-		4B25A8172136888600C74B87 /* RSAAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A8162136888600C74B87 /* RSAAlgorithm.swift */; };
 		4B2D14E3212F8EDA000DD5BE /* LineSDKUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */; };
 		4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */; };
 		4B2D14ED212F931D000DD5BE /* LineSDKModelInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */; };
@@ -38,6 +37,11 @@
 		4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1E121104C7A00A45510 /* LoginManagerExtension.swift */; };
 		4B39D1E421104DBA00A45510 /* APITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1E321104DBA00A45510 /* APITests.swift */; };
 		4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1E521104F3B00A45510 /* ViewControllerCompatibleTest.swift */; };
+		4B3CCB762152295300F51D76 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB752152295300F51D76 /* CryptoData.swift */; };
+		4B3CCB78215229DC00F51D76 /* CryptoAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB77215229DC00F51D76 /* CryptoAlgorithm.swift */; };
+		4B3CCB9A21523A2600F51D76 /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9921523A2600F51D76 /* CryptoKey.swift */; };
+		4B3CCB9C21523B1300F51D76 /* ECDSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9B21523B1300F51D76 /* ECDSA.swift */; };
+		4B3CCB9E2152449400F51D76 /* ECDSAKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9D2152449400F51D76 /* ECDSAKeyTests.swift */; };
 		4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5B210EF12C00FD19BC /* APIError.swift */; };
 		4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5D210F077700FD19BC /* RequestStubs.swift */; };
 		4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */; };
@@ -97,6 +101,9 @@
 		4B9058D6210073E6004D717F /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D5210073E6004D717F /* LoginManager.swift */; };
 		4B9058D8210078FB004D717F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
 		4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
+		4B94D06721533D4D0049DE68 /* ECDSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D06621533D4D0049DE68 /* ECDSATests.swift */; };
+		4B94D0692153678D0049DE68 /* JWTRSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D0682153678D0049DE68 /* JWTRSATests.swift */; };
+		4B94D06B2153681E0049DE68 /* JWTECTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D06A2153681E0049DE68 /* JWTECTests.swift */; };
 		4B95F3FF21251BB300AD3A81 /* PostSendMessagesRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */; };
 		4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */; };
 		4B95F4042125364500AD3A81 /* PostMultisendMessagesRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B95F4032125364500AD3A81 /* PostMultisendMessagesRequestTests.swift */; };
@@ -192,8 +199,7 @@
 		4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
-		4BF45A842137810600CCD28E /* RSAKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A832137810600CCD28E /* RSAKey.swift */; };
-		4BF45A86213783D000CCD28E /* RSAHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* RSAHelpers.swift */; };
+		4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* CryptoHelpers.swift */; };
 		4BF45A892137B29300CCD28E /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A882137B29300CCD28E /* RSATests.swift */; };
 		4BF45A8B2137B2C500CCD28E /* RSAKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */; };
 		4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */; };
@@ -207,7 +213,6 @@
 		4BFC09F5213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F4213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift */; };
 		4BFC09F7213CF68000F4594D /* GetJWKSetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */; };
 		4BFC09F9213CFB6000F4594D /* GetJWKSetRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F8213CFB6000F4594D /* GetJWKSetRequestTests.swift */; };
-		4BFC09FB213D029400F4594D /* JWTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09FA213D029400F4594D /* JWTTests.swift */; };
 		4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */; };
 		4BFD605C212A8775009E9838 /* FlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605B212A8775009E9838 /* FlexTextComponent.swift */; };
 		4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */; };
@@ -274,7 +279,6 @@
 		4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTCoder.swift; sourceTree = "<group>"; };
 		4B2422EE2134FBE8007200C2 /* LineSDKErrorConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKErrorConstant.swift; sourceTree = "<group>"; };
 		4B25A814213687A400C74B87 /* RSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSA.swift; sourceTree = "<group>"; };
-		4B25A8162136888600C74B87 /* RSAAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAAlgorithm.swift; sourceTree = "<group>"; };
 		4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKUserProfile.swift; sourceTree = "<group>"; };
 		4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAccessTokenVerifyResult.swift; sourceTree = "<group>"; };
 		4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKModelInterfaceTests.m; sourceTree = "<group>"; };
@@ -290,6 +294,11 @@
 		4B39D1E121104C7A00A45510 /* LoginManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerExtension.swift; sourceTree = "<group>"; };
 		4B39D1E321104DBA00A45510 /* APITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITests.swift; sourceTree = "<group>"; };
 		4B39D1E521104F3B00A45510 /* ViewControllerCompatibleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerCompatibleTest.swift; sourceTree = "<group>"; };
+		4B3CCB752152295300F51D76 /* CryptoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoData.swift; sourceTree = "<group>"; };
+		4B3CCB77215229DC00F51D76 /* CryptoAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAlgorithm.swift; sourceTree = "<group>"; };
+		4B3CCB9921523A2600F51D76 /* CryptoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoKey.swift; sourceTree = "<group>"; };
+		4B3CCB9B21523B1300F51D76 /* ECDSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSA.swift; sourceTree = "<group>"; };
+		4B3CCB9D2152449400F51D76 /* ECDSAKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSAKeyTests.swift; sourceTree = "<group>"; };
 		4B414D5B210EF12C00FD19BC /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4B414D5D210F077700FD19BC /* RequestStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStubs.swift; sourceTree = "<group>"; };
 		4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageProperties.swift; sourceTree = "<group>"; };
@@ -354,6 +363,9 @@
 		4B9058D5210073E6004D717F /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		4B9058D7210078FB004D717F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		4B9058DB21007C8C004D717F /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
+		4B94D06621533D4D0049DE68 /* ECDSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSATests.swift; sourceTree = "<group>"; };
+		4B94D0682153678D0049DE68 /* JWTRSATests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTRSATests.swift; sourceTree = "<group>"; };
+		4B94D06A2153681E0049DE68 /* JWTECTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTECTests.swift; sourceTree = "<group>"; };
 		4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSendMessagesRequestTests.swift; sourceTree = "<group>"; };
 		4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMultisendMessagesRequest.swift; sourceTree = "<group>"; };
 		4B95F4032125364500AD3A81 /* PostMultisendMessagesRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMultisendMessagesRequestTests.swift; sourceTree = "<group>"; };
@@ -451,8 +463,7 @@
 		4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponentTests.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BF45A8121377DCF00CCD28E /* CryptoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoError.swift; sourceTree = "<group>"; };
-		4BF45A832137810600CCD28E /* RSAKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAKey.swift; sourceTree = "<group>"; };
-		4BF45A85213783D000CCD28E /* RSAHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAHelpers.swift; sourceTree = "<group>"; };
+		4BF45A85213783D000CCD28E /* CryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoHelpers.swift; sourceTree = "<group>"; };
 		4BF45A882137B29300CCD28E /* RSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
 		4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAKeyTests.swift; sourceTree = "<group>"; };
 		4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageContainer.swift; sourceTree = "<group>"; };
@@ -466,7 +477,6 @@
 		4BFC09F4213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDiscoveryDocumentRequestTests.swift; sourceTree = "<group>"; };
 		4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetJWKSetRequest.swift; sourceTree = "<group>"; };
 		4BFC09F8213CFB6000F4594D /* GetJWKSetRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetJWKSetRequestTests.swift; sourceTree = "<group>"; };
-		4BFC09FA213D029400F4594D /* JWTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTTests.swift; sourceTree = "<group>"; };
 		4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBoxComponent.swift; sourceTree = "<group>"; };
 		4BFD605B212A8775009E9838 /* FlexTextComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponent.swift; sourceTree = "<group>"; };
 		4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexComponentMessageTests.swift; sourceTree = "<group>"; };
@@ -578,25 +588,27 @@
 		4B25A811213684F000C74B87 /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
+				4B3CCB752152295300F51D76 /* CryptoData.swift */,
+				4B3CCB77215229DC00F51D76 /* CryptoAlgorithm.swift */,
+				4B3CCB9921523A2600F51D76 /* CryptoKey.swift */,
+				4BF45A85213783D000CCD28E /* CryptoHelpers.swift */,
 				4BF45A8121377DCF00CCD28E /* CryptoError.swift */,
 				4BFC09F2213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift */,
 				4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */,
 				4B1C44632137E0AF0094C1D4 /* JWT */,
 				D1A591252138D26100AC080D /* JWK */,
-				4B25A8122136850900C74B87 /* RSA */,
+				4B25A8122136850900C74B87 /* Algorithms */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
 		};
-		4B25A8122136850900C74B87 /* RSA */ = {
+		4B25A8122136850900C74B87 /* Algorithms */ = {
 			isa = PBXGroup;
 			children = (
 				4B25A814213687A400C74B87 /* RSA.swift */,
-				4B25A8162136888600C74B87 /* RSAAlgorithm.swift */,
-				4BF45A832137810600CCD28E /* RSAKey.swift */,
-				4BF45A85213783D000CCD28E /* RSAHelpers.swift */,
+				4B3CCB9B21523B1300F51D76 /* ECDSA.swift */,
 			);
-			path = RSA;
+			path = Algorithms;
 			sourceTree = "<group>";
 		};
 		4B2D14FB212F9FA5000DD5BE /* Networking */ = {
@@ -1008,19 +1020,22 @@
 		4BF45A872137B27F00CCD28E /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
-				4BF45A8C2137B35B00CCD28E /* SampleKeys */,
+				4BF45A8C2137B35B00CCD28E /* SampleRSAKeys */,
 				4BF45A882137B29300CCD28E /* RSATests.swift */,
 				4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */,
+				4B94D06621533D4D0049DE68 /* ECDSATests.swift */,
+				4B3CCB9D2152449400F51D76 /* ECDSAKeyTests.swift */,
 				4BFC09EE213CCE7700F4594D /* JWKTests.swift */,
 				4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */,
 				4BFC09F4213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift */,
 				4BFC09F8213CFB6000F4594D /* GetJWKSetRequestTests.swift */,
-				4BFC09FA213D029400F4594D /* JWTTests.swift */,
+				4B94D0682153678D0049DE68 /* JWTRSATests.swift */,
+				4B94D06A2153681E0049DE68 /* JWTECTests.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
 		};
-		4BF45A8C2137B35B00CCD28E /* SampleKeys */ = {
+		4BF45A8C2137B35B00CCD28E /* SampleRSAKeys */ = {
 			isa = PBXGroup;
 			children = (
 				4B7D8C2D2137BD8900C6855A /* private.der */,
@@ -1033,7 +1048,7 @@
 				4B7D8C1F2137B9FA00C6855A /* test_private.pem */,
 				4B7D8C242137B9FA00C6855A /* test_public.cer */,
 			);
-			path = SampleKeys;
+			path = SampleRSAKeys;
 			sourceTree = "<group>";
 		};
 		4BF53530212A79C800EA602A /* Messaging */ = {
@@ -1429,7 +1444,6 @@
 				4BD24CF5213E278700606411 /* JWA.swift in Sources */,
 				4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */,
 				4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */,
-				4B25A8172136888600C74B87 /* RSAAlgorithm.swift in Sources */,
 				4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */,
 				4B15EEF4211D466D00866E6C /* TextMessage.swift in Sources */,
 				D1A591292139495B00AC080D /* JWKSet.swift in Sources */,
@@ -1437,7 +1451,7 @@
 				4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */,
 				4B9A303F2121277400174C6F /* LocationMessage.swift in Sources */,
 				4B9A304B21213DBB00174C6F /* TemplateMessagePayload.swift in Sources */,
-				4BF45A86213783D000CCD28E /* RSAHelpers.swift in Sources */,
+				4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */,
 				4B45257621019EFB00A39D4F /* Session.swift in Sources */,
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
 				4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */,
@@ -1445,6 +1459,7 @@
 				4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */,
 				DBE4E36D211D6C1A00184D66 /* User.swift in Sources */,
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
+				4B3CCB9A21523A2600F51D76 /* CryptoKey.swift in Sources */,
 				4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */,
 				4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */,
 				4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */,
@@ -1463,6 +1478,7 @@
 				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
+				4B3CCB9C21523B1300F51D76 /* ECDSA.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
 				4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */,
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,
@@ -1472,6 +1488,7 @@
 				4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */,
 				4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */,
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
+				4B3CCB762152295300F51D76 /* CryptoData.swift in Sources */,
 				4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */,
 				4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */,
 				4B1C44692137E1EE0094C1D4 /* JWTHelpers.swift in Sources */,
@@ -1481,11 +1498,11 @@
 				DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */,
 				4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */,
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
+				4B3CCB78215229DC00F51D76 /* CryptoAlgorithm.swift in Sources */,
 				4BFC09F7213CF68000F4594D /* GetJWKSetRequest.swift in Sources */,
 				DBF20274212C114D00780358 /* Group.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
 				4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */,
-				4BF45A842137810600CCD28E /* RSAKey.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,
 				4BFD605C212A8775009E9838 /* FlexTextComponent.swift in Sources */,
 				4B9A305421215A1A00174C6F /* TemplateConfirmPayload.swift in Sources */,
@@ -1512,6 +1529,7 @@
 				4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */,
 				4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */,
 				4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */,
+				4B94D06721533D4D0049DE68 /* ECDSATests.swift in Sources */,
 				4BF45A892137B29300CCD28E /* RSATests.swift in Sources */,
 				4B95F3FF21251BB300AD3A81 /* PostSendMessagesRequestTests.swift in Sources */,
 				4B6A0FF9212AACEC00B3ED1F /* HexColorTests.swift in Sources */,
@@ -1529,6 +1547,7 @@
 				DBF2027D212D5B5200780358 /* GetApproversInGroupRequestTests.swift in Sources */,
 				4B5EE2E1212BB53F0009DF2E /* FlexBoxComponentTests.swift in Sources */,
 				4B5EE2DF212BAFA00009DF2E /* FlexSpacerComponentTests.swift in Sources */,
+				4B94D0692153678D0049DE68 /* JWTRSATests.swift in Sources */,
 				4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */,
 				4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */,
 				4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */,
@@ -1538,11 +1557,11 @@
 				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
 				4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */,
 				4BFC09F9213CFB6000F4594D /* GetJWKSetRequestTests.swift in Sources */,
-				4BFC09FB213D029400F4594D /* JWTTests.swift in Sources */,
 				4B39D1E421104DBA00A45510 /* APITests.swift in Sources */,
 				4B9A305A2121639600174C6F /* TemplateCarouselPayloadTests.swift in Sources */,
 				4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */,
 				4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */,
+				4B3CCB9E2152449400F51D76 /* ECDSAKeyTests.swift in Sources */,
 				4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */,
 				4B5EE2E8212BE0D00009DF2E /* FlexCarouselContainerTests.swift in Sources */,
 				4BCD27952113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift in Sources */,
@@ -1560,6 +1579,7 @@
 				4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */,
 				4B9A30502121429C00174C6F /* TemplateButtonsPayloadTests.swift in Sources */,
 				4BEB4924212BA0A300BA946A /* FlexIconCompomentTests.swift in Sources */,
+				4B94D06B2153681E0049DE68 /* JWTECTests.swift in Sources */,
 				4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */,
 				DBF2027B212D58FC00780358 /* GetGroupsRequestTests.swift in Sources */,
 				4BFC09F1213CDFC300F4594D /* JWKDataTests.swift in Sources */,

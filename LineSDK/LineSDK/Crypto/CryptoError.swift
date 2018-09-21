@@ -39,7 +39,7 @@ import Foundation
 /// - generalError: Other general errors might happen for crypto in LineSDK.
 public enum CryptoError: Error {
     
-    /// The underlying reason for why a `.RSAFailed` happens.
+    /// The underlying reason for why a `.algorithmsFailed` happens.
     ///
     /// - invalidDERKey: The DER data does not contain a valid RSA key. Code 3016_1001.
     /// - invalidX509Header: x509 header is found in the key, but the expected data is wrong. Code 3016_1002.
@@ -49,7 +49,7 @@ public enum CryptoError: Error {
     /// - decryptingError: Error happens while decrypting some encrypted data. Code 3016_1006.
     /// - signingError: Error happens while signing some plain data. Code 3016_1007.
     /// - verifyingError:  Error happens while verifying data. Code 3016_1008.
-    public enum RSAErrorReason {
+    public enum AlgorithmsErrorReason {
         case invalidDERKey(data: Data, reason: String)
         case invalidX509Header(data: Data, index: Int, reason: String)
         case createKeyFailed(data: Data, reason: String)
@@ -57,7 +57,7 @@ public enum CryptoError: Error {
         case encryptingError(Error?)
         case decryptingError(Error?)
         case signingError(Error?)
-        case verifyingError(Error?)
+        case verifyingError(Error?, statusCode: Int?)
     }
 
     /// The underlying reason for why a `.JWTFailed` happens.
@@ -93,13 +93,13 @@ public enum CryptoError: Error {
         case decodingFailed(string: String, type: Any.Type)
     }
     
-    case RSAFailed(reason: RSAErrorReason)
+    case algorithmsFailed(reason: AlgorithmsErrorReason)
     case JWTFailed(reason: JWTErrorReason)
     case JWKFailed(reason: JWKErrorReason)
     case generalError(reason: GeneralErrorReason)
 }
 
-extension CryptoError.RSAErrorReason {
+extension CryptoError.AlgorithmsErrorReason {
     
     var errorDescription: String? {
         switch self {
@@ -117,8 +117,9 @@ extension CryptoError.RSAErrorReason {
             return "Error happens while decrypting some plain data. Error: \(String(describing: error))"
         case .signingError(let error):
             return "Error happens while signing some plain data. Error: \(String(describing: error))"
-        case .verifyingError(let error):
-            return "Error happens while verifying some plain data. Error: \(String(describing: error))"
+        case .verifyingError(let error, let code):
+            return "Error happens while verifying some plain data. " +
+                   "Error: \(String(describing: error)), code: \(String(describing: code))"
         }
     }
     
@@ -153,8 +154,11 @@ extension CryptoError.RSAErrorReason {
             userInfo[.underlyingError] = error
         case .signingError(let error):
             userInfo[.underlyingError] = error
-        case .verifyingError(let error):
+        case .verifyingError(let error, let code):
             userInfo[.underlyingError] = error
+            if let code = code {
+                userInfo[.statusCode] = code
+            }
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }
@@ -275,7 +279,7 @@ extension CryptoError.GeneralErrorReason {
 extension CryptoError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .RSAFailed(reason: let reason): return reason.errorDescription
+        case .algorithmsFailed(reason: let reason): return reason.errorDescription
         case .JWTFailed(reason: let reason): return reason.errorDescription
         case .JWKFailed(reason: let reason): return reason.errorDescription
         case .generalError(reason: let reason): return reason.errorDescription
@@ -288,7 +292,7 @@ extension CryptoError: CustomNSError {
     
     public var errorUserInfo: [String : Any] {
         switch self {
-        case .RSAFailed(reason: let reason): return reason.errorUserInfo
+        case .algorithmsFailed(reason: let reason): return reason.errorUserInfo
         case .JWTFailed(reason: let reason): return reason.errorUserInfo
         case .JWKFailed(reason: let reason): return reason.errorUserInfo
         case .generalError(reason: let reason): return reason.errorUserInfo
@@ -297,7 +301,7 @@ extension CryptoError: CustomNSError {
     
     public var errorCode: Int {
         switch self {
-        case .RSAFailed(reason: let reason): return reason.errorCode
+        case .algorithmsFailed(reason: let reason): return reason.errorCode
         case .JWTFailed(reason: let reason): return reason.errorCode
         case .JWKFailed(reason: let reason): return reason.errorCode
         case .generalError(reason: let reason): return reason.errorCode
