@@ -23,19 +23,19 @@ import Foundation
 import CommonCrypto
 
 extension Data {
-    /// Data with x509 stripped from a provided ASN.1 DER RSA public key.
-    /// The DER data will be returned as is, if no header contained.
-    /// We need to do this on Apple's platform for accepting a key.
-    // http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/
-    func x509HeaserStrippedForRSA() throws -> Data {
+
+    func x509HeaserStripped(earlyTerminator: UInt8) throws -> Data {
         let count = self.count / MemoryLayout<CUnsignedChar>.size
-        
         guard count > 0 else {
             throw CryptoError.algorithmsFailed(reason: .invalidDERKey(data: self, reason: "The input key is empty."))
         }
         
         // Check the first byte
         var index = 0
+        
+        // If the first byte is already the terminator, just return.
+        if self[index] == earlyTerminator { return self }
+        
         guard self[index] == ASN1Type.sequence.byte else {
             throw CryptoError.algorithmsFailed(
                 reason: .invalidDERKey(
@@ -47,15 +47,15 @@ extension Data {
         
         // octets length
         index += 1
-        if self[index] > 0x80 {
+        if self[index] > 0x80 { // 0x80 == 128
             index += Int(self[index]) - 0x80 + 1
         } else {
             index += 1
         }
         
-        // If the target == 0x02, it is an INTEGER. There is no X509 header contained. We could just return the
-        // input DER data as is.
-        if self[index] == ASN1Type.integer.byte { return self }
+        // Check again for the terminator (for RSA, it should be an INTEGER).
+        // There is no X509 header contained anymore. We could just return the input DER data as is.
+        if self[index] == earlyTerminator { return self }
         
         // Handle X.509 key now. PKCS #1 rsaEncryption szOID_RSA_RSA, it should look like this:
         // 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00
@@ -69,7 +69,7 @@ extension Data {
         
         index += 1
         index += Int(self[index]) + 1
-        guard self[index] == 0x03 else {
+        guard self[index] == ASN1Type.bitString.byte else {
             throw CryptoError.algorithmsFailed(
                 reason: .invalidX509Header(
                     data: self, index: index, reason: "Expects byte 0x03, but found \(self[index])"
@@ -104,78 +104,15 @@ extension Data {
     /// Data with x509 stripped from a provided ASN.1 DER EC public key.
     /// The DER data will be returned as is, if no header contained.
     func x509HeaserStrippedForEC() throws -> Data {
-        let count = self.count / MemoryLayout<CUnsignedChar>.size
-        guard count > 0 else {
-            throw CryptoError.algorithmsFailed(reason: .invalidDERKey(data: self, reason: "The input key is empty."))
-        }
-        
-        // Check the first byte
-        var index = 0
-        
-        let indicator = 0x04
-        // If the target == 0x04, it is an unpressed indication. There is no X509 header contained.
-        // We could just return the DER data as it is.
-        if self[index] == indicator { return self }
-        
-        guard self[index] == ASN1Type.sequence.byte else {
-            throw CryptoError.algorithmsFailed(
-                reason: .invalidDERKey(
-                    data: self,
-                    reason: "The input key is invalid. ASN.1 structure requires 0x30 (SEQUENCE) as its first byte"
-                )
-            )
-        }
-        
-        // octets length
-        index += 1
-        if self[index] > 0x80 {
-            index += Int(self[index]) - 0x80 + 1
-        } else {
-            index += 1
-        }
-        
-        // Handle X.509 key now. EC Key with OID 1.2.840.10045.2.1 prime field
-        // 0x30, 0x13, 0x06, 0x07, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02, 0x21...
-        guard self[index] == ASN1Type.sequence.byte else {
-            throw CryptoError.algorithmsFailed(
-                reason: .invalidX509Header(
-                    data: self, index: index, reason: "Expects byte 0x30, but found \(self[index])"
-                )
-            )
-        }
-        index += 1
-        // Skip octet string
-        index += Int(self[index]) + 1
-        guard self[index] == 0x03 else {
-            throw CryptoError.algorithmsFailed(
-                reason: .invalidX509Header(
-                    data: self, index: index, reason: "Expects byte 0x03, but found \(self[index])"
-                )
-            )
-        }
-        
-        index += 1
-        if self[index] > 0x80 {
-            index += Int(self[index]) - 0x80 + 1
-        } else {
-            index += 1
-        }
-        
-        // End of header
-        guard self[index] == 0 else {
-            throw CryptoError.algorithmsFailed(
-                reason: .invalidX509Header(
-                    data: self, index: index, reason: "Expects byte 0x00, but found \(self[index])"
-                )
-            )
-        }
-        
-        index += 1
-        
-        let strippedKeyBytes = [UInt8](self[index...self.count - 1])
-        let data = Data(bytes: UnsafePointer<UInt8>(strippedKeyBytes), count: self.count - index)
-        
-        return data
+        return try x509HeaserStripped(earlyTerminator: ASN1Type.uncompressIndicator.byte)
+    }
+    
+    /// Data with x509 stripped from a provided ASN.1 DER RSA public key.
+    /// The DER data will be returned as is, if no header contained.
+    /// We need to do this on Apple's platform for accepting a key.
+    // http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/
+    func x509HeaserStrippedForRSA() throws -> Data {
+        return try x509HeaserStripped(earlyTerminator: ASN1Type.integer.byte)
     }
 }
 
@@ -276,11 +213,15 @@ extension RSA {
 enum ASN1Type {
     case sequence
     case integer
+    case bitString
+    case uncompressIndicator
     
     var byte: UInt8 {
         switch self {
         case .sequence: return 0x30
         case .integer: return 0x02
+        case .bitString: return 0x03
+        case .uncompressIndicator: return 0x04
         }
     }
 }

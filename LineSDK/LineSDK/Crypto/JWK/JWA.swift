@@ -139,15 +139,9 @@ extension JWA {
     // X.509 SPKI
     struct ECDRAParameters: Decodable {
 
-        enum Curve: String, Decodable {
-            case P256 = "P-256"
-            case P384 = "P-384"
-            case P521 = "P-521"
-        }
-        
         let x: String
         let y: String
-        let curve: Curve
+        let curve: ECDSA.Curve
         
         enum CodingKeys: String, CodingKey {
             case x, y, curve = "crv"
@@ -161,12 +155,25 @@ extension JWA {
                 throw CryptoError.generalError(reason: .base64ConversionFailed(string: y))
             }
             
+            
             // Make sure X and Y Coordinate not started with 0x00. Some SSL implementation would append 0x00 when to
             // prevent a big number to be recognized as minus. However, SecKey would expect a non-0x00 started value.
             // https://stackoverflow.com/questions/4407779/biginteger-to-byte
-            let xBytes = [UInt8](decodedXData).dropFirst { $0 == 0x00 }
-            let yBytes = [UInt8](decodedYData).dropFirst { $0 == 0x00 }
-            let uncompressedIndicator: [UInt8] = [0x04]
+            let xBytes: [UInt8]
+            if decodedXData.count == curve.coordinateOctetLength {
+                xBytes = [UInt8](decodedXData)
+            } else {
+                xBytes = [UInt8](decodedXData).dropFirst { $0 == 0x00 }
+            }
+            
+            let yBytes: [UInt8]
+            if decodedYData.count == curve.coordinateOctetLength {
+                yBytes = [UInt8](decodedYData)
+            } else {
+                yBytes = [UInt8](decodedYData).dropFirst { $0 == 0x00 }
+            }
+            
+            let uncompressedIndicator: [UInt8] = [ASN1Type.uncompressIndicator.byte]
             
             return Data(bytes: uncompressedIndicator + xBytes + yBytes)
         }

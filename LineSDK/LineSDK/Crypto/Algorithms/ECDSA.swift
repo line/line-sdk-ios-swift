@@ -27,8 +27,10 @@ struct ECDSA {}
 
 /// ECDRA Digest Algorithms.
 extension ECDSA {
-    enum Curve {
-        case P256, P384, P521
+    enum Curve: String, Decodable {
+        case P256 = "P-256"
+        case P384 = "P-384"
+        case P521 = "P-521"
         
         var signatureOctetLength: Int {
             return coordinateOctetLength * 2
