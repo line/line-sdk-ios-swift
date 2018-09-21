@@ -284,9 +284,23 @@ func selectFlexMessage(in viewController: UIViewController, handler: @escaping (
         }()
         handler(simpleBubble)
     })
+
+    alert.addAction(.init(title: "Simple Carousel", style: .default, handler: { _ in
+        let flexCarousel: Message = {
+            var firstBox = FlexBoxComponent(layout: .vertical)
+            firstBox.addComponent(FlexTextComponent(text: "Hello"))
+            firstBox.addComponent(FlexTextComponent(text: "World"))
+            let firstBoxBubbleContainer = FlexBubbleContainer(body: firstBox)
+            var secondBox = FlexBoxComponent(layout: .vertical)
+            secondBox.addComponent(FlexTextComponent(text: "Hello"))
+            secondBox.addComponent(FlexTextComponent(text: "World"))
+            let secondBoxBubbleContainer = FlexBubbleContainer(body: secondBox)
+            return FlexCarouselContainer(contents: [firstBoxBubbleContainer, secondBoxBubbleContainer]).messageWithAltText("This is a flex carousel message")
+        }()
+        handler(flexCarousel)
+    }))
     
     viewController.present(alert, animated: true)
-
 }
 
 
