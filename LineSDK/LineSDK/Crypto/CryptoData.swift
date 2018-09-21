@@ -136,7 +136,9 @@ extension Crypto {
                 let status = SecKeyRawVerify(
                     key.key, .sigRaw, digest, digest.count, signatureBytes, ecAlgorithm.curve.signatureOctetLength)
                 if status != 0 {
-                    throw CryptoError.algorithmsFailed(reason: .verifyingError(nil, statusCode: Int(status)))
+                    let statusCode = Int(status)
+                    let error = NSError(domain: CryptoError.errorDomain, code: statusCode, userInfo: nil)
+                    throw CryptoError.algorithmsFailed(reason: .verifyingError(error, statusCode: statusCode))
                 }
                 return true
             } else {

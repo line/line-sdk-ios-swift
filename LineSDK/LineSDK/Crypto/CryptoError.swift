@@ -117,8 +117,9 @@ extension CryptoError.AlgorithmsErrorReason {
             return "Error happens while decrypting some plain data. Error: \(String(describing: error))"
         case .signingError(let error):
             return "Error happens while signing some plain data. Error: \(String(describing: error))"
-        case .verifyingError(let error):
-            return "Error happens while verifying some plain data. Error: \(String(describing: error))"
+        case .verifyingError(let error, let code):
+            return "Error happens while verifying some plain data. " +
+                   "Error: \(String(describing: error)), code: \(String(describing: code))"
         }
     }
     
@@ -153,8 +154,11 @@ extension CryptoError.AlgorithmsErrorReason {
             userInfo[.underlyingError] = error
         case .signingError(let error):
             userInfo[.underlyingError] = error
-        case .verifyingError(let error):
+        case .verifyingError(let error, let code):
             userInfo[.underlyingError] = error
+            if let code = code {
+                userInfo[.statusCode] = code
+            }
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }
