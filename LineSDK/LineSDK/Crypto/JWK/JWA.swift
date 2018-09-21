@@ -138,7 +138,7 @@ extension JWA {
     // RFC 5349 https://tools.ietf.org/html/rfc5349
     // X.509 SPKI
     struct ECDRAParameters: Decodable {
-        
+
         enum Curve: String, Decodable {
             case P256 = "P-256"
             case P384 = "P-384"
@@ -161,14 +161,14 @@ extension JWA {
                 throw CryptoError.generalError(reason: .base64ConversionFailed(string: y))
             }
             
-            let xBytes = [UInt8](decodedXData)
-            let yBytes = [UInt8](decodedYData)
-            
+            // Make sure X and Y Coordinate not started with 0x00. Some SSL implementation would append 0x00 when to
+            // prevent a big number to be recognized as minus. However, SecKey would expect a non-0x00 started value.
+            // https://stackoverflow.com/questions/4407779/biginteger-to-byte
+            let xBytes = [UInt8](decodedXData).dropFirst { $0 == 0x00 }
+            let yBytes = [UInt8](decodedYData).dropFirst { $0 == 0x00 }
             let uncompressedIndicator: [UInt8] = [0x04]
             
-            let sequenceEncoded = (uncompressedIndicator + xBytes + yBytes).encode(as: .sequence)
-            
-            return Data(bytes: sequenceEncoded)
+            return Data(bytes: uncompressedIndicator + xBytes + yBytes)
         }
     }
 }
@@ -186,6 +186,20 @@ extension Array where Element == UInt8 {
         return tlvTriplet
     }
     
+}
+
+extension Array where Element: Equatable {
+    /// Returns an array containing all but the first element, if `condition` meets. Otherwise, returns `self`.
+    ///
+    /// - Parameter condition: The condition to check when try to drop the first element.
+    /// - Returns: An array without the first element if `condition` returns `true`. Otherwise, `self`.
+    func dropFirst(_ condition: (Element) -> Bool) -> Array {
+        if count == 0 { return self }
+        if condition(self[startIndex]) {
+            return Array(dropFirst())
+        }
+        return self
+    }
 }
 
 // MARK: Freestanding Helper Function

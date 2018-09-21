@@ -49,6 +49,24 @@ let keys = """
     "crv":"P-256",
     "x":"GGERLwduXJpu_-Yizvypq5TlJS8VCOxoreD9J6DsZZs",
     "y":"RLKGzm2JCHmixjsrKysjNKPym8-odN_HSY2rx72qZFM"
+  },
+  {
+    "kty":"EC",
+    "alg":"ES256",
+    "use":"sig",
+    "kid":"3829b108279b26bcfcc8971e348d116727d20773f06a41c5e4e9706f7a0dc966",
+    "crv":"P-256",
+    "x":"AP-wDPkDt5uw9sBJIIpZxEgEm-Cioa9GksSGCFy9kFfv",
+    "y":"PU-LJ7KeXHf8-Hc2ckXz11wvuoBsVKCgwFgH4bU25oo"
+  },
+  {
+    "kty":"EC",
+    "alg":"ES256",
+    "use":"sig",
+    "kid":"16e04d4e56783a792dcb4684d86d179dc7abc0bb909d96ee12ef07097cddff0c",
+    "crv":"P-256",
+    "x":"M5ucqcVZ7YVZcZ8QNXfLQkcpMssToe2o7IogW2yrhZQ",
+    "y":"AJVj5j7yN_wz-Zc0a9n-7bk-U9BxhNOF0taXzFrwdxcy"
   }
   ]
 }
@@ -73,5 +91,16 @@ class JWKDataTests: XCTestCase {
         XCTAssertNotNil(key3)
         let data3 = try! key3!.getKeyData()
         _ = try! Crypto.ECDSAPublicKey(der: data3)
+        
+        let key4 = keySet.getKeyByID("3829b108279b26bcfcc8971e348d116727d20773f06a41c5e4e9706f7a0dc966")
+        XCTAssertNotNil(key4)
+        let data4 = try! key4!.getKeyData()
+        let k = try! Crypto.ECDSAPublicKey(der: data4)
+        print(k)
+        
+        let key6 = keySet.getKeyByID("16e04d4e56783a792dcb4684d86d179dc7abc0bb909d96ee12ef07097cddff0c")
+        XCTAssertNotNil(key6)
+        let data6 = try! key6!.getKeyData()
+        _ = try! Crypto.ECDSAPublicKey(der: data6)
     }
 }

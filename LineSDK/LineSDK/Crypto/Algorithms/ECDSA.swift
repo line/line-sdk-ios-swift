@@ -34,6 +34,9 @@ extension ECDSA {
             return coordinateOctetLength * 2
         }
         
+        // Standards for Efficient Cryptography Group SEC 1:
+        // Elliptic Curve Cryptography
+        // http://www.secg.org/sec1-v2.pdf
         var coordinateOctetLength: Int {
             switch self {
             case .P256:
@@ -51,7 +54,7 @@ extension ECDSA {
         
         var length: CC_LONG {
             switch self {
-            case .sha1: return CC_LONG(CC_SHA1_DIGEST_LENGTH)
+            case .sha1:   return CC_LONG(CC_SHA1_DIGEST_LENGTH)
             case .sha224: return CC_LONG(CC_SHA224_DIGEST_LENGTH)
             case .sha256: return CC_LONG(CC_SHA256_DIGEST_LENGTH)
             case .sha384: return CC_LONG(CC_SHA384_DIGEST_LENGTH)

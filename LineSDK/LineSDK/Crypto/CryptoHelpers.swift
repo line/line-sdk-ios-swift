@@ -67,8 +67,9 @@ extension Data {
             )
         }
         
-        index += 15
-        if self[index] != 0x03 {
+        index += 1
+        index += Int(self[index]) + 1
+        guard self[index] == 0x03 else {
             throw CryptoError.algorithmsFailed(
                 reason: .invalidX509Header(
                     data: self, index: index, reason: "Expects byte 0x03, but found \(self[index])"
@@ -110,6 +111,12 @@ extension Data {
         
         // Check the first byte
         var index = 0
+        
+        let indicator = 0x04
+        // If the target == 0x04, it is an unpressed indication. There is no X509 header contained.
+        // We could just return the DER data as it is.
+        if self[index] == indicator { return self }
+        
         guard self[index] == ASN1Type.sequence.byte else {
             throw CryptoError.algorithmsFailed(
                 reason: .invalidDERKey(
@@ -127,17 +134,8 @@ extension Data {
             index += 1
         }
         
-        let indicator = 0x04
-        // If the target == 0x04, it is an unpressed indication. There is no X509 header contained.
-        //We could just return the DER data containing big int.
-        if self[index] == indicator {
-            let strippedKeyBytes = [UInt8](self[index...self.count - 1])
-            let data = Data(bytes: UnsafePointer<UInt8>(strippedKeyBytes), count: self.count - index)
-            return data
-        }
-        
         // Handle X.509 key now. EC Key with OID 1.2.840.10045.2.1 prime field
-        // 0x30, 0x13, 0x06, 0x07, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02, 0x21
+        // 0x30, 0x13, 0x06, 0x07, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02, 0x21...
         guard self[index] == ASN1Type.sequence.byte else {
             throw CryptoError.algorithmsFailed(
                 reason: .invalidX509Header(
@@ -145,21 +143,34 @@ extension Data {
                 )
             )
         }
-        
+        index += 1
         // Skip octet string
-        index += 23
-        if self[index] == 0x00 { // Some key contains a 0x00 between seq and uncompress indicator
-            index += 1
-        }
-        
-        // Check uncompress indicator. We do not support comppressed key.
-        guard self[index] == indicator else {
+        index += Int(self[index]) + 1
+        guard self[index] == 0x03 else {
             throw CryptoError.algorithmsFailed(
                 reason: .invalidX509Header(
-                    data: self, index: index, reason: "Expects byte 0x04, but found \(self[index])"
+                    data: self, index: index, reason: "Expects byte 0x03, but found \(self[index])"
                 )
             )
         }
+        
+        index += 1
+        if self[index] > 0x80 {
+            index += Int(self[index]) - 0x80 + 1
+        } else {
+            index += 1
+        }
+        
+        // End of header
+        guard self[index] == 0 else {
+            throw CryptoError.algorithmsFailed(
+                reason: .invalidX509Header(
+                    data: self, index: index, reason: "Expects byte 0x00, but found \(self[index])"
+                )
+            )
+        }
+        
+        index += 1
         
         let strippedKeyBytes = [UInt8](self[index...self.count - 1])
         let data = Data(bytes: UnsafePointer<UInt8>(strippedKeyBytes), count: self.count - index)
@@ -212,6 +223,7 @@ extension SecKey {
         return key
     }
     
+    // Create a public key from some given certificate data.
     static func createPublicKey(certificateData data: Data) throws -> SecKey {
         guard let certData = SecCertificateCreateWithData(nil, data as CFData) else {
             throw CryptoError.algorithmsFailed(

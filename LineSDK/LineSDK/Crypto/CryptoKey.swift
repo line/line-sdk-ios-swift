@@ -21,6 +21,9 @@
 
 import Foundation
 
+/// Represents a general key in crypto domain.
+/// Basically it is a wrapper of a native `SecKey`. All keys should be created by some DER raw data, but they could
+/// have its own clustered implementation.
 protocol CryptoKey {
     var key: SecKey { get }
     init(key: SecKey)
@@ -28,10 +31,11 @@ protocol CryptoKey {
 }
 
 protocol CryptoPublicKey: CryptoKey {}
+
 protocol CryptoPrivateKey: CryptoKey {}
 
 extension CryptoKey {
-    /// Creates a public key with a base64-encoded string representing DER data.
+    /// Creates a key with a base64-encoded string representing DER data.
     ///
     /// - Parameter base64Encoded: Base64-encoded DER data.
     /// - Throws: Any possible error while creating the key.
@@ -42,7 +46,7 @@ extension CryptoKey {
         try self.init(der: data)
     }
     
-    /// Creates a public key with a given PEM encoded string.
+    /// Creates a key with a given PEM encoded string.
     ///
     /// - Parameter string: The PEM encoded string.
     /// - Throws: Any possible error while creating the key.
@@ -50,14 +54,13 @@ extension CryptoKey {
         let base64String = try string.markerStrippedBase64()
         try self.init(base64Encoded: base64String)
     }
-    
-    init(_ key: JWK) throws {
-        let data = try key.getKeyData()
-        try self.init(der: data)
-    }
 }
 
+// MARK: - RSA Keys
 extension Crypto {
+    
+    /// Represents an RSA public key. This key should follow PKCS #1 specifications and with ASN.1 encoded.
+    // RFC8017 & RFC3447
     struct RSAPublicKey: CryptoPublicKey {
         let key: SecKey
         init(key: SecKey) { self.key = key }
@@ -86,6 +89,7 @@ extension Crypto {
         }
     }
     
+    /// Represents an RSA private key.
     struct RSAPrivateKey: CryptoPrivateKey {
         let key: SecKey
         init(key: SecKey) { self.key = key }
@@ -101,7 +105,13 @@ extension Crypto {
     }
 }
 
+// MARK: - ECDSA Keys
+// Now only public key support is provided (since we only use public keys to verify a signature).
 extension Crypto {
+    
+    /// Represents an ECDSA public key. The raw data of this key should follow X9.62 for EC parameters encoding or
+    /// it should be just a plain key with uncompressed indication. Compressed EC key is not supported yet.
+    // RFC5480 https://tools.ietf.org/html/rfc5480
     struct ECDSAPublicKey: CryptoPublicKey {
         let key: SecKey
         init(key: SecKey) { self.key = key }
@@ -113,7 +123,13 @@ extension Crypto {
     }
 }
 
+// MARK: - JWK Related Methods
 extension JWK {
+    
+    /// Helps for converting this `JWK` to a `CryptoPublicKey`.
+    ///
+    /// - Returns: The converted crypto public key, if succeeded.
+    /// - Throws: Any possible error while converting the key.
     func getPublicKey() throws -> CryptoPublicKey {
         let data = try getKeyData()
         switch keyType {
