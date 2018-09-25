@@ -25,15 +25,17 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>line3rdpb.$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+				<string>$(LINE_SDK_URL_SCHEME).$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LINE Channel ID</key>
+	<string>$(LINE_CHANNEL_ID)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>lineauth2</string>
+		<string>$(LINE_AUTH_URL_SCHEME)</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

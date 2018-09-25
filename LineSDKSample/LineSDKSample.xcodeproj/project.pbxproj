@@ -99,6 +99,7 @@
 		4B9058BA21006E9C004D717F /* LineSDKSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineSDKSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B9058BE21006E9C004D717F /* LineSDKSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSampleUITests.swift; sourceTree = "<group>"; };
 		4B9058C021006E9C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B9AB20D2159EE1500B8C22C /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		4BB8445C211BD41A005B60D7 /* APIHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHomeViewController.swift; sourceTree = "<group>"; };
 		4BB8445E211BD4DF005B60D7 /* APIStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStore.swift; sourceTree = "<group>"; };
 		4BB84460211BE5E7005B60D7 /* APIResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +183,7 @@
 				4B9058A521006E9C004D717F /* Assets.xcassets */,
 				4B9058A721006E9C004D717F /* LaunchScreen.storyboard */,
 				4B9058AA21006E9C004D717F /* Info.plist */,
+				4B9AB20D2159EE1500B8C22C /* Config.xcconfig */,
 			);
 			path = LineSDKSample;
 			sourceTree = "<group>";
@@ -335,6 +337,7 @@
 					};
 					4B9058B921006E9C004D717F = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 4B90589A21006E9B004D717F;
 					};
 				};
@@ -623,6 +626,7 @@
 		};
 		4B9058C421006E9C004D717F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B9AB20D2159EE1500B8C22C /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -640,6 +644,7 @@
 		};
 		4B9058C521006E9C004D717F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B9AB20D2159EE1500B8C22C /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -708,7 +713,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = LineSDKSample;
 			};
@@ -727,7 +732,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = LineSDKSample;
 			};
