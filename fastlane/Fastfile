@@ -12,13 +12,20 @@ platform :ios do
       `git clone https://git.linecorp.com/wei-wang/linesdk-ios-swift-beta-config.git 2> /dev/null || (cd linesdk-ios-swift-beta-config ; git pull)`
     end
 
-    env_path = Pathname.new("../LineSDK/LineSDK/Utils/URLs.swift")
-    clone_path = Pathname.new("../linesdk-ios-swift-beta-config/URLs.swift")
-    FileUtils.cp(clone_path, env_path)
+    env_paths = [
+        Pathname.new("../LineSDK/LineSDK/Utils/URLs.swift"),
+        Pathname.new("../LineSDK/LineSDKObjC/Utils/LineSDKConstant.swift"),
+        Pathname.new("../LineSDKSample/LineSDKSample/Config.xcconfig"),
+    ]
 
-    env_path = Pathname.new("../LineSDKSample/LineSDKSample/Config.xcconfig")
-    clone_path = Pathname.new("../linesdk-ios-swift-beta-config/Config.xcconfig")
-    FileUtils.cp(clone_path, env_path)
+    clone_paths = [
+        Pathname.new("../linesdk-ios-swift-beta-config/URLs.swift"),
+        Pathname.new("../linesdk-ios-swift-beta-config/LineSDKConstant.swift"),
+        Pathname.new("../linesdk-ios-swift-beta-config/Config.xcconfig")
+    ]
+    clone_paths.zip(env_paths).each do |clone, env|
+        FileUtils.cp(clone, env)
+    end
   end
 
   desc "Run tests"

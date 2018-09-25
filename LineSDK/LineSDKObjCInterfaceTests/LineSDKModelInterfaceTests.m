@@ -256,6 +256,10 @@
     button = nil;
     [button login];
 }
+    
+- (void)testConstantInterface {
+    XCTAssertNotNil(LineSDKConstant.SDKVersion);
+}
 
 @end
 
