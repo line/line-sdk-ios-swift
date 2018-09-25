@@ -1,5 +1,5 @@
 //
-//  URLsBeta.swift
+//  LineSDKConstant.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,12 +20,11 @@
 //
 
 import Foundation
+#if !LineSDKCocoaPods
+import LineSDK
+#endif
 
-extension Constant {
-    static let APIHost = "api.line.me"
-    static let thirdPartySchemePrefix = "line3rdp"
-    static let lineAuthV2Scheme = "lineauth2"
-    static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
-    static let lineWebAuthURL = "https://access.line.me/oauth2/v2.1/login"
-    static let openIDDiscoveryDocumentURL = "https://access.line.me/.well-known/openid-configuration"
+@objcMembers
+public class LineSDKConstant: NSObject {
+    public static let SDKVersion = Constant.SDKVersion
 }

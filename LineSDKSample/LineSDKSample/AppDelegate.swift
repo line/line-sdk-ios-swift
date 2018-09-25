@@ -31,7 +31,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        LoginManager.shared.setup(channelID: "1539955650", universalLinkURL: nil)
+        #if LINE_SDK_INTERNAL
+        Constant.toBeta()
+        #endif
+        
+        // Modify Config.xcconfig to setup your LINE channel ID.
+        if let channelID = Bundle.main.infoDictionary?["LINE Channel ID"] as? String,
+           let _ = Int(channelID)
+        {
+            LoginManager.shared.setup(channelID: channelID, universalLinkURL: nil)
+        } else {
+            fatalError("Please set correct channel ID in Config.xcconfig file.")
+        }
         
         return true
     }

@@ -1,5 +1,5 @@
 //
-//  URLsBeta.swift
+//  Config.xcconfig
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,13 +19,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
 
-extension Constant {
-    static let APIHost = "api.line.me"
-    static let thirdPartySchemePrefix = "line3rdp"
-    static let lineAuthV2Scheme = "lineauth2"
-    static let lineWebAuthUniversalURL = "https://access-auto.line.me/oauth2/v2.1/login"
-    static let lineWebAuthURL = "https://access.line.me/oauth2/v2.1/login"
-    static let openIDDiscoveryDocumentURL = "https://access.line.me/.well-known/openid-configuration"
-}
+LINE_CHANNEL_ID = 1606667895
+LINE_SDK_URL_SCHEME = line3rdp
+LINE_AUTH_URL_SCHEME = lineauth2

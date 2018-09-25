@@ -21,8 +21,11 @@
 
 import Foundation
 
-struct Constant {
-    static let SDKVersion: String = {
+/// Constants used in LINE SDK.
+public struct Constant {
+    
+    /// The version string of current SDK.
+    public static let SDKVersion: String = {
         let bundle = Bundle.frameworkBundle
         guard let version = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
             Log.fatalError("SDK resource bundle cannot be loaded, please verify your installation is not corrupted and try to reinstall LineSDK.")
@@ -44,10 +47,6 @@ struct Constant {
     
     static var thirdPartyAppReturnURL: String {
         return "\(Constant.thirdPartyAppReturnScheme)://authorize/"
-    }
-    
-    static var lineAppAuthURLv1: URL {
-        return URL(string: "\(Constant.lineAuthScheme)://authorize/")!
     }
     
     static var lineAppAuthURLv2: URL {
