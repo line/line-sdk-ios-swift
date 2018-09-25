@@ -185,32 +185,11 @@ public class LoginProcess {
                 self.setupAppSwitchingObserver()
                 self.appUniversalLinkFlow = appUniversalLinkFlow
             } else {
-                // LINE universal link handling failed for some reason. Fallback to LINE v2 auth
+                // LINE universal link handling failed for some reason. Fallback to LINE v2 auth or web login.
                 if self.canUseLineAuthV2 {
                     self.startAppAuthSchemeFlow(parameters)
                 } else {
-                    // No lineauth2 scheme supported. Make user to choose
-                    // install/upgrade LINE, or continue login with web.
-                    // TODO: We need localize these text.
-                    let mainActionTitle = self.canUseLineAuthV1 ? "Upgrade" : "Install"
-                    
-                    let actions: [UIAlertAction] = [
-                        .init(title: mainActionTitle, style: .default) { _ in
-                            UIApplication.shared.openLINEInAppStore()
-                            self.setupAppSwitchingObserver()
-                        },
-                        .init(title: "Continue Login", style: .default) { _ in
-                            self.startWebLoginFlow(parameters)
-                        }
-                    ]
-                    let showed = UIAlertController.presentAlert(
-                        in: self.presentingViewController,
-                        title: "Earlier LINE app detected",
-                        message: "You are using an earlier LINE app which does not support login with LINE client.",
-                        actions: actions)
-                    if !showed {
-                        self.startWebLoginFlow(parameters)
-                    }
+                    self.startWebLoginFlow(parameters)
                 }
             }
         }
@@ -289,10 +268,6 @@ public class LoginProcess {
         }
         
         return true
-    }
-    
-    private var canUseLineAuthV1: Bool {
-        return UIApplication.shared.canOpenURL(Constant.lineAppAuthURLv1)
     }
     
     private var canUseLineAuthV2: Bool {
