@@ -15,6 +15,10 @@ platform :ios do
     env_path = Pathname.new("../LineSDK/LineSDK/Utils/URLs.swift")
     clone_path = Pathname.new("../linesdk-ios-swift-beta-config/URLs.swift")
     FileUtils.cp(clone_path, env_path)
+
+    env_path = Pathname.new("../LineSDKSample/LineSDKSample/Config.xcconfig")
+    clone_path = Pathname.new("../linesdk-ios-swift-beta-config/Config.xcconfig")
+    FileUtils.cp(clone_path, env_path)
   end
 
   desc "Run tests"
