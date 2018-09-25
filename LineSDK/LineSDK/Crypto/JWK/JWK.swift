@@ -68,8 +68,8 @@ struct JWK: Decodable {
         switch parameters {
         case .rsa(let rsaParams):
             return try rsaParams.getKeyData()
-        case .ec(let ecParames):
-            return try ecParames.getKeyData()
+        case .ec(let ecParams):
+            return try ecParams.getKeyData()
         }
     }
 }

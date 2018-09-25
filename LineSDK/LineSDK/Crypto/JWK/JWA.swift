@@ -58,7 +58,7 @@ extension JWA {
         }
         
         case rsa(RSAParameters)
-        case ec(ECDRAParameters)
+        case ec(ECDSAParameters)
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -67,7 +67,7 @@ extension JWA {
             case .rsa:
                 self = .rsa(try RSAParameters(from: decoder))
             case .ec:
-                self = .ec(try ECDRAParameters(from: decoder))
+                self = .ec(try ECDSAParameters(from: decoder))
             }
         }
         
@@ -76,7 +76,7 @@ extension JWA {
             return nil
         }
         
-        var asEC: ECDRAParameters? {
+        var asEC: ECDSAParameters? {
             if case .ec(let parameters) = self { return parameters }
             return nil
         }
@@ -137,7 +137,7 @@ extension JWA {
 extension JWA {
     // RFC 5349 https://tools.ietf.org/html/rfc5349
     // X.509 SPKI
-    struct ECDRAParameters: Decodable {
+    struct ECDSAParameters: Decodable {
 
         let x: String
         let y: String

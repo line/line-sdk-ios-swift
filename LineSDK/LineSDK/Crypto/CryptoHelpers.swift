@@ -24,7 +24,7 @@ import CommonCrypto
 
 extension Data {
 
-    func x509HeaserStripped(earlyTerminator: UInt8) throws -> Data {
+    func x509HeaderStripped(earlyTerminator: UInt8) throws -> Data {
         let count = self.count / MemoryLayout<CUnsignedChar>.size
         guard count > 0 else {
             throw CryptoError.algorithmsFailed(reason: .invalidDERKey(data: self, reason: "The input key is empty."))
@@ -103,16 +103,16 @@ extension Data {
     
     /// Data with x509 stripped from a provided ASN.1 DER EC public key.
     /// The DER data will be returned as is, if no header contained.
-    func x509HeaserStrippedForEC() throws -> Data {
-        return try x509HeaserStripped(earlyTerminator: ASN1Type.uncompressIndicator.byte)
+    func x509HeaderStrippedForEC() throws -> Data {
+        return try x509HeaderStripped(earlyTerminator: ASN1Type.uncompressIndicator.byte)
     }
     
     /// Data with x509 stripped from a provided ASN.1 DER RSA public key.
     /// The DER data will be returned as is, if no header contained.
     /// We need to do this on Apple's platform for accepting a key.
     // http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/
-    func x509HeaserStrippedForRSA() throws -> Data {
-        return try x509HeaserStripped(earlyTerminator: ASN1Type.integer.byte)
+    func x509HeaderStrippedForRSA() throws -> Data {
+        return try x509HeaderStripped(earlyTerminator: ASN1Type.integer.byte)
     }
 }
 

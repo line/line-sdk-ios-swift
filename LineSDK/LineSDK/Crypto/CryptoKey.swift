@@ -70,7 +70,7 @@ extension Crypto {
         /// - Parameter data: The DER data from which to create the public key.
         /// - Throws: Any possible error while creating the key.
         init(der data: Data) throws {
-            let keyData = try data.x509HeaserStrippedForRSA()
+            let keyData = try data.x509HeaderStrippedForRSA()
             self.key = try SecKey.createKey(derData: keyData, keyClass: .publicKey, keyType: .rsa)
         }
         
@@ -99,7 +99,7 @@ extension Crypto {
         /// - Parameter data: The DER data from which to create the private key.
         /// - Throws: Any possible error while creating the key.
         init(der data: Data) throws {
-            let keyData = try data.x509HeaserStrippedForRSA()
+            let keyData = try data.x509HeaderStrippedForRSA()
             self.key = try SecKey.createKey(derData: keyData, keyClass: .privateKey, keyType: .rsa)
         }
     }
@@ -117,7 +117,7 @@ extension Crypto {
         init(key: SecKey) { self.key = key }
         
         init(der data: Data) throws {
-            let keyData = try data.x509HeaserStrippedForEC()
+            let keyData = try data.x509HeaderStrippedForEC()
             self.key = try SecKey.createKey(derData: keyData, keyClass: .publicKey, keyType: .ec)
         }
     }
