@@ -31,6 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        #if LINE_SDK_INTERNAL
+        Constant.toBeta()
+        #endif
+        
         // Modify Config.xcconfig to setup your LINE channel ID.
         if let channelID = Bundle.main.infoDictionary?["LINE Channel ID"] as? String,
            let _ = Int(channelID)
