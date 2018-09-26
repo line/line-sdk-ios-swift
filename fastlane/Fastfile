@@ -52,6 +52,11 @@ platform :ios do
     jazzy
   end
 
+  desc "Generate documentation for internal usage"
+  lane :doc_internal do
+    jazzy(config: ".jazzy-internal.yaml")
+  end
+
   lane :change_log do |options|
     target_version = options[:version]
     raise "The version is missed. You need to specify a version parameter." if target_version.nil?

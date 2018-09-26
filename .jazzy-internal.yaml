@@ -4,12 +4,8 @@ clean: true
 github_url: https://git.linecorp.com/LINE-Client/linesdk-ios-swift
 hide_documentation_coverage: true
 module: LineSDK
-output: docs/public
+output: docs/internal
 sdk: iphonesimulator
 skip_undocumented: true
 source_directory: LineSDK
 theme: fullwidth
-exclude: 
-  - "LineSDK/LineSDK/Messaging/*"
-  - "LineSDK/LineSDK/Social/*"
-  - "LineSDK/LineSDK/Networking/API+Internal.swift"
