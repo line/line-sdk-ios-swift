@@ -22,8 +22,7 @@
 import Foundation
 
 
-// MARK: - Social API
-
+// MARK: - Graph API
 extension API {
     /// Gets a friend list of the user. Unless already having granted the channel,
     /// users who've configured the privacy filter are excluded from the list.
@@ -112,7 +111,6 @@ extension API {
 
 
 // MARK: - Messaging API
-
 extension API {
     
     /// Sends messages to a certain chat destination on behalf of the current authorized user.
