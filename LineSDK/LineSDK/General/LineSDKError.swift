@@ -182,6 +182,16 @@ extension LineSDKError {
         return isResponseError(statusCode: 400)
     }
     
+    /// Returns whether the `LineSDKError` represents a refresh token error. Usually, when user uses an expired access
+    /// token to send an API request, an auto token refresh operation with current `refreshToken` will be triggered.
+    /// This error usually happens when the `refreshToken` itself also expires or invalid. If this error happens, you
+    /// have to let your user do an re-authorize before you can continue use LINE APIs.
+    public var isRefreshTokenError: Bool {
+        let refreshTokenRequest = PostRefreshTokenRequest(channelID: "", refreshToken: "")
+        let url = refreshTokenRequest.baseURL.appendingPathComponentIfNotEmpty(refreshTokenRequest.path)
+        return isResponseError(statusCode: 400, url: url)
+    }
+    
     /// Returns whether the `LineSDKError` represents a permission granting issue. Usually, it means you do not have
     /// enough permission to invoke a LINE API.
     public var isPermissionError: Bool {
@@ -193,14 +203,26 @@ extension LineSDKError {
     public var isTokenError: Bool {
         return isResponseError(statusCode: 401)
     }
-    
+
     /// Returns whether the `LineSDKError` represents a response failing with specified HTTP status code.
     ///
-    /// - Parameter statusCode: The status code to check whether matches HTTP status error code.
-    /// - Returns: `true` if `self` is a .invalidHTTPStatusAPIError with give `statusCode`. Otherwise, `false`.
-    public func isResponseError(statusCode: Int) -> Bool {
-        if case .responseFailed(.invalidHTTPStatusAPIError(let detail)) = self, detail.code == statusCode {
-            return true
+    /// - Parameters:
+    ///   - statusCode: The status code to check whether matches HTTP status error code.
+    ///   - url: The URL to check with the URL of error response. If `nil`, the URL matching check is skipped.
+    /// - Returns: `true` if `self` is a .invalidHTTPStatusAPIError with give `statusCode` and `url`.
+    ///            Otherwise, `false`.
+    public func isResponseError(statusCode: Int, url: URL? = nil) -> Bool {
+        if case .responseFailed(.invalidHTTPStatusAPIError(let detail)) = self {
+            let codeMatch = detail.code == statusCode
+            
+            let urlMatch: Bool
+            if let url = url {
+                urlMatch = url == detail.raw.url
+            } else {
+                urlMatch = true
+            }
+            
+            return codeMatch && urlMatch
         }
         return false
     }

@@ -76,6 +76,18 @@ class LineSDKErrorTests: XCTestCase {
         XCTAssertTrue(error.isTokenError)
     }
     
+    func testIsRefreshTokenError() {
+        let err = APIError(InternalAPIError(message: "The refresh token expired"))
+        let refresh = PostRefreshTokenRequest(channelID: "", refreshToken: "")
+        let urlString = refresh.baseURL.appendingPathComponentIfNotEmpty(refresh.path).absoluteString
+        let response = HTTPURLResponse.responseFromCode(400, urlString: urlString)
+        let detail = LineSDKError.ResponseErrorReason.APIErrorDetail(
+            code: 400, error: err, raw: response, rawString: "raw")
+        
+        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(detail: detail))
+        XCTAssertTrue(error.isRefreshTokenError)
+    }
+    
     func testErrorCode() {
         let error = LineSDKError.requestFailed(reason: .lackOfAccessToken)
         XCTAssertEqual(error.errorCode, 1002)
@@ -84,6 +96,7 @@ class LineSDKErrorTests: XCTestCase {
 
 func apiErrorReason(code: Int, error: APIError, rawString: String) -> LineSDKError.ResponseErrorReason {
     let response = HTTPURLResponse.responseFromCode(code)
-    let detail = LineSDKError.ResponseErrorReason.APIErrorDetail(code: code, error: error, raw: response, rawString: rawString)
+    let detail = LineSDKError.ResponseErrorReason.APIErrorDetail(
+        code: code, error: error, raw: response, rawString: rawString)
     return .invalidHTTPStatusAPIError(detail: detail)
 }

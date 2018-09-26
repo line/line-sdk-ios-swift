@@ -23,9 +23,9 @@ import Foundation
 @testable import LineSDK
 
 extension HTTPURLResponse {
-    static func responseFromCode(_ code: Int) -> HTTPURLResponse {
+    static func responseFromCode(_ code: Int, urlString: String = "linesdktest://sampleurl") -> HTTPURLResponse {
         return HTTPURLResponse(
-            url: URL(string: "linesdktest://sampleurl")!,
+            url: URL(string: urlString)!,
             statusCode: code,
             httpVersion: "HTTP/1.1",
             headerFields: [:])!
