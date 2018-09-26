@@ -69,12 +69,12 @@ class PipelineTests: XCTestCase {
             case .stop(let error):
                 if let sdkError = error as? LineSDKError,
                    case .responseFailed(reason:
-                    .invalidHTTPStatusAPIError(code: let code, error: let authErr, raw: let raw)) = sdkError
+                    .invalidHTTPStatusAPIError(let detail)) = sdkError
                 {
-                    XCTAssertEqual(code, 404)
-                    XCTAssertEqual(authErr!.error, "123")
-                    XCTAssertEqual(authErr!.detail, "sample")
-                    self.assertJSONText(raw, equalsTo: authError)
+                    XCTAssertEqual(detail.code, 404)
+                    XCTAssertEqual(detail.error!.error, "123")
+                    XCTAssertEqual(detail.error!.detail, "sample")
+                    self.assertJSONText(detail.rawString, equalsTo: authError)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")
                 }
@@ -97,11 +97,11 @@ class PipelineTests: XCTestCase {
             case .stop(let error):
                 if let sdkError = error as? LineSDKError,
                     case .responseFailed(reason:
-                        .invalidHTTPStatusAPIError(code: let code, error: let apiErr, raw: let raw)) = sdkError
+                        .invalidHTTPStatusAPIError(let detail)) = sdkError
                 {
-                    XCTAssertEqual(code, 404)
-                    XCTAssertEqual(apiErr!.error, "hello")
-                    self.assertJSONText(raw, equalsTo: apiError)
+                    XCTAssertEqual(detail.code, 404)
+                    XCTAssertEqual(detail.error!.error, "hello")
+                    self.assertJSONText(detail.rawString, equalsTo: apiError)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")
                 }
@@ -124,11 +124,11 @@ class PipelineTests: XCTestCase {
             case .stop(let err):
                 if let sdkError = err as? LineSDKError,
                     case .responseFailed(reason:
-                        .invalidHTTPStatusAPIError(let code, let e, let raw)) = sdkError
+                        .invalidHTTPStatusAPIError(let detail)) = sdkError
                 {
-                    XCTAssertEqual(code, 404)
-                    XCTAssertNil(e)
-                    self.assertJSONText(raw, equalsTo: error)
+                    XCTAssertEqual(detail.code, 404)
+                    XCTAssertNil(detail.error)
+                    self.assertJSONText(detail.rawString, equalsTo: error)
                 } else {
                     XCTFail("A responseFailed with AuthError should be thrown out.")
                 }

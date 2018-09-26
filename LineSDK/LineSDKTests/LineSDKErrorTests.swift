@@ -53,26 +53,26 @@ class LineSDKErrorTests: XCTestCase {
     
     func testIsResponseError() {
         let err = APIError(InternalAPIError(message: "321"))
-        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 123, error: err, raw: "raw"))
+        let error = LineSDKError.responseFailed(reason: apiErrorReason(code: 123, error: err, rawString: "raw"))
         XCTAssertTrue(error.isResponseError(statusCode: 123))
         XCTAssertFalse(error.isResponseError(statusCode: 321))
     }
     
     func testIsBadRequest() {
         let err = APIError(InternalAPIError(message: "Bad request"))
-        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 400, error: err, raw: "raw"))
+        let error = LineSDKError.responseFailed(reason: apiErrorReason(code: 400, error: err, rawString: "raw"))
         XCTAssertTrue(error.isBadRequest)
     }
     
     func testIsPermission() {
         let err = APIError(InternalAPIError(message: "Not enough permission"))
-        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 403, error: err, raw: "raw"))
+        let error = LineSDKError.responseFailed(reason: apiErrorReason(code: 403, error: err, rawString: "raw"))
         XCTAssertTrue(error.isPermissionError)
     }
     
     func testIsTokenError() {
         let err = APIError(InternalAPIError(message: "The access token expired"))
-        let error = LineSDKError.responseFailed(reason: .invalidHTTPStatusAPIError(code: 401, error: err, raw: "raw"))
+        let error = LineSDKError.responseFailed(reason: apiErrorReason(code: 401, error: err, rawString: "raw"))
         XCTAssertTrue(error.isTokenError)
     }
     
@@ -80,4 +80,10 @@ class LineSDKErrorTests: XCTestCase {
         let error = LineSDKError.requestFailed(reason: .lackOfAccessToken)
         XCTAssertEqual(error.errorCode, 1002)
     }
+}
+
+func apiErrorReason(code: Int, error: APIError, rawString: String) -> LineSDKError.ResponseErrorReason {
+    let response = HTTPURLResponse.responseFromCode(code)
+    let detail = LineSDKError.ResponseErrorReason.APIErrorDetail(code: code, error: error, raw: response, rawString: rawString)
+    return .invalidHTTPStatusAPIError(detail: detail)
 }

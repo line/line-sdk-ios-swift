@@ -111,13 +111,13 @@ public struct API {
                 handleSuccessResult()
             case .failure(let error):
                 guard let sdkError = error as? LineSDKError,
-                      case .responseFailed(reason: .invalidHTTPStatusAPIError(let code, _, _)) = sdkError else
+                      case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = sdkError else
                 {
                     completion(.failure(error))
                     return
                 }
                 // We recognize response 400 as a success for revoking (since the token itself is invalid).
-                if code == 400 {
+                if detail.code == 400 {
                     Log.print(sdkError.localizedDescription)
                     handleSuccessResult()
                 }

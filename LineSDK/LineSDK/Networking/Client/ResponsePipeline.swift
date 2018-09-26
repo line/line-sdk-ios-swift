@@ -150,30 +150,46 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
     {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let raw = String(data: data, encoding: .utf8)
+        let rawString = String(data: data, encoding: .utf8)
         do {
             // There are two possible error format now.
             // First, try to parse the error into a auth related error
             let error = try decoder.decode(InternalAuthError.self, from: data)
+            let detail = LineSDKError.ResponseErrorReason.APIErrorDetail(
+                code: response.statusCode,
+                error: .init(error),
+                raw: response,
+                rawString: rawString)
+            
             try closure(.stop(
                 LineSDKError.responseFailed(
-                    reason: .invalidHTTPStatusAPIError(code: response.statusCode, error: .init(error), raw: raw))
+                    reason: .invalidHTTPStatusAPIError(detail: detail))
                 )
             )
         } catch {
             do {
                 // If failed to parse to a auth error, then try APIError format.
                 let error = try decoder.decode(InternalAPIError.self, from: data)
+                let detail = LineSDKError.ResponseErrorReason.APIErrorDetail(
+                    code: response.statusCode,
+                    error: .init(error),
+                    raw: response,
+                    rawString: rawString)
                 try closure(.stop(
                     LineSDKError.responseFailed(
-                        reason: .invalidHTTPStatusAPIError(code: response.statusCode, error: .init(error), raw: raw))
+                        reason: .invalidHTTPStatusAPIError(detail: detail))
                     )
                 )
             } catch {
                 // An unknown error response format, let framework user decide what to do.
+                let detail = LineSDKError.ResponseErrorReason.APIErrorDetail(
+                    code: response.statusCode,
+                    error: nil,
+                    raw: response,
+                    rawString: rawString)
                 try closure(.stop(
                     LineSDKError.responseFailed(
-                        reason: .invalidHTTPStatusAPIError(code: response.statusCode, error: nil, raw: raw))
+                        reason: .invalidHTTPStatusAPIError(detail: detail))
                     )
                 )
             }

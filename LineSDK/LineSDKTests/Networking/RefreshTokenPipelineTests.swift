@@ -71,7 +71,8 @@ class RefreshTokenPipelineTests: XCTestCase {
         
         let expect = expectation(description: "\(#file)_\(#line)")
         
-        let delegate = SessionDelegateStub(stub: .init(string: "error message", responseCode: 123))
+        let either = SessionDelegateStub.Either(string: "error message", responseCode: 123)
+        let delegate = SessionDelegateStub(stub: either)
         Session._shared = Session(configuration: LoginConfiguration.shared, delegate: delegate)
         
         setupTestToken()
@@ -84,16 +85,20 @@ class RefreshTokenPipelineTests: XCTestCase {
             case .stop(let error):
                 guard case .responseFailed(
                     reason: .invalidHTTPStatusAPIError(
-                        let code,
-                        let e,
-                        let message)) = error as! LineSDKError else
+                        let detail)) = error as! LineSDKError else
                 {
                     XCTFail("Error type is not correct.")
                     return
                 }
-                XCTAssertNil(e)
-                XCTAssertEqual(code, 123)
-                XCTAssertEqual(message, "error message")
+                XCTAssertNil(detail.error)
+                XCTAssertEqual(detail.code, 123)
+                XCTAssertEqual(detail.rawString, "error message")
+                
+                if case .response(_, let res) = either {
+                    XCTAssertEqual(detail.raw, res)
+                } else {
+                    XCTFail("Either should contain the refresh token response")
+                }
             default:
                 XCTFail("Refresh token pipeline should success.")
             }

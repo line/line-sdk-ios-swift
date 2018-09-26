@@ -52,14 +52,23 @@ public enum LineSDKError: Error {
     /// - nonHTTPURLResponse: The response is not a valid `HTTPURLResponse`. Code 2002.
     /// - dataParsingFailed: Cannot parse received data to an instance of target type. Code 2003.
     /// - invalidHTTPStatusAPIError: Received response contains an invalid HTTP status code. If the response data
-    ///                              can be converted to an `APIError` object, it will be associated as the `error`
-    ///                              to indicate what is going wrong. Otherwise, the `error` will be `nil`. In both
-    ///                              cases, `raw` will contain the plain error text. Code 2004.
+    ///                              can be converted to an `APIError` object, it will be associated as an
+    ///                              `APIErrorDetail` with `error` inside to indicate what is going wrong.
+    ///                              Otherwise, the `error` will be `nil`. In both cases, `raw` and `rawString` will
+    ///                              contain the plain response and error text respectively. Code 2004.
     public enum ResponseErrorReason {
+        
+        public struct APIErrorDetail {
+            let code: Int
+            let error: APIError?
+            let raw: HTTPURLResponse
+            let rawString: String?
+        }
+        
         case URLSessionError(Error)
         case nonHTTPURLResponse
         case dataParsingFailed(Any.Type, Data, Error)
-        case invalidHTTPStatusAPIError(code: Int, error: APIError?, raw: String?)
+        case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
     
     /// The underlying reason for why `.authorizeFailed` happens.
@@ -190,7 +199,7 @@ extension LineSDKError {
     /// - Parameter statusCode: The status code to check whether matches HTTP status error code.
     /// - Returns: `true` if `self` is a .invalidHTTPStatusAPIError with give `statusCode`. Otherwise, `false`.
     public func isResponseError(statusCode: Int) -> Bool {
-        if case .responseFailed(.invalidHTTPStatusAPIError(code: statusCode, error: _, raw: _)) = self {
+        if case .responseFailed(.invalidHTTPStatusAPIError(let detail)) = self, detail.code == statusCode {
             return true
         }
         return false
@@ -300,11 +309,14 @@ extension LineSDKError.ResponseErrorReason {
             } else {
                 return result
             }
-        case .invalidHTTPStatusAPIError(let code, let error, let raw):
-            if let error = error {
-                return "HTTP status code is not valid in response. Code: \(code), error: \(error.error), raw data: \(raw ?? "nil")"
+        case .invalidHTTPStatusAPIError(let detail):
+            let url = detail.raw.url?.absoluteString ?? "null"
+            if let error = detail.error {
+                return "HTTP status code is not valid in response (request: \(url)). " +
+                       "Code: \(detail.code), error: \(error.error), raw data: \(detail.rawString ?? "nil")"
             } else {
-                return "HTTP status code is not valid in response. Code: \(code), raw data: \(raw ?? "nil")"
+                return "HTTP status code is not valid in response (request: \(url)). " +
+                       "Code: \(detail.code), raw data: \(detail.rawString ?? "nil")"
             }
         }
     }
@@ -329,10 +341,11 @@ extension LineSDKError.ResponseErrorReason {
             userInfo[.underlyingError] = error
             userInfo[.type] = type
             userInfo[.data] = data
-        case .invalidHTTPStatusAPIError(let code, let error, let raw):
-            userInfo[.statusCode] = code
-            if let error = error { userInfo[.APIError] = error }
-            if let raw = raw { userInfo[.raw] = raw }
+        case .invalidHTTPStatusAPIError(let detail):
+            userInfo[.statusCode] = detail.code
+            userInfo[.raw] = detail.raw
+            if let error = detail.error { userInfo[.APIError] = error }
+            if let rawtString = detail.rawString { userInfo[.message] = rawtString }
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }

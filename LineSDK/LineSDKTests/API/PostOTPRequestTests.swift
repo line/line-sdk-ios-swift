@@ -59,18 +59,15 @@ class PostOTPRequestTests: APITests {
             }
             
             guard case .responseFailed(
-                reason: .invalidHTTPStatusAPIError(
-                    code: let code,
-                    error: let error,
-                    raw: _)) = e else
+                reason: .invalidHTTPStatusAPIError(let detail)) = e else
             {
                 XCTFail("Error reason should be .invalidHTTPStatusAPIError")
                 return
             }
             
-            XCTAssertEqual(code, 400)
-            XCTAssertEqual(error!.error, "invalid_request")
-            XCTAssertEqual(error!.detail, "some error")
+            XCTAssertEqual(detail.code, 400)
+            XCTAssertEqual(detail.error!.error, "invalid_request")
+            XCTAssertEqual(detail.error!.detail, "some error")
             
             expect.fulfill()
         }
