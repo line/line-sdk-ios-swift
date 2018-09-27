@@ -25,16 +25,19 @@ import XCTest
 class LineLoginButtonTest: XCTestCase {
     
     let app = XCUIApplication()
-    var loginPage: LoginPage?
-
+    var loginPage = LoginPage()
+    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         app.launch()
-        loginPage = LoginPage()
+        
+        if loginPage.isLineLogoutButtonExists() {
+            LineSDKScript.logout(app:app,loginPage:loginPage)
+        }
     }
-
+    
     func testLineLoginButton() {
-        loginPage?.verifyLineLoginButtonExists()
+        XCTAssert(loginPage.isLineLoginButtonExists())
     }
 }

@@ -1,5 +1,5 @@
 //
-//  APIHomePage.swift
+//  LineSDKScript.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,44 +21,11 @@
 
 import XCTest
 
-class APIHomePage {
-
-    let app = XCUIApplication()
-    var table: XCUIElement
-
-    init() {
-        table = app.tables.firstMatch
-    }
-
-    func navigateToAPIHomePage() {
-        app.tabBars.buttons["API"].tap()
-    }
-
-    func tapGetFriends() {
-        table.cells.staticTexts["Get Friends"].tap()
-    }
-
-    func tapGetApproversInFriends() {
-        table.cells.staticTexts["Get Approvers in Friends"].tap()
-    }
-
-    func tapGetGroups() {
-        table.cells.staticTexts["Get Groups"].tap()
-    }
-
-    func tapGetApproversInGivenGroup() {
-        table.cells.staticTexts["Get Approvers in given Group"].tap()
-    }
+class LineSDKScript {
     
-    func tapSendTextMessage() {
-        table.cells.staticTexts["Send text message to a friend"].tap()
-    }
-
-    func tapMultisendTextMessage() {
-        table.cells.staticTexts["Multisend text message to first five friends"].tap()
-    }
-
-    func tapSendFlexMessage() {
-        table.cells.staticTexts["Send flex message to a friend"].tap()
+    static func logout(app:XCUIApplication, loginPage:LoginPage) {
+        loginPage.tapLogoutButton()
+        app.alerts.buttons["Logout"].tap()
+        app.alerts.buttons["OK"].tap()
     }
 }

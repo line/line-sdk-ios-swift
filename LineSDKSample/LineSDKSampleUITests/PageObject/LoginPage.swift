@@ -25,16 +25,26 @@ class LoginPage {
 
     let app = XCUIApplication()
     var lineLoginButton: XCUIElement
+    var lineLogoutButton: XCUIElement
 
     init() {
-        lineLoginButton = app.buttons["Log in with LINE"]
+        lineLoginButton = app.buttons["login.button"]
+        lineLogoutButton = app.navigationBars.buttons["Logout"]
     }
 
     func tapLoginButton() {
         lineLoginButton.tap()
     }
 
-    func verifyLineLoginButtonExists() {
-        XCTAssert(lineLoginButton.exists)
+    func tapLogoutButton() {
+        lineLogoutButton.tap()
+    }
+    
+    func isLineLoginButtonExists() -> Bool {
+        return lineLoginButton.exists
+    }
+    
+    func isLineLogoutButtonExists() -> Bool{
+        return lineLogoutButton.exists
     }
 }

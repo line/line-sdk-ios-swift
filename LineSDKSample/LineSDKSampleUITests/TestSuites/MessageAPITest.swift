@@ -1,5 +1,5 @@
 //
-//  GraphAPITest.swift
+//  MessageAPITest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,11 +22,11 @@
 import Foundation
 import XCTest
 
-class GraphAPITest: XCTestCase{
+class MessageAPITest: XCTestCase{
     
     let app = XCUIApplication()
     var apiHomePage: APIHomePage?
-
+    
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
@@ -38,31 +38,25 @@ class GraphAPITest: XCTestCase{
             LineSDKScript.logout(app:app,loginPage:loginPage)
         }
     }
-
-    func testGetFriends() {
+    
+    func testSendTextMessage() {
         apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetFriends()
+        apiHomePage?.tapSendTextMessage()
         tapOkButtonInAlertView()
     }
-
-    func testGetApproversInFriends() {
+    
+    func testMultiSendTextMessage() {
         apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetApproversInFriends()
+        apiHomePage?.tapMultisendTextMessage()
         tapOkButtonInAlertView()
     }
-
-    func testGetGroups() {
+    
+    func testSendFlexMessage() {
         apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetGroups()
+        apiHomePage?.tapSendFlexMessage()
         tapOkButtonInAlertView()
     }
-
-    func testGetApproversInGivenGroup() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetApproversInGivenGroup()
-        tapOkButtonInAlertView()
-    }
-
+    
     func tapOkButtonInAlertView() {
         addUIInterruptionMonitor(withDescription: "No access token error") { (alert) -> Bool in
             

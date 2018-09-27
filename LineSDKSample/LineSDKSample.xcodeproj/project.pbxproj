@@ -32,6 +32,8 @@
 		65E6BDBB2154D8240024D7C1 /* APIHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6BDBA2154D8240024D7C1 /* APIHomePage.swift */; };
 		65E6BDC02154D8670024D7C1 /* LineLoginButtonTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6BDBF2154D8670024D7C1 /* LineLoginButtonTest.swift */; };
 		65E6BDC22154D9300024D7C1 /* GraphAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6BDC12154D9300024D7C1 /* GraphAPITest.swift */; };
+		9712B432215C951500C367D1 /* MessageAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9712B431215C951500C367D1 /* MessageAPITest.swift */; };
+		9712B435215CC44600C367D1 /* LineSDKScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9712B434215CC44600C367D1 /* LineSDKScript.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +116,8 @@
 		65E6BDBA2154D8240024D7C1 /* APIHomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHomePage.swift; sourceTree = "<group>"; };
 		65E6BDBF2154D8670024D7C1 /* LineLoginButtonTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineLoginButtonTest.swift; sourceTree = "<group>"; };
 		65E6BDC12154D9300024D7C1 /* GraphAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphAPITest.swift; sourceTree = "<group>"; };
+		9712B431215C951500C367D1 /* MessageAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAPITest.swift; sourceTree = "<group>"; };
+		9712B434215CC44600C367D1 /* LineSDKScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKScript.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +207,7 @@
 			children = (
 				4B9058BE21006E9C004D717F /* LineSDKSampleUITests.swift */,
 				4B9058C021006E9C004D717F /* Info.plist */,
+				9712B433215CC3FD00C367D1 /* Script */,
 				65E6BDBE2154D83C0024D7C1 /* PageObject */,
 				65E6BDC32154D9640024D7C1 /* TestSuites */,
 			);
@@ -255,8 +260,17 @@
 			children = (
 				65E6BDBF2154D8670024D7C1 /* LineLoginButtonTest.swift */,
 				65E6BDC12154D9300024D7C1 /* GraphAPITest.swift */,
+				9712B431215C951500C367D1 /* MessageAPITest.swift */,
 			);
 			path = TestSuites;
+			sourceTree = "<group>";
+		};
+		9712B433215CC3FD00C367D1 /* Script */ = {
+			isa = PBXGroup;
+			children = (
+				9712B434215CC44600C367D1 /* LineSDKScript.swift */,
+			);
+			path = Script;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -441,7 +455,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				65E6BDB92154D80A0024D7C1 /* LoginPage.swift in Sources */,
+				9712B435215CC44600C367D1 /* LineSDKScript.swift in Sources */,
 				65E6BDC02154D8670024D7C1 /* LineLoginButtonTest.swift in Sources */,
+				9712B432215C951500C367D1 /* MessageAPITest.swift in Sources */,
 				65E6BDBB2154D8240024D7C1 /* APIHomePage.swift in Sources */,
 				4B9058BF21006E9C004D717F /* LineSDKSampleUITests.swift in Sources */,
 				65E6BDC22154D9300024D7C1 /* GraphAPITest.swift in Sources */,
