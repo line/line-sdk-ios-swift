@@ -35,10 +35,16 @@ public class LineSDKLoginPermission: NSObject {
 
     public static let openID                         = LineSDKLoginPermission(.openID)
     public static let profile                        = LineSDKLoginPermission(.profile)
-    public static let email                          = LineSDKLoginPermission(.email)
     public static let friends                        = LineSDKLoginPermission(.friends)
     public static let groups                         = LineSDKLoginPermission(.groups)
     public static let messageWrite                   = LineSDKLoginPermission(.messageWrite)
+    
+    public static let email                          = LineSDKLoginPermission(.email)
+    public static let phone                          = LineSDKLoginPermission(.phone)
+    public static let gender                         = LineSDKLoginPermission(.gender)
+    public static let birthdate                      = LineSDKLoginPermission(.birthdate)
+    public static let address                        = LineSDKLoginPermission(.address)
+    public static let realName                       = LineSDKLoginPermission(.realName)
     
     var unwrapped: LoginPermission { return _value }
 }

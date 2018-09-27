@@ -38,9 +38,6 @@ public struct LoginPermission: Hashable {
     /// Whether could access the user's profile, including user ID, display name, etc.
     public static let profile                        = LoginPermission(rawValue: "profile")
     
-    /// Whether could access user's email.
-    public static let email                          = LoginPermission(rawValue: "email")
-    
     /// Whether could get friends information of current user.
     public static let friends                        = LoginPermission(rawValue: "friends")
     
@@ -49,6 +46,29 @@ public struct LoginPermission: Hashable {
     
     /// Whether could write a message as current user.
     public static let messageWrite                   = LoginPermission(rawValue: "message.write")
+}
+
+/// Subpermissions of .openID. Permissions in this extension will not be included in the `permissions` property of
+/// issued access token.
+public extension LoginPermission {
+    /// Whether could access user's email inside ID Token. Requires `.openID` set.
+    public static let email                          = LoginPermission(rawValue: "email")
+    
+    /// Whether could access user's phone inside ID Token. Requires `.openID` set.
+    public static let phone                          = LoginPermission(rawValue: "phone")
+    
+    /// Whether could access user's gender inside ID Token. Requires `.openID` set.
+    public static let gender                         = LoginPermission(rawValue: "gender")
+    
+    /// Whether could access user's birthdate inside ID Token. Requires `.openID` set.
+    public static let birthdate                      = LoginPermission(rawValue: "birthdate")
+    
+    /// Whether could access user's address inside ID Token. Requires `.openID` set.
+    public static let address                        = LoginPermission(rawValue: "address")
+    
+    /// Whether could access user's real name inside ID Token. Requires `.openID` set.
+    public static let realName                      = LoginPermission(rawValue: "real_name")
+    
 }
 
 extension LoginPermission: CustomStringConvertible {

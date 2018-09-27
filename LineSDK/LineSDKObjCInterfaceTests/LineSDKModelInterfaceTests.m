@@ -36,10 +36,16 @@
 - (void)testLoginPermissionInterface {
     XCTAssertNotNil([LineSDKLoginPermission openID]);
     XCTAssertNotNil([LineSDKLoginPermission profile]);
-    XCTAssertNotNil([LineSDKLoginPermission email]);
     XCTAssertNotNil([LineSDKLoginPermission friends]);
     XCTAssertNotNil([LineSDKLoginPermission groups]);
     XCTAssertNotNil([LineSDKLoginPermission messageWrite]);
+    
+    XCTAssertNotNil([LineSDKLoginPermission email]);
+    XCTAssertNotNil([LineSDKLoginPermission phone]);
+    XCTAssertNotNil([LineSDKLoginPermission gender]);
+    XCTAssertNotNil([LineSDKLoginPermission birthdate]);
+    XCTAssertNotNil([LineSDKLoginPermission address]);
+    XCTAssertNotNil([LineSDKLoginPermission realName]);
 }
 
 - (void)testAccessTokenInterface {
