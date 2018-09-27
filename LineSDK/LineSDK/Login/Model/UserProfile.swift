@@ -33,6 +33,16 @@ public struct UserProfile: Decodable {
     /// Picture URL of current authorized user. `nil` if the user does not set a picture as avatar.
     public let pictureURL: URL?
     
+    /// Large avatar URL of current authorized user. `nil` if the user does not set a picture as avatar.
+    public var pictureURLLarge: URL? {
+        return pictureURL?.appendingPathComponent("/large")
+    }
+    
+    /// Small avatar URL of current authorized user. `nil` if the user does not set a picture as avatar.
+    public var pictureURLSmall: URL? {
+        return pictureURL?.appendingPathComponent("/small")
+    }
+    
     /// Status message of current authorized user. `nil` if the user does not set a status message.
     public let statusMessage: String?
     

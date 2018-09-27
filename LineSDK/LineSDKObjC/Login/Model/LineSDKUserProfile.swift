@@ -31,5 +31,7 @@ public class LineSDKUserProfile: NSObject {
     public var userID: String { return _value.userID }
     public var displayName: String { return _value.displayName }
     public var pictureURL: URL? { return _value.pictureURL }
+    public var pictureURLLarge: URL? { return _value.pictureURLLarge }
+    public var pictureURLSmall: URL? { return _value.pictureURLSmall }
     public var statusMessage: String? { return _value.statusMessage }
 }

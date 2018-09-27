@@ -76,6 +76,8 @@
     XCTAssertNil(profile.userID);
     XCTAssertNil(profile.displayName);
     XCTAssertNil(profile.pictureURL);
+    XCTAssertNil(profile.pictureURLLarge);
+    XCTAssertNil(profile.pictureURLSmall);
     XCTAssertNil(profile.statusMessage);
 }
 
