@@ -25,13 +25,12 @@ import XCTest
 class MessageAPITest: XCTestCase{
     
     let app = XCUIApplication()
-    var apiHomePage: APIHomePage?
+    var apiHomePage = APIHomePage()
     
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         app.launch()
-        apiHomePage = APIHomePage()
         
         let loginPage = LoginPage()
         if loginPage.isLineLogoutButtonExists() {
@@ -40,20 +39,20 @@ class MessageAPITest: XCTestCase{
     }
     
     func testSendTextMessage() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapSendTextMessage()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapSendTextMessage()
         tapOkButtonInAlertView()
     }
     
     func testMultiSendTextMessage() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapMultisendTextMessage()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapMultisendTextMessage()
         tapOkButtonInAlertView()
     }
     
     func testSendFlexMessage() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapSendFlexMessage()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapSendFlexMessage()
         tapOkButtonInAlertView()
     }
     

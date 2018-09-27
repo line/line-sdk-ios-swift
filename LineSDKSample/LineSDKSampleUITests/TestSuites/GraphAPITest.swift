@@ -25,13 +25,12 @@ import XCTest
 class GraphAPITest: XCTestCase{
     
     let app = XCUIApplication()
-    var apiHomePage: APIHomePage?
+    var apiHomePage = APIHomePage()
 
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         app.launch()
-        apiHomePage = APIHomePage()
         
         let loginPage = LoginPage()
         if loginPage.isLineLogoutButtonExists() {
@@ -40,26 +39,26 @@ class GraphAPITest: XCTestCase{
     }
 
     func testGetFriends() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetFriends()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapGetFriends()
         tapOkButtonInAlertView()
     }
 
     func testGetApproversInFriends() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetApproversInFriends()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapGetApproversInFriends()
         tapOkButtonInAlertView()
     }
 
     func testGetGroups() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetGroups()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapGetGroups()
         tapOkButtonInAlertView()
     }
 
     func testGetApproversInGivenGroup() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetApproversInGivenGroup()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapGetApproversInGivenGroup()
         tapOkButtonInAlertView()
     }
 
