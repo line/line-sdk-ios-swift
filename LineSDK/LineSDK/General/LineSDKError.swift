@@ -41,8 +41,13 @@ public enum LineSDKError: Error {
     /// - jsonEncodingFailed: The request requires a JSON body, but provided data cannot be encoded to valid JSON.
     ///                       Code 1003.
     public enum RequestErrorReason {
+        /// `URL` is missing while encoding a request. Code 1001.
         case missingURL
+        
+        /// The request requires an access token, but there is no one. Code 1002.
         case lackOfAccessToken
+        
+        /// The request requires a JSON body, but provided data cannot be encoded to valid JSON. Code 1003.
         case jsonEncodingFailed(Error)
     }
     
@@ -65,9 +70,20 @@ public enum LineSDKError: Error {
             let rawString: String?
         }
         
+        /// Error happens in the underlying `URLSession`. Code 2001.
         case URLSessionError(Error)
+        
+        /// The response is not a valid `HTTPURLResponse`. Code 2002.
         case nonHTTPURLResponse
+        
+        /// Cannot parse received data to an instance of target type. Code 2003.
         case dataParsingFailed(Any.Type, Data, Error)
+        
+        /// Received response contains an invalid HTTP status code. If the response data
+        /// can be converted to an `APIError` object, it will be associated as an
+        /// `APIErrorDetail` with `error` inside to indicate what is going wrong.
+        /// Otherwise, the `error` will be `nil`. In both cases, `raw` and `rawString` will
+        /// contain the plain response and error text respectively. Code 2004.
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
     
@@ -99,21 +115,58 @@ public enum LineSDKError: Error {
     ///                certificate or key error, or an unsupport algorithm is used. See `CryptoError` for more.
     ///                Code 3016.
     public enum AuthorizeErrorReason {
+        
+        /// There is no other login methods left. The login process cannot be completed. Code 3001.
         case exhaustedLoginFlow
+        
+        /// The view hierarchy or view controller hierarchy is malformed and LineSDK cannot present
+        /// its login view controller. Code 3002.
         case malformedHierarchy
+        
+        /// User cancelled or interrupted the login process. Code 3003.
         case userCancelled
+        
+        /// `stop` method is called on the login process. Code 3004.
         case forceStopped
+        
+        /// The received `URL` while opening app does not match the URL scheme defined. Code 3005.
         case callbackURLSchemeNotMatching
+        
+        /// The source application is invalid to finish auth process. Code 3006.
         case invalidSourceApplication
+        
+        /// The received `URL` while opening app is not a valid one, or does not contain all
+        /// necessary information. Code 3007.
         case malformedRedirectURL(url: URL, message: String?)
+        
+        /// An unknown `resultCode` in the opening app `URL`. Code 3008.
         case invalidLineURLResultCode(String)
+        
+        /// An error happens in the LINE client app while auth process. Code 3009.
         case lineClientError(code: String, message: String?)
+        
+        /// Invalid `state` verification. Received URL response is not from the original auth request. Code 3010.
         case responseStateValueNotMatching(expected: String, got: String?)
+        
+        /// An error happens in the web login flow while auth process. Code 3011.
         case webLoginError(error: String, description: String?)
+        
+        /// An error happens in keychain access which prevents LineSDK loads or writes to keychain. Code 3012.
         case keychainOperation(status: OSStatus)
+        
+        /// The retrieved auth information from keychain cannot be converted to valid data. Code 3013.
         case invalidDataInKeychain
+        
+        /// The authorization contains openID permission, but ID token cannot be found or parsed in
+        /// server response. Code 3014.
         case lackOfIDToken(raw: String?)
+        
+        /// Public key not found for a give key ID or the key ID does not exist. Code 3015.
         case JWTPublicKeyNotFound(keyID: String?)
+        
+        /// Something wrong happened inside LineSDK crypto part. This usually indicates a malformed
+        /// certificate or key error, or an unsupport algorithm is used. See `CryptoError` for more.
+        /// Code 3016.
         case cryptoError(error: CryptoError)
     }
     
@@ -122,7 +175,10 @@ public enum LineSDKError: Error {
     /// - conversionError: Cannot convert target `string` to valid data under `encoding`.
     /// - parameterError: Method invoked with an invalid parameter.
     public enum GeneralErrorReason {
+        /// Cannot convert target `string` to valid data under `encoding`.
         case conversionError(string: String, encoding: String.Encoding)
+        
+        /// Method invoked with an invalid parameter.
         case parameterError(parameterName: String, description: String)
     }
     

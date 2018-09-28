@@ -69,8 +69,16 @@ public struct PostSendMessagesRequest: Request {
 /// - unknown: Server returns an unknown status code, which is bound to the associated value in this case.
 ///
 public enum MessageSendingStatus: Decodable, Equatable {
+    
+    /// Messages are delivered successfully.
     case ok
+    
+    /// Messages are delivered but the receiver discarded them. This is due to receiver has turned off the
+    /// 1-to-1 messages in settings for the channel message or unapproved channel message. This `discarded`
+    /// status does not apply for messages sent to room, group or square chat.
     case discarded
+    
+    /// Server returns an unknown status code, which is bound to the associated value in this case.
     case unknown(String)
     
     public init(from decoder: Decoder) throws {
