@@ -34,7 +34,7 @@ class MessageAPITest: XCTestCase{
         
         let loginPage = LoginPage()
         if loginPage.isLineLogoutButtonExists() {
-            LineSDKScript.logout(app:app,loginPage:loginPage)
+            LineSDKScript.logout(app: app, loginPage: loginPage)
         }
     }
     
