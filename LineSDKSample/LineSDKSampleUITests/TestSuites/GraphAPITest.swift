@@ -25,7 +25,7 @@ import XCTest
 class GraphAPITest: XCTestCase{
     
     let app = XCUIApplication()
-    var apiHomePage = APIHomePage()
+    let apiHomePage = APIHomePage()
 
     override func setUp() {
         super.setUp()
@@ -34,36 +34,36 @@ class GraphAPITest: XCTestCase{
         
         let loginPage = LoginPage()
         if loginPage.isLineLogoutButtonExists() {
-            LineSDKScript.logout(app:app,loginPage:loginPage)
+            LineSDKScript.logout(app: app, loginPage: loginPage)
         }
     }
 
     func testGetFriends() {
         apiHomePage.navigateToAPIHomePage()
         apiHomePage.tapGetFriends()
-        tapOkButtonInAlertView()
+        tapOKButtonInErrorAlertView()
     }
 
     func testGetApproversInFriends() {
         apiHomePage.navigateToAPIHomePage()
         apiHomePage.tapGetApproversInFriends()
-        tapOkButtonInAlertView()
+        tapOKButtonInErrorAlertView()
     }
 
     func testGetGroups() {
         apiHomePage.navigateToAPIHomePage()
         apiHomePage.tapGetGroups()
-        tapOkButtonInAlertView()
+        tapOKButtonInErrorAlertView()
     }
 
     func testGetApproversInGivenGroup() {
         apiHomePage.navigateToAPIHomePage()
         apiHomePage.tapGetApproversInGivenGroup()
-        tapOkButtonInAlertView()
+        tapOKButtonInErrorAlertView()
     }
 
-    func tapOkButtonInAlertView() {
-        addUIInterruptionMonitor(withDescription: "No access token error") { (alert) -> Bool in
+    func tapOKButtonInErrorAlertView() {
+        addUIInterruptionMonitor(withDescription: "No access token error of using graph API") { (alert) -> Bool in
             
             XCTAssert(alert.staticTexts["Error"].exists)
             

@@ -25,7 +25,7 @@ import XCTest
 class MessageAPITest: XCTestCase{
     
     let app = XCUIApplication()
-    var apiHomePage = APIHomePage()
+    let apiHomePage = APIHomePage()
     
     override func setUp() {
         super.setUp()
@@ -41,23 +41,23 @@ class MessageAPITest: XCTestCase{
     func testSendTextMessage() {
         apiHomePage.navigateToAPIHomePage()
         apiHomePage.tapSendTextMessage()
-        tapOkButtonInAlertView()
+        tapOKButtonInErrorAlertView()
     }
     
     func testMultiSendTextMessage() {
         apiHomePage.navigateToAPIHomePage()
         apiHomePage.tapMultisendTextMessage()
-        tapOkButtonInAlertView()
+        tapOKButtonInErrorAlertView()
     }
     
     func testSendFlexMessage() {
         apiHomePage.navigateToAPIHomePage()
         apiHomePage.tapSendFlexMessage()
-        tapOkButtonInAlertView()
+        tapOKButtonInErrorAlertView()
     }
     
-    func tapOkButtonInAlertView() {
-        addUIInterruptionMonitor(withDescription: "No access token error") { (alert) -> Bool in
+    func tapOKButtonInErrorAlertView() {
+        addUIInterruptionMonitor(withDescription: "No access token error of using message API") { (alert) -> Bool in
             
             XCTAssert(alert.staticTexts["Error"].exists)
             

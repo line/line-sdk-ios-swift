@@ -23,7 +23,7 @@ import XCTest
 
 class LineSDKScript {
     
-    static func logout(app:XCUIApplication, loginPage:LoginPage) {
+    static func logout(app: XCUIApplication, loginPage: LoginPage) {
         loginPage.tapLogoutButton()
         app.alerts.buttons["Logout"].tap()
         app.alerts.buttons["OK"].tap()

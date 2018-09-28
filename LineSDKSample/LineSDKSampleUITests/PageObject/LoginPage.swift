@@ -24,8 +24,8 @@ import XCTest
 class LoginPage {
 
     let app = XCUIApplication()
-    var lineLoginButton: XCUIElement
-    var lineLogoutButton: XCUIElement
+    let lineLoginButton: XCUIElement
+    let lineLogoutButton: XCUIElement
 
     init() {
         lineLoginButton = app.buttons["login.button"]

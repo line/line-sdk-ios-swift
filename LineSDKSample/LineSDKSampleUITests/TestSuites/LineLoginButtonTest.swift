@@ -25,7 +25,7 @@ import XCTest
 class LineLoginButtonTest: XCTestCase {
     
     let app = XCUIApplication()
-    var loginPage = LoginPage()
+    let loginPage = LoginPage()
     
     override func setUp() {
         super.setUp()
@@ -33,7 +33,7 @@ class LineLoginButtonTest: XCTestCase {
         app.launch()
         
         if loginPage.isLineLogoutButtonExists() {
-            LineSDKScript.logout(app:app,loginPage:loginPage)
+            LineSDKScript.logout(app: app, loginPage: loginPage)
         }
     }
     
