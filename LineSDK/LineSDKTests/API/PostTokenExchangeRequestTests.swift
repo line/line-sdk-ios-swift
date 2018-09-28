@@ -66,7 +66,8 @@ class PostExchangeTokenRequestTests: APITests {
             channelID: config.channelID,
             code: "abcabc",
             otpValue: "123123",
-            redirectURI: "urlurl")
+            redirectURI: "urlurl",
+            optionalRedirectURI: "universal")
         runTestSuccess(for: request) { token in
             XCTAssertEqual(token.value, "123")
             XCTAssertEqual(token.refreshToken, "abc")

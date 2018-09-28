@@ -32,6 +32,7 @@ class LoginConfigurationTests: XCTestCase {
             "https://sample.com",
             "randomUrl://authorize",
             "\(Constant.thirdPartyAppReturnScheme)://somePath/",
+            
             "\(Constant.thirdPartyAppReturnScheme)://authorize?hello=world",
             "\(Constant.thirdPartyAppReturnScheme)://authorize",
             "\(Constant.thirdPartyAppReturnScheme.uppercased())://Authorize"
@@ -52,6 +53,7 @@ class LoginConfigurationTests: XCTestCase {
             "https://sample.com/auth/other",
             "https://domain.com/auth",
             "randomUrl://auth",
+            "http://sample.com/auth",
             
             "https://sample.com/auth",
             "https://sample.com/auth?code=123",
@@ -59,7 +61,7 @@ class LoginConfigurationTests: XCTestCase {
             "HTTPS://sample.com/auth",
         ].map { config.isValidUniversalLinkURL(url: URL(string: $0)!) }
         XCTAssertEqual(results, [
-            false, false, false, false,
+            false, false, false, false, false,
             true,  true,  true,  true
         ])
     }
