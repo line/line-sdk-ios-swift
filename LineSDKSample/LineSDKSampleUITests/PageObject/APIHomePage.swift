@@ -49,4 +49,16 @@ class APIHomePage {
     func tapGetApproversInGivenGroup() {
         table.cells.staticTexts["Get Approvers in given Group"].tap()
     }
+    
+    func tapSendTextMessage() {
+        table.cells.staticTexts["Send text message to a friend"].tap()
+    }
+
+    func tapMultisendTextMessage() {
+        table.cells.staticTexts["Multisend text message to first five friends"].tap()
+    }
+
+    func tapSendFlexMessage() {
+        table.cells.staticTexts["Send flex message to a friend"].tap()
+    }
 }

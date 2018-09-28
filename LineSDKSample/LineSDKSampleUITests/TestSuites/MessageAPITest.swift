@@ -1,5 +1,5 @@
 //
-//  LineLoginButtonTest.swift
+//  MessageAPITest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,22 +22,51 @@
 import Foundation
 import XCTest
 
-class LineLoginButtonTest: XCTestCase {
+class MessageAPITest: XCTestCase{
     
     let app = XCUIApplication()
-    let loginPage = LoginPage()
+    let apiHomePage = APIHomePage()
     
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         app.launch()
         
+        let loginPage = LoginPage()
         if loginPage.isLineLogoutButtonExists() {
             LineSDKScript.logout(app: app, loginPage: loginPage)
         }
     }
     
-    func testLineLoginButton() {
-        XCTAssert(loginPage.isLineLoginButtonExists())
+    func testSendTextMessage() {
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapSendTextMessage()
+        tapOKButtonInErrorAlertView()
+    }
+    
+    func testMultiSendTextMessage() {
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapMultisendTextMessage()
+        tapOKButtonInErrorAlertView()
+    }
+    
+    func testSendFlexMessage() {
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapSendFlexMessage()
+        tapOKButtonInErrorAlertView()
+    }
+    
+    func tapOKButtonInErrorAlertView() {
+        addUIInterruptionMonitor(withDescription: "No access token error of using message API") { (alert) -> Bool in
+            
+            XCTAssert(alert.staticTexts["Error"].exists)
+            
+            if alert.buttons["OK"].exists {
+                alert.buttons["OK"].tap()
+                return true
+            }
+            return false
+        }
+        app.navigationBars.firstMatch.tap()
     }
 }

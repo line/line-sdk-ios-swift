@@ -132,6 +132,9 @@ open class LoginButton: UIButton {
 
     /// Setup the default style of `LoginButton`.
     func setup() {
+        // set accessibility label for sample UI test
+        accessibilityLabel = "login.button"
+        
         titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 11)
         titleLabel?.textAlignment = .center
         setTitleColor(.white, for: .normal)

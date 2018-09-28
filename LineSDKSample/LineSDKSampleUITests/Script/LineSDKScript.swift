@@ -1,5 +1,5 @@
 //
-//  LoginPage.swift
+//  LineSDKScript.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,30 +21,11 @@
 
 import XCTest
 
-class LoginPage {
-
-    let app = XCUIApplication()
-    let lineLoginButton: XCUIElement
-    let lineLogoutButton: XCUIElement
-
-    init() {
-        lineLoginButton = app.buttons["login.button"]
-        lineLogoutButton = app.navigationBars.buttons["Logout"]
-    }
-
-    func tapLoginButton() {
-        lineLoginButton.tap()
-    }
-
-    func tapLogoutButton() {
-        lineLogoutButton.tap()
-    }
+class LineSDKScript {
     
-    func isLineLoginButtonExists() -> Bool {
-        return lineLoginButton.exists
-    }
-    
-    func isLineLogoutButtonExists() -> Bool{
-        return lineLogoutButton.exists
+    static func logout(app: XCUIApplication, loginPage: LoginPage) {
+        loginPage.tapLogoutButton()
+        app.alerts.buttons["Logout"].tap()
+        app.alerts.buttons["OK"].tap()
     }
 }

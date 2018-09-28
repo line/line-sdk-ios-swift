@@ -25,41 +25,48 @@ import XCTest
 class GraphAPITest: XCTestCase{
     
     let app = XCUIApplication()
-    var apiHomePage: APIHomePage?
+    let apiHomePage = APIHomePage()
 
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         app.launch()
-        apiHomePage = APIHomePage()
+        
+        let loginPage = LoginPage()
+        if loginPage.isLineLogoutButtonExists() {
+            LineSDKScript.logout(app: app, loginPage: loginPage)
+        }
     }
 
     func testGetFriends() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetFriends()
-        tapOkButtonInAlertView()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapGetFriends()
+        tapOKButtonInErrorAlertView()
     }
 
     func testGetApproversInFriends() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetApproversInFriends()
-        tapOkButtonInAlertView()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapGetApproversInFriends()
+        tapOKButtonInErrorAlertView()
     }
 
     func testGetGroups() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetGroups()
-        tapOkButtonInAlertView()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapGetGroups()
+        tapOKButtonInErrorAlertView()
     }
 
     func testGetApproversInGivenGroup() {
-        apiHomePage?.navigateToAPIHomePage()
-        apiHomePage?.tapGetApproversInGivenGroup()
-        tapOkButtonInAlertView()
+        apiHomePage.navigateToAPIHomePage()
+        apiHomePage.tapGetApproversInGivenGroup()
+        tapOKButtonInErrorAlertView()
     }
 
-    func tapOkButtonInAlertView() {
-        addUIInterruptionMonitor(withDescription: "No access token error") { (alert) -> Bool in
+    func tapOKButtonInErrorAlertView() {
+        addUIInterruptionMonitor(withDescription: "No access token error of using graph API") { (alert) -> Bool in
+            
+            XCTAssert(alert.staticTexts["Error"].exists)
+            
             if alert.buttons["OK"].exists {
                 alert.buttons["OK"].tap()
                 return true
