@@ -235,16 +235,23 @@ public class LoginProcess {
     }
     
     func resumeOpenURL(url: URL, sourceApplication: String?) -> Bool {
-        guard configuration.isValidUniversalLinkURL(url: url) ||
-              configuration.isValidCustomizeURL(url: url) else
+        
+        let isValidUniversalLinkURL = configuration.isValidUniversalLinkURL(url: url)
+        let isValidCustomizeURL = configuration.isValidCustomizeURL(url: url)
+        
+        guard isValidUniversalLinkURL || isValidCustomizeURL else
         {
             invokeFailure(error: LineSDKError.authorizeFailed(reason: .callbackURLSchemeNotMatching))
             return false
         }
         
-        guard let sourceApp = sourceApplication, configuration.isValidSourceApplication(appID: sourceApp) else {
-            invokeFailure(error: LineSDKError.authorizeFailed(reason: .invalidSourceApplication))
-            return false
+        // For universal link callback, we can skip source application checking.
+        // Just do it for customize URL scheme.
+        if isValidCustomizeURL {
+            guard let sourceApp = sourceApplication, configuration.isValidSourceApplication(appID: sourceApp) else {
+                invokeFailure(error: LineSDKError.authorizeFailed(reason: .invalidSourceApplication))
+                return false
+            }
         }
         
         // It is the callback url we could handle, so the app switching observer should be invalidated.

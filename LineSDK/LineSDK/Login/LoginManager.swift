@@ -247,10 +247,12 @@ public class LoginManager {
     ///         arguments without modifying anything.
     public func application(
         _ app: UIApplication,
-        open url: URL,
+        open url: URL?,
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
     {
+        guard let url = url else { return false }
         guard let currentProcess = currentProcess else { return false }
+        
         let sourceApplication = options[.sourceApplication] as? String
         return currentProcess.resumeOpenURL(url: url, sourceApplication: sourceApplication)
     }

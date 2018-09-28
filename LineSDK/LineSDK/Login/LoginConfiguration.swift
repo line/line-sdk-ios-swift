@@ -69,12 +69,6 @@ struct LoginConfiguration {
             return false
         }
         
-        guard setURL.scheme?.lowercased() == "https",
-              url.scheme?.lowercased() == "https" else
-        {
-            return false
-        }
-        
         guard setURL.host?.lowercased() == url.host?.lowercased() else {
             return false
         }
