@@ -26,6 +26,7 @@ struct PostExchangeTokenRequest: Request {
     let code: String
     let otpValue: String
     let redirectURI: String
+    let optionalRedirectURI: String?
     
     let method: HTTPMethod = .post
     let path = "/oauth2/v2.1/token"
@@ -33,7 +34,7 @@ struct PostExchangeTokenRequest: Request {
     let authentication: AuthenticateMethod = .none
     
     var parameters: [String : Any]? {
-        return [
+        var parameters = [
             "client_id": channelID,
             "grant_type": "authorization_code",
             "code": code,
@@ -42,6 +43,10 @@ struct PostExchangeTokenRequest: Request {
             "client_version": Constant.SDKVersionString,
             "id_token_key_type": "JWK"
         ]
+        if let optionalRedirectURI = optionalRedirectURI {
+            parameters["optional_redirect_uri"] = optionalRedirectURI
+        }
+        return parameters
     }
     
     typealias Response = AccessToken

@@ -256,7 +256,8 @@ public class LoginProcess {
                 channelID: configuration.channelID,
                 code: response.requestToken,
                 otpValue: otp.otp,
-                redirectURI: Constant.thirdPartyAppReturnURL)
+                redirectURI: Constant.thirdPartyAppReturnURL,
+                optionalRedirectURI: configuration.universalLinkURL?.absoluteString)
             Session.shared.send(tokenExchangeRequest) { tokenResult in
                 switch tokenResult {
                 case .success(let token): self.invokeSuccess(result: token, response: response)
