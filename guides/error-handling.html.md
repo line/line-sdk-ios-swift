@@ -45,7 +45,7 @@ public enum ResponseErrorReason {
     // Cannot parse received data to an instance of target type. Code 2003.
     case dataParsingFailed(Any.Type, Data, Error)
     // Received response contains an invalid HTTP status code. Code 2004.
-    case invalidHTTPStatusAPIError(code: Int, error: APIError?, raw: String?)
+    case invalidHTTPStatusAPIError(detail: APIErrorDetail)
 }
 ```
 
@@ -59,30 +59,27 @@ To get the detail information from the top level `LineSDKError`, you can use Swi
 case .failure(let error):
     if let sdkError = error as? LineSDKError,
        case .responseFailed(
-        reason: .invalidHTTPStatusAPIError(
-            code: let code, error: let apiError, raw: let raw)) = sdkError
+        reason: .invalidHTTPStatusAPIError(let detail)) = sdkError
     {
-        print("HTTP Status Code: \(code)")
-        print("API Error Detail: \(apiError?.detail ?? "nil")")
-        print("Raw Response: \(raw ?? "nil")")
+        print("HTTP Status Code: \(detail.code)")
+        print("API Error Detail: \(detail.error?.detail ?? "nil")")
+        print("Raw Response: \(detail.raw)")
     }
 ```
 
-You should determine what to do based on error type and reason. For example, if an `.invalidHTTPStatusAPIError` happens, you need to check its `code`. If it is `500`, it means a server error and you might have little to do expect for showing some pop-up. However, if it is `403`, it means your current token has no enough permission to access current API. In this case, you will need to prompt your user to login again with proper required login permission for that failing API:
+You should determine what to do based on error type and reason. For example, if an `.invalidHTTPStatusAPIError` happens, you need to check its `code` of its `detail` parameter. If it is `500`, it means a server error and you might have little to do expect for showing some pop-up. However, if it is `403`, it means your current token has no enough permission to access current API. In this case, you will need to prompt your user to login again with proper required login permission for that failing API:
 
 ```swift
 case .failure(let error):
     if let sdkError = error as? LineSDKError,
        case .responseFailed(
-        reason: .invalidHTTPStatusAPIError(
-            code: let code, error: let apiError, raw: let raw)) = sdkError
+        reason: .invalidHTTPStatusAPIError(let detail)) = sdkError
     {
-        if code == 500 {
-            showAlert("LINE API Server Error: \(raw ?? "nil")")
-        } else if code == 403 {
-            showAlert("Not enough permission. Login again?") {
-                self.navigateToLoginViewController()
-            }
+        if detail.code == 500 {
+            print("LINE API Server Error: \(String(describing: detail.error)")
+        } else if detail.code == 403 {
+            print("Not enough permission. Login again with required permissions?")
+            // Do Login
         }
     }
 ```
@@ -104,12 +101,17 @@ case .failure(let error):
         } else if sdkError.isURLSessionTimeout {
             // Underlying request timeout in URL session. Should try again later.
             
-        } else if /* other condition */ {
+        } else if sdkError.isRefreshTokenError {
+            // User is accessing a public API with expired token, LINE SDK tried to
+            // refresh the access token automatically, but failed (due to refresh token)
+            // also expired. Should login again.
+            
+        } else if /* sdkError.isXYZ other condition */ {
             // You could also extend LineSDKError to make your own shortcuts.
             
         } else {
             // Any other errors.
-            showAlert("\(sdkError)")
+            print("\(sdkError)")
         }
     }
 ```
