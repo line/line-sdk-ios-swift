@@ -11,5 +11,5 @@ source_directory: LineSDK
 theme: fullwidth
 exclude: 
   - "LineSDK/LineSDK/Messaging/*"
-  - "LineSDK/LineSDK/Social/*"
+  - "LineSDK/LineSDK/Graph/*"
   - "LineSDK/LineSDK/Networking/API+Internal.swift"
