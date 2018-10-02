@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         continue userActivity: NSUserActivity,
         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool
     {
-        return LoginManager.shared.application(application, open: url)
+        return LoginManager.shared.application(application, open: userActivity.webpageURL)
     }
 
 }
