@@ -25,13 +25,22 @@ import UIKit
 /// `LoginButton` we provide.
 public protocol LoginButtonDelegate: class {
 
-    /// This method would be called after login action did start.
+    /// This method would be called after login action did start. Since LINE login is an async operation, it is a
+    /// good chance to show an indicator or some other visual effect to block your users other actions.
     func loginButtonDidStartLogin(_ button: LoginButton)
 
     /// This method would be called if the login action did succeed.
+    ///
+    /// - Parameters:
+    ///   - button: The button which is used to trigger the login.
+    ///   - loginResult: Successful result of the login.
     func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult)
 
     /// This method would be called if the login action did fail.
+    ///
+    /// - Parameters:
+    ///   - button: The button which is used to trigger the login.
+    ///   - error: Error happened during the login process.
     func loginButton(_ button: LoginButton, didFailLogin error: Error)
 }
 
@@ -120,6 +129,8 @@ open class LoginButton: UIButton {
         }
     }
 
+    /// Creates a predefined LINE Login button. The button size should be fixed. You need
+    /// to layout its x and y values.
     public init() {
         super.init(frame: .zero)
         setup()
