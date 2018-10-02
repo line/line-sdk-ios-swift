@@ -32,8 +32,7 @@ class ECDSAKeyTests: XCTestCase {
         -----END PUBLIC KEY-----
         """
         do {
-            let k = try Crypto.ECDSAPublicKey(pem: keyString)
-            print(k)
+            _ = try Crypto.ECDSAPublicKey(pem: keyString)
         } catch {
             XCTFail("\(error)")
         }
