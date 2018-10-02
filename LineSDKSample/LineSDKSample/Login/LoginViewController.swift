@@ -31,29 +31,19 @@ class LoginViewController: UIViewController, IndicatorDisplay {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let loginBtn = LoginButton()
-        loginBtn.delegate = self
-        loginBtn.presentingViewController = self
+        let loginButton = LoginButton()
+        
+        loginButton.delegate = self
+        loginButton.presentingViewController = self
 
         // You could set the permissions you need or use default permissions
-        loginBtn.permissions = [.profile, .friends, .groups, .messageWrite, .openID]
+        loginButton.permissions = [.profile, .friends, .groups, .messageWrite, .openID]
 
-        view.addSubview(loginBtn)
-        loginBtn.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: loginBtn,
-                           attribute: .centerX,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .centerX,
-                           multiplier: 1,
-                           constant: 0).isActive = true
-        NSLayoutConstraint(item: loginBtn,
-                           attribute: .centerY,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .centerY,
-                           multiplier: 1,
-                           constant: 0).isActive = true
+        view.addSubview(loginButton)
+        
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 }
 
