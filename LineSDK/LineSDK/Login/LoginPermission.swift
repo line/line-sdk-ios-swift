@@ -51,25 +51,35 @@ public struct LoginPermission: Hashable {
 /// Subpermissions of .openID. Permissions in this extension will not be included in the `permissions` property of
 /// issued access token.
 public extension LoginPermission {
-    /// Whether could access user's email inside ID Token. Requires `.openID` set.
+    /// Whether could access user's email inside ID Token. Requires `.openID` set. Additional request is required
+    /// in LINE Developer Console to use this permission.
     public static let email                          = LoginPermission(rawValue: "email")
-    
+}
+
+/// :nodoc:
+/// Subpermissions of .openID. Permissions in this extension will not be included in the `permissions` property of issued access token.
+public extension LoginPermission {
     /// Whether could access user's phone inside ID Token. Requires `.openID` set.
+    /// Only available to LINE internal partners.
     public static let phone                          = LoginPermission(rawValue: "phone")
     
     /// Whether could access user's gender inside ID Token. Requires `.openID` set.
+    /// Only available to LINE internal partners.
     public static let gender                         = LoginPermission(rawValue: "gender")
     
     /// Whether could access user's birthdate inside ID Token. Requires `.openID` set.
+    /// Only available to LINE internal partners.
     public static let birthdate                      = LoginPermission(rawValue: "birthdate")
     
     /// Whether could access user's address inside ID Token. Requires `.openID` set.
+    /// Only available to LINE internal partners.
     public static let address                        = LoginPermission(rawValue: "address")
     
     /// Whether could access user's real name inside ID Token. Requires `.openID` set.
+    /// Only available to LINE internal partners.
     public static let realName                      = LoginPermission(rawValue: "real_name")
-    
 }
+
 
 extension LoginPermission: CustomStringConvertible {
     public var description: String { return rawValue }
