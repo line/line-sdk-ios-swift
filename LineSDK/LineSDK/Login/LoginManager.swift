@@ -259,8 +259,11 @@ public class LoginManager {
 }
 
 extension LoginManager {
-    func getUserProfile(with token: AccessToken, in group: DispatchGroup, handler: @escaping (Result<UserProfile>) -> Void) {
-        
+    func getUserProfile(
+        with token: AccessToken,
+        in group: DispatchGroup,
+        handler: @escaping (Result<UserProfile>) -> Void)
+    {
         group.enter()
         
         Session.shared.send(GetUserProfileRequestInjectedToken(token: token.value)) { profileResult in
@@ -286,7 +289,8 @@ extension LoginManager {
             group.leave()
             return
         }
-        // Use Discovery Document to find JWKs URI
+        
+        // Use Discovery Document to find JWKs URI. How about introducing some promise mechanism 
         Session.shared.send(GetDiscoveryDocumentRequest()) { documentResult in
             switch documentResult {
             case .success(let document):
