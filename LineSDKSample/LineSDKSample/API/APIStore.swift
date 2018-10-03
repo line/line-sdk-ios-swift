@@ -24,16 +24,18 @@ import LineSDK
 
 enum APICategory: Int {
     case auth
+    case friendship
     case graph
     case messaging
     
-    static let count = 3
+    static let count = 4
 }
 
 class APIStore {
     static let shared = APIStore()
     
     private(set) var authAPIs: [APIItem] = []
+    private(set) var friendshipAPIs: [APIItem] = []
     private(set) var graphAPIs: [APIItem] = []
     private(set) var messagingAPIs: [APIItem] = []
     
@@ -61,6 +63,11 @@ class APIStore {
             )
         ]
         
+        friendshipAPIs = [
+            .init(title: "Get Bot Friendship Status",
+                  request: GetBotFriendshipStatusRequest())
+        ]
+        
         graphAPIs = [
             .init(title: "Get Friends" ,
                   request: GetFriendsRequest()
@@ -84,6 +91,7 @@ class APIStore {
     func numberOfAPIs(in category: APICategory) -> Int {
         switch category {
         case .auth: return authAPIs.count
+        case .friendship: return friendshipAPIs.count
         case .graph: return graphAPIs.count
         case .messaging: return messagingAPIs.count
         }
@@ -92,6 +100,7 @@ class APIStore {
     func api(in category: APICategory, at index: Int) -> APIItem {
         switch category {
         case .auth: return authAPIs[index]
+        case .friendship: return friendshipAPIs[index]
         case .graph: return graphAPIs[index]
         case .messaging: return messagingAPIs[index]
         }
