@@ -264,7 +264,8 @@ public class LoginProcess {
         // "-1005 The network connection was lost.", seems only happening on some iOS 12 devices).
         // So as a workaround, we need wait for a while before continuing.
         //
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        // ref: https://github.com/AFNetworking/AFNetworking/issues/4279
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             do {
                 let response = try LoginProcessURLResponse(from: url, validatingWith: self.processID)
                 let tokenExchangeRequest = PostExchangeTokenRequest(
