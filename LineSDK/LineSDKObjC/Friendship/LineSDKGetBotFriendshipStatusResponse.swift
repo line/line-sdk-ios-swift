@@ -1,5 +1,5 @@
 //
-//  GetBotFriendshipStatus.swift
+//  LineSDKGetBotFriendshipStatusResponse.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,22 +19,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+#if !LineSDKCocoaPods
+import LineSDK
+#endif
 
-/// Represents the request of getting friendship status between the bot
-/// (which linked to current channel) and the current authorized user.
-public struct GetBotFriendshipStatusRequest: Request {
-    
-    public let method: HTTPMethod = .get
-    public let path: String = "/friendship/v1/status"
-    public let authentication: AuthenticateMethod = .token
-    
-    public init() {}
-    
-    public struct Response: Decodable {
-        /// A flag indicates friendship. `true` means the channel bot is a friend of the user,
-        /// and the user is not blocking the bot. `false` means the channel bot is not a friend
-        /// of the user, or the bot is a friend but the user is blocking the bot.
-        public let friendFlag: Bool
-    }
+@objcMembers
+public class LineSDKGetBotFriendshipStatusResponse: NSObject {
+    let _value: GetBotFriendshipStatusRequest.Response
+    init(_ value: GetBotFriendshipStatusRequest.Response) { _value = value }
+    public var friendFlag: Bool { return _value.friendFlag }
 }

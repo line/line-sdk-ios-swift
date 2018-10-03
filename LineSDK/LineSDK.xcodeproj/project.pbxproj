@@ -222,6 +222,7 @@
 		4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */; };
 		D102A69E2164658D00804C7C /* GetBotFriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */; };
 		D102A6A0216467FE00804C7C /* GetBotFriendshipStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A69F216467FE00804C7C /* GetBotFriendshipStatusTests.swift */; };
+		D102A6A421646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A6A321646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift */; };
 		D1A591272139489E00AC080D /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
 		D1A591292139495B00AC080D /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
 		DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
@@ -490,6 +491,7 @@
 		4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageComponent.swift; sourceTree = "<group>"; };
 		D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBotFriendshipStatus.swift; sourceTree = "<group>"; };
 		D102A69F216467FE00804C7C /* GetBotFriendshipStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBotFriendshipStatusTests.swift; sourceTree = "<group>"; };
+		D102A6A321646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKGetBotFriendshipStatusResponse.swift; sourceTree = "<group>"; };
 		D1A591262139489E00AC080D /* JWK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWK.swift; sourceTree = "<group>"; };
 		D1A591282139495B00AC080D /* JWKSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKSet.swift; sourceTree = "<group>"; };
 		DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsRequest.swift; sourceTree = "<group>"; };
@@ -879,6 +881,7 @@
 		4BBEA993212EAF9F00858627 /* LineSDKObjC */ = {
 			isa = PBXGroup;
 			children = (
+				D102A6A221646AA100804C7C /* Friendship */,
 				4B2422ED2134FBD6007200C2 /* General */,
 				4BBEA9AD212EAFFB00858627 /* Login */,
 				4BC9B2DC212FB7100071C736 /* Social */,
@@ -1197,6 +1200,14 @@
 				D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */,
 			);
 			path = Request;
+			sourceTree = "<group>";
+		};
+		D102A6A221646AA100804C7C /* Friendship */ = {
+			isa = PBXGroup;
+			children = (
+				D102A6A321646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift */,
+			);
+			path = Friendship;
 			sourceTree = "<group>";
 		};
 		D1A591252138D26100AC080D /* JWK */ = {
@@ -1675,6 +1686,7 @@
 				4BC4B3E4212FF86100750794 /* LineSDKAudioMessage.swift in Sources */,
 				4BDD2C212133C1CD00DD563D /* LineSDKFlexMessageContainer.swift in Sources */,
 				4BDD2C232133C61F00DD563D /* LineSDKFlexBubbleContainer.swift in Sources */,
+				D102A6A421646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift in Sources */,
 				4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */,
 				4BDD2C162133970800DD563D /* Log.swift in Sources */,
 				4BDD2C302133F2FA00DD563D /* LineSDKFlexFillerComponent.swift in Sources */,
