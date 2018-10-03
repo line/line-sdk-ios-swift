@@ -22,13 +22,11 @@
 import Foundation
 import LineSDK
 
-enum APICategory: Int {
+enum APICategory: Int, CaseIterable {
     case auth
     case friendship
     case graph
     case messaging
-    
-    static let count = 4
 }
 
 class APIStore {

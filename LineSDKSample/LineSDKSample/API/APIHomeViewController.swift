@@ -24,7 +24,7 @@ import UIKit
 class APIHomeViewController: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return APICategory.count
+        return APICategory.allCases.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
