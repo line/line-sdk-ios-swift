@@ -221,6 +221,7 @@
 		4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605F212A8F00009E9838 /* FlexMessageProperties.swift */; };
 		4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */; };
 		D102A69E2164658D00804C7C /* GetBotFriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */; };
+		D102A6A0216467FE00804C7C /* GetBotFriendshipStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A69F216467FE00804C7C /* GetBotFriendshipStatusTests.swift */; };
 		D1A591272139489E00AC080D /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
 		D1A591292139495B00AC080D /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
 		DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
@@ -488,6 +489,7 @@
 		4BFD605F212A8F00009E9838 /* FlexMessageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageProperties.swift; sourceTree = "<group>"; };
 		4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageComponent.swift; sourceTree = "<group>"; };
 		D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBotFriendshipStatus.swift; sourceTree = "<group>"; };
+		D102A69F216467FE00804C7C /* GetBotFriendshipStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBotFriendshipStatusTests.swift; sourceTree = "<group>"; };
 		D1A591262139489E00AC080D /* JWK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWK.swift; sourceTree = "<group>"; };
 		D1A591282139495B00AC080D /* JWKSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKSet.swift; sourceTree = "<group>"; };
 		DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsRequest.swift; sourceTree = "<group>"; };
@@ -690,6 +692,7 @@
 				4BCD27942113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift */,
 				4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */,
 				4B95F4032125364500AD3A81 /* PostMultisendMessagesRequestTests.swift */,
+				D102A69F216467FE00804C7C /* GetBotFriendshipStatusTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1563,6 +1566,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D102A6A0216467FE00804C7C /* GetBotFriendshipStatusTests.swift in Sources */,
 				4BD191B22111452E00E2C481 /* PostRefreshTokenRequestTests.swift in Sources */,
 				4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */,
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
