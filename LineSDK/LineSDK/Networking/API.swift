@@ -161,4 +161,20 @@ public struct API {
         let request = GetUserProfileRequest()
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
+    
+    /// Gets the friendship status between the bot (which linked to current channel) and current authorized user.
+    ///
+    /// - Parameters:
+    ///   - queue: The callback queue will be used for `completionHandler`.
+    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
+    ///   - completion: The completion closure to be executed when the API finishes.
+    /// - Note: `.profile` permission is required.
+    ///
+    public static func getBotFriendStatus(
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<GetBotFriendshipStatusRequest.Response>) -> Void)
+    {
+        let request = GetBotFriendshipStatusRequest()
+        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+    }
 }

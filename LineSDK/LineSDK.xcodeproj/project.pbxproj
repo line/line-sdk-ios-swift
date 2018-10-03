@@ -220,6 +220,9 @@
 		4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */; };
 		4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605F212A8F00009E9838 /* FlexMessageProperties.swift */; };
 		4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */; };
+		D102A69E2164658D00804C7C /* GetBotFriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */; };
+		D102A6A0216467FE00804C7C /* GetBotFriendshipStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A69F216467FE00804C7C /* GetBotFriendshipStatusTests.swift */; };
+		D102A6A421646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A6A321646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift */; };
 		D1A591272139489E00AC080D /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
 		D1A591292139495B00AC080D /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
 		DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
@@ -486,6 +489,9 @@
 		4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexComponentMessageTests.swift; sourceTree = "<group>"; };
 		4BFD605F212A8F00009E9838 /* FlexMessageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageProperties.swift; sourceTree = "<group>"; };
 		4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageComponent.swift; sourceTree = "<group>"; };
+		D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBotFriendshipStatus.swift; sourceTree = "<group>"; };
+		D102A69F216467FE00804C7C /* GetBotFriendshipStatusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBotFriendshipStatusTests.swift; sourceTree = "<group>"; };
+		D102A6A321646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKGetBotFriendshipStatusResponse.swift; sourceTree = "<group>"; };
 		D1A591262139489E00AC080D /* JWK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWK.swift; sourceTree = "<group>"; };
 		D1A591282139495B00AC080D /* JWKSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKSet.swift; sourceTree = "<group>"; };
 		DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsRequest.swift; sourceTree = "<group>"; };
@@ -688,6 +694,7 @@
 				4BCD27942113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift */,
 				4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */,
 				4B95F4032125364500AD3A81 /* PostMultisendMessagesRequestTests.swift */,
+				D102A69F216467FE00804C7C /* GetBotFriendshipStatusTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -736,6 +743,7 @@
 				4B9058CE210072B9004D717F /* Login */,
 				DBE4E36E211D6C2600184D66 /* Graph */,
 				4BF53530212A79C800EA602A /* Messaging */,
+				D102A6992164650A00804C7C /* Friendship */,
 				4B9058CD210072B0004D717F /* Networking */,
 				4B25A811213684F000C74B87 /* Crypto */,
 				4B9058CF210072C3004D717F /* Utils */,
@@ -873,6 +881,7 @@
 		4BBEA993212EAF9F00858627 /* LineSDKObjC */ = {
 			isa = PBXGroup;
 			children = (
+				D102A6A221646AA100804C7C /* Friendship */,
 				4B2422ED2134FBD6007200C2 /* General */,
 				4BBEA9AD212EAFFB00858627 /* Login */,
 				4BC9B2DC212FB7100071C736 /* Social */,
@@ -1069,7 +1078,6 @@
 		4BF53531212A79D900EA602A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4B9A304C2121404000174C6F /* Actions */,
 				4B15EEF5211D46FF00866E6C /* Message.swift */,
 				4B9A303A212121FC00174C6F /* MessageProtocols.swift */,
 				4B15EEF7211D473400866E6C /* MessageSender.swift */,
@@ -1080,6 +1088,7 @@
 				4B9A303E2121277400174C6F /* LocationMessage.swift */,
 				4B9A3046212139C000174C6F /* TemplateMessage.swift */,
 				4BF53538212A7C9100EA602A /* FlexMessage.swift */,
+				4B9A304C2121404000174C6F /* Actions */,
 				4B9A3045212139AE00174C6F /* Template */,
 				4BF53535212A7B4000EA602A /* Flex */,
 			);
@@ -1157,6 +1166,50 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		D102A6992164650A00804C7C /* Friendship */ = {
+			isa = PBXGroup;
+			children = (
+				D102A69C2164655D00804C7C /* Request */,
+			);
+			path = Friendship;
+			sourceTree = "<group>";
+		};
+		D102A69A2164652900804C7C /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */,
+				DBF20275212C11A600780358 /* GetGroupsRequest.swift */,
+				DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */,
+				DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		D102A69B2164653900804C7C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DBE4E36C211D6C1A00184D66 /* User.swift */,
+				DBF20273212C114D00780358 /* Group.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D102A69C2164655D00804C7C /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		D102A6A221646AA100804C7C /* Friendship */ = {
+			isa = PBXGroup;
+			children = (
+				D102A6A321646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift */,
+			);
+			path = Friendship;
+			sourceTree = "<group>";
+		};
 		D1A591252138D26100AC080D /* JWK */ = {
 			isa = PBXGroup;
 			children = (
@@ -1170,12 +1223,8 @@
 		DBE4E36E211D6C2600184D66 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
-				DBE4E36C211D6C1A00184D66 /* User.swift */,
-				DBF20273212C114D00780358 /* Group.swift */,
-				DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */,
-				DBF20275212C11A600780358 /* GetGroupsRequest.swift */,
-				DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */,
-				DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */,
+				D102A69B2164653900804C7C /* Model */,
+				D102A69A2164652900804C7C /* Request */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -1465,6 +1514,7 @@
 				4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */,
 				DBE4E36D211D6C1A00184D66 /* User.swift in Sources */,
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
+				D102A69E2164658D00804C7C /* GetBotFriendshipStatus.swift in Sources */,
 				4B3CCB9A21523A2600F51D76 /* CryptoKey.swift in Sources */,
 				4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */,
 				4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */,
@@ -1527,6 +1577,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D102A6A0216467FE00804C7C /* GetBotFriendshipStatusTests.swift in Sources */,
 				4BD191B22111452E00E2C481 /* PostRefreshTokenRequestTests.swift in Sources */,
 				4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */,
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
@@ -1635,6 +1686,7 @@
 				4BC4B3E4212FF86100750794 /* LineSDKAudioMessage.swift in Sources */,
 				4BDD2C212133C1CD00DD563D /* LineSDKFlexMessageContainer.swift in Sources */,
 				4BDD2C232133C61F00DD563D /* LineSDKFlexBubbleContainer.swift in Sources */,
+				D102A6A421646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift in Sources */,
 				4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */,
 				4BDD2C162133970800DD563D /* Log.swift in Sources */,
 				4BDD2C302133F2FA00DD563D /* LineSDKFlexFillerComponent.swift in Sources */,

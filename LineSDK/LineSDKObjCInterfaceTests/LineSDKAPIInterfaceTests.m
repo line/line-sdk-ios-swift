@@ -112,4 +112,12 @@
            completionHandler:^(LineSDKPostSendMessagesResponse *response, NSError *error) {}];
 }
 
+- (void)_testGetBotFriendshipInterface {
+    [LineSDKAPI
+     getBotFriendStatusWithCompletionHandler:^(LineSDKGetBotFriendshipStatusResponse *response, NSError *error) {}];
+    [LineSDKAPI
+     getBotFriendStatusWithCallbackQueue:[LineSDKCallbackQueue asyncMain]
+                       completionHandler:^(LineSDKGetBotFriendshipStatusResponse *response, NSError *error) {}];
+}
+
 @end
