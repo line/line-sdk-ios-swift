@@ -257,22 +257,32 @@ public class LoginProcess {
         // It is the callback url we could handle, so the app switching observer should be invalidated.
         appSwitchingObserver?.valid = false
         
-        do {
-            let response = try LoginProcessURLResponse(from: url, validatingWith: processID)
-            let tokenExchangeRequest = PostExchangeTokenRequest(
-                channelID: configuration.channelID,
-                code: response.requestToken,
-                otpValue: otp.otp,
-                redirectURI: Constant.thirdPartyAppReturnURL,
-                optionalRedirectURI: configuration.universalLinkURL?.absoluteString)
-            Session.shared.send(tokenExchangeRequest) { tokenResult in
-                switch tokenResult {
-                case .success(let token): self.invokeSuccess(result: token, response: response)
-                case .failure(let error): self.invokeFailure(error: error)
+        // Wait for a while before request access token.
+        //
+        // When switching back to SDK container app from another app, with url scheme or universal link,
+        // the URL Session is not avaliable yet (sending a request causes "53: Software caused connection abort" or
+        // "-1005 The network connection was lost.", seems only happening on some iOS 12 devices).
+        // So as a workaround, we need wait for a while before continuing.
+        //
+        // ref: https://github.com/AFNetworking/AFNetworking/issues/4279
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            do {
+                let response = try LoginProcessURLResponse(from: url, validatingWith: self.processID)
+                let tokenExchangeRequest = PostExchangeTokenRequest(
+                    channelID: self.configuration.channelID,
+                    code: response.requestToken,
+                    otpValue: self.otp.otp,
+                    redirectURI: Constant.thirdPartyAppReturnURL,
+                    optionalRedirectURI: self.configuration.universalLinkURL?.absoluteString)
+                Session.shared.send(tokenExchangeRequest) { tokenResult in
+                    switch tokenResult {
+                    case .success(let token): self.invokeSuccess(result: token, response: response)
+                    case .failure(let error): self.invokeFailure(error: error)
+                    }
                 }
+            } catch {
+                self.invokeFailure(error: error)
             }
-        } catch {
-            invokeFailure(error: error)
         }
         
         return true
