@@ -56,11 +56,7 @@ public enum LineSDKError: Error {
     /// - URLSessionError: Error happens in the underlying `URLSession`. Code 2001.
     /// - nonHTTPURLResponse: The response is not a valid `HTTPURLResponse`. Code 2002.
     /// - dataParsingFailed: Cannot parse received data to an instance of target type. Code 2003.
-    /// - invalidHTTPStatusAPIError: Received response contains an invalid HTTP status code. If the response data
-    ///                              can be converted to an `APIError` object, it will be associated as an
-    ///                              `APIErrorDetail` with `error` inside to indicate what is going wrong.
-    ///                              Otherwise, the `error` will be `nil`. In both cases, `raw` and `rawString` will
-    ///                              contain the plain response and error text respectively. Code 2004.
+    /// - invalidHTTPStatusAPIError: Received response contains an invalid HTTP status code. Code 2004.
     public enum ResponseErrorReason {
         
         public struct APIErrorDetail {
@@ -70,19 +66,20 @@ public enum LineSDKError: Error {
             let rawString: String?
         }
         
-        /// Error happens in the underlying `URLSession`. Code 2001.
+        /// Error happens in the underlying `URLSession`. The system `URLSessionError` value is associated. Code 2001.
         case URLSessionError(Error)
         
         /// The response is not a valid `HTTPURLResponse`. Code 2002.
         case nonHTTPURLResponse
         
         /// Cannot parse received data to an instance of target type. Code 2003.
+        /// - Associated values: Parsing destination type, original data, and system underlying error.
         case dataParsingFailed(Any.Type, Data, Error)
         
-        /// Received response contains an invalid HTTP status code. If the response data
-        /// can be converted to an `APIError` object, it will be associated as an
-        /// `APIErrorDetail` with `error` inside to indicate what is going wrong.
-        /// Otherwise, the `error` will be `nil`. In both cases, `raw` and `rawString` will
+        /// Received response contains an invalid HTTP status code. Associated `APIErrorDetail` contains information
+        /// of the error detail. If the response data can be converted to an `APIError` object,
+        /// it will be associated with an `APIErrorDetail`, in which `error` property indicates what is going wrong.
+        /// Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and `detail.rawString` will
         /// contain the plain response and error text respectively. Code 2004.
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
@@ -137,21 +134,31 @@ public enum LineSDKError: Error {
         
         /// The received `URL` while opening app is not a valid one, or does not contain all
         /// necessary information. Code 3007.
+        /// - url: The url which is used to open current app.
+        /// - message: A human readable message to describe the error reason.
         case malformedRedirectURL(url: URL, message: String?)
         
         /// An unknown `resultCode` in the opening app `URL`. Code 3008.
+        /// - Associated value: The `resultCode` in the response url.
         case invalidLineURLResultCode(String)
         
         /// An error happens in the LINE client app while auth process. Code 3009.
+        /// - code: The code returned by LINE client during the authorization.
+        /// - message: The message describes the error.
         case lineClientError(code: String, message: String?)
         
         /// Invalid `state` verification. Received URL response is not from the original auth request. Code 3010.
+        /// - expected: Expected state value.
+        /// - got: The state value actually got from URL response.
         case responseStateValueNotMatching(expected: String, got: String?)
         
         /// An error happens in the web login flow while auth process. Code 3011.
+        /// - error: Error reason when login with web flow.
+        /// - description: A human readable message to describe the error reason.
         case webLoginError(error: String, description: String?)
         
         /// An error happens in keychain access which prevents LineSDK loads or writes to keychain. Code 3012.
+        /// - status: The `OSStatus` number system gives.
         case keychainOperation(status: OSStatus)
         
         /// The retrieved auth information from keychain cannot be converted to valid data. Code 3013.
@@ -159,14 +166,17 @@ public enum LineSDKError: Error {
         
         /// The authorization contains openID permission, but ID token cannot be found or parsed in
         /// server response. Code 3014.
+        /// - raw: Raw value of the ID Token, which cannot be parsed correctly.
         case lackOfIDToken(raw: String?)
         
         /// Public key not found for a give key ID or the key ID does not exist. Code 3015.
+        /// - keyID: The key ID specified in ID Token header which should be used.
         case JWTPublicKeyNotFound(keyID: String?)
         
         /// Something wrong happened inside LineSDK crypto part. This usually indicates a malformed
         /// certificate or key error, or an unsupport algorithm is used. See `CryptoError` for more.
         /// Code 3016.
+        /// - error: Underlying `CryptoError` value.
         case cryptoError(error: CryptoError)
     }
     
