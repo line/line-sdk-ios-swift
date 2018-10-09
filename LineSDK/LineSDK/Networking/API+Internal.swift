@@ -37,6 +37,9 @@ extension API {
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be executed when the API finishes.
+    ///
+    /// - Note: `.friends` permission is required.
+    ///
     public static func getFriends(
         sort: GetFriendsRequest.Sort? = nil,
         pageToken: String?,
@@ -58,6 +61,9 @@ extension API {
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The closure to be executed when the approver list is returned.
+    ///
+    /// - Note: `.friends` permission is required.
+    ///
     public static func getApproversInFriends(
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -77,6 +83,9 @@ extension API {
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The closure to be executed when the list is returned.
+    ///
+    /// - Note: `.groups` permission is required.
+    ///
     public static func getGroups(
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -98,6 +107,9 @@ extension API {
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The closure to be executed when the list is returned.
+    ///
+    /// - Note: `.friends` and `.groups` permission is required.
+    ///
     public static func getApproversInGroup(
         groupID: String,
         pageToken: String?,
