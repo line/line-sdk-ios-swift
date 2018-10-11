@@ -192,8 +192,14 @@ extension APIItem {
                 switch result {
                 case .success(let chatID):
                     selectFlexMessage(in: controller) { message in
-                        let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [message])
-                        Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
+                        switch message {
+                        case .success(let m):
+                            let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [m])
+                            Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
+                        case .failure(let error):
+                            handler(.failure(error))
+                        }
+
                     }
                 case .failure(let error):
                     handler(.failure(error))
@@ -242,8 +248,11 @@ func selectUserFromFriendList(in viewController: UIViewController, handler: @esc
             value.friends.prefix(5).forEach { friend in
                 alert.addAction(.init(title: friend.displayName, style: .default) { _ in
                     handler(.success(friend.userID))
-                    })
+                })
             }
+            alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
+                handler(.failure(LineSDKSampleError.userCancelAction))
+            })
             viewController.present(alert, animated: true)
         case .failure(let error):
             handler(.failure(error))
@@ -272,6 +281,9 @@ func selectGroupFromGroupList(in viewController: UIViewController, handler: @esc
                     handler(.success(group.groupID))
                     })
             }
+            alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
+                handler(.failure(LineSDKSampleError.userCancelAction))
+            })
             viewController.present(alert, animated: true)
         case .failure(let error):
             handler(.failure(error))
@@ -279,7 +291,7 @@ func selectGroupFromGroupList(in viewController: UIViewController, handler: @esc
     }
 }
 
-func selectFlexMessage(in viewController: UIViewController, handler: @escaping (Message) -> Void) {
+func selectFlexMessage(in viewController: UIViewController, handler: @escaping (Result<Message>) -> Void) {
     let alert = UIAlertController(title: "Message", message: nil, preferredStyle: .actionSheet)
 
     alert.addAction(.init(title: "Simple Bubble", style: .default) { _ in
@@ -289,7 +301,7 @@ func selectFlexMessage(in viewController: UIViewController, handler: @escaping (
             box.addComponent(FlexTextComponent(text: "World"))
             return FlexBubbleContainer(body: box).messageWithAltText("this is a flex message")
         }()
-        handler(simpleBubble)
+        handler(.success(simpleBubble))
     })
 
     alert.addAction(.init(title: "Simple Carousel", style: .default, handler: { _ in
@@ -304,8 +316,12 @@ func selectFlexMessage(in viewController: UIViewController, handler: @escaping (
             let secondBoxBubbleContainer = FlexBubbleContainer(body: secondBox)
             return FlexCarouselContainer(contents: [firstBoxBubbleContainer, secondBoxBubbleContainer]).messageWithAltText("This is a flex carousel message")
         }()
-        handler(flexCarousel)
+        handler(.success(flexCarousel))
     }))
+
+    alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
+        handler(.failure(LineSDKSampleError.userCancelAction))
+    })
     
     viewController.present(alert, animated: true)
 }

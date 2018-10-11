@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B104808216ED51A00300C61 /* LineSDKSampleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B104807216ED51A00300C61 /* LineSDKSampleError.swift */; };
 		4B15EEF1211D322B00866E6C /* APIResultEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF0211D322B00866E6C /* APIResultEntryTests.swift */; };
 		4B3687E2212AB62D00B6048A /* Placeholder.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B3687E0212AB62D00B6048A /* Placeholder.strings */; };
 		4B63F46F2106D43D003D1BF1 /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; };
@@ -68,6 +69,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4B104807216ED51A00300C61 /* LineSDKSampleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSampleError.swift; sourceTree = "<group>"; };
 		4B15EEF0211D322B00866E6C /* APIResultEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultEntryTests.swift; sourceTree = "<group>"; };
 		4B3687E1212AB62D00B6048A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Placeholder.strings; sourceTree = "<group>"; };
 		4B3687E3212AB63B00B6048A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Placeholder.strings"; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				4B9058A721006E9C004D717F /* LaunchScreen.storyboard */,
 				4B9058AA21006E9C004D717F /* Info.plist */,
 				4B9AB20D2159EE1500B8C22C /* Config.xcconfig */,
+				4B104807216ED51A00300C61 /* LineSDKSampleError.swift */,
 			);
 			path = LineSDKSample;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				4BB84463211BF48F005B60D7 /* UIViewControllerExtensions.swift in Sources */,
 				4BDADDD6211C35230044D827 /* APIResultEntry.swift in Sources */,
 				4BCD27A521142A3400B90D8F /* UserDetailViewController.swift in Sources */,
+				4B104808216ED51A00300C61 /* LineSDKSampleError.swift in Sources */,
 				4BCD279E2113FE9D00B90D8F /* IndicatorDisplay.swift in Sources */,
 				4BB8445F211BD4DF005B60D7 /* APIStore.swift in Sources */,
 				4BB84461211BE5E7005B60D7 /* APIResultViewController.swift in Sources */,
