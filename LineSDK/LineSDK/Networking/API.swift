@@ -170,7 +170,7 @@ public struct API {
     ///   - completion: The completion closure to be executed when the API finishes.
     /// - Note: `.profile` permission is required.
     ///
-    public static func getBotFriendStatus(
+    public static func getBotFriendshipStatus(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<GetBotFriendshipStatusRequest.Response>) -> Void)
     {

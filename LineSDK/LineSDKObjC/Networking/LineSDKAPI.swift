@@ -219,17 +219,17 @@ public class LineSDKAPI: NSObject {
     }
     
     // - MARK: Friendship
-    public static func getBotFriendStatus(
+    public static func getBotFriendshipStatus(
         completionHandler completion: @escaping (LineSDKGetBotFriendshipStatusResponse?, Error?) -> Void)
     {
-        getBotFriendStatus(callbackQueue: .currentMainOrAsync, completionHandler: completion)
+        getBotFriendshipStatus(callbackQueue: .currentMainOrAsync, completionHandler: completion)
     }
     
-    public static func getBotFriendStatus(
+    public static func getBotFriendshipStatus(
         callbackQueue queue: LineSDKCallbackQueue,
         completionHandler completion: @escaping (LineSDKGetBotFriendshipStatusResponse?, Error?) -> Void)
     {
-        API.getBotFriendStatus(callbackQueue: queue.unwrapped) { result in
+        API.getBotFriendshipStatus(callbackQueue: queue.unwrapped) { result in
             completion(result.value.map { .init($0) }, result.error)
         }
     }
