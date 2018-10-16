@@ -44,13 +44,13 @@ public protocol LoginButtonDelegate: class {
     func loginButton(_ button: LoginButton, didFailLogin error: Error)
 }
 
-/// `LoginButton` is a UIButton which executes login function when user taps on it.
+/// Represents a login button which executes the login function when the user taps the button.
 open class LoginButton: UIButton {
 
-    /// Specifies the size of a `LoginButton`.
+    /// Represents the size of the login button.
     ///
-    /// - small: the small-sized `LoginButton`.
-    /// - normal: the normal-sized `LoginButton`.
+    /// - small: The size of the login button is small.
+    /// - normal: The size of the login button is normal.
     public enum ButtonSize {
         case small
         case normal
@@ -95,24 +95,23 @@ open class LoginButton: UIButton {
         }
     }
 
-    /// The object conforms to `LoginButtonDelegate` and implements the methods defined in `LoginButtonDelegate`
+    /// Conforms to the `LoginButtonDelegate` protocol and implements the methods defined in the protocol
     /// to handle different login states.
     public weak var delegate: LoginButtonDelegate?
 
-    /// This property would be a parameter of login action which presents the login alert view controller.
-    /// If its value is `nil`, the most top view controller in current view controller hierarchy will be used.
+    /// A parameter of the login action that determines the login alert view controller to show.
+    /// If this value is `nil`, the most top view controller in the current view controller hierarchy will be used.
     public weak var presentingViewController: UIViewController?
 
-    /// The set of permissions is a parameter of login action.
-    /// The default permissions is [.profile].
+    /// A parameter of the login action that represents a set of permissions.
+    /// The default value is `[.profile]`.
     public var permissions: Set<LoginPermission> = [.profile]
 
-    /// The set of options is a parameter of login action.
-    /// The default options is empty.
+    /// A parameter of the login action that represents a set of options.
+    /// The default value is empty.
     public var options: LoginManagerOptions = []
 
-    /// The size of `LoginButton`. The default button size is normal. The buton will be resized if you change
-    /// this property.
+    /// The size of the login button. The default value is `normal`.
     public var buttonSize: ButtonSize = .normal {
         didSet {
             // update button style after buttonSize is changed
@@ -120,7 +119,7 @@ open class LoginButton: UIButton {
         }
     }
 
-    /// The text on the `LoginButton`. Its value is a localized string which is `Log in with LINE` in English.
+    /// The text on the login button. Its value is "Log in with LINE" in the English environment and localized for different environments.
     /// The buton will be resized if you change this property.
     public var buttonText: String? {
         didSet {
@@ -195,16 +194,16 @@ open class LoginButton: UIButton {
         invalidateIntrinsicContentSize()
     }
 
-    /// Override the getter of intrinsicContentSize to support auto layout.
+    /// Overrides the getter of the `intrinsicContentSize` property to support automatic layout.
     override open var intrinsicContentSize: CGSize {
         let titleSize = titleLabel?.intrinsicContentSize ?? .zero
         return buttonSize.sizeForTitleSize(titleSize)
     }
 
-    /// Execute this function to do login action when user taps on `LoginButton`.
+    /// Executes the login action when the user taps the login button.
     @objc open func login() {
         if LoginManager.shared.isAuthorizing {
-            // Authorizing process is on-going so not to call login again
+            // Authorizing process is ongoing so not to call login again
             return
         }
         isUserInteractionEnabled = false

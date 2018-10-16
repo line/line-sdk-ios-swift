@@ -2,12 +2,12 @@
 Pod::Spec.new do |s|
   s.name                = "LineSDKSwift"
   s.version             = "5.0.0"
-  s.summary             = "Integrate LINE Login and APIs into your iOS app to create a more engaging experience for your users."
+  s.summary             = "The LINE SDK for iOS Swift provides a modern way of implementing LINE APIs."
 
   s.description         = <<-DESC
-                          The LineSDK lets you integrate LINE into your iOS app to create a more engaging 
-                          experience for your users. This framework is written in pure Swift and provides an easy 
-                          way to integrate LINE login, LINE APIs and other exciting features into your app.
+                          Developed in Swift, the LINE SDK for iOS Swift provides a modern way of implementing 
+                          LINE APIs. The features included in this SDK will help you develop an iOS app with 
+                          engaging and personalized user experience.
                           DESC
 
   s.homepage            = "https://developers.line.me/"

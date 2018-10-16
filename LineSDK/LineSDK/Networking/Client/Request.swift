@@ -21,12 +21,12 @@
 
 import Foundation
 
-/// Represents possible HTTP method for `Request`.
+/// Represents an HTTP method specified with a `Request` instance.
 ///
-/// - get: HTTP method "GET"
-/// - post: HTTP method "POST"
-/// - put: HTTP method "PUT"
-/// - delete: HTTP method "DELETE"
+/// - get: The GET method.
+/// - post: The POST method.
+/// - put: The PUT method.
+/// - delete: The DELETE method.
 public enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
@@ -42,10 +42,10 @@ public enum HTTPMethod: String {
     }
 }
 
-/// Represents possible authenticate method for `Request`.
+/// Represents an authentication method specified with a `Request` instance.
 ///
-/// - none: Do not use an authenticate method.
-/// - token: Uses oAuth 2 Bearer token.
+/// - none: Does not use any authentication method.
+/// - token: Uses OAuth 2.0 Bearer token.
 public enum AuthenticateMethod {
     case none
     case token
@@ -70,11 +70,11 @@ public enum AuthenticateMethod {
     }
 }
 
-/// Represents possible content type for `Request`.
+/// Represents a content type specified with a `Request` instance.
 ///
-/// - none: The request does not contains body content.
-/// - formUrlEncoded: The request contains form url encoded data as its content.
-/// - json: The request contains JSON data as its content.
+/// - none: The request does not contain any body content.
+/// - formUrlEncoded: The request contains form url encoded data.
+/// - json: The request contains JSON data.
 public enum ContentType {
     case none
     case formUrlEncoded

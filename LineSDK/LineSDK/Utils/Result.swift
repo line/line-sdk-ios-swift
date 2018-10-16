@@ -63,8 +63,8 @@ public enum Result<Value> {
     /// returned.
     ///
     /// - Parameter transform: A closure that takes the success value of the instance.
-    /// - Returns: A `Result` containing the result of the given closure. If this instance is a failure, returns the
-    ///            same failure.
+    /// - Returns: The `Result` containing the result of the given closure. If this instance is a failure,
+    ///            returns the same failure.
     public func map<T>(_ transform: (Value) -> T) -> Result<T> {
         switch self {
         case .success(let value): return .success(transform(value))

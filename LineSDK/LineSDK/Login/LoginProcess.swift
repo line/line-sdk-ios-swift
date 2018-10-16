@@ -23,8 +23,9 @@ import Foundation
 import UIKit
 import SafariServices
 
-/// Represents a login process initialized by a `LoginManager`. Normally, a process contains multiple login flows,
-/// which will run serially. If a previous flow succeeded in auth the user, later flows will not be executed.
+/// Represents a login process initialized by a `LoginManager` object. Normally, a process that contains multiple
+/// login flows will run serially. If a flow succeeded in loging in the user, subsequent flows will not be
+/// executed.
 public class LoginProcess {
     
     enum BotPrompt: String {
@@ -155,7 +156,7 @@ public class LoginProcess {
         }
     }
     
-    /// Stops this login process. The login process will fail with a `.forceStopped` error.
+    /// Stops the login process. The login process will fail with a `.forceStopped` error.
     public func stop() {
         invokeFailure(error: LineSDKError.authorizeFailed(reason: .forceStopped))
     }

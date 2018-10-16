@@ -21,25 +21,26 @@
 
 import Foundation
 
-/// `LineSDKError` is the error type returned by LineSDK. It encompasses a few different types of errors, each with
-/// their own associated reasons.
+/// `LineSDKError` is the error type returned by the LINE SDK. It encompasses different types of errors
+/// that have their own associated reasons.
 ///
-/// You could switch over the error to know the detail reason and associated information for each error. Or you could
-/// access the `localizedDescription` property to get a human-readable text description. Access `errorCode` to get a
-/// fixed error code to identify the error type quickly. All `LineSDKError`s are under the "LineSDKError" error domain.
+/// You can switch over to each error to know the detailed reason and associated information. You can also
+/// access the `localizedDescription` property to get a human-readable text description. Access `errorCode`
+/// to get a fixed error code to identify the error type quickly. All `LineSDKError`s are under the
+/// "LineSDKError" error domain.
 ///
-/// - requestFailed: Returned when something wrong happens while constructing a request.
-/// - responseFailed: Returned when something wrong happens during handling response.
-/// - authorizeFailed: Returned when something wrong happens during user authorizing process.
-/// - generalError: Other general errors might happen in LineSDK.
+/// - requestFailed: An error occurred while constructing a request.
+/// - responseFailed: An error occurred while handling a response.
+/// - authorizeFailed: An error occurred while authorizing a user.
+/// - generalError: An error occurred while performing another process in the LINE SDK.
 public enum LineSDKError: Error {
     
-    /// The underlying reason for why `.requestFailed` happens.
+    /// The underlying reason why a `.requestFailed` error occurs.
     ///
-    /// - missingURL: `URL` is missing while encoding a request. Code 1001.
-    /// - lackOfAccessToken: The request requires an access token, but there is no one. Code 1002.
-    /// - jsonEncodingFailed: The request requires a JSON body, but provided data cannot be encoded to valid JSON.
-    ///                       Code 1003.
+    /// - missingURL: The `URL` object is missing while encoding a request. Code 1001.
+    /// - lackOfAccessToken: The request requires an access token but it is unavailable. Code 1002.
+    /// - jsonEncodingFailed: The request requires a JSON body but provided data cannot be encoded to
+    ///                       valid JSON. Code 1003.
     public enum RequestErrorReason {
         /// `URL` is missing while encoding a request. Code 1001.
         case missingURL
@@ -51,12 +52,13 @@ public enum LineSDKError: Error {
         case jsonEncodingFailed(Error)
     }
     
-    /// The underlying reason for why `.responseFailed` happens.
+    /// The underlying reason why a `.responseFailed` error occurs.
     ///
-    /// - URLSessionError: Error happens in the underlying `URLSession`. Code 2001.
-    /// - nonHTTPURLResponse: The response is not a valid `HTTPURLResponse`. Code 2002.
-    /// - dataParsingFailed: Cannot parse received data to an instance of target type. Code 2003.
-    /// - invalidHTTPStatusAPIError: Received response contains an invalid HTTP status code. Code 2004.
+    /// - URLSessionError: An error occurred in the underlying `URLSession` object. Code 2001.
+    /// - nonHTTPURLResponse: The response is not a valid `HTTPURLResponse` object. Code 2002.
+    /// - dataParsingFailed: The received data cannot be persed to an instance of the target type. Code
+    ///                      2003.
+    /// - invalidHTTPStatusAPIError: The received response contains an invalid HTTP status code. Code 2004.
     public enum ResponseErrorReason {
         
         public struct APIErrorDetail {
@@ -84,33 +86,37 @@ public enum LineSDKError: Error {
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
     
-    /// The underlying reason for why `.authorizeFailed` happens.
+    /// The underlying reason why an `.authorizeFailed` error occurs.
     ///
-    /// - exhaustedLoginFlow: There is no other login methods left. The login process cannot be completed. Code 3001.
-    /// - malformedHierarchy: The view hierarchy or view controller hierarchy is malformed and LineSDK cannot present
-    ///                       its login view controller. Code 3002.
-    /// - userCancelled: User cancelled or interrupted the login process. Code 3003.
-    /// - forceStopped: `stop` method is called on the login process. Code 3004.
-    /// - callbackURLSchemeNotMatching: The received `URL` while opening app does not match the URL scheme defined.
-    ///                                 Code 3005.
-    /// - invalidSourceApplication: The source application is invalid to finish auth process. Code 3006.
-    /// - malformedRedirectURL: The received `URL` while opening app is not a valid one, or does not contain all
-    ///                         necessary information. Code 3007.
-    /// - invalidLineURLResultCode: An unknown `resultCode` in the opening app `URL`. Code 3008.
-    /// - lineClientError: An error happens in the LINE client app while auth process. Code 3009.
-    /// - responseStateValueNotMatching: Invalid `state` verification. Received URL response is not from the
-    ///                                  original auth request. Code 3010.
-    /// - webLoginError: An error happens in the web login flow while auth process. Code 3011.
-    /// - keychainOperation: An error happens in keychain access which prevents LineSDK loads or writes to keychain.
-    ///                      Code 3012.
-    /// - invalidDataInKeychain: The retrieved auth information from keychain cannot be converted to valid data.
-    ///                          Code 3013.
-    /// - lackOfIDToken: The authorization contains openID permission, but ID token cannot be found or parsed in
-    ///                  server response. Code 3014.
-    /// - JWTPublicKeyNotFound: Public key not found for a give key ID or the key ID does not exist. Code 3015.
-    /// - cryptoError: Something wrong happened inside LineSDK crypto part. This usually indicates a malformed
-    ///                certificate or key error, or an unsupport algorithm is used. See `CryptoError` for more.
-    ///                Code 3016.
+    /// - exhaustedLoginFlow: There is no other login method left. The login process cannot be completed.
+    ///                       Code 3001.
+    /// - malformedHierarchy: The view hierarchy or view controller hierarchy is malformed and the LINE
+    ///                       SDK cannot show its login view controller. Code 3002.
+    /// - userCancelled: The user cancelled or interrupted the login process. Code 3003.
+    /// - forceStopped: The `stop` method is called during the login process. Code 3004.
+    /// - callbackURLSchemeNotMatching: The received `URL` object while opening the app does not match the
+    ///                                 defined URL scheme. Code 3005.
+    /// - invalidSourceApplication: The source application is invalid and cannot finish the authorization
+    ///                             process. Code 3006.
+    /// - malformedRedirectURL: The received `URL` object while opening the app is invalid or does not
+    ///                         contain necessary information. Code 3007.
+    /// - invalidLineURLResultCode: The received `URL` object while opening the app has an unknown result
+    ///                             code. Code 3008.
+    /// - lineClientError: An error occurs in the LINE app during the authorization process. Code 3009.
+    /// - responseStateValueNotMatching: Failed to verify the `state` value. The received URL response is
+    ///                                  not from the original authorization request. Code 3010.
+    /// - webLoginError: An error occurrs in the web login flow during the authorization process. Code 3011.
+    /// - keychainOperation: An error occurrs while accessing the keychain. It prevents the LINE SDK from
+    ///                      loading data from or writing data to the keychain. Code 3012.
+    /// - invalidDataInKeychain: The retrieved authorization information from the keychain cannot be
+    ///                          converted to valid data. Code 3013.
+    /// - lackOfIDToken: The authorization request contains the OpenID scope, but any ID token is not found
+    ///                  in or parsed from the server response. Code 3014.
+    /// - JWTPublicKeyNotFound: The public key is not found for a give key ID or the key ID does not exist. Code
+    ///                         3015.
+    /// - cryptoError: An error occurred at the LINE SDK crypto part. Usually this indicates a malformed
+    ///                certificate or a key, or an unsupported algorithm is used. For more information, see
+    ///                `CryptoError`. Code 3016.
     public enum AuthorizeErrorReason {
         
         /// There is no other login methods left. The login process cannot be completed. Code 3001.
@@ -180,10 +186,10 @@ public enum LineSDKError: Error {
         case cryptoError(error: CryptoError)
     }
     
-    /// The underlying reason for why `.generalError` happens.
+    /// The underlying reason why a `.generalError` occurs.
     ///
-    /// - conversionError: Cannot convert target `string` to valid data under `encoding`.
-    /// - parameterError: Method invoked with an invalid parameter.
+    /// - conversionError: Cannot convert `string` to valid data with `encoding`.
+    /// - parameterError: The method is invoked with an invalid parameter.
     public enum GeneralErrorReason {
         /// Cannot convert target `string` to valid data under `encoding`.
         case conversionError(string: String, encoding: String.Encoding)
@@ -200,7 +206,7 @@ public enum LineSDKError: Error {
 
 // MARK: - Classifies the Error
 extension LineSDKError {
-    /// Returns whether the `LineSDKError` is a request error.
+    /// Checks whether the `LineSDKError` is a request error.
     public var isRequestError: Bool {
         if case .requestFailed = self {
             return true
@@ -208,7 +214,7 @@ extension LineSDKError {
         return false
     }
     
-    /// Returns whether the `LineSDKError` is a response error.
+    /// Checks whether the `LineSDKError` is a response error.
     public var isResponseError: Bool {
         if case .responseFailed = self {
             return true
@@ -216,7 +222,7 @@ extension LineSDKError {
         return false
     }
     
-    /// Returns whether the `LineSDKError` is an authorization error.
+    /// Checks whether the `LineSDKError` is an authorization error.
     public var isAuthorizeError: Bool {
         if case .authorizeFailed = self {
             return true
@@ -224,7 +230,7 @@ extension LineSDKError {
         return false
     }
     
-    /// Returns whether the `LineSDKError` is a general error.
+    /// Checks whether the `LineSDKError` is a general error.
     public var isGeneralError: Bool {
         if case .generalError = self {
             return true
@@ -235,7 +241,7 @@ extension LineSDKError {
 
 // MARK: - Convenience Properties
 extension LineSDKError {
-    /// Returns whether the `LineSDKError` is an authorization error with `.userCancelled` as its reason.
+    /// Checks whether the `LineSDKError` is an authorization error and the reason is `.userCancelled`.
     public var isUserCancelled: Bool {
         if case .authorizeFailed(.userCancelled) = self {
             return true
@@ -243,40 +249,40 @@ extension LineSDKError {
         return false
     }
     
-    /// Returns whether the `LineSDKError` represents a bad request error.
+    /// Checks whether the `LineSDKError` is a bad request error.
     public var isBadRequest: Bool {
         return isResponseError(statusCode: 400)
     }
     
-    /// Returns whether the `LineSDKError` represents a refresh token error. Usually, when user uses an expired access
-    /// token to send an API request, an auto token refresh operation with current `refreshToken` will be triggered.
-    /// This error usually happens when the `refreshToken` itself also expires or invalid. If this error happens, you
-    /// have to let your user do an re-authorize before you can continue use LINE APIs.
+    /// Checks whether the `LineSDKError` is a refresh token error. Usually, when the user uses an expired
+    /// access token to send an API request, an automatic token refresh operation with the current refresh token
+    /// will be triggered. This error usually occurs when the refresh token also expires or is invalid. If this
+    /// error occurs, let the user logs in again before you can continue to use LINE APIs.
     public var isRefreshTokenError: Bool {
         let refreshTokenRequest = PostRefreshTokenRequest(channelID: "", refreshToken: "")
         let url = refreshTokenRequest.baseURL.appendingPathComponentIfNotEmpty(refreshTokenRequest.path)
         return isResponseError(statusCode: 400, url: url)
     }
     
-    /// Returns whether the `LineSDKError` represents a permission granting issue. Usually, it means you do not have
-    /// enough permission to invoke a LINE API.
+    /// Checks whether the `LineSDKError` is a permission granting error. Usually, it means you do not have
+    /// enough permission to access an endpoint of the LINE API.
     public var isPermissionError: Bool {
         return isResponseError(statusCode: 403)
     }
     
-    /// Returns whether the `LineSDKError` represents a token problem. Usually, it means your token is expired or
-    /// malformed.
+    /// Checks whether the `LineSDKError` is an access token error. Usually, it means the user's access token is
+    /// expired or malformed.
     public var isTokenError: Bool {
         return isResponseError(statusCode: 401)
     }
 
-    /// Returns whether the `LineSDKError` represents a response failing with specified HTTP status code.
+    /// Checks whether the `LineSDKError` occurs because of a response failing with a specified HTTP status code.
     ///
     /// - Parameters:
-    ///   - statusCode: The status code to check whether matches HTTP status error code.
+    ///   - statusCode: The status code to check whether it matches with the returned HTTP status error code.
     ///   - url: The URL to check with the URL of error response. If `nil`, the URL matching check is skipped.
-    /// - Returns: `true` if `self` is a .invalidHTTPStatusAPIError with give `statusCode` and `url`.
-    ///            Otherwise, `false`.
+    /// - Returns: `true` if `self` is an `.invalidHTTPStatusAPIError` with the given `statusCode` and `url`;
+    ///            `false` otherwise.
     public func isResponseError(statusCode: Int, url: URL? = nil) -> Bool {
         if case .responseFailed(.invalidHTTPStatusAPIError(let detail)) = self {
             let codeMatch = detail.code == statusCode
@@ -293,15 +299,16 @@ extension LineSDKError {
         return false
     }
     
-    /// Returns whether the `LineSDKError` represents a time out error from underlying URL session error.
+    /// Checks whether the `LineSDKError` is a time out error caused by the underlying URL session error.
     public var isURLSessionTimeout: Bool {
         return isURLSessionErrorCode(sessionErrorCode: NSURLErrorTimedOut)
     }
     
-    /// Returns whether the `LineSDKError` represents a URL session error with specified error code.
+    /// Checks whether the `LineSDKError` is a URL session error with a specified error code.
     ///
-    /// - Parameter code: The underlying URL session error code. See `NSURLError` in Foundation.
-    /// - Returns: `true` if `self` is a .URLSessionError with give `code`. Otherwise, `false`.
+    /// - Parameter code: The underlying URL session error code. See `URLError` in the documentation for the
+    ///                   Foundation framework.
+    /// - Returns: `true` if `self` is a `.URLSessionError` error with the given `code`; `false` otherwise.
     public func isURLSessionErrorCode(sessionErrorCode code: Int) -> Bool {
         if case .responseFailed(.URLSessionError(let error)) = self {
             let nsError = error as NSError
@@ -313,7 +320,7 @@ extension LineSDKError {
 
 // MARK: - Error Description
 extension LineSDKError: LocalizedError {
-    /// Describes why an error happens in human-readable text.
+    /// Describes why an error occurs in human-readable text.
     public var errorDescription: String? {
         switch self {
         case .requestFailed(reason: let reason): return reason.errorDescription

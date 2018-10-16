@@ -21,9 +21,9 @@
 
 import Foundation
 
-/// `Session` takes the responsibility of sending a `Request` through `URLSession` for LINE APIs.
-/// It respects `adapters` and `pipelines` properties of `Request`, to create proper request and handle the response
-/// in a designed way.
+/// Represents a session for sending a `Request` instance through `URLSession` for LINE APIs. It respects the
+/// `adapters` and `pipelines` properties of the `Request` protocol, to create proper requests and handle the
+/// response in the designed way.
 public class Session {
     
     /// The result of response `handle` method could give.
@@ -65,14 +65,14 @@ public class Session {
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: delegate, delegateQueue: nil)
     }
     
-    /// Send a `Request` with underlying session.
+    /// Sends a `Request` instance with the underlying session.
     ///
     /// - Parameters:
-    ///   - request: An `Request` instance which defines necessary information for the request.
-    ///   - callbackQueue: A queue options on which the `completion` closure should be executed.
-    ///                    Default is `.currentMainOrAsync`.
-    ///   - completion: The completion closure to be executed when the session sending finishes.
-    /// - Returns: A `SessionTask` object to indicate the task.
+    ///   - request: A `Request` instance which defines necessary information for the request.
+    ///   - callbackQueue: A queue option to be used when `completion` is invoked. The default value is 
+    ///                    `.currentMainOrAsync`.
+    ///   - completion: The completion closure to be invoked when the request has been sent.
+    /// - Returns: The `SessionTask` object that indicates the task.
     @discardableResult
     public func send<T: Request>(
         _ request: T,
@@ -91,7 +91,7 @@ public class Session {
     ///   - pipelines: The pipelines should be used to override `request.pipelines`. When provided, the `Session` will
     ///                ignore the Default is `nil`,
     ///   - completion: The completion closure to be executed when the session sending finishes.
-    /// - Returns: A `SessionTask` object to indicate the task.
+    /// - Returns: The `SessionTask` object that indicates the task.
     @discardableResult
     func send<T: Request>(
         _ request: T,
@@ -325,7 +325,7 @@ extension SessionDelegate: SessionDelegateType {
 
 typealias SessionTaskResult = (Data?, URLResponse?, Error?)
 
-/// Represents a task of `Session`.
+/// Represents a task of a `Session` object.
 public class SessionTask {
     let request: URLRequest
     let session: URLSession

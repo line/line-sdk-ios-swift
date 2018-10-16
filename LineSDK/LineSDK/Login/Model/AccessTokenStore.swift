@@ -44,7 +44,7 @@ extension LineSDKNotificationKey {
     public static let newAccessToken = "newAccessToken"
 }
 
-/// Represents the storage of `AccessToken`.
+/// Represents the storage of an `AccessToken` object.
 public class AccessTokenStore {
     
     // In case we might do migration later on the token,
@@ -128,7 +128,7 @@ public class AccessTokenStore {
         }
     }
     
-    /// The `AccessToken` in use currently.
+    /// The `AccessToken` object currently in use.
     public private(set) var current: AccessToken?
     
     func setCurrentToken(_ token: AccessToken) throws {
