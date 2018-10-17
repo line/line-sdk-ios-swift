@@ -52,7 +52,9 @@ open class LoginButton: UIButton {
     /// - small: The size of the login button is small.
     /// - normal: The size of the login button is normal.
     public enum ButtonSize {
+        /// The size of the login button is small.
         case small
+        /// The size of the login button is normal.
         case normal
 
         struct Constant {
@@ -99,8 +101,9 @@ open class LoginButton: UIButton {
     /// to handle different login states.
     public weak var delegate: LoginButtonDelegate?
 
-    /// A parameter of the login action that determines the login alert view controller to show.
-    /// If this value is `nil`, the most top view controller in the current view controller hierarchy will be used.
+    /// A parameter of the login action that determines from which view controller the login related view controller
+    /// to present. If this value is `nil`, the most top view controller in the current view controller hierarchy
+    /// will be used.
     public weak var presentingViewController: UIViewController?
 
     /// A parameter of the login action that represents a set of permissions.
@@ -119,7 +122,8 @@ open class LoginButton: UIButton {
         }
     }
 
-    /// The text on the login button. Its value is "Log in with LINE" in the English environment and localized for different environments.
+    /// The text on the login button. Its value is "Log in with LINE" in the English environment and
+    /// localized for different environments.
     /// The buton will be resized if you change this property.
     public var buttonText: String? {
         didSet {
@@ -140,7 +144,7 @@ open class LoginButton: UIButton {
         setup()
     }
 
-    /// Setup the default style of `LoginButton`.
+    // Setup the default style of `LoginButton`.
     func setup() {
         // set accessibility label for sample UI test
         accessibilityLabel = "login.button"
@@ -158,8 +162,8 @@ open class LoginButton: UIButton {
         addTarget(self, action:#selector(login), for: .touchUpInside)
     }
 
-    /// This method is called when the style of `LoginButton` is changed. It will update the appearance of button
-    /// to new style you set.
+    // This method is called when the style of `LoginButton` is changed.
+    // It will update the appearance of button to new style you set.
     func updateButtonStyle() {
         let bundle = Bundle(for: LoginButton.self)
         let imagesPairs: [(String, UIControl.State)]
@@ -200,7 +204,7 @@ open class LoginButton: UIButton {
         return buttonSize.sizeForTitleSize(titleSize)
     }
 
-    /// Executes the login action when the user taps the login button.
+    // Executes the login action when the user taps the login button.
     @objc open func login() {
         if LoginManager.shared.isAuthorizing {
             // Authorizing process is ongoing so not to call login again

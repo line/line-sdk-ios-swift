@@ -53,10 +53,20 @@ public protocol ResponsePipelineRedirector: class { // Use class protocol for ea
 /// - `continue`: The handling process should continue.
 /// - continueWith: The handling process should continue with modified data and response.
 public enum ResponsePipelineRedirectorAction {
+
+    /// The current request needs to be restarted with original pipelines.
     case restart
+
+    /// The current request needs to be restarted, but excluding a certain pipeline.
     case restartWithout(ResponsePipeline)
+
+    /// The handling process should be stopped due to an error.
     case stop(Error)
+
+    /// The handling process should continue.
     case `continue`
+
+    /// The handling process should continue with modified data and response.
     case continueWith(Data, HTTPURLResponse)
 }
 
@@ -68,7 +78,11 @@ public enum ResponsePipelineRedirectorAction {
 /// - terminator: Associates with a `ResponsePipelineTerminator`, to terminate the pipeline.
 /// - redirector: Associates with a `ResponsePipelineRedirector`, to redirect current handling process.
 public enum ResponsePipeline {
+
+    /// Associates with a `ResponsePipelineTerminator`, to terminate the pipeline.
     case terminator(ResponsePipelineTerminator)
+
+    /// Associates with a `ResponsePipelineRedirector`, to redirect current handling process.
     case redirector(ResponsePipelineRedirector)
 }
 

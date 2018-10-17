@@ -49,7 +49,10 @@ public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
     /// - leftToRight: The text should be from left to right.
     /// - rightToLeft: The text should be from right to left.
     public enum Direction: String, DefaultEnumCodable {
+        /// The text should be from left to right.
         case leftToRight = "ltr"
+
+        /// The text should be from right to left.
         case rightToLeft = "rtl"
         
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,

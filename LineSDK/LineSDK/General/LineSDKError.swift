@@ -42,13 +42,13 @@ public enum LineSDKError: Error {
     /// - jsonEncodingFailed: The request requires a JSON body but provided data cannot be encoded to
     ///                       valid JSON. Code 1003.
     public enum RequestErrorReason {
-        /// `URL` is missing while encoding a request. Code 1001.
+        /// The `URL` object is missing while encoding a request. Code 1001.
         case missingURL
         
-        /// The request requires an access token, but there is no one. Code 1002.
+        /// The request requires an access token but it is unavailable. Code 1002.
         case lackOfAccessToken
         
-        /// The request requires a JSON body, but provided data cannot be encoded to valid JSON. Code 1003.
+        /// The request requires a JSON body but provided data cannot be encoded to valid JSON. Code 1003.
         case jsonEncodingFailed(Error)
     }
     
@@ -68,18 +68,18 @@ public enum LineSDKError: Error {
             let rawString: String?
         }
         
-        /// Error happens in the underlying `URLSession`. The system `URLSessionError` value is associated. Code 2001.
+        /// An error occurred in the underlying `URLSession` object. Code 2001.
         case URLSessionError(Error)
         
-        /// The response is not a valid `HTTPURLResponse`. Code 2002.
+        /// The response is not a valid `HTTPURLResponse` object. Code 2002.
         case nonHTTPURLResponse
         
-        /// Cannot parse received data to an instance of target type. Code 2003.
+        /// The received data cannot be persed to an instance of the target type. Code 2003
         /// - Associated values: Parsing destination type, original data, and system underlying error.
         case dataParsingFailed(Any.Type, Data, Error)
         
-        /// Received response contains an invalid HTTP status code. Associated `APIErrorDetail` contains information
-        /// of the error detail. If the response data can be converted to an `APIError` object,
+        /// The received response contains an invalid HTTP status code. Code 2004.. Associated `APIErrorDetail`
+        /// contains information of the error detail. If the response data can be converted to an `APIError` object,
         /// it will be associated with an `APIErrorDetail`, in which `error` property indicates what is going wrong.
         /// Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and `detail.rawString` will
         /// contain the plain response and error text respectively. Code 2004.
@@ -119,69 +119,71 @@ public enum LineSDKError: Error {
     ///                `CryptoError`. Code 3016.
     public enum AuthorizeErrorReason {
         
-        /// There is no other login methods left. The login process cannot be completed. Code 3001.
+        /// There is no other login method left. The login process cannot be completed. Code 3001.
         case exhaustedLoginFlow
         
-        /// The view hierarchy or view controller hierarchy is malformed and LineSDK cannot present
-        /// its login view controller. Code 3002.
+        /// The view hierarchy or view controller hierarchy is malformed and the LINE
+        /// SDK cannot show its login view controller. Code 3002.
         case malformedHierarchy
         
-        /// User cancelled or interrupted the login process. Code 3003.
+        /// The user cancelled or interrupted the login process. Code 3003.
         case userCancelled
         
-        /// `stop` method is called on the login process. Code 3004.
+        /// The `stop` method is called during the login process. Code 3004.
         case forceStopped
         
-        /// The received `URL` while opening app does not match the URL scheme defined. Code 3005.
+        /// The received `URL` object while opening the app does not match the defined URL scheme. Code 3005.
         case callbackURLSchemeNotMatching
         
-        /// The source application is invalid to finish auth process. Code 3006.
+        /// The source application is invalid and cannot finish the authorization process. Code 3006.
         case invalidSourceApplication
         
-        /// The received `URL` while opening app is not a valid one, or does not contain all
-        /// necessary information. Code 3007.
+        /// The received `URL` object while opening the app is invalid or does not
+        /// contain necessary information. Code 3007.
         /// - url: The url which is used to open current app.
         /// - message: A human readable message to describe the error reason.
         case malformedRedirectURL(url: URL, message: String?)
         
-        /// An unknown `resultCode` in the opening app `URL`. Code 3008.
+        /// The received `URL` object while opening the app has an unknown result code. Code 3008.
         /// - Associated value: The `resultCode` in the response url.
         case invalidLineURLResultCode(String)
         
-        /// An error happens in the LINE client app while auth process. Code 3009.
+        /// An error occurs in the LINE app during the authorization process. Code 3009.
         /// - code: The code returned by LINE client during the authorization.
         /// - message: The message describes the error.
         case lineClientError(code: String, message: String?)
         
-        /// Invalid `state` verification. Received URL response is not from the original auth request. Code 3010.
+        /// Failed to verify the `state` value. The received URL response
+        /// is not from the original authorization request. Code 3010.
         /// - expected: Expected state value.
         /// - got: The state value actually got from URL response.
         case responseStateValueNotMatching(expected: String, got: String?)
         
-        /// An error happens in the web login flow while auth process. Code 3011.
+        /// An error occurrs in the web login flow during the authorization process. Code 3011.
         /// - error: Error reason when login with web flow.
         /// - description: A human readable message to describe the error reason.
         case webLoginError(error: String, description: String?)
         
-        /// An error happens in keychain access which prevents LineSDK loads or writes to keychain. Code 3012.
+        /// An error occurrs while accessing the keychain. It prevents the LINE SDK from
+        ///  loading data from or writing data to the keychain. Code 3012.
         /// - status: The `OSStatus` number system gives.
         case keychainOperation(status: OSStatus)
         
-        /// The retrieved auth information from keychain cannot be converted to valid data. Code 3013.
+        /// The retrieved authorization information from the keychain cannot be converted to valid data. Code 3013.
         case invalidDataInKeychain
         
-        /// The authorization contains openID permission, but ID token cannot be found or parsed in
-        /// server response. Code 3014.
+        /// The authorization request contains the OpenID scope, but any ID token is not found
+        /// in or parsed from the server response. Code 3014.
         /// - raw: Raw value of the ID Token, which cannot be parsed correctly.
         case lackOfIDToken(raw: String?)
         
-        /// Public key not found for a give key ID or the key ID does not exist. Code 3015.
+        /// The public key is not found for a give key ID or the key ID does not exist. Code 3015.
         /// - keyID: The key ID specified in ID Token header which should be used.
         case JWTPublicKeyNotFound(keyID: String?)
         
-        /// Something wrong happened inside LineSDK crypto part. This usually indicates a malformed
-        /// certificate or key error, or an unsupport algorithm is used. See `CryptoError` for more.
-        /// Code 3016.
+        /// An error occurred at the LINE SDK crypto part. Usually this indicates a malformed
+        /// certificate or a key, or an unsupported algorithm is used. For more information, see
+        /// `CryptoError`. Code 3016.
         /// - error: Underlying `CryptoError` value.
         case cryptoError(error: CryptoError)
     }
@@ -191,10 +193,10 @@ public enum LineSDKError: Error {
     /// - conversionError: Cannot convert `string` to valid data with `encoding`.
     /// - parameterError: The method is invoked with an invalid parameter.
     public enum GeneralErrorReason {
-        /// Cannot convert target `string` to valid data under `encoding`.
+        /// Cannot convert `string` to valid data with `encoding`.
         case conversionError(string: String, encoding: String.Encoding)
         
-        /// Method invoked with an invalid parameter.
+        /// The method is invoked with an invalid parameter.
         case parameterError(parameterName: String, description: String)
     }
     
@@ -300,7 +302,7 @@ extension LineSDKError {
     }
     
     /// Checks whether the `LineSDKError` is a time out error caused by the underlying URL session error.
-    public var isURLSessionTimeout: Bool {
+    public var isURLSessionTimeOut: Bool {
         return isURLSessionErrorCode(sessionErrorCode: NSURLErrorTimedOut)
     }
     

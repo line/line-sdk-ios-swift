@@ -29,7 +29,10 @@ extension TemplateMessagePayload {
     ///              container.
     /// - square: A ratio of 1:1, under which the image will be rendered in a square container.
     public enum ImageAspectRatio: String, DefaultEnumCodable {
+        /// A ratio of 1.51:1 (width:height), under which the image will be rendered in a wide rectangle container.
         case rectangle
+
+        /// A ratio of 1:1, under which the image will be rendered in a square container.
         case square
         
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,

@@ -25,8 +25,14 @@ enum MessageActionType: String, Codable {
     case URI = "uri"
 }
 
+/// Represents an action in the LINE SDK Message types. Users can interact with the actions in the LINE app.
+///
+/// - URI: Represents an action navigates users to a URI resource.
+/// - unknown: An action type is not defined in the LINE SDK yet.
 public enum MessageAction: Codable, MessageActionConvertible {
+    /// Represents an action navigates users to a URI resource.
     case URI(MessageURIAction)
+    /// An action type is not defined in the LINE SDK yet.
     case unknown
     
     enum CodingKeys: String, CodingKey {

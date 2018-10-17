@@ -26,7 +26,11 @@ import Foundation
 /// - success: The operation is successful and an associated value could be provided.
 /// - failure: An error happens during the operation.
 public enum Result<Value> {
+
+    /// The operation is successful and an associated value could be provided.
     case success(Value)
+
+    /// An error happens during the operation.
     case failure(Error)
     
     /// Returns `true` if the result is a success, `false` otherwise.

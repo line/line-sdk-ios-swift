@@ -32,8 +32,8 @@ import Foundation
 /// to get a fixed error code to identify the error type quickly. All `CryptoError`s are under the
 /// "LineSDKError.CryptoError" error domain.
 ///
-/// - RSAFailed: An error occurred while performing a RSA related operation like creating keys or
-///              verifying signed data.
+/// - algorithmsFailed: An error occurred while performing an algorithms related operation like creating keys or
+///                     verifying signed data.
 /// - JWTFailed: An error occurred while performing a JWT related operation.
 /// - JWKFailed: An error occurred while performing a JWK related operation.
 /// - generalError: An error occurred while performing another crypto related operation.
@@ -54,25 +54,25 @@ public enum CryptoError: Error {
         /// The DER data does not contain a valid RSA key. Code 3016_1001.
         case invalidDERKey(data: Data, reason: String)
         
-        /// x509 header is found in the key, but the expected data is wrong. Code 3016_1002.
+        /// The x509 header is found in the key, but the data is invalid. Code 3016_1002.
         case invalidX509Header(data: Data, index: Int, reason: String)
         
-        /// Error happens while creating security key. Code 3016_1003.
+        /// An error occurred while creating a security key. Code 3016_1003.
         case createKeyFailed(data: Data, reason: String)
         
         /// The PEM key is invalid. Code 3016_1004.
         case invalidPEMKey(string: String, reason: String)
         
-        /// Error happens while encrypting some plain data. Code 3016_1005.
+        /// An error occurred while encrypting plain data. Code 3016_1005.
         case encryptingError(Error?)
         
-        /// Error happens while decrypting some encrypted data. Code 3016_1006.
+        /// An error occurred while decrypting encrypted data. Code 3016_1006.
         case decryptingError(Error?)
         
-        /// Error happens while signing some plain data. Code 3016_1007.
+        /// An error occurred while signing plain data. Code 3016_1007.
         case signingError(Error?)
         
-        /// Error happens while verifying data. Code 3016_1008.
+        /// An error occurred while verifying data. Code 3016_1008.
         case verifyingError(Error?, statusCode: Int?)
     }
 
@@ -81,17 +81,16 @@ public enum CryptoError: Error {
     /// - malformedJWTFormat: The input text is not a valid JWT encoded string. Code 3016_2001.
     /// - unsupportedHeaderAlgorithm: The algorithm defined in the JWT header is not supported in the
     ///                               LINE SDK. Code 3016_2002.
-    /// - claimVerifyingFailed: Verification for a certain key in the JWT payload does not pass. Code
-    ///                         3016_2003.
+    /// - claimVerifyingFailed: Verification for a certain key in the JWT payload does not pass. Code 3016_2003.
     public enum JWTErrorReason {
         
         /// The input text is not a valid JWT encoded string. Code 3016_2001.
         case malformedJWTFormat(string: String)
         
-        /// The algorithm defined in JWT header is not supported in LineSDK. Code 3016_2002.
+        /// The algorithm defined in the JWT header is not supported in the LINE SDK. Code 3016_2002.
         case unsupportedHeaderAlgorithm(name: String)
         
-        /// Verification for a certain key in JWT payload does not pass. Code 3016_2003.
+        /// Verification for a certain key in the JWT payload does not pass. Code 3016_2003.
         case claimVerifyingFailed(key: String, got: String, description: String)
     }    
 
@@ -100,7 +99,7 @@ public enum CryptoError: Error {
     /// - unsupportedKeyType: The key type is not supported in the LINE SDK. Code 3016_3001.
     public enum JWKErrorReason {
         
-        /// The key type is not supported in LineSDK. Code 3016_3001.
+        /// The key type is not supported in the LINE SDK. Code 3016_3001.
         case unsupportedKeyType(String)
     }
     
@@ -115,19 +114,19 @@ public enum CryptoError: Error {
     /// - decodingFailed: The data cannot be decoded to the target type. Code 3016_4005.
     public enum GeneralErrorReason {
         
-        /// String cannot be converted to base64 data format. Code 3016_4001.
+        /// The string cannot be converted to the base64 data format. Code 3016_4001.
         case base64ConversionFailed(string: String)
         
-        /// Cannot convert data to string under a given encoding. Code 3016_4002.
+        /// The data cannot be converted to a string with the given encoding. Code 3016_4002.
         case dataConversionFailed(data: Data, encoding: String.Encoding)
         
-        /// Cannot convert string to data under a given encoding. Code 3016_4003.
+        /// The string cannot be converted to data with the given encoding. Code 3016_4003.
         case stringConversionFailed(string: String, encoding: String.Encoding)
         
-        /// The operation is not supported in current OS. Code 3016_4004.
+        /// The operation is not supported in the current OS. Code 3016_4004.
         case operationNotSupported(reason: String)
         
-        /// Decoding data to a target type failed. Code 3016_4005.
+        /// The data cannot be decoded to the target type. Code 3016_4005.
         case decodingFailed(string: String, type: Any.Type)
     }
     

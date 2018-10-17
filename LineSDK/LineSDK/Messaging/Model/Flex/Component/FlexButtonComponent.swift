@@ -29,7 +29,16 @@ public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
     /// - primary: Style for dark color buttons.
     /// - secondary: Style for light color buttons
     public enum Style: String, DefaultEnumCodable {
-        case link, primary, secondary
+
+        /// HTML link style
+        case link
+
+        /// Style for dark color buttons.
+        case primary
+
+        /// Style for light color buttons
+        case secondary
+
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.link` will be used.
         public static let defaultCase: FlexButtonComponent.Style = .link

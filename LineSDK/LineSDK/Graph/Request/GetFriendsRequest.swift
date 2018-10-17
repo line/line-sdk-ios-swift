@@ -30,6 +30,7 @@ public struct GetFriendsRequest: Request {
     ///
     /// - name: Sort by `displayName`
     public enum Sort: String {
+        /// Sort by `displayName`
         case name
     }
 

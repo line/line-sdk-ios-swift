@@ -28,9 +28,13 @@ import Foundation
 /// - put: The PUT method.
 /// - delete: The DELETE method.
 public enum HTTPMethod: String {
+    /// The GET method.
     case get = "GET"
+    /// The POST method.
     case post = "POST"
+    /// The PUT method.
     case put = "PUT"
+    /// The DELETE method.
     case delete = "DELETE"
     
     var adapter: AnyRequestAdapter {
@@ -47,7 +51,9 @@ public enum HTTPMethod: String {
 /// - none: Does not use any authentication method.
 /// - token: Uses OAuth 2.0 Bearer token.
 public enum AuthenticateMethod {
+    /// Does not use any authentication method.
     case none
+    /// Uses OAuth 2.0 Bearer token.
     case token
     
     var adapter: TokenAdapter? {
@@ -76,8 +82,11 @@ public enum AuthenticateMethod {
 /// - formUrlEncoded: The request contains form url encoded data.
 /// - json: The request contains JSON data.
 public enum ContentType {
+    /// The request does not contain any body content.
     case none
+    /// The request contains form url encoded data.
     case formUrlEncoded
+    /// The request contains JSON data.
     case json
     
     var headerValue: String {
