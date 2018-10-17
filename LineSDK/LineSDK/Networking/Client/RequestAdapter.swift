@@ -28,7 +28,7 @@ public protocol RequestAdapter {
     /// Adapts an input `URLRequest` and return a new modified one.
     ///
     /// - Parameter request: Input request to be adapted.
-    /// - Returns: A new request object with modification applied.
+    /// - Returns: The new request object with modification applied.
     /// - Throws: An error during adapting process.
     func adapted(_ request: URLRequest) throws -> URLRequest
 }
@@ -94,7 +94,7 @@ public struct AnyRequestAdapter: RequestAdapter {
     /// Adapts an input `URLRequest` and return a new modified one.
     ///
     /// - Parameter request: Input request to be adapted.
-    /// - Returns: A new request object with modification applied.
+    /// - Returns: The new request object with modification applied.
     /// - Throws: An error during adapting process.
     /// - Note: This method just call the `block` passed in from the initializer.
     public func adapted(_ request: URLRequest) throws -> URLRequest {

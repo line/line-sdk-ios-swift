@@ -30,7 +30,7 @@ public protocol ResponsePipelineTerminator: class { // Use class protocol for ea
     /// - Parameters:
     ///   - request: Original `request` object.
     ///   - data: Received `Data` from `Session`.
-    /// - Returns: A parsed `Response` object.
+    /// - Returns: The parsed `Response` object.
     /// - Throws: An error happens during the parsing process.
     func parse<T: Request>(request: T, data: Data) throws -> T.Response
 }
@@ -82,26 +82,26 @@ extension ResponsePipeline: Equatable {
     }
 }
 
-/// A terminator pipeline with a JSON decoder to parse data.
+/// Represents a terminator pipeline with a JSON decoder to parse data.
 public class JSONParsePipeline: ResponsePipelineTerminator {
     
-    /// Underlying JSON parser of this pipeline.
+    /// An underlying JSON parser of this pipeline.
     public let parser: JSONDecoder
     
-    /// Initializes a `JSONParsePipeline`.
+    /// Initializes a `JSONParsePipeline` object.
     ///
-    /// - Parameter parser: JSON parser which will be used to parse input data.
+    /// - Parameter parser: The JSON parser for input data.
     public init(_ parser: JSONDecoder) {
         self.parser = parser
     }
     
-    /// Parse input `data` to a `Response`.
+    /// Parses `data` that holds input values to a `Response` object.
     ///
     /// - Parameters:
-    ///   - request: Original `request` object.
-    ///   - data: Received `Data` from `Session`.
-    /// - Returns: A parsed `Response` object.
-    /// - Throws: An error happens during the parsing process.
+    ///   - request: The original request.
+    ///   - data: The `Data` object that was received from the `Session` object.
+    /// - Returns: The `Response` object.
+    /// - Throws: An error that happens during the parsing process.
     public func parse<T: Request>(request: T, data: Data) throws -> T.Response {
         return try parser.decode(T.Response.self, from: data)
     }
