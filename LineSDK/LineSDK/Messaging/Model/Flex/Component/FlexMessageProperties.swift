@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 extension FlexMessageComponent {
 
     /// The ratio (or flex value) of a flex component should take.

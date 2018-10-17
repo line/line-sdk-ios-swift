@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents an icon component. It is used to embed into a baseline layout and its flex is fixed to 0.
 public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
     let type: FlexMessageComponentType = .icon

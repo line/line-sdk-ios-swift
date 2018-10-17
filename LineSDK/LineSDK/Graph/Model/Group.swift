@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// LINE internal use only.
 /// Represents an `Group` object which LineSDK used in `group list` or `approvers in given group`.
 public struct Group: Decodable {
 

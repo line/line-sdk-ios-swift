@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a flexible message which consists of an alternative text and a flex container.
 /// Flex messages are messages with a customizable layout. You can customize the layout freely by combining
 /// multiple elements.

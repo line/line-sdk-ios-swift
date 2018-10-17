@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a container that contains one message bubble. It can contain four blocks: header, hero, body, and
 /// footer. These blocks, which could contain nested components, will follow some given `styles` to construct the
 /// flexible layout.

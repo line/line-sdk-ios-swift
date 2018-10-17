@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// LINE internal use only.
 /// Represents a message sender of a certain type of `Message`.
 /// - Note: Some message types have footer area which shows the agent information who sends the message on behalf of
 ///         the sender user. The information includes an icon image, a text label and a link URL to move page when

@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// LINE internal use only.
 /// Represents the request of getting friends list, returns a friend list of current user.
 /// Unless already having granted the channel, users who've configured the privacy filter are excluded from the list.
 public struct GetFriendsRequest: Request {

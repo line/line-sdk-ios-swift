@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 enum FlexMessageContainerType: String, Codable {
     case bubble
     case carousel

@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 enum FlexMessageComponentType: String, Codable {
     case box
     case text

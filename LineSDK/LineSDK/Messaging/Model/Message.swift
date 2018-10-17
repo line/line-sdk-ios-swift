@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 enum MessageType: String, Codable {
     case text
     case image

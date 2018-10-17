@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a button component in a flex message.
 /// A button component contains a interactive button. When the user taps the button, a bound action is performed.
 public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {

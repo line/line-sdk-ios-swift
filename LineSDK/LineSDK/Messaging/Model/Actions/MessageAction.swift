@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 enum MessageActionType: String, Codable {
     case URI = "uri"
 }

@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 extension TemplateMessagePayload {
     
     /// Represents image aspect ratio setting for `TemplateMessagePayload`.

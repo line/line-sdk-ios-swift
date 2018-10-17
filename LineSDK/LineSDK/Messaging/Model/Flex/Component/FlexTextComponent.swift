@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a text component in a flex message.
 /// A text component contains some formatted text. LINE clients will render the text in a flex message.
 public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible, MessageActionContainer {

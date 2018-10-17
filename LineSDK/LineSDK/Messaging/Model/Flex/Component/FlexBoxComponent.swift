@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a box component in a flex message.
 /// A box component behave as a container of other components. It defines the layout of its child components.
 /// You can also include a nested box in a box.

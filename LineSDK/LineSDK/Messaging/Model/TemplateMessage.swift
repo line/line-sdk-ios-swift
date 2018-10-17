@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a template message which consists of an alternative text and a template payload.
 /// Template messages are messages with predefined layouts which you can customize.
 ///
