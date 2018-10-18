@@ -21,8 +21,8 @@
 
 import Foundation
 
-/// `LineSDKError` is the error type returned by the LINE SDK. It encompasses different types of errors
-/// that have their own associated reasons.
+/// Error types returned by the LINE SDK. It encompasses different types of errors that have their own
+/// associated reasons.
 ///
 /// You can switch over to each error to know the detailed reason and associated information. You can also
 /// access the `localizedDescription` property to get a human-readable text description. Access `errorCode`
@@ -35,7 +35,7 @@ import Foundation
 /// - generalError: An error occurred while performing another process in the LINE SDK.
 public enum LineSDKError: Error {
     
-    /// The underlying reason why a `.requestFailed` error occurs.
+    /// The possible underlying reasons why a `.requestFailed` error occurs.
     ///
     /// - missingURL: The `URL` object is missing while encoding a request. Code 1001.
     /// - lackOfAccessToken: The request requires an access token but it is unavailable. Code 1002.
@@ -52,7 +52,7 @@ public enum LineSDKError: Error {
         case jsonEncodingFailed(Error)
     }
     
-    /// The underlying reason why a `.responseFailed` error occurs.
+    /// The possible underlying reasons why a `.responseFailed` error occurs.
     ///
     /// - URLSessionError: An error occurred in the underlying `URLSession` object. Code 2001.
     /// - nonHTTPURLResponse: The response is not a valid `HTTPURLResponse` object. Code 2002.
@@ -86,7 +86,7 @@ public enum LineSDKError: Error {
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
     
-    /// The underlying reason why an `.authorizeFailed` error occurs.
+    /// The possible underlying reasons why an `.authorizeFailed` error occurs.
     ///
     /// - exhaustedLoginFlow: There is no other login method left. The login process cannot be completed.
     ///                       Code 3001.
@@ -188,7 +188,7 @@ public enum LineSDKError: Error {
         case cryptoError(error: CryptoError)
     }
     
-    /// The underlying reason why a `.generalError` occurs.
+    /// The possible underlying reasons why a `.generalError` occurs.
     ///
     /// - conversionError: Cannot convert `string` to valid data with `encoding`.
     /// - parameterError: The method is invoked with an invalid parameter.
@@ -208,7 +208,7 @@ public enum LineSDKError: Error {
 
 // MARK: - Classifies the Error
 extension LineSDKError {
-    /// Checks whether the `LineSDKError` is a request error.
+    /// Checks and returns whether the `LineSDKError` is a request error.
     public var isRequestError: Bool {
         if case .requestFailed = self {
             return true
@@ -216,7 +216,7 @@ extension LineSDKError {
         return false
     }
     
-    /// Checks whether the `LineSDKError` is a response error.
+    /// Checks and returns whether the `LineSDKError` is a response error.
     public var isResponseError: Bool {
         if case .responseFailed = self {
             return true
@@ -224,7 +224,7 @@ extension LineSDKError {
         return false
     }
     
-    /// Checks whether the `LineSDKError` is an authorization error.
+    /// Checks and returns whether the `LineSDKError` is an authorization error.
     public var isAuthorizeError: Bool {
         if case .authorizeFailed = self {
             return true
@@ -232,7 +232,7 @@ extension LineSDKError {
         return false
     }
     
-    /// Checks whether the `LineSDKError` is a general error.
+    /// Checks and returns whether the `LineSDKError` is a general error.
     public var isGeneralError: Bool {
         if case .generalError = self {
             return true
@@ -243,7 +243,8 @@ extension LineSDKError {
 
 // MARK: - Convenience Properties
 extension LineSDKError {
-    /// Checks whether the `LineSDKError` is an authorization error and the reason is `.userCancelled`.
+    /// Checks and returns whether the `LineSDKError` is an authorization error and the reason is
+    /// `.userCancelled`.
     public var isUserCancelled: Bool {
         if case .authorizeFailed(.userCancelled) = self {
             return true
@@ -251,34 +252,36 @@ extension LineSDKError {
         return false
     }
     
-    /// Checks whether the `LineSDKError` is a bad request error.
+    /// Checks and returns whether the `LineSDKError` is a bad request error.
     public var isBadRequest: Bool {
         return isResponseError(statusCode: 400)
     }
     
-    /// Checks whether the `LineSDKError` is a refresh token error. Usually, when the user uses an expired
-    /// access token to send an API request, an automatic token refresh operation with the current refresh token
-    /// will be triggered. This error usually occurs when the refresh token also expires or is invalid. If this
-    /// error occurs, let the user logs in again before you can continue to use LINE APIs.
+    /// Checks and returns whether the `LineSDKError` is a refresh token error. Usually, when the user uses
+    /// an expired access token to send an API request, an automatic token refresh operation with the
+    /// current refresh token will be triggered. This error usually occurs when the refresh token also
+    /// expires or is invalid. If this error occurs, let the user log in again before you can continue to
+    /// access the LINE Platform.
     public var isRefreshTokenError: Bool {
         let refreshTokenRequest = PostRefreshTokenRequest(channelID: "", refreshToken: "")
         let url = refreshTokenRequest.baseURL.appendingPathComponentIfNotEmpty(refreshTokenRequest.path)
         return isResponseError(statusCode: 400, url: url)
     }
     
-    /// Checks whether the `LineSDKError` is a permission granting error. Usually, it means you do not have
-    /// enough permission to access an endpoint of the LINE API.
+    /// Checks and returns whether the `LineSDKError` is a permission granting error. Usually, it means you
+    /// do not have enough permission to access an endpoint of the LINE Platform.
     public var isPermissionError: Bool {
         return isResponseError(statusCode: 403)
     }
     
-    /// Checks whether the `LineSDKError` is an access token error. Usually, it means the user's access token is
-    /// expired or malformed.
+    /// Checks and returns whether the `LineSDKError` is an access token error. Usually, it means the user's
+    /// access token is expired or malformed.
     public var isTokenError: Bool {
         return isResponseError(statusCode: 401)
     }
 
-    /// Checks whether the `LineSDKError` occurs because of a response failing with a specified HTTP status code.
+    /// Checks whether the `LineSDKError` occurs because of a response failing with a specified HTTP status
+    /// code.
     ///
     /// - Parameters:
     ///   - statusCode: The status code to check whether it matches with the returned HTTP status error code.
@@ -301,7 +304,8 @@ extension LineSDKError {
         return false
     }
     
-    /// Checks whether the `LineSDKError` is a time out error caused by the underlying URL session error.
+    /// Checks and returns whether the `LineSDKError` is a time out error caused by the underlying URL
+    /// session error.
     public var isURLSessionTimeOut: Bool {
         return isURLSessionErrorCode(sessionErrorCode: NSURLErrorTimedOut)
     }

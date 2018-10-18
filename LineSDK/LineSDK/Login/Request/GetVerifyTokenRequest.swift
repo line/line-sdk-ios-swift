@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// Represents the request of verifying an access token.
+/// Represents a request for verifying an access token.
 public struct GetVerifyTokenRequest: Request {
     
     public let accessToken: String
@@ -30,13 +30,18 @@ public struct GetVerifyTokenRequest: Request {
         self.accessToken = accessToken
     }
     
+    /// :nodoc:
     public let method: HTTPMethod = .get
+    /// :nodoc:
     public let path = "/oauth2/v2.1/verify"
+    /// :nodoc:
     public let authentication: AuthenticateMethod = .none
     
+    /// :nodoc:
     public var parameters: Parameters? {
         return [ "access_token": accessToken ]
     }
     
+    /// :nodoc:
     public typealias Response = AccessTokenVerifyResult
 }

@@ -21,9 +21,9 @@
 
 import Foundation
 
-/// Represents a session for sending a `Request` instance through `URLSession` for LINE APIs. It respects the
-/// `adapters` and `pipelines` properties of the `Request` protocol, to create proper requests and handle the
-/// response in the designed way.
+/// Represents a session for sending a `Request` object through `URLSession` for the LINE Platform. It
+/// respects the `adapters` and `pipelines` properties of the `Request` protocol, to create proper requests
+/// and handle the response in the designed way.
 public class Session {
     
     /// The result of response `handle` method could give.
@@ -65,10 +65,10 @@ public class Session {
         session = URLSession(configuration: URLSessionConfiguration.default, delegate: delegate, delegateQueue: nil)
     }
     
-    /// Sends a `Request` instance with the underlying session.
+    /// Sends a `Request` object with the underlying session.
     ///
     /// - Parameters:
-    ///   - request: A `Request` instance which defines necessary information for the request.
+    ///   - request: A `Request` object which defines necessary information for the request.
     ///   - callbackQueue: A queue option to be used when `completion` is invoked. The default value is 
     ///                    `.currentMainOrAsync`.
     ///   - completion: The completion closure to be invoked when the request has been sent.
@@ -82,15 +82,15 @@ public class Session {
         return send(request, callbackQueue: callbackQueue, pipelines: nil, completionHandler: completion)
     }
     
-    /// Send a `Request` with underlying session.
+    /// Send a `Request` object with underlying session.
     ///
     /// - Parameters:
-    ///   - request: An `Request` instance which defines necessary information for the request.
+    ///   - request: A `Request` object which defines necessary information for the request.
     ///   - callbackQueue: A queue options on which the `completion` closure should be executed.
     ///                    Default is `.currentMainOrAsync`.
     ///   - pipelines: The pipelines should be used to override `request.pipelines`. When provided, the `Session` will
     ///                ignore the Default is `nil`,
-    ///   - completion: The completion closure to be executed when the session sending finishes.
+    ///   - completion: The completion closure to be invoked when the session sending finishes.
     /// - Returns: The `SessionTask` object that indicates the task.
     @discardableResult
     func send<T: Request>(
@@ -191,7 +191,7 @@ public class Session {
     ///   - pipelines: Pipelines should be applied to current handle process.
     ///   - fullPipelines: Full pipelines of original request.
     ///   - done: Invoked when a handling result prepared, to determine the next pipeline step.
-    /// - Throws: The error happens during the handling process.
+    /// - Throws: The error occurs during the handling process.
     func handle<T: Request>(
         request: T,
         data: Data,

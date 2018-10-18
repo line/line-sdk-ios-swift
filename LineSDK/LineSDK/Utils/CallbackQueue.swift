@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// Represents a callback queue behavior when a closure call is dispatched.
+/// Callback queue behaviors when a closure call is dispatched.
 ///
 /// - asyncMain: Dispatches a call to `DispatchQueue.main` with the `async` behavior.
 /// - currentMainOrAsync: Dispatches a call to `DispatchQueue.main` with the `async` behavior if

@@ -23,21 +23,21 @@ import Foundation
 
 protocol AccessTokenType {}
 
-/// Represents the token which is used to access LINE APIs. Most of LINE API request requires a token as authorization.
-/// You will have a valid token after user authorized your application to his/her content.
-/// An `AccessToken` is bound to certain `permissions` or so-called scopes. It defines which ones of APIs you could
-/// access, and which ones you could not. You need to choose the permissions in LINE Developer center site and in the
-/// login method correctly.
+/// Represents an access token which is used to access the LINE Platform. Most API calls to the LINE
+/// Platform require an access token as an evidence of successful authorization. A valid access token is
+/// issued after the user grants your app the permissions that your app requests. An access token is bound
+/// to permissions (scopes) that define the API endpoints that you can access. Choose the permissions for
+/// your channel in the LINE Developers site and set them in the login method used in your app.
 ///
-/// A token will expire after a certain period. You could check it in `expiresAt`, which calculated the expire time by
-/// your local timing setting. LineSDK will try to refresh the token automatically if necessary, when you access any
-/// APIs which require an authorization.
+/// An access token will expire after a certain period. Check the `expiresAt` property, which contains the
+/// expiration time calculated with the local time setting. Any API call will attempt to refresh the access
+/// token if necessary, when it requires authorization.
 ///
-/// By default, LineSDK will also store the token to keychain of your app, as well as setup all authorization when you
-/// access LINE's APIs through framework request methods.
+/// By default, the LINE SDK stores an access token to keychain for your app and obtains authorization when
+/// you access the LINE Platform through the framework request methods.
 ///
-/// You should never try to create a token yourself. By accessing the `current` property of a `AccessTokenStore`, you
-/// could get a valid token in use if there is one.
+/// Do not try to create an access token yourself. You can get a valid access token in use by accessing the
+/// `current` property of an `AccessTokenStore` object.
 ///
 public struct AccessToken: Codable, AccessTokenType, Equatable {
     
@@ -46,24 +46,25 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
     
     let expiresIn: TimeInterval
     
-    /// When this token was created. It is the local time of current token received.
+    /// The creation time of the access token. It is the system time of the device that receives the current
+    /// access token.
     public let createdAt: Date
     
-    /// ID token bound to this token. Only exists if you have the `.openID` permission for the token.
+    /// The ID token bound to the access token. The value exists only if the access token is obtained with
+    /// the `.openID` permission.
     public let IDToken: JWT?
     let IDTokenRaw: String?
     
-    /// Refresh token bound to the access token.
+    /// The refresh token bound to the access token.
     public let refreshToken: String
     
-    /// Permissions of the token. However, the `.email` is not contained as a value of the permissions property
-    /// even if the permission has been granted.
+    /// Permissions of the access token.
     public let permissions: [LoginPermission]
     let tokenType: String
     
-    /// When this token will expire. It is calculated by `createdAt` and a expires duration.
-    /// This value depends on the system time when `createdAt` was determined, so it might not be the actual date when
-    /// this token gets expired.
+    /// The expiration time of the access token. It is calculated using `createdAt` and the validity period
+    /// of the access token. This value might not be the actual expiration time because this value depends
+    /// on the system time of the device when `createdAt` is determined.
     public var expiresAt: Date {
         return createdAt.addingTimeInterval(expiresIn)
     }
@@ -78,6 +79,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         case createdAt
     }
     
+    /// :nodoc:
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         value = try container.decode(String.self, forKey: .value)
@@ -100,6 +102,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         tokenType = try container.decode(String.self, forKey: .tokenType)
     }
     
+    /// :nodoc:
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(value, forKey: .value)

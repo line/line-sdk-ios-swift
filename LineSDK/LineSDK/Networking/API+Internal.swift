@@ -36,7 +36,7 @@ extension API {
     ///                the first page.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be executed when the API finishes.
+    ///   - completion: The completion closure to be invoked when the API finishes.
     ///
     /// - Note: `.friends` permission is required.
     ///
@@ -60,7 +60,7 @@ extension API {
     ///                the first page.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The closure to be executed when the approver list is returned.
+    ///   - completion: The closure to be invoked when the approver list is returned.
     ///
     /// - Note: `.friends` permission is required.
     ///
@@ -82,7 +82,7 @@ extension API {
     ///                the first page.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The closure to be executed when the list is returned.
+    ///   - completion: The closure to be invoked when the list is returned.
     ///
     /// - Note: `.groups` permission is required.
     ///
@@ -106,7 +106,7 @@ extension API {
     ///                the first page.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The closure to be executed when the list is returned.
+    ///   - completion: The closure to be invoked when the list is returned.
     ///
     /// - Note: `.friends` and `.groups` permission is required.
     ///
@@ -132,7 +132,7 @@ extension API {
     ///   - chatID: A chat ID to send messages to. It could be an ID of user, room, group or square chat ID.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be executed when the API finishes.
+    ///   - completion: The completion closure to be invoked when the API finishes.
     ///
     /// - Note:
     ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
@@ -164,7 +164,7 @@ extension API {
     ///   - userIDs: An array of users' ID to where messages will be sent. Up to 10 elements.
     ///   - queue: The callback queue will be used for `completionHandler`.
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be executed when the API finishes.
+    ///   - completion: The completion closure to be invoked when the API finishes.
     ///
     /// - Note:
     ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,

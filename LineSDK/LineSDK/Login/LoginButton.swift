@@ -21,26 +21,26 @@
 
 import UIKit
 
-/// `LoginButtonDelegate` protocol defines methods that allow you to handle different login states if you use
-/// `LoginButton` we provide.
+/// Defines methods that allow you to handle different login states if you use the predefined LINE Login
+/// button by using the `LoginButton` class.
 public protocol LoginButtonDelegate: class {
 
-    /// This method would be called after login action did start. Since LINE login is an async operation, it is a
-    /// good chance to show an indicator or some other visual effect to block your users other actions.
+    /// Called after the login action is started. Since LINE Login is an asynchronous operation, you might
+    /// want to show an indicator or another visual effect to prevent the user from taking other actions.
     func loginButtonDidStartLogin(_ button: LoginButton)
 
-    /// This method would be called if the login action did succeed.
+    /// Called if the login action succeeded.
     ///
     /// - Parameters:
-    ///   - button: The button which is used to trigger the login.
-    ///   - loginResult: Successful result of the login.
+    ///   - button: The button which is used to start the login action.
+    ///   - loginResult: The successful login result.
     func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult)
 
-    /// This method would be called if the login action did fail.
+    /// Called if the login action failed.
     ///
     /// - Parameters:
-    ///   - button: The button which is used to trigger the login.
-    ///   - error: Error happened during the login process.
+    ///   - button: The button which is used to start the login action.
+    ///   - error: The error of the failed login.
     func loginButton(_ button: LoginButton, didFailLogin error: Error)
 }
 

@@ -21,29 +21,30 @@
 
 import Foundation
 
-/// Utility class for calling the LINE APIs.
+/// Represents an utility structure for calling the LINE Platform.
 ///
 /// - Note:
-/// For most of APIs, using interfaces in `API` is equivalent with
-/// using underlying `Request` and sending it by a `Session`. However, some methods in `LineSDKAPI` provide useful
-/// side effects like operating on keychain or redirecting final result in a more reasonable way.
+/// For most API calls, using the interfaces in the `API` structure is equivalent to using and sending an
+/// underlying `Request` object with a `Session` object. However, some methods in the `API` provides
+/// additional useful features such as working with the keychain and redirecting the final result in a more
+/// reasonable way.
 ///
-/// Unless you know the detail or want to extend LineSDK to send arbitrary unimplemented LINE API,
-/// using `LineSDKAPI` to interact with LINE's APIs are highly recommended.
+/// Using the `API` structure to interact with the LINE Platform is highly recommended, unless you are
+/// familiar with and want to extend the LINE SDK to send unimplemented API requests to the LINE Platform.
 ///
 public struct API {
-    /// Refreshes the access token with a provided `refreshToken`.
+    /// Refreshes the access token with `refreshToken`.
     ///
     /// - Parameters:
-    ///   - refreshToken: Refresh token. Optional. The SDK will use the current refresh token if not provided.
-    ///   - queue: The callback queue will be used for `completionHandler`.
-    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be executed when the API finishes.
+    ///   - refreshToken: A refresh token. Optional. If not specified, the current refresh token is used.
+    ///   - queue: The callback queue that is used for `completion`. The default value is
+    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
+    ///   - completion: The completion closure to be invoked when the access token is refreshed.
     /// - Note:
-    ///   If the token refresh process finishes without an issue, the received new token will be stored in keychain
-    ///   automatically for later use. And you will get a `.LineSDKAccessTokenDidUpdate` notification. Normally,
-    ///   there is no need for you to invoke this method manually, since all APIs will try refresh expired token
-    ///   if needed.
+    ///   If the token refresh process finishes successfully, the refreshed access token will be
+    ///   automatically stored in the keychain for later use and you will get a
+    ///   `.LineSDKAccessTokenDidUpdate` notification. Normally, you do not need to refresh the access token
+    ///   manually because any API call will attempt to refresh the access token if necessary.
     ///
     public static func refreshAccessToken(
         _ refreshToken: String? = nil,
@@ -73,17 +74,19 @@ public struct API {
     /// Revokes the access token.
     ///
     /// - Parameters:
-    ///   - token: The access token which needs to be revoked. The SDK will use current access token if not provided.
-    ///   - queue: The callback queue will be used for `completionHandler`.
-    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be executed when the API finishes.
+    ///   - token: The access token to be revoked. Optional. If not speficied, the current access token will
+    ///            be revoked.
+    ///   - queue: The callback queue that is used for `completion`. The default value is
+    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
+    ///   - completion: The completion closure to be invoked when the access token is revoked.
     /// - Note:
-    ///   The revoked token will be removed from keychain for you. The `completion` closure will be called
-    ///   with a `.success` if you pass a `nil` for `token`, and at the same time, the current access token does
-    ///   not exist. The same thing will also happen when you provide an invalid token to revoke.
+    ///   The revoked token will be automatically removed from the keychain. If `token` has a `nil` value
+    ///   and the current access token does not exist, `completion` will be called with `.success`. The
+    ///   same applies when `token` has an invalid access token.
     ///
-    ///   After a token revoked successfully, it will not be able to use again for LINE APIs. Your user need to
-    ///   authorize your app again to issue a new token before using any other APIs.
+    ///   After the access token is revoked, you cannot use it again for accessing the LINE Platform. You
+    ///   need to have the user authorize your app again to issue a new access token before accessing the
+    ///   LINE Platform.
     ///
     public static func revokeAccessToken(
         _ token: String? = nil,
@@ -125,13 +128,14 @@ public struct API {
         }
     }
     
-    /// Verifies a token.
+    /// Verifies the access token.
     ///
     /// - Parameters:
-    ///   - token: The access token which needs to be verified. The SDK will use current access token if not provided.
-    ///   - queue: The callback queue will be used for `completionHandler`.
-    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be executed when the API finishes.
+    ///   - token: The access token to be verified. Optional. If not speficied, the current access token
+    ///            will be verified.
+    ///   - queue: The callback queue that is used for `completion`. The default value is
+    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
+    ///   - completion: The completion closure to be invoked when the access token is verified.
     ///
     public static func verifyAccessToken(
         _ token: String? = nil,
@@ -146,13 +150,13 @@ public struct API {
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
     
-    /// Gets user's basic profile.
+    /// Gets the user's profile.
     ///
     /// - Parameters:
-    ///   - queue: The callback queue will be used for `completionHandler`.
-    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be executed when the API finishes.
-    /// - Note: `.profile` permission is required.
+    ///   - queue: The callback queue that is used for `completion`. The default value is
+    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
+    ///   - completion: The completion closure to be invoked when the user's profile is returned.
+    /// - Note: The `.profile` permission is required.
     ///
     public static func getProfile(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -162,13 +166,13 @@ public struct API {
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
     
-    /// Gets the friendship status between the bot (which linked to current channel) and current authorized user.
+    /// Gets the friendship status of the user and the bot linked to your LINE Login channel.
     ///
     /// - Parameters:
-    ///   - queue: The callback queue will be used for `completionHandler`.
-    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be executed when the API finishes.
-    /// - Note: `.profile` permission is required.
+    ///   - queue: The callback queue that is used for `completion`. The default value is
+    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
+    ///   - completion: The completion closure to be invoked when the friendship status is returned.
+    /// - Note: The `.profile` permission is required.
     ///
     public static func getBotFriendshipStatus(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,

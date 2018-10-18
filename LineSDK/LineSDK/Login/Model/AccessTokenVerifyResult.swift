@@ -21,16 +21,16 @@
 
 import Foundation
 
-/// Response of `GetVerifyTokenRequest`.
+/// Represents a response to the `GetVerifyTokenRequest` method.
 public struct AccessTokenVerifyResult: Decodable {
     
-    /// The channel ID bound to the token.
+    /// The channel ID bound to the access token.
     public let channelID: String
     
-    /// Valid permissions of this token.
+    /// Valid permissions of the access token.
     public let permissions: [LoginPermission]
     
-    /// The time interval before this token expires.
+    /// The amount of time until the access token expires.
     public let expiresIn: TimeInterval
     
     enum CodingKeys: String, CodingKey {
@@ -39,6 +39,7 @@ public struct AccessTokenVerifyResult: Decodable {
         case scope
     }
     
+    /// :nodoc:
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         channelID = try container.decode(String.self, forKey: .clientID)

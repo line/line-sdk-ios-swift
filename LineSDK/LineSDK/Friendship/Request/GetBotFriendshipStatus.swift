@@ -21,20 +21,24 @@
 
 import Foundation
 
-/// Represents the request of getting friendship status between the bot
-/// (which linked to current channel) and the current authorized user.
+/// Represents a request for the friendship status of the user and the bot linked to your LINE Login
+/// channel.
 public struct GetBotFriendshipStatusRequest: Request {
     
+    /// :nodoc:
     public let method: HTTPMethod = .get
+    /// :nodoc:
     public let path: String = "/friendship/v1/status"
+    /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     
     public init() {}
     
+    /// Represents a response for a request for the friendship status of the user and the bot linked to your
+    /// LINE Login channel.
     public struct Response: Decodable {
-        /// A flag indicates friendship. `true` means the channel bot is a friend of the user,
-        /// and the user is not blocking the bot. `false` means the channel bot is not a friend
-        /// of the user, or the bot is a friend but the user is blocking the bot.
+        /// Indicates the friendship status. `true` if the bot is a friend of the user and the user has not
+        /// blocked the bot. `false` if the bot is not a friend of the user or the user has blocked the bot. 
         public let friendFlag: Bool
     }
 }

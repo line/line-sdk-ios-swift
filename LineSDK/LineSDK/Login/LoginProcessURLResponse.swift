@@ -28,7 +28,7 @@ enum LineWebURLResultError: String {
 }
 
 /// Converts an input open app `URL` to a login process response if possible. Later we could use the `requestToken` in
-/// this url to exchange real access token for LINE APIs.
+/// this url to exchange real access token for the LINE Platform.
 struct LoginProcessURLResponse {
     
     let requestToken: String

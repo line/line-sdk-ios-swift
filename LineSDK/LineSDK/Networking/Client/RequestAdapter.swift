@@ -21,15 +21,14 @@
 
 import Foundation
 
-/// Adapts a request to another one.
-/// An adapter takes responsibility of modifying an input `URLRequest`.
+/// Adapts a request to another request. Adapters modify an input `URLRequest` object.
 public protocol RequestAdapter {
     
-    /// Adapts an input `URLRequest` and return a new modified one.
+    /// Adapts an input `URLRequest` object and returns a modified object.
     ///
-    /// - Parameter request: Input request to be adapted.
-    /// - Returns: The new request object with modification applied.
-    /// - Throws: An error during adapting process.
+    /// - Parameter request: The request to be adapted.
+    /// - Returns: The modified `URLRequest` object.
+    /// - Throws: An error during the adapting process.
     func adapted(_ request: URLRequest) throws -> URLRequest
 }
 
@@ -79,24 +78,24 @@ struct HeaderAdapter: RequestAdapter {
     }
 }
 
-/// An easy way to create a `RequestAdapter` with a block.
+/// Provides an easy way to create a `RequestAdapter` pbkect with a block.
 public struct AnyRequestAdapter: RequestAdapter {
 
     var block: (URLRequest) throws -> URLRequest
     
-    /// Initialize an `AnyRequestAdapter` with a execution closure.
+    /// Initializes an `AnyRequestAdapter` object with a closure.
     ///
-    /// - Parameter block: A closure will be executed with an input `URLRequest`.
+    /// - Parameter block: A closure to be invoked with an input `URLRequest` object.
     public init(_ block: @escaping (URLRequest) throws -> URLRequest) {
         self.block = block
     }
     
-    /// Adapts an input `URLRequest` and return a new modified one.
+    /// Adapts an input `URLRequest` object and returns a modified object.
     ///
-    /// - Parameter request: Input request to be adapted.
-    /// - Returns: The new request object with modification applied.
-    /// - Throws: An error during adapting process.
-    /// - Note: This method just call the `block` passed in from the initializer.
+    /// - Parameter request: The request to be adapted.
+    /// - Returns: The modified `URLRequest` object.
+    /// - Throws: An error during the adapting process.
+    /// - Note: This method just invokes `block` received from the initializer.
     public func adapted(_ request: URLRequest) throws -> URLRequest {
         return try block(request)
     }

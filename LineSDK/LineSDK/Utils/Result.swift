@@ -21,19 +21,19 @@
 
 import Foundation
 
-/// Represents a result of some operation, whether it is successful or an error happens.
+/// The possible results of an operation, whether it is successful or not.
 ///
-/// - success: The operation is successful and an associated value could be provided.
-/// - failure: An error happens during the operation.
+/// - success: The operation is successful and an associated value is available.
+/// - failure: The operation is failed and an associated error is available.
 public enum Result<Value> {
 
-    /// The operation is successful and an associated value could be provided.
+    /// The operation is successful and an associated value is available.
     case success(Value)
 
-    /// An error happens during the operation.
+    /// The operation is failed and an associated error is available.
     case failure(Error)
     
-    /// Returns `true` if the result is a success, `false` otherwise.
+    /// Checks and returns whether the result is a success.
     public var isSuccess: Bool {
         if case .success = self {
             return true
@@ -41,7 +41,7 @@ public enum Result<Value> {
         return false
     }
     
-    /// Returns the associated value if the result is a success, `nil` otherwise.
+    /// Checks and returns the associated value if the result is a success; `nil` otherwise.
     public var value: Value? {
         if case .success(let v) = self {
             return v
@@ -49,12 +49,12 @@ public enum Result<Value> {
         return nil
     }
     
-    /// Returns `true` if the result is a failure, `false` otherwise.
+    /// Returns whether the result is a failure; `false` otherwise.
     public var failure: Bool {
         return !isSuccess
     }
     
-    /// Returns the associated error value if the result is a failure, `nil` otherwise.
+    /// Checks and returns the associated error value if the result is a failure; `nil` otherwise.
     public var error: Error? {
         if case .failure(let e) = self {
             return e
@@ -62,13 +62,13 @@ public enum Result<Value> {
         return nil
     }
     
-    /// Map over the `Result` value. If it was a `.success`, `transform` closure will be applied to associated value
-    /// and a new `.success` with transformed value will be returned. If it was a `.failure`, the same error will be
-    /// returned.
+    /// Maps the result to a `Result` object. If the result is `.success`, the `transform` closure is
+    /// called with the associated value and new `.success` with the transformed value is returned. If the
+    /// result is `.failure`, the original error is returned without transformation.
     ///
-    /// - Parameter transform: A closure that takes the success value of the instance.
-    /// - Returns: The `Result` containing the result of the given closure. If this instance is a failure,
-    ///            returns the same failure.
+    /// - Parameter transform: A closure that takes the `.success` value of the result.
+    /// - Returns: The `Result` object containing the result of the given closure. If the result is a
+    ///            failure, the `Result` object contains the original failure.
     public func map<T>(_ transform: (Value) -> T) -> Result<T> {
         switch self {
         case .success(let value): return .success(transform(value))

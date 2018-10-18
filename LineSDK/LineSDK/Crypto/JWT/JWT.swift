@@ -21,18 +21,19 @@
 
 import Foundation
 
-/// Represents a JSON Web Token Object. Use this struct to get values/verify.
-/// If your users authorize you with the `.openID` permission, an signed ID Token will be issued with the access token.
-/// LineSDK will verify
+/// Represents a JSON Web Token object. Use this struct to get and verify JWT tokens. If the user authorizes
+/// your app with the `.openID` permission, an signed ID token will be issued together with an access token.
+/// The LINE SDK verifies JWT tokens for you.
 public struct JWT: Equatable {
     
+    /// :nodoc:
     public static func == (lhs: JWT, rhs: JWT) -> Bool {
         return lhs.rawValue == rhs.rawValue
     }
     
     let header: Header
     
-    /// Payload section of this JWT object.
+    /// The payload section of the JWT object.
     public let payload: Payload
     
     let signature: Data
@@ -107,8 +108,8 @@ extension JWT {
 
 extension JWT {
     
-    /// Represents the payload content of a JWT object. You could use the exposed properties to get claims from the
-    /// payload. Or use the subscript to get any unexposed values.
+    /// Represents the payload section of a JWT object. Use the exposed properties to get claims from the
+    /// payload. Use the `subscript` method to get any unexposed values.
     public struct Payload {
         let values: [String: Any]
         
@@ -146,29 +147,32 @@ extension JWT {
     }
 }
 
-// MARK: - Named getter for claims
+// MARK: - Named getters for claims
 extension JWT.Payload {
     
-    /// Subcript to get a value from current payload.
+    /// Gets values from current payload.
     ///
     /// - Parameters:
     ///   - key: The string key of a claim.
-    ///   - type: Indicates what type should be expected under the given `key`. After getting the value from `key`,
-    ///           it will be converted to this type. You can only use JSON compatible types.
+    ///   - type: The expected type for `key`. The value for `key` will be converted to the specified type.
+    ///           Use JSON compatible types only.
     public subscript<T>(key: String, type: T.Type) -> T? {
         return values[key] as? T
     }
     
-    /// Issuer claim of this JWT. In LineSDK, the issuer is always "https://access.line.me".
+    /// The issuer claim of the ID token. The issuer of ID tokens from the LINE Platform is always
+    /// "https://access.line.me".
     public var issuer: String? { return self["iss", String.self] }
     
-    /// Subject claim of this JWT. In LineSDK, the subject is the `userID` of authorized user.
+    /// The subject claim of the ID token. The subject of ID tokens from the LINE Platform is the user ID
+    /// of the authorized user.
     public var subject: String? { return self["sub", String.self] }
     
-    /// Audience claim of this JWT. In LineSDK, the audience is your channel ID.
+    /// The audience claim of the ID token. The audience of ID tokens from the LINE Platform is the channel
+    /// ID of your app.
     public var audience: String? { return self["aud", String.self] }
     
-    /// When the JWT will expire.
+    /// The expiration time of the ID token.
     public var expiration: Date? {
         guard let timeInterval = self["exp", TimeInterval.self] else {
             return nil
@@ -176,7 +180,7 @@ extension JWT.Payload {
         return Date(timeIntervalSince1970: timeInterval)
     }
     
-    /// When the JWT was issued.
+    /// The issued time of the ID token.
     public var issueAt: Date? {
         guard let timeInterval = self["iat", TimeInterval.self] else {
             return nil
@@ -185,15 +189,16 @@ extension JWT.Payload {
     }
 }
 
-// MARK: - LINE Related claims
+// MARK: - LINE-specific claims
 extension JWT.Payload {
     var nonce: String? { return self["nonce", String.self] }
     
-    /// User's display name. Not included if the `.profile` permission was not specified in the authorization request.
+    /// The user's display name. Not included if the `.profile` permission was not specified in the
+    /// authorization request.
     public var name: String? { return self["name", String.self] }
     
-    /// User's profile image URL. Not included if the `.profile` permission was not specified in the authorization
-    /// request.
+    /// The user's profile image URL. Not included if the `.profile` permission was not specified in the
+    /// authorization request.
     public var pictureURL: URL? {
         guard let string = self["picture", String.self] else {
             return nil
@@ -201,7 +206,8 @@ extension JWT.Payload {
         return URL(string: string)
     }
     
-    /// User's email address. Not included if the `.email` permission was not specified in the authorization request.
+    /// The user's email address. Not included if the `.email` permission was not specified in the
+    /// authorization request.
     public var email: String? { return self["email", String.self] }
     
 }

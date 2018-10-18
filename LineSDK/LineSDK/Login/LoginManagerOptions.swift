@@ -21,28 +21,29 @@
 
 import Foundation
 
-/// Represents the possible options when login to LINE with `LoginManager`
+/// Represents options for logging in to the LINE Platform using the `LoginManager` class.
 public struct LoginManagerOptions: OptionSet {
     
-    /// Raw value of the option
+    /// The raw value of an option.
     public let rawValue: Int
     
-    /// Initializes an option from raw value.
+    /// Initializes an option from a raw value.
     ///
     /// - Parameter rawValue: Underlying raw value of option.
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
     
-    /// Skips LINE client app auth flow. Only uses web login flow to login.
+    /// Uses a Safari View Controller to log in, not the LINE app-to-app authentication.
     public static let onlyWebLogin = LoginManagerOptions(rawValue: 1 << 0)
     
-    /// Includes an option to add a bot as friend in the consent screen.
-    /// If `.botPromptNormal` and `.botPromptAggressive` is set at the same time, `.botPromptAggressive` will be used.
+    /// Includes an option to add a bot as friend in the consent screen. If `.botPromptNormal` and
+    /// `.botPromptAggressive` are set at the same time, `.botPromptAggressive` will be used.
     public static let botPromptNormal = LoginManagerOptions(rawValue: 1 << 1)
     
-    /// Opens a new screen to add the bot as friend after the user agrees to the permissions in the consent screen.
-    /// If `.botPromptNormal` and `.botPromptAggressive` is set at the same time, `.botPromptAggressive` will be used.
+    /// Opens a new screen to add a bot as a friend after the user agrees to the permissions in the consent
+    /// screen. If `.botPromptNormal` and `.botPromptAggressive` is set at the same time,
+    /// `.botPromptAggressive` will be used.
     public static let botPromptAggressive = LoginManagerOptions(rawValue: 1 << 2)
     
     var botPrompt: LoginProcess.BotPrompt? {

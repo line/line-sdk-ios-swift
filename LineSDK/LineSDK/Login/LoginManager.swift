@@ -34,22 +34,23 @@ public class LoginManager {
     /// is waiting for the login result; `nil` otherwise.
     public private(set) var currentProcess: LoginProcess?
     
-    /// Checks whether the current `LoginManager` instance is ready to use. Call the `setup` method to set up the
-    /// LINE SDK with basic information before you call any other methods or properties in the LINE SDK.
+    /// Checks and returns whether the current `LoginManager` instance is ready to use. Call the `setup`
+    /// method to set up the LINE SDK with basic information before you call any other methods or properties
+    /// in the LINE SDK.
     public var isSetupFinished: Bool {
         lock.lock()
         defer { lock.unlock() }
         return setup
     }
     
-    /// Checks whether the user was authorized and an access token exists locally. This method does not check
-    /// whether the access token has been expired or not. To verify an access token, use the
+    /// Checks and returns whether the user was authorized and an access token exists locally. This method
+    /// does not check whether the access token has been expired or not. To verify an access token, use the
     /// `API.verifyAccessToken` method.
     public var isAuthorized: Bool {
         return AccessTokenStore.shared.current != nil
     }
     
-    /// Checks whether the authorizing process is currently ongoing.
+    /// Checks and returns whether the authorizing process is currently ongoing.
     public var isAuthorizing: Bool {
         return currentProcess != nil
     }
@@ -113,8 +114,8 @@ public class LoginManager {
     ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
     ///   more information, see `UserProfile`.
     ///
-    ///   An access token will be issued if the user grants the permissions to your app. This token and a refresh
-    ///   token will be automatically stored in the keychain of your app for later use. You do not need to
+    ///   An access token will be issued if the user authorizes your app. This token and a refresh token 
+    ///   will be automatically stored in the keychain of your app for later use. You do not need to
     ///   refresh the access token manually because any API call will attempt to refresh the access token if
     ///   necessary. However, if you would like to refresh the access token manually, use the
     ///   `API.refreshAccessToken(with:)` method.
@@ -165,7 +166,7 @@ public class LoginManager {
     ///   - token: The access token retrieved from auth server.
     ///   - response: The URL response object created when a login callback URL opened by SDK.
     ///   - process: The related login process initialized by `login` method.
-    ///   - completion: The completion closure to be executed when the whole login process finishes.
+    ///   - completion: The completion closure to be invoked when the whole login process finishes.
     func postLogin(
         token: AccessToken,
         response: LoginProcessURLResponse,

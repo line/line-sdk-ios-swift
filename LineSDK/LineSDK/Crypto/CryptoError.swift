@@ -21,25 +21,25 @@
 
 import Foundation
 
-/// `CryptoError` is an error subtype of the LINE SDK, which is related to certificates, keys, and token
-/// verification. A `CryptoError` will not be thrown to you directly. This type of error will be wrapped
-/// under `LineSDKError.authorizeFailed` with the `.cryptoError` reason and the error code `3016`.
-/// Find the underlying `CryptoError` by checking the associated value of the `.cryptoError` reason
-/// or the `.underlyingError` key in the error's `userInfo`.
+/// Error subtypes of the LINE SDK, which are related to certificates, keys, and token verification.
+/// A `CryptoError` will not be thrown to you directly. This type of error will be wrapped under
+/// `LineSDKError.authorizeFailed` with the `.cryptoError` reason and the error code `3016`. Find the
+/// underlying `CryptoError` by checking the associated value of the `.cryptoError` reason or the
+/// `.underlyingError` key in the error's `userInfo`.
 ///
 /// You can switch over to each error to know the detailed reason and associated information. You can also
 /// access the `localizedDescription` property to get a human-readable text description. Access `errorCode`
 /// to get a fixed error code to identify the error type quickly. All `CryptoError`s are under the
 /// "LineSDKError.CryptoError" error domain.
 ///
-/// - algorithmsFailed: An error occurred while performing an algorithms related operation like creating keys or
-///                     verifying signed data.
+/// - algorithmsFailed: An error occurred while performing an algorithms related operation like creating
+///                     keys or verifying signed data.
 /// - JWTFailed: An error occurred while performing a JWT related operation.
 /// - JWKFailed: An error occurred while performing a JWK related operation.
 /// - generalError: An error occurred while performing another crypto related operation.
 public enum CryptoError: Error {
     
-    /// The underlying reason why an `.algorithmsFailed` error occurs.
+    /// The possible underlying reasons why an `.algorithmsFailed` error occurs.
     ///
     /// - invalidDERKey: The DER data does not contain a valid RSA key. Code 3016_1001.
     /// - invalidX509Header: The x509 header is found in the key, but the data is invalid. Code 3016_1002.
@@ -76,7 +76,7 @@ public enum CryptoError: Error {
         case verifyingError(Error?, statusCode: Int?)
     }
 
-    /// The underlying reason why a `.JWTFailed` error occurs.
+    /// The possible underlying reasons why a `.JWTFailed` error occurs.
     ///
     /// - malformedJWTFormat: The input text is not a valid JWT encoded string. Code 3016_2001.
     /// - unsupportedHeaderAlgorithm: The algorithm defined in the JWT header is not supported in the
@@ -94,7 +94,7 @@ public enum CryptoError: Error {
         case claimVerifyingFailed(key: String, got: String, description: String)
     }    
 
-    /// The underlying reason why an `.JWKFailed` error occurs.
+    /// The possible underlying reasons why an `.JWKFailed` error occurs.
     ///
     /// - unsupportedKeyType: The key type is not supported in the LINE SDK. Code 3016_3001.
     public enum JWKErrorReason {
@@ -103,7 +103,7 @@ public enum CryptoError: Error {
         case unsupportedKeyType(String)
     }
     
-    /// The underlying reason why a `.generalError` occurs.
+    /// The possible underlying reasons why a `.generalError` occurs.
     ///
     /// - base64ConversionFailed: The string cannot be converted to the base64 data format. Code 3016_4001.
     /// - dataConversionFailed: The data cannot be converted to a string with the given encoding. Code
