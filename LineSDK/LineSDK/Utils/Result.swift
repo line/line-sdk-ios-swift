@@ -62,9 +62,9 @@ public enum Result<Value> {
         return nil
     }
     
-    /// Maps the result to a `Result` object. If the result is `.success`, the `transform` closure is
-    /// called with the associated value and new `.success` with the transformed value is returned. If the
-    /// result is `.failure`, the original error is returned without transformation.
+    /// Maps the result to a `Result` object. If the result is `.success`, `transform` is called with the
+    /// associated value and new `.success` with the transformed value is returned. If the result is `.failure`,
+    /// the original error is returned without transformation.
     ///
     /// - Parameter transform: A closure that takes the `.success` value of the result.
     /// - Returns: The `Result` object containing the result of the given closure. If the result is a

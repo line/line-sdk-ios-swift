@@ -27,12 +27,12 @@ public struct LoginResult {
     public let accessToken: AccessToken
     /// The permissions bound to the `accessToken` object by the authorization process.
     public let permissions: Set<LoginPermission>
-    /// A `UserProfile` object contains the user profile including the user ID, display name, and so on.
-    /// The value exists only when the `.profile` permission is set in the authorization request.
+    /// Contains the user profile including the user ID, display name, and so on. The value exists only when the
+    /// `.profile` permission is set in the authorization request.
     public let userProfile: UserProfile?
-    /// Indicates that the friendship status between the user and the bot changes during the login. This
-    /// value is non-`nil` only if the `.botPromptNormal` or `.botPromptAggressive` are specified as part of
-    /// the `LoginManagerOption` object when the user logs in. For more information, see Linking a bot with
-    /// your LINE Login channel at https://developers.line.me/en/docs/line-login/web/link-a-bot/.
+    /// Indicates that the friendship status between the user and the bot changes during the login. This value is
+    /// non-`nil` only if the `.botPromptNormal` or `.botPromptAggressive` are specified as part of the
+    /// `LoginManagerOption` object when the user logs in. For more information, see Linking a bot with your LINE 
+    /// Login channel at https://developers.line.me/en/docs/line-login/web/link-a-bot/.
     public let friendshipStatusChanged: Bool?
 }

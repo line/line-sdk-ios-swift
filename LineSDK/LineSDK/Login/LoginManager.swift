@@ -67,7 +67,7 @@ public class LoginManager {
     ///   - universalLinkURL: The universal link used to navigate back to your app from the LINE app.
     /// - Note:
     ///   Call this method before you access any other methods or properties in the LINE SDK. Call this method
-    ///   only once because a login manager cannot be set up for multiple times.
+    ///   only once because the login manager cannot be set up for multiple times.
     ///
     ///   We strongly suggest that you specify a valid universal link URL. Set up your own universal link
     ///   callback for your channel by following the guide on the LINE Developers site. When the callback is set
@@ -98,9 +98,8 @@ public class LoginManager {
     /// - Parameters:
     ///   - permissions: The set of permissions which are requested by your app. The default value is
     ///                  `[.profile]`.
-    ///   - viewController: The view controller from which the LINE SDK should show its login view controller.
-    ///                     If `nil`, the most top view controller in the current view controller hierarchy will
-    ///                     be used.
+    ///   - viewController: The the view controller that presents the login view controller. If `nil`, the most
+    ///                     top view controller in the current view controller hierarchy will be used.
     ///   - options: The options used during the login process. For more information, see `LoginManagerOptions`.
     ///   - completion: The completion closure to be invoked when the login action is finished.
     /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.

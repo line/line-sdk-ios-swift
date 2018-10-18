@@ -23,13 +23,13 @@ import Foundation
 
 
 /// Represents the final pipeline of a series of response pipelines. Use the terminator to parse response
-/// data to a final `Response` object of a certain `Request` object.
+/// data into a final `Response` object of a certain `Request` object.
 public protocol ResponsePipelineTerminator: class { // Use class protocol for easier Equatable conforming
     /// Parses `data` that holds input values to a `Response` object.
     ///
     /// - Parameters:
     ///   - request: The original request.
-    ///   - data: The `Data` object that was received from the `Session` object.
+    ///   - data: The `Data` object received from a `Session` object.
     /// - Returns: The `Response` object.
     /// - Throws: An error that occurs during the parsing process.
     func parse<T: Request>(request: T, data: Data) throws -> T.Response
@@ -44,7 +44,7 @@ public protocol ResponsePipelineRedirector: class { // Use class protocol for ea
 }
 
 /// Actions against the processing result from a `ResponsePipelineRedirector` object. A redirector needs to
-/// decide where to redirect the current request after processing data. These enumerators provide data
+/// decide where to redirect the current request after data processing. These enumerators provide data
 /// destinations and behaviors of a redirector.
 ///
 /// - restart: Restarts the current request with the original pipelines.
@@ -66,13 +66,13 @@ public enum ResponsePipelineRedirectorAction {
     /// Continues the handling process.
     case `continue`
 
-    /// The handling process should continue with modified data and response.
+    /// Continues the handling process with modified data and response.
     case continueWith(Data, HTTPURLResponse)
 }
 
-/// Pipelines for a response. Pipelines take a response and its data from a `Session` object. To convert
-/// data to a `Response` object, the last pipeline should be a `terminator` pipeline. To process data, you
-/// can have multiple `redirector` pipelines before the `terminator` pipeline.
+/// Pipelines for a response. Pipelines take a response and its data from a `Session` object. To convert data to
+/// a `Response` object, the last pipeline must be a `terminator` pipeline. To process data, you can have
+/// multiple `redirector` pipelines before the `terminator` pipeline.
 ///
 /// - terminator: Associates a pipeline with a `ResponsePipelineTerminator` object to terminate the
 ///               current handling process.
@@ -89,6 +89,7 @@ public enum ResponsePipeline {
     case redirector(ResponsePipelineRedirector)
 }
 
+/// :nodoc:
 extension ResponsePipeline: Equatable {
     public static func == (lhs: ResponsePipeline, rhs: ResponsePipeline) -> Bool {
         switch (lhs, rhs) {
@@ -102,7 +103,7 @@ extension ResponsePipeline: Equatable {
 /// Represents a terminator pipeline with a JSON decoder to parse data.
 public class JSONParsePipeline: ResponsePipelineTerminator {
     
-    /// An underlying JSON parser of this pipeline.
+    /// An underlying JSON parser of the pipeline.
     public let parser: JSONDecoder
     
     /// Initializes a `JSONParsePipeline` object.
@@ -116,7 +117,7 @@ public class JSONParsePipeline: ResponsePipelineTerminator {
     ///
     /// - Parameters:
     ///   - request: The original request.
-    ///   - data: The `Data` object that was received from the `Session` object.
+    ///   - data: The `Data` object received from a `Session` object.
     /// - Returns: The `Response` object.
     /// - Throws: An error that occurs during the parsing process.
     public func parse<T: Request>(request: T, data: Data) throws -> T.Response {

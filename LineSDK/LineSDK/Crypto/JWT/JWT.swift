@@ -22,7 +22,7 @@
 import Foundation
 
 /// Represents a JSON Web Token object. Use this struct to get and verify JWT tokens. If the user authorizes
-/// your app with the `.openID` permission, an signed ID token will be issued together with an access token.
+/// your app with the `.openID` permission, a signed ID token will be issued together with an access token.
 /// The LINE SDK verifies JWT tokens for you.
 public struct JWT: Equatable {
     
@@ -150,7 +150,7 @@ extension JWT {
 // MARK: - Named getters for claims
 extension JWT.Payload {
     
-    /// Gets values from current payload.
+    /// Gets values from the current payload.
     ///
     /// - Parameters:
     ///   - key: The string key of a claim.

@@ -31,7 +31,7 @@ struct InternalAPIError: Decodable {
 }
 
 /// Represents an API error that occurs when interacting with the LINE Platform. If the LINE Platform
-/// returns an error in a known format, the error is parsed to an `APIError` object and thrown out. The
+/// returns an error in a known format, the error is parsed into an `APIError` object and thrown out. The
 /// error type is `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError`.
 ///
 public struct APIError {

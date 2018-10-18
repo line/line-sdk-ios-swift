@@ -101,16 +101,15 @@ open class LoginButton: UIButton {
     /// to handle different login states.
     public weak var delegate: LoginButtonDelegate?
 
-    /// A parameter of the login action that determines from which view controller the login related view controller
-    /// to present. If this value is `nil`, the most top view controller in the current view controller hierarchy
-    /// will be used.
+    /// Determines the view controller that presents the login view controller. If the value is `nil`, the most 
+    /// top view controller in the current view controller hierarchy will be used.
     public weak var presentingViewController: UIViewController?
 
-    /// A parameter of the login action that represents a set of permissions.
+    /// Represents a set of permissions.
     /// The default value is `[.profile]`.
     public var permissions: Set<LoginPermission> = [.profile]
 
-    /// A parameter of the login action that represents a set of options.
+    /// Represents a set of options.
     /// The default value is empty.
     public var options: LoginManagerOptions = []
 
@@ -124,7 +123,7 @@ open class LoginButton: UIButton {
 
     /// The text on the login button. Its value is "Log in with LINE" in the English environment and
     /// localized for different environments.
-    /// The buton will be resized if you change this property.
+    /// The button will be resized if you change this property.
     public var buttonText: String? {
         didSet {
             // update button style after buttonText is changed

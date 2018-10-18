@@ -79,12 +79,12 @@ public enum AuthenticateMethod {
 /// Content types specified in a `Request` object.
 ///
 /// - none: The request does not contain any body content.
-/// - formUrlEncoded: The request contains form url encoded data.
+/// - formUrlEncoded: The request contains form URL encoded data.
 /// - json: The request contains JSON data.
 public enum ContentType {
     /// The request does not contain any body content.
     case none
-    /// The request contains form url encoded data.
+    /// The request contains form URL encoded data.
     case formUrlEncoded
     /// The request contains JSON data.
     case json
@@ -110,7 +110,7 @@ public enum ContentType {
     }
 }
 
-/// Prameter types for `Request` objects.
+/// Parameter types for `Request` objects.
 public typealias Parameters = [String: Any]
 
 /// Represents a request to the LINE Platform. A request is composed of various components such as `method`,
@@ -171,7 +171,7 @@ public protocol Request {
     var prefixPipelines: [ResponsePipeline]? { get }
     
     /// The final data parser that parses the response data into a `Response` object at the end of
-    /// `pipelines`. By default, a `JSONParsePipeline` object with the standard `JSONDecoder` method will be
+    /// `pipelines`. By default, a `JSONParsePipeline` object with the standard `JSONDecoder` object will be
     /// used.
     var dataParser: ResponsePipelineTerminator { get }
     

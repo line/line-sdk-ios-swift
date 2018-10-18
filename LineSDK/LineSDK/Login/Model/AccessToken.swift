@@ -23,17 +23,17 @@ import Foundation
 
 protocol AccessTokenType {}
 
-/// Represents an access token which is used to access the LINE Platform. Most API calls to the LINE
-/// Platform require an access token as an evidence of successful authorization. A valid access token is
-/// issued after the user grants your app the permissions that your app requests. An access token is bound
-/// to permissions (scopes) that define the API endpoints that you can access. Choose the permissions for
-/// your channel in the LINE Developers site and set them in the login method used in your app.
+/// Represents an access token which is used to access the LINE Platform. Most API calls to the LINE Platform
+/// require an access token as an evidence of successful authorization. A valid access token is issued after the
+/// user grants your app the permissions that your app requests. An access token is bound to permissions (scopes)
+/// that define the API endpoints that you can access. Choose the permissions for your channel in the LINE
+/// Developers site and set them in the login method used in your app.
 ///
 /// An access token will expire after a certain period. Check the `expiresAt` property, which contains the
 /// expiration time calculated with the local time setting. Any API call will attempt to refresh the access
 /// token if necessary, when it requires authorization.
 ///
-/// By default, the LINE SDK stores an access token to keychain for your app and obtains authorization when
+/// By default, the LINE SDK stores an access token in the keychain for your app and obtains authorization when
 /// you access the LINE Platform through the framework request methods.
 ///
 /// Do not try to create an access token yourself. You can get a valid access token in use by accessing the
@@ -41,7 +41,7 @@ protocol AccessTokenType {}
 ///
 public struct AccessToken: Codable, AccessTokenType, Equatable {
     
-    /// The access token value.
+    /// The value of the access token.
     public let value: String
     
     let expiresIn: TimeInterval

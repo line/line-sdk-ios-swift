@@ -312,8 +312,9 @@ extension CryptoError.GeneralErrorReason {
     }
 }
 
-// MARK: - Error Description
+// MARK: - Error description
 extension CryptoError: LocalizedError {
+    /// Describes why an error occurs in human-readable text.
     public var errorDescription: String? {
         switch self {
         case .algorithmsFailed(reason: let reason): return reason.errorDescription
@@ -324,9 +325,10 @@ extension CryptoError: LocalizedError {
     }
 }
 
-// MARK: - NSError Compatibility
+// MARK: - NSError compatibility
 extension CryptoError: CustomNSError {
     
+    /// :nodoc:
     public var errorUserInfo: [String : Any] {
         switch self {
         case .algorithmsFailed(reason: let reason): return reason.errorUserInfo
@@ -336,6 +338,7 @@ extension CryptoError: CustomNSError {
         }
     }
     
+    /// :nodoc:
     public var errorCode: Int {
         switch self {
         case .algorithmsFailed(reason: let reason): return reason.errorCode
@@ -345,6 +348,7 @@ extension CryptoError: CustomNSError {
         }
     }
     
+    /// :nodoc:
     public static var errorDomain: String {
         return "LineSDKError.CryptoError"
     }

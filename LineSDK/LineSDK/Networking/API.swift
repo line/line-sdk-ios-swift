@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// Represents an utility structure for calling the LINE Platform.
+/// Represents a utility structure for calling the LINE Platform.
 ///
 /// - Note:
 /// For most API calls, using the interfaces in the `API` structure is equivalent to using and sending an
@@ -29,8 +29,8 @@ import Foundation
 /// additional useful features such as working with the keychain and redirecting the final result in a more
 /// reasonable way.
 ///
-/// Using the `API` structure to interact with the LINE Platform is highly recommended, unless you are
-/// familiar with and want to extend the LINE SDK to send unimplemented API requests to the LINE Platform.
+/// Using the `API` structure to interact with the LINE Platform is highly recommended unless you are familiar
+/// with and want to extend the LINE SDK to send unimplemented API requests to the LINE Platform.
 ///
 public struct API {
     /// Refreshes the access token with `refreshToken`.
@@ -74,7 +74,7 @@ public struct API {
     /// Revokes the access token.
     ///
     /// - Parameters:
-    ///   - token: The access token to be revoked. Optional. If not speficied, the current access token will
+    ///   - token: The access token to be revoked. Optional. If not specified, the current access token will
     ///            be revoked.
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
@@ -131,7 +131,7 @@ public struct API {
     /// Verifies the access token.
     ///
     /// - Parameters:
-    ///   - token: The access token to be verified. Optional. If not speficied, the current access token
+    ///   - token: The access token to be verified. Optional. If not specified, the current access token
     ///            will be verified.
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.

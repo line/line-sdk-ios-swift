@@ -29,7 +29,7 @@ public struct LoginManagerOptions: OptionSet {
     
     /// Initializes an option from a raw value.
     ///
-    /// - Parameter rawValue: Underlying raw value of option.
+    /// - Parameter rawValue: The underlying raw value of an option.
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }

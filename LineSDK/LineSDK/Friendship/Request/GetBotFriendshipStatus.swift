@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// Represents a request for the friendship status of the user and the bot linked to your LINE Login
+/// Represents a request for getting the friendship status of the user and the bot linked to your LINE Login
 /// channel.
 public struct GetBotFriendshipStatusRequest: Request {
     
@@ -34,8 +34,8 @@ public struct GetBotFriendshipStatusRequest: Request {
     
     public init() {}
     
-    /// Represents a response for a request for the friendship status of the user and the bot linked to your
-    /// LINE Login channel.
+    /// Represents a response for a request for getting the friendship status of the user and the bot linked to
+    /// your LINE Login channel.
     public struct Response: Decodable {
         /// Indicates the friendship status. `true` if the bot is a friend of the user and the user has not
         /// blocked the bot. `false` if the bot is not a friend of the user or the user has blocked the bot. 

@@ -324,7 +324,7 @@ extension LineSDKError {
     }
 }
 
-// MARK: - Error Description
+// MARK: - Error description
 extension LineSDKError: LocalizedError {
     /// Describes why an error occurs in human-readable text.
     public var errorDescription: String? {
@@ -337,7 +337,7 @@ extension LineSDKError: LocalizedError {
     }
 }
 
-// MARK: - NSError Compatibility
+// MARK: - NSError compatibility
 extension LineSDKError: CustomNSError {
     public var errorCode: Int {
         switch self {
@@ -348,6 +348,7 @@ extension LineSDKError: CustomNSError {
         }
     }
     
+    /// :nodoc:
     public var errorUserInfo: [String : Any] {
         switch self {
         case .requestFailed(reason: let reason): return reason.errorUserInfo
@@ -357,6 +358,7 @@ extension LineSDKError: CustomNSError {
         }
     }
     
+    /// :nodoc:
     public static var errorDomain: String {
         return "LineSDKError"
     }

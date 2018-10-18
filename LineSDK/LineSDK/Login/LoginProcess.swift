@@ -24,7 +24,7 @@ import UIKit
 import SafariServices
 
 /// Represents a login process initialized by a `LoginManager` object. Normally, a process that contains multiple
-/// login flows will run serially. If a flow succeeded in loging in the user, subsequent flows will not be
+/// login flows will run serially. If a flow logs in the user successfully, subsequent flows will not be
 /// executed.
 public class LoginProcess {
     

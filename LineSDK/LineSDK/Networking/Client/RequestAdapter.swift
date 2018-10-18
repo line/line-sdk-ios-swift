@@ -78,7 +78,7 @@ struct HeaderAdapter: RequestAdapter {
     }
 }
 
-/// Provides an easy way to create a `RequestAdapter` pbkect with a block.
+/// Provides an easy way to create a `RequestAdapter` object with a block.
 public struct AnyRequestAdapter: RequestAdapter {
 
     var block: (URLRequest) throws -> URLRequest

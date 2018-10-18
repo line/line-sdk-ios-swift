@@ -21,8 +21,8 @@
 
 import Foundation
 
-/// Represents a session for sending a `Request` object through `URLSession` for the LINE Platform. It
-/// respects the `adapters` and `pipelines` properties of the `Request` protocol, to create proper requests
+/// Represents a session for sending a `Request` object through a `URLSession` object for the LINE Platform. This
+/// class respects the `adapters` and `pipelines` properties of the `Request` protocol, to create proper requests
 /// and handle the response in the designed way.
 public class Session {
     
@@ -72,7 +72,7 @@ public class Session {
     ///   - callbackQueue: A queue option to be used when `completion` is invoked. The default value is 
     ///                    `.currentMainOrAsync`.
     ///   - completion: The completion closure to be invoked when the request has been sent.
-    /// - Returns: The `SessionTask` object that indicates the task.
+    /// - Returns: The `SessionTask` object that represents the task.
     @discardableResult
     public func send<T: Request>(
         _ request: T,
@@ -91,7 +91,7 @@ public class Session {
     ///   - pipelines: The pipelines should be used to override `request.pipelines`. When provided, the `Session` will
     ///                ignore the Default is `nil`,
     ///   - completion: The completion closure to be invoked when the session sending finishes.
-    /// - Returns: The `SessionTask` object that indicates the task.
+    /// - Returns: The `SessionTask` object that represents the task.
     @discardableResult
     func send<T: Request>(
         _ request: T,
