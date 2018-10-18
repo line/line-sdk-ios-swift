@@ -76,7 +76,7 @@ public class Session {
     @discardableResult
     public func send<T: Request>(
         _ request: T,
-        callbackQueue: CallbackQueue = .asyncMain,
+        callbackQueue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: ((Result<T.Response>) -> Void)? = nil) -> SessionTask?
     {
         return send(request, callbackQueue: callbackQueue, pipelines: nil, completionHandler: completion)
@@ -95,7 +95,7 @@ public class Session {
     @discardableResult
     func send<T: Request>(
         _ request: T,
-        callbackQueue: CallbackQueue = .asyncMain,
+        callbackQueue: CallbackQueue = .currentMainOrAsync,
         pipelines: [ResponsePipeline]?,
         completionHandler completion: ((Result<T.Response>) -> Void)? = nil) -> SessionTask?
     {
