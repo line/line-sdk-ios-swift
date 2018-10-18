@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// Represents a response to the `getProfile` method.
+/// Represents a response to the `GetUserProfileRequest` method.
 public struct UserProfile: Decodable {
     
     /// The user ID of the current authorized user.

@@ -21,13 +21,16 @@
 
 import Foundation
 
+/// Represents a request for getting user profile.
 public struct GetUserProfileRequest: Request {
     public init() {}
-    
+    /// :nodoc:
     public let method: HTTPMethod = .get
+    /// :nodoc:
     public let path = "/v2/profile"
+    /// :nodoc:
     public let authentication: AuthenticateMethod = .token
-    
+    /// :nodoc:
     public typealias Response = UserProfile
 }
 
