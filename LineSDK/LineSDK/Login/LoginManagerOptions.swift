@@ -34,7 +34,7 @@ public struct LoginManagerOptions: OptionSet {
         self.rawValue = rawValue
     }
     
-    /// Uses a Safari View Controller to log in, not the LINE app-to-app authentication.
+    /// Uses the web authentication flow instead of the LINE app-to-app authentication flow.
     public static let onlyWebLogin = LoginManagerOptions(rawValue: 1 << 0)
     
     /// Includes an option to add a bot as friend in the consent screen. If `.botPromptNormal` and

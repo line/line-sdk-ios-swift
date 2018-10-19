@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// Represents a request for getting user profile.
+/// Represents a request for getting the user's profile.
 public struct GetUserProfileRequest: Request {
     public init() {}
     /// :nodoc:
