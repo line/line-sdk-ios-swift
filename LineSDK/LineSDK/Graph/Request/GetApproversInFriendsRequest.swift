@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// LINE internal use only.
 /// Represents the request getting the list of the user's friends who have already approved the channel,
 /// regardless each user's privacy filter setting.
 /// This API returns a maximum of 200 users per request.

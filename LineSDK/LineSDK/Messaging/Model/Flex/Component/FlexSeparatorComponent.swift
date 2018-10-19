@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represent a separator component. This component draws a separator between components in the parent box.
 /// Different from the `separator` property of `FlexBlockStyle`, the `FlexSeparatorComponent` allows you to add a
 /// separator between components instead of container block, as well as full control on separator `margin`.

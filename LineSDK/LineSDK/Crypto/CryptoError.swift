@@ -21,109 +21,112 @@
 
 import Foundation
 
-/// `CryptoError` is an error subtype of LineSDK, which is related to certs, keys and token verification.
-/// A `CryptoError` will not be thrown to you directly, all these kind of errors will be wrapped under
-/// `LineSDKError.authorizeFailed` with `.cryptoError` reason (which has an error code `3016`).
-/// You could find the underlying `CryptoError` by checking the associated value of `.cryptoError` reason,
-/// or by accessing the `.underlyingError` key in the error's `userInfo`.
+/// Error subtypes of the LINE SDK, which are related to certificates, keys, and token verification.
+/// A `CryptoError` will not be thrown to you directly. This type of error will be wrapped under
+/// `LineSDKError.authorizeFailed` with the `.cryptoError` reason and the error code `3016`. Find the
+/// underlying `CryptoError` by checking the associated value of the `.cryptoError` reason or the
+/// `.underlyingError` key in the error's `userInfo`.
 ///
-/// You could switch over the error to know the detail reason and associated information for each error. Or you could
-/// access the `localizedDescription` property to get a human-readable text description. Access `errorCode` to get a
-/// fixed error code to identify the error type quickly.
-/// All `CryptoError`s are under the "LineSDKError.CryptoError" error domain.
+/// You can switch over to each error to know the detailed reason and associated information. You can also
+/// access the `localizedDescription` property to get a human-readable text description. Access `errorCode`
+/// to get a fixed error code to identify the error type quickly. All `CryptoError`s are under the
+/// "LineSDKError.CryptoError" error domain.
 ///
-/// - RSAFailed: Returned when something wrong happens while performing RSA related operations like creating keys or
-///              verifying signed data.
-/// - JWTFailed: Returned when something wrong happens while performing JWT related operations.
-/// - JWKFailed: Returned when something wrong happens while performing JWK related operations.
-/// - generalError: Other general errors might happen for crypto in LineSDK.
+/// - algorithmsFailed: An error occurred while performing an algorithms related operation like creating
+///                     keys or verifying signed data.
+/// - JWTFailed: An error occurred while performing a JWT related operation.
+/// - JWKFailed: An error occurred while performing a JWK related operation.
+/// - generalError: An error occurred while performing another crypto related operation.
 public enum CryptoError: Error {
     
-    /// The underlying reason for why a `.algorithmsFailed` happens.
+    /// The possible underlying reasons why an `.algorithmsFailed` error occurs.
     ///
     /// - invalidDERKey: The DER data does not contain a valid RSA key. Code 3016_1001.
-    /// - invalidX509Header: x509 header is found in the key, but the expected data is wrong. Code 3016_1002.
-    /// - createKeyFailed: Error happens while creating security key. Code 3016_1003.
+    /// - invalidX509Header: The x509 header is found in the key, but the data is invalid. Code 3016_1002.
+    /// - createKeyFailed: An error occurred while creating a security key. Code 3016_1003.
     /// - invalidPEMKey: The PEM key is invalid. Code 3016_1004.
-    /// - encryptingError: Error happens while encrypting some plain data. Code 3016_1005.
-    /// - decryptingError: Error happens while decrypting some encrypted data. Code 3016_1006.
-    /// - signingError: Error happens while signing some plain data. Code 3016_1007.
-    /// - verifyingError:  Error happens while verifying data. Code 3016_1008.
+    /// - encryptingError: An error occurred while encrypting plain data. Code 3016_1005.
+    /// - decryptingError: An error occurred while decrypting encrypted data. Code 3016_1006.
+    /// - signingError: An error occurred while signing plain data. Code 3016_1007.
+    /// - verifyingError:  An error occurred while verifying data. Code 3016_1008.
     public enum AlgorithmsErrorReason {
         
         /// The DER data does not contain a valid RSA key. Code 3016_1001.
         case invalidDERKey(data: Data, reason: String)
         
-        /// x509 header is found in the key, but the expected data is wrong. Code 3016_1002.
+        /// The x509 header is found in the key, but the data is invalid. Code 3016_1002.
         case invalidX509Header(data: Data, index: Int, reason: String)
         
-        /// Error happens while creating security key. Code 3016_1003.
+        /// An error occurred while creating a security key. Code 3016_1003.
         case createKeyFailed(data: Data, reason: String)
         
         /// The PEM key is invalid. Code 3016_1004.
         case invalidPEMKey(string: String, reason: String)
         
-        /// Error happens while encrypting some plain data. Code 3016_1005.
+        /// An error occurred while encrypting plain data. Code 3016_1005.
         case encryptingError(Error?)
         
-        /// Error happens while decrypting some encrypted data. Code 3016_1006.
+        /// An error occurred while decrypting encrypted data. Code 3016_1006.
         case decryptingError(Error?)
         
-        /// Error happens while signing some plain data. Code 3016_1007.
+        /// An error occurred while signing plain data. Code 3016_1007.
         case signingError(Error?)
         
-        /// Error happens while verifying data. Code 3016_1008.
+        /// An error occurred while verifying data. Code 3016_1008.
         case verifyingError(Error?, statusCode: Int?)
     }
 
-    /// The underlying reason for why a `.JWTFailed` happens.
+    /// The possible underlying reasons why a `.JWTFailed` error occurs.
     ///
     /// - malformedJWTFormat: The input text is not a valid JWT encoded string. Code 3016_2001.
-    /// - unsupportedHeaderAlgorithm: The algorithm defined in JWT header is not supported in LineSDK. Code 3016_2002.
-    /// - claimVerifyingFailed: Verification for a certain key in JWT payload does not pass. Code 3016_2003.
+    /// - unsupportedHeaderAlgorithm: The algorithm defined in the JWT header is not supported in the
+    ///                               LINE SDK. Code 3016_2002.
+    /// - claimVerifyingFailed: Verification for a certain key in the JWT payload does not pass. Code 3016_2003.
     public enum JWTErrorReason {
         
         /// The input text is not a valid JWT encoded string. Code 3016_2001.
         case malformedJWTFormat(string: String)
         
-        /// The algorithm defined in JWT header is not supported in LineSDK. Code 3016_2002.
+        /// The algorithm defined in the JWT header is not supported in the LINE SDK. Code 3016_2002.
         case unsupportedHeaderAlgorithm(name: String)
         
-        /// Verification for a certain key in JWT payload does not pass. Code 3016_2003.
+        /// Verification for a certain key in the JWT payload does not pass. Code 3016_2003.
         case claimVerifyingFailed(key: String, got: String, description: String)
     }    
 
-    /// The underlying reason for why a `.JWKFailed` happens.
+    /// The possible underlying reasons why an `.JWKFailed` error occurs.
     ///
-    /// - unsupportedKeyType: The key type is not supported in LineSDK. Code 3016_3001.
+    /// - unsupportedKeyType: The key type is not supported in the LINE SDK. Code 3016_3001.
     public enum JWKErrorReason {
         
-        /// The key type is not supported in LineSDK. Code 3016_3001.
+        /// The key type is not supported in the LINE SDK. Code 3016_3001.
         case unsupportedKeyType(String)
     }
     
-    /// The underlying reason for why a `.generalError` happens.
+    /// The possible underlying reasons why a `.generalError` occurs.
     ///
-    /// - base64ConversionFailed: String cannot be converted to base64 data format. Code 3016_4001.
-    /// - dataConversionFailed: Cannot convert data to string under a given encoding. Code 3016_4002.
-    /// - stringConversionFailed: Cannot convert string to data under a given encoding. Code 3016_4003.
-    /// - operationNotSupported: The operation is not supported in current OS. Code 3016_4004.
-    /// - decodingFailed: Decoding data to a target type failed. Code 3016_4005.
+    /// - base64ConversionFailed: The string cannot be converted to the base64 data format. Code 3016_4001.
+    /// - dataConversionFailed: The data cannot be converted to a string with the given encoding. Code
+    ///                         3016_4002.
+    /// - stringConversionFailed: The string cannot be converted to data with the given encoding. Code
+    ///                           3016_4003.
+    /// - operationNotSupported: The operation is not supported in the current OS. Code 3016_4004.
+    /// - decodingFailed: The data cannot be decoded to the target type. Code 3016_4005.
     public enum GeneralErrorReason {
         
-        /// String cannot be converted to base64 data format. Code 3016_4001.
+        /// The string cannot be converted to the base64 data format. Code 3016_4001.
         case base64ConversionFailed(string: String)
         
-        /// Cannot convert data to string under a given encoding. Code 3016_4002.
+        /// The data cannot be converted to a string with the given encoding. Code 3016_4002.
         case dataConversionFailed(data: Data, encoding: String.Encoding)
         
-        /// Cannot convert string to data under a given encoding. Code 3016_4003.
+        /// The string cannot be converted to data with the given encoding. Code 3016_4003.
         case stringConversionFailed(string: String, encoding: String.Encoding)
         
-        /// The operation is not supported in current OS. Code 3016_4004.
+        /// The operation is not supported in the current OS. Code 3016_4004.
         case operationNotSupported(reason: String)
         
-        /// Decoding data to a target type failed. Code 3016_4005.
+        /// The data cannot be decoded to the target type. Code 3016_4005.
         case decodingFailed(string: String, type: Any.Type)
     }
     
@@ -309,8 +312,9 @@ extension CryptoError.GeneralErrorReason {
     }
 }
 
-// MARK: - Error Description
+// MARK: - Error description
 extension CryptoError: LocalizedError {
+    /// Describes why an error occurs in human-readable text.
     public var errorDescription: String? {
         switch self {
         case .algorithmsFailed(reason: let reason): return reason.errorDescription
@@ -321,9 +325,10 @@ extension CryptoError: LocalizedError {
     }
 }
 
-// MARK: - NSError Compatibility
+// MARK: - NSError compatibility
 extension CryptoError: CustomNSError {
     
+    /// :nodoc:
     public var errorUserInfo: [String : Any] {
         switch self {
         case .algorithmsFailed(reason: let reason): return reason.errorUserInfo
@@ -333,6 +338,7 @@ extension CryptoError: CustomNSError {
         }
     }
     
+    /// :nodoc:
     public var errorCode: Int {
         switch self {
         case .algorithmsFailed(reason: let reason): return reason.errorCode
@@ -342,6 +348,7 @@ extension CryptoError: CustomNSError {
         }
     }
     
+    /// :nodoc:
     public static var errorDomain: String {
         return "LineSDKError.CryptoError"
     }

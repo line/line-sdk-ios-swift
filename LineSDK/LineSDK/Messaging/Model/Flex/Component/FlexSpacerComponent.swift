@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents some spacing in a box component.
 /// This is an invisible component that places a fixed-size space at the beginning or end of the box.
 public struct FlexSpacerComponent: Codable, FlexMessageComponentTypeCompatible {

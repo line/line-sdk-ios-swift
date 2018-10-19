@@ -30,13 +30,13 @@ struct InternalAPIError: Decodable {
     let message: String
 }
 
-/// Represents API error happens when interacting with LINE APIs.
-/// If server returns an error in a known format, the error will be parsed to an `APIError` and
-/// an `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` as its reason will be thrown out.
+/// Represents an API error that occurs when interacting with the LINE Platform. If the LINE Platform
+/// returns an error in a known format, the error is parsed into an `APIError` object and thrown out. The
+/// error type is `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError`.
 ///
 public struct APIError {
     
-    /// Error state received from server.
+    /// The error state received from the LINE Platform.
     public let error: String
     
     /// Detail of the error.

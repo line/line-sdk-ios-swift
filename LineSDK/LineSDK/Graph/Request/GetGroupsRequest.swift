@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// LINE internal use only.
 /// Represents the request of returning a list of groups that the user belongs to.
 /// This API returns a maximum of 200 groups per request.
 public struct GetGroupsRequest: Request {

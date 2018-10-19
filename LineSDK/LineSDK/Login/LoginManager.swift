@@ -21,35 +21,36 @@
 
 import Foundation
 
-/// `LoginManager` takes responsibility of login process management. You could setup the LineSDK configuration,
-/// let your users login or logout with LINE authorization flows and check the authorizing state.
+/// Represents a login manager. You can set up the LINE SDK configuration, log in and log out the user with the
+/// LINE authorization flow, and check the authorizing state.
 public class LoginManager {
     
     let lock = NSLock()
     
-    /// Shared instance of manager. You should always use this instance to interact with LineSDK login process.
+    /// The shared instance of the login manager. Always use this instance to interact with the login process of the LINE SDK.
     public static let shared = LoginManager()
     
-    /// Current login process. A non-`nil` value means there is an on-going process and LineSDK is waiting for the
-    /// login result. Otherwise, `nil`.
+    /// The current login process. A non-`nil` value indicates that there is an ongoing process and the LINE SDK
+    /// is waiting for the login result; `nil` otherwise.
     public private(set) var currentProcess: LoginProcess?
     
-    /// Returns whether current `LoginManager` instance is setup and ready to use. You should call `setup` method
-    /// to setup the SDK with its basic information before you call any other methods or properties in LineSDK.
+    /// Checks and returns whether the current `LoginManager` instance is ready to use. Call the `setup`
+    /// method to set up the LINE SDK with basic information before you call any other methods or properties
+    /// in the LINE SDK.
     public var isSetupFinished: Bool {
         lock.lock()
         defer { lock.unlock() }
         return setup
     }
     
-    /// Returns whether a user was authorized and a token is existing locally.
-    /// This does not check whether a token is expired or not.
-    /// To verify a token, use `API.verifyAccessToken` instead.
+    /// Checks and returns whether the user was authorized and an access token exists locally. This method
+    /// does not check whether the access token has been expired or not. To verify an access token, use the
+    /// `API.verifyAccessToken` method.
     public var isAuthorized: Bool {
         return AccessTokenStore.shared.current != nil
     }
     
-    /// Returns whether the authorizing process is currently on-going.
+    /// Checks and returns whether the authorizing process is currently ongoing.
     public var isAuthorizing: Bool {
         return currentProcess != nil
     }
@@ -59,20 +60,21 @@ public class LoginManager {
     
     private init() { }
     
-    /// Setups current `LoginManager` instance.
+    /// Sets up the current `LoginManager` instance.
     ///
     /// - Parameters:
-    ///   - channelID: The channel ID your app is registering.
-    ///   - universalLinkURL: A universal link used to navigate back to your app from LINE client app.
+    ///   - channelID: The channel ID for your app.
+    ///   - universalLinkURL: The universal link used to navigate back to your app from the LINE app.
     /// - Note:
-    ///   This should be the first method you call before you access any other methods or properties in LineSDK.
-    ///   A login manager cannot be setup for multiple times, so do not call it more than once.
+    ///   Call this method before you access any other methods or properties in the LINE SDK. Call this method
+    ///   only once because the login manager cannot be set up for multiple times.
     ///
-    ///   Providing a valid `universalLinkURL` is strongly suggested. You need to setup your own universal link callback
-    ///   in your channel setting by following guide on LINE developer dev center page. When set properly, LINE client
-    ///   will try to bring up your app by universal link first, which dramatically improves the security of
-    ///   authorization flow and protects your data. If `universalLinkURL` is `nil`, only custom URL scheme will be
-    ///   used to open your app after authorization in LINE client.
+    ///   We strongly suggest that you specify a valid universal link URL. Set up your own universal link
+    ///   callback for your channel by following the guide on the LINE Developers site. When the callback is set
+    ///   properly, the LINE app will try to bring up your app with the universal link first, which improves the
+    ///   security of the authorization flow and protects your data. If the `universalLinkURL` parameter is
+    ///   `nil`, only a custom URL scheme will be used to open your app after the authorization in the LINE app
+    ///   is complete.
     ///
     public func setup(channelID: String, universalLinkURL: URL?) {
         
@@ -91,28 +93,31 @@ public class LoginManager {
         Session._shared = Session(configuration: config)
     }
     
-    /// Login to LINE service.
+    /// Logs in to the LINE Platform.
     ///
     /// - Parameters:
-    ///   - permissions: The set of permissions which are required by client app. Default is `[.profile]`.
-    ///   - viewController: The view controller from which LineSDK should present its login view controller.
-    ///                     If `nil`, the most top view controller in current view controller hierarchy will be used.
-    ///   - options: The options used during login process. See `LoginManagerOptions` for more.
-    ///   - completion: The completion closure to be executed when login action finishes.
-    /// - Returns: A `LoginProcess` object which indicates this started login process.
+    ///   - permissions: The set of permissions which are requested by your app. The default value is
+    ///                  `[.profile]`.
+    ///   - viewController: The the view controller that presents the login view controller. If `nil`, the most
+    ///                     top view controller in the current view controller hierarchy will be used.
+    ///   - options: The options used during the login process. For more information, see `LoginManagerOptions`.
+    ///   - completion: The completion closure to be invoked when the login action is finished.
+    /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.
     ///
     /// - Note:
-    ///   Only one process could be started at a time. You should not call this method again to start a new login
-    ///         process before `completion` being invoked.
+    ///   Only one process can be started at a time. Do not call this method again to start a new login process
+    ///   before `completion` is invoked.
     ///
-    ///   If `.profile` is contained in `permissions`, the user profile will be retrieved during the login process
-    ///   and contained in the `userProfile` property of `LoginResult` in `completionHandler`. Otherwise, `userProfile`
-    ///   will be `nil`. You could use this profile to identify your user. See `UserProfile` for more.
+    ///   If the value of `permissions` is `.profile`, the user profile will be retrieved during the login
+    ///   process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
+    ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
+    ///   more information, see `UserProfile`.
     ///
-    ///   The access token will be issued if user authorized your app. This token will be stored to keychain of your
-    ///   app automatically for later use. A refresh token will be stored as well, and all API invocation will try to
-    ///   refresh the access token if necessary, so basically you do not need to worry about it. However, if you would
-    ///   like to refresh the access token manually, use `API.refreshAccessToken(with:)`.
+    ///   An access token will be issued if the user authorizes your app. This token and a refresh token 
+    ///   will be automatically stored in the keychain of your app for later use. You do not need to
+    ///   refresh the access token manually because any API call will attempt to refresh the access token if
+    ///   necessary. However, if you would like to refresh the access token manually, use the
+    ///   `API.refreshAccessToken(with:)` method.
     ///
     @discardableResult
     public func login(
@@ -153,14 +158,14 @@ public class LoginManager {
         return currentProcess
     }
     
-    /// Actions after auth process finishes. We do something like storing token, getting user profile and ID token
-    /// verification before we can inform framework users every thing is done.
+    /// Actions after auth process finishes. We do something like storing token, getting user profile and ID
+    /// token verification before we can inform framework users every thing is done.
     ///
     /// - Parameters:
     ///   - token: The access token retrieved from auth server.
     ///   - response: The URL response object created when a login callback URL opened by SDK.
     ///   - process: The related login process initialized by `login` method.
-    ///   - completion: The completion closure to be executed when the whole login process finishes.
+    ///   - completion: The completion closure to be invoked when the whole login process finishes.
     func postLogin(
         token: AccessToken,
         response: LoginProcessURLResponse,
@@ -226,25 +231,24 @@ public class LoginManager {
         }
     }
     
-    /// Logout current user by revoking the access token.
+    /// Logs out the current user by revoking the access token.
     ///
-    /// - Parameter completion: The completion closure to be executed when logout action finishes.
+    /// - Parameter completion: The completion closure to be invoked when the logout action is finished.
     public func logout(completionHandler completion: @escaping (Result<()>) -> Void) {
         API.revokeAccessToken(completionHandler: completion)
     }
     
-    /// Asks this `LoginManager` to handle a url callback from either LINE client app or web login flow.
+    /// Asks this `LoginManager` object to handle a URL callback from either the LINE app or the web login flow.
     ///
     /// - Parameters:
     ///   - app: The singleton app object.
-    ///   - url: The URL resource to open. This resource should be the URL iOS system pass to you in
-    ///          related `UIApplicationDelegate` methods.
-    ///   - options: A dictionary of URL handling options which passed to you in related
-    ///              `UIApplicationDelegate` methods.
-    /// - Returns: Whether the `url` is successfully handled or not. If the input `url` is a valid login callback url,
-    ///            it will be handled and `true` is returned.
-    /// - Note: This method has the same method signature as in `UIApplicationDelegate`. You can just pass in all
-    ///         arguments without modifying anything.
+    ///   - url: The URL resource to open. This resource should be the one passed from the iOS system through the
+    ///          related method of the `UIApplicationDelegate` protocol.
+    ///   - options: A dictionary of the URL handling options passed from the related method of the
+    ///              `UIApplicationDelegate` protocol.
+    /// - Returns: `true` if `url` has been successfully handled; `false` otherwise.
+    /// - Note: This method has the same method signature as in the methods of the `UIApplicationDelegate`
+    ///         protocol. Just pass all arguments to this method without any modification.
     public func application(
         _ app: UIApplication,
         open url: URL?,

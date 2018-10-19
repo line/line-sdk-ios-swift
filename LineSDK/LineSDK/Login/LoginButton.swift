@@ -21,38 +21,40 @@
 
 import UIKit
 
-/// `LoginButtonDelegate` protocol defines methods that allow you to handle different login states if you use
-/// `LoginButton` we provide.
+/// Defines methods that allow you to handle different login states if you use the predefined LINE Login
+/// button by using the `LoginButton` class.
 public protocol LoginButtonDelegate: class {
 
-    /// This method would be called after login action did start. Since LINE login is an async operation, it is a
-    /// good chance to show an indicator or some other visual effect to block your users other actions.
+    /// Called after the login action is started. Since LINE Login is an asynchronous operation, you might
+    /// want to show an indicator or another visual effect to prevent the user from taking other actions.
     func loginButtonDidStartLogin(_ button: LoginButton)
 
-    /// This method would be called if the login action did succeed.
+    /// Called if the login action succeeded.
     ///
     /// - Parameters:
-    ///   - button: The button which is used to trigger the login.
-    ///   - loginResult: Successful result of the login.
+    ///   - button: The button which is used to start the login action.
+    ///   - loginResult: The successful login result.
     func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult)
 
-    /// This method would be called if the login action did fail.
+    /// Called if the login action failed.
     ///
     /// - Parameters:
-    ///   - button: The button which is used to trigger the login.
-    ///   - error: Error happened during the login process.
+    ///   - button: The button which is used to start the login action.
+    ///   - error: The error of the failed login.
     func loginButton(_ button: LoginButton, didFailLogin error: Error)
 }
 
-/// `LoginButton` is a UIButton which executes login function when user taps on it.
+/// Represents a login button which executes the login function when the user taps the button.
 open class LoginButton: UIButton {
 
-    /// Specifies the size of a `LoginButton`.
+    /// Represents the size of the login button.
     ///
-    /// - small: the small-sized `LoginButton`.
-    /// - normal: the normal-sized `LoginButton`.
+    /// - small: The size of the login button is small.
+    /// - normal: The size of the login button is normal.
     public enum ButtonSize {
+        /// The size of the login button is small.
         case small
+        /// The size of the login button is normal.
         case normal
 
         struct Constant {
@@ -95,24 +97,23 @@ open class LoginButton: UIButton {
         }
     }
 
-    /// The object conforms to `LoginButtonDelegate` and implements the methods defined in `LoginButtonDelegate`
+    /// Conforms to the `LoginButtonDelegate` protocol and implements the methods defined in the protocol
     /// to handle different login states.
     public weak var delegate: LoginButtonDelegate?
 
-    /// This property would be a parameter of login action which presents the login alert view controller.
-    /// If its value is `nil`, the most top view controller in current view controller hierarchy will be used.
+    /// Determines the view controller that presents the login view controller. If the value is `nil`, the most 
+    /// top view controller in the current view controller hierarchy will be used.
     public weak var presentingViewController: UIViewController?
 
-    /// The set of permissions is a parameter of login action.
-    /// The default permissions is [.profile].
+    /// Represents a set of permissions.
+    /// The default value is `[.profile]`.
     public var permissions: Set<LoginPermission> = [.profile]
 
-    /// The set of options is a parameter of login action.
-    /// The default options is empty.
+    /// Represents a set of options.
+    /// The default value is empty.
     public var options: LoginManagerOptions = []
 
-    /// The size of `LoginButton`. The default button size is normal. The buton will be resized if you change
-    /// this property.
+    /// The size of the login button. The default value is `normal`.
     public var buttonSize: ButtonSize = .normal {
         didSet {
             // update button style after buttonSize is changed
@@ -120,8 +121,9 @@ open class LoginButton: UIButton {
         }
     }
 
-    /// The text on the `LoginButton`. Its value is a localized string which is `Log in with LINE` in English.
-    /// The buton will be resized if you change this property.
+    /// The text on the login button. Its value is "Log in with LINE" in the English environment and
+    /// localized for different environments.
+    /// The button will be resized if you change this property.
     public var buttonText: String? {
         didSet {
             // update button style after buttonText is changed
@@ -141,7 +143,7 @@ open class LoginButton: UIButton {
         setup()
     }
 
-    /// Setup the default style of `LoginButton`.
+    // Setup the default style of `LoginButton`.
     func setup() {
         // set accessibility label for sample UI test
         accessibilityLabel = "login.button"
@@ -159,8 +161,8 @@ open class LoginButton: UIButton {
         addTarget(self, action:#selector(login), for: .touchUpInside)
     }
 
-    /// This method is called when the style of `LoginButton` is changed. It will update the appearance of button
-    /// to new style you set.
+    // This method is called when the style of `LoginButton` is changed.
+    // It will update the appearance of button to new style you set.
     func updateButtonStyle() {
         let bundle = Bundle(for: LoginButton.self)
         let imagesPairs: [(String, UIControl.State)]
@@ -195,16 +197,16 @@ open class LoginButton: UIButton {
         invalidateIntrinsicContentSize()
     }
 
-    /// Override the getter of intrinsicContentSize to support auto layout.
+    /// Overrides the getter of the `intrinsicContentSize` property to support automatic layout.
     override open var intrinsicContentSize: CGSize {
         let titleSize = titleLabel?.intrinsicContentSize ?? .zero
         return buttonSize.sizeForTitleSize(titleSize)
     }
 
-    /// Execute this function to do login action when user taps on `LoginButton`.
+    // Executes the login action when the user taps the login button.
     @objc open func login() {
         if LoginManager.shared.isAuthorizing {
-            // Authorizing process is on-going so not to call login again
+            // Authorizing process is ongoing so not to call login again
             return
         }
         isUserInteractionEnabled = false

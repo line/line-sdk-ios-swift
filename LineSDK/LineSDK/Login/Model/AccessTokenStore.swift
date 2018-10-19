@@ -22,29 +22,31 @@
 import Foundation
 
 extension Notification.Name {
-    /// Sent when LineSDK detected current token gets updated and stored to keychain. It means a user authorized
-    /// your app and an access token was obtained without problem. The `object` of posted `Notification` is the
-    /// new token. `userInfo` dictionary of the posted `Notification` contains the new token under
-    /// `LineSDKNotificationKey.newAccessToken` key. If the old token existed, it will be under the
-    /// `LineSDKNotificationKey.oldAccessToken` key.
+    /// Sent when the LINE SDK detects that the current token has got updated and stored in the keychain.
+    /// This means that the user has authorized your app and your app has obtained an access token. The
+    /// `object` property of the posted `Notification` object contains the new access token. The `userInfo`
+    /// dictionary of the posted `Notification` object contains the new access token under the
+    /// `LineSDKNotificationKey.newAccessToken` key. If the old access token has existed, it will be under
+    /// the `LineSDKNotificationKey.oldAccessToken` key.
     public static let LineSDKAccessTokenDidUpdate = Notification.Name("com.linecorp.linesdk.AccessTokenDidUpdate")
     
-    /// Sent when LineSDK removed current token from keychain. This normally happens when you logout a user or invoke
-    /// `revokeToken` API. Expired token will not be removed automatically since it could be refreshed when
-    /// used to access an API. The `object` of the posted `Notification` is the token just removed.
+    /// Sent when the LINE SDK removes the current access token from the keychain. This normally happens
+    /// when you log out the user or call the `revokeToken` method. An expired access token is not
+    /// automatically removed since the access token is refreshed when it is used to make an API call.
+    /// The `object` property of the posted `Notification` object contains the removed access token.
     public static let LineSDKAccessTokenDidRemove = Notification.Name("com.linecorp.linesdk.AccessTokenDidRemove")
 }
 
 extension LineSDKNotificationKey {
     
-    /// User info key for old access token value.
+    /// A user information key for an old access token value.
     public static let oldAccessToken = "oldAccessToken"
     
-    /// User info key for new access token value.
+    /// A user information key for a new access token value.
     public static let newAccessToken = "newAccessToken"
 }
 
-/// Represents the storage of `AccessToken`.
+/// Represents the storage of an `AccessToken` object.
 public class AccessTokenStore {
     
     // In case we might do migration later on the token,
@@ -128,7 +130,7 @@ public class AccessTokenStore {
         }
     }
     
-    /// The `AccessToken` in use currently.
+    /// The `AccessToken` object currently in use.
     public private(set) var current: AccessToken?
     
     func setCurrentToken(_ token: AccessToken) throws {

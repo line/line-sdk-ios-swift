@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a style for a block in a flex message.
 public struct FlexBlockStyle: Codable {
     

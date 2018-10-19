@@ -21,10 +21,10 @@
 
 import Foundation
 
-/// Constants used in LINE SDK.
+/// Constants used in the LINE SDK.
 public struct Constant {
     
-    /// The version string of current SDK.
+    /// The version of the current LINE SDK.
     public static let SDKVersion: String = {
         let bundle = Bundle.frameworkBundle
         guard let version = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {

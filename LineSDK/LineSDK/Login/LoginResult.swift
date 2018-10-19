@@ -21,19 +21,18 @@
 
 import Foundation
 
-/// Represents the successful result of login process.
+/// Represents a successful login.
 public struct LoginResult {
-    /// The access token obtained by login process.
+    /// The access token obtained by the login process.
     public let accessToken: AccessToken
-    /// The permissions bound to the `accessToken` from the authorization.
+    /// The permissions bound to the `accessToken` object by the authorization process.
     public let permissions: Set<LoginPermission>
-    /// A `UserProfile` value contains basic user information like user id, display name and avatar URL.
-    /// Only exists when `.profile` permission contained.
+    /// Contains the user profile including the user ID, display name, and so on. The value exists only when the
+    /// `.profile` permission is set in the authorization request.
     public let userProfile: UserProfile?
-    /// Whether the friendship status between the user and the bot changes during login. This value is only non-`nil`
-    /// if the `.botPromptNormal` or `.botPromptAggressive` specified as `LoginManagerOption` when user login. The
-    /// consent screen with the option to add your bot as friend is displayed to the user, and you could check whether
-    /// the user added your bot as a friend or not. For more information, see Linking a bot with your LINE Login channel.
-    /// https://developers.line.me/en/docs/line-login/web/link-a-bot/
+    /// Indicates that the friendship status between the user and the bot changes during the login. This value is
+    /// non-`nil` only if the `.botPromptNormal` or `.botPromptAggressive` are specified as part of the
+    /// `LoginManagerOption` object when the user logs in. For more information, see Linking a bot with your LINE 
+    /// Login channel at https://developers.line.me/en/docs/line-login/web/link-a-bot/.
     public let friendshipStatusChanged: Bool?
 }

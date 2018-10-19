@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 enum FlexMessageComponentType: String, Codable {
     case box
     case text
@@ -42,19 +44,36 @@ enum FlexMessageComponentType: String, Codable {
 /// - icon: Represents the type of icon component. A `FlexIconComponent` value is associated.
 /// - separator: Represents the type of separator component. A `FlexSeparatorComponent` value is associated.
 /// - spacer: Represents the type of spacer component. A `FlexSpacerComponent` value is associated.
-/// - unknown: A component type is not defined in LineSDK yet.
+/// - unknown: A component type is not defined in the LINE SDK yet.
 ///
 /// For more information, see https://developers.line.me/en/reference/messaging-api/#component
 public enum FlexMessageComponent: Codable {
+
+    /// Represents the type of box component. A `FlexBoxComponent` value is associated.
     case box(FlexBoxComponent)
+
+    /// Represents the type of text component. A `FlexTextComponent` value is associated.
     case text(FlexTextComponent)
+
+    /// Represents the type of button component. A `FlexButtonComponent` value is associated.
     case button(FlexButtonComponent)
+
+    /// Represents the type of image component. A `FlexImageComponent` value is associated.
     case image(FlexImageComponent)
+
+    /// Represents the type of filler component. A `FlexFillerComponent` value is associated.
     case filler(FlexFillerComponent)
+
+    /// Represents the type of icon component. A `FlexIconComponent` value is associated.
     case icon(FlexIconComponent)
+
+    /// Represents the type of separator component. A `FlexSeparatorComponent` value is associated.
     case separator(FlexSeparatorComponent)
+
+    /// Represents the type of spacer component. A `FlexSpacerComponent` value is associated.
     case spacer(FlexSpacerComponent)
-    
+
+    /// A component type is not defined in the LINE SDK yet.
     case unknown
     
     enum CodingKeys: String, CodingKey {

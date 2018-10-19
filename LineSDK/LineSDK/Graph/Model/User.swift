@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// LINE internal use only.
 /// Represents an `User` object which LineSDK used in `friend list` or `approvers in friend list`.
 public struct User: Decodable {
 

@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a template payload with a text and two action button.
 /// Use this template if you want users to answer between "Yes" or "No".
 public struct TemplateConfirmPayload: Codable, TemplateMessagePayloadTypeCompatible {

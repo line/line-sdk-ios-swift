@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents an image component in a flex message.
 public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible, MessageActionContainer {
     let type: FlexMessageComponentType = .image

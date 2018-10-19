@@ -22,56 +22,74 @@
 import Foundation
 
 
-/// Represents the final stage of response pipelines. It will be used to parse response data to
-/// a final `Response` object of a certain `Request`.
+/// Represents the final pipeline of a series of response pipelines. Use the terminator to parse response
+/// data into a final `Response` object of a certain `Request` object.
 public protocol ResponsePipelineTerminator: class { // Use class protocol for easier Equatable conforming
-    /// Parse input `data` to a `Response`.
+    /// Parses `data` that holds input values to a `Response` object.
     ///
     /// - Parameters:
-    ///   - request: Original `request` object.
-    ///   - data: Received `Data` from `Session`.
-    /// - Returns: A parsed `Response` object.
-    /// - Throws: An error happens during the parsing process.
+    ///   - request: The original request.
+    ///   - data: The `Data` object received from a `Session` object.
+    /// - Returns: The `Response` object.
+    /// - Throws: An error that occurs during the parsing process.
     func parse<T: Request>(request: T, data: Data) throws -> T.Response
 }
 
-/// Represents a redirection might be required to the response pipelines. It would be a chance
-/// to take side effect on current response and data, then perform additional handling by
-/// invoking `closure` with a proper `ResponsePipelineRedirectorAction`.
+/// Represents a redirection stage of a series of response pipelines. Use redirectors to additionally
+/// perform data processing by invoking `closure` with a proper
+/// `ResponsePipelineRedirectorAction` enumerator.
 public protocol ResponsePipelineRedirector: class { // Use class protocol for easier Equatable conforming
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
     func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
-/// Actions for `ResponsePipelineRedirector` result. A redirector needs to decide where to redirect
-/// current handling after it applied its side effect. This enum provides possible destination and
-/// behavior for a redirector.
+/// Actions against the processing result from a `ResponsePipelineRedirector` object. A redirector needs to
+/// decide where to redirect the current request after data processing. These enumerators provide data
+/// destinations and behaviors of a redirector.
 ///
-/// - restart: The current request needs to be restarted with original pipelines.
-/// - restartWithout: The current request needs to be restarted, but excluding a certain pipeline.
-/// - stop: The handling process should be stopped due to an error.
-/// - `continue`: The handling process should continue.
-/// - continueWith: The handling process should continue with modified data and response.
+/// - restart: Restarts the current request with the original pipelines.
+/// - restartWithout: Restarts the current request without certain pipelines.
+/// - stop: Stops the handling process due to an error.
+/// - continue: Continues the handling process.
+/// - continueWith: Continues the handling process with modified data and response.
 public enum ResponsePipelineRedirectorAction {
+
+    /// Restarts the current request with the original pipelines.
     case restart
+
+    /// Restarts the current request without certain pipelines.
     case restartWithout(ResponsePipeline)
+
+    /// Stops the handling process due to an error.
     case stop(Error)
+
+    /// Continues the handling process.
     case `continue`
+
+    /// Continues the handling process with modified data and response.
     case continueWith(Data, HTTPURLResponse)
 }
 
-/// Represents pipeline for response. A pipeline will take the response and its data from `Session`.
-/// At the end of a pipeline, there should be always a `terminator` pipeline to convert data to a
-/// `Response` object. In the middle of the pipelines, there could be multiple `redirector`s to
-/// perform some side effects.
+/// Pipelines for a response. Pipelines take a response and its data from a `Session` object. To convert data to
+/// a `Response` object, the last pipeline must be a `terminator` pipeline. To process data, you can have
+/// multiple `redirector` pipelines before the `terminator` pipeline.
 ///
-/// - terminator: Associates with a `ResponsePipelineTerminator`, to terminate the pipeline.
-/// - redirector: Associates with a `ResponsePipelineRedirector`, to redirect current handling process.
+/// - terminator: Associates a pipeline with a `ResponsePipelineTerminator` object to terminate the
+///               current handling process.
+/// - redirector: Associates a pipeline with a `ResponsePipelineRedirector` object to redirect the current
+///               handling process.
 public enum ResponsePipeline {
+
+    /// Associates a pipeline with a `ResponsePipelineTerminator` object to terminate the current handling
+    /// process.
     case terminator(ResponsePipelineTerminator)
+
+    /// Associates a pipeline with a `ResponsePipelineRedirector` object to redirect the current handling
+    /// process.
     case redirector(ResponsePipelineRedirector)
 }
 
+/// :nodoc:
 extension ResponsePipeline: Equatable {
     public static func == (lhs: ResponsePipeline, rhs: ResponsePipeline) -> Bool {
         switch (lhs, rhs) {
@@ -82,26 +100,26 @@ extension ResponsePipeline: Equatable {
     }
 }
 
-/// A terminator pipeline with a JSON decoder to parse data.
+/// Represents a terminator pipeline with a JSON decoder to parse data.
 public class JSONParsePipeline: ResponsePipelineTerminator {
     
-    /// Underlying JSON parser of this pipeline.
+    /// An underlying JSON parser of the pipeline.
     public let parser: JSONDecoder
     
-    /// Initializes a `JSONParsePipeline`.
+    /// Initializes a `JSONParsePipeline` object.
     ///
-    /// - Parameter parser: JSON parser which will be used to parse input data.
+    /// - Parameter parser: The JSON parser for input data.
     public init(_ parser: JSONDecoder) {
         self.parser = parser
     }
     
-    /// Parse input `data` to a `Response`.
+    /// Parses `data` that holds input values to a `Response` object.
     ///
     /// - Parameters:
-    ///   - request: Original `request` object.
-    ///   - data: Received `Data` from `Session`.
-    /// - Returns: A parsed `Response` object.
-    /// - Throws: An error happens during the parsing process.
+    ///   - request: The original request.
+    ///   - data: The `Data` object received from a `Session` object.
+    /// - Returns: The `Response` object.
+    /// - Throws: An error that occurs during the parsing process.
     public func parse<T: Request>(request: T, data: Data) throws -> T.Response {
         return try parser.decode(T.Response.self, from: data)
     }

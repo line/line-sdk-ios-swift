@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a container that contains one message bubble. It can contain four blocks: header, hero, body, and
 /// footer. These blocks, which could contain nested components, will follow some given `styles` to construct the
 /// flexible layout.
@@ -49,7 +50,10 @@ public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
     /// - leftToRight: The text should be from left to right.
     /// - rightToLeft: The text should be from right to left.
     public enum Direction: String, DefaultEnumCodable {
+        /// The text should be from left to right.
         case leftToRight = "ltr"
+
+        /// The text should be from right to left.
         case rightToLeft = "rtl"
         
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,

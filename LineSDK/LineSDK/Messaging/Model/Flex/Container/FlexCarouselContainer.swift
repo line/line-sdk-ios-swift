@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a container that contains multiple bubble containers. The bubbles will be shown in order by
 /// scrolling horizontally.
 ///

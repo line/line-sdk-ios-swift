@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
+
 enum TemplateMessagePayloadType: String, Codable {
     case buttons
     case confirm
@@ -32,14 +34,22 @@ enum TemplateMessagePayloadType: String, Codable {
 /// - confirm: Represents the type of confirm payload. A `TemplateConfirmPayload` value is associated.
 /// - carousel: Represents the type of carousel payload. A `TemplateCarouselPayload` value is associated.
 /// - imageCarousel: Represents the type of imageCarousel payload. A `TemplateImageCarouselPayload` value is associated.
-/// - unknown: A payload type is not defined in LineSDK yet.
+/// - unknown: A payload type is not defined in the LINE SDK yet.
 public enum TemplateMessagePayload: Codable {
-    
+
+    /// Represents the type of buttons payload. A `TemplateButtonsPayload` value is associated.
     case buttons(TemplateButtonsPayload)
+
+    /// Represents the type of confirm payload. A `TemplateConfirmPayload` value is associated.
     case confirm(TemplateConfirmPayload)
+
+    /// Represents the type of carousel payload. A `TemplateCarouselPayload` value is associated.
     case carousel(TemplateCarouselPayload)
+
+    /// Represents the type of imageCarousel payload. A `TemplateImageCarouselPayload` value is associated.
     case imageCarousel(TemplateImageCarouselPayload)
-    
+
+    /// A payload type is not defined in the LINE SDK yet.
     case unknown
     
     enum CodingKeys: String, CodingKey {

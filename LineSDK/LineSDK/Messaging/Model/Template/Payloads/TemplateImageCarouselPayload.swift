@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a template payload with multiple `Column`s with image which can be cycled like a carousel.
 /// The columns with image will be shown in order by scrolling horizontally.
 public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeCompatible {

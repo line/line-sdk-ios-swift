@@ -21,43 +21,49 @@
 
 import Foundation
 
-/// Represents the possible login permissions being sent when login to LINE.
+/// Represents the possible login permissions to be set in the authorization request.
 public struct LoginPermission: Hashable {
-    /// Raw value of the permission. A `LoginPermission` is composed by a plain raw string.
+    /// The raw value of the permission. A `LoginPermission` object is composed of a plain raw string.
     public let rawValue: String
     
-    /// Inits a `LoginPermission` value with a plain string. You could use this
-    /// if a pre-defined permission not defined in the framework.
+    /// Initializes a `LoginPermission` value with a plain string. Use this method to set permissions that
+    /// are not defined in the framework.
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
     
-    /// Whether open_id should be returned as login result.
+    /// The permission to get an ID token in the login response.
     public static let openID                         = LoginPermission(rawValue: "openid")
     
-    /// Whether could access the user's profile, including user ID, display name, etc.
+    /// The permission to get the user's profile including the user ID, display name, and the profile image
+    /// URL in the login response.
     public static let profile                        = LoginPermission(rawValue: "profile")
     
-    /// Whether could get friends information of current user.
+    /// :nodoc:
+    /// LINE internal use only. The permission to get friends information of current user.
     public static let friends                        = LoginPermission(rawValue: "friends")
     
-    /// Whether could get groups information of current user.
+    /// :nodoc:
+    /// LINE internal use only. The permission to get groups information of current user.
     public static let groups                         = LoginPermission(rawValue: "groups")
     
-    /// Whether could write a message as current user.
+    /// :nodoc:
+    /// LINE internal use only. The permission to write a message as current user.
     public static let messageWrite                   = LoginPermission(rawValue: "message.write")
 }
 
 /// Subpermissions of .openID. Permissions in this extension will not be included in the `permissions` property of
 /// issued access token.
 public extension LoginPermission {
-    /// Whether could access user's email inside ID Token. Requires `.openID` set. Additional request is required
-    /// in LINE Developer Console to use this permission.
+    /// The permission to get the user's email from an ID Token in the login response. This permission
+    /// requires the `.openID` permission to be granted at the same time. The channel of your app must have
+    /// the email permission that can be configured in the LINE Developers console.
     public static let email                          = LoginPermission(rawValue: "email")
 }
 
 /// :nodoc:
-/// Subpermissions of .openID. Permissions in this extension will not be included in the `permissions` property of issued access token.
+/// LINE internal use only. Subpermissions of .openID. Permissions in this extension will not be included in
+/// the `permissions` property of issued access token.
 public extension LoginPermission {
     /// Whether could access user's phone inside ID Token. Requires `.openID` set.
     /// Only available to LINE internal partners.
@@ -80,7 +86,7 @@ public extension LoginPermission {
     public static let realName                      = LoginPermission(rawValue: "real_name")
 }
 
-
+/// :nodoc:
 extension LoginPermission: CustomStringConvertible {
     public var description: String { return rawValue }
 }

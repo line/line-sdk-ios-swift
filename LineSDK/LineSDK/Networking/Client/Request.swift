@@ -21,16 +21,20 @@
 
 import Foundation
 
-/// Represents possible HTTP method for `Request`.
+/// HTTP methods specified in a `Request` object.
 ///
-/// - get: HTTP method "GET"
-/// - post: HTTP method "POST"
-/// - put: HTTP method "PUT"
-/// - delete: HTTP method "DELETE"
+/// - get: The GET method.
+/// - post: The POST method.
+/// - put: The PUT method.
+/// - delete: The DELETE method.
 public enum HTTPMethod: String {
+    /// The GET method.
     case get = "GET"
+    /// The POST method.
     case post = "POST"
+    /// The PUT method.
     case put = "PUT"
+    /// The DELETE method.
     case delete = "DELETE"
     
     var adapter: AnyRequestAdapter {
@@ -42,12 +46,14 @@ public enum HTTPMethod: String {
     }
 }
 
-/// Represents possible authenticate method for `Request`.
+/// Authentication methods specified in a `Request` object.
 ///
-/// - none: Do not use an authenticate method.
-/// - token: Uses oAuth 2 Bearer token.
+/// - none: Does not use any authentication method.
+/// - token: Uses OAuth 2.0 Bearer token.
 public enum AuthenticateMethod {
+    /// Does not use any authentication method.
     case none
+    /// Uses OAuth 2.0 Bearer token.
     case token
     
     var adapter: TokenAdapter? {
@@ -70,14 +76,17 @@ public enum AuthenticateMethod {
     }
 }
 
-/// Represents possible content type for `Request`.
+/// Content types specified in a `Request` object.
 ///
-/// - none: The request does not contains body content.
-/// - formUrlEncoded: The request contains form url encoded data as its content.
-/// - json: The request contains JSON data as its content.
+/// - none: The request does not contain any body content.
+/// - formUrlEncoded: The request contains form URL encoded data.
+/// - json: The request contains JSON data.
 public enum ContentType {
+    /// The request does not contain any body content.
     case none
+    /// The request contains form URL encoded data.
     case formUrlEncoded
+    /// The request contains JSON data.
     case json
     
     var headerValue: String {
@@ -101,68 +110,77 @@ public enum ContentType {
     }
 }
 
-/// Type for `Request` parameters.
+/// Parameter types for `Request` objects.
 public typealias Parameters = [String: Any]
 
-/// Represents a request to LINE APIs. A request is composed by `method`, `path`, `parameters` and some other
-/// necessary components. By conforming to `Request`, you could implement your own request type for arbitrary LINE API.
-/// You could build a `Request` instance and then send it by `Session` to get a response.
+/// Represents a request to the LINE Platform. A request is composed of various components such as `method`,
+/// `path`, `parameters` and so on. By conforming to the `Request` protocol, you can implement your own
+/// request type for any API requests for the LINE Platform. To get a response, build a `Request` object and
+/// then send it with a `Session` object.
 public protocol Request {
     
-    /// Response type of this request. The `Response` should conforms to `Decodable` and be able to be decoded from
-    /// raw data from an HTTP response.
+    /// Represents a response type of the request. `Response` objects are decodable from raw data from an
+    /// HTTP response.
     associatedtype Response: Decodable
     
-    /// `HTTPMethod` used for this request.
+    /// The `HTTPMethod` enumerator used for the request.
     var method: HTTPMethod { get }
     
-    /// The base URL of current request.
+    /// The base URL of the current request.
     var baseURL: URL { get }
     
-    /// API entry path for this request.
+    /// The API entry path for the request.
     var path: String { get }
     
-    /// Parameters be encoded and sent. Default is `nil`.
+    /// Parameters to be encoded and sent. The default value is `nil`.
     var parameters: Parameters? { get }
     
-    /// `AuthenticateMethod` should be used for this request.
+    /// The `AuthenticateMethod` enumerator used for the request.
     var authentication: AuthenticateMethod { get }
     
-    /// `ContentType` of HTTP body data for this request. Default is `.json`.
+    /// The `ContentType` enumerator used for the HTTP body data of the request. The default value is
+    /// `.json`.
     var contentType: ContentType { get }
     
-    /// The `RequestAdapter`s should be used to synthesize the request. The items in `adapters` will be applied to the
-    /// underlying `URLRequest` to modify it. By default, LineSDK will adapt the request by setting its header and
-    /// body according to properties of this request.
+    /// The request adapters for synthesizing the request. Use the `RequestAdapter` protocol to set up
+    /// adapters. The items in `adapters` will be applied to and modify the underlying `URLRequest` object.
+    /// By default, the LINE SDK will adapt the request by setting its header and body according to the
+    /// properties of the request.
     ///
-    /// You could provide your own `adapters` to completely change the request properties. However, it's more likely
-    /// you might want to provide some adapters by `suffixAdapters` instead, to modify the request based on LineSDK
-    /// default result. The final adapters are `adapters + (suffixAdapters ?? [])`.
+    /// You can provide your own `adapters` to change the request properties. However, it's more likely that
+    /// you might want to provide adapters with `suffixAdapters` instead, to modify the request according to
+    /// the default result provided by the LINE SDK. The resulting adapters would be
+    /// `adapters + (suffixAdapters ?? [])`.
     var adapters: [RequestAdapter] { get }
     
-    /// Additional adapters which will be appended to `adapters`. Default is `nil`.
+    /// Additional adapters to be appended to `adapters`. The default value is `nil`.
     var suffixAdapters: [RequestAdapter]? { get }
     
-    /// The `ResponsePipeline`s should be used to intercept or parse the response. The items in `pipelines` will be
-    /// applied to the underlying `URLResponse` and received `Data`. By default, LineSDK provides pipelines to handle
-    /// token refreshing and bad HTTP status code. At last, it will try to decode the data to an instance of `Response`.
+    /// The pipelines to intercept or parse the response. Use `ResponsePipeline` enumerators to set up
+    /// pipelines. The items in `pipelines` will be applied to the underlying `URLResponse` object and the
+    /// received `Data` object. By default, the LINE SDK provides pipelines for handling token refreshing
+    /// and bad HTTP status codes. The last pipeline will attempt to decode the data to a `Response` object.
     ///
-    /// You could provide your own `pipelines` to completely change response handling process. However, it's more likely
-    /// you might want to provide some pipelines by `prefixPipelines` instead, to handle the response before LineSDK
-    /// apply its default behaviors. The final pipelines are `(prefixPipelines ?? []) + pipelines`.
+    /// You can provide your own `pipelines` to change the response handling process. However, it's more
+    /// likely that you might want to provide pipelines with `prefixPipelines` instead, to handle a response
+    /// before the LINE SDK applies the default behavior. The resulting pipelines would be
+    /// `(prefixPipelines ?? []) + pipelines`.
     var pipelines: [ResponsePipeline] { get }
     
-    /// Additional pipelines which will be prefixed to `pipelines`. Default is `nil`.
+    /// Additional pipelines to be added before `pipelines`. The default value is `nil`.
     var prefixPipelines: [ResponsePipeline]? { get }
     
-    /// The final data parser used in the end of `pipeline`. It should parse the response data into a `Response` object.
-    /// By default, a `JSONParsePipeline` with a standard `JSONDecoder` will be used.
+    /// The final data parser that parses the response data into a `Response` object at the end of
+    /// `pipelines`. By default, a `JSONParsePipeline` object with the standard `JSONDecoder` object will be
+    /// used.
     var dataParser: ResponsePipelineTerminator { get }
     
-    /// Timeout interval by second of current request before receiving a response. Default is 30 seconds.
+    /// The timeout in seconds for the current request before receiving a response. The default value is
+    /// 30 seconds.
     var timeout: TimeInterval { get }
     
-    /// Cache policy of this request. Default is .reloadIgnoringLocalCacheData for general API request.
+    /// The cache policy of the request. The default value is `.reloadIgnoringLocalCacheData` for general
+    /// API requests.
     var cachePolicy: NSURLRequest.CachePolicy { get }
 }
 

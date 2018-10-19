@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// LINE internal use only.
 /// Represents the request of getting a list of users in the specified group who've already approved the channel.
 /// Note that this API does not take friendship status into account.
 public struct GetApproversInGroupRequest: Request {

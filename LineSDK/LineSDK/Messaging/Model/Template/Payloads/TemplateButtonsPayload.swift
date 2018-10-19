@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// LINE internal use only.
 /// Represents a template payload with an image, title, text, and multiple action buttons.
 /// The message bubble size is the same with a regular message. It may include an image at most.
 public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompatible {

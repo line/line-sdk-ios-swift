@@ -38,7 +38,7 @@ struct Log {
     }
 }
 
-/// Possible keys in `userInfo` of LineSDK related notifications.
+/// Possible keys in the `userInfo` property of notifications related to the LINE Platform.
 public struct LineSDKNotificationKey {}
 
 extension UIAlertController {

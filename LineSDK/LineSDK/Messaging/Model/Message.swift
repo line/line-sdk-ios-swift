@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 enum MessageType: String, Codable {
     case text
     case image
@@ -46,17 +48,34 @@ enum MessageType: String, Codable {
 /// - flex: Represents the type of flexible message. A `FlexMessage` value is associated. LINE APIs allows you to send
 ///         a flex message by constructing with blocks and components. It gives you freedom to control the message
 ///         content and style. `FlexMessage` is also a representing wrapper for underlying `FlexMessageContainer`.
-/// - unknown: A message type is not defined in LineSDK yet.
+/// - unknown: A message type is not defined in the LINE SDK yet.
 public enum Message: Codable {
-    
+    /// Represents the type of text message. A `TextMessage` value is associated.
     case text(TextMessage)
+
+    /// Represents the type of image message. An `ImageMessage` value is associated.
     case image(ImageMessage)
+
+    /// Represents the type of video message. A `VideoMessage` value is associated.
     case video(VideoMessage)
+
+    /// Represents the type of audio message. A `AudioMessage` value is associated.
     case audio(AudioMessage)
+
+    /// Represents the type of location message. A `LocationMessage` value is associated.
     case location(LocationMessage)
+
+    /// Represents the type of template message. A `TemplateMessage` value is associated. LINE APIs supports a
+    /// few types of template messagess. `TemplateMessage` is also a representing wrapper for underlying
+    /// `TemplateMessagePayload`.
     case template(TemplateMessage)
+
+    /// Represents the type of flexible message. A `FlexMessage` value is associated. LINE APIs allows you to send
+    /// a flex message by constructing with blocks and components. It gives you freedom to control the message
+    /// content and style. `FlexMessage` is also a representing wrapper for underlying `FlexMessageContainer`.
     case flex(FlexMessage)
-    
+
+    /// A message type is not defined in the LINE SDK yet.
     case unknown
     
     enum CodingKeys: String, CodingKey {

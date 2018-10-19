@@ -21,6 +21,7 @@
 
 import Foundation
 
+/// LINE internal use only.
 /// Represents a type which could be converted to a `Message` directly.
 public protocol MessageConvertible {
     /// Returns a converted `Message` which wraps `Self`.

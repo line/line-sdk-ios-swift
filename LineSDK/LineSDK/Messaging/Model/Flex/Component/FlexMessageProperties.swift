@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 extension FlexMessageComponent {
 
     /// The ratio (or flex value) of a flex component should take.
@@ -39,7 +41,18 @@ extension FlexMessageComponent {
     /// For more information, see
     /// https://developers.line.me/en/docs/messaging-api/flex-message-layout/#box-layout-types .
     public enum Layout: String, DefaultEnumCodable {
-        case horizontal, vertical, baseline
+
+        /// Components are placed horizontally.
+        /// The direction will be determined by `Direction` in the parent level.
+        case horizontal
+
+        /// Components are placed vertically from top to bottom.
+        case vertical
+
+        /// Components are placed in the same way as horizontal is specified except the baselines of the
+        /// components are aligned.
+        case baseline
+        
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.vertical` will be used.
         public static let defaultCase: Layout = .vertical

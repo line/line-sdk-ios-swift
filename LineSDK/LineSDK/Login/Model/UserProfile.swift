@@ -21,29 +21,32 @@
 
 import Foundation
 
-/// Response of `GetUserProfileRequest`.
+/// Represents a response to the `GetUserProfileRequest` method.
 public struct UserProfile: Decodable {
     
-    /// User ID of current authorized user.
+    /// The user ID of the current authorized user.
     public let userID: String
     
-    /// Display name of current authorized user.
+    /// The display name of the current authorized user.
     public let displayName: String
     
-    /// Picture URL of current authorized user. `nil` if the user does not set a picture as avatar.
+    /// The profile image URL of the current authorized user. `nil` if the user does not set a profile
+    /// image.
     public let pictureURL: URL?
     
-    /// Large avatar URL of current authorized user. `nil` if the user does not set a picture as avatar.
+    /// The large profile image URL of the current authorized user. `nil` if the user does not set a profile
+    /// image.
     public var pictureURLLarge: URL? {
         return pictureURL?.appendingPathComponent("/large")
     }
     
-    /// Small avatar URL of current authorized user. `nil` if the user does not set a picture as avatar.
+    /// The small profile image URL of the current authorized user. `nil` if the user does not set a profile
+    /// image.
     public var pictureURLSmall: URL? {
         return pictureURL?.appendingPathComponent("/small")
     }
     
-    /// Status message of current authorized user. `nil` if the user does not set a status message.
+    /// The status message of the current authorized user. `nil` if the user does not set a status message.
     public let statusMessage: String?
     
     enum CodingKeys: String, CodingKey {
