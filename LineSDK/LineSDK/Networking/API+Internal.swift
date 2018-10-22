@@ -44,7 +44,7 @@ extension API {
         sort: GetFriendsRequest.Sort? = nil,
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetFriendsRequest.Response>) -> Void)
+        completionHandler completion: @escaping (Result<GetFriendsRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetFriendsRequest(sort: sort, pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -67,7 +67,7 @@ extension API {
     public static func getApproversInFriends(
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetApproversInFriendsRequest.Response>) -> Void)
+        completionHandler completion: @escaping (Result<GetApproversInFriendsRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetApproversInFriendsRequest(pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -89,7 +89,7 @@ extension API {
     public static func getGroups(
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetGroupsRequest.Response>) -> Void)
+        completionHandler completion: @escaping (Result<GetGroupsRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetGroupsRequest(pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -114,7 +114,7 @@ extension API {
         groupID: String,
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetApproversInGroupRequest.Response>) -> Void)
+        completionHandler completion: @escaping (Result<GetApproversInGroupRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetApproversInGroupRequest(groupID: groupID, pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -151,7 +151,7 @@ extension API {
         _ messages: [MessageConvertible],
         to chatID: String,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<PostSendMessagesRequest.Response>) -> Void)
+        completionHandler completion: @escaping (Result<PostSendMessagesRequest.Response, LineSDKError>) -> Void)
     {
         let request = PostSendMessagesRequest(chatID: chatID, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
@@ -185,7 +185,7 @@ extension API {
         _ messages: [MessageConvertible],
         to userIDs: [String],
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<PostMultisendMessagesRequest.Response>) -> Void)
+        completionHandler completion: @escaping (Result<PostMultisendMessagesRequest.Response, LineSDKError>) -> Void)
     {
         let request = PostMultisendMessagesRequest(userIDs: userIDs, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)

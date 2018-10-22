@@ -124,7 +124,7 @@ public class LoginManager {
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
         options: LoginManagerOptions = [],
-        completionHandler completion: @escaping (Result<LoginResult>) -> Void) -> LoginProcess?
+        completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void) -> LoginProcess?
     {
         lock.lock()
         defer { lock.unlock() }
@@ -151,7 +151,7 @@ public class LoginManager {
         }
         process.onFail.delegate(on: self) { (self, error) in
             self.currentProcess = nil
-            completion(.failure(error))
+            completion(.failure(error.sdkError))
         }
         
         self.currentProcess = process
@@ -170,7 +170,7 @@ public class LoginManager {
         token: AccessToken,
         response: LoginProcessURLResponse,
         process: LoginProcess,
-        completionHandler completion: @escaping (Result<LoginResult>) -> Void) {
+        completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void) {
         
         let group = DispatchGroup()
         
@@ -196,7 +196,7 @@ public class LoginManager {
 
         group.notify(queue: .main) {
             guard errors.isEmpty else {
-                completion(.failure(errors[0]))
+                completion(.failure(errors[0].sdkError))
                 return
             }
             
@@ -207,7 +207,7 @@ public class LoginManager {
                     if let cryptoError = error as? CryptoError {
                         completion(.failure(LineSDKError.authorizeFailed(reason: .cryptoError(error: cryptoError))))
                     } else {
-                        completion(.failure(error))
+                        completion(.failure(error.sdkError))
                     }
                     return
                 }
@@ -217,7 +217,7 @@ public class LoginManager {
             do {
                 try AccessTokenStore.shared.setCurrentToken(token)
             } catch {
-                completion(.failure(error))
+                completion(.failure(error.sdkError))
                 return
             }
             
@@ -234,7 +234,7 @@ public class LoginManager {
     /// Logs out the current user by revoking the access token.
     ///
     /// - Parameter completion: The completion closure to be invoked when the logout action is finished.
-    public func logout(completionHandler completion: @escaping (Result<()>) -> Void) {
+    public func logout(completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void) {
         API.revokeAccessToken(completionHandler: completion)
     }
     
@@ -266,7 +266,7 @@ extension LoginManager {
     func getUserProfile(
         with token: AccessToken,
         in group: DispatchGroup,
-        handler: @escaping (Result<UserProfile>) -> Void)
+        handler: @escaping (Result<UserProfile, LineSDKError>) -> Void)
     {
         group.enter()
         
@@ -276,8 +276,11 @@ extension LoginManager {
         }
     }
     
-    func getJWK(for token: AccessToken, in group: DispatchGroup, handler: @escaping (Result<JWK>) -> Void) {
-        
+    func getJWK(
+        for token: AccessToken,
+        in group: DispatchGroup,
+        handler: @escaping (Result<JWK, LineSDKError>) -> Void)
+    {
         group.enter()
         // We need a valid ID Token existing to continue.
         guard let IDToken = token.IDToken else {

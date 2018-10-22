@@ -35,7 +35,7 @@ class APIResultViewController: UITableViewController, IndicatorDisplay, CellCopy
     var resultEntries: [APIResultEntry] = []
     
     var apiItem: APIItem?
-    var result: Result<Any>? {
+    var result: Result<Any, ApplicationError>? {
         didSet {
             defer {
                 if isViewLoaded { tableView.reloadData() }

@@ -178,7 +178,7 @@ struct StubRequestWithStopPipeline: Request, ResponseDataStub {
             done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws where T : Request
         {
             invoked = true
-            try closure(.stop(ErrorStub.testError))
+            try closure(.stop(LineSDKError.untypedError(error: ErrorStub.testError)))
         }
     }
     

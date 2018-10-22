@@ -49,7 +49,7 @@ public struct API {
     public static func refreshAccessToken(
         _ refreshToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<AccessToken>) -> Void)
+        completionHandler completion: @escaping (Result<AccessToken, LineSDKError>) -> Void)
     {
         guard let token = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
             queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
@@ -63,7 +63,7 @@ public struct API {
                     try AccessTokenStore.shared.setCurrentToken(token)
                     completion(.success(token))
                 } catch {
-                    completion(.failure(error))
+                    completion(.failure(error.sdkError))
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -91,14 +91,14 @@ public struct API {
     public static func revokeAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<()>) -> Void)
+        completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
     {
         func handleSuccessResult() {
             do {
                 try AccessTokenStore.shared.removeCurrentAccessToken()
                 completion(.success(()))
             } catch {
-                completion(.failure(error))
+                completion(.failure(error.sdkError))
             }
         }
         
@@ -113,15 +113,13 @@ public struct API {
             case .success(_):
                 handleSuccessResult()
             case .failure(let error):
-                guard let sdkError = error as? LineSDKError,
-                      case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = sdkError else
-                {
+                guard case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = error else {
                     completion(.failure(error))
                     return
                 }
                 // We recognize response 400 as a success for revoking (since the token itself is invalid).
                 if detail.code == 400 {
-                    Log.print(sdkError.localizedDescription)
+                    Log.print(error.localizedDescription)
                     handleSuccessResult()
                 }
             }
@@ -140,7 +138,7 @@ public struct API {
     public static func verifyAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<AccessTokenVerifyResult>) -> Void)
+        completionHandler completion: @escaping (Result<AccessTokenVerifyResult, LineSDKError>) -> Void)
     {
         guard let token = token ?? AccessTokenStore.shared.current?.value else {
             queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
@@ -160,7 +158,7 @@ public struct API {
     ///
     public static func getProfile(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<UserProfile>) -> Void)
+        completionHandler completion: @escaping (Result<UserProfile, LineSDKError>) -> Void)
     {
         let request = GetUserProfileRequest()
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
@@ -176,7 +174,7 @@ public struct API {
     ///
     public static func getBotFriendshipStatus(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetBotFriendshipStatusRequest.Response>) -> Void)
+        completionHandler completion: @escaping (Result<GetBotFriendshipStatusRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetBotFriendshipStatusRequest()
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)

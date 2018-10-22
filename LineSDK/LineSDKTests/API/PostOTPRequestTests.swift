@@ -52,14 +52,9 @@ class PostOTPRequestTests: APITests {
         let expect = expectation(description: "\(#file)_\(#line)")
         let session = Session.stub(configuration: config, string: PostOTPRequest.fail, statusCode: 400)
         session.send(PostOTPRequest(channelID: config.channelID)) { result in
-            
-            guard let e = result.error as? LineSDKError else {
-                XCTFail("Error should be a LineSDKError")
-                return
-            }
-            
+
             guard case .responseFailed(
-                reason: .invalidHTTPStatusAPIError(let detail)) = e else
+                reason: .invalidHTTPStatusAPIError(let detail)) = result.error! else
             {
                 XCTFail("Error reason should be .invalidHTTPStatusAPIError")
                 return

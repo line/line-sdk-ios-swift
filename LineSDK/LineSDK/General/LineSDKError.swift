@@ -33,6 +33,7 @@ import Foundation
 /// - responseFailed: An error occurred while handling a response.
 /// - authorizeFailed: An error occurred while authorizing a user.
 /// - generalError: An error occurred while performing another process in the LINE SDK.
+/// - untypedError: An error not defined in the LINE SDK.
 public enum LineSDKError: Error {
     
     /// The possible underlying reasons why a `.requestFailed` error occurs.
@@ -190,13 +191,13 @@ public enum LineSDKError: Error {
     
     /// The possible underlying reasons why a `.generalError` occurs.
     ///
-    /// - conversionError: Cannot convert `string` to valid data with `encoding`.
-    /// - parameterError: The method is invoked with an invalid parameter.
+    /// - conversionError: Cannot convert `string` to valid data with `encoding`. Code 4001.
+    /// - parameterError: The method is invoked with an invalid parameter. Code 4002.
     public enum GeneralErrorReason {
-        /// Cannot convert `string` to valid data with `encoding`.
+        /// Cannot convert `string` to valid data with `encoding`. Code 4001.
         case conversionError(string: String, encoding: String.Encoding)
         
-        /// The method is invoked with an invalid parameter.
+        /// The method is invoked with an invalid parameter. Code 4002.
         case parameterError(parameterName: String, description: String)
     }
     
@@ -204,6 +205,13 @@ public enum LineSDKError: Error {
     case responseFailed(reason: ResponseErrorReason)
     case authorizeFailed(reason: AuthorizeErrorReason)
     case generalError(reason: GeneralErrorReason)
+    case untypedError(error: Error)
+}
+
+extension Error {
+    var sdkError: LineSDKError {
+        return self as? LineSDKError ?? .untypedError(error: self)
+    }
 }
 
 // MARK: - Classifies the Error
@@ -333,6 +341,7 @@ extension LineSDKError: LocalizedError {
         case .responseFailed(reason: let reason): return reason.errorDescription
         case .authorizeFailed(reason: let reason): return reason.errorDescription
         case .generalError(reason: let reason): return reason.errorDescription
+        case .untypedError(error: let error): return "An error not typed inside LINE SDK: \(error)"
         }
     }
 }
@@ -345,6 +354,7 @@ extension LineSDKError: CustomNSError {
         case .responseFailed(reason: let reason): return reason.errorCode
         case .authorizeFailed(reason: let reason): return reason.errorCode
         case .generalError(reason: let reason): return reason.errorCode
+        case .untypedError: return -1
         }
     }
     
@@ -355,6 +365,7 @@ extension LineSDKError: CustomNSError {
         case .responseFailed(reason: let reason): return reason.errorUserInfo
         case .authorizeFailed(reason: let reason): return reason.errorUserInfo
         case .generalError(reason: let reason): return reason.errorUserInfo
+        case .untypedError(error: let error): return [LineSDKErrorUserInfoKey.underlyingError.rawValue: error]
         }
     }
     

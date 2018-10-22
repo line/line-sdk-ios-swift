@@ -25,7 +25,7 @@ import Foundation
 ///
 /// - success: The operation is successful and an associated value is available.
 /// - failure: The operation is failed and an associated error is available.
-public enum Result<Value> {
+public enum Result<Value, Error: Swift.Error>: CustomStringConvertible, CustomDebugStringConvertible {
 
     /// The operation is successful and an associated value is available.
     case success(Value)
@@ -61,6 +61,17 @@ public enum Result<Value> {
         }
         return nil
     }
+
+    public var description: String {
+        switch self {
+        case let .success(value): return ".success(\(value))"
+        case let .failure(error): return ".failure(\(error))"
+        }
+    }
+
+    public var debugDescription: String {
+        return description
+    }
     
     /// Maps the result to a `Result` object. If the result is `.success`, `transform` is called with the
     /// associated value and new `.success` with the transformed value is returned. If the result is `.failure`,
@@ -69,7 +80,7 @@ public enum Result<Value> {
     /// - Parameter transform: A closure that takes the `.success` value of the result.
     /// - Returns: The `Result` object containing the result of the given closure. If the result is a
     ///            failure, the `Result` object contains the original failure.
-    public func map<T>(_ transform: (Value) -> T) -> Result<T> {
+    public func map<T>(_ transform: (Value) -> T) -> Result<T, Error> {
         switch self {
         case .success(let value): return .success(transform(value))
         case .failure(let error): return .failure(error)
