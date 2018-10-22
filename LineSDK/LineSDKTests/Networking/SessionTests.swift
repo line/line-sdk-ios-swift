@@ -302,9 +302,7 @@ class SessionTests: XCTestCase {
         let expect = expectation(description: "\(#file)_\(#line)")
         let session = Session.stub(configuration: configuration, error: ErrorStub.testError)
         session.send(StubRequestSimple()) { result in
-            guard let e = result.error as? LineSDKError,
-                  case .responseFailed(reason: .URLSessionError(ErrorStub.testError)) = e
-            else {
+            guard case .responseFailed(reason: .URLSessionError(ErrorStub.testError)) = result.error! else {
                 XCTFail("Request should fail with .testError")
                 return
             }

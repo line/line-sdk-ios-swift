@@ -77,7 +77,7 @@ public class Session {
     public func send<T: Request>(
         _ request: T,
         callbackQueue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: ((Result<T.Response>) -> Void)? = nil) -> SessionTask?
+        completionHandler completion: ((Result<T.Response, LineSDKError>) -> Void)? = nil) -> SessionTask?
     {
         return send(request, callbackQueue: callbackQueue, pipelines: nil, completionHandler: completion)
     }
@@ -97,13 +97,13 @@ public class Session {
         _ request: T,
         callbackQueue: CallbackQueue = .currentMainOrAsync,
         pipelines: [ResponsePipeline]?,
-        completionHandler completion: ((Result<T.Response>) -> Void)? = nil) -> SessionTask?
+        completionHandler completion: ((Result<T.Response, LineSDKError>) -> Void)? = nil) -> SessionTask?
     {
         let urlRequest: URLRequest
         do {
             urlRequest = try create(request)
         } catch {
-            callbackQueue.execute { completion?(.failure(error)) }
+            callbackQueue.execute { completion?(.failure(error.sdkError)) }
             return nil
         }
         
@@ -129,7 +129,7 @@ public class Session {
                         case .value(let value):
                             callbackQueue.execute { completion?(.success(value)) }
                         case .action(.stop(let error)):
-                            callbackQueue.execute { completion?(.failure(error)) }
+                            callbackQueue.execute { completion?(.failure(error.sdkError)) }
                         case .action(.restart):
                             self.send(
                                 request,
@@ -145,7 +145,7 @@ public class Session {
                         }
                     }
                 } catch {
-                    callbackQueue.execute { completion?(.failure(error)) }
+                    callbackQueue.execute { completion?(.failure(error.sdkError)) }
                 }
             default:
                 let error = LineSDKError.responseFailed(reason: .nonHTTPURLResponse)

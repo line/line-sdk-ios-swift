@@ -22,6 +22,11 @@
 import Foundation
 import LineSDK
 
+enum ApplicationError: Error {
+    case sdkError(LineSDKError)
+    case sampleError(LineSDKSampleError)
+}
+
 enum APICategory: Int, CaseIterable {
     case auth
     case friendship
@@ -107,7 +112,7 @@ class APIStore {
 
 struct APIItem {
     
-    typealias AnyResultBlock = ((UIViewController, (Result<Any>) -> Void)) -> Void
+    typealias AnyResultBlock = ((UIViewController, (Result<Any, ApplicationError>) -> Void)) -> Void
     
     let block: AnyResultBlock
     
@@ -118,7 +123,15 @@ struct APIItem {
     
     init<T: Request>(title: String, request: T, available: Bool = true) {
         self.init(title: title, path: request.path, available: available) { (controller, handler) in
-            Session.shared.send(request) { result in handler(result.map { $0 as Any }) }
+            Session.shared.send(request) {
+                result in
+                switch result {
+                case .success(let value):
+                    handler(.success(value as Any))
+                case .failure(let error):
+                    handler(.failure(.sdkError(error)))
+                }
+            }
         }
     }
     
@@ -130,7 +143,7 @@ struct APIItem {
         self.available = available
     }
     
-    func execute(with controller: UIViewController, handler: @escaping (Result<Any>) -> Void) -> Void {
+    func execute(with controller: UIViewController, handler: @escaping (Result<Any, ApplicationError>) -> Void) -> Void {
         block((controller, handler))
     }
 }
@@ -145,7 +158,13 @@ extension APIItem {
                 case .success(let chatID):
                     let message = TextMessage(text: "Hello")
                     let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [message])
-                    Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
+                    Session.shared.send(sendMessage) {
+                        messageResult in
+                        switch messageResult {
+                        case .success(let value): handler(.success(value))
+                        case .failure(let error): handler(.failure(.sdkError(error)))
+                        }
+                    }
                 case .failure(let error):
                     handler(.failure(error))
                 }
@@ -168,15 +187,21 @@ extension APIItem {
                             reason: .parameterError(
                                 parameterName: "friends",
                                 description: "You need at least one friend to use this API."))
-                        handler(.failure(error))
+                        handler(.failure(.sdkError(error)))
                         return
                     }
                     let userIDs = value.friends.prefix(5).map { $0.userID }
                     let message = TextMessage(text: "Hello")
                     let sendMessage = PostMultisendMessagesRequest(userIDs: userIDs, messages: [message])
-                    Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
+                    Session.shared.send(sendMessage) {
+                        messageResult in
+                        switch messageResult {
+                        case .success(let value): handler(.success(value))
+                        case .failure(let error): handler(.failure(.sdkError(error)))
+                        }
+                    }
                 case .failure(let error):
-                    handler(.failure(error))
+                    handler(.failure(.sdkError(error)))
                 }
             }
         }
@@ -195,7 +220,13 @@ extension APIItem {
                         switch message {
                         case .success(let m):
                             let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [m])
-                            Session.shared.send(sendMessage) { messageResult in handler(messageResult.map { $0 as Any }) }
+                            Session.shared.send(sendMessage) {
+                                messageResult in
+                                switch messageResult {
+                                case .success(let value): handler(.success(value))
+                                case .failure(let error): handler(.failure(.sdkError(error)))
+                                }
+                            }
                         case .failure(let error):
                             handler(.failure(error))
                         }
@@ -217,8 +248,12 @@ extension APIItem {
                 switch result {
                 case .success(let groupID):
                     let request = GetApproversInGroupRequest(groupID: groupID)
-                    Session.shared.send(request) { response in
-                        handler(response.map { $0 as Any })
+                    Session.shared.send(request) {
+                        response in
+                        switch response {
+                        case .success(let value): handler(.success(value))
+                        case .failure(let error): handler(.failure(.sdkError(error)))
+                        }
                     }
                 case .failure(let error):
                     handler(.failure(error))
@@ -229,7 +264,10 @@ extension APIItem {
     }
 }
 
-func selectUserFromFriendList(in viewController: UIViewController, handler: @escaping (Result<String>) -> Void) {
+func selectUserFromFriendList(
+    in viewController: UIViewController,
+    handler: @escaping (Result<String, ApplicationError>) -> Void)
+{
     let getFriends = GetFriendsRequest()
     Session.shared.send(getFriends) { res in
         
@@ -240,7 +278,7 @@ func selectUserFromFriendList(in viewController: UIViewController, handler: @esc
                     reason: .parameterError(
                         parameterName: "friends",
                         description: "You need at least one friend to use this API."))
-                handler(.failure(error))
+                handler(.failure(.sdkError(error)))
                 return
             }
             
@@ -251,16 +289,19 @@ func selectUserFromFriendList(in viewController: UIViewController, handler: @esc
                 })
             }
             alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
-                handler(.failure(LineSDKSampleError.userCancelAction))
+                handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
             })
             viewController.present(alert, animated: true)
         case .failure(let error):
-            handler(.failure(error))
+            handler(.failure(.sdkError(error)))
         }
     }
 }
 
-func selectGroupFromGroupList(in viewController: UIViewController, handler: @escaping (Result<String>) -> Void) {
+func selectGroupFromGroupList(
+    in viewController: UIViewController,
+    handler: @escaping (Result<String, ApplicationError>) -> Void)
+{
     let request = GetGroupsRequest()
     Session.shared.send(request) { res in
 
@@ -271,7 +312,7 @@ func selectGroupFromGroupList(in viewController: UIViewController, handler: @esc
                     reason: .parameterError(
                         parameterName: "groups",
                         description: "You need at least one group to use this API."))
-                handler(.failure(error))
+                handler(.failure(.sdkError(error)))
                 return
             }
 
@@ -282,16 +323,19 @@ func selectGroupFromGroupList(in viewController: UIViewController, handler: @esc
                     })
             }
             alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
-                handler(.failure(LineSDKSampleError.userCancelAction))
+                handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
             })
             viewController.present(alert, animated: true)
         case .failure(let error):
-            handler(.failure(error))
+            handler(.failure(.sdkError(error)))
         }
     }
 }
 
-func selectFlexMessage(in viewController: UIViewController, handler: @escaping (Result<Message>) -> Void) {
+func selectFlexMessage(
+    in viewController: UIViewController,
+    handler: @escaping (Result<Message, ApplicationError>) -> Void)
+{
     let alert = UIAlertController(title: "Message", message: nil, preferredStyle: .actionSheet)
 
     alert.addAction(.init(title: "Simple Bubble", style: .default) { _ in
@@ -320,7 +364,7 @@ func selectFlexMessage(in viewController: UIViewController, handler: @escaping (
     }))
 
     alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
-        handler(.failure(LineSDKSampleError.userCancelAction))
+        handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
     })
     
     viewController.present(alert, animated: true)
