@@ -291,6 +291,7 @@ func selectUserFromFriendList(
             alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
                 handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
             })
+            alert.setupPopover(in: viewController.view)
             viewController.present(alert, animated: true)
         case .failure(let error):
             handler(.failure(.sdkError(error)))
@@ -325,6 +326,7 @@ func selectGroupFromGroupList(
             alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
                 handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
             })
+            alert.setupPopover(in: viewController.view)
             viewController.present(alert, animated: true)
         case .failure(let error):
             handler(.failure(.sdkError(error)))
@@ -366,8 +368,18 @@ func selectFlexMessage(
     alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
         handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
     })
-    
+    alert.setupPopover(in: viewController.view)
     viewController.present(alert, animated: true)
 }
 
+extension UIAlertController {
+    func setupPopover(in view: UIView) {
+        guard let popoverController = popoverPresentationController else {
+            return
+        }
 
+        popoverController.sourceView = view
+        popoverController.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+        popoverController.permittedArrowDirections = []
+    }
+}
