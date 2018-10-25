@@ -25,7 +25,17 @@ Switch to Beta environment
 ```
 fastlane ios tests
 ```
-Run tests
+Run tests.
+### ios lint
+```
+fastlane ios lint
+```
+Lint to check Carthage and CocoaPods compatibility.
+### ios release
+```
+fastlane ios release
+```
+Release a new version.
 ### ios doc
 ```
 fastlane ios doc
@@ -39,11 +49,6 @@ Generate documentation for internal usage
 ### ios change_log
 ```
 fastlane ios change_log
-```
-
-### ios lint
-```
-fastlane ios lint
 ```
 
 ### ios ensure_latest_carthage

@@ -28,7 +28,7 @@ platform :ios do
     end
   end
 
-  desc "Run tests"
+  desc "Run tests."
   lane :tests do
     run_tests(
         workspace: "LineSDK.xcworkspace",
@@ -47,6 +47,53 @@ platform :ios do
     )
   end
 
+  desc "Lint to check Carthage and CocoaPods compatibility."
+  lane :lint do
+    ensure_latest_carthage
+    carthage(command: "build", no_skip_current: true)
+    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec")
+  end
+
+  desc "Release a new version."
+  lane :release do |options|
+    target_version = options[:version]
+    raise "The version is missed. Use `fastlane release version:{version_number}`.`" if target_version.nil?
+
+    ensure_git_branch
+    ensure_git_status_clean
+
+    tests
+    lint
+
+    increment_build_number(
+        build_number: number_of_commits,
+        xcodeproj: "LineSDK/LineSDK.xcodeproj"
+    )
+    increment_version_number(
+        version_number: target_version,
+        xcodeproj: "LineSDK/LineSDK.xcodeproj"
+    )
+  
+    version_bump_podspec(path: "LineSDKSwift.podspec", version_number: target_version)
+    
+    release_content = read_changelog(excluded_markdown_elements: [])
+
+    # change_log(version: target_version)
+    git_commit_all(message: "Bump version to #{target_version}") 
+    add_git_tag(tag: target_version, sign: true)
+    push_to_git_remote
+
+    set_github_release(
+      repository_name: "line/linesdk-swift",
+      api_token: ENV['GITHUB_TOKEN'],
+      name: target_version,
+      tag_name: target_version,
+      description: release_content
+    )
+
+    pod_push
+  end
+
   desc "Generate documentation"
   lane :doc do
     jazzy
@@ -61,12 +108,6 @@ platform :ios do
     target_version = options[:version]
     raise "The version is missed. You need to specify a version parameter." if target_version.nil?
     stamp_changelog(section_identifier: target_version)
-  end
-
-  lane :lint do
-    ensure_latest_carthage
-    carthage(command: "build", no_skip_current: true)
-    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec")
   end
 
   lane :ensure_latest_carthage do
