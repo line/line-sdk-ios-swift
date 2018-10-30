@@ -123,7 +123,7 @@ public protocol Request {
     /// HTTP response.
     associatedtype Response: Decodable
     
-    /// The `HTTPMethod` enumerator used for the request.
+    /// The `HTTPMethod` enumeration member used for the request.
     var method: HTTPMethod { get }
     
     /// The base URL of the current request.
@@ -135,10 +135,10 @@ public protocol Request {
     /// Parameters to be encoded and sent. The default value is `nil`.
     var parameters: Parameters? { get }
     
-    /// The `AuthenticateMethod` enumerator used for the request.
+    /// The `AuthenticateMethod` enumeration member used for the request.
     var authentication: AuthenticateMethod { get }
     
-    /// The `ContentType` enumerator used for the HTTP body data of the request. The default value is
+    /// The `ContentType` enumeration member used for the HTTP body data of the request. The default value is
     /// `.json`.
     var contentType: ContentType { get }
     
@@ -156,7 +156,7 @@ public protocol Request {
     /// Additional adapters to be appended to `adapters`. The default value is `nil`.
     var suffixAdapters: [RequestAdapter]? { get }
     
-    /// The pipelines to intercept or parse the response. Use `ResponsePipeline` enumerators to set up
+    /// The pipelines to intercept or parse the response. Use `ResponsePipeline` enumeration members to set up
     /// pipelines. The items in `pipelines` will be applied to the underlying `URLResponse` object and the
     /// received `Data` object. By default, the LINE SDK provides pipelines for handling token refreshing
     /// and bad HTTP status codes. The last pipeline will attempt to decode the data to a `Response` object.
