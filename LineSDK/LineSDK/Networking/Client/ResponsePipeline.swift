@@ -37,14 +37,14 @@ public protocol ResponsePipelineTerminator: class { // Use class protocol for ea
 
 /// Represents a redirection stage of a series of response pipelines. Use redirectors to additionally
 /// perform data processing by invoking `closure` with a proper
-/// `ResponsePipelineRedirectorAction` enumerator.
+/// `ResponsePipelineRedirectorAction` enumeration member.
 public protocol ResponsePipelineRedirector: class { // Use class protocol for easier Equatable conforming
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
     func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
 /// Actions against the processing result from a `ResponsePipelineRedirector` object. A redirector needs to
-/// decide where to redirect the current request after data processing. These enumerators provide data
+/// decide where to redirect the current request after data processing. These enumeration members provide data
 /// destinations and behaviors of a redirector.
 ///
 /// - restart: Restarts the current request with the original pipelines.
