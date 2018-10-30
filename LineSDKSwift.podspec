@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   
   s.module_name         = "LineSDK"
   s.swift_version       = "4.2"
-  s.source              = { :git => "https://github.com/line/linesdk-ios-swift.git", :tag => "#{s.version}" }
+  s.source              = { :git => "https://github.com/line/line-sdk-ios-swift.git", :tag => "#{s.version}" }
 
   s.default_subspecs    = "Core"
   s.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DLineSDKCocoaPods' }
