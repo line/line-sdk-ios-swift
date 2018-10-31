@@ -84,7 +84,7 @@ platform :ios do
     push_to_git_remote
 
     set_github_release(
-      repository_name: "line/linesdk-swift",
+      repository_name: "line/line-sdk-ios-swift",
       api_token: ENV['GITHUB_TOKEN'],
       name: target_version,
       tag_name: target_version,
