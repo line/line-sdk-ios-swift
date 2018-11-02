@@ -9,6 +9,7 @@ sdk: iphonesimulator
 skip_undocumented: true
 source_directory: LineSDK
 theme: fullwidth
+readme: REFERENCETOP.md
 exclude: 
   - "LineSDK/LineSDK/Messaging/*"
   - "LineSDK/LineSDK/Graph/*"
