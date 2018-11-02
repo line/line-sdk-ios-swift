@@ -80,6 +80,7 @@ public struct API {
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the access token is revoked.
     /// - Note:
+    ///
     ///   The revoked token will be automatically removed from the keychain. If `token` has a `nil` value
     ///   and the current access token does not exist, `completion` will be called with `.success`. The
     ///   same applies when `token` has an invalid access token.
@@ -88,6 +89,7 @@ public struct API {
     ///   need to have the user authorize your app again to issue a new access token before accessing the
     ///   LINE Platform.
     ///
+    ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token removed from the device.
     public static func revokeAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
