@@ -3,7 +3,7 @@ default_platform(:ios)
 platform :ios do
 
   before_all do
-    xcversion(version: "10.0")
+    xcversion(version: "10.1")
   end
 
   desc "Switch to Beta environment"
@@ -74,11 +74,17 @@ platform :ios do
         xcodeproj: "LineSDK/LineSDK.xcodeproj"
     )
   
+    # Increase version numbers in resource info plist.
+    plistbuddy = "/usr/libexec/PlistBuddy"
+    Action.sh("#{plistbuddy} -c 'Set :CFBundleShortVersionString #{target_version}' ../LineSDK/LineSDK/Resource.bundle/Info.plist")
+    Action.sh("#{plistbuddy} -c 'Set :CFBundleVersion #{number_of_commits}' ../LineSDK/LineSDK/Resource.bundle/Info.plist")
+
     version_bump_podspec(path: "LineSDKSwift.podspec", version_number: target_version)
     
     release_content = read_changelog(excluded_markdown_elements: [])
 
     # change_log(version: target_version)
+    
     git_commit_all(message: "Bump version to #{target_version}") 
     add_git_tag(tag: target_version, sign: true)
     push_to_git_remote
