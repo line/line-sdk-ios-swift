@@ -1,4 +1,4 @@
-![](https://git.linecorp.com/LINE-Client/linesdk-ios-swift/raw/assets/assets/sdklogo.png)
+<img src="https://git.linecorp.com/LINE-Client/linesdk-ios-swift/raw/assets/assets/sdklogo.png" width="355" height="97">
 
 # LineSDK Swift
 
