@@ -22,6 +22,6 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-LINE_CHANNEL_ID = 1606667895
+LINE_CHANNEL_ID = 1620019587
 LINE_SDK_URL_SCHEME = line3rdp
 LINE_AUTH_URL_SCHEME = lineauth2
