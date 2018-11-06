@@ -49,6 +49,12 @@
       "scale" : "3x"
     },
     {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "icon.png",
+      "scale" : "1x"
+    },
+    {
       "size" : "20x20",
       "idiom" : "ipad",
       "filename" : "Icon-Notification.png",
@@ -101,16 +107,6 @@
       "idiom" : "ipad",
       "filename" : "Icon-83.5@2x.png",
       "scale" : "2x"
-    },
-    {
-      "size" : "1024x1024",
-      "idiom" : "ios-marketing",
-      "filename" : "icon.png",
-      "scale" : "1x"
     }
-  ],
-  "info" : {
-    "version" : 1,
-    "author" : "xcode"
-  }
+  ]
 }
