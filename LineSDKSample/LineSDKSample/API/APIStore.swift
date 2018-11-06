@@ -22,9 +22,16 @@
 import Foundation
 import LineSDK
 
-enum ApplicationError: Error {
+enum ApplicationError: Error, LocalizedError {
     case sdkError(LineSDKError)
     case sampleError(LineSDKSampleError)
+
+    var errorDescription: String? {
+        switch self {
+        case .sdkError(let error): return error.errorDescription
+        case .sampleError(let error): return error.errorDescription
+        }
+    }
 }
 
 enum APICategory: Int, CaseIterable {
