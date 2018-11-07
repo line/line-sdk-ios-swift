@@ -1,7 +1,7 @@
 author: LINE Corporation
 author_url: https://line.me
 clean: true
-github_url: https://git.linecorp.com/LINE-Client/linesdk-ios-swift
+github_url: https://github.com/line/line-sdk-ios-swift
 hide_documentation_coverage: true
 module: LineSDK
 output: docs/public
