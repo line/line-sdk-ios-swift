@@ -8,7 +8,7 @@ output: docs/public
 sdk: iphonesimulator
 skip_undocumented: true
 source_directory: LineSDK
-theme: fullwidth
+theme: "jazzy-templates/linedevdocs"
 readme: REFERENCETOP.md
 exclude: 
   - "LineSDK/LineSDK/Messaging/*"

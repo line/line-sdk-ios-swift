@@ -8,4 +8,4 @@ output: docs/internal
 sdk: iphonesimulator
 skip_undocumented: true
 source_directory: LineSDK
-theme: fullwidth
+theme: "jazzy-templates/linedevdocs"
