@@ -26,9 +26,9 @@ extension GetDiscoveryDocumentRequest: ResponseDataStub {
     static let success = """
     {
       "issuer": "https://access.line.me",
-      "authorization_endpoint": "https://access.line-beta.me/oauth2/v2.1/authorize",
-      "token_endpoint": "https://api.line-beta.me/oauth2/v2.1/token",
-      "jwks_uri": "https://api.line-beta.me/oauth2/v2.1/certs",
+      "authorization_endpoint": "https://access.line.me/oauth2/v2.1/authorize",
+      "token_endpoint": "https://api.line.me/oauth2/v2.1/token",
+      "jwks_uri": "https://api.line.me/oauth2/v2.1/certs",
       "response_types_supported": [ "code" ],
       "subject_types_supported": [ "pairwise" ],
       "id_token_signing_alg_values_supported": [ "RS256" ]
@@ -42,7 +42,7 @@ class GetDiscoveryDocumentRequestTests: APITests {
         let r = GetDiscoveryDocumentRequest()
         runTestSuccess(for: r) { document in
             XCTAssertEqual(document.issuer, "https://access.line.me")
-            XCTAssertEqual(document.jwksURI.absoluteString, "https://api.line-beta.me/oauth2/v2.1/certs")
+            XCTAssertEqual(document.jwksURI.absoluteString, "https://api.line.me/oauth2/v2.1/certs")
         }
     }
 

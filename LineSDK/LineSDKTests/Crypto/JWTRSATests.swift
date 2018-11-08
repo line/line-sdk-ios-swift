@@ -81,11 +81,11 @@ private let sample = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
    "iat": 1535959770,
    "nonce": "ABCABC",
    "name": "onevcat",
-   "picture": "https://obs-beta.line-apps.com/xxxx",
+   "picture": "https://obs.line-apps.com/xxxx",
    "email": "abc@def.com"
  }
 */
-private let LINEIDToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEyMzQ1In0.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVTEyMzQ1Njc4OTBhYmNkZWYxMjM0NTY3ODkwYWJjZGVmIiwiYXVkIjoiMTIzNDUiLCJleHAiOjE1MzU5NTk4NzAsImlhdCI6MTUzNTk1OTc3MCwibm9uY2UiOiJBQkNBQkMiLCJuYW1lIjoib25ldmNhdCIsInBpY3R1cmUiOiJodHRwczovL29icy1iZXRhLmxpbmUtYXBwcy5jb20veHh4eCIsImVtYWlsIjoiYWJjQGRlZi5jb20ifQ.F_Y8w5rqQEdzrjxhps4EJYUf0choZ9Mu7Uq-WMQ2sGIJDpWOIxu4DjGN-jYOeW_1ndJ9tFwUwXA26Gobawjirf4Y9WvGQiC7mevpkilAB8kL7sBILJ2pjmryJPagaFto0yAv0e2_UQjGSgZnElU2k2UbViAdfzIEC0XKy_PApFM"
+private let LINEIDToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjEyMzQ1In0.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVTEyMzQ1Njc4OTBhYmNkZWYxMjM0NTY3ODkwYWJjZGVmIiwiYXVkIjoiMTIzNDUiLCJleHAiOjE1MzU5NTk4NzAsImlhdCI6MTUzNTk1OTc3MCwibm9uY2UiOiJBQkNBQkMiLCJuYW1lIjoib25ldmNhdCIsInBpY3R1cmUiOiJodHRwczovL29icy5saW5lLWFwcHMuY29tL3h4eHgiLCJlbWFpbCI6ImFiY0BkZWYuY29tIn0.z8XL3SKiQvuooPVGvWtsd515SxnhgKWoqC6yBY-9LYQNPiKO71mK_ETiPh418aBz5WtayidlZY5AlhMBkCw2ky3nHiVxirE9kXo58yiUqfGaVDQMtrtW-TS-JZqgaeR8v_Mh04W2qK4mjMc5txIfdfImiajguzFh6ZZ0OHUFsdo"
 
 class JWTRSATests: XCTestCase {
 
@@ -135,6 +135,6 @@ class JWTRSATests: XCTestCase {
         
         XCTAssertEqual(payload.name, "onevcat")
         XCTAssertEqual(payload.email, "abc@def.com")
-        XCTAssertEqual(payload.pictureURL?.absoluteString, "https://obs-beta.line-apps.com/xxxx")
+        XCTAssertEqual(payload.pictureURL?.absoluteString, "https://obs.line-apps.com/xxxx")
     }
 }
