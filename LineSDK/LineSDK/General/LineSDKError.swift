@@ -293,23 +293,32 @@ extension LineSDKError {
     ///
     /// - Parameters:
     ///   - statusCode: The status code to check whether it matches with the returned HTTP status error code.
+    /// - Returns: `true` if `self` is an `.invalidHTTPStatusAPIError` with the given `statusCode`;
+    ///            `false` otherwise.
+    public func isResponseError(statusCode: Int) -> Bool {
+        return isResponseError(statusCode: statusCode, url: nil)
+    }
+
+    /// Checks whether the `LineSDKError` occurs because of a response failing with a specified HTTP status
+    /// code.
+    ///
+    /// - Parameters:
+    ///   - statusCode: The status code to check whether it matches with the returned HTTP status error code.
     ///   - url: The URL to check with the URL of error response. If `nil`, the URL matching check is skipped.
     /// - Returns: `true` if `self` is an `.invalidHTTPStatusAPIError` with the given `statusCode` and `url`;
     ///            `false` otherwise.
-    public func isResponseError(statusCode: Int, url: URL? = nil) -> Bool {
-        if case .responseFailed(.invalidHTTPStatusAPIError(let detail)) = self {
-            let codeMatch = detail.code == statusCode
-            
-            let urlMatch: Bool
-            if let url = url {
-                urlMatch = url == detail.raw.url
-            } else {
-                urlMatch = true
-            }
-            
-            return codeMatch && urlMatch
+    func isResponseError(statusCode: Int, url: URL?) -> Bool {
+        guard case .responseFailed(.invalidHTTPStatusAPIError(let detail)) = self else {
+            return false
         }
-        return false
+
+        guard statusCode == detail.code else { return false }
+        guard let url = url else {
+            // `url` is `nil`. We can skip URL matching.
+            return true
+        }
+        guard url == detail.raw.url else { return false }
+        return true
     }
     
     /// Checks and returns whether the `LineSDKError` is a time out error caused by the underlying URL
