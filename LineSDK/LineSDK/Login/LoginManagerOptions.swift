@@ -41,7 +41,7 @@ public struct LoginManagerOptions: OptionSet {
     /// `.botPromptAggressive` are set at the same time, `.botPromptAggressive` will be used.
     public static let botPromptNormal = LoginManagerOptions(rawValue: 1 << 1)
     
-    /// Opens a new screen to add a bot as a friend after the user agrees to the permissions in the consent
+    /// Opens a new screen to add a bot as a friend after the user agrees to the permissions on the consent
     /// screen. If `.botPromptNormal` and `.botPromptAggressive` is set at the same time,
     /// `.botPromptAggressive` will be used.
     public static let botPromptAggressive = LoginManagerOptions(rawValue: 1 << 2)

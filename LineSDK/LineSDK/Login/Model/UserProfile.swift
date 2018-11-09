@@ -30,11 +30,11 @@ public struct UserProfile: Decodable {
     /// The display name of the current authorized user.
     public let displayName: String
     
-    /// The profile image URL of the current authorized user. `nil` if the user does not set a profile
+    /// The profile image URL of the current authorized user. `nil` if the user has not set a profile
     /// image.
     public let pictureURL: URL?
     
-    /// The large profile image URL of the current authorized user. `nil` if the user does not set a profile
+    /// The large profile image URL of the current authorized user. `nil` if the user has not set a profile
     /// image.
     public var pictureURLLarge: URL? {
         return pictureURL?.appendingPathComponent("/large")
