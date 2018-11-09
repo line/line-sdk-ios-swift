@@ -148,7 +148,7 @@ public protocol Request {
     /// properties of the request.
     ///
     /// You can provide your own `adapters` to change the request properties. However, it's more likely that
-    /// you might want to provide adapters with `suffixAdapters` instead, to modify the request according to
+    /// you want to provide adapters with `suffixAdapters` instead, to modify the request according to
     /// the default result provided by the LINE SDK. The resulting adapters would be
     /// `adapters + (suffixAdapters ?? [])`.
     var adapters: [RequestAdapter] { get }
@@ -158,11 +158,11 @@ public protocol Request {
     
     /// The pipelines to intercept or parse the response. Use `ResponsePipeline` enumeration members to set up
     /// pipelines. The items in `pipelines` will be applied to the underlying `URLResponse` object and the
-    /// received `Data` object. By default, the LINE SDK provides pipelines for handling token refreshing
+    /// received `Data` object. By default, the LINE SDK provides pipelines for handling token refreshes
     /// and bad HTTP status codes. The last pipeline will attempt to decode the data to a `Response` object.
     ///
     /// You can provide your own `pipelines` to change the response handling process. However, it's more
-    /// likely that you might want to provide pipelines with `prefixPipelines` instead, to handle a response
+    /// likely that you want to provide pipelines with `prefixPipelines` instead, to handle a response
     /// before the LINE SDK applies the default behavior. The resulting pipelines would be
     /// `(prefixPipelines ?? []) + pipelines`.
     var pipelines: [ResponsePipeline] { get }

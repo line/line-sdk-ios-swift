@@ -26,14 +26,14 @@ import Foundation
 
 /// The possible results of an operation, whether it is successful or not.
 ///
-/// - success: The operation is successful and an associated value is available.
-/// - failure: The operation is failed and an associated error is available.
+/// - success: The operation was successful and an associated value is available.
+/// - failure: The operation failed and an associated error is available.
 public enum Result<Value, Error> {
 
-    /// The operation is successful and an associated value is available.
+    /// The operation was successful and an associated value is available.
     case success(Value)
 
-    /// The operation is failed and an associated error is available.
+    /// The operation failed and an associated error is available.
     case failure(Error)
     
     /// Checks and returns whether the result is a success.
@@ -149,7 +149,7 @@ public enum Result<Value, Error> {
 }
 
 extension Result where Error : Swift.Error {
-    /// Unwraps the `Result` into a throwing expression.
+    /// Unwraps the `Result` and includes it into a throwing expression.
     ///
     /// - Returns: The success value, if the instance is a success.
     /// - Throws:  The error value, if the instance is a failure.

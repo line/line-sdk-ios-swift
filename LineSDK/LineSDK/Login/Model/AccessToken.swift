@@ -24,7 +24,7 @@ import Foundation
 protocol AccessTokenType {}
 
 /// Represents an access token which is used to access the LINE Platform. Most API calls to the LINE Platform
-/// require an access token as an evidence of successful authorization. A valid access token is issued after the
+/// require an access token as evidence of successful authorization. A valid access token is issued after the
 /// user grants your app the permissions that your app requests. An access token is bound to permissions (scopes)
 /// that define the API endpoints that you can access. Choose the permissions for your channel in the LINE
 /// Developers site and set them in the login method used in your app.

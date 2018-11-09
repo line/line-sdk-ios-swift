@@ -83,7 +83,7 @@ public struct API {
     ///   and the current access token does not exist, `completion` will be called with `.success`. The
     ///   same applies when `token` has an invalid access token.
     ///
-    ///   After the access token is revoked, you cannot use it again for accessing the LINE Platform. You
+    ///   After the access token is revoked, you cannot use it again to access the LINE Platform. You
     ///   need to have the user authorize your app again to issue a new access token before accessing the
     ///   LINE Platform.
     ///

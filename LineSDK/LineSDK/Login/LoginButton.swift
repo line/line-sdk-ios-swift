@@ -21,7 +21,7 @@
 
 import UIKit
 
-/// Defines methods that allow you to handle different login states if you use the predefined LINE Login
+/// Defines methods that allow you to handle different login statuses if you use the predefined LINE Login
 /// button by using the `LoginButton` class.
 public protocol LoginButtonDelegate: class {
 

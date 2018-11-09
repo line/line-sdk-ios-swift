@@ -40,13 +40,13 @@ public struct UserProfile: Decodable {
         return pictureURL?.appendingPathComponent("/large")
     }
     
-    /// The small profile image URL of the current authorized user. `nil` if the user does not set a profile
+    /// The small profile image URL of the current authorized user. `nil` if the user has not set a profile
     /// image.
     public var pictureURLSmall: URL? {
         return pictureURL?.appendingPathComponent("/small")
     }
     
-    /// The status message of the current authorized user. `nil` if the user does not set a status message.
+    /// The status message of the current authorized user. `nil` if the user has not set a status message.
     public let statusMessage: String?
     
     enum CodingKeys: String, CodingKey {

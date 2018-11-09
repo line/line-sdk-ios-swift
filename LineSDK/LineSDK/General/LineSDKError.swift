@@ -75,15 +75,17 @@ public enum LineSDKError: Error {
         /// The response is not a valid `HTTPURLResponse` object. Code 2002.
         case nonHTTPURLResponse
         
-        /// The received data cannot be parsed to an instance of the target type. Code 2003
+        /// The received data cannot be parsed to an instance of the target type. Code 2003.
         /// - Associated values: Parsing destination type, original data, and system underlying error.
         case dataParsingFailed(Any.Type, Data, Error)
         
-        /// The received response contains an invalid HTTP status code. Code 2004. Associated `APIErrorDetail`
+        /// The received response contains an invalid HTTP status code. Code 2004.
+        ///
+        ///Associated `APIErrorDetail`
         /// contains information about the error detail. If the response data can be converted to an `APIError` object,
         /// it will be associated with `APIErrorDetail`. The `error` property in `APIErrorDetail` indicates the cause of an error.
         /// Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and `detail.rawString` will
-        /// contain the plain response and error text respectively. Code 2004.
+        /// contain the plain response and error text respectively.
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
     

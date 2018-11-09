@@ -22,11 +22,11 @@
 import Foundation
 
 extension Notification.Name {
-    /// Sent when the LINE SDK detects that the current token has got updated and stored in the keychain.
+    /// Sent when the LINE SDK detects that the current token has been updated and stored in the keychain.
     /// This means that the user has authorized your app and your app has obtained an access token. The
     /// `object` property of the posted `Notification` object contains the new access token. The `userInfo`
     /// dictionary of the posted `Notification` object contains the new access token under the
-    /// `LineSDKNotificationKey.newAccessToken` key. If the old access token has existed, it will be under
+    /// `LineSDKNotificationKey.newAccessToken` key. If the old access token still exists, it will be under
     /// the `LineSDKNotificationKey.oldAccessToken` key.
     public static let LineSDKAccessTokenDidUpdate = Notification.Name("com.linecorp.linesdk.AccessTokenDidUpdate")
     
