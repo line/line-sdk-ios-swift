@@ -27,19 +27,19 @@ import Foundation
 /// underlying `CryptoError` by checking the associated value of the `.cryptoError` reason or the
 /// `.underlyingError` key in the error's `userInfo`.
 ///
-/// You can switch over to each error to know the detailed reason and associated information. You can also
+/// You can switch over to each error to find out the reason of the error and its associated information. You can also
 /// access the `localizedDescription` property to get a human-readable text description. Access `errorCode`
 /// to get a fixed error code to identify the error type quickly. All `CryptoError`s are under the
 /// "LineSDKError.CryptoError" error domain.
 ///
-/// - algorithmsFailed: An error occurred while performing an algorithms related operation like creating
+/// - algorithmsFailed: An error occurred while performing an algorithm related operation like creating
 ///                     keys or verifying signed data.
 /// - JWTFailed: An error occurred while performing a JWT related operation.
 /// - JWKFailed: An error occurred while performing a JWK related operation.
 /// - generalError: An error occurred while performing another crypto related operation.
 public enum CryptoError: Error {
     
-    /// The possible underlying reasons why an `.algorithmsFailed` error occurs.
+    /// The possible underlying reasons an `.algorithmsFailed` error occurs.
     ///
     /// - invalidDERKey: The DER data does not contain a valid RSA key. Code 3016_1001.
     /// - invalidX509Header: The x509 header is found in the key, but the data is invalid. Code 3016_1002.
@@ -76,7 +76,7 @@ public enum CryptoError: Error {
         case verifyingError(Error?, statusCode: Int?)
     }
 
-    /// The possible underlying reasons why a `.JWTFailed` error occurs.
+    /// The possible underlying reasons a `.JWTFailed` error occurs.
     ///
     /// - malformedJWTFormat: The input text is not a valid JWT encoded string. Code 3016_2001.
     /// - unsupportedHeaderAlgorithm: The algorithm defined in the JWT header is not supported in the
@@ -94,7 +94,7 @@ public enum CryptoError: Error {
         case claimVerifyingFailed(key: String, got: String, description: String)
     }    
 
-    /// The possible underlying reasons why an `.JWKFailed` error occurs.
+    /// The possible underlying reasons an `.JWKFailed` error occurs.
     ///
     /// - unsupportedKeyType: The key type is not supported in the LINE SDK. Code 3016_3001.
     public enum JWKErrorReason {
@@ -103,14 +103,14 @@ public enum CryptoError: Error {
         case unsupportedKeyType(String)
     }
     
-    /// The possible underlying reasons why a `.generalError` occurs.
+    /// The possible underlying reasons a `.generalError` occurs.
     ///
     /// - base64ConversionFailed: The string cannot be converted to the base64 data format. Code 3016_4001.
     /// - dataConversionFailed: The data cannot be converted to a string with the given encoding. Code
     ///                         3016_4002.
     /// - stringConversionFailed: The string cannot be converted to data with the given encoding. Code
     ///                           3016_4003.
-    /// - operationNotSupported: The operation is not supported in the current OS. Code 3016_4004.
+    /// - operationNotSupported: The operation is not supported by the current OS. Code 3016_4004.
     /// - decodingFailed: The data cannot be decoded to the target type. Code 3016_4005.
     public enum GeneralErrorReason {
         
@@ -123,7 +123,7 @@ public enum CryptoError: Error {
         /// The string cannot be converted to data with the given encoding. Code 3016_4003.
         case stringConversionFailed(string: String, encoding: String.Encoding)
         
-        /// The operation is not supported in the current OS. Code 3016_4004.
+        /// The operation is not supported by the current OS. Code 3016_4004.
         case operationNotSupported(reason: String)
         
         /// The data cannot be decoded to the target type. Code 3016_4005.
@@ -314,7 +314,7 @@ extension CryptoError.GeneralErrorReason {
 
 // MARK: - Error description
 extension CryptoError: LocalizedError {
-    /// Describes why an error occurs in human-readable text.
+    /// Describes the cause of an error in human-readable text.
     public var errorDescription: String? {
         switch self {
         case .algorithmsFailed(reason: let reason): return reason.errorDescription

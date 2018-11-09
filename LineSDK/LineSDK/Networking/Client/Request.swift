@@ -49,11 +49,11 @@ public enum HTTPMethod: String {
 /// Authentication methods specified in a `Request` object.
 ///
 /// - none: Does not use any authentication method.
-/// - token: Uses OAuth 2.0 Bearer token.
+/// - token: Uses an OAuth 2.0 Bearer token.
 public enum AuthenticateMethod {
     /// Does not use any authentication method.
     case none
-    /// Uses OAuth 2.0 Bearer token.
+    /// Uses an OAuth 2.0 Bearer token.
     case token
     
     var adapter: TokenAdapter? {
