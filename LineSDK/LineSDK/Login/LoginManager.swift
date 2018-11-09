@@ -205,7 +205,7 @@ public class LoginManager {
                     try self.verifyIDToken(token.IDToken!, key: key, process: process, userID: profile?.userID)
                 } catch {
                     if let cryptoError = error as? CryptoError {
-                        completion(.failure(LineSDKError.authorizeFailed(reason: .cryptoError(error: cryptoError))))
+                        completion(.failure(.authorizeFailed(reason: .cryptoError(error: cryptoError))))
                     } else {
                         completion(.failure(error.sdkError))
                     }
@@ -214,20 +214,16 @@ public class LoginManager {
             }
             
             // Everything goes fine now. Store token.
-            do {
+            let result = Result {
                 try AccessTokenStore.shared.setCurrentToken(token)
-            } catch {
-                completion(.failure(error.sdkError))
-                return
+            }.map {
+                LoginResult.init(
+                    accessToken: token,
+                    permissions: Set(token.permissions),
+                    userProfile: profile,
+                    friendshipStatusChanged: response.friendshipStatusChanged)
             }
-            
-            // Notice result.
-            let result = LoginResult.init(
-                accessToken: token,
-                permissions: Set(token.permissions),
-                userProfile: profile,
-                friendshipStatusChanged: response.friendshipStatusChanged)
-            completion(.success(result))
+            completion(result)
         }
     }
     

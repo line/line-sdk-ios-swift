@@ -59,12 +59,10 @@ public struct API {
         Session.shared.send(request, callbackQueue: queue) { result in
             switch result {
             case .success(let token):
-                do {
+                let reuslt = Result {
                     try AccessTokenStore.shared.setCurrentToken(token)
-                    completion(.success(token))
-                } catch {
-                    completion(.failure(error.sdkError))
-                }
+                }.map { token }
+                completion(reuslt)
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -96,12 +94,8 @@ public struct API {
         completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
     {
         func handleSuccessResult() {
-            do {
-                try AccessTokenStore.shared.removeCurrentAccessToken()
-                completion(.success(()))
-            } catch {
-                completion(.failure(error.sdkError))
-            }
+            let result = Result { try AccessTokenStore.shared.removeCurrentAccessToken() }
+            completion(result)
         }
         
         guard let token = token ?? AccessTokenStore.shared.current?.value else {

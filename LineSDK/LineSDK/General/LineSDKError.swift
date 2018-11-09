@@ -603,6 +603,17 @@ extension LineSDKError.GeneralErrorReason {
     }
 }
 
+extension Result where Error == LineSDKError {
+    init(_ throwing: () throws -> Value) {
+        do {
+            let value = try throwing()
+            self = .success(value)
+        } catch {
+            self = .failure(error.sdkError)
+        }
+    }
+}
+
 public enum LineSDKErrorUserInfoKey: String {
     case underlyingError
     case statusCode
