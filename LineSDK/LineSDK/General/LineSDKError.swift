@@ -291,24 +291,33 @@ extension LineSDKError {
     /// Checks whether this lineSDKError object's status code matches a specified value.
     ///
     /// - Parameters:
-    ///   - statusCode:  The status code to compare against the `LineSDKError` object.
+    ///   - statusCode: The HTTP status code to compare against the `LineSDKError` object.
+    /// - Returns: `true` if `self` is an `.invalidHTTPStatusAPIError` with the given `statusCode`;
+    ///            `false` otherwise.
+    public func isResponseError(statusCode: Int) -> Bool {
+        return isResponseError(statusCode: statusCode, url: nil)
+    }
+
+    /// Checks whether the `LineSDKError` occurs because of a response failing with a specified HTTP status
+    /// code.
+    ///
+    /// - Parameters:
+    ///   - statusCode: The HTTP status code to compare against the `LineSDKError` object.
     ///   - url: The URL to check with the URL of error response. If `nil`, the URL matching check is skipped.
     /// - Returns: `true` if `self` is an `.invalidHTTPStatusAPIError` with the given `statusCode` and `url`;
     ///            `false` otherwise.
-    public func isResponseError(statusCode: Int, url: URL? = nil) -> Bool {
-        if case .responseFailed(.invalidHTTPStatusAPIError(let detail)) = self {
-            let codeMatch = detail.code == statusCode
-            
-            let urlMatch: Bool
-            if let url = url {
-                urlMatch = url == detail.raw.url
-            } else {
-                urlMatch = true
-            }
-            
-            return codeMatch && urlMatch
+    func isResponseError(statusCode: Int, url: URL?) -> Bool {
+        guard case .responseFailed(.invalidHTTPStatusAPIError(let detail)) = self else {
+            return false
         }
-        return false
+
+        guard statusCode == detail.code else { return false }
+        guard let url = url else {
+            // `url` is `nil`. We can skip URL matching.
+            return true
+        }
+        guard url == detail.raw.url else { return false }
+        return true
     }
     
     /// Checks and returns whether the `LineSDKError` is a timeout error caused by the underlying URL
@@ -590,6 +599,17 @@ extension LineSDKError.GeneralErrorReason {
             userInfo[.reason] = reason
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
+    }
+}
+
+extension Result where Error == LineSDKError {
+    init(_ throwing: () throws -> Value) {
+        do {
+            let value = try throwing()
+            self = .success(value)
+        } catch {
+            self = .failure(error.sdkError)
+        }
     }
 }
 

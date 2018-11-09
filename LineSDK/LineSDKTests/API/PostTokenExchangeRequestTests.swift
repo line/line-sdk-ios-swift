@@ -36,7 +36,7 @@ import XCTest
  "iat": 1535959770,
  "nonce": "ABCABC",
  "name": "onevcat",
- "picture": "https://obs-beta.line-apps.com/xxxx",
+ "picture": "https://obs.line-apps.com/xxxx",
  "email": "abc@def.com"
  }
  */
