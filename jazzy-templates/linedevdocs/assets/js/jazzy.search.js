@@ -39,7 +39,7 @@ $(function () {
 
       $(".doc-search").on('keyup', function (e) {
         if (e.keyCode == 13) {
-          var val = $('.typeahead').typeahead('val');
+          var val = $('.doc-search').val();
           var result = searchIndex.search(val);
           if (result.length > 0){
             window.location = baseURL + result[0].ref;
