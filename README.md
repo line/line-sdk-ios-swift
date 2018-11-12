@@ -1,38 +1,45 @@
 <img src="https://git.linecorp.com/LINE-Client/linesdk-ios-swift/raw/assets/assets/sdklogo.png" width="355" height="97">
 
-# LineSDK Swift
+# LINE SDK for iOS Swift
 
-The LineSDK Swift lets you integrate LINE into your iOS app to create a more engaging experience for your users. This framework is written in pure Swift and provides an easy way to integrate LINE login, LINE APIs and other exciting features to your app.
+## Overview
+
+Developed in Swift, the LINE SDK for iOS Swift provides a modern way of implementing LINE APIs. The features included in this SDK will help you develop an iOS app with engaging and personalized user experience.
 
 ## Features
 
-After installing LINE SDK Swift, you will be provided with the following features.
+The LINE SDK for iOS Swift provides the following features.
 
-### Authentication with LINE Login
+### User authentication
 
-Allowing your users to log in to your service with their LINE accounts. With the help of LINE SDK Swift, it was never easier to integrate LINE Login into your app. Your users will automatically log in to your app without entering their LINE credentials if they are already logged in to LINE on their iOS devices. This brings you a good way to have users trying your app quickly without registration.
+This feature allows users to log in to your service with their LINE accounts. With the help of the LINE SDK for iOS Swift, it has never been easier to integrate LINE Login into your app. Your users will automatically log in to your app without entering their LINE credentials if they are already logged in to LINE on their iOS devices. This offers a great way for users to get started with your app without having to go through a registration process.
 
-### Getting Better Connection to Users
+### Utilizing user data with OpenID support
 
-Once authorized, you could identify your users by accessing your users' profile in LINE. With additional setup, you could request display name, profile image, mail address, and an unique user ID. This saves you the cost of building your own user system since you could trust and rely on LINE's account management.
+Once the user is authorized, you can get the user’s LINE profile. You can utilize the user's information registered in LINE without building your user system.
 
-## Getting Started
+The LINE SDK supports the OpenID Connect 1.0 specification. You can get ID tokens that contain the user’s LINE profile when you retrieve the access token.
 
-For a detail guide on how to use LINE SDK Swift, please refer the links below:
+## Using the SDK
 
-- Official Guide in LINE Developer
-- API Reference of LINE SDK Swift
+To use the LINE SDK with your iOS app, follow the steps below.
 
-These guides covered most useful topics of LINE SDK Swift, from installation to usage, as well as error handling best practice.
+* Create a channel. 
+* Integrate LINE Login into your iOS app using the SDK. 
+* Make API calls from your app using the SDK or from server-side through the Social API. 
 
-### Sample App
+For more information, refer to the [LINE SDK for iOS Swift guide](https://developers.line.biz/en/docs/ios-sdk/) on the [LINE Developers site](https://developers.line.biz).
 
-To have a quick and basic impression of LINE SDK Swift, you could check the Sample App in this project. Try to clone this project, build and run "LineSDKSample". If you want to try it with your own channel, please modify the app bundle ID to your app ID, and update the "LINE_CHANNEL_ID" value in `Config.xcconfig` file to your channel ID.
+### Trying the starter app
 
-## Project CI Status
+To have a quick look at the features of the LINE SDK, try our starter app by following the steps below:
 
-| **Build** | **Status** |
-|:-----------:|:------------:|
-| **Master** | [![Build Status](https://jenkins.linecorp.com/buildStatus/icon?job=com.linecorp.linesdk_swift_master)](https://jenkins.linecorp.com/view/LINE_SDK/job/com.linecorp.linesdk_swift_master/) |
-| **Pull Request** | [![Build Status](https://jenkins.linecorp.com/buildStatus/icon?job=com.linecorp.linesdk_swift_pr)](https://jenkins.linecorp.com/view/LINE_SDK/job/com.linecorp.linesdk_swift_pr/) |
+1. Clone the repository.
 
+    ```git clone https://github.com/line/line-sdk-ios-swift.git```
+
+1. Open the `LineSDK.xcworkspace` file in Xcode.
+
+1. Build the `LineSDKSample` project.
+
+The starter app launches in Simulator.
