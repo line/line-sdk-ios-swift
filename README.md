@@ -1,4 +1,4 @@
-<img src="https://git.linecorp.com/LINE-Client/linesdk-ios-swift/raw/assets/assets/sdklogo.png" width="355" height="97">
+<img src="https://raw.githubusercontent.com/line/line-sdk-ios-swift/assets/assets/sdklogo.png" width="355" height="97">
 
 # LINE SDK for iOS Swift
 
@@ -38,8 +38,8 @@ To have a quick look at the features of the LINE SDK, try our starter app by fol
 
     ```git clone https://github.com/line/line-sdk-ios-swift.git```
 
-1. Open the `LineSDK.xcworkspace` file in Xcode.
+2. Open the `LineSDK.xcworkspace` file in Xcode.
 
-1. Build the `LineSDKSample` project.
+3. Build and run the `LineSDKSample` scheme.
 
-The starter app launches in Simulator.
+The starter app should launches.
