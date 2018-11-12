@@ -42,4 +42,4 @@ To have a quick look at the features of the LINE SDK, try our starter app by fol
 
 3. Build and run the `LineSDKSample` scheme.
 
-The starter app should launches.
+The starter app should launch.
