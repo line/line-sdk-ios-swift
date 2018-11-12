@@ -21,16 +21,29 @@
 
 import Foundation
 
+/// Represents a color in format of hexadecimal string. This type provides `Codable` compatibility for
+/// a color object.
 public struct HexColor: Codable {
     
+    /// The raw string value of the hex color.
     public let rawValue: String
+
+    /// The `UIColor` representation of the hex color.
     public let color: UIColor
     
+    /// Creates a hex color from a given `UIColor` value.
+    ///
+    /// - Parameter color: The color represented by `UIColor`.
     public init(_ color: UIColor) {
         self.color = color
         self.rawValue = color.hexString()
     }
     
+    /// Creates a hex color from a given string. If the string does not represent a valid color, `default` is used.
+    ///
+    /// - Parameters:
+    ///   - rawValue: The raw string representation of the hex color.
+    ///   - default: The fallback color used to create the hex color when it fails to create a color with `rawValue`.
     public init(rawValue: String, default: UIColor) {
         self.color = UIColor(rgb: rawValue, default: `default`)
         self.rawValue = self.color.hexString()
