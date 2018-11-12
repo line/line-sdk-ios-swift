@@ -37,11 +37,11 @@ public struct LoginManagerOptions: OptionSet {
     /// Uses the web authentication flow instead of the LINE app-to-app authentication flow.
     public static let onlyWebLogin = LoginManagerOptions(rawValue: 1 << 0)
     
-    /// Includes an option to add a bot as friend in the consent screen. If `.botPromptNormal` and
+    /// Includes an option to add a bot as friend on the consent screen. If `.botPromptNormal` and
     /// `.botPromptAggressive` are set at the same time, `.botPromptAggressive` will be used.
     public static let botPromptNormal = LoginManagerOptions(rawValue: 1 << 1)
     
-    /// Opens a new screen to add a bot as a friend after the user agrees to the permissions in the consent
+    /// Opens a new screen to add a bot as a friend after the user agrees to the permissions on the consent
     /// screen. If `.botPromptNormal` and `.botPromptAggressive` is set at the same time,
     /// `.botPromptAggressive` will be used.
     public static let botPromptAggressive = LoginManagerOptions(rawValue: 1 << 2)

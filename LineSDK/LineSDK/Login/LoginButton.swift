@@ -21,7 +21,7 @@
 
 import UIKit
 
-/// Defines methods that allow you to handle different login states if you use the predefined LINE Login
+/// Defines methods that allow you to handle different login statuses if you use the predefined LINE Login
 /// button by using the `LoginButton` class.
 public protocol LoginButtonDelegate: class {
 
@@ -45,6 +45,10 @@ public protocol LoginButtonDelegate: class {
 }
 
 /// Represents a login button which executes the login function when the user taps the button.
+///
+/// - Note:
+/// To change the size of the button, use the `buttonSize` property instead of setting its frame or giving
+/// it some size constraints.
 open class LoginButton: UIButton {
 
     /// Represents the size of the login button.
@@ -131,8 +135,7 @@ open class LoginButton: UIButton {
         }
     }
 
-    /// Creates a predefined LINE Login button. The button size should be fixed. You need
-    /// to layout its x and y values.
+    /// Creates a predefined LINE Login button.
     public init() {
         super.init(frame: .zero)
         setup()

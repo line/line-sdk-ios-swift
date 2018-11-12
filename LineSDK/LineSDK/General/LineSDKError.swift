@@ -24,7 +24,7 @@ import Foundation
 /// Error types returned by the LINE SDK. It encompasses different types of errors that have their own
 /// associated reasons.
 ///
-/// You can switch over to each error to know the detailed reason and associated information. You can also
+/// You can switch over to each error to find out the reason of the error and its associated information. You can also
 /// access the `localizedDescription` property to get a human-readable text description. Access `errorCode`
 /// to get a fixed error code to identify the error type quickly. All `LineSDKError`s are under the
 /// "LineSDKError" error domain.
@@ -36,11 +36,11 @@ import Foundation
 /// - untypedError: An error not defined in the LINE SDK.
 public enum LineSDKError: Error {
     
-    /// The possible underlying reasons why a `.requestFailed` error occurs.
+    /// The possible underlying reasons a `.requestFailed` error occurs.
     ///
     /// - missingURL: The `URL` object is missing while encoding a request. Code 1001.
     /// - lackOfAccessToken: The request requires an access token but it is unavailable. Code 1002.
-    /// - jsonEncodingFailed: The request requires a JSON body but provided data cannot be encoded to
+    /// - jsonEncodingFailed: The request requires a JSON body but the provided data cannot be encoded to
     ///                       valid JSON. Code 1003.
     public enum RequestErrorReason {
         /// The `URL` object is missing while encoding a request. Code 1001.
@@ -49,15 +49,15 @@ public enum LineSDKError: Error {
         /// The request requires an access token but it is unavailable. Code 1002.
         case lackOfAccessToken
         
-        /// The request requires a JSON body but provided data cannot be encoded to valid JSON. Code 1003.
+        /// The request requires a JSON body but the provided data cannot be encoded to valid JSON. Code 1003.
         case jsonEncodingFailed(Error)
     }
     
-    /// The possible underlying reasons why a `.responseFailed` error occurs.
+    /// The possible underlying reasons a `.responseFailed` error occurs.
     ///
     /// - URLSessionError: An error occurred in the underlying `URLSession` object. Code 2001.
     /// - nonHTTPURLResponse: The response is not a valid `HTTPURLResponse` object. Code 2002.
-    /// - dataParsingFailed: The received data cannot be persed to an instance of the target type. Code
+    /// - dataParsingFailed: The received data cannot be parsed to an instance of the target type. Code
     ///                      2003.
     /// - invalidHTTPStatusAPIError: The received response contains an invalid HTTP status code. Code 2004.
     public enum ResponseErrorReason {
@@ -75,19 +75,21 @@ public enum LineSDKError: Error {
         /// The response is not a valid `HTTPURLResponse` object. Code 2002.
         case nonHTTPURLResponse
         
-        /// The received data cannot be persed to an instance of the target type. Code 2003
+        /// The received data cannot be parsed to an instance of the target type. Code 2003.
         /// - Associated values: Parsing destination type, original data, and system underlying error.
         case dataParsingFailed(Any.Type, Data, Error)
         
-        /// The received response contains an invalid HTTP status code. Code 2004.. Associated `APIErrorDetail`
-        /// contains information of the error detail. If the response data can be converted to an `APIError` object,
-        /// it will be associated with an `APIErrorDetail`, in which `error` property indicates what is going wrong.
+        /// The received response contains an invalid HTTP status code. Code 2004.
+        ///
+        /// Associated `APIErrorDetail`
+        /// contains information about the error detail. If the response data can be converted to an `APIError` object,
+        /// it will be associated with `APIErrorDetail`. The `error` property in `APIErrorDetail` indicates the cause of an error.
         /// Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and `detail.rawString` will
-        /// contain the plain response and error text respectively. Code 2004.
+        /// contain the plain response and error text respectively.
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
     
-    /// The possible underlying reasons why an `.authorizeFailed` error occurs.
+    /// The possible underlying reasons an `.authorizeFailed` error occurs.
     ///
     /// - exhaustedLoginFlow: There is no other login method left. The login process cannot be completed.
     ///                       Code 3001.
@@ -189,7 +191,7 @@ public enum LineSDKError: Error {
         case cryptoError(error: CryptoError)
     }
     
-    /// The possible underlying reasons why a `.generalError` occurs.
+    /// The possible underlying reasons `.generalError` occurs.
     ///
     /// - conversionError: Cannot convert `string` to valid data with `encoding`. Code 4001.
     /// - parameterError: The method is invoked with an invalid parameter. Code 4002.
@@ -265,9 +267,9 @@ extension LineSDKError {
         return isResponseError(statusCode: 400)
     }
     
-    /// Checks and returns whether the `LineSDKError` is a refresh token error. Usually, when the user uses
+    /// Checks and returns whether the `LineSDKError` is a refresh token error. Typically, when the user uses
     /// an expired access token to send an API request, an automatic token refresh operation with the
-    /// current refresh token will be triggered. This error usually occurs when the refresh token also
+    /// current refresh token will be triggered. This error typically occurs when the refresh token also
     /// expires or is invalid. If this error occurs, let the user log in again before you can continue to
     /// access the LINE Platform.
     public var isRefreshTokenError: Bool {
@@ -276,8 +278,8 @@ extension LineSDKError {
         return isResponseError(statusCode: 400, url: url)
     }
     
-    /// Checks and returns whether the `LineSDKError` is a permission granting error. Usually, it means you
-    /// do not have enough permission to access an endpoint of the LINE Platform.
+    /// Checks and returns whether the `LineSDKError` is a permission error. This typically means you
+    /// do not have sufficient permissions to access an endpoint of the LINE Platform.
     public var isPermissionError: Bool {
         return isResponseError(statusCode: 403)
     }
@@ -288,11 +290,10 @@ extension LineSDKError {
         return isResponseError(statusCode: 401)
     }
 
-    /// Checks whether the `LineSDKError` occurs because of a response failing with a specified HTTP status
-    /// code.
+    /// Checks whether this lineSDKError object's status code matches a specified value.
     ///
     /// - Parameters:
-    ///   - statusCode: The status code to check whether it matches with the returned HTTP status error code.
+    ///   - statusCode: The HTTP status code to compare against the `LineSDKError` object.
     /// - Returns: `true` if `self` is an `.invalidHTTPStatusAPIError` with the given `statusCode`;
     ///            `false` otherwise.
     public func isResponseError(statusCode: Int) -> Bool {
@@ -303,7 +304,7 @@ extension LineSDKError {
     /// code.
     ///
     /// - Parameters:
-    ///   - statusCode: The status code to check whether it matches with the returned HTTP status error code.
+    ///   - statusCode: The HTTP status code to compare against the `LineSDKError` object.
     ///   - url: The URL to check with the URL of error response. If `nil`, the URL matching check is skipped.
     /// - Returns: `true` if `self` is an `.invalidHTTPStatusAPIError` with the given `statusCode` and `url`;
     ///            `false` otherwise.
@@ -321,7 +322,7 @@ extension LineSDKError {
         return true
     }
     
-    /// Checks and returns whether the `LineSDKError` is a time out error caused by the underlying URL
+    /// Checks and returns whether the `LineSDKError` is a timeout error caused by the underlying URL
     /// session error.
     public var isURLSessionTimeOut: Bool {
         return isURLSessionErrorCode(sessionErrorCode: NSURLErrorTimedOut)
@@ -343,7 +344,7 @@ extension LineSDKError {
 
 // MARK: - Error description
 extension LineSDKError: LocalizedError {
-    /// Describes why an error occurs in human-readable text.
+    /// Describes the cause of an error in human-readable text.
     public var errorDescription: String? {
         switch self {
         case .requestFailed(reason: let reason): return reason.errorDescription

@@ -22,7 +22,7 @@
 import Foundation
 
 /// Represents a login manager. You can set up the LINE SDK configuration, log in and log out the user with the
-/// LINE authorization flow, and check the authorizing state.
+/// LINE authorization flow, and check the authorization status.
 public class LoginManager {
     
     let lock = NSLock()
@@ -44,7 +44,7 @@ public class LoginManager {
     }
     
     /// Checks and returns whether the user was authorized and an access token exists locally. This method
-    /// does not check whether the access token has been expired or not. To verify an access token, use the
+    /// does not check whether the access token has been expired. To verify an access token, use the
     /// `API.verifyAccessToken` method.
     public var isAuthorized: Bool {
         return AccessTokenStore.shared.current != nil
@@ -67,7 +67,7 @@ public class LoginManager {
     ///   - universalLinkURL: The universal link used to navigate back to your app from the LINE app.
     /// - Note:
     ///   Call this method before you access any other methods or properties in the LINE SDK. Call this method
-    ///   only once because the login manager cannot be set up for multiple times.
+    ///   only once because the login manager cannot be set up multiple times.
     ///
     ///   We strongly suggest that you specify a valid universal link URL. Set up your own universal link
     ///   callback for your channel by following the guide on the LINE Developers site. When the callback is set
@@ -96,10 +96,10 @@ public class LoginManager {
     /// Logs in to the LINE Platform.
     ///
     /// - Parameters:
-    ///   - permissions: The set of permissions which are requested by your app. The default value is
+    ///   - permissions: The set of permissions requested by your app. The default value is
     ///                  `[.profile]`.
-    ///   - viewController: The the view controller that presents the login view controller. If `nil`, the most
-    ///                     top view controller in the current view controller hierarchy will be used.
+    ///   - viewController: The the view controller that presents the login view controller. If `nil`, the topmost
+    ///                     view controller in the current view controller hierarchy will be used.
     ///   - options: The options used during the login process. For more information, see `LoginManagerOptions`.
     ///   - completion: The completion closure to be invoked when the login action is finished.
     /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.
@@ -244,7 +244,7 @@ public class LoginManager {
     ///              `UIApplicationDelegate` protocol.
     /// - Returns: `true` if `url` has been successfully handled; `false` otherwise.
     /// - Note: This method has the same method signature as in the methods of the `UIApplicationDelegate`
-    ///         protocol. Just pass all arguments to this method without any modification.
+    ///         protocol. Pass all arguments to this method without any modification.
     public func application(
         _ app: UIApplication,
         open url: URL?,
