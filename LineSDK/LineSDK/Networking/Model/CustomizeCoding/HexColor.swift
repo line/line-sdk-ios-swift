@@ -21,17 +21,17 @@
 
 import Foundation
 
-/// Represents a color in format of hexadecimal string. This type provides `Codable` compatibility for
-/// a color object.
+/// Represents a color in hexadecimal notation. This type provides compatibility with the `Codable` protocol
+/// for color objects.
 public struct HexColor: Codable {
     
-    /// The raw string value of the hex color.
+    /// The raw string value of the hex color code.
     public let rawValue: String
 
-    /// The `UIColor` representation of the hex color.
+    /// The `UIColor` representation of the hex color code.
     public let color: UIColor
     
-    /// Creates a hex color from a given `UIColor` value.
+    /// Creates a hex color code from a given `UIColor` value.
     ///
     /// - Parameter color: The color represented by `UIColor`.
     public init(_ color: UIColor) {
@@ -39,34 +39,39 @@ public struct HexColor: Codable {
         self.rawValue = color.hexString()
     }
     
-    /// Creates a hex color from a given string. If the string does not represent a valid color, `default` is used.
+    /// Creates a hex color code from a given string. If the string does not represent a valid color, `default` is used.
     ///
     /// - Parameters:
-    ///   - rawValue: The raw string representation of the hex color.
-    ///   - default: The fallback color used to create the hex color when it fails to create a color with `rawValue`.
+    ///   - rawValue: The raw string representation of the hex color code.
+    ///   - default: The fallback color used to create the hex color code when a color cannot be created
+    ///              with `rawValue`.
     public init(rawValue: String, default: UIColor) {
         self.color = UIColor(rgb: rawValue, default: `default`)
         self.rawValue = self.color.hexString()
     }
     
+    /// :nodoc:
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let rawValue = try container.decode(String.self)
         self.init(rawValue: rawValue, default: .white)
     }
-    
+
+    /// :nodoc:
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(rawValue)
     }
 }
 
+/// :nodoc:
 extension HexColor: Equatable {
     public static func == (lhs: HexColor, rhs: HexColor) -> Bool {
         return lhs.rawValue.lowercased() == rhs.rawValue.lowercased()
     }
 }
 
+/// :nodoc:
 extension HexColor: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(rawValue: value, default: .white)
