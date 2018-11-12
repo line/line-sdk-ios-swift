@@ -81,7 +81,7 @@ public enum LineSDKError: Error {
         
         /// The received response contains an invalid HTTP status code. Code 2004.
         ///
-        ///Associated `APIErrorDetail`
+        /// Associated `APIErrorDetail`
         /// contains information about the error detail. If the response data can be converted to an `APIError` object,
         /// it will be associated with `APIErrorDetail`. The `error` property in `APIErrorDetail` indicates the cause of an error.
         /// Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and `detail.rawString` will
