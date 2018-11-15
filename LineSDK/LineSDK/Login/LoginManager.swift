@@ -334,8 +334,9 @@ extension LoginManager {
         try payload.verify(keyPath: \.audience, expected: process.configuration.channelID)
         
         let now = Date()
-        try payload.verify(keyPath: \.expiration, laterThan: now)
-        try payload.verify(keyPath: \.issueAt, earlierThan: now)
+        let allowedClockSkew: TimeInterval = 5 * 60
+        try payload.verify(keyPath: \.expiration, laterThan: now.addingTimeInterval(-allowedClockSkew))
+        try payload.verify(keyPath: \.issueAt, earlierThan: now.addingTimeInterval(allowedClockSkew))
         try payload.verify(keyPath: \.nonce, expected: process.tokenIDNonce!)
     }
 }
