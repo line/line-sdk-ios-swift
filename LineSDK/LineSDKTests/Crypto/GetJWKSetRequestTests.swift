@@ -31,7 +31,7 @@ extension GetJWKSetRequest: ResponseDataStub {
 class GetJWKSetRequestTests: APITests {
 
     func testSuccess() {
-        let r = GetJWKSetRequest(url: URL(string: "https://sample.com")!)
+        let r = GetJWKSetRequest(url: URL(string: "https://example.com")!)
         runTestSuccess(for: r) { result in
             XCTAssertEqual(result.keys.count, 4)
         }

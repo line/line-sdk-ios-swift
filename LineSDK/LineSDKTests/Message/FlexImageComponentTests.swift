@@ -51,16 +51,16 @@ extension FlexImageComponent: MessageSample {
 class FlexImageComponentTests: XCTestCase {
 
     func testImageComponentEncode() {
-        let url = URL(string: "https://sample.com")!
+        let url = URL(string: "https://example.com")!
         let component = try! FlexImageComponent(url: url)
         let dic = FlexMessageComponent.image(component).json
         assertEqual(in: dic, forKey: "type", value: "image")
-        assertEqual(in: dic, forKey: "url", value: "https://sample.com")
+        assertEqual(in: dic, forKey: "url", value: "https://example.com")
         XCTAssertNil(dic["flex"])
     }
     
     func testImageComponentFullEncode() {
-        let url = URL(string: "https://sample.com")!
+        let url = URL(string: "https://example.com")!
         var component = try! FlexImageComponent(url: url)
         component.flex = 1
         component.margin = .lg
@@ -74,7 +74,7 @@ class FlexImageComponentTests: XCTestCase {
         
         let dic = FlexMessageComponent.image(component).json
         assertEqual(in: dic, forKey: "type", value: "image")
-        assertEqual(in: dic, forKey: "url", value: "https://sample.com")
+        assertEqual(in: dic, forKey: "url", value: "https://example.com")
         assertEqual(in: dic, forKey: "flex", value: 1)
         assertEqual(in: dic, forKey: "margin", value: "lg")
         assertEqual(in: dic, forKey: "gravity", value: "bottom")

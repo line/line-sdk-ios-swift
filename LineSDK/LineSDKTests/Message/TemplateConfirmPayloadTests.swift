@@ -52,8 +52,8 @@ class TemplateConfirmPayloadTests: XCTestCase {
     func testTemplateConfirmPayloadEncoding() {
         let message = TemplateConfirmPayload(
             text: "123",
-            confirmAction: MessageURIAction(label: "OK", uri: URL(string: "https://sample.com")!),
-            cancelAction: MessageURIAction(label: "Cancel", uri: URL(string: "https://cancel.com")!))
+            confirmAction: MessageURIAction(label: "OK", uri: URL(string: "https://example.com")!),
+            cancelAction: MessageURIAction(label: "Cancel", uri: URL(string: "https://example.com/cancel")!))
         let dic = TemplateMessagePayload.confirm(message).json
         assertEqual(in: dic, forKey: "type", value: "confirm")
         assertEqual(in: dic, forKey: "text", value: "123")
@@ -63,11 +63,11 @@ class TemplateConfirmPayloadTests: XCTestCase {
         
         let action1 = actions[0]
         assertEqual(in: action1, forKey: "label", value: "OK")
-        assertEqual(in: action1, forKey: "uri", value: "https://sample.com")
+        assertEqual(in: action1, forKey: "uri", value: "https://example.com")
         
         let action2 = actions[1]
         assertEqual(in: action2, forKey: "label", value: "Cancel")
-        assertEqual(in: action2, forKey: "uri", value: "https://cancel.com")
+        assertEqual(in: action2, forKey: "uri", value: "https://example.com/cancel")
     }
     
     func testTemplateConfirmPayloadDecoding() {

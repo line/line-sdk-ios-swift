@@ -32,7 +32,7 @@ class FlexBoxComponentTests: XCTestCase {
     }
     
     func testBoxComponentContentEncode() {
-        let url = URL(string: "https://sample.com")!
+        let url = URL(string: "https://example.com")!
         var imageComponent = try! FlexImageComponent(url: url)
         imageComponent.gravity = .top
         
@@ -45,12 +45,12 @@ class FlexBoxComponentTests: XCTestCase {
         XCTAssertEqual(contents.count, 1)
         let contentDic = contents[0]
         assertEqual(in: contentDic, forKey: "type", value: "image")
-        assertEqual(in: contentDic, forKey: "url", value: "https://sample.com")
+        assertEqual(in: contentDic, forKey: "url", value: "https://example.com")
         assertEqual(in: contentDic, forKey: "gravity", value: "top")
     }
     
     func testBoxComponentMultipleContentsEncode() {
-        let url = URL(string: "https://sample.com")!
+        let url = URL(string: "https://example.com")!
         var imageComponent = try! FlexImageComponent(url: url)
         imageComponent.gravity = .top
         
@@ -73,12 +73,12 @@ class FlexBoxComponentTests: XCTestCase {
         
         let imageDic = contents[1]
         assertEqual(in: imageDic, forKey: "type", value: "image")
-        assertEqual(in: imageDic, forKey: "url", value: "https://sample.com")
+        assertEqual(in: imageDic, forKey: "url", value: "https://example.com")
         assertEqual(in: imageDic, forKey: "gravity", value: "top")
     }
     
     func testBoxComponentNestedContentEncode() {
-        let url = URL(string: "https://sample.com")!
+        let url = URL(string: "https://example.com")!
         var imageComponent = try! FlexImageComponent(url: url)
         imageComponent.gravity = .top
         
@@ -99,7 +99,7 @@ class FlexBoxComponentTests: XCTestCase {
         XCTAssertEqual(nestedContent.count, 1)
         let contentDic = nestedContent[0]
         assertEqual(in: contentDic, forKey: "type", value: "image")
-        assertEqual(in: contentDic, forKey: "url", value: "https://sample.com")
+        assertEqual(in: contentDic, forKey: "url", value: "https://example.com")
         assertEqual(in: contentDic, forKey: "gravity", value: "top")
     }
 }

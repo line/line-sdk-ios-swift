@@ -37,7 +37,7 @@ extension TextMessage: MessageSample {
           "text": "Hello, world",
           "sentBy": {
             "label": "onevcat",
-            "iconUrl": "https://sample.com"
+            "iconUrl": "https://example.com"
           }
         }
         """,
@@ -59,7 +59,7 @@ class TextMessageTests: XCTestCase {
     }
     
     func testTextMessageWithSenderEncoding() {
-        let sender = MessageSender(label: "user", iconURL: URL(string: "https://sample.com")!, linkURL: nil)
+        let sender = MessageSender(label: "user", iconURL: URL(string: "https://example.com")!, linkURL: nil)
         let textMessageWithSender = TextMessage(text: "test", sender: sender)
         let message = Message.text(textMessageWithSender)
         
@@ -69,7 +69,7 @@ class TextMessageTests: XCTestCase {
         XCTAssertNotNil(dic["sentBy"])
         
         let sentBy = dic["sentBy"] as! [String: Any]
-        assertEqual(in: sentBy, forKey: "iconUrl", value: "https://sample.com")
+        assertEqual(in: sentBy, forKey: "iconUrl", value: "https://example.com")
         XCTAssertNil(sentBy["linkUrl"])
     }
     
@@ -85,7 +85,7 @@ class TextMessageTests: XCTestCase {
         
         XCTAssertNotNil(result[1].sender)
         XCTAssertEqual(result[1].sender!.label, "onevcat")
-        XCTAssertEqual(result[1].sender!.iconURL, URL(string: "https://sample.com")!)
+        XCTAssertEqual(result[1].sender!.iconURL, URL(string: "https://example.com")!)
         XCTAssertNil(result[1].sender!.linkURL)
     }
 }

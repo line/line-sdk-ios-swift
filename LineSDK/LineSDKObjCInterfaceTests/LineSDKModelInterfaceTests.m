@@ -131,7 +131,7 @@
     }];
     
     BOOL opened = [manager application:[UIApplication sharedApplication]
-                                  open:[NSURL URLWithString:@"https://sample.com"]
+                                  open:[NSURL URLWithString:@"https://example.com"]
                                options:@{}];
     XCTAssertFalse(opened);
     

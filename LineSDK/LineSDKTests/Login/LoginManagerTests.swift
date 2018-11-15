@@ -28,7 +28,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     
     override func setUp() {
         super.setUp()
-        let url = URL(string: "https://sample.com/auth")
+        let url = URL(string: "https://example.com/auth")
         LoginManager.shared.setup(channelID: "123", universalLinkURL: url)
     }
     

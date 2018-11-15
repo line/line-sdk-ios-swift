@@ -39,15 +39,15 @@ extension VideoMessage: MessageSample {
 class VideoMessageTests: XCTestCase {
     
     func testVideoMessageEncoding() {
-        let contentURL = URL(string: "https://sample.com/original.mp4")!
-        let previewImageURL = URL(string: "https://sample.com/preview.jpg")!
+        let contentURL = URL(string: "https://example.com/original.mp4")!
+        let previewImageURL = URL(string: "https://example.com/preview.jpg")!
         let videoMessage = try! VideoMessage(originalContentURL: contentURL, previewImageURL: previewImageURL)
         let message = Message.video(videoMessage)
         
         let dic = message.json
         assertEqual(in: dic, forKey: "type", value: "video")
-        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://sample.com/original.mp4")
-        assertEqual(in: dic, forKey: "previewImageUrl", value: "https://sample.com/preview.jpg")
+        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://example.com/original.mp4")
+        assertEqual(in: dic, forKey: "previewImageUrl", value: "https://example.com/preview.jpg")
     }
  
     func testVideoMessageDecoding() {
@@ -61,8 +61,8 @@ class VideoMessageTests: XCTestCase {
     }
     
     func testVideoMessageInitThrows() {
-        let contentURL = URL(string: "http://sample.com/original.png")!
-        let previewImageURL = URL(string: "/sample.com/preview.png")!
+        let contentURL = URL(string: "http://example.com/original.png")!
+        let previewImageURL = URL(string: "/example.com/preview.png")!
         XCTAssertThrowsError(
             try VideoMessage.init(
                 originalContentURL: contentURL,
@@ -76,7 +76,7 @@ class VideoMessageTests: XCTestCase {
             XCTAssertEqual(name, "originalContentURL")
         }
         
-        let correctContentURL = URL(string: "https://sample.com/original.png")!
+        let correctContentURL = URL(string: "https://example.com/original.png")!
         XCTAssertThrowsError(
             try VideoMessage.init(
                 originalContentURL: correctContentURL,

@@ -41,7 +41,7 @@ extension ImageMessage: MessageSample {
           "previewImageUrl": "https://example.com/preview.jpg",
           "sentBy": {
             "label": "onevcat",
-            "iconUrl": "https://sample.com"
+            "iconUrl": "https://example.com"
           }
         }
         """
@@ -52,8 +52,8 @@ extension ImageMessage: MessageSample {
 class ImageMessageTests: XCTestCase {
     
     func testImageMessageEncoding() {
-        let contentURL = URL(string: "https://sample.com/original.png")!
-        let previewImageURL = URL(string: "https://sample.com/preview.png")!
+        let contentURL = URL(string: "https://example.com/original.png")!
+        let previewImageURL = URL(string: "https://example.com/preview.png")!
         let imageMessage = try! ImageMessage(
             originalContentURL: contentURL,
             previewImageURL: previewImageURL,
@@ -64,8 +64,8 @@ class ImageMessageTests: XCTestCase {
         
         let dic = message.json
         assertEqual(in: dic, forKey: "type", value: "image")
-        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://sample.com/original.png")
-        assertEqual(in: dic, forKey: "previewImageUrl", value: "https://sample.com/preview.png")
+        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://example.com/original.png")
+        assertEqual(in: dic, forKey: "previewImageUrl", value: "https://example.com/preview.png")
         assertEqual(in: dic, forKey: "animated", value: false)
         assertEqual(in: dic, forKey: "extension", value: "png")
         XCTAssertNil(dic["sentBy"])
@@ -73,9 +73,9 @@ class ImageMessageTests: XCTestCase {
     
     func testImageMessageWithSenderEncoding() {
         
-        let contentURL = URL(string: "https://sample.com/original.png")!
-        let previewImageURL = URL(string: "https://sample.com/preview.png")!
-        let sender = MessageSender(label: "user", iconURL: URL(string: "https://sample.com")!, linkURL: nil)
+        let contentURL = URL(string: "https://example.com/original.png")!
+        let previewImageURL = URL(string: "https://example.com/preview.png")!
+        let sender = MessageSender(label: "user", iconURL: URL(string: "https://example.com")!, linkURL: nil)
         
         let imageMessageWithSender = try! ImageMessage(
             originalContentURL: contentURL,
@@ -85,14 +85,14 @@ class ImageMessageTests: XCTestCase {
         
         let dic = message.json
         assertEqual(in: dic, forKey: "type", value: "image")
-        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://sample.com/original.png")
-        assertEqual(in: dic, forKey: "previewImageUrl", value: "https://sample.com/preview.png")
+        assertEqual(in: dic, forKey: "originalContentUrl", value: "https://example.com/original.png")
+        assertEqual(in: dic, forKey: "previewImageUrl", value: "https://example.com/preview.png")
         XCTAssertNil(dic["animated"])
         XCTAssertNil(dic["extension"])
         XCTAssertNotNil(dic["sentBy"])
         
         let sentBy = dic["sentBy"] as! [String: Any]
-        assertEqual(in: sentBy, forKey: "iconUrl", value: "https://sample.com")
+        assertEqual(in: sentBy, forKey: "iconUrl", value: "https://example.com")
         XCTAssertNil(sentBy["linkUrl"])
     }
     
@@ -116,13 +116,13 @@ class ImageMessageTests: XCTestCase {
         XCTAssertNil(result[1].fileExtension)
         XCTAssertNotNil(result[1].sender)
         XCTAssertEqual(result[1].sender!.label, "onevcat")
-        XCTAssertEqual(result[1].sender!.iconURL, URL(string: "https://sample.com")!)
+        XCTAssertEqual(result[1].sender!.iconURL, URL(string: "https://example.com")!)
         XCTAssertNil(result[1].sender!.linkURL)
     }
     
     func testImageMessageInitThrows() {
-        let contentURL = URL(string: "http://sample.com/original.png")!
-        let previewImageURL = URL(string: "/sample.com/preview.png")!
+        let contentURL = URL(string: "http://example.com/original.png")!
+        let previewImageURL = URL(string: "/example.com/preview.png")!
         XCTAssertThrowsError(
             try ImageMessage.init(
                 originalContentURL: contentURL,
@@ -136,7 +136,7 @@ class ImageMessageTests: XCTestCase {
             XCTAssertEqual(name, "originalContentURL")
         }
         
-        let correctContentURL = URL(string: "https://sample.com/original.png")!
+        let correctContentURL = URL(string: "https://example.com/original.png")!
         XCTAssertThrowsError(
             try ImageMessage.init(
                 originalContentURL: correctContentURL,

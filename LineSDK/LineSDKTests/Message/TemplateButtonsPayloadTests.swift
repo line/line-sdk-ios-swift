@@ -28,7 +28,7 @@ extension TemplateButtonsPayload: MessageSample {
         """
         {
           "type": "buttons",
-          "thumbnailImageUrl": "https://sample.com",
+          "thumbnailImageUrl": "https://example.com",
           "title": "title",
           "text": "text",
           "actions": [
@@ -48,7 +48,7 @@ extension TemplateButtonsPayload: MessageSample {
         """
         {
           "type": "buttons",
-          "thumbnailImageUrl": "https://sample.com",
+          "thumbnailImageUrl": "https://example.com",
           "text": "text",
           "actions": [],
           "imageAspectRatio": "unknown",
@@ -59,7 +59,7 @@ extension TemplateButtonsPayload: MessageSample {
         """
         {
           "type": "buttons",
-          "thumbnailImageUrl": "https://sample.com",
+          "thumbnailImageUrl": "https://example.com",
           "text": "text",
           "actions": [],
           "imageAspectRatio": "square",
@@ -79,7 +79,7 @@ class TemplateButtonsPayloadTests: XCTestCase {
         
         var message = TemplateButtonsPayload(title: "world", text: "hello", actions: [action])
         message.defaultAction = action
-        message.thumbnailImageURL = URL(string: "https://sample.com")
+        message.thumbnailImageURL = URL(string: "https://example.com")
         message.imageContentMode = .aspectFit
         message.imageBackgroundColor = HexColor(.red)
         
@@ -89,7 +89,7 @@ class TemplateButtonsPayloadTests: XCTestCase {
         assertEqual(in: dic, forKey: "type", value: "buttons")
         assertEqual(in: dic, forKey: "text", value: "hello")
         assertEqual(in: dic, forKey: "title", value: "world")
-        assertEqual(in: dic, forKey: "thumbnailImageUrl", value: "https://sample.com")
+        assertEqual(in: dic, forKey: "thumbnailImageUrl", value: "https://example.com")
         assertEqual(in: dic, forKey: "imageSize", value: "contain")
         assertEqual(in: dic, forKey: "imageBackgroundColor", value: "#FF0000")
         
@@ -104,7 +104,7 @@ class TemplateButtonsPayloadTests: XCTestCase {
             .map { try! decoder.decode(TemplateMessagePayload.self, from: $0) }
             .map { $0.asButtonsPayload! }
         XCTAssertEqual(result[0].type, .buttons)
-        XCTAssertEqual(result[0].thumbnailImageURL, URL(string: "https://sample.com")!)
+        XCTAssertEqual(result[0].thumbnailImageURL, URL(string: "https://example.com")!)
         XCTAssertEqual(result[0].title, "title")
         XCTAssertEqual(result[0].text, "text")
         XCTAssertEqual(result[0].actions.count, 2)

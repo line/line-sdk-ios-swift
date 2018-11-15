@@ -44,7 +44,7 @@ extension FlexButtonComponent: MessageSample {
 class FlexButtonComponentTests: XCTestCase {
     
     func testButtonComponentEncode() {
-        let action = MessageURIAction(label: "action", uri: URL(string: "https://sample.com")!)
+        let action = MessageURIAction(label: "action", uri: URL(string: "https://example.com")!)
         let component = FlexButtonComponent(action: action)
         let dic = FlexMessageComponent.button(component).json
         
@@ -52,7 +52,7 @@ class FlexButtonComponentTests: XCTestCase {
         
         let actionDic = dic["action"] as! [String: Any]
         assertEqual(in: actionDic, forKey: "label", value: "action")
-        assertEqual(in: actionDic, forKey: "uri", value: "https://sample.com")
+        assertEqual(in: actionDic, forKey: "uri", value: "https://example.com")
         
         XCTAssertNil(dic["flex"])
         XCTAssertNil(dic["margin"])
@@ -63,7 +63,7 @@ class FlexButtonComponentTests: XCTestCase {
     }
     
     func testButtonComponentFullEncode() {
-        let action = MessageURIAction(label: "action", uri: URL(string: "https://sample.com")!)
+        let action = MessageURIAction(label: "action", uri: URL(string: "https://example.com")!)
         var component = FlexButtonComponent(action: action)
         component.flex = 1
         component.margin = .lg

@@ -29,7 +29,7 @@ class LoginConfigurationTests: XCTestCase {
         
         let results = [
             "/somePath/",
-            "https://sample.com",
+            "https://example.com",
             "randomUrl://authorize",
             "\(Constant.thirdPartyAppReturnScheme)://somePath/",
             
@@ -45,20 +45,20 @@ class LoginConfigurationTests: XCTestCase {
     }
     
     func testValidUniversalLinkURL() {
-        let url = URL(string: "https://sample.com/auth/")
+        let url = URL(string: "https://example.com/auth/")
         let config = LoginConfiguration(channelID: "123", universalLinkURL: url)
         
         let results = [
-            "https://sample.com",
-            "https://sample.com/auth/other",
+            "https://example.com",
+            "https://example.com/auth/other",
             "https://domain.com/auth",
             "randomUrl://auth",
-            "http://sample.com/auth",
+            "http://example.com/auth",
             
-            "https://sample.com/auth",
-            "https://sample.com/auth?code=123",
-            "https://SAMPLE.com/Auth/?code=123",
-            "HTTPS://sample.com/auth",
+            "https://example.com/auth",
+            "https://example.com/auth?code=123",
+            "https://example.com/Auth/?code=123",
+            "HTTPS://example.com/auth",
         ].map { config.isValidUniversalLinkURL(url: URL(string: $0)!) }
         XCTAssertEqual(results, [
             false, false, false, false, false,
@@ -68,7 +68,7 @@ class LoginConfigurationTests: XCTestCase {
     
     func testInvalidUniversalLinkURLIfNotSet() {
         let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
-        let result = config.isValidUniversalLinkURL(url: URL(string: "https://sample.com")!)
+        let result = config.isValidUniversalLinkURL(url: URL(string: "https://example.com")!)
         XCTAssertEqual(result, false)
     }
     

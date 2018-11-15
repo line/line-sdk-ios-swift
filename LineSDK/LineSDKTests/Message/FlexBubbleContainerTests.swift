@@ -105,7 +105,7 @@ class FlexBubbleContainerTests: XCTestCase {
         }()
         
         container.hero = {
-            return try! FlexImageComponent(url: URL(string: "https://sample.com")!)
+            return try! FlexImageComponent(url: URL(string: "https://example.com")!)
         }()
         
         container.body = {

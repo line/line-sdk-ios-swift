@@ -29,7 +29,7 @@ extension MessageURIAction: MessageSample {
         {
           "type": "uri",
           "label": "tap me",
-          "uri": "https://sample.com"
+          "uri": "https://example.com"
         }
         """
         ]
@@ -55,6 +55,6 @@ class TemplateMessageActionTests: XCTestCase {
         
         XCTAssertEqual(result[0].type, .URI)
         XCTAssertEqual(result[0].label, "tap me")
-        XCTAssertEqual(result[0].uri, URL(string: "https://sample.com"))
+        XCTAssertEqual(result[0].uri, URL(string: "https://example.com"))
     }
 }

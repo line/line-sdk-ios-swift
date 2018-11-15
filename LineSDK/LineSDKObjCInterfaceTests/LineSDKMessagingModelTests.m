@@ -31,8 +31,8 @@
 - (void)testMessageSenderInterface {
     LineSDKMessageSender *sender = [
                                     [LineSDKMessageSender alloc] initWithLabel:@"123"
-                                    iconURL:[NSURL URLWithString:@"https://sample.com"]
-                                    linkURL:[NSURL URLWithString:@"https://sample.com"]];
+                                    iconURL:[NSURL URLWithString:@"https://example.com"]
+                                    linkURL:[NSURL URLWithString:@"https://example.com"]];
     [sender setLabel:@"456"];
     XCTAssertEqual([sender label], @"456");
     
@@ -45,8 +45,8 @@
 - (void)testTextMessageInterface {
     LineSDKMessageSender *sender = [
                                     [LineSDKMessageSender alloc] initWithLabel:@"123"
-                                    iconURL:[NSURL URLWithString:@"https://sample.com"]
-                                    linkURL:[NSURL URLWithString:@"https://sample.com"]];
+                                    iconURL:[NSURL URLWithString:@"https://example.com"]
+                                    linkURL:[NSURL URLWithString:@"https://example.com"]];
     LineSDKTextMessage *message = [[LineSDKTextMessage alloc] initWithText:@"hello" sender:sender];
     message.sender.label = @"456";
     XCTAssertEqual([message.sender label], @"456");
@@ -61,8 +61,8 @@
 - (void)testImageMessageInterface {
     LineSDKMessageSender *sender = [
                                     [LineSDKMessageSender alloc] initWithLabel:@"123"
-                                    iconURL:[NSURL URLWithString:@"https://sample.com"]
-                                    linkURL:[NSURL URLWithString:@"https://sample.com"]];
+                                    iconURL:[NSURL URLWithString:@"https://example.com"]
+                                    linkURL:[NSURL URLWithString:@"https://example.com"]];
     
     NSURL *url = [NSURL URLWithString:@"https://example.com"];
     LineSDKImageMessage *message1 = [[LineSDKImageMessage alloc]
@@ -130,9 +130,9 @@
 - (void)testMessageActionInterface {
     LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"action"
-                                       uri:[NSURL URLWithString:@"https://sample.com"]];
+                                       uri:[NSURL URLWithString:@"https://example.com"]];
     XCTAssertEqual(action.label, @"action");
-    XCTAssertEqual(action.uri.absoluteString, @"https://sample.com");
+    XCTAssertEqual(action.uri.absoluteString, @"https://example.com");
     
     XCTAssertNotEqual([action URIAction], action);
     XCTAssertEqual([action URIAction].label, action.label);
@@ -142,7 +142,7 @@
 - (void)testTemplateMessagePayloadInterface {
     LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"action"
-                                       uri:[NSURL URLWithString:@"https://sample.com"]];
+                                       uri:[NSURL URLWithString:@"https://example.com"]];
     LineSDKTemplateButtonsPayload *payload = [[LineSDKTemplateButtonsPayload alloc]
                                               initWithTitle:@"title"
                                               text:@"text"
@@ -158,7 +158,7 @@
 - (void)testTemplateButtonsPayloadInterface {
     LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"action"
-                                       uri:[NSURL URLWithString:@"https://sample.com"]];
+                                       uri:[NSURL URLWithString:@"https://example.com"]];
     LineSDKTemplateButtonsPayload *payload = [[LineSDKTemplateButtonsPayload alloc]
                                               initWithTitle:@"title"
                                               text:@"text"
@@ -185,10 +185,10 @@
 - (void)testTemplateConfirmPayloadInterface {
     LineSDKMessageURIAction *confirm = [[LineSDKMessageURIAction alloc]
                                         initWithLabel:@"confirm"
-                                        uri:[NSURL URLWithString:@"https://sample.com/confirm"]];
+                                        uri:[NSURL URLWithString:@"https://example.com/confirm"]];
     LineSDKMessageURIAction *cancel = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"cancel"
-                                       uri:[NSURL URLWithString:@"https://sample.com/cancel"]];
+                                       uri:[NSURL URLWithString:@"https://example.com/cancel"]];
     LineSDKTemplateConfirmPayload *payload = [[LineSDKTemplateConfirmPayload alloc]
                                               initWithText:@"Text"
                                               confirmAction:confirm
@@ -204,7 +204,7 @@
 - (void)testTemplateCarouselPayloadColumnInterface {
     LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"action"
-                                       uri:[NSURL URLWithString:@"https://sample.com"]];
+                                       uri:[NSURL URLWithString:@"https://example.com"]];
     LineSDKTemplateCarouselPayloadColumn *column = [[LineSDKTemplateCarouselPayloadColumn alloc]
                                                     initWithTitle:@"title"
                                                     text:@"text"
@@ -226,7 +226,7 @@
 - (void)testTemplateCarouselPayloadInterface {
     LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"action"
-                                       uri:[NSURL URLWithString:@"https://sample.com"]];
+                                       uri:[NSURL URLWithString:@"https://example.com"]];
     LineSDKTemplateCarouselPayloadColumn *column = [[LineSDKTemplateCarouselPayloadColumn alloc]
                                                     initWithTitle:@"title"
                                                     text:@"text"
@@ -248,7 +248,7 @@
 - (void)testTemplateImageCarouselPayloadColumnInterface {
     LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"action"
-                                       uri:[NSURL URLWithString:@"https://sample.com"]];
+                                       uri:[NSURL URLWithString:@"https://example.com"]];
     LineSDKTemplateImageCarouselPayloadColumn *column = [[LineSDKTemplateImageCarouselPayloadColumn alloc]
                                                          initWithImageURL:[NSURL URLWithString:@"https://image.com"]
                                                          action:action];
@@ -259,7 +259,7 @@
 - (void)testTemplateImageCarouselPayloadInterface {
     LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"action"
-                                       uri:[NSURL URLWithString:@"https://sample.com"]];
+                                       uri:[NSURL URLWithString:@"https://example.com"]];
     LineSDKTemplateImageCarouselPayloadColumn *column = [[LineSDKTemplateImageCarouselPayloadColumn alloc]
                                                          initWithImageURL:[NSURL URLWithString:@"https://image.com"]
                                                          action:action];
@@ -405,7 +405,7 @@
 - (void)testFlexButtonComponentInterface {
     LineSDKMessageURIAction *action = [[LineSDKMessageURIAction alloc]
                                        initWithLabel:@"action"
-                                       uri:[NSURL URLWithString:@"https://sample.com"]];
+                                       uri:[NSURL URLWithString:@"https://example.com"]];
     LineSDKFlexButtonComponent *component = [[LineSDKFlexButtonComponent alloc] initWithAction:action];
     component.flex = @3;
     component.margin = LineSDKFlexMessageComponentMarginSm;
@@ -419,7 +419,7 @@
 
 - (void)testFlexImageComponentInterface {
     LineSDKFlexImageComponent *component = [[LineSDKFlexImageComponent alloc]
-                                            initWithImageURL:[NSURL URLWithString:@"https://sample.com"]];
+                                            initWithImageURL:[NSURL URLWithString:@"https://example.com"]];
     component.flex = @3;
     component.margin = LineSDKFlexMessageComponentMarginXs;
     component.size = LineSDKFlexMessageComponentSizeLg;
@@ -429,8 +429,8 @@
     component.aspectRatio = LineSDKFlexMessageComponentAspectRatioRatio_1x3;
     component.aspectMode = LineSDKFlexMessageComponentAspectModeFill;
     component.backgroundColor = nil;
-    XCTAssertEqual(component.url.absoluteString, @"https://sample.com");
-    XCTAssertEqual([component imageComponent].url.absoluteString, @"https://sample.com");
+    XCTAssertEqual(component.url.absoluteString, @"https://example.com");
+    XCTAssertEqual([component imageComponent].url.absoluteString, @"https://example.com");
 }
 
 - (void)testFlexFillerComponentInterface {
@@ -459,7 +459,7 @@
 
 - (void)testFlexIconComponentInterface {
     LineSDKFlexIconComponent *component = [[LineSDKFlexIconComponent alloc]
-                                           initWithIconURL:[NSURL URLWithString:@"https://sample.com"]];
+                                           initWithIconURL:[NSURL URLWithString:@"https://example.com"]];
     component.margin = LineSDKFlexMessageComponentMarginMd;
     component.size = LineSDKFlexMessageComponentSizeMd;
     component.aspectRatio = LineSDKFlexMessageComponentAspectRatioRatio_2x1;
@@ -484,7 +484,7 @@
 
 - (void)testFlexBubbleContainerInterface {
     LineSDKFlexImageComponent *image = [[LineSDKFlexImageComponent alloc]
-                                        initWithImageURL:[NSURL URLWithString:@"https://sample.com"]];
+                                        initWithImageURL:[NSURL URLWithString:@"https://example.com"]];
     LineSDKFlexBoxComponent *box = [[LineSDKFlexBoxComponent alloc]
                                     initWithLayout:LineSDKFlexMessageComponentLayoutHorizontal contents:@[image]];
     LineSDKFlexBubbleContainer *container = [[LineSDKFlexBubbleContainer alloc] init];
@@ -499,7 +499,7 @@
 
 - (void)testFlexCarouselContainerInterface {
     LineSDKFlexImageComponent *image = [[LineSDKFlexImageComponent alloc]
-                                        initWithImageURL:[NSURL URLWithString:@"https://sample.com"]];
+                                        initWithImageURL:[NSURL URLWithString:@"https://example.com"]];
     LineSDKFlexBoxComponent *box = [[LineSDKFlexBoxComponent alloc]
                                     initWithLayout:LineSDKFlexMessageComponentLayoutHorizontal contents:@[image]];
     LineSDKFlexBubbleContainer *bubble = [[LineSDKFlexBubbleContainer alloc] init];
@@ -512,7 +512,7 @@
 
 -(void)testFlexMessageInterface {
     LineSDKFlexImageComponent *image = [[LineSDKFlexImageComponent alloc]
-                                        initWithImageURL:[NSURL URLWithString:@"https://sample.com"]];
+                                        initWithImageURL:[NSURL URLWithString:@"https://example.com"]];
     LineSDKFlexBoxComponent *box = [[LineSDKFlexBoxComponent alloc]
                                     initWithLayout:LineSDKFlexMessageComponentLayoutHorizontal contents:@[image]];
     LineSDKFlexBubbleContainer *container = [[LineSDKFlexBubbleContainer alloc] init];

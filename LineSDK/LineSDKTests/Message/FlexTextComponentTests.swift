@@ -70,7 +70,7 @@ class FlexTextComponentTests: XCTestCase {
         component.maxLines = 5
         component.weight = .bold
         component.color = HexColor(.red)
-        component.setAction(MessageURIAction(label: "action", uri: URL(string: "https://sample.com")!))
+        component.setAction(MessageURIAction(label: "action", uri: URL(string: "https://example.com")!))
         
         let dic = FlexMessageComponent.text(component).json
         assertEqual(in: dic, forKey: "text", value: "world")

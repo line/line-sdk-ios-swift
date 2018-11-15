@@ -34,7 +34,7 @@ extension TemplateImageCarouselPayload: MessageSample {
               "action": {
                 "type": "uri",
                 "label": "action 1",
-                "uri": "https://sample.com"
+                "uri": "https://example.com"
               }
             },
             {
@@ -42,7 +42,7 @@ extension TemplateImageCarouselPayload: MessageSample {
               "action": {
                 "type": "uri",
                 "label": "action 2",
-                "uri": "https://sample.com"
+                "uri": "https://example.com"
               }
             }
           ]
@@ -58,13 +58,13 @@ class TemplateImageCarouselPayloadTests: XCTestCase {
         let action = MessageAction.URI(uriAction)
         
         let column = try! TemplateImageCarouselPayload.Column(
-            imageURL: URL(string: "https://sample.com")!,
+            imageURL: URL(string: "https://example.com")!,
             action: action
         )
         var message = TemplateImageCarouselPayload(columns: [column])
         
         var anotherColumn = try! TemplateImageCarouselPayload.Column(
-            imageURL: URL(string: "https://another-sample.com")!,
+            imageURL: URL(string: "https://example.com/another")!,
             action: action
         )
         let anotherAction = MessageURIAction(label: "OK", uri: URL(string: "scheme://action-2")!)
@@ -78,14 +78,14 @@ class TemplateImageCarouselPayloadTests: XCTestCase {
         XCTAssertEqual(columns.count, 2)
         
         let column1 = columns[0]
-        assertEqual(in: column1, forKey: "imageUrl", value: "https://sample.com")
+        assertEqual(in: column1, forKey: "imageUrl", value: "https://example.com")
         let actionInColumn1 = column1["action"] as! [String: Any]
         assertEqual(in: actionInColumn1, forKey: "label", value: "Cacnel")
         assertEqual(in: actionInColumn1, forKey: "uri", value: "scheme://action")
 
         
         let column2 = columns[1]
-        assertEqual(in: column2, forKey: "imageUrl", value: "https://another-sample.com")
+        assertEqual(in: column2, forKey: "imageUrl", value: "https://example.com/another")
         let actionInColumn2 = column2["action"] as! [String: Any]
         assertEqual(in: actionInColumn2, forKey: "label", value: "OK")
         assertEqual(in: actionInColumn2, forKey: "uri", value: "scheme://action-2")

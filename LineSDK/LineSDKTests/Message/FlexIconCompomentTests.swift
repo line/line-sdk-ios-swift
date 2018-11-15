@@ -39,16 +39,16 @@ extension FlexIconComponent: MessageSample {
 class FlexIconComponentTests: XCTestCase {
     
     func testIconComponentEncode() {
-        let url = URL(string: "https://sample.com")!
+        let url = URL(string: "https://example.com")!
         let component = try! FlexIconComponent(url: url)
         let dic = FlexMessageComponent.icon(component).json
         assertEqual(in: dic, forKey: "type", value: "icon")
-        assertEqual(in: dic, forKey: "url", value: "https://sample.com")
+        assertEqual(in: dic, forKey: "url", value: "https://example.com")
         XCTAssertNil(dic["flex"])
     }
     
     func testIconComponentFullEncode() {
-        let url = URL(string: "https://sample.com")!
+        let url = URL(string: "https://example.com")!
         var component = try! FlexIconComponent(url: url)
         component.margin = .lg
         component.size = .full
@@ -56,7 +56,7 @@ class FlexIconComponentTests: XCTestCase {
         
         let dic = FlexMessageComponent.icon(component).json
         assertEqual(in: dic, forKey: "type", value: "icon")
-        assertEqual(in: dic, forKey: "url", value: "https://sample.com")
+        assertEqual(in: dic, forKey: "url", value: "https://example.com")
         assertEqual(in: dic, forKey: "margin", value: "lg")
         assertEqual(in: dic, forKey: "size", value: "full")
         assertEqual(in: dic, forKey: "aspectRatio", value: "3:1")

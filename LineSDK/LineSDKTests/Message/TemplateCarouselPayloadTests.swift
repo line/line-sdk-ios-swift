@@ -30,7 +30,7 @@ extension TemplateCarouselPayload: MessageSample {
           "type": "carousel",
           "columns": [
             {
-              "thumbnailImageUrl": "https://sample.com",
+              "thumbnailImageUrl": "https://example.com",
               "title": "title 1",
               "text": "text 1",
               "actions": [
@@ -42,7 +42,7 @@ extension TemplateCarouselPayload: MessageSample {
               ]
             },
             {
-              "thumbnailImageUrl": "https://another-sample.com",
+              "thumbnailImageUrl": "https://example.com/another",
               "text": "text 2",
               "actions": [
                 {
