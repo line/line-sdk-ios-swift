@@ -35,7 +35,7 @@ extension TemplateButtonsPayload: MessageSample {
             {
               "type": "uri",
               "label": "CALL",
-              "uri": "tel:818055475287"
+              "uri": "tel:12345678"
             },
             {
               "type": "uri",
@@ -113,7 +113,7 @@ class TemplateButtonsPayloadTests: XCTestCase {
         XCTAssertNil(result[0].imageContentMode)
         
         XCTAssertEqual(result[0].actions[0].asURIAction!.label, "CALL")
-        XCTAssertEqual(result[0].actions[0].asURIAction!.uri, URL(string: "tel:818055475287")!)
+        XCTAssertEqual(result[0].actions[0].asURIAction!.uri, URL(string: "tel:12345678")!)
         XCTAssertEqual(result[0].actions[1].asURIAction!.label, "WEBSITE")
         XCTAssertEqual(result[0].actions[1].asURIAction!.uri, URL(string: "https://linecorp.com")!)
         
