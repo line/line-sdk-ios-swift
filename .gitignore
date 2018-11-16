@@ -125,6 +125,7 @@ fastlane/test_output
 
 # End of https://www.gitignore.io/api/xcode,swift,macos,ios
 
-linesdk-ios-swift-beta-config
 docs
 .vscode
+beta_config
+script/to_beta.rb
