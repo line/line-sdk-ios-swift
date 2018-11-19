@@ -8,7 +8,7 @@ platform :ios do
 
   desc "Switch to Beta environment"
   lane :to_beta do
-    Action.sh("../script/to_beta.rb")
+    Action.sh("ruby ../script/to_beta.rb")
   end
 
   desc "Run tests."
