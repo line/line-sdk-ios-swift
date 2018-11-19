@@ -33,7 +33,7 @@ extension TemplateConfirmPayload: MessageSample {
             {
               "type": "uri",
               "label": "Yes",
-              "uri": "tel:818055475287"
+              "uri": "tel:12345678"
             },
             {
               "type": "uri",
