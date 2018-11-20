@@ -37,7 +37,7 @@ extension TemplateCarouselPayload: MessageSample {
                 {
                   "type": "uri",
                   "label": "action 1",
-                  "uri": "http://action1.com/"
+                  "uri": "https://example.com/action1/"
                 }
               ]
             },
@@ -48,12 +48,12 @@ extension TemplateCarouselPayload: MessageSample {
                 {
                   "type": "uri",
                   "label": "action 2",
-                  "uri": "http://action2.com/"
+                  "uri": "https://example.com/action2"
                 },
                 {
                   "type": "uri",
                   "label": "action 3",
-                  "uri": "http://action3.com/"
+                  "uri": "https://example.com/action3/"
                 }
               ]
             }
