@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-## [5.0.0] - 2018-11-19
+## [5.0.0] - 2018-11-20
 
 Initial release of LINE SDK Swift. Now the LINE SDK is an open source project.
 
