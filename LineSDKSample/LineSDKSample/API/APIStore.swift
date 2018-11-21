@@ -60,7 +60,27 @@ class APIStore {
         }
     }
     
-    func refresh() {
+    func numberOfAPIs(in category: APICategory) -> Int {
+        switch category {
+        case .auth: return authAPIs.count
+        case .friendship: return friendshipAPIs.count
+        case .graph: return graphAPIs.count
+        case .messaging: return messagingAPIs.count
+        }
+    }
+    
+    func api(in category: APICategory, at index: Int) -> APIItem {
+        switch category {
+        case .auth: return authAPIs[index]
+        case .friendship: return friendshipAPIs[index]
+        case .graph: return graphAPIs[index]
+        case .messaging: return messagingAPIs[index]
+        }
+    }
+}
+
+extension APIStore {
+    private func refresh() {
         authAPIs = [
             .init(
                 title: "Get User Profile",
@@ -96,24 +116,6 @@ class APIStore {
             .multiSendTextMessage,
             .sendFlexMessage
         ]
-    }
-    
-    func numberOfAPIs(in category: APICategory) -> Int {
-        switch category {
-        case .auth: return authAPIs.count
-        case .friendship: return friendshipAPIs.count
-        case .graph: return graphAPIs.count
-        case .messaging: return messagingAPIs.count
-        }
-    }
-    
-    func api(in category: APICategory, at index: Int) -> APIItem {
-        switch category {
-        case .auth: return authAPIs[index]
-        case .friendship: return friendshipAPIs[index]
-        case .graph: return graphAPIs[index]
-        case .messaging: return messagingAPIs[index]
-        }
     }
 }
 
