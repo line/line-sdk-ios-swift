@@ -3,12 +3,16 @@ osx_image: xcode10.1
 
 env:
   matrix:
-    - LANE=tests
-    - LANE=lint
+    - LANE=sdk_tests
+    - LANE=wrapper_tests
+    - LANE=sample_tests
+    - LANE=lint_pod
+    - LANE=lint_carthage
 
 cache: bundler
 
 before_install:
+  - gem install bundler
   - bundle install
   - bundle update
 
