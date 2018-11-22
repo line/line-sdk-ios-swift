@@ -13,16 +13,25 @@ platform :ios do
 
   desc "Run tests."
   lane :tests do
+    sdk_tests
+    sample_tests
+  end
+
+  lane :sdk_tests do
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 6s"],
         scheme: "LineSDK"
     )
+    
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 6s"],
         scheme: "LineSDKObjC"
     )
+  end
+
+  lane :sample_tests do
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 6s"],
@@ -32,9 +41,18 @@ platform :ios do
 
   desc "Lint to check Carthage and CocoaPods compatibility."
   lane :lint do
-    ensure_latest_carthage
-    carthage(command: "build", no_skip_current: true)
+    lint_carthage
+    lint_pod
+  end
+
+  lane :lint_pod do
     Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec")
+  end
+
+  lane :lint_carthage do
+    # This slows down the CI a lot. Not worth. Only do `ensure_latest_carthage` in internal CI.
+    # ensure_latest_carthage
+    carthage(command: "build", no_skip_current: true)
   end
 
   desc "Release a new version."
@@ -100,7 +118,7 @@ platform :ios do
   end
 
   lane :ensure_latest_carthage do
-    Actions.sh("brew update || brew update")
+    Actions.sh("brew update")
     Actions.sh("brew outdated carthage || brew upgrade carthage")
   end
 end

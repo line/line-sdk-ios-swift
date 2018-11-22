@@ -26,11 +26,36 @@ Switch to Beta environment
 fastlane ios tests
 ```
 Run tests.
+### ios sdk_tests
+```
+fastlane ios sdk_tests
+```
+
+### ios wrapper_tests
+```
+fastlane ios wrapper_tests
+```
+
+### ios sample_tests
+```
+fastlane ios sample_tests
+```
+
 ### ios lint
 ```
 fastlane ios lint
 ```
 Lint to check Carthage and CocoaPods compatibility.
+### ios lint_pod
+```
+fastlane ios lint_pod
+```
+
+### ios lint_carthage
+```
+fastlane ios lint_carthage
+```
+
 ### ios release
 ```
 fastlane ios release

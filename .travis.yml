@@ -1,0 +1,19 @@
+language: objective-c
+osx_image: xcode10.1
+
+addons:
+  homebrew:
+    packages:
+    - carthage
+
+env:
+  matrix:
+    - LANE=sdk_tests
+    - LANE=sample_tests
+    - LANE=lint_pod
+    - LANE=lint_carthage
+
+cache: bundler
+
+script:
+  - bundle exec fastlane $LANE
