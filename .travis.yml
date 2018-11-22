@@ -11,10 +11,5 @@ env:
 
 cache: bundler
 
-before_install:
-  - gem install bundler
-  - bundle install
-  - bundle update
-
 script:
   - bundle exec fastlane $LANE
