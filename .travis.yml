@@ -1,0 +1,16 @@
+language: objective-c
+osx_image: xcode10.1
+
+env:
+  matrix:
+    - LANE=tests
+    - LANE=lint
+
+cache: bundler
+
+before_install:
+  - bundle install
+  - bundle update
+
+script:
+  - bundle exec fastlane $LANE
