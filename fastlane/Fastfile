@@ -120,7 +120,7 @@ platform :ios do
   end
 
   lane :ensure_latest_carthage do
-    Actions.sh("brew update || brew update")
+    Actions.sh("brew update")
     Actions.sh("brew outdated carthage || brew upgrade carthage")
   end
 end
