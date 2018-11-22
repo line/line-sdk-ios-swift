@@ -89,12 +89,12 @@ platform :ios do
     # change_log(version: target_version)
     
     git_commit_all(message: "Bump version to #{target_version}") 
-    add_git_tag(tag: target_version, sign: true)
+    Actions.sh("git tag -u #{ENV["GPG_KEY_ID"]} #{target_version} -m ''")
     push_to_git_remote
 
     set_github_release(
       repository_name: "line/line-sdk-ios-swift",
-      api_token: ENV['GITHUB_TOKEN'],
+      api_token: ENV["GITHUB_TOKEN"],
       name: target_version,
       tag_name: target_version,
       description: release_content
@@ -116,7 +116,7 @@ platform :ios do
   lane :change_log do |options|
     target_version = options[:version]
     raise "The version is missed. You need to specify a version parameter." if target_version.nil?
-    stamp_changelog(section_identifier: target_version)
+    stamp_changelog(section_identifier: target_version, git_tag: target_version)
   end
 
   lane :ensure_latest_carthage do

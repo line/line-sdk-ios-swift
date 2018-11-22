@@ -31,11 +31,6 @@ Run tests.
 fastlane ios sdk_tests
 ```
 
-### ios wrapper_tests
-```
-fastlane ios wrapper_tests
-```
-
 ### ios sample_tests
 ```
 fastlane ios sample_tests
