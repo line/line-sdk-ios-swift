@@ -1,6 +1,11 @@
 language: objective-c
 osx_image: xcode10.1
 
+addons:
+  homebrew:
+    packages:
+    - carthage
+
 env:
   matrix:
     - LANE=sdk_tests

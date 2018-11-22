@@ -53,7 +53,8 @@ platform :ios do
   end
 
   lane :lint_carthage do
-    ensure_latest_carthage
+    # This slows down the CI a lot. Not worth. Only do `ensure_latest_carthage` in internal CI.
+    # ensure_latest_carthage
     carthage(command: "build", no_skip_current: true)
   end
 
