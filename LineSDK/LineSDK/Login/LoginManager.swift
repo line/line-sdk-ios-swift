@@ -56,7 +56,7 @@ public class LoginManager {
     }
     
     /// A flag to prevent setup multiple times
-    private var setup = false
+    var setup = false
     
     private init() { }
     
