@@ -103,6 +103,7 @@ GEM
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
     fastlane-plugin-changelog (0.12.0)
+    fastlane-plugin-codecov_reporter (0.1.2)
     ffi (1.9.25)
     fourflusher (2.0.1)
     fuzzy_match (2.0.4)
@@ -225,6 +226,7 @@ PLATFORMS
 DEPENDENCIES
   fastlane
   fastlane-plugin-changelog
+  fastlane-plugin-codecov_reporter
   jazzy
   xcode-install
 

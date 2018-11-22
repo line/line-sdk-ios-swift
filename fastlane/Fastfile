@@ -23,6 +23,8 @@ platform :ios do
         devices: ["iPhone 6s"],
         scheme: "LineSDK"
     )
+
+    codecov_reporter if ENV["TRAVIS"] == "true"
     
     run_tests(
         workspace: "LineSDK.xcworkspace",

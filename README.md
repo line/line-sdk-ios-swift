@@ -1,5 +1,7 @@
 <img src="https://raw.githubusercontent.com/line/line-sdk-ios-swift/assets/assets/sdklogo.png" width="355" height="97">
 
+[![Build Status](https://travis-ci.org/line/line-sdk-ios-swift.svg?branch=master)](https://travis-ci.org/line/line-sdk-ios-swift)
+
 # LINE SDK for iOS Swift
 
 ## Overview
