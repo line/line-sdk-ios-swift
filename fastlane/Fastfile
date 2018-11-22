@@ -14,7 +14,6 @@ platform :ios do
   desc "Run tests."
   lane :tests do
     sdk_tests
-    wrapper_tests
     sample_tests
   end
 
@@ -24,9 +23,7 @@ platform :ios do
         devices: ["iPhone 6s"],
         scheme: "LineSDK"
     )
-  end
-
-  lane :wrapper_tests do
+    
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 6s"],

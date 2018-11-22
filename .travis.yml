@@ -9,7 +9,6 @@ addons:
 env:
   matrix:
     - LANE=sdk_tests
-    - LANE=wrapper_tests
     - LANE=sample_tests
     - LANE=lint_pod
     - LANE=lint_carthage
