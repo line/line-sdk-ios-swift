@@ -49,6 +49,8 @@ public enum CryptoError: Error {
     /// - decryptingError: An error occurred while decrypting encrypted data. Code 3016_1006.
     /// - signingError: An error occurred while signing plain data. Code 3016_1007.
     /// - verifyingError:  An error occurred while verifying data. Code 3016_1008.
+    /// - invalidSignature: The algorithm does not accept the input data as a signature.
+    ///                     The data is corrupted. Code 3016_1009.
     public enum AlgorithmsErrorReason {
         
         /// The DER data does not contain a valid RSA key. Code 3016_1001.
@@ -74,6 +76,9 @@ public enum CryptoError: Error {
         
         /// An error occurred while verifying data. Code 3016_1008.
         case verifyingError(Error?, statusCode: Int?)
+
+        /// The algorithm does not accept the input data as a signature. The data is corrupted. Code 3016_1009.
+        case invalidSignature(data: Data)
     }
 
     /// The possible underlying reasons a `.JWTFailed` error occurs.
@@ -157,6 +162,8 @@ extension CryptoError.AlgorithmsErrorReason {
         case .verifyingError(let error, let code):
             return "Error happens while verifying some plain data. " +
                    "Error: \(String(describing: error)), code: \(String(describing: code))"
+        case .invalidSignature(let data):
+            return "The algorithm does not accept the input data as a signature. Data: \([UInt8](data))"
         }
     }
     
@@ -170,6 +177,7 @@ extension CryptoError.AlgorithmsErrorReason {
         case .decryptingError:   return 3016_1006
         case .signingError:      return 3016_1007
         case .verifyingError:    return 3016_1008
+        case .invalidSignature:  return 3016_1009
         }
     }
     
@@ -196,6 +204,8 @@ extension CryptoError.AlgorithmsErrorReason {
             if let code = code {
                 userInfo[.statusCode] = code
             }
+        case .invalidSignature(let data):
+            userInfo[.data] = data
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }

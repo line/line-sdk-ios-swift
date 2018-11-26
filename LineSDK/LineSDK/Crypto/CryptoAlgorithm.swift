@@ -33,6 +33,12 @@ protocol CryptoAlgorithm {
     var signatureAlgorithm: SecKeyAlgorithm { get }
     var encryptionAlgorithm: SecKeyAlgorithm { get }
     var digest: CryptoDigest { get }
+    // Some algorithms require a different format for signature data. This is an injection point for it.
+    func convertSignatureData(_ data: Data) throws -> Data
+}
+
+extension CryptoAlgorithm {
+    func convertSignatureData(_ data: Data) throws -> Data { return data }
 }
 
 extension Data {
