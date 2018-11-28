@@ -95,8 +95,7 @@ class JWKDataTests: XCTestCase {
         let key4 = keySet.getKeyByID("3829b108279b26bcfcc8971e348d116727d20773f06a41c5e4e9706f7a0dc966")
         XCTAssertNotNil(key4)
         let data4 = try! key4!.getKeyData()
-        let k = try! Crypto.ECDSAPublicKey(der: data4)
-        print(k)
+        _ = try! Crypto.ECDSAPublicKey(der: data4)
         
         let key6 = keySet.getKeyByID("16e04d4e56783a792dcb4684d86d179dc7abc0bb909d96ee12ef07097cddff0c")
         XCTAssertNotNil(key6)

@@ -88,15 +88,6 @@ extension ECDSA {
             case .sha512: return CC_SHA512
             }
         }
-        
-        var curve: Curve {
-            switch self {
-            case .sha1, .sha224: Log.fatalError("Too simple SHA algorithm. Not supported.")
-            case .sha256: return .P256
-            case .sha384: return .P384
-            case .sha512: return .P521
-            }
-        }
 
         func convertSignatureData(_ data: Data) throws -> Data {
 
