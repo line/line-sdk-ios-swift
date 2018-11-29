@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.0.1] - 2018-11-29
+
+### Fixed
+
+- Improve ID Token signature verifying code to use latest Security framework API. [#4](https://github.com/line/line-sdk-ios-swift/pull/4)
+- Hide an implementation detail in the sample app. [#2](https://github.com/line/line-sdk-ios-swift/pull/2)
+
 ## [5.0.0] - 2018-11-20
 
 Initial release of LINE SDK Swift. Now the LINE SDK is an open source project.
@@ -23,3 +30,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 - The automatically token refreshing should now work properly when receives a token expiring error from LINE Login Server.
 
 [5.0.0]: https://github.com/line/line-sdk-ios-swift/releases/tag/5.0.0
+[5.0.1]: https://github.com/line/line-sdk-ios-swift/releases/compare/5.0.0...5.0.1
