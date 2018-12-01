@@ -30,4 +30,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 - The automatically token refreshing should now work properly when receives a token expiring error from LINE Login Server.
 
 [5.0.0]: https://github.com/line/line-sdk-ios-swift/releases/tag/5.0.0
-[5.0.1]: https://github.com/line/line-sdk-ios-swift/releases/compare/5.0.0...5.0.1
+[5.0.1]: https://github.com/line/line-sdk-ios-swift/compare/5.0.0...5.0.1
