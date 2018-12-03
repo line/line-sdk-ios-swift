@@ -54,7 +54,7 @@ public struct LoginPermission: Hashable {
 
 /// Subpermissions of .openID. Permissions in this extension will not be included in the `permissions` property of
 /// issued access token.
-public extension LoginPermission {
+extension LoginPermission {
     /// The permission to get the user's email from an ID Token in the login response. This permission
     /// requires the `.openID` permission to be granted at the same time. The channel of your app must have
     /// the email permission that can be configured in the LINE Developers console.
@@ -64,7 +64,7 @@ public extension LoginPermission {
 /// :nodoc:
 /// LINE internal use only. Subpermissions of .openID. Permissions in this extension will not be included in
 /// the `permissions` property of issued access token.
-public extension LoginPermission {
+extension LoginPermission {
     /// Whether could access user's phone inside ID Token. Requires `.openID` set.
     /// Only available to LINE internal partners.
     public static let phone                          = LoginPermission(rawValue: "phone")

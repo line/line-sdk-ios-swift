@@ -196,7 +196,8 @@ public class LoginManager {
 
         group.notify(queue: .main) {
             guard errors.isEmpty else {
-                completion(.failure(errors[0].sdkError))
+                let error = errors[0]
+                completion(.failure(error.sdkError))
                 return
             }
             

@@ -63,7 +63,7 @@ public protocol FlexMessageConvertible: AltTextMessageConvertible {
     var container: FlexMessageContainer { get }
 }
 
-public extension FlexMessageConvertible {
+extension FlexMessageConvertible {
     
     /// Returns a converted `Message` which wraps `Self` with an alternate text.
     ///
