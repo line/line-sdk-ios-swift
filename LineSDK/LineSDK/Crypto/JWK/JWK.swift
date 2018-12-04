@@ -22,7 +22,7 @@
 import Foundation
 
 // A partitial implementation for JSON Web Key (JWK) RFC7517.
-// Only RSA is required for LineSDK, ref: https://tools.ietf.org/html/rfc7517
+// Ref: https://tools.ietf.org/html/rfc7517
 struct JWK: Decodable {
     
     typealias Parameters = JWA.KeyParameters

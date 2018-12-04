@@ -22,7 +22,7 @@
 import Foundation
 
 // A partitial implementation for JSON Web Algorithms (JWA) RFC 7518
-// Only RSA related algorithms are required for LineSDK, ref:  https://tools.ietf.org/html/rfc7518
+// Ref:  https://tools.ietf.org/html/rfc7518
 struct JWA {
     enum Algorithm: String, Decodable {
         
@@ -117,8 +117,8 @@ extension JWA {
             
             var modulusBytes = [UInt8](decodedModulusData)
             
-            // Make sure the modulusBytes starts with 0x00. If not, append it.
-            if let firstByte = modulusBytes.first, firstByte != 0x00 {
+            // Make sure the modulusBytes starts with 0x00 if the first bit is 1.
+            if let firstByte = modulusBytes.first, firstByte >= 0x80 {
                 modulusBytes.insert(0x00, at: 0)
             }
             

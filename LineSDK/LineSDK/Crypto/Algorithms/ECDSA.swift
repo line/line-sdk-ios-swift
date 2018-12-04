@@ -127,12 +127,12 @@ extension ECDSA {
             var sBytes = [UInt8](data[(count / 2)...])
 
             // For byte >= 0x80 (first bit is 1), prefix 0x00 to make Security framework happy.
-            if rBytes.first! >= UInt8(0x80) {
-                rBytes = [0x00] + rBytes
+            if rBytes.first! >= 0x80 {
+                rBytes.insert(0x00, at: 0)
             }
 
-            if sBytes.first! >= UInt8(0x80) {
-                sBytes = [0x00] + sBytes
+            if sBytes.first! >= 0x80 {
+                sBytes.insert(0x00, at: 0)
             }
 
             return Data(bytes: (rBytes.encode(as: .integer) + sBytes.encode(as: .integer)).encode(as: .sequence))
