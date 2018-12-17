@@ -45,7 +45,7 @@ public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
         public init() {}
     }
     
-    /// Represents the text direction inside a buddle.
+    /// Represents the text direction inside a bubble.
     ///
     /// - leftToRight: The text should be from left to right.
     /// - rightToLeft: The text should be from right to left.
@@ -70,7 +70,7 @@ public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
     /// The hero block. Hero block is a `FlexImageComponent` which show an image inside the bubble.
     public var hero: FlexImageComponent?
     
-    /// The body block. Main content of the buddle. This block is a `FlexBoxComponent` and could contains
+    /// The body block. Main content of the bubble. This block is a `FlexBoxComponent` and could contains
     /// arbitrary nested components.
     public var body: FlexBoxComponent?
     
@@ -91,7 +91,7 @@ public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
     ///   - header: The header block. Header section of the bubble. This block is a `FlexBoxComponent` and could
     ///             contains arbitrary nested components.
     ///   - hero: The hero block. Hero block is a `FlexImageComponent` which show an image inside the bubble.
-    ///   - body: The body block. Main content of the buddle. This block is a `FlexBoxComponent` and could contains
+    ///   - body: The body block. Main content of the bubble. This block is a `FlexBoxComponent` and could contains
     ///           arbitrary nested components.
     ///   - footer: The footer block. Footer section of the bubble. This block is a `FlexBoxComponent` and could contains
     ///             arbitrary nested components.

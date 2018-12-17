@@ -31,7 +31,7 @@ protocol CryptoData: Equatable {
 
 extension CryptoData {
     
-    /// Creates a data object in crypto domian for operation from a base64 string.
+    /// Creates a data object in crypto domain for operation from a base64 string.
     ///
     /// - Parameter string: The raw data in base64 encoding.
     /// - Throws: A `CryptoError` if something wrong happens.

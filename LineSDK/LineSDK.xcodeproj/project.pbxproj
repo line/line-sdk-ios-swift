@@ -196,7 +196,7 @@
 		4BEB491E212B9E5500BA946A /* FlexFillerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */; };
 		4BEB4920212B9F6900BA946A /* FlexFillerComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491F212B9F6900BA946A /* FlexFillerComponentTests.swift */; };
 		4BEB4922212BA05500BA946A /* FlexIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4921212BA05500BA946A /* FlexIconComponent.swift */; };
-		4BEB4924212BA0A300BA946A /* FlexIconCompomentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4923212BA0A300BA946A /* FlexIconCompomentTests.swift */; };
+		4BEB4924212BA0A300BA946A /* FlexIconComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4923212BA0A300BA946A /* FlexIconComponentTests.swift */; };
 		4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */; };
 		4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
@@ -465,7 +465,7 @@
 		4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexFillerComponent.swift; sourceTree = "<group>"; };
 		4BEB491F212B9F6900BA946A /* FlexFillerComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexFillerComponentTests.swift; sourceTree = "<group>"; };
 		4BEB4921212BA05500BA946A /* FlexIconComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexIconComponent.swift; sourceTree = "<group>"; };
-		4BEB4923212BA0A300BA946A /* FlexIconCompomentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexIconCompomentTests.swift; sourceTree = "<group>"; };
+		4BEB4923212BA0A300BA946A /* FlexIconComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexIconComponentTests.swift; sourceTree = "<group>"; };
 		4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponent.swift; sourceTree = "<group>"; };
 		4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponentTests.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
@@ -567,7 +567,7 @@
 				4B6A0FF6212AACCF00B3ED1F /* FlexButtonComponentTests.swift */,
 				4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */,
 				4BEB491F212B9F6900BA946A /* FlexFillerComponentTests.swift */,
-				4BEB4923212BA0A300BA946A /* FlexIconCompomentTests.swift */,
+				4BEB4923212BA0A300BA946A /* FlexIconComponentTests.swift */,
 				4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */,
 				4B5EE2DE212BAFA00009DF2E /* FlexSpacerComponentTests.swift */,
 				4B5EE2E0212BB53F0009DF2E /* FlexBoxComponentTests.swift */,
@@ -1636,7 +1636,7 @@
 				4B6A0FF1212A99AD00B3ED1F /* FlexTextComponentTests.swift in Sources */,
 				4BA8E445210ED27900355F03 /* SessionDelegateStub.swift in Sources */,
 				4B9A30502121429C00174C6F /* TemplateButtonsPayloadTests.swift in Sources */,
-				4BEB4924212BA0A300BA946A /* FlexIconCompomentTests.swift in Sources */,
+				4BEB4924212BA0A300BA946A /* FlexIconComponentTests.swift in Sources */,
 				4B94D06B2153681E0049DE68 /* JWTECTests.swift in Sources */,
 				4B9A303721211CC100174C6F /* VideoMessageTests.swift in Sources */,
 				DBF2027B212D58FC00780358 /* GetGroupsRequestTests.swift in Sources */,

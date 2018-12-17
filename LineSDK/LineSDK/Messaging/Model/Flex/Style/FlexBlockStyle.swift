@@ -39,7 +39,7 @@ public struct FlexBlockStyle: Codable {
     /// - Parameters:
     ///   - backgroundColor: Background color of the block. White color will be used if not specified.
     ///   - separator: Whether a separator should be placed above the block.
-    ///   - separatorColor: olor of the separator. White color will be used if not specified.
+    ///   - separatorColor: Color of the separator. White color will be used if not specified.
     public init(backgroundColor: HexColor? = nil, separator: Bool? = nil, separatorColor: HexColor? = nil) {
         self.backgroundColor = backgroundColor
         self.separator = separator

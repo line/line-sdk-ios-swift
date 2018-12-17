@@ -39,7 +39,7 @@ class FlexComponentMessageTests: XCTestCase {
         XCTAssertEqual(results, [.a, .b, .hello, .a])
     }
     
-    func testMarginDeccode() {
+    func testMarginDecode() {
         
         typealias Property = FlexMessageComponent.Margin
         
@@ -51,7 +51,7 @@ class FlexComponentMessageTests: XCTestCase {
         XCTAssertEqual(results, [.none, .xs, .sm, .md, .lg, .xl, .xxl, .none])
     }
     
-    func testSizeDeccode() {
+    func testSizeDecode() {
         
         typealias Property = FlexMessageComponent.Size
         
@@ -64,7 +64,7 @@ class FlexComponentMessageTests: XCTestCase {
         XCTAssertEqual(results, [.xxs, .xs, .sm, .md, .lg, .xl, .xxl, .xl3, .xl4, .xl5, .full, .md])
     }
     
-    func testAlignDeccode() {
+    func testAlignDecode() {
         
         typealias Property = FlexMessageComponent.Alignment
         
@@ -76,7 +76,7 @@ class FlexComponentMessageTests: XCTestCase {
         XCTAssertEqual(results, [.start, .end, .center, .start])
     }
     
-    func testGravityDeccode() {
+    func testGravityDecode() {
         
         typealias Property = FlexMessageComponent.Gravity
         
@@ -88,7 +88,7 @@ class FlexComponentMessageTests: XCTestCase {
         XCTAssertEqual(results, [.top, .bottom, .center, .top])
     }
     
-    func testWeightDeccode() {
+    func testWeightDecode() {
         
         typealias Property = FlexMessageComponent.Weight
         

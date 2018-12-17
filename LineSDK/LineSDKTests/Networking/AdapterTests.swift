@@ -82,7 +82,7 @@ class AdapterTests: XCTestCase {
         XCTAssertEqual(result[3].httpMethod, "DELETE")
     }
     
-    func testContentTypeAdapater() {
+    func testContentTypeAdapter() {
         let types: [ContentType] = [.none, .formUrlEncoded, .json]
         let requests: [URLRequest] = .init(
             repeating: URLRequest(url: URL(string: "linesdktest://sampleurl")!),

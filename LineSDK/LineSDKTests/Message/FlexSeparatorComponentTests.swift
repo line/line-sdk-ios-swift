@@ -38,7 +38,7 @@ extension FlexSeparatorComponent: MessageSample {
 
 class FlexSeparatorComponentTests: XCTestCase {
 
-    func testSperatorComponentEncode() {
+    func testSeparatorComponentEncode() {
         let component = FlexSeparatorComponent(margin: .lg, color: HexColor(.red))
         let dic = FlexMessageComponent.separator(component).json
         assertEqual(in: dic, forKey: "type", value: "separator")
@@ -46,7 +46,7 @@ class FlexSeparatorComponentTests: XCTestCase {
         assertEqual(in: dic, forKey: "color", value: "#FF0000")
     }
     
-    func testSperatorComponentDecode() {
+    func testSeparatorComponentDecode() {
         let decoder = JSONDecoder()
         let result = FlexSeparatorComponent.samplesData
             .map { try! decoder.decode(FlexMessageComponent.self, from: $0) }

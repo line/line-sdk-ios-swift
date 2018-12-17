@@ -48,7 +48,7 @@ public class LoginProcess {
     /// If the app switching happens during login process, we want to
     /// inspect the event of switched back from another app (Safari or LINE or any other)
     /// If the framework container app has not been started up by an `open(url:)`, we think current
-    /// login process fails and we need to call the completion closuer with a `.userCancelled` error.
+    /// login process fails and we need to call the completion closure with a `.userCancelled` error.
     class AppSwitchingObserver {
         // A token holds current observing. It will be released and trigger remove observer
         // when this `AppSwitchingObserver` gets released.
@@ -261,7 +261,7 @@ public class LoginProcess {
         // Wait for a while before request access token.
         //
         // When switching back to SDK container app from another app, with url scheme or universal link,
-        // the URL Session is not avaliable yet (sending a request causes "53: Software caused connection abort" or
+        // the URL Session is not available yet (sending a request causes "53: Software caused connection abort" or
         // "-1005 The network connection was lost.", seems only happening on some iOS 12 devices).
         // So as a workaround, we need wait for a while before continuing.
         //

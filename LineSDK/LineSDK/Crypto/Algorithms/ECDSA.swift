@@ -1,5 +1,5 @@
 //
-//  ECDRA.swift
+//  ECDSA.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,10 +22,10 @@
 import Foundation
 import CommonCrypto
 
-/// Namespace for ECDRA related things.
+/// Namespace for ECDSA related things.
 struct ECDSA {}
 
-/// ECDRA Digest Algorithms.
+/// ECDSA Digest Algorithms.
 extension ECDSA {
     enum Curve: String, Decodable {
         case P256 = "P-256"

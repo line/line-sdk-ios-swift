@@ -108,8 +108,8 @@ public enum LineSDKError: Error {
     /// - lineClientError: An error occurs in the LINE app during the authorization process. Code 3009.
     /// - responseStateValueNotMatching: Failed to verify the `state` value. The received URL response is
     ///                                  not from the original authorization request. Code 3010.
-    /// - webLoginError: An error occurrs in the web login flow during the authorization process. Code 3011.
-    /// - keychainOperation: An error occurrs while accessing the keychain. It prevents the LINE SDK from
+    /// - webLoginError: An error occurs in the web login flow during the authorization process. Code 3011.
+    /// - keychainOperation: An error occurs while accessing the keychain. It prevents the LINE SDK from
     ///                      loading data from or writing data to the keychain. Code 3012.
     /// - invalidDataInKeychain: The retrieved authorization information from the keychain cannot be
     ///                          converted to valid data. Code 3013.
@@ -162,12 +162,12 @@ public enum LineSDKError: Error {
         /// - got: The state value actually got from URL response.
         case responseStateValueNotMatching(expected: String, got: String?)
         
-        /// An error occurrs in the web login flow during the authorization process. Code 3011.
+        /// An error occurs in the web login flow during the authorization process. Code 3011.
         /// - error: Error reason when login with web flow.
         /// - description: A human readable message to describe the error reason.
         case webLoginError(error: String, description: String?)
         
-        /// An error occurrs while accessing the keychain. It prevents the LINE SDK from
+        /// An error occurs while accessing the keychain. It prevents the LINE SDK from
         ///  loading data from or writing data to the keychain. Code 3012.
         /// - status: The `OSStatus` number system gives.
         case keychainOperation(status: OSStatus)
