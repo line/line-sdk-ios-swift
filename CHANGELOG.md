@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.0.2] - 2018-12-18
+
 ### Fixed
 
 - A compiling crash when using Swift 5.0 tool chain to compile LINE SDK. [#6](https://github.com/line/line-sdk-ios-swift/issues/6), [SR-9375](https://bugs.swift.org/browse/SR-9375), [Swift #21296](https://github.com/apple/swift/pull/21296)
@@ -37,3 +39,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 
 [5.0.0]: https://github.com/line/line-sdk-ios-swift/releases/tag/5.0.0
 [5.0.1]: https://github.com/line/line-sdk-ios-swift/compare/5.0.0...5.0.1
+[5.0.2]: https://github.com/line/line-sdk-ios-swift/compare/5.0.1...5.0.2
