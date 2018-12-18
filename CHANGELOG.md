@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- A compiling crash when using Swift 5.0 tool chain to compile LINE SDK. [#6](https://github.com/line/line-sdk-ios-swift/issues/6), [SR-9375](https://bugs.swift.org/browse/SR-9375), [Swift #21296](https://github.com/apple/swift/pull/21296)
+- An internal improvement on JWK handling.
+- Improvement on documentation spelling and grammar. [#9](https://github.com/line/line-sdk-ios-swift/pull/9)
+
 ## [5.0.1] - 2018-11-29
 
 ### Fixed
