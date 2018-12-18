@@ -86,7 +86,7 @@ platform :ios do
     
     release_content = read_changelog(excluded_markdown_elements: [])
 
-    # change_log(version: target_version)
+    change_log(version: target_version)
     
     git_commit_all(message: "Bump version to #{target_version}") 
     Actions.sh("git tag -u #{ENV["GPG_KEY_ID"]} #{target_version} -m ''")
