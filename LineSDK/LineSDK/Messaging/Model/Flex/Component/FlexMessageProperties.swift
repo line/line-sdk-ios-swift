@@ -121,7 +121,7 @@ extension FlexMessageComponent {
         public static let defaultCase: Gravity = .top
     }
     
-    /// Represents the font weight used in compoment.
+    /// Represents the font weight used in component.
     ///
     /// - regular: Normal font weight.
     /// - bold: Bold font weight.

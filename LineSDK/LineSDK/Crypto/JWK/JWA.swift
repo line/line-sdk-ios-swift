@@ -21,7 +21,7 @@
 
 import Foundation
 
-// A partitial implementation for JSON Web Algorithms (JWA) RFC 7518
+// A partial implementation for JSON Web Algorithms (JWA) RFC 7518
 // Ref:  https://tools.ietf.org/html/rfc7518
 struct JWA {
     enum Algorithm: String, Decodable {
@@ -173,7 +173,7 @@ extension JWA {
                 yBytes = [UInt8](decodedYData).dropFirst { $0 == 0x00 }
             }
             
-            let uncompressedIndicator: [UInt8] = [ASN1Type.uncompressIndicator.byte]
+            let uncompressedIndicator: [UInt8] = [ASN1Type.uncompressedIndicator.byte]
             
             return Data(bytes: uncompressedIndicator + xBytes + yBytes)
         }

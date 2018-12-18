@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-// This is an identical implementaion for SE-0235 and https://github.com/apple/swift/pull/19982/
+// This is an identical implementation for SE-0235 and https://github.com/apple/swift/pull/19982/
 // We could add a conditional flag to the whole file once `Result` contained in the Swift Standard Library.
 
 import Foundation

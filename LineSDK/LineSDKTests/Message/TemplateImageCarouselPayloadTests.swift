@@ -54,7 +54,7 @@ extension TemplateImageCarouselPayload: MessageSample {
 
 class TemplateImageCarouselPayloadTests: XCTestCase {
     func testTemplateImageCarouselMessageEncoding() {
-        let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
+        let uriAction = MessageURIAction(label: "Cancel", uri: URL(string: "scheme://action")!)
         let action = MessageAction.URI(uriAction)
         
         let column = try! TemplateImageCarouselPayload.Column(
@@ -80,7 +80,7 @@ class TemplateImageCarouselPayloadTests: XCTestCase {
         let column1 = columns[0]
         assertEqual(in: column1, forKey: "imageUrl", value: "https://example.com")
         let actionInColumn1 = column1["action"] as! [String: Any]
-        assertEqual(in: actionInColumn1, forKey: "label", value: "Cacnel")
+        assertEqual(in: actionInColumn1, forKey: "label", value: "Cancel")
         assertEqual(in: actionInColumn1, forKey: "uri", value: "scheme://action")
 
         

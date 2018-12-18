@@ -26,7 +26,7 @@ import Foundation
 /// Unless already having granted the channel, users who've configured the privacy filter are excluded from the list.
 public struct GetFriendsRequest: Request {
 
-    /// Sorting method for the returned freind list.
+    /// Sorting method for the returned friend list.
     /// Only a value of `name` is supported.
     ///
     /// - name: Sort by `displayName`

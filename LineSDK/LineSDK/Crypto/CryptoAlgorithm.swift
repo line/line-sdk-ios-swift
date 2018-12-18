@@ -45,7 +45,7 @@ extension Data {
 
     /// Calculate the digest with a given algorithm.
     ///
-    /// - Parameter algorithm: The algorithm be used. It should provice a digest hash method at least.
+    /// - Parameter algorithm: The algorithm be used. It should provide a digest hash method at least.
     /// - Returns: The digest data.
     func digest(using algorithm: CryptoAlgorithm) -> Data {
         var hash = [UInt8](repeating: 0, count: Int(algorithm.length))

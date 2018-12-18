@@ -43,7 +43,7 @@ enum MessageType: String, Codable {
 /// - audio: Represents the type of audio message. A `AudioMessage` value is associated.
 /// - location: Represents the type of location message. A `LocationMessage` value is associated.
 /// - template: Represents the type of template message. A `TemplateMessage` value is associated. LINE APIs supports a
-///             few types of template messagess. `TemplateMessage` is also a representing wrapper for underlying
+///             few types of template messages. `TemplateMessage` is also a representing wrapper for underlying
 ///             `TemplateMessagePayload`.
 /// - flex: Represents the type of flexible message. A `FlexMessage` value is associated. LINE APIs allows you to send
 ///         a flex message by constructing with blocks and components. It gives you freedom to control the message

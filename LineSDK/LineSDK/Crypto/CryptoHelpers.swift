@@ -104,7 +104,7 @@ extension Data {
     /// Data with x509 stripped from a provided ASN.1 DER EC public key.
     /// The DER data will be returned as is, if no header contained.
     func x509HeaderStrippedForEC() throws -> Data {
-        return try x509HeaderStripped(earlyTerminator: ASN1Type.uncompressIndicator.byte)
+        return try x509HeaderStripped(earlyTerminator: ASN1Type.uncompressedIndicator.byte)
     }
     
     /// Data with x509 stripped from a provided ASN.1 DER RSA public key.
@@ -214,14 +214,14 @@ enum ASN1Type {
     case sequence
     case integer
     case bitString
-    case uncompressIndicator
+    case uncompressedIndicator
     
     var byte: UInt8 {
         switch self {
         case .sequence: return 0x30
         case .integer: return 0x02
         case .bitString: return 0x03
-        case .uncompressIndicator: return 0x04
+        case .uncompressedIndicator: return 0x04
         }
     }
 }

@@ -21,7 +21,7 @@
 
 import Foundation
 
-// A partitial implementation for JSON Web Key (JWK) RFC7517.
+// A partial implementation for JSON Web Key (JWK) RFC7517.
 // Ref: https://tools.ietf.org/html/rfc7517
 struct JWK: Decodable {
     

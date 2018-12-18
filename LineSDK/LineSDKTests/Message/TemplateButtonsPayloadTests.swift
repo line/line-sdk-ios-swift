@@ -74,7 +74,7 @@ extension TemplateButtonsPayload: MessageSample {
 class TemplateButtonsPayloadTests: XCTestCase {
     
     func testTemplateButtonsPayloadEncoding() {
-        let uriAction = MessageURIAction(label: "Cacnel", uri: URL(string: "scheme://action")!)
+        let uriAction = MessageURIAction(label: "Cancel", uri: URL(string: "scheme://action")!)
         let action = MessageAction.URI(uriAction)
         
         var message = TemplateButtonsPayload(title: "world", text: "hello", actions: [action])
