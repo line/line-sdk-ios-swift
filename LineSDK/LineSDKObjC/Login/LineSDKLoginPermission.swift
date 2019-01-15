@@ -33,6 +33,11 @@ public class LineSDKLoginPermission: NSObject {
         _value = .init(rawValue: rawValue)
     }
 
+    public static func permissions(from string: String) -> Set<LineSDKLoginPermission> {
+        let permissions = string.split(separator: " ").map { LineSDKLoginPermission(rawValue: String($0)) }
+        return Set(permissions)
+    }
+
     public static let openID                         = LineSDKLoginPermission(.openID)
     public static let profile                        = LineSDKLoginPermission(.profile)
     public static let friends                        = LineSDKLoginPermission(.friends)
