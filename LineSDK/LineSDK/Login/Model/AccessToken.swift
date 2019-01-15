@@ -110,10 +110,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         try container.encode(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(IDTokenRaw, forKey: .IDTokenRaw)
         try container.encode(refreshToken, forKey: .refreshToken)
-        
-        let scope = permissions.map { $0.rawValue }.joined(separator: " ")
-        try container.encode(scope, forKey: .scope)
-        
+        try container.encodeLoginPermissions(permissions, forKey: .scope)
         try container.encode(tokenType, forKey: .tokenType)
     }
 }
