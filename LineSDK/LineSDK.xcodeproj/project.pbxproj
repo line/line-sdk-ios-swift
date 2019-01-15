@@ -44,6 +44,7 @@
 		4B3CCB9E2152449400F51D76 /* ECDSAKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9D2152449400F51D76 /* ECDSAKeyTests.swift */; };
 		4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5B210EF12C00FD19BC /* APIError.swift */; };
 		4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5D210F077700FD19BC /* RequestStubs.swift */; };
+		4B42816621ED9CE6004A0846 /* JSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B42816521ED9CE6004A0846 /* JSONConverter.swift */; };
 		4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */; };
 		4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256A2101810D00A39D4F /* LoginProcess.swift */; };
 		4B45256D2101829F00A39D4F /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256C2101829F00A39D4F /* Helpers.swift */; };
@@ -306,6 +307,7 @@
 		4B3CCB9D2152449400F51D76 /* ECDSAKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSAKeyTests.swift; sourceTree = "<group>"; };
 		4B414D5B210EF12C00FD19BC /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4B414D5D210F077700FD19BC /* RequestStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStubs.swift; sourceTree = "<group>"; };
+		4B42816521ED9CE6004A0846 /* JSONConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverter.swift; sourceTree = "<group>"; };
 		4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageProperties.swift; sourceTree = "<group>"; };
 		4B45256A2101810D00A39D4F /* LoginProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcess.swift; sourceTree = "<group>"; };
 		4B45256C2101829F00A39D4F /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -955,6 +957,7 @@
 				4BC9B2D8212FADD60071C736 /* LinsSDKCallbackQueue.swift */,
 				4BDD2C152133970800DD563D /* Log.swift */,
 				4B4A9AF22159FCF700915054 /* LineSDKConstant.swift */,
+				4B42816521ED9CE6004A0846 /* JSONConverter.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1690,6 +1693,7 @@
 				4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */,
 				4BDD2C162133970800DD563D /* Log.swift in Sources */,
 				4BDD2C302133F2FA00DD563D /* LineSDKFlexFillerComponent.swift in Sources */,
+				4B42816621ED9CE6004A0846 /* JSONConverter.swift in Sources */,
 				4B2D1501212FA9EE000DD5BE /* LineSDKHexColor.swift in Sources */,
 				4B2D14F1212F95B3000DD5BE /* LineSDKLoginResult.swift in Sources */,
 				4B2D14F3212F96A7000DD5BE /* LineSDKLoginProcess.swift in Sources */,

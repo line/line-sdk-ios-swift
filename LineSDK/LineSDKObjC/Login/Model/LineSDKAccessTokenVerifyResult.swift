@@ -33,4 +33,6 @@ public class LineSDKAccessTokenVerifyResult: NSObject {
     public var channelID: String { return _value.channelID }
     public var permissions: [LineSDKLoginPermission] { return _value.permissions.map { .init($0) } }
     public var expiresIn: TimeInterval { return _value.expiresIn }
+
+    public var json: String? { return toJSON(_value) }
 }

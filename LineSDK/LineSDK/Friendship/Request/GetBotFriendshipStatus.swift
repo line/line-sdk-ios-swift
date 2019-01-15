@@ -36,7 +36,7 @@ public struct GetBotFriendshipStatusRequest: Request {
     
     /// Represents a response to a request for getting the friendship status of the user and the bot linked to
     /// your LINE Login channel.
-    public struct Response: Decodable {
+    public struct Response: Codable {
         /// Indicates the friendship status. `true` if the bot is a friend of the user and the user has not
         /// blocked the bot. `false` if the bot is not a friend of the user or the user has blocked the bot. 
         public let friendFlag: Bool

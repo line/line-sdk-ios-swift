@@ -56,6 +56,7 @@
     XCTAssertNil(token.refreshToken);
     XCTAssertNil(token.permissions);
     XCTAssertNil(token.expiresAt);
+    XCTAssertNil(token.json);
 }
 
 - (void)testAccessTokenStoreInterface {
