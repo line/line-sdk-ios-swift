@@ -34,4 +34,6 @@ public class LineSDKUserProfile: NSObject {
     public var pictureURLLarge: URL? { return _value.pictureURLLarge }
     public var pictureURLSmall: URL? { return _value.pictureURLSmall }
     public var statusMessage: String? { return _value.statusMessage }
+
+    public var json: String? { return toJSON(_value) }
 }
