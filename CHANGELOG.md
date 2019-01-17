@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.0.3] - 2019-01-17
+
 ### Fixed
 
 - Build LineSDKObjC with Carthage now works properly with all targets included. [#13](https://github.com/line/line-sdk-ios-swift/issues/13)
@@ -44,3 +46,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.0.0]: https://github.com/line/line-sdk-ios-swift/releases/tag/5.0.0
 [5.0.1]: https://github.com/line/line-sdk-ios-swift/compare/5.0.0...5.0.1
 [5.0.2]: https://github.com/line/line-sdk-ios-swift/compare/5.0.1...5.0.2
+[5.0.3]: https://github.com/line/line-sdk-ios-swift/compare/5.0.2...5.0.3
