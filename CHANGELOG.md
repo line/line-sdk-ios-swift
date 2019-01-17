@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Build LineSDKObjC with Carthage now works properly with all targets included. [#13](https://github.com/line/line-sdk-ios-swift/issues/13)
+
 ## [5.0.2] - 2018-12-18
 
 ### Fixed
