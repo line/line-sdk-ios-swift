@@ -47,7 +47,7 @@
     XCTAssertNotNil([LineSDKLoginPermission address]);
     XCTAssertNotNil([LineSDKLoginPermission realName]);
 
-    XCTAssertEqual([LineSDKLoginPermission permissionsFrom:@"profile email"].count, 2);
+    XCTAssertEqual([LineSDKLoginPermission permissionsFrom:@"profile email abcd"].count, 3);
 }
 
 - (void)testAccessTokenInterface {

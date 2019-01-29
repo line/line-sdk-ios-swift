@@ -53,7 +53,10 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
     /// The ID token bound to the access token. The value exists only if the access token is obtained with
     /// the `.openID` permission.
     public let IDToken: JWT?
-    let IDTokenRaw: String?
+
+    /// The raw string value of ID token bound to the access token. The value exists only if the access token
+    /// is obtained with the `.openID` permission.
+    public let IDTokenRaw: String?
     
     /// The refresh token bound to the access token.
     public let refreshToken: String
