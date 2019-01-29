@@ -28,4 +28,6 @@ public class LineSDKGetBotFriendshipStatusResponse: NSObject {
     let _value: GetBotFriendshipStatusRequest.Response
     init(_ value: GetBotFriendshipStatusRequest.Response) { _value = value }
     public var friendFlag: Bool { return _value.friendFlag }
+
+    public var json: String? { return toJSON(_value) }
 }

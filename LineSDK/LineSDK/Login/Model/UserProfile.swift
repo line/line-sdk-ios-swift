@@ -22,7 +22,7 @@
 import Foundation
 
 /// Represents a response to the `GetUserProfileRequest` method.
-public struct UserProfile: Decodable {
+public struct UserProfile: Codable {
     
     /// The user ID of the current authorized user.
     public let userID: String

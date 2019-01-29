@@ -35,4 +35,24 @@ public struct LoginResult {
     /// `LoginManagerOption` object when the user logs in. For more information, see Linking a bot with your LINE 
     /// Login channel at https://developers.line.me/en/docs/line-login/web/link-a-bot/.
     public let friendshipStatusChanged: Bool?
+
+}
+
+extension LoginResult: Encodable {
+
+    enum CodingKeys: String, CodingKey {
+        case accessToken
+        case scope
+        case userProfile
+        case friendshipStatusChanged
+    }
+
+    /// :nodoc:
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(accessToken, forKey: .accessToken)
+        try container.encodeLoginPermissions(Array(permissions), forKey: .scope)
+        try container.encodeIfPresent(userProfile, forKey: .userProfile)
+        try container.encodeIfPresent(friendshipStatusChanged, forKey: .friendshipStatusChanged)
+    }
 }

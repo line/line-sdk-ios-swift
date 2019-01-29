@@ -1,5 +1,5 @@
 //
-//  LineSDKAccessToken.swift
+//  JSONConverter.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,21 +19,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
-import LineSDK
-#endif
+import Foundation
 
-@objcMembers
-public class LineSDKAccessToken: NSObject {
-    let _value: AccessToken
-    init(_ value: AccessToken) { _value = value }
-    
-    public var value: String { return _value.value }
-    public var createdAt: Date { return _value.createdAt }
-    public var IDToken: LineSDKJWT? { return _value.IDToken.map { .init($0) } }
-    public var refreshToken: String { return _value.refreshToken }
-    public var permissions: [LineSDKLoginPermission] { return _value.permissions.map { .init($0) } }
-    public var expiresAt: Date { return _value.expiresAt }
+private let encoder = JSONEncoder()
 
-    public var json: String? { return toJSON(_value) }
+func toJSON<T: Encodable>(_ value: T) -> String? {
+    guard let data = try? encoder.encode(value) else {
+        return nil
+    }
+    return String(data: data, encoding: .utf8)
 }

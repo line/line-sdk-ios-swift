@@ -46,6 +46,8 @@
     XCTAssertNotNil([LineSDKLoginPermission birthdate]);
     XCTAssertNotNil([LineSDKLoginPermission address]);
     XCTAssertNotNil([LineSDKLoginPermission realName]);
+
+    XCTAssertEqual([LineSDKLoginPermission permissionsFrom:@"profile email"].count, 2);
 }
 
 - (void)testAccessTokenInterface {
@@ -56,6 +58,7 @@
     XCTAssertNil(token.refreshToken);
     XCTAssertNil(token.permissions);
     XCTAssertNil(token.expiresAt);
+    XCTAssertNil(token.json);
 }
 
 - (void)testAccessTokenStoreInterface {

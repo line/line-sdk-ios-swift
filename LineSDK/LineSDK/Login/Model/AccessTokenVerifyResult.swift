@@ -22,7 +22,7 @@
 import Foundation
 
 /// Represents a response to the `GetVerifyTokenRequest` method.
-public struct AccessTokenVerifyResult: Decodable {
+public struct AccessTokenVerifyResult: Codable {
     
     /// The channel ID bound to the access token.
     public let channelID: String
@@ -45,5 +45,13 @@ public struct AccessTokenVerifyResult: Decodable {
         channelID = try container.decode(String.self, forKey: .clientID)
         permissions = try container.decodeLoginPermissions(forKey: .scope)
         expiresIn = try container.decode(TimeInterval.self, forKey: .expiresIn)
+    }
+
+    /// :nodoc:
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(channelID, forKey: .clientID)
+        try container.encode(expiresIn, forKey: .expiresIn)
+        try container.encodeLoginPermissions(permissions, forKey: .scope)
     }
 }
