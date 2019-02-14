@@ -1357,15 +1357,15 @@
 				TargetAttributes = {
 					4B6A702D2109793500D71C66 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					4B90587721006E5C004D717F = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					4B90588021006E5D004D717F = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						TestTargetID = 4B6A702D2109793500D71C66;
 					};
 					4BBEA991212EAF9F00858627 = {

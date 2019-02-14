@@ -117,9 +117,15 @@ public struct FlexBoxComponent: Codable, FlexMessageComponentTypeCompatible, Mes
     public mutating func removeFisrtComponent(
         where condition: (FlexMessageComponent) throws -> Bool) rethrows -> FlexMessageComponent?
     {
+        #if swift(>=5.0)
+        guard let index = try contents.firstIndex(where: condition) else {
+            return nil
+        }
+        #else
         guard let index = try contents.index(where: condition) else {
             return nil
         }
+        #endif
         
         return contents.remove(at: index)
     }
