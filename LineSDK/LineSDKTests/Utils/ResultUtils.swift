@@ -23,14 +23,8 @@
 import Foundation
 import LineSDK
 
-#if swift(>=5.0)
-typealias LineSDKResult = Result
-#else
-typealias LineSDKResult = LineSDK.Result
-#endif
-
 // Make tests happier with old Result type
-extension LineSDKResult {
+extension LineSDK.Result {
 
     var value: Success? {
         switch self {

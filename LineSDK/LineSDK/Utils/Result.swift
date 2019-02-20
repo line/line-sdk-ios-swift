@@ -22,7 +22,6 @@
 // This is an identical implementation for SE-0235 and https://github.com/apple/swift/pull/19982/
 // We could add a conditional flag to the whole file once `Result` contained in the Swift Standard Library.
 
-#if swift(<5.0)
 import Foundation
 
 /// A value that represents either a success or failure, capturing associated
@@ -280,4 +279,3 @@ extension Result {
         }
     }
 }
-#endif
