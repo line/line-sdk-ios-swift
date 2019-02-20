@@ -136,36 +136,6 @@ public enum Result<Success, Failure: Error> {
     }
 }
 
-extension Result where Failure == Swift.Error {
-
-    /// Creates a new result by evaluating a throwing closure, capturing the
-    /// returned value as a success, or any thrown error as a failure.
-    ///
-    /// - Parameter body: A throwing closure to evaluate.
-    @_transparent
-    public init(catching body: () throws -> Success) {
-        do {
-            self = .success(try body())
-        } catch {
-            self = .failure(error)
-        }
-    }
-
-    /// Create an instance by capturing the output of a throwing closure.
-    ///
-    /// - Parameter throwing: A throwing closure to evaluate.
-    @available(*, deprecated, message: "Use `init(catching:)` instead.")
-    @_transparent
-    public init(_ throwing: () throws -> Success) {
-        do {
-            let value = try throwing()
-            self = .success(value)
-        } catch {
-            self = .failure(error)
-        }
-    }
-}
-
 extension Result : Equatable where Success : Equatable, Failure: Equatable { }
 
 extension Result : Hashable where Success : Hashable, Failure : Hashable { }
@@ -253,29 +223,6 @@ extension Result {
             return value
         case let .failure(error):
             throw error
-        }
-    }
-
-    /// Evaluates the given transform closure when this `Result` instance is
-    /// `.success`, passing the value as a parameter and flattening the result.
-    ///
-    /// - Parameter transform: A closure that takes the successful value of the
-    ///   instance.
-    /// - Returns: A new `Result` instance, either from the transform or from
-    ///   the previous error value.
-    @available(*, deprecated, message: "This method will be removed soon. Use methods defined in `Swift.Result`.")
-    public func flatMap<NewValue>(
-        _ transform: (Success) throws -> NewValue
-        ) -> Result<NewValue, Error> {
-        switch self {
-        case let .success(value):
-            do {
-                return .success(try transform(value))
-            } catch {
-                return .failure(error)
-            }
-        case let .failure(error):
-            return .failure(error)
         }
     }
 }
