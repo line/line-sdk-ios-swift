@@ -202,6 +202,7 @@
 		4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */; };
 		4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
+		4BF3044F221D3620005ADADD /* ResultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3044E221D3620005ADADD /* ResultUtils.swift */; };
 		4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
 		4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* CryptoHelpers.swift */; };
 		4BF45A892137B29300CCD28E /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A882137B29300CCD28E /* RSATests.swift */; };
@@ -473,6 +474,7 @@
 		4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponent.swift; sourceTree = "<group>"; };
 		4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponentTests.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
+		4BF3044E221D3620005ADADD /* ResultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtils.swift; sourceTree = "<group>"; };
 		4BF45A8121377DCF00CCD28E /* CryptoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoError.swift; sourceTree = "<group>"; };
 		4BF45A85213783D000CCD28E /* CryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoHelpers.swift; sourceTree = "<group>"; };
 		4BF45A882137B29300CCD28E /* RSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
@@ -961,6 +963,7 @@
 				4BDD2C152133970800DD563D /* Log.swift */,
 				4B4A9AF22159FCF700915054 /* LineSDKConstant.swift */,
 				4B42816521ED9CE6004A0846 /* JSONConverter.swift */,
+				4BF3044E221D3620005ADADD /* ResultUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1668,6 +1671,7 @@
 				4B4A9AF32159FCF700915054 /* LineSDKConstant.swift in Sources */,
 				4BDD2C382133F34300DD563D /* LineSDKFlexBoxComponent.swift in Sources */,
 				4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */,
+				4BF3044F221D3620005ADADD /* ResultUtils.swift in Sources */,
 				4BDD2C1A2133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift in Sources */,
 				4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */,
 				4BC4B3D7212FD76C00750794 /* LineSDKMessage.swift in Sources */,

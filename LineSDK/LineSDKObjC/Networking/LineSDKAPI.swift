@@ -46,7 +46,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void)
     {
         API.refreshAccessToken(refreshToken, callbackQueue: queue.unwrapped) { result in
-            completion(result.value.map { .init($0) }, result.error)
+            result.map(LineSDKAccessToken.init).fold(with: completion)
         }
     }
     
@@ -70,7 +70,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (Error?) -> Void)
     {
         API.revokeAccessToken(token, callbackQueue: queue.unwrapped) { result in
-            completion(result.error)
+            result.foldError(with: completion)
         }
     }
     
@@ -94,7 +94,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
     {
         API.verifyAccessToken(token, callbackQueue: queue.unwrapped) { result in
-            completion(result.value.map { .init($0) }, result.error)
+            result.map(LineSDKAccessTokenVerifyResult.init).fold(with: completion)
         }
     }
     
@@ -110,7 +110,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (LineSDKUserProfile?, Error?) -> Void)
     {
         API.getProfile(callbackQueue: queue.unwrapped) { result in
-            completion(result.value.map { .init($0) }, result.error)
+            result.map(LineSDKUserProfile.init).fold(with: completion)
         }
     }
     
@@ -137,7 +137,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (LineSDKGetFriendsResponse?, Error?) -> Void)
     {
         API.getFriends(sort: sort.unwrapped, pageToken: pageToken, callbackQueue: queue.unwrapped) { result in
-            completion(result.value.map { .init($0) }, result.error)
+            result.map(LineSDKGetFriendsResponse.init).fold(with: completion)
         }
     }
     
@@ -155,7 +155,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (LineSDKGetApproversInFriendsResponse?, Error?) -> Void)
     {
         API.getApproversInFriends(pageToken: pageToken, callbackQueue: queue.unwrapped) { result in
-            completion(result.value.map { .init($0) }, result.error)
+            result.map(LineSDKGetApproversInFriendsResponse.init).fold(with: completion)
         }
     }
     
@@ -173,7 +173,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (LineSDKGetGroupsResponse?, Error?) -> Void)
     {
         API.getGroups(pageToken: pageToken, callbackQueue: queue.unwrapped) { result in
-            completion(result.value.map { .init($0) }, result.error)
+            result.map(LineSDKGetGroupsResponse.init).fold(with: completion)
         }
     }
     
@@ -194,7 +194,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (LineSDKGetApproversInGroupResponse?, Error?) -> Void)
     {
         API.getApproversInGroup(groupID: groupID, pageToken: pageToken, callbackQueue: queue.unwrapped) { result in
-            completion(result.value.map { .init($0) }, result.error)
+            result.map(LineSDKGetApproversInGroupResponse.init).fold(with: completion)
         }
     }
     
@@ -214,7 +214,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (LineSDKPostSendMessagesResponse?, Error?) -> Void)
     {
         API.sendMessages(messages.map { $0.unwrapped }, to: chatID, callbackQueue: queue.unwrapped) { result in
-            completion(result.value.map { .init($0) }, result.error)
+            result.map(LineSDKPostSendMessagesResponse.init).fold(with: completion)
         }
     }
     
@@ -230,7 +230,7 @@ public class LineSDKAPI: NSObject {
         completionHandler completion: @escaping (LineSDKGetBotFriendshipStatusResponse?, Error?) -> Void)
     {
         API.getBotFriendshipStatus(callbackQueue: queue.unwrapped) { result in
-            completion(result.value.map { .init($0) }, result.error)
+            result.map(LineSDKGetBotFriendshipStatusResponse.init).fold(with: completion)
         }
     }
 }

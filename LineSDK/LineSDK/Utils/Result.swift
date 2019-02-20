@@ -161,7 +161,7 @@ extension Result : CustomDebugStringConvertible {
 extension Result {
 
     /// The stored value of a successful `Result`. `nil` if the `Result` was a failure.
-    @available(*, deprecated, message: "Use `get() throws -> Success` instead.")
+    @available(*, deprecated, message: "This method will be removed soon. Use `get() throws -> Success` instead.")
     public var value: Success? {
         switch self {
         case let .success(value):
@@ -172,7 +172,7 @@ extension Result {
     }
 
     /// The stored value of a failure `Result`. `nil` if the `Result` was a success.
-    @available(*, deprecated, message: "Use `get() throws -> Success` instead.")
+    @available(*, deprecated, message: "This method will be removed soon. Use `get() throws -> Success` instead.")
     public var error: Failure? {
         switch self {
         case let .failure(error):
@@ -193,14 +193,30 @@ extension Result {
         }
     }
 
+    /// Unwraps the `Result` into a throwing expression.
+    ///
+    /// - Returns: The success value, if the instance is a success.
+    /// - Throws:  The error value, if the instance is a failure.
+    @available(*, deprecated, message: "This method will be removed soon. Use `get() throws -> Success` instead.")
+    public func unwrapped() throws -> Success {
+        switch self {
+        case let .success(value):
+            return value
+        case let .failure(error):
+            throw error
+        }
+    }
+}
+
+extension Result {
+
     /// Evaluates the given transform closures to create a single output value.
     ///
     /// - Parameters:
     ///   - onSuccess: A closure that transforms the success value.
     ///   - onFailure: A closure that transforms the error value.
     /// - Returns: A single `Output` value.
-    @available(*, deprecated, message: "This method will be removed soon. Use methods defined in `Swift.Result`.")
-    public func fold<Output>(
+    func fold<Output>(
         onSuccess: (Success) -> Output,
         onFailure: (Failure) -> Output
         ) -> Output {
@@ -209,20 +225,6 @@ extension Result {
             return onSuccess(value)
         case let .failure(error):
             return onFailure(error)
-        }
-    }
-
-    /// Unwraps the `Result` into a throwing expression.
-    ///
-    /// - Returns: The success value, if the instance is a success.
-    /// - Throws:  The error value, if the instance is a failure.
-    @available(*, deprecated, message: "Use `get() throws -> Success` instead.")
-    public func unwrapped() throws -> Success {
-        switch self {
-        case let .success(value):
-            return value
-        case let .failure(error):
-            throw error
         }
     }
 }
