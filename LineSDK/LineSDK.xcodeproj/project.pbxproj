@@ -22,6 +22,7 @@
 		4B1C446B2137E98D0094C1D4 /* JWTCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */; };
 		4B2422EF2134FBE8007200C2 /* LineSDKErrorConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2422EE2134FBE8007200C2 /* LineSDKErrorConstant.swift */; };
 		4B25A815213687A400C74B87 /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A814213687A400C74B87 /* RSA.swift */; };
+		4B26F6AF221D266D00F33BF4 /* ResultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B26F6AE221D266D00F33BF4 /* ResultUtils.swift */; };
 		4B2D14E3212F8EDA000DD5BE /* LineSDKUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */; };
 		4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */; };
 		4B2D14ED212F931D000DD5BE /* LineSDKModelInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */; };
@@ -285,6 +286,7 @@
 		4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTCoder.swift; sourceTree = "<group>"; };
 		4B2422EE2134FBE8007200C2 /* LineSDKErrorConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKErrorConstant.swift; sourceTree = "<group>"; };
 		4B25A814213687A400C74B87 /* RSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSA.swift; sourceTree = "<group>"; };
+		4B26F6AE221D266D00F33BF4 /* ResultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtils.swift; sourceTree = "<group>"; };
 		4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKUserProfile.swift; sourceTree = "<group>"; };
 		4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAccessTokenVerifyResult.swift; sourceTree = "<group>"; };
 		4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKModelInterfaceTests.m; sourceTree = "<group>"; };
@@ -856,6 +858,7 @@
 				4B39D1E321104DBA00A45510 /* APITests.swift */,
 				4B39D1E521104F3B00A45510 /* ViewControllerCompatibleTest.swift */,
 				4B15EEFC211D628000866E6C /* MessageSample.swift */,
+				4B26F6AE221D266D00F33BF4 /* ResultUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1611,6 +1614,7 @@
 				4B94D0692153678D0049DE68 /* JWTRSATests.swift in Sources */,
 				4B9A3033212111BE00174C6F /* ImageMessageTests.swift in Sources */,
 				4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */,
+				4B26F6AF221D266D00F33BF4 /* ResultUtils.swift in Sources */,
 				4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */,
 				4BEB4920212B9F6900BA946A /* FlexFillerComponentTests.swift in Sources */,
 				4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */,

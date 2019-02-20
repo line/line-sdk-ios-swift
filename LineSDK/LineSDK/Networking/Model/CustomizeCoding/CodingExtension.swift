@@ -90,8 +90,8 @@ extension UIColor {
             self.init(cgColor: color.cgColor)
             return
         }
-        
-        let hexString = String(rgb[String.Index(encodedOffset: 1)...])
+
+        let hexString = String(rgb.dropFirst())
         var hexValue:  UInt32 = 0
         
         guard Scanner(string: hexString).scanHexInt32(&hexValue) else {

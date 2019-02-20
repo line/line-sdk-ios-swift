@@ -49,7 +49,12 @@ extension Data {
     /// - Returns: The digest data.
     func digest(using algorithm: CryptoAlgorithm) -> Data {
         var hash = [UInt8](repeating: 0, count: Int(algorithm.length))
+        #if swift(>=5.0)
+        withUnsafeBytes { _ = algorithm.digest($0.baseAddress, CC_LONG(count), &hash) }
+        return Data(hash)
+        #else
         withUnsafeBytes { _ = algorithm.digest($0, CC_LONG(count), &hash) }
         return Data(bytes: hash)
+        #endif
     }
 }

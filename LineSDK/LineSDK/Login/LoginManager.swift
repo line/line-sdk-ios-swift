@@ -182,15 +182,15 @@ public class LoginManager {
         if token.permissions.contains(.profile) {
             // We need to pass token since it is not stored in keychain yet.
             getUserProfile(with: token, in: group) { result in
-                profile = result.value
-                result.error.map { errors.append($0) }
+                do { profile = try result.get() }
+                catch { errors.append(error) }
             }
         }
         
         if token.permissions.contains(.openID) {
             getJWK(for: token, in: group) { result in
-                webToken = result.value
-                result.error.map { errors.append($0) }
+                do { webToken = try result.get() }
+                catch { errors.append(error) }
             }
         }
 
