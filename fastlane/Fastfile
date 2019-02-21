@@ -3,7 +3,7 @@ default_platform(:ios)
 platform :ios do
 
   before_all do
-    xcversion(version: "10.1")
+    xcversion(version: "~> 10.1")
   end
 
   desc "Switch to Beta environment"
@@ -18,10 +18,12 @@ platform :ios do
   end
 
   lane :sdk_tests do
+    swift_version = ENV["SWIFT_VERSION"] || "4.2"
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 6s"],
-        scheme: "LineSDK"
+        scheme: "LineSDK",
+        xcargs: "SWIFT_VERSION=#{swift_version}"
     )
 
     codecov_reporter if ENV["TRAVIS"] == "true"
@@ -29,7 +31,8 @@ platform :ios do
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 6s"],
-        scheme: "LineSDKObjC"
+        scheme: "LineSDKObjC",
+        xcargs: "SWIFT_VERSION=#{swift_version}"
     )
   end
 
@@ -52,8 +55,6 @@ platform :ios do
   end
 
   lane :lint_carthage do
-    # This slows down the CI a lot. Not worth. Only do `ensure_latest_carthage` in internal CI.
-    # ensure_latest_carthage
     carthage(command: "build", no_skip_current: true)
   end
 
