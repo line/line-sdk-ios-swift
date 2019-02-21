@@ -89,6 +89,8 @@
 		4B7D8C2B2137B9FA00C6855A /* public.der in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C232137B9FA00C6855A /* public.der */; };
 		4B7D8C2C2137B9FA00C6855A /* test_public.cer in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C242137B9FA00C6855A /* test_public.cer */; };
 		4B7D8C2E2137BD8900C6855A /* private.der in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C2D2137BD8900C6855A /* private.der */; };
+		4B7FEDC6221E4245003F7369 /* ResultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3044E221D3620005ADADD /* ResultUtils.swift */; };
+		4B7FEE0F221E466E003F7369 /* ResultExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7FEE0E221E466E003F7369 /* ResultExtensions.swift */; };
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
 		4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8A965621100A5800760219 /* LoginConfigurationTests.swift */; };
@@ -202,7 +204,6 @@
 		4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */; };
 		4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
-		4BF3044F221D3620005ADADD /* ResultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3044E221D3620005ADADD /* ResultUtils.swift */; };
 		4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
 		4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* CryptoHelpers.swift */; };
 		4BF45A892137B29300CCD28E /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A882137B29300CCD28E /* RSATests.swift */; };
@@ -356,6 +357,7 @@
 		4B7D8C232137B9FA00C6855A /* public.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = public.der; sourceTree = "<group>"; };
 		4B7D8C242137B9FA00C6855A /* test_public.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_public.cer; sourceTree = "<group>"; };
 		4B7D8C2D2137BD8900C6855A /* private.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = private.der; sourceTree = "<group>"; };
+		4B7FEE0E221E466E003F7369 /* ResultExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultExtensions.swift; sourceTree = "<group>"; };
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
 		4B8A965621100A5800760219 /* LoginConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurationTests.swift; sourceTree = "<group>"; };
@@ -809,6 +811,7 @@
 		4B9058CF210072C3004D717F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4BF3044E221D3620005ADADD /* ResultUtils.swift */,
 				4B9058D7210078FB004D717F /* Result.swift */,
 				4B45256C2101829F00A39D4F /* Helpers.swift */,
 				4B8FF4852105656500890AEF /* Delegate.swift */,
@@ -963,7 +966,7 @@
 				4BDD2C152133970800DD563D /* Log.swift */,
 				4B4A9AF22159FCF700915054 /* LineSDKConstant.swift */,
 				4B42816521ED9CE6004A0846 /* JSONConverter.swift */,
-				4BF3044E221D3620005ADADD /* ResultUtils.swift */,
+				4B7FEE0E221E466E003F7369 /* ResultExtensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1567,6 +1570,7 @@
 				4B3CCB78215229DC00F51D76 /* CryptoAlgorithm.swift in Sources */,
 				4BFC09F7213CF68000F4594D /* GetJWKSetRequest.swift in Sources */,
 				DBF20274212C114D00780358 /* Group.swift in Sources */,
+				4B7FEDC6221E4245003F7369 /* ResultUtils.swift in Sources */,
 				4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */,
 				4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,
@@ -1663,6 +1667,7 @@
 				4BC9B2D9212FADD60071C736 /* LinsSDKCallbackQueue.swift in Sources */,
 				4BDD2C1C2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift in Sources */,
 				4BC4B3E1212FF39D00750794 /* LineSDKTemplateMessage.swift in Sources */,
+				4B7FEE0F221E466E003F7369 /* ResultExtensions.swift in Sources */,
 				4B2D1505212FABD2000DD5BE /* LineSDKAPI.swift in Sources */,
 				4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */,
 				4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */,
@@ -1671,7 +1676,6 @@
 				4B4A9AF32159FCF700915054 /* LineSDKConstant.swift in Sources */,
 				4BDD2C382133F34300DD563D /* LineSDKFlexBoxComponent.swift in Sources */,
 				4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */,
-				4BF3044F221D3620005ADADD /* ResultUtils.swift in Sources */,
 				4BDD2C1A2133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift in Sources */,
 				4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */,
 				4BC4B3D7212FD76C00750794 /* LineSDKMessage.swift in Sources */,

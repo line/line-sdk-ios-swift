@@ -1,5 +1,5 @@
 //
-//  ResultUtils.swift
+//  ResultExtensions.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,9 +19,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
-import LineSDK
+#if !LineSDKCocoaPods
 
+import LineSDK
+// These helper methods are not public since we do not want them to be exposed or cause any conflicting.
+// However, they are just wrapper of `ResultUtil` static methods.
+//
+// When compiling with CocoaPods, the extensions under LineSDK target should be used.
 extension Result {
 
     /// Evaluates the given transform closures to create a single output value.
@@ -30,36 +34,23 @@ extension Result {
     ///   - onSuccess: A closure that transforms the success value.
     ///   - onFailure: A closure that transforms the error value.
     /// - Returns: A single `Output` value.
-    func fold<Output>(
+    func match<Output>(
         onSuccess: (Success) -> Output,
-        onFailure: (Failure) -> Output
-        ) -> Output {
-        switch self {
-        case let .success(value):
-            return onSuccess(value)
-        case let .failure(error):
-            return onFailure(error)
-        }
+        onFailure: (Failure) -> Output) -> Output
+    {
+        return ResultUtil.match(result: self, onSuccess: onSuccess, onFailure: onFailure)
     }
 
-    func foldSuccess<Output>(with folder: (Success?) -> Output) -> Output {
-        return fold(
-            onSuccess: { value in folder(value) },
-            onFailure: { _ in folder(nil) }
-        )
+    func matchSuccess<Output>(with folder: (Success?) -> Output) -> Output {
+        return ResultUtil.matchSuccess(result: self, with: folder)
     }
 
-    func foldError<Output>(with folder: (Error?) -> Output) -> Output {
-        return fold(
-            onSuccess: { _ in folder(nil) },
-            onFailure: { error in folder(error) }
-        )
+    func matchFailure<Output>(with folder: (Error?) -> Output) -> Output {
+        return ResultUtil.matchFailure(result: self, with: folder)
     }
 
-    func fold<Output>(with folder: (Success?, Error?) -> Output) -> Output {
-        return fold(
-            onSuccess: { folder($0, nil) },
-            onFailure: { folder(nil, $0) }
-        )
+    func match<Output>(with folder: (Success?, Error?) -> Output) -> Output {
+        return ResultUtil.match(result: self, with: folder)
     }
 }
+#endif

@@ -54,13 +54,13 @@ public class LineSDKLoginManager: NSObject {
             result in
             result
                 .map(LineSDKLoginResult.init)
-                .fold(with: completion)
+                .match(with: completion)
         }
         return process.map { .init($0) }
     }
     
     public func logout(completionHandler completion: @escaping (Error?) -> Void) {
-        _value.logout { result in result.foldError(with: completion) }
+        _value.logout { result in result.matchFailure(with: completion) }
     }
     
     public func application(

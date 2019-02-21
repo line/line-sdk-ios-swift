@@ -207,24 +207,3 @@ extension Result {
         }
     }
 }
-
-extension Result {
-
-    /// Evaluates the given transform closures to create a single output value.
-    ///
-    /// - Parameters:
-    ///   - onSuccess: A closure that transforms the success value.
-    ///   - onFailure: A closure that transforms the error value.
-    /// - Returns: A single `Output` value.
-    func fold<Output>(
-        onSuccess: (Success) -> Output,
-        onFailure: (Failure) -> Output
-        ) -> Output {
-        switch self {
-        case let .success(value):
-            return onSuccess(value)
-        case let .failure(error):
-            return onFailure(error)
-        }
-    }
-}

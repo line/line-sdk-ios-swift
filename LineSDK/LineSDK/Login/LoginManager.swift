@@ -27,7 +27,8 @@ public class LoginManager {
     
     let lock = NSLock()
     
-    /// The shared instance of the login manager. Always use this instance to interact with the login process of the LINE SDK.
+    /// The shared instance of the login manager. Always use this instance to interact with the login process of
+    /// the LINE SDK.
     public static let shared = LoginManager()
     
     /// The current login process. A non-`nil` value indicates that there is an ongoing process and the LINE SDK
