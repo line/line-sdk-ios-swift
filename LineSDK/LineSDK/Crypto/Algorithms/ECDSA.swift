@@ -135,7 +135,14 @@ extension ECDSA {
                 sBytes.insert(0x00, at: 0)
             }
 
-            return Data(bytes: (rBytes.encode(as: .integer) + sBytes.encode(as: .integer)).encode(as: .sequence))
+            let bytes = (rBytes.encode(as: .integer) + sBytes.encode(as: .integer)).encode(as: .sequence)
+            
+            #if swift(>=5.0)
+            return Data(bytes)
+            #else
+            return Data(bytes: bytes)
+            #endif
+
         }
     }
 }

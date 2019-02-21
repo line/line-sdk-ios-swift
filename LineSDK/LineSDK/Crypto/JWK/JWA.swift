@@ -128,8 +128,12 @@ extension JWA {
             let exponentEncoded = exponentBytes.encode(as: .integer)
             
             let sequenceEncoded = (modulusEncoded + exponentEncoded).encode(as: .sequence)
-            
+
+            #if swift(>=5.0)
+            return Data(sequenceEncoded)
+            #else
             return Data(bytes: sequenceEncoded)
+            #endif
         }
     }
 }
@@ -174,8 +178,12 @@ extension JWA {
             }
             
             let uncompressedIndicator: [UInt8] = [ASN1Type.uncompressedIndicator.byte]
-            
-            return Data(bytes: uncompressedIndicator + xBytes + yBytes)
+            let bytes = uncompressedIndicator + xBytes + yBytes
+            #if swift(>=5.0)
+            return Data(bytes)
+            #else
+            return Data(bytes: bytes)
+            #endif
         }
     }
 }

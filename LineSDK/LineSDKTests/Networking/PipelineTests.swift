@@ -149,8 +149,14 @@ class PipelineTests: XCTestCase {
         
         let result1 = pipeline.shouldApply(request: request, data: Data(), response: response)
         XCTAssertTrue(result1)
-        
-        let result2 = pipeline.shouldApply(request: request, data: Data(bytes: [1,2,3]), response: response)
+
+        #if swift(>=5.0)
+        let data = Data([1,2,3])
+        #else
+        let data = Data(bytes: [1,2,3])
+        #endif
+
+        let result2 = pipeline.shouldApply(request: request, data: data, response: response)
         XCTAssertFalse(result2)
         
         try! pipeline.redirect(request: request, data: Data(), response: response) { action in

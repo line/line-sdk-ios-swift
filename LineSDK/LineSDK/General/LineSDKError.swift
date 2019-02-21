@@ -604,11 +604,10 @@ extension LineSDKError.GeneralErrorReason {
     }
 }
 
-extension Result where Error == LineSDKError {
-    init(_ throwing: () throws -> Value) {
+extension Result where Failure == LineSDKError {
+    init(catching body: () throws -> Success) {
         do {
-            let value = try throwing()
-            self = .success(value)
+            self = .success(try body())
         } catch {
             self = .failure(error.sdkError)
         }

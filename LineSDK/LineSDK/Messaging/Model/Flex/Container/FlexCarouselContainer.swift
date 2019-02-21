@@ -54,9 +54,16 @@ public struct FlexCarouselContainer: Codable, FlexMessageContainerTypeCompatible
     public mutating func removeFirstBubble(
         where condition: (FlexBubbleContainer) throws -> Bool) rethrows -> FlexBubbleContainer?
     {
+        #if swift(>=5.0)
+        guard let index = try contents.firstIndex(where: condition) else {
+            return nil
+        }
+        #else
         guard let index = try contents.index(where: condition) else {
             return nil
         }
+        #endif
+
         
         return contents.remove(at: index)
     }
