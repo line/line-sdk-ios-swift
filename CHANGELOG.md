@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - Some model types also support `Encodable` now for easier serialization.
 - Support JSON conversion for Objective-C model wrapper classes for future features.
 - Now you can get the raw ID Token value for server verification purpose.
+- Add compatibility for Swift 5.0 and Xcode 10.2.
 
 ## [5.0.3] - 2019-01-17
 
