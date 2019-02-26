@@ -21,7 +21,7 @@ This feature allows users to log in to your service with their LINE accounts. Wi
 
 ### Utilizing user data with OpenID support
 
-Once the user is authorized, you can get the user’s LINE profile. You can utilize the user's information registered in LINE without building your user system.
+Once the user authorizes, you can get the user’s LINE profile. You can utilize the user's information registered in LINE without building your user system.
 
 The LINE SDK supports the OpenID Connect 1.0 specification. You can get ID tokens that contain the user’s LINE profile when you retrieve the access token.
 
