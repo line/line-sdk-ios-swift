@@ -54,3 +54,7 @@ public struct GetGroupsRequest: Request {
         public let pageToken: String?
     }
 }
+
+extension GetGroupsRequest.Response: PaginatedResponse {
+    var values: [Group] { return groups }
+}
