@@ -140,7 +140,9 @@ private struct PaginatedRequest: Request {
     let authentication: AuthenticateMethod = .none
 
     struct Response: Decodable, PaginatedResponse {
-        let paginatedValues: [Int]
+        let values: [Int]
         let pageToken: String?
+
+        var paginatedValues: [Int] { return values }
     }
 }
