@@ -57,7 +57,7 @@ class RefreshTokenPipelineTests: XCTestCase {
             case .restartWithout(let p):
                 XCTAssertNotNil(AccessTokenStore.shared.current)
                 XCTAssertEqual(p, .redirector(self.pipeline))
-                XCTAssertTrue(delegate.stubs.isEmpty)
+                XCTAssertTrue(delegate.stubItems.isEmpty)
             default:
                 XCTFail("Refresh token pipeline should success.")
             }
