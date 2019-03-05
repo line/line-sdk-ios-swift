@@ -68,3 +68,11 @@ public struct GetFriendsRequest: Request {
         public let pageToken: String?
     }
 }
+
+extension GetFriendsRequest: Sortable {
+    var sortValue: String? { return sort?.rawValue }
+}
+
+extension GetFriendsRequest.Response: PaginatedResponse {
+    var values: [User] { return friends }
+}
