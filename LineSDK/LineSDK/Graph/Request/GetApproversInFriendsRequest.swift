@@ -57,5 +57,5 @@ public struct GetApproversInFriendsRequest: Request {
 }
 
 extension GetApproversInFriendsRequest.Response: PaginatedResponse {
-    var values: [User] { return friends }
+    var paginatedValues: [User] { return friends }
 }

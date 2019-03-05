@@ -68,5 +68,5 @@ public struct GetApproversInGroupRequest: Request {
 }
 
 extension GetApproversInGroupRequest.Response: PaginatedResponse {
-    var values: [User] { return users }
+    var paginatedValues: [User] { return users }
 }

@@ -74,5 +74,5 @@ extension GetFriendsRequest: Sortable {
 }
 
 extension GetFriendsRequest.Response: PaginatedResponse {
-    var values: [User] { return friends }
+    var paginatedValues: [User] { return friends }
 }

@@ -56,5 +56,5 @@ public struct GetGroupsRequest: Request {
 }
 
 extension GetGroupsRequest.Response: PaginatedResponse {
-    var values: [Group] { return groups }
+    var paginatedValues: [Group] { return groups }
 }

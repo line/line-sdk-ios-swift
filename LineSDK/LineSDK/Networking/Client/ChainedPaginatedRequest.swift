@@ -27,7 +27,7 @@ protocol Sortable {
 
 protocol PaginatedResponse: Decodable {
     associatedtype Item: Decodable
-    var values: [Item] { get }
+    var paginatedValues: [Item] { get }
     var pageToken: String? { get }
 }
 
@@ -95,7 +95,7 @@ class PaginatedParseRedirector<Wrapped: Request>: ResponsePipelineRedirector whe
         done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
     {
         let paginatedValue = try parser.decode(Wrapped.Response.self, from: data)
-        chainedPaginatedRequest.items.append(contentsOf: paginatedValue.values)
+        chainedPaginatedRequest.items.append(contentsOf: paginatedValue.paginatedValues)
 
         if let nextPageToken = paginatedValue.pageToken {
             chainedPaginatedRequest.currentPageToken = nextPageToken
