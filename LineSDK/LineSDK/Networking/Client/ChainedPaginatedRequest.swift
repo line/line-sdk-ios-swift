@@ -21,8 +21,8 @@
 
 import Foundation
 
-protocol Sortable {
-    var sortValue: String? { get }
+protocol SortParameterReqeust {
+    var sortParameter: String? { get }
 }
 
 protocol PaginatedResponse: Decodable {
@@ -50,7 +50,7 @@ class ChainedPaginatedRequest<T: Request> : Request where T.Response: PaginatedR
 
     var parameters: Parameters? {
         var param: [String : Any] = [:]
-        if let s = originalRequest as? Sortable, let sort = s.sortValue {
+        if let s = originalRequest as? SortParameterReqeust, let sort = s.sortParameter {
             param["sort"] = sort
         }
         if let pageToken = currentPageToken {

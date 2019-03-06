@@ -69,8 +69,8 @@ public struct GetFriendsRequest: Request {
     }
 }
 
-extension GetFriendsRequest: Sortable {
-    var sortValue: String? { return sort?.rawValue }
+extension GetFriendsRequest: SortParameterReqeust {
+    var sortParameter: String? { return sort?.rawValue }
 }
 
 extension GetFriendsRequest.Response: PaginatedResponse {
