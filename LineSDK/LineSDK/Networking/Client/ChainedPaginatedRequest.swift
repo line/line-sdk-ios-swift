@@ -73,7 +73,7 @@ class ChainedPaginatedRequest<T: Request> : Request where T.Response: PaginatedR
     }
 }
 
-// Parse a intermediate response (single response) of a `ChainedPaginatedRequest`.
+// Parse an intermediate response (single response) of a `ChainedPaginatedRequest`.
 class PaginatedParseRedirector<Wrapped: Request>: ResponsePipelineRedirector where Wrapped.Response: PaginatedResponse {
 
     let parser: JSONDecoder
