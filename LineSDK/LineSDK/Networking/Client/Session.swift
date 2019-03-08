@@ -172,7 +172,7 @@ public class Session {
         let url = request.baseURL.appendingPathComponentIfNotEmpty(request.path)
         let urlRequest = URLRequest(
             url: url,
-            cachePolicy: .reloadIgnoringLocalCacheData,
+            cachePolicy: request.cachePolicy,
             timeoutInterval: request.timeout)
         
         let adapters = request.adapters + (request.suffixAdapters ?? [])
