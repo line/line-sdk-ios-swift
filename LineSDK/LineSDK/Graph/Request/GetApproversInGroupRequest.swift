@@ -66,3 +66,7 @@ public struct GetApproversInGroupRequest: Request {
         }
     }
 }
+
+extension GetApproversInGroupRequest.Response: PaginatedResponse {
+    var paginatedValues: [User] { return users }
+}

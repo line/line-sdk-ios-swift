@@ -232,7 +232,7 @@ class SessionTests: XCTestCase {
                 XCTFail("Should parse to final result after restarting for once.")
                 return
             }
-            XCTAssertTrue(delegate.stubs.isEmpty)
+            XCTAssertTrue(delegate.stubItems.isEmpty)
             XCTAssertEqual(value.foo, "bar")
         }
         waitForExpectations(timeout: 1, handler: nil)
@@ -292,7 +292,7 @@ class SessionTests: XCTestCase {
                 XCTFail("Should parse to final result after restarting for once.")
                 return
             }
-            XCTAssertTrue(delegate.stubs.isEmpty)
+            XCTAssertTrue(delegate.stubItems.isEmpty)
             XCTAssertEqual(value.foo, "bar")
         }
         waitForExpectations(timeout: 1, handler: nil)

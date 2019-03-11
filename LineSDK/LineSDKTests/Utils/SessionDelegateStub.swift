@@ -33,13 +33,26 @@ extension HTTPURLResponse {
 }
 
 class SessionDelegateStub: NSObject, SessionDelegateType {
-    
+
+    struct StubItem {
+        let action: Either
+        let verifier: RequestTaskVerifier
+    }
+
+    struct RequestTaskVerifier {
+        let block: (SessionTask) throws -> Void
+        func verify(sessionTask: SessionTask) throws {
+            try block(sessionTask)
+        }
+
+        static let empty = RequestTaskVerifier { _ in }
+    }
+
     enum Either {
         case response(Data, HTTPURLResponse)
         case error(Error)
         
-        init(data: Data, response: HTTPURLResponse? = nil) {
-            let response = response ?? .responseFromCode(200)
+        init(data: Data, response: HTTPURLResponse) {
             self = .response(data, response)
         }
         
@@ -48,7 +61,7 @@ class SessionDelegateStub: NSObject, SessionDelegateType {
             self.init(data: data, response: response)
         }
         
-        init(string: String, response: HTTPURLResponse? = nil) {
+        init(string: String, response: HTTPURLResponse) {
             let data = string.data(using: .utf8)!
             self.init(data: data, response: response)
         }
@@ -59,23 +72,34 @@ class SessionDelegateStub: NSObject, SessionDelegateType {
         }
     }
     
-    var stubs: [Either]
+    var stubItems: [StubItem]
     
-    init(stub: Either) {
-        self.stubs = [stub]
+    convenience init(stub: Either) {
+        self.init(stubs: [stub])
     }
     
-    init(stubs: [Either]) {
-        self.stubs = stubs
+    convenience init(stubs: [Either]) {
+        self.init(stubItems: stubs.map { StubItem(action: $0, verifier: .empty) })
+    }
+
+    init(stubItems: [StubItem]) {
+        self.stubItems = stubItems
     }
     
     func shouldTaskStart(_ task: SessionTask) -> Bool {
-        guard !stubs.isEmpty else {
+        guard !stubItems.isEmpty else {
             fatalError("Stubs are not enough. Make sure you have enough response stubs prepared for task: \(task)")
         }
         
-        let stub = stubs.removeFirst()
-        switch stub {
+        let stub = stubItems.removeFirst()
+
+        do {
+            try stub.verifier.verify(sessionTask: task)
+        } catch {
+            fatalError("Stub request verifying failed without handling for task: \(task)")
+        }
+
+        switch stub.action {
         case .response(let data, let response):
             task.onResult.call((data, response, nil))
         case .error(let error):

@@ -208,6 +208,8 @@
 		4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* CryptoHelpers.swift */; };
 		4BF45A892137B29300CCD28E /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A882137B29300CCD28E /* RSATests.swift */; };
 		4BF45A8B2137B2C500CCD28E /* RSAKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */; };
+		4BF5337E222E33E30080D138 /* ChainedPaginatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5337D222E33E30080D138 /* ChainedPaginatedRequest.swift */; };
+		4BF53380222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5337F222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift */; };
 		4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */; };
 		4BF53539212A7C9100EA602A /* FlexMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53538212A7C9100EA602A /* FlexMessage.swift */; };
 		4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */; };
@@ -482,6 +484,8 @@
 		4BF45A85213783D000CCD28E /* CryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoHelpers.swift; sourceTree = "<group>"; };
 		4BF45A882137B29300CCD28E /* RSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
 		4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAKeyTests.swift; sourceTree = "<group>"; };
+		4BF5337D222E33E30080D138 /* ChainedPaginatedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainedPaginatedRequest.swift; sourceTree = "<group>"; };
+		4BF5337F222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainedPaginatedRequestsTests.swift; sourceTree = "<group>"; };
 		4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageContainer.swift; sourceTree = "<group>"; };
 		4BF53538212A7C9100EA602A /* FlexMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessage.swift; sourceTree = "<group>"; };
 		4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBubbleContainer.swift; sourceTree = "<group>"; };
@@ -662,6 +666,7 @@
 		4B45257C2101A77300A39D4F /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				4BF5337D222E33E30080D138 /* ChainedPaginatedRequest.swift */,
 				4B4525702101938F00A39D4F /* Request.swift */,
 				4B45257521019EFB00A39D4F /* Session.swift */,
 				4B813C592101B1450091F78E /* RequestAdapter.swift */,
@@ -879,6 +884,7 @@
 				4BA8E44B210EDB5100355F03 /* ParameterEncoderTests.swift */,
 				4BA8E44D210EE79B00355F03 /* PipelineTests.swift */,
 				4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */,
+				4BF5337F222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1525,6 +1531,7 @@
 				4B45257621019EFB00A39D4F /* Session.swift in Sources */,
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
 				4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */,
+				4BF5337E222E33E30080D138 /* ChainedPaginatedRequest.swift in Sources */,
 				4BD191B4211154DF00E2C481 /* API.swift in Sources */,
 				4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */,
 				DBE4E36D211D6C1A00184D66 /* User.swift in Sources */,
@@ -1599,6 +1606,7 @@
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
 				4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */,
 				4B9A303D2121238D00174C6F /* AudioMessageTests.swift in Sources */,
+				4BF53380222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift in Sources */,
 				4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */,
 				4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */,
 				4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */,

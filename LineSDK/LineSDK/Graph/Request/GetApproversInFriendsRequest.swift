@@ -55,3 +55,7 @@ public struct GetApproversInFriendsRequest: Request {
         public let pageToken: String?
     }
 }
+
+extension GetApproversInFriendsRequest.Response: PaginatedResponse {
+    var paginatedValues: [User] { return friends }
+}
