@@ -218,9 +218,6 @@ public class LoginProcess {
             switch result {
             case .safariViewController:
                 self.webLoginFlow = webLoginFlow
-            case .externalSafari:
-                self.setupAppSwitchingObserver()
-                self.webLoginFlow = webLoginFlow
             case .error(let error):
                 // Starting login flow failed. There is no more
                 // fallback methods or cannot find correct view controller.
@@ -349,7 +346,6 @@ class WebLoginFlow: NSObject {
     
     enum Next {
         case safariViewController
-        case externalSafari
         case error(Error)
     }
     

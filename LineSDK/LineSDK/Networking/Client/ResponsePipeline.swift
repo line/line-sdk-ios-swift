@@ -40,7 +40,11 @@ public protocol ResponsePipelineTerminator: class { // Use class protocol for ea
 /// `ResponsePipelineRedirectorAction` enumeration member.
 public protocol ResponsePipelineRedirector: class { // Use class protocol for easier Equatable conforming
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
-    func redirect<T: Request>(request: T, data: Data, response: HTTPURLResponse, done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
+    func redirect<T: Request>(
+        request: T,
+        data: Data,
+        response: HTTPURLResponse,
+        done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
 /// Actions against the processing result from a `ResponsePipelineRedirector` object. A redirector needs to

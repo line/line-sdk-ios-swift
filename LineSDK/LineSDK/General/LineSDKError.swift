@@ -83,9 +83,9 @@ public enum LineSDKError: Error {
         ///
         /// Associated `APIErrorDetail`
         /// contains information about the error detail. If the response data can be converted to an `APIError` object,
-        /// it will be associated with `APIErrorDetail`. The `error` property in `APIErrorDetail` indicates the cause of an error.
-        /// Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and `detail.rawString` will
-        /// contain the plain response and error text respectively.
+        /// it will be associated with `APIErrorDetail`. The `error` property in `APIErrorDetail` indicates the cause
+        /// of an error. Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and
+        /// `detail.rawString` will contain the plain response and error text respectively.
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
     
