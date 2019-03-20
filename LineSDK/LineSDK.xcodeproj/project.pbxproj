@@ -43,6 +43,7 @@
 		4B3CCB9A21523A2600F51D76 /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9921523A2600F51D76 /* CryptoKey.swift */; };
 		4B3CCB9C21523B1300F51D76 /* ECDSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9B21523B1300F51D76 /* ECDSA.swift */; };
 		4B3CCB9E2152449400F51D76 /* ECDSAKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9D2152449400F51D76 /* ECDSAKeyTests.swift */; };
+		4B3D78BB22420BEA00DE27D1 /* PageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */; };
 		4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5B210EF12C00FD19BC /* APIError.swift */; };
 		4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5D210F077700FD19BC /* RequestStubs.swift */; };
 		4B42816621ED9CE6004A0846 /* JSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B42816521ED9CE6004A0846 /* JSONConverter.swift */; };
@@ -60,6 +61,8 @@
 		4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8121083CDB006D17F5 /* Constant.swift */; };
 		4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8321084755006D17F5 /* UserProfile.swift */; };
 		4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */; };
+		4B5B0EF32241DEA900BA59A0 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */; };
+		4B5B0EF52241DF3E00BA59A0 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */; };
 		4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */; };
 		4B5EE2DF212BAFA00009DF2E /* FlexSpacerComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2DE212BAFA00009DF2E /* FlexSpacerComponentTests.swift */; };
 		4B5EE2E1212BB53F0009DF2E /* FlexBoxComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E0212BB53F0009DF2E /* FlexBoxComponentTests.swift */; };
@@ -312,6 +315,7 @@
 		4B3CCB9921523A2600F51D76 /* CryptoKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoKey.swift; sourceTree = "<group>"; };
 		4B3CCB9B21523B1300F51D76 /* ECDSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSA.swift; sourceTree = "<group>"; };
 		4B3CCB9D2152449400F51D76 /* ECDSAKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSAKeyTests.swift; sourceTree = "<group>"; };
+		4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTabView.swift; sourceTree = "<group>"; };
 		4B414D5B210EF12C00FD19BC /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4B414D5D210F077700FD19BC /* RequestStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStubs.swift; sourceTree = "<group>"; };
 		4B42816521ED9CE6004A0846 /* JSONConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverter.swift; sourceTree = "<group>"; };
@@ -329,6 +333,8 @@
 		4B4F0B8121083CDB006D17F5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		4B4F0B8321084755006D17F5 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequest.swift; sourceTree = "<group>"; };
+		4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSpacerComponent.swift; sourceTree = "<group>"; };
 		4B5EE2DE212BAFA00009DF2E /* FlexSpacerComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSpacerComponentTests.swift; sourceTree = "<group>"; };
 		4B5EE2E0212BB53F0009DF2E /* FlexBoxComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBoxComponentTests.swift; sourceTree = "<group>"; };
@@ -676,6 +682,16 @@
 			path = Client;
 			sourceTree = "<group>";
 		};
+		4B5B0EF12241DE4600BA59A0 /* SharingUI */ = {
+			isa = PBXGroup;
+			children = (
+				4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */,
+				4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */,
+				4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */,
+			);
+			path = SharingUI;
+			sourceTree = "<group>";
+		};
 		4B5EE2E2212BCE030009DF2E /* Style */ = {
 			isa = PBXGroup;
 			children = (
@@ -761,6 +777,7 @@
 				D102A6992164650A00804C7C /* Friendship */,
 				4B9058CD210072B0004D717F /* Networking */,
 				4B25A811213684F000C74B87 /* Crypto */,
+				4B5B0EF12241DE4600BA59A0 /* SharingUI */,
 				4B9058CF210072C3004D717F /* Utils */,
 				3F75522E2123D214004AC047 /* Assets.xcassets */,
 				4B90587B21006E5C004D717F /* LineSDK.h */,
@@ -1498,6 +1515,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBF20276212C11A600780358 /* GetGroupsRequest.swift in Sources */,
+				4B5B0EF52241DF3E00BA59A0 /* PageViewController.swift in Sources */,
 				4BFC09F3213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift in Sources */,
 				4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */,
 				4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */,
@@ -1528,12 +1546,14 @@
 				4B9A303F2121277400174C6F /* LocationMessage.swift in Sources */,
 				4B9A304B21213DBB00174C6F /* TemplateMessagePayload.swift in Sources */,
 				4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */,
+				4B3D78BB22420BEA00DE27D1 /* PageTabView.swift in Sources */,
 				4B45257621019EFB00A39D4F /* Session.swift in Sources */,
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
 				4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */,
 				4BF5337E222E33E30080D138 /* ChainedPaginatedRequest.swift in Sources */,
 				4BD191B4211154DF00E2C481 /* API.swift in Sources */,
 				4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */,
+				4B5B0EF32241DEA900BA59A0 /* ShareViewController.swift in Sources */,
 				DBE4E36D211D6C1A00184D66 /* User.swift in Sources */,
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
 				D102A69E2164658D00804C7C /* GetBotFriendshipStatus.swift in Sources */,

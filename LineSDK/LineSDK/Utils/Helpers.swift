@@ -65,6 +65,44 @@ extension UIApplication {
     }
 }
 
+extension UIViewController {
+    var safeTopAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaLayoutGuide.topAnchor
+        } else {
+            return topLayoutGuide.bottomAnchor
+        }
+    }
+
+    var safeBottomAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaLayoutGuide.bottomAnchor
+        } else {
+            return bottomLayoutGuide.topAnchor
+        }
+    }
+
+    func addChild(_ viewController: UIViewController, to containerView: UIView) {
+        addChild(viewController)
+        containerView.addChildSubview(viewController.view)
+        viewController.didMove(toParent: self)
+    }
+}
+
+extension UIView {
+    // Add a subview as `self` is a container. Layout the added `child` to match `self` size.
+    func addChildSubview(_ child: UIView) {
+        child.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(child)
+        NSLayoutConstraint.activate([
+            child.topAnchor     .constraint(equalTo: topAnchor),
+            child.leadingAnchor .constraint(equalTo: leadingAnchor),
+            child.trailingAnchor.constraint(equalTo: trailingAnchor),
+            child.bottomAnchor  .constraint(equalTo: bottomAnchor),
+        ])
+    }
+}
+
 func guardSharedProperty<T>(_ input: T?) -> T {
     guard let shared = input else {
         Log.fatalError("Use \(T.self) before setup. " +
