@@ -64,7 +64,8 @@ struct HeaderAdapter: RequestAdapter {
         let systemVersion = device.systemVersion.replacingOccurrences(of: ".", with: "_")
         let model = device.model
         
-        userAgent = "\(appID)/\(appVersion) ChannelSDK/\(Constant.SDKVersion) (\(model); CPU iPhone OS \(systemVersion) like Mac OS X)"
+        userAgent = "\(appID)/\(appVersion) ChannelSDK/\(Constant.SDKVersion) " +
+                    "(\(model); CPU iPhone OS \(systemVersion) like Mac OS X)"
     }
     
     func adapted(_ request: URLRequest) throws -> URLRequest {

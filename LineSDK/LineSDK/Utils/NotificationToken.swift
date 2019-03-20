@@ -38,7 +38,11 @@ class NotificationToken {
 }
 
 extension NotificationCenter {
-    func addObserver(forName name: Notification.Name?, object obj: Any?, queue: OperationQueue?, using block: @escaping (Notification) -> Swift.Void) -> NotificationToken
+    func addObserver(
+        forName name: Notification.Name?,
+        object obj: Any?,
+        queue: OperationQueue?,
+        using block: @escaping (Notification) -> Swift.Void) -> NotificationToken
     {
         let token: NSObjectProtocol = addObserver(forName: name, object: obj, queue: queue, using: block)
         return NotificationToken(token: token, in: self)

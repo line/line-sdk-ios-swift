@@ -191,7 +191,9 @@ extension String {
         }
         
         guard lines.count != 0 else {
-            throw CryptoError.algorithmsFailed(reason: .invalidPEMKey(string: self, reason: "Empty PEM key after stripping."))
+            throw CryptoError.algorithmsFailed(
+                reason: .invalidPEMKey(string: self, reason: "Empty PEM key after stripping.")
+            )
         }
         
         // Strip off carriage returns in case.

@@ -47,7 +47,8 @@ struct URLQueryEncoder: RequestAdapter {
             var allowedCharacterSet = CharacterSet.urlQueryAllowed
             allowedCharacterSet.remove(charactersIn: "!*'();:@&=+$,/?%#[]")
             
-            let percentEncodedQuery = (components.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters, allowed: allowedCharacterSet)
+            let percentEncodedQuery = (components.percentEncodedQuery.map { $0 + "&" } ?? "") +
+                                      query(parameters, allowed: allowedCharacterSet)
             components.percentEncodedQuery = percentEncodedQuery
             return components.url ?? url
         }
@@ -91,7 +92,11 @@ private func query(_ parameters: Parameters, allowed: CharacterSet = .urlQueryAl
         .joined(separator: "&")
 }
 
-private func queryComponents(fromKey key: String, value: Any, allowed: CharacterSet = .urlQueryAllowed) -> [(String, String)] {
+private func queryComponents(
+    fromKey key: String,
+    value: Any,
+    allowed: CharacterSet = .urlQueryAllowed) -> [(String, String)]
+{
     var components: [(String, String)] = []
 
     if let dictionary = value as? [String: Any] {
