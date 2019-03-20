@@ -365,7 +365,10 @@ class WebLoginFlow: NSObject {
         safariViewController.modalPresentationStyle = .overFullScreen
         safariViewController.modalTransitionStyle = .coverVertical
         safariViewController.delegate = self
-        
+        if #available(iOS 11.0, *) {
+            safariViewController.dismissButtonStyle = .cancel
+        }
+
         self.safariViewController = safariViewController
         
         guard let presenting = viewController ?? .topMost else {
