@@ -43,6 +43,7 @@ class ChainedPaginatedRequest<T: Request> : Request where T.Response: PaginatedR
         self.originalRequest = originalRequest
     }
 
+    /// Called when every time a page is loaded and parsed. This would be invoked in the session's delegate queue.
     let onPageLoaded = Delegate<T.Response, Void>()
 
     let originalRequest: T
