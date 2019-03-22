@@ -77,7 +77,7 @@ public enum LineSDKError: Error {
         
         /// The received data cannot be parsed to an instance of the target type. Code 2003.
         /// - Associated values: Parsing destination type, original data, and system underlying error.
-        case dataParsingFailed(Any.Type, Data, Error)
+        case dataParsingFailed(Any.Type, Data, Error?)
         
         /// The received response contains an invalid HTTP status code. Code 2004.
         ///
