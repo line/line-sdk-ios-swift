@@ -427,7 +427,8 @@ extension LineSDKError.ResponseErrorReason {
         case .nonHTTPURLResponse:
             return "The response is not a valid `HTTPURLResponse`."
         case .dataParsingFailed(let type, let data, let error):
-            let result = "Parsing response data to \(type) failed: \(error)."
+            let errorMessage = error != nil ? "\(error!)" : "<nil>"
+            let result = "Parsing response data to \(type) failed: \(errorMessage)."
             if let text = String(data: data, encoding: .utf8) {
                 return result + "\nOriginal: \(text)"
             } else {
