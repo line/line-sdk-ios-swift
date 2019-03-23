@@ -64,12 +64,13 @@ class PageTabView: UIView {
 
         enum Design {
             static let height: CGFloat = 3
-            static let widthMargin: CGFloat = 2
+            static let widthMargin: CGFloat = 4
+            static func color() -> UIColor { return .black }
         }
 
         private let underline: UIView = {
             let underline = UIView()
-            underline.backgroundColor = .black
+            underline.backgroundColor = Design.color()
             return underline
         }()
 
@@ -84,7 +85,7 @@ class PageTabView: UIView {
         }
 
         func setup(centerX: CGFloat, width: CGFloat) {
-            underline.bounds.size = CGSize(width: width + 2 * Underline.Design.widthMargin,
+            underline.bounds.size = CGSize(width: width + Design.widthMargin,
                                            height: Design.height)
             underline.center = CGPoint(x: centerX, y: bounds.midY)
         }
