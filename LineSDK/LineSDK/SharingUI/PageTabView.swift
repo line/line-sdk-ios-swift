@@ -194,6 +194,11 @@ class PageTabView: UIView {
     }
 
     @objc func tabViewTouchUpInside(_ sender: TabView) {
+        self.isUserInteractionEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.isUserInteractionEnabled = true
+        }
+
         selectIndex(sender.index)
     }
 
