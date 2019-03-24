@@ -31,34 +31,13 @@ class PageViewController: UIViewController {
     private lazy var pageContainerView: UIView = {
         let pageContainerView = UIView()
         view.addSubview(pageContainerView)
-
-        pageContainerView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            pageContainerView.topAnchor     .constraint(equalTo: pageTabView.bottomAnchor),
-            pageContainerView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
-            pageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageContainerView.bottomAnchor  .constraint(equalTo: view.bottomAnchor)
-        ])
-
         return pageContainerView
     }()
 
     private lazy var pageTabView: PageTabView = {
         let pageTabView = PageTabView(titles: pages.map { $0.title })
         view.addSubview(pageTabView)
-
-        pageTabView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            pageTabView.heightAnchor  .constraint(equalToConstant: 45),
-            pageTabView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
-            pageTabView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageTabView.topAnchor     .constraint(equalTo: safeTopAnchor)
-        ])
-
         pageTabView.delegate = self
-
         return pageTabView
     }()
 
@@ -90,6 +69,30 @@ class PageViewController: UIViewController {
 
         view.backgroundColor = .white
         pageTabView.backgroundColor = .yellow
+
+        view.addSubview(pageTabView)
+        view.addSubview(pageContainerView)
+
+        pageTabView.translatesAutoresizingMaskIntoConstraints = false
+        pageContainerView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            pageTabView.heightAnchor  .constraint(equalToConstant: 45),
+            pageTabView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
+            pageTabView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pageTabView.topAnchor     .constraint(equalTo: safeTopAnchor)
+            ])
+
+        NSLayoutConstraint.activate([
+            pageContainerView.topAnchor     .constraint(equalTo: pageTabView.bottomAnchor),
+            pageContainerView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
+            pageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pageContainerView.bottomAnchor  .constraint(equalTo: view.bottomAnchor)
+            ])
+
+        view.layoutIfNeeded()
+        pageTabView.resetUnderline()
+
 
         pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) { [weak self] scrollView, change in
             guard let self = self else { return }

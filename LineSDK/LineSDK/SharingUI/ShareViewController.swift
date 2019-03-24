@@ -26,15 +26,22 @@ public class ShareViewController: UINavigationController {
     public init() {
         let v1 = UIViewController()
         v1.view.backgroundColor = .red
-        let page1 = PageViewController.Page(viewController: v1, title: "V1")
+        let page1 = PageViewController.Page(viewController: v1, title: "A")
         let v2 = UIViewController()
         v2.view.backgroundColor = .yellow
-        let page2 = PageViewController.Page(viewController: v2, title: "V2")
+        let page2 = PageViewController.Page(viewController: v2, title: "BB")
         let v3 = UIViewController()
         v3.view.backgroundColor = .blue
-        let page3 = PageViewController.Page(viewController: v3, title: "V3")
+        let page3 = PageViewController.Page(viewController: v3, title: "CCC")
 
         let root = PageViewController(pages: [page1, page2, page3])
+        root.pages.forEach { page in
+            let label = UILabel()
+            label.text = page.title
+            label.sizeToFit()
+            label.center = page.viewController.view.center
+            page.viewController.view.addSubview(label)
+        }
         super.init(rootViewController: root)
     }
 
