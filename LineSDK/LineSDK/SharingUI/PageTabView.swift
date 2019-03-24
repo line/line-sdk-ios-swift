@@ -89,6 +89,32 @@ class PageTabView: UIView {
                                            height: Design.height)
             underline.center = CGPoint(x: centerX, y: bounds.midY)
         }
+
+        static func preferredWidth(progress: CGFloat, titleWidths: [CGFloat]) -> CGFloat {
+            precondition(!titleWidths.isEmpty, "PageTabView does not accept empty titles.")
+            switch progress {
+            case _ where progress <= 0:
+                return titleWidths[0]
+            case _ where progress >= CGFloat(titleWidths.count - 1):
+                return titleWidths.last!
+            default:
+                return titleWidths.enumerated().reduce(0) { (res, arg) in
+                    let (index, w) = arg
+                    return res + w * (1 - min(1, abs(progress - CGFloat(index))))
+                }
+            }
+        }
+
+        static func preferredCenterX(progress: CGFloat, tabWidth: CGFloat, countOfTabs: CGFloat) -> CGFloat {
+            switch progress {
+            case _ where progress <= 0:
+                return 0.5 * tabWidth
+            case _ where progress >= (countOfTabs - 1):
+                return (countOfTabs - 0.5) * tabWidth
+            default:
+                return (0.5 + progress) * tabWidth
+            }
+        }
     }
 
     lazy var underline = Underline()
@@ -164,6 +190,17 @@ class PageTabView: UIView {
     }
 
     func updateScrollingProgress(_ progress: CGFloat) {
+        normalizeProgress(progress)
+
+        let centerX = Underline.preferredCenterX(progress: currentProgress,
+                                                 tabWidth: tabs.first!.bounds.width,
+                                                 countOfTabs: CGFloat(countOfTabs))
+        let width = Underline.preferredWidth(progress: currentProgress,
+                                             titleWidths: tabs.map { $0.textLabel.bounds.width })
+        underline.setup(centerX: centerX, width: width)
+    }
+
+    func normalizeProgress(_ progress: CGFloat) {
         // UIPageViewController resets the content offset when new page displayed.
         // In this case, the `progress` is 0 and we fix it by using diff
         let diff = currentProgress - progress * nextSpacingFactor - currentDiff
@@ -171,16 +208,6 @@ class PageTabView: UIView {
             currentDiff += diff.rounded()
         }
         currentProgress = progress * nextSpacingFactor + currentDiff
-
-        let centerX = (0.5 + currentProgress) * (tabs.first?.frame.width ?? 0)
-        let proportionalWidth: CGFloat = tabs
-            .map { $0.textLabel.bounds.width }
-            .enumerated()
-            .reduce(0) { (res, arg) in
-                let (index, w) = arg
-                return res + w * (1 - min(1, abs(currentProgress - CGFloat(index))))
-        }
-        underline.setup(centerX: centerX, width: proportionalWidth)
     }
 
     private var currentProgress: CGFloat = 0
