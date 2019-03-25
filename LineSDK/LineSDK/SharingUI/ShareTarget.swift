@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  ShareTarget.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,32 +21,17 @@
 
 import Foundation
 
-/// LINE internal use only.
-/// Represents an `User` object which LineSDK used in `friend list` or `approvers in friend list`.
-public struct User: Decodable {
+protocol ShareTarget {
+    var targetID: String { get }
+    var avatarURL: URL? { get }
+}
 
-    /// Identifier of the user
-    public let userID: String
+extension User: ShareTarget {
+    var targetID: String { return userID }
+    var avatarURL: URL? { return pictureURLSmall }
+}
 
-    /// User's display name
-    public let displayName: String
-
-    /// Profile image URL. Not included in the response if the user doesn't have a profile image.
-    public let pictureURL: URL?
-
-    /// The large image URL of the user. `nil` if the user has not set a profile image.
-    public var pictureURLLarge: URL? {
-        return pictureURL?.appendingPathComponent("/large")
-    }
-
-    /// The small image URL of the user. `nil` if the user has not set a profile image.
-    public var pictureURLSmall: URL? {
-        return pictureURL?.appendingPathComponent("/small")
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case userID = "userId"
-        case displayName
-        case pictureURL = "pictureUrl"
-    }
+extension Group: ShareTarget {
+    var targetID: String { return groupID }
+    var avatarURL: URL? { return pictureURLSmall }
 }
