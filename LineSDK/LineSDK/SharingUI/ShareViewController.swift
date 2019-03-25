@@ -23,19 +23,26 @@ import UIKit
 
 public class ShareViewController: UINavigationController {
 
+    enum ColummIndex: Int, CaseIterable {
+        case friends
+        case groups
+
+        var title: String {
+            switch self {
+            case .friends: return "Friends"
+            case .groups: return "Groups"
+            }
+        }
+    }
+
     public init() {
         let store = ColumnDataStore<ShareTarget>(columnCount: 2)
 
-        let v1 = ShareTargetSelectingViewController(store: store, columnIndex: 0)
-        v1.view.backgroundColor = .red
-        let page1 = PageViewController.Page(viewController: v1, title: "Friends")
-
-        let v2 = ShareTargetSelectingViewController(store: store, columnIndex: 1)
-        v2.view.backgroundColor = .yellow
-        let page2 = PageViewController.Page(viewController: v2, title: "Groups")
-
-        let root = PageViewController(pages: [page1, page2])
-
+        let pages = ColummIndex.allCases.map { index -> PageViewController.Page in
+            let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
+            return .init(viewController: controller, title: index.title)
+        }
+        let root = PageViewController(pages: pages)
         super.init(rootViewController: root)
     }
 
@@ -46,4 +53,6 @@ public class ShareViewController: UINavigationController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    
 }

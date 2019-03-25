@@ -30,6 +30,7 @@ final class ShareTargetSelectingViewController: UITableViewController {
         self.store = store
         self.columnIndex = columnIndex
         super.init(style: .plain)
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +44,6 @@ final class ShareTargetSelectingViewController: UITableViewController {
             ShareTargetSelectingTableCell.self,
             forCellReuseIdentifier: ShareTargetSelectingTableCell.reuseIdentifier)
         tableView.rowHeight = ShareTargetSelectingTableCell.Design.height
-
     }
 }
 
