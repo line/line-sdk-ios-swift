@@ -141,6 +141,8 @@ extension Result : Equatable where Success : Equatable, Failure: Equatable { }
 extension Result : Hashable where Success : Hashable, Failure : Hashable { }
 
 extension Result : CustomDebugStringConvertible {
+
+    /// A textual summary of the `Result`, to help with debugging.
     public var debugDescription: String {
         var output = "Result."
         switch self {
