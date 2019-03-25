@@ -182,7 +182,7 @@ extension Result {
         }
     }
 
-    /// A Boolean value indicating whether the `Result` as a success.
+    /// A Boolean value indicating whether the `Result` was a success.
     @available(*, deprecated, message: "This method will be removed soon. Use methods defined in `Swift.Result`.")
     public var isSuccess: Bool {
         switch self {
