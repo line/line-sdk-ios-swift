@@ -28,6 +28,10 @@ class PageViewController: UIViewController {
         let title: String
     }
 
+    let pages: [Page]
+
+    private var pageScrollViewObserver: NSKeyValueObservation?
+
     private lazy var pageContainerView: UIView = {
         let pageContainerView = UIView()
         return pageContainerView
@@ -40,8 +44,6 @@ class PageViewController: UIViewController {
         return pageTabView
     }()
 
-    let pages: [Page]
-
     private lazy var pageViewController: UIPageViewController = {
         return UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }()
@@ -51,8 +53,6 @@ class PageViewController: UIViewController {
         scrollView?.delegate = self
         return scrollView
     }()
-
-    private var pageScrollViewObserver: NSKeyValueObservation?
 
     init(pages: [Page]) {
         self.pages = pages
@@ -72,6 +72,8 @@ class PageViewController: UIViewController {
         setupSubviews()
         setupLayouts()
 
+        // Layout current views for getting correct page tab size.
+        view.layoutIfNeeded()
         pageTabView.resetUnderline()
 
         pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) { [weak self] scrollView, change in
@@ -120,8 +122,6 @@ class PageViewController: UIViewController {
             pageTabView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             pageTabView.topAnchor     .constraint(equalTo: safeTopAnchor)
             ])
-
-        view.layoutIfNeeded()
     }
 }
 
