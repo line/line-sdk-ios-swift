@@ -35,7 +35,6 @@ class PageViewController: UIViewController {
 
     private lazy var pageTabView: PageTabView = {
         let pageTabView = PageTabView(titles: pages.map { $0.title })
-        view.addSubview(pageTabView)
         pageTabView.delegate = self
 
         return pageTabView
