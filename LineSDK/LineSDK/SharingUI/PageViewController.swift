@@ -28,48 +28,43 @@ class PageViewController: UIViewController {
         let title: String
     }
 
-    private lazy var pageContainerView: UIView! = {
+    private lazy var pageContainerView: UIView = {
         let pageContainerView = UIView()
         view.addSubview(pageContainerView)
-
         pageContainerView.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             pageContainerView.topAnchor     .constraint(equalTo: pageTabView.bottomAnchor),
             pageContainerView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
             pageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             pageContainerView.bottomAnchor  .constraint(equalTo: view.bottomAnchor)
-        ])
+            ])
 
         return pageContainerView
     }()
 
-    private lazy var pageTabView: PageTabView! = {
+    private lazy var pageTabView: PageTabView = {
         let pageTabView = PageTabView(titles: pages.map { $0.title })
         view.addSubview(pageTabView)
-
         pageTabView.translatesAutoresizingMaskIntoConstraints = false
-
+        pageTabView.delegate = self
         NSLayoutConstraint.activate([
             pageTabView.heightAnchor  .constraint(equalToConstant: 45),
             pageTabView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
             pageTabView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             pageTabView.topAnchor     .constraint(equalTo: safeTopAnchor)
-        ])
-
-        pageTabView.delegate = self
+            ])
 
         return pageTabView
     }()
 
     let pages: [Page]
 
-    private lazy var pageViewController: UIPageViewController! = {
+    private lazy var pageViewController: UIPageViewController = {
         return UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }()
 
-    private lazy var pageScrollView: UIScrollView! = {
-        return (pageViewController.view.subviews.first { $0 is UIScrollView }) as! UIScrollView
+    private lazy var pageScrollView: UIScrollView? = {
+        return (pageViewController.view.subviews.first { $0 is UIScrollView }) as? UIScrollView
     }()
 
     private var pageScrollViewObserver: NSKeyValueObservation?
@@ -87,11 +82,12 @@ class PageViewController: UIViewController {
         super.viewDidLoad()
 
         setupPageViewController()
+        setupSubviews()
 
         view.backgroundColor = .white
         pageTabView.backgroundColor = .yellow
 
-        pageScrollViewObserver = pageScrollView.observe(\.contentOffset, options: [.new]) { [weak self] scrollView, change in
+        pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) { [weak self] scrollView, change in
             guard let self = self else { return }
             guard let newValue = change.newValue else { return }
             let width = self.pageViewController.view.bounds.width
@@ -99,7 +95,14 @@ class PageViewController: UIViewController {
             self.pageTabView.updateScrollingProgress(progress)
         }
 
-        pageScrollView.delegate = self
+        pageScrollView?.delegate = self
+    }
+
+    private func setupSubviews() {
+        _ = pageContainerView
+        _ = pageTabView
+        view.layoutIfNeeded()
+        pageTabView.resetUnderline()
     }
 
     private func setupPageViewController() {

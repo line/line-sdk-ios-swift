@@ -37,6 +37,7 @@ class PageTabView: UIView {
             self.textLabel = {
                 let label = UILabel(frame: .zero)
                 label.text = title
+                label.textAlignment = .center
                 return label
             }()
 
@@ -58,6 +59,65 @@ class PageTabView: UIView {
             ])
         }
     }
+
+    class Underline: UIView {
+
+        enum Design {
+            static let height: CGFloat = 3
+            static let widthMargin: CGFloat = 4
+            static func color() -> UIColor { return .black }
+        }
+
+        private let underline: UIView = {
+            let underline = UIView()
+            underline.backgroundColor = Design.color()
+            return underline
+        }()
+
+        init() {
+            super.init(frame: .zero)
+            backgroundColor = .clear
+            addSubview(underline)
+        }
+
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        func setup(centerX: CGFloat, width: CGFloat) {
+            underline.bounds.size = CGSize(width: width + Design.widthMargin,
+                                           height: Design.height)
+            underline.center = CGPoint(x: centerX, y: bounds.midY)
+        }
+
+        static func preferredWidth(progress: CGFloat, titleWidths: [CGFloat]) -> CGFloat {
+            precondition(!titleWidths.isEmpty, "PageTabView does not accept empty titles.")
+            switch progress {
+            case _ where progress <= 0:
+                return titleWidths[0]
+            case _ where progress >= CGFloat(titleWidths.count - 1):
+                return titleWidths.last!
+            default:
+                return titleWidths.enumerated().reduce(0) { (res, arg) in
+                    let (index, w) = arg
+                    return res + w * (1 - min(1, abs(progress - CGFloat(index))))
+                }
+            }
+        }
+
+        static func preferredCenterX(progress: CGFloat, tabWidth: CGFloat, countOfTabs: CGFloat) -> CGFloat {
+            switch progress {
+            case _ where progress <= 0:
+                return 0.5 * tabWidth
+            case _ where progress >= (countOfTabs - 1):
+                return (countOfTabs - 0.5) * tabWidth
+            default:
+                return (0.5 + progress) * tabWidth
+            }
+        }
+    }
+
+    lazy var underline = Underline()
 
     weak var delegate: PageTabViewDelegate?
 
@@ -104,6 +164,15 @@ class PageTabView: UIView {
             
             leading = tabView.trailingAnchor
         }
+
+        addSubview(underline)
+        underline.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            underline.leadingAnchor.constraint(equalTo: leadingAnchor),
+            underline.trailingAnchor.constraint(equalTo: trailingAnchor),
+            underline.heightAnchor.constraint(equalToConstant: Underline.Design.height),
+            underline.bottomAnchor.constraint(equalTo: bottomAnchor),
+            ])
     }
 
     // Select a certain index.
@@ -121,13 +190,43 @@ class PageTabView: UIView {
     }
 
     func updateScrollingProgress(_ progress: CGFloat) {
+        normalizeProgress(progress)
+
+        let centerX = Underline.preferredCenterX(progress: currentProgress,
+                                                 tabWidth: tabs.first!.bounds.width,
+                                                 countOfTabs: CGFloat(countOfTabs))
+        let width = Underline.preferredWidth(progress: currentProgress,
+                                             titleWidths: tabs.map { $0.textLabel.bounds.width })
+        underline.setup(centerX: centerX, width: width)
+    }
+
+    func normalizeProgress(_ progress: CGFloat) {
         // UIPageViewController resets the content offset when new page displayed.
-        // In this case, the `progress` is 0 and we ignore it to keep indicator where it is.
-        guard progress != 0 && progress != 1 && progress != -1 else { return }
-        print(progress * nextSpacingFactor)
+        // In this case, the `progress` is 0 and we fix it by using diff
+        let diff = currentProgress - progress * nextSpacingFactor - currentDiff
+        if abs(diff) > 0.5 { // process normally continuous
+            currentDiff += diff.rounded()
+        }
+        currentProgress = progress * nextSpacingFactor + currentDiff
+    }
+
+    private var currentProgress: CGFloat = 0
+
+    private var currentDiff: CGFloat = 0
+
+    func resetUnderline() {
+        currentProgress = 0
+        currentDiff = 0
+        selectedIndex = 0
+        updateScrollingProgress(0)
     }
 
     @objc func tabViewTouchUpInside(_ sender: TabView) {
+        self.isUserInteractionEnabled = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.isUserInteractionEnabled = true
+        }
+
         selectIndex(sender.index)
     }
 
