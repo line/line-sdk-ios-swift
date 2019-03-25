@@ -23,7 +23,40 @@ import UIKit
 
 final class ShareTargetSelectingViewController: UITableViewController {
 
+    var store: ColumnDataStore<ShareTarget>!
+    let columnIndex: Int
+
+    init(store: ColumnDataStore<ShareTarget>, columnIndex: Int) {
+        self.store = store
+        self.columnIndex = columnIndex
+        super.init(style: .plain)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.register(
+            ShareTargetSelectingTableCell.self,
+            forCellReuseIdentifier: ShareTargetSelectingTableCell.reuseIdentifier)
+        tableView.rowHeight = ShareTargetSelectingTableCell.Design.height
+
+    }
+}
+
+extension ShareTargetSelectingViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return store.data(atColumn: columnIndex).count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: ShareTargetSelectingTableCell.reuseIdentifier,
+            for: indexPath) as! ShareTargetSelectingTableCell
+        cell.displayNameLabel.text = "\(indexPath)"
+        return cell
     }
 }

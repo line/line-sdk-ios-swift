@@ -52,12 +52,12 @@ class ColumnDataStore<T> {
 
     var maximumSelectedCount = 10
 
-    init(tabCount: Int) {
-        data = .init(repeating: [], count: tabCount)
+    init(columnCount: Int) {
+        data = .init(repeating: [], count: columnCount)
     }
 
     func append(data appendingData: [T], to columnIndex: Int) {
-        var column = data(at: columnIndex)
+        var column = data(atColumn: columnIndex)
 
         let startIndex = column.count
 
@@ -73,12 +73,12 @@ class ColumnDataStore<T> {
         )
     }
 
-    func data(at columnIndex: Int) -> [T] {
+    func data(atColumn columnIndex: Int) -> [T] {
         precondition(columnIndex < columnCount, "Input index `columnIndex` is out of range. Data range: 0..<\(data.count)")
         return data[columnIndex]
     }
 
-    func data(at columnIndex: Int, row rowIndex: Int) -> T {
+    func data(atColumn columnIndex: Int, row rowIndex: Int) -> T {
         return data[columnIndex][rowIndex]
     }
 

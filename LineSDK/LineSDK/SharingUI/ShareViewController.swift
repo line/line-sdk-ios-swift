@@ -24,24 +24,18 @@ import UIKit
 public class ShareViewController: UINavigationController {
 
     public init() {
-        let v1 = UIViewController()
-        v1.view.backgroundColor = .red
-        let page1 = PageViewController.Page(viewController: v1, title: "A")
-        let v2 = UIViewController()
-        v2.view.backgroundColor = .yellow
-        let page2 = PageViewController.Page(viewController: v2, title: "BB")
-        let v3 = UIViewController()
-        v3.view.backgroundColor = .blue
-        let page3 = PageViewController.Page(viewController: v3, title: "CCC")
+        let store = ColumnDataStore<ShareTarget>(columnCount: 2)
 
-        let root = PageViewController(pages: [page1, page2, page3])
-        root.pages.forEach { page in
-            let label = UILabel()
-            label.text = page.title
-            label.sizeToFit()
-            label.center = page.viewController.view.center
-            page.viewController.view.addSubview(label)
-        }
+        let v1 = ShareTargetSelectingViewController(store: store, columnIndex: 0)
+        v1.view.backgroundColor = .red
+        let page1 = PageViewController.Page(viewController: v1, title: "Friends")
+
+        let v2 = ShareTargetSelectingViewController(store: store, columnIndex: 1)
+        v2.view.backgroundColor = .yellow
+        let page2 = PageViewController.Page(viewController: v2, title: "Groups")
+
+        let root = PageViewController(pages: [page1, page2])
+
         super.init(rootViewController: root)
     }
 
