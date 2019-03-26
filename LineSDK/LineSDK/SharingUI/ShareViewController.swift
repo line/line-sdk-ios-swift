@@ -53,7 +53,22 @@ public enum MessageShareAuthorizationStatus {
 
 public class ShareViewController: UINavigationController {
 
+    enum Design {
+        static let navigationBarTintColor = UIColor(hex6: 0x283145)
+        static let preferredStatusBarStyle = UIStatusBarStyle.lightContent
+        static let navigationBarTextColor = UIColor.white
+    }
+
     typealias ColummIndex = MessageShareTargetType
+
+    public var navigationBarTintColor = Design.navigationBarTintColor { didSet { updateNavigationStyles() } }
+    public var navigationBarTextColor = Design.navigationBarTextColor { didSet { updateNavigationStyles() } }
+    public var statusBarStyle = Design.preferredStatusBarStyle { didSet { updateNavigationStyles() } }
+
+    private var rootViewController: UIViewController! { didSet { print("Set") } }
+    private var store: ColumnDataStore<ShareTarget>!
+
+    var allLoaded: Bool = false
 
     public weak var shareDelegate: ShareViewControllerDelegate?
 
@@ -78,24 +93,40 @@ public class ShareViewController: UINavigationController {
     }
 
     public init() {
-        let store = ColumnDataStore<ShareTarget>(columnCount: 2)
-
+        let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
         let pages = ColummIndex.allCases.map { index -> PageViewController.Page in
             let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
             return .init(viewController: controller, title: index.title)
         }
-        let root = PageViewController(pages: pages)
-        super.init(rootViewController: root)
+        let rootViewController = PageViewController(pages: pages)
+
+        super.init(rootViewController: rootViewController)
+
+        self.store = store
+        self.rootViewController = rootViewController
+
+        updateNavigationStyles()
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        loadGraphList()
+    }
 
-        title = "LINE"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle
+    }
+
+    private func updateNavigationStyles() {
+
+        rootViewController.title = "LINE"
+        rootViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel, target: self, action: #selector(cancelSharing))
 
-        loadGraphList()
+        navigationBar.shadowImage = UIImage()
+        navigationBar.barTintColor = navigationBarTintColor
+        navigationBar.tintColor = navigationBarTextColor
+        navigationBar.titleTextAttributes = [.foregroundColor: navigationBarTextColor]
     }
 
     @objc private func cancelSharing() {
@@ -115,6 +146,32 @@ public class ShareViewController: UINavigationController {
 
     private func loadGraphList() {
 
+        let friendsRequest = GetFriendsRequest(sort: .relation, pageToken: nil)
+        let chainedFriendsRequest = ChainedPaginatedRequest(originalRequest: friendsRequest)
+        chainedFriendsRequest.onPageLoaded.delegate(on: self) { (self, response) in
+            self.store.append(data: response.friends, to: MessageShareTargetType.friends.rawValue)
+        }
+
+        let groupsRequest = GetGroupsRequest(pageToken: nil)
+        let chainedGroupsRequest = ChainedPaginatedRequest(originalRequest: groupsRequest)
+        chainedGroupsRequest.onPageLoaded.delegate(on: self) { (self, response) in
+            self.store.append(data: response.groups, to: MessageShareTargetType.groups.rawValue)
+        }
+
+        let sendingDispatchGroup = DispatchGroup()
+        sendingDispatchGroup.notify(queue: .main) {
+
+        }
+
+        sendingDispatchGroup.enter()
+        Session.shared.send(chainedFriendsRequest) { result in
+            print(result)
+        }
+
+        sendingDispatchGroup.enter()
+        Session.shared.send(chainedGroupsRequest) { result in
+            print(result)
+        }
     }
     
 }

@@ -33,6 +33,10 @@ public struct GetFriendsRequest: Request {
     public enum Sort: String {
         /// Sort by `displayName`
         case name
+
+        /// Sort by the relationship between the current user and friends. Generally, during a specified period,
+        /// the friends who received more messages from the current user will be sorted at top.
+        case relation
     }
 
     public init(sort: Sort? = nil, pageToken: String? = nil) {

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B104808216ED51A00300C61 /* LineSDKSampleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B104807216ED51A00300C61 /* LineSDKSampleError.swift */; };
+		4B121F132249DE4000473132 /* SampleUIHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */; };
 		4B15EEF1211D322B00866E6C /* APIResultEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF0211D322B00866E6C /* APIResultEntryTests.swift */; };
 		4B3687E2212AB62D00B6048A /* Placeholder.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B3687E0212AB62D00B6048A /* Placeholder.strings */; };
 		4B63F46F2106D43D003D1BF1 /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		4B104807216ED51A00300C61 /* LineSDKSampleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSampleError.swift; sourceTree = "<group>"; };
+		4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUIHomeViewController.swift; sourceTree = "<group>"; };
 		4B15EEF0211D322B00866E6C /* APIResultEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultEntryTests.swift; sourceTree = "<group>"; };
 		4B3687E1212AB62D00B6048A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Placeholder.strings; sourceTree = "<group>"; };
 		4B3687E3212AB63B00B6048A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Placeholder.strings"; sourceTree = "<group>"; };
@@ -148,6 +150,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B121F112249DE2300473132 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		4B3687DF212AB62D00B6048A /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +192,7 @@
 			children = (
 				4B3687DF212AB62D00B6048A /* Localization */,
 				4BB8445B211BD2B6005B60D7 /* API */,
+				4B121F112249DE2300473132 /* UI */,
 				4BCD27A12114031B00B90D8F /* Login */,
 				4BCD279C2113FE9000B90D8F /* Utils */,
 				4B90589E21006E9C004D717F /* AppDelegate.swift */,
@@ -442,6 +453,7 @@
 				4B9058A121006E9C004D717F /* LoginViewController.swift in Sources */,
 				4BCD27982113F95700B90D8F /* UserProfileViewController.swift in Sources */,
 				4B90589F21006E9C004D717F /* AppDelegate.swift in Sources */,
+				4B121F132249DE4000473132 /* SampleUIHomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -85,7 +85,6 @@ class PageViewController: UIViewController {
         setupSubviews()
 
         view.backgroundColor = .white
-        pageTabView.backgroundColor = .yellow
 
         pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) { [weak self] scrollView, change in
             guard let self = self else { return }

@@ -66,11 +66,15 @@ class ColumnDataStore<T> {
 
         let endIndex = column.count
         let indexRange = AppendingIndexRange(startIndex: startIndex, endIndex: endIndex, column: columnIndex)
-        NotificationCenter.default.post(
-            name: .columnDataStoreDidAppendData,
-            object: self,
-            userInfo: [LineSDKNotificationKey.appendDataIndexRange: indexRange]
-        )
+
+        // Make sure the notification is delivered on the main thread since it is often used to update UI.
+        CallbackQueue.currentMainOrAsync.execute {
+            NotificationCenter.default.post(
+                name: .columnDataStoreDidAppendData,
+                object: self,
+                userInfo: [LineSDKNotificationKey.appendDataIndexRange: indexRange]
+            )
+        }
     }
 
     func data(atColumn columnIndex: Int) -> [T] {
