@@ -21,18 +21,60 @@
 
 import UIKit
 
+@objc public protocol ShareViewControllerDelegate {
+    @objc optional func shareViewController(_ controller: ShareViewController, didFailLoadingListWithError: Error)
+    @objc optional func shareViewControllerDidCancelSharing(_ controller: ShareViewController)
+}
+
+public enum MessageShareTargetType: Int, CaseIterable {
+    case friends
+    case groups
+
+    var title: String {
+        switch self {
+        case .friends: return "Friends"
+        case .groups: return "Groups"
+        }
+    }
+
+    var requiredGraphPermission: LoginPermission? {
+        switch self {
+        case .friends: return .friends
+        case .groups: return .groups
+        }
+    }
+}
+
+public enum MessageShareAuthorizationStatus {
+    case lackOfToken
+    case lackOfPermissions([LoginPermission])
+    case authorized
+}
+
 public class ShareViewController: UINavigationController {
 
-    enum ColummIndex: Int, CaseIterable {
-        case friends
-        case groups
+    typealias ColummIndex = MessageShareTargetType
 
-        var title: String {
-            switch self {
-            case .friends: return "Friends"
-            case .groups: return "Groups"
-            }
+    public weak var shareDelegate: ShareViewControllerDelegate?
+
+    public static func authorizationStatusForSendingMessage(to type: MessageShareTargetType)
+        -> MessageShareAuthorizationStatus
+    {
+        guard let token = AccessTokenStore.shared.current else {
+            return .lackOfToken
         }
+
+        var lackPermissions = [LoginPermission]()
+        if let required = type.requiredGraphPermission, !token.permissions.contains(required) {
+            lackPermissions.append(required)
+        }
+        if !token.permissions.contains(.messageWrite) {
+            lackPermissions.append(.messageWrite)
+        }
+        guard lackPermissions.isEmpty else {
+            return .lackOfPermissions(lackPermissions)
+        }
+        return .authorized
     }
 
     public init() {
@@ -46,6 +88,22 @@ public class ShareViewController: UINavigationController {
         super.init(rootViewController: root)
     }
 
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+
+        title = "LINE"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel, target: self, action: #selector(cancelSharing))
+
+        loadGraphList()
+    }
+
+    @objc private func cancelSharing() {
+        dismiss(animated: true) {
+            self.shareDelegate?.shareViewControllerDidCancelSharing?(self)
+        }
+    }
+
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -54,5 +112,9 @@ public class ShareViewController: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
 
+
+    private func loadGraphList() {
+
+    }
     
 }
