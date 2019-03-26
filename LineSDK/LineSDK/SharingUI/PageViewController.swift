@@ -74,7 +74,7 @@ class PageViewController: UIViewController {
 
         // Layout current views for getting correct page tab size.
         view.layoutIfNeeded()
-        pageTabView.resetUnderline()
+        pageTabView.selectIndex(0)
 
         pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) { [weak self] scrollView, change in
             guard let self = self else { return }
@@ -161,7 +161,7 @@ extension PageViewController: UIPageViewControllerDataSource {
 }
 
 extension PageViewController: UIPageViewControllerDelegate {
-
+    // triggered when manually drag PageViewController to next page animation ended
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let index = currentViewControllerIndex else {
             return
@@ -185,6 +185,7 @@ extension PageViewController: PageTabViewDelegate {
 }
 
 extension PageViewController: UIScrollViewDelegate {
+    // triggered when programmatically set the index of PageViewController and its animation ended
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         pageTabView.resetSpacingFactor()
     }

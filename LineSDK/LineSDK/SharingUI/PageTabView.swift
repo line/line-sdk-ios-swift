@@ -28,6 +28,14 @@ protocol PageTabViewDelegate: AnyObject {
 class PageTabView: UIView {
 
     class TabView: UIControl {
+        enum Design {
+            static let titleColor = UIColor.gray
+            static let selectedTitleColor = UIColor.black
+
+            static let titleFont = UIFont.systemFont(ofSize: 15)
+            static let selectedTitleFont = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        }
+
         let index: Int
 
         let textLabel: UILabel
@@ -42,6 +50,7 @@ class PageTabView: UIView {
             }()
 
             super.init(frame: .zero)
+            isSelected = false
             setupViews()
         }
 
@@ -57,6 +66,13 @@ class PageTabView: UIView {
                 textLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
                 textLabel.widthAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: 0.8)
             ])
+        }
+
+        override var isSelected: Bool {
+            didSet {
+                textLabel.font = isSelected ? Design.selectedTitleFont : Design.titleFont
+                textLabel.textColor = isSelected ? Design.selectedTitleColor : Design.titleColor
+            }
         }
     }
 
@@ -121,11 +137,7 @@ class PageTabView: UIView {
 
     weak var delegate: PageTabViewDelegate?
 
-    private (set) var selectedIndex = 0 {
-        didSet {
-            print("Tab selected: \(selectedIndex)")
-        }
-    }
+    private (set) var selectedIndex: Int?
 
     private let countOfTabs: Int
 
@@ -178,7 +190,7 @@ class PageTabView: UIView {
     // Select a certain index.
     func selectIndex(_ index: Int) {
         if selectedIndex == index { return }
-        nextSpacingFactor = abs(CGFloat(index) - CGFloat(selectedIndex))
+        nextSpacingFactor = abs(CGFloat(index) - CGFloat(selectedIndex ?? 0))
         updateSelectedIndex(index)
 
         delegate?.pageTabView(self, didSelectIndex: index)
@@ -187,6 +199,11 @@ class PageTabView: UIView {
     // This only update the `selectedIndex` property and update style when neccessary.
     func updateSelectedIndex(_ index: Int) {
         selectedIndex = index
+
+        // update tabs style
+        tabs.enumerated().forEach { (i, tabView) in
+            tabView.isSelected = (i == selectedIndex)
+        }
     }
 
     func updateScrollingProgress(_ progress: CGFloat) {
@@ -213,13 +230,6 @@ class PageTabView: UIView {
     private var currentProgress: CGFloat = 0
 
     private var currentDiff: CGFloat = 0
-
-    func resetUnderline() {
-        currentProgress = 0
-        currentDiff = 0
-        selectedIndex = 0
-        updateScrollingProgress(0)
-    }
 
     @objc func tabViewTouchUpInside(_ sender: TabView) {
         self.isUserInteractionEnabled = false
