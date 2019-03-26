@@ -28,46 +28,31 @@ class PageViewController: UIViewController {
         let title: String
     }
 
+    let pages: [Page]
+
+    private var pageScrollViewObserver: NSKeyValueObservation?
+
     private lazy var pageContainerView: UIView = {
         let pageContainerView = UIView()
-        view.addSubview(pageContainerView)
-        pageContainerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            pageContainerView.topAnchor     .constraint(equalTo: pageTabView.bottomAnchor),
-            pageContainerView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
-            pageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageContainerView.bottomAnchor  .constraint(equalTo: view.bottomAnchor)
-            ])
-
         return pageContainerView
     }()
 
     private lazy var pageTabView: PageTabView = {
         let pageTabView = PageTabView(titles: pages.map { $0.title })
-        view.addSubview(pageTabView)
-        pageTabView.translatesAutoresizingMaskIntoConstraints = false
         pageTabView.delegate = self
-        NSLayoutConstraint.activate([
-            pageTabView.heightAnchor  .constraint(equalToConstant: 45),
-            pageTabView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
-            pageTabView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageTabView.topAnchor     .constraint(equalTo: safeTopAnchor)
-            ])
 
         return pageTabView
     }()
-
-    let pages: [Page]
 
     private lazy var pageViewController: UIPageViewController = {
         return UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }()
 
     private lazy var pageScrollView: UIScrollView? = {
-        return (pageViewController.view.subviews.first { $0 is UIScrollView }) as? UIScrollView
+        let scrollView = (pageViewController.view.subviews.first { $0 is UIScrollView }) as? UIScrollView
+        scrollView?.delegate = self
+        return scrollView
     }()
-
-    private var pageScrollViewObserver: NSKeyValueObservation?
 
     init(pages: [Page]) {
         self.pages = pages
@@ -81,10 +66,15 @@ class PageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .white
+
         setupPageViewController()
         setupSubviews()
+        setupLayouts()
 
-        view.backgroundColor = .white
+        // Layout current views for getting correct page tab size.
+        view.layoutIfNeeded()
+        pageTabView.selectIndex(0)
 
         pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) { [weak self] scrollView, change in
             guard let self = self else { return }
@@ -93,15 +83,6 @@ class PageViewController: UIViewController {
             let progress = (newValue.x - width) / width
             self.pageTabView.updateScrollingProgress(progress)
         }
-
-        pageScrollView?.delegate = self
-    }
-
-    private func setupSubviews() {
-        _ = pageContainerView
-        _ = pageTabView
-        view.layoutIfNeeded()
-        pageTabView.resetUnderline()
     }
 
     private func setupPageViewController() {
@@ -117,6 +98,30 @@ class PageViewController: UIViewController {
         pageViewController.delegate = self
 
         addChild(pageViewController, to: pageContainerView)
+    }
+
+    private func setupSubviews() {
+        view.addSubview(pageContainerView)
+        view.addSubview(pageTabView)
+    }
+
+    private func setupLayouts() {
+
+        pageContainerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            pageContainerView.topAnchor     .constraint(equalTo: pageTabView.bottomAnchor),
+            pageContainerView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
+            pageContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pageContainerView.bottomAnchor  .constraint(equalTo: view.bottomAnchor)
+            ])
+
+        pageTabView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            pageTabView.heightAnchor  .constraint(equalToConstant: 45),
+            pageTabView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
+            pageTabView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pageTabView.topAnchor     .constraint(equalTo: safeTopAnchor)
+            ])
     }
 }
 
@@ -156,7 +161,7 @@ extension PageViewController: UIPageViewControllerDataSource {
 }
 
 extension PageViewController: UIPageViewControllerDelegate {
-
+    // triggered when manually drag PageViewController to next page animation ended
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let index = currentViewControllerIndex else {
             return
@@ -180,6 +185,7 @@ extension PageViewController: PageTabViewDelegate {
 }
 
 extension PageViewController: UIScrollViewDelegate {
+    // triggered when programmatically set the index of PageViewController and its animation ended
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         pageTabView.resetSpacingFactor()
     }
