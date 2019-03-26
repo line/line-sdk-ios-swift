@@ -70,8 +70,8 @@ class PageTabView: UIView {
 
         override var isSelected: Bool {
             didSet {
-                textLabel.font = isSelected ?Design.selectedTitleFont :Design.titleFont
-                textLabel.textColor = isSelected ?Design.selectedTitleColor :Design.titleColor
+                textLabel.font = isSelected ? Design.selectedTitleFont : Design.titleFont
+                textLabel.textColor = isSelected ? Design.selectedTitleColor : Design.titleColor
             }
         }
     }
