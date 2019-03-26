@@ -21,9 +21,20 @@
 
 import UIKit
 
-@objc public protocol ShareViewControllerDelegate {
-    @objc optional func shareViewController(_ controller: ShareViewController, didFailLoadingListWithError: Error)
-    @objc optional func shareViewControllerDidCancelSharing(_ controller: ShareViewController)
+public protocol ShareViewControllerDelegate: AnyObject {
+    func shareViewController(
+        _ controller: ShareViewController,
+        didFailLoadingListType shareType: MessageShareTargetType,
+        withError: LineSDKError)
+    func shareViewControllerDidCancelSharing(_ controller: ShareViewController)
+}
+
+extension ShareViewControllerDelegate {
+    public func shareViewController(
+        _ controller: ShareViewController,
+        didFailLoadingListType shareType: MessageShareTargetType,
+        withError: LineSDKError) { }
+    public func shareViewControllerDidCancelSharing(_ controller: ShareViewController) { }
 }
 
 public enum MessageShareTargetType: Int, CaseIterable {
@@ -68,10 +79,113 @@ public class ShareViewController: UINavigationController {
     private var rootViewController: UIViewController! { didSet { print("Set") } }
     private var store: ColumnDataStore<ShareTarget>!
 
-    var allLoaded: Bool = false
+    private var allLoaded: Bool = false
 
     public weak var shareDelegate: ShareViewControllerDelegate?
 
+    // MARK: - Initializers
+    public init() {
+        let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
+        let pages = ColummIndex.allCases.map { index -> PageViewController.Page in
+            let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
+            return .init(viewController: controller, title: index.title)
+        }
+        let rootViewController = PageViewController(pages: pages)
+
+        super.init(rootViewController: rootViewController)
+
+        self.store = store
+        self.rootViewController = rootViewController
+
+        updateNavigationStyles()
+    }
+
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Lift Cycle
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        loadGraphList()
+    }
+
+    // MARK: - Setup & Style
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle
+    }
+
+    private func updateNavigationStyles() {
+
+        rootViewController.title = "LINE"
+        rootViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel, target: self, action: #selector(cancelSharing))
+
+        navigationBar.shadowImage = UIImage()
+        navigationBar.barTintColor = navigationBarTintColor
+        navigationBar.tintColor = navigationBarTextColor
+        navigationBar.titleTextAttributes = [.foregroundColor: navigationBarTextColor]
+    }
+}
+
+// MARK: - Controller Actions
+extension ShareViewController {
+    @objc private func cancelSharing() {
+        dismiss(animated: true) {
+            self.shareDelegate?.shareViewControllerDidCancelSharing(self)
+        }
+    }
+
+    private func loadGraphList() {
+
+        let friendsRequest = GetFriendsRequest(sort: .relation, pageToken: nil)
+        let chainedFriendsRequest = ChainedPaginatedRequest(originalRequest: friendsRequest)
+        chainedFriendsRequest.onPageLoaded.delegate(on: self) { (self, response) in
+            self.store.append(data: response.friends, to: MessageShareTargetType.friends.rawValue)
+        }
+
+        let groupsRequest = GetGroupsRequest(pageToken: nil)
+        let chainedGroupsRequest = ChainedPaginatedRequest(originalRequest: groupsRequest)
+        chainedGroupsRequest.onPageLoaded.delegate(on: self) { (self, response) in
+            self.store.append(data: response.groups, to: MessageShareTargetType.groups.rawValue)
+        }
+
+
+        let sendingDispatchGroup = DispatchGroup()
+        sendingDispatchGroup.notify(queue: .main) {
+            self.allLoaded = true
+        }
+
+        sendingDispatchGroup.enter()
+        Session.shared.send(chainedFriendsRequest) { result in
+            sendingDispatchGroup.leave()
+            switch result {
+            case .success:
+                break
+            case .failure(let error):
+                self.shareDelegate?.shareViewController(self, didFailLoadingListType: .friends, withError: error)
+            }
+        }
+
+        sendingDispatchGroup.enter()
+        Session.shared.send(chainedGroupsRequest) { result in
+            sendingDispatchGroup.leave()
+            switch result {
+            case .success:
+                break
+            case .failure(let error):
+                self.shareDelegate?.shareViewController(self, didFailLoadingListType: .groups, withError: error)
+            }
+        }
+    }
+}
+
+// MARK: - Authorization Helpers
+extension ShareViewController {
     public static func authorizationStatusForSendingMessage(to type: MessageShareTargetType)
         -> MessageShareAuthorizationStatus
     {
@@ -91,87 +205,4 @@ public class ShareViewController: UINavigationController {
         }
         return .authorized
     }
-
-    public init() {
-        let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
-        let pages = ColummIndex.allCases.map { index -> PageViewController.Page in
-            let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
-            return .init(viewController: controller, title: index.title)
-        }
-        let rootViewController = PageViewController(pages: pages)
-
-        super.init(rootViewController: rootViewController)
-
-        self.store = store
-        self.rootViewController = rootViewController
-
-        updateNavigationStyles()
-    }
-
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-        loadGraphList()
-    }
-
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
-        return statusBarStyle
-    }
-
-    private func updateNavigationStyles() {
-
-        rootViewController.title = "LINE"
-        rootViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel, target: self, action: #selector(cancelSharing))
-
-        navigationBar.shadowImage = UIImage()
-        navigationBar.barTintColor = navigationBarTintColor
-        navigationBar.tintColor = navigationBarTextColor
-        navigationBar.titleTextAttributes = [.foregroundColor: navigationBarTextColor]
-    }
-
-    @objc private func cancelSharing() {
-        dismiss(animated: true) {
-            self.shareDelegate?.shareViewControllerDidCancelSharing?(self)
-        }
-    }
-
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-
-    private func loadGraphList() {
-
-        let friendsRequest = GetFriendsRequest(sort: .relation, pageToken: nil)
-        let chainedFriendsRequest = ChainedPaginatedRequest(originalRequest: friendsRequest)
-        chainedFriendsRequest.onPageLoaded.delegate(on: self) { (self, response) in
-            self.store.append(data: response.friends, to: MessageShareTargetType.friends.rawValue)
-        }
-
-        let groupsRequest = GetGroupsRequest(pageToken: nil)
-        let chainedGroupsRequest = ChainedPaginatedRequest(originalRequest: groupsRequest)
-        chainedGroupsRequest.onPageLoaded.delegate(on: self) { (self, response) in
-            self.store.append(data: response.groups, to: MessageShareTargetType.groups.rawValue)
-        }
-
-        let sendingDispatchGroup = DispatchGroup()
-        sendingDispatchGroup.notify(queue: .main) {
-
-        }
-
-        sendingDispatchGroup.enter()
-        Session.shared.send(chainedFriendsRequest) { result in
-            print(result)
-        }
-
-        sendingDispatchGroup.enter()
-        Session.shared.send(chainedGroupsRequest) { result in
-            print(result)
-        }
-    }
-    
 }
