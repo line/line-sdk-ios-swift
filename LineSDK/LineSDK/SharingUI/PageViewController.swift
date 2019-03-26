@@ -185,7 +185,7 @@ extension PageViewController: PageTabViewDelegate {
 }
 
 extension PageViewController: UIScrollViewDelegate {
-    // triggered when programmatically set the index of PageViewController
+    // triggered when programmatically set the index of PageViewController and its animation ended
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         pageTabView.resetSpacingFactor()
     }
