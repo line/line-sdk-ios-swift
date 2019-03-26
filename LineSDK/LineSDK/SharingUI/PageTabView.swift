@@ -137,11 +137,7 @@ class PageTabView: UIView {
 
     weak var delegate: PageTabViewDelegate?
 
-    private (set) var selectedIndex = 0 {
-        didSet {
-            print("Tab selected: \(selectedIndex)")
-        }
-    }
+    private (set) var selectedIndex: Int?
 
     private let countOfTabs: Int
 
@@ -194,7 +190,7 @@ class PageTabView: UIView {
     // Select a certain index.
     func selectIndex(_ index: Int) {
         if selectedIndex == index { return }
-        nextSpacingFactor = abs(CGFloat(index) - CGFloat(selectedIndex))
+        nextSpacingFactor = abs(CGFloat(index) - CGFloat(selectedIndex ?? 0))
         updateSelectedIndex(index)
 
         delegate?.pageTabView(self, didSelectIndex: index)
@@ -234,13 +230,6 @@ class PageTabView: UIView {
     private var currentProgress: CGFloat = 0
 
     private var currentDiff: CGFloat = 0
-
-    func resetUnderline() {
-        currentProgress = 0
-        currentDiff = 0
-        updateSelectedIndex(0)
-        updateScrollingProgress(0)
-    }
 
     @objc func tabViewTouchUpInside(_ sender: TabView) {
         self.isUserInteractionEnabled = false
