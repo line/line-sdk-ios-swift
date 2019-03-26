@@ -85,6 +85,29 @@ class ChainedPaginatedRequestsTests: XCTestCase {
             XCTAssertTrue(result.error!.isResponseError(statusCode: 500))
         }
     }
+
+    func testChainedRequestCallsPageLoadedOnEachParsing() {
+        let delegate = SessionDelegateStub(stubItems: [
+            paginatedResponseStub(values: "[1,2,3]", token: "hello") {
+                XCTAssertFalse($0.containsPageToken("hello"))
+            },
+            paginatedResponseStub(values: "[4,5,6]") {
+                XCTAssertTrue($0.containsPageToken("hello"))
+            }
+        ])
+        let session = Session(configuration: config, delegate: delegate)
+        var count = 0
+        var values: [[Int]] = []
+        request.onPageLoaded.delegate(on: self) { (self, response) in
+            count += 1
+            values.append(response.values)
+        }
+        session.send(request) { result in
+            XCTAssertEqual(result.value, [1,2,3,4,5,6])
+            XCTAssertEqual(count, 2)
+            XCTAssertEqual(values, [[1,2,3], [4,5,6]])
+        }
+    }
 }
 
 extension SessionTask {

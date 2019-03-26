@@ -77,15 +77,15 @@ public enum LineSDKError: Error {
         
         /// The received data cannot be parsed to an instance of the target type. Code 2003.
         /// - Associated values: Parsing destination type, original data, and system underlying error.
-        case dataParsingFailed(Any.Type, Data, Error)
+        case dataParsingFailed(Any.Type, Data, Error?)
         
         /// The received response contains an invalid HTTP status code. Code 2004.
         ///
         /// Associated `APIErrorDetail`
         /// contains information about the error detail. If the response data can be converted to an `APIError` object,
-        /// it will be associated with `APIErrorDetail`. The `error` property in `APIErrorDetail` indicates the cause of an error.
-        /// Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and `detail.rawString` will
-        /// contain the plain response and error text respectively.
+        /// it will be associated with `APIErrorDetail`. The `error` property in `APIErrorDetail` indicates the cause
+        /// of an error. Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and
+        /// `detail.rawString` will contain the plain response and error text respectively.
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
     
@@ -427,7 +427,8 @@ extension LineSDKError.ResponseErrorReason {
         case .nonHTTPURLResponse:
             return "The response is not a valid `HTTPURLResponse`."
         case .dataParsingFailed(let type, let data, let error):
-            let result = "Parsing response data to \(type) failed: \(error)."
+            let errorMessage = error != nil ? "\(error!)" : "<nil>"
+            let result = "Parsing response data to \(type) failed: \(errorMessage)."
             if let text = String(data: data, encoding: .utf8) {
                 return result + "\nOriginal: \(text)"
             } else {

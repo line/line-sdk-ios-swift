@@ -1,5 +1,5 @@
 //
-//  NotificationToken.swift
+//  ImageDownloader.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,33 +19,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-/// Wraps normal `Notification` observing method, to provide a behavior of releasing `token` automatically when
-/// observer gets deinit.
-class NotificationToken {
-    let token: NSObjectProtocol
-    let center: NotificationCenter
-    
-    init(token: NSObjectProtocol, in center: NotificationCenter) {
-        self.token = token
-        self.center = center
-    }
-    
-    deinit {
-        center.removeObserver(token)
-    }
-}
+class ImageDownloader {
+    let session: URLSession
 
-extension NotificationCenter {
-    func addObserver(
-        forName name: Notification.Name?,
-        object obj: Any?,
-        queue: OperationQueue?,
-        using block: @escaping (Notification) -> Swift.Void) -> NotificationToken
+    init() {
+        session = URLSession(configuration: .default)
+    }
+
+    func download(
+        url: URL,
+        callbackQueue: CallbackQueue = .asyncMain,
+        completion: @escaping (ImageSettingResult) -> Void)
     {
-        let token: NSObjectProtocol = addObserver(forName: name, object: obj, queue: queue, using: block)
-        return NotificationToken(token: token, in: self)
-    }
+        session.dataTask(with: url) { (data, response, error) in
 
+            let callback: ((Result<UIImage, LineSDKError>) -> Void) = { result in
+                callbackQueue.execute { completion(result) }
+            }
+
+            if let data = data {
+                if let image = UIImage(data: data) {
+                    callback(.success(image))
+                } else {
+                    callback(.failure(.responseFailed(reason: .dataParsingFailed(UIImage.self, data, nil))))
+                }
+            } else {
+                if let error = error {
+                    callback(.failure(.responseFailed(reason: .URLSessionError(error))))
+                } else {
+                    callback(.failure(.responseFailed(reason: .nonHTTPURLResponse)))
+                }
+            }
+        }.resume()
+    }
 }

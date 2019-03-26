@@ -1,5 +1,5 @@
 //
-//  NotificationToken.swift
+//  ImageManager.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,31 +21,40 @@
 
 import Foundation
 
-/// Wraps normal `Notification` observing method, to provide a behavior of releasing `token` automatically when
-/// observer gets deinit.
-class NotificationToken {
-    let token: NSObjectProtocol
-    let center: NotificationCenter
-    
-    init(token: NSObjectProtocol, in center: NotificationCenter) {
-        self.token = token
-        self.center = center
-    }
-    
-    deinit {
-        center.removeObserver(token)
-    }
-}
+typealias ImageSettingResult = Result<UIImage, LineSDKError>
 
-extension NotificationCenter {
-    func addObserver(
-        forName name: Notification.Name?,
-        object obj: Any?,
-        queue: OperationQueue?,
-        using block: @escaping (Notification) -> Swift.Void) -> NotificationToken
+class ImageManager {
+    static let shared = ImageManager()
+
+    let downloader = ImageDownloader()
+    let cache: NSCache<NSURL, UIImage>
+
+    private init() {
+        cache = NSCache()
+        cache.countLimit = 500
+    }
+
+    func getImage(
+        _ url: URL,
+        callbackQueue: CallbackQueue = .currentMainOrAsync,
+        completion: @escaping (ImageSettingResult) -> Void)
     {
-        let token: NSObjectProtocol = addObserver(forName: name, object: obj, queue: queue, using: block)
-        return NotificationToken(token: token, in: self)
+        let nsURL = url as NSURL
+        if let image = cache.object(forKey: nsURL) {
+            callbackQueue.execute { completion(.success(image)) }
+            return
+        }
+        downloader.download(url: url, callbackQueue: callbackQueue) { result in
+            if let image = try? result.get() {
+                self.cache.setObject(image, forKey: nsURL)
+            }
+
+            callbackQueue.execute { completion(result) }
+        }
+    }
+
+    func purgeCache() {
+        cache.removeAllObjects()
     }
 
 }

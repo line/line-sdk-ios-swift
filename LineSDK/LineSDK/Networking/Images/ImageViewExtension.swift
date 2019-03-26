@@ -1,5 +1,5 @@
 //
-//  NotificationToken.swift
+//  ImageViewExtension.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,33 +19,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-/// Wraps normal `Notification` observing method, to provide a behavior of releasing `token` automatically when
-/// observer gets deinit.
-class NotificationToken {
-    let token: NSObjectProtocol
-    let center: NotificationCenter
-    
-    init(token: NSObjectProtocol, in center: NotificationCenter) {
-        self.token = token
-        self.center = center
-    }
-    
-    deinit {
-        center.removeObserver(token)
-    }
-}
-
-extension NotificationCenter {
-    func addObserver(
-        forName name: Notification.Name?,
-        object obj: Any?,
-        queue: OperationQueue?,
-        using block: @escaping (Notification) -> Swift.Void) -> NotificationToken
+extension UIImageView {
+    func setImage(
+        _ url: URL,
+        placeholder: UIImage? = nil,
+        completion: ((ImageSettingResult) -> Void)? = nil)
     {
-        let token: NSObjectProtocol = addObserver(forName: name, object: obj, queue: queue, using: block)
-        return NotificationToken(token: token, in: self)
+        image = placeholder
+        ImageManager.shared.getImage(url) { result in
+            if let image = try? result.get() {
+                self.image = image
+            }
+            completion?(result)
+        }
     }
-
 }

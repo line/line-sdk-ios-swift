@@ -22,11 +22,19 @@
 import Foundation
 
 struct Log {
-    static func assertionFailure(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) {
+    static func assertionFailure(
+        _ message: @autoclosure () -> String,
+        file: StaticString = #file,
+        line: UInt = #line)
+    {
         Swift.assertionFailure("[LineSDK] \(message())", file: file, line: line)
     }
     
-    static func fatalError(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) -> Never {
+    static func fatalError(
+        _ message: @autoclosure () -> String,
+        file: StaticString = #file,
+        line: UInt = #line) -> Never
+    {
         Swift.fatalError("[LineSDK] \(message())", file: file, line: line)
     }
     

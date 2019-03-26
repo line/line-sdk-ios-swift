@@ -188,7 +188,9 @@ open class LoginButton: UIButton {
         
         titleEdgeInsets = UIEdgeInsets(
             top: CGFloat(buttonSize.constant.bubbleWidth / 2),
-            left: CGFloat(buttonSize.constant.iconWidth + buttonSize.constant.separatorWidth + buttonSize.constant.leftPadding),
+            left: CGFloat(buttonSize.constant.iconWidth +
+                          buttonSize.constant.separatorWidth +
+                          buttonSize.constant.leftPadding),
             bottom: CGFloat(buttonSize.constant.bubbleWidth / 2),
             right: CGFloat(buttonSize.constant.rightPadding)
         )
