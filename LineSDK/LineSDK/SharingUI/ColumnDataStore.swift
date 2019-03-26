@@ -46,7 +46,7 @@ class ColumnDataStore<T> {
     }
 
     private var data: [[T]]
-    private var selected: [ColumnIndex] = []
+    private(set) var selected: [ColumnIndex] = []
 
     private var columnCount: Int { return data.count }
 
@@ -77,21 +77,25 @@ class ColumnDataStore<T> {
         }
     }
 
-    func data(atColumn columnIndex: Int) -> [T] {
-        precondition(columnIndex < columnCount, "Input index `columnIndex` is out of range. Data range: 0..<\(data.count)")
-        return data[columnIndex]
+    func data(atColumn column: Int) -> [T] {
+        precondition(column < columnCount, "Input index `column` is out of range. Data range: 0..<\(data.count)")
+        return data[column]
     }
 
-    func data(atColumn columnIndex: Int, row rowIndex: Int) -> T {
-        return data[columnIndex][rowIndex]
+    func data(atColumn column: Int, row: Int) -> T {
+        return data[column][row]
+    }
+
+    func data(at index: ColumnIndex) -> T {
+        return data(atColumn: index.column, row: index.row)
     }
 
     // Return `false` if the toggle failed due to `maximumSelectedCount` reached.
     func toggleSelect(atColumn columnIndex: Int, row rowIndex: Int) -> Bool {
 
-        func notifySelectingChange(_ targetIndex: ColumnIndex) {
+        func notifySelectingChange(selected: Bool, targetIndex: ColumnIndex) {
             NotificationCenter.default.post(
-                name: .columnDataStoreDidUnselected,
+                name: selected ? .columnDataStoreDidSelected : .columnDataStoreDidUnselected,
                 object: self,
                 userInfo: [LineSDKNotificationKey.selectingIndex: targetIndex]
             )
@@ -100,14 +104,15 @@ class ColumnDataStore<T> {
         let targetIndex = ColumnIndex(row: rowIndex, column: columnIndex)
         if let index = selected.firstIndex(of: targetIndex) {
             selected.remove(at: index)
+            notifySelectingChange(selected: false, targetIndex: targetIndex)
         } else {
             guard selected.count < maximumSelectedCount else {
                 return false
             }
             selected.append(targetIndex)
+            notifySelectingChange(selected: false, targetIndex: targetIndex)
         }
-        
-        notifySelectingChange(targetIndex)
+
         return true
     }
 
