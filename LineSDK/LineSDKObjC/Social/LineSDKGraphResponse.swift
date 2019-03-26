@@ -63,17 +63,20 @@ public class LineSDKGetApproversInGroupResponse: NSObject {
 public enum LineSDKGetFriendsRequestSort: Int {
     case none
     case name
+    case relation
     
     var unwrapped: GetFriendsRequest.Sort? {
         switch self {
         case .none: return nil
         case .name: return .name
+        case .relation: return .relation
         }
     }
     
     init(_ value: GetFriendsRequest.Sort?) {
         switch value {
         case .name?: self = .name
+        case .relation?: self = .relation
         case nil: self = .none
         }
     }
