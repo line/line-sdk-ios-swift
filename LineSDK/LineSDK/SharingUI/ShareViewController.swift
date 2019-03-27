@@ -111,7 +111,8 @@ public class ShareViewController: UINavigationController {
     // MARK: - Lift Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
-        loadGraphList()
+        // Wait for child view controllers setup themselves.
+        DispatchQueue.main.async { self.loadGraphList() }
     }
 
     // MARK: - Setup & Style

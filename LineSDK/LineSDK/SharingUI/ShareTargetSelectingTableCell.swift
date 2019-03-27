@@ -100,3 +100,11 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension ShareTargetSelectingTableCell {
+    func setShareTarget(_ target: ShareTarget, selected: Bool) {
+        displayNameLabel.text = target.displayName
+        avatarImageView.setImage(target.avatarURL)
+        print(selected)
+    }
+}

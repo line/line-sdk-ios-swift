@@ -23,14 +23,20 @@ import UIKit
 
 final class ShareTargetSelectingViewController: UITableViewController {
 
+    typealias AppendingIndexRange = ColumnDataStore<ShareTarget>.AppendingIndexRange
+    typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
+
     var store: ColumnDataStore<ShareTarget>!
     let columnIndex: Int
+
+    var dataAppendingObserver: NotificationToken!
+    var selectingObserver: NotificationToken!
+    var deselectingObserver: NotificationToken!
 
     init(store: ColumnDataStore<ShareTarget>, columnIndex: Int) {
         self.store = store
         self.columnIndex = columnIndex
         super.init(style: .plain)
-        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -40,10 +46,71 @@ final class ShareTargetSelectingViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupTableView()
+        setupObservers()
+    }
+
+    private func setupTableView() {
         tableView.register(
             ShareTargetSelectingTableCell.self,
             forCellReuseIdentifier: ShareTargetSelectingTableCell.reuseIdentifier)
         tableView.rowHeight = ShareTargetSelectingTableCell.Design.height
+        tableView.tableFooterView = UIView(frame: .init(x: 0, y: 0, width: 0, height: 60))
+    }
+
+    private func setupObservers() {
+        dataAppendingObserver = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidAppendData, object: store, queue: nil)
+        {
+            [unowned self] noti in
+            self.handleDataAppended(noti)
+        }
+
+        selectingObserver = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidSelect, object: store, queue: nil)
+        {
+            [unowned self] noti in
+            self.handleSelectingChange(noti)
+        }
+
+        deselectingObserver = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidDeselect, object: store, queue: nil)
+        {
+            [unowned self] noti in
+            self.handleSelectingChange(noti)
+        }
+    }
+
+    private func handleSelectingChange(_ notification: Notification) {
+        guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
+            assertionFailure("The `columnDataStoreSelected` notification should contain " +
+                "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
+            return
+        }
+        guard index.column == columnIndex else {
+            return
+        }
+        let indexPath = IndexPath(row: index.row, section: 0)
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+
+    private func handleDataAppended(_ notification: Notification) {
+        guard let range =
+            notification.userInfo?[LineSDKNotificationKey.appendDataIndexRange] as? AppendingIndexRange else
+        {
+            assertionFailure("The `columnDataStoreDidAppendData` notification should contain " +
+                "`appendDataIndexRange` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
+            return
+        }
+        guard range.column == columnIndex else {
+            return
+        }
+        let indexPaths = (range.startIndex..<range.endIndex).map { IndexPath(row: $0, section: 0) }
+        tableView.insertRows(at: indexPaths, with: .none)
+    }
+
+    deinit {
+        print("Deinit: \(self)")
     }
 }
 
@@ -56,7 +123,19 @@ extension ShareTargetSelectingViewController {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: ShareTargetSelectingTableCell.reuseIdentifier,
             for: indexPath) as! ShareTargetSelectingTableCell
-        cell.displayNameLabel.text = "\(indexPath)"
+
+        let dataIndex = ColumnIndex(row: indexPath.row, column: columnIndex)
+
+        let target = store.data(at: dataIndex)
+        let selected = store.isSelected(at: dataIndex)
+        cell.setShareTarget(target, selected: selected)
         return cell
     }
+}
+
+extension ShareTargetSelectingViewController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        store.toggleSelect(atColumn: columnIndex, row: indexPath.row)
+    }
+
 }

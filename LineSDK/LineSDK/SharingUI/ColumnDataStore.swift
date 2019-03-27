@@ -23,8 +23,8 @@ import Foundation
 
 extension Notification.Name {
     static let columnDataStoreDidAppendData = Notification.Name("com.linecorp.linesdk.columnDataStoreDidAppendData")
-    static let columnDataStoreDidSelected = Notification.Name("com.linecorp.linesdk.columnDataStoreDidSelected")
-    static let columnDataStoreDidUnselected = Notification.Name("com.linecorp.linesdk.columnDataStoreDidUnselected")
+    static let columnDataStoreDidSelect = Notification.Name("com.linecorp.linesdk.columnDataStoreDidSelect")
+    static let columnDataStoreDidDeselect = Notification.Name("com.linecorp.linesdk.columnDataStoreDidDeselect")
 }
 
 extension LineSDKNotificationKey {
@@ -90,12 +90,16 @@ class ColumnDataStore<T> {
         return data(atColumn: index.column, row: index.row)
     }
 
+    func isSelected(at index: ColumnIndex) -> Bool {
+        return selected.contains(index)
+    }
+
     // Return `false` if the toggle failed due to `maximumSelectedCount` reached.
     func toggleSelect(atColumn columnIndex: Int, row rowIndex: Int) -> Bool {
 
         func notifySelectingChange(selected: Bool, targetIndex: ColumnIndex) {
             NotificationCenter.default.post(
-                name: selected ? .columnDataStoreDidSelected : .columnDataStoreDidUnselected,
+                name: selected ? .columnDataStoreDidSelect : .columnDataStoreDidDeselect,
                 object: self,
                 userInfo: [LineSDKNotificationKey.selectingIndex: targetIndex]
             )
@@ -110,7 +114,7 @@ class ColumnDataStore<T> {
                 return false
             }
             selected.append(targetIndex)
-            notifySelectingChange(selected: false, targetIndex: targetIndex)
+            notifySelectingChange(selected: true, targetIndex: targetIndex)
         }
 
         return true

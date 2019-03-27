@@ -23,6 +23,7 @@ import Foundation
 
 protocol ShareTarget {
     var targetID: String { get }
+    var displayName: String { get }
     var avatarURL: URL? { get }
 }
 
@@ -33,5 +34,6 @@ extension User: ShareTarget {
 
 extension Group: ShareTarget {
     var targetID: String { return groupID }
+    var displayName: String { return groupName }
     var avatarURL: URL? { return pictureURLSmall }
 }

@@ -23,11 +23,15 @@ import UIKit
 
 extension UIImageView {
     func setImage(
-        _ url: URL,
+        _ url: URL?,
         placeholder: UIImage? = nil,
         completion: ((ImageSettingResult) -> Void)? = nil)
     {
         image = placeholder
+        guard let url = url else {
+            completion?(.success(placeholder ?? UIImage()))
+            return
+        }
         ImageManager.shared.getImage(url) { result in
             if let image = try? result.get() {
                 self.image = image
