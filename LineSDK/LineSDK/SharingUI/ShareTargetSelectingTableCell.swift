@@ -24,18 +24,18 @@ import UIKit
 final class ShareTargetSelectingTableCell: UITableViewCell {
 
     enum Design {
-        static let height: CGFloat = 53.0
+        static let height: CGFloat = 54.0
 
         static let tickLeading: CGFloat = 10.0
         static let tickWidth: CGFloat = 22.0
 
         static let avatarLeading: CGFloat = 10.0
-        static let avatarWidth: CGFloat = 43.0
+        static let avatarWidth: CGFloat = 44.0
 
         static let displayNameLeading: CGFloat = 10.0
         static let displayNameTrailing: CGFloat = 10.0
 
-        static let separatorInset = UIEdgeInsets(top: 0, left: 95, bottom: 0, right: 0)
+        static let separatorInset = UIEdgeInsets(top: 0, left: 96   , bottom: 0, right: 0)
         static let separatorColorRGB =  UIColor(hex6: 0xE6E7EA)
         static let bgColor = UIColor.white
         static let highlightedBgColor = UIColor(hex6: 0xF5F5F5)
@@ -63,6 +63,9 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
         contentView.addSubview(tickImageView)
         contentView.addSubview(avatarImageView)
         contentView.addSubview(displayNameLabel)
+
+        avatarImageView.layer.cornerRadius = Design.avatarWidth / 2;
+        avatarImageView.clipsToBounds = true
     }
 
     private func setupLayouts() {
@@ -105,6 +108,5 @@ extension ShareTargetSelectingTableCell {
     func setShareTarget(_ target: ShareTarget, selected: Bool) {
         displayNameLabel.text = target.displayName
         avatarImageView.setImage(target.avatarURL)
-        print(selected)
     }
 }

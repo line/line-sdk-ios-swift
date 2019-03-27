@@ -100,6 +100,10 @@ public class ShareViewController: UINavigationController {
         updateNavigationStyles()
     }
 
+    deinit {
+        ImageManager.shared.purgeCache()
+    }
+
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }

@@ -54,6 +54,7 @@ class ImageManager {
     }
 
     func purgeCache() {
+        print("purging image cache")
         cache.removeAllObjects()
     }
 
