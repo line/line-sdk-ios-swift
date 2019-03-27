@@ -137,7 +137,7 @@ class PageTabView: UIView {
 
     weak var delegate: PageTabViewDelegate?
 
-    private (set) var selectedIndex: Int?
+    private (set) var selectedIndex: Int = 0
 
     private let countOfTabs: Int
 
@@ -190,7 +190,7 @@ class PageTabView: UIView {
     // Select a certain index.
     func selectIndex(_ index: Int) {
         if selectedIndex == index { return }
-        nextSpacingFactor = abs(CGFloat(index) - CGFloat(selectedIndex ?? 0))
+        nextSpacingFactor = abs(CGFloat(index) - CGFloat(selectedIndex))
         updateSelectedIndex(index)
 
         delegate?.pageTabView(self, didSelectIndex: index)
@@ -219,7 +219,6 @@ class PageTabView: UIView {
 
     func normalizeProgress(_ progress: CGFloat) {
         // UIPageViewController resets the content offset when new page displayed.
-        // In this case, the `progress` is 0 and we fix it by using diff
         let diff = currentProgress - progress * nextSpacingFactor - currentDiff
         if abs(diff) > 0.5 { // process normally continuous
             currentDiff += diff.rounded()
@@ -228,7 +227,6 @@ class PageTabView: UIView {
     }
 
     private var currentProgress: CGFloat = 0
-
     private var currentDiff: CGFloat = 0
 
     @objc func tabViewTouchUpInside(_ sender: TabView) {

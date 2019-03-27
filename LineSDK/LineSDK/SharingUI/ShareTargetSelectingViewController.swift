@@ -56,6 +56,7 @@ final class ShareTargetSelectingViewController: UITableViewController {
             forCellReuseIdentifier: ShareTargetSelectingTableCell.reuseIdentifier)
         tableView.rowHeight = ShareTargetSelectingTableCell.Design.height
         tableView.tableFooterView = UIView(frame: .init(x: 0, y: 0, width: 0, height: 60))
+        tableView.showsVerticalScrollIndicator = false
     }
 
     private func setupObservers() {
@@ -135,7 +136,10 @@ extension ShareTargetSelectingViewController {
 
 extension ShareTargetSelectingViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        store.toggleSelect(atColumn: columnIndex, row: indexPath.row)
+        let toggled = store.toggleSelect(atColumn: columnIndex, row: indexPath.row)
+        if !toggled {
+            print("Max!")
+        }
     }
 
 }
