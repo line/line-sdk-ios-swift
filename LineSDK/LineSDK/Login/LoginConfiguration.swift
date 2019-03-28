@@ -89,7 +89,7 @@ struct LoginConfiguration {
     /// - Parameter appID: The app ID of the source app which opens current app by `open(:url:)`.
     /// - Returns: `true` if `appID` is from a valid auth application.
     func isValidSourceApplication(appID: String) -> Bool {
-        var validPrefixes = ["jp.naver", "com.apple"]
+        var validPrefixes = ["jp.naver", "com.apple", "com.linecorp"]
         if let currentAppID = Bundle.main.bundleIdentifier {
             validPrefixes.append(currentAppID)
         }
