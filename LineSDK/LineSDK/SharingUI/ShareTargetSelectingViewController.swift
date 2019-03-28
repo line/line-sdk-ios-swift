@@ -23,6 +23,10 @@ import UIKit
 
 final class ShareTargetSelectingViewController: UITableViewController {
 
+    enum Design {
+        static let separatorColor = UIColor(hex6: 0xE6E7EA)
+    }
+
     typealias AppendingIndexRange = ColumnDataStore<ShareTarget>.AppendingIndexRange
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
@@ -57,6 +61,7 @@ final class ShareTargetSelectingViewController: UITableViewController {
         tableView.rowHeight = ShareTargetSelectingTableCell.Design.height
         tableView.tableFooterView = UIView(frame: .init(x: 0, y: 0, width: 0, height: 60))
         tableView.showsVerticalScrollIndicator = false
+        tableView.separatorColor = Design.separatorColor
     }
 
     private func setupObservers() {

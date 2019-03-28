@@ -70,7 +70,7 @@ public class ShareViewController: UINavigationController {
         static let navigationBarTextColor = UIColor.white
     }
 
-    typealias ColummIndex = MessageShareTargetType
+    typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
     public var navigationBarTintColor = Design.navigationBarTintColor { didSet { updateNavigationStyles() } }
     public var navigationBarTextColor = Design.navigationBarTextColor { didSet { updateNavigationStyles() } }
@@ -81,12 +81,15 @@ public class ShareViewController: UINavigationController {
 
     private var allLoaded: Bool = false
 
+    var selectingObserver: NotificationToken!
+    var deselectingObserver: NotificationToken!
+
     public weak var shareDelegate: ShareViewControllerDelegate?
 
     // MARK: - Initializers
     public init() {
         let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
-        let pages = ColummIndex.allCases.map { index -> PageViewController.Page in
+        let pages = MessageShareTargetType.allCases.map { index -> PageViewController.Page in
             let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
             // Force load view for pages to setup table view initial state.
             _ = controller.view
@@ -120,6 +123,7 @@ public class ShareViewController: UINavigationController {
         // Wait for child view controllers setup themselves.
 
         loadGraphList()
+        setupObservers()
     }
 
     // MARK: - Setup & Style
@@ -137,6 +141,22 @@ public class ShareViewController: UINavigationController {
         navigationBar.barTintColor = navigationBarTintColor
         navigationBar.tintColor = navigationBarTextColor
         navigationBar.titleTextAttributes = [.foregroundColor: navigationBarTextColor]
+    }
+
+    private func setupObservers() {
+        selectingObserver = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidSelect, object: store, queue: nil)
+        {
+            [unowned self] noti in
+            self.handleSelectingChange(noti)
+        }
+
+        deselectingObserver = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidDeselect, object: store, queue: nil)
+        {
+            [unowned self] noti in
+            self.handleSelectingChange(noti)
+        }
     }
 }
 
@@ -189,6 +209,20 @@ extension ShareViewController {
                 self.shareDelegate?.shareViewController(self, didFailLoadingListType: .groups, withError: error)
             }
         }
+    }
+
+    private func handleSelectingChange(_ notification: Notification) {
+        let count = store.selected.count
+        if count == 0 {
+            rootViewController.navigationItem.rightBarButtonItem = nil
+        } else {
+            rootViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: "Send (\(count))", style: .plain, target: self, action: #selector(sendMessage))
+        }
+    }
+
+    @objc private func sendMessage() {
+        print("Send")
     }
 }
 

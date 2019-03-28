@@ -35,7 +35,7 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
         static let displayNameLeading: CGFloat = 10.0
         static let displayNameTrailing: CGFloat = 10.0
 
-        static let separatorInset = UIEdgeInsets(top: 0, left: 96   , bottom: 0, right: 0)
+        static let separatorInset = UIEdgeInsets(top: 0, left: 96, bottom: 0, right: 0)
         static let separatorColorRGB =  UIColor(hex6: 0xE6E7EA)
         static let bgColor = UIColor.white
         static let highlightedBgColor = UIColor(hex6: 0xF5F5F5)
