@@ -108,5 +108,9 @@ extension ShareTargetSelectingTableCell {
     func setShareTarget(_ target: ShareTarget, selected: Bool) {
         displayNameLabel.text = target.displayName
         avatarImageView.setImage(target.avatarURL)
+
+        let selectedImage = selected ?
+            UIImage(named: "shareBtnCheckOn", in: Bundle.frameworkBundle, compatibleWith: nil) :
+            UIImage(named: "shareBtnCheckOff", in: Bundle.frameworkBundle, compatibleWith: nil)
     }
 }
