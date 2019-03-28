@@ -92,7 +92,12 @@ final class ShareTargetSelectingViewController: UITableViewController {
             return
         }
         let indexPath = IndexPath(row: index.row, section: 0)
-        tableView.reloadRows(at: [indexPath], with: .none)
+
+        if let cell = tableView.cellForRow(at: indexPath) as? ShareTargetSelectingTableCell {
+            let target = store.data(at: index)
+            let selected = store.isSelected(at: index)
+            cell.setShareTarget(target, selected: selected)
+        }
     }
 
     private func handleDataAppended(_ notification: Notification) {
@@ -136,6 +141,7 @@ extension ShareTargetSelectingViewController {
 
 extension ShareTargetSelectingViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let toggled = store.toggleSelect(atColumn: columnIndex, row: indexPath.row)
         if !toggled {
             print("Max!")

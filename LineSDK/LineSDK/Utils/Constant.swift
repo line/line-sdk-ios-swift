@@ -26,7 +26,7 @@ public struct Constant {
     
     /// The version of the current LINE SDK.
     public static let SDKVersion: String = {
-        let bundle = Bundle.frameworkBundle
+        let bundle = Bundle.frameworkResourceBundle
         guard let version = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else {
             Log.fatalError("SDK resource bundle cannot be loaded, " +
                            "please verify your installation is not corrupted and try to reinstall LineSDK.")
@@ -56,8 +56,7 @@ public struct Constant {
 }
 
 extension Bundle {
-    static let frameworkBundle: Bundle = {
-        let frameworkBundle = Bundle(for: LoginManager.self)
+    static let frameworkResourceBundle: Bundle = {
         guard let path = frameworkBundle.path(forResource: "Resource", ofType: "bundle"),
             let bundle = Bundle(path: path) else
         {
@@ -65,5 +64,9 @@ extension Bundle {
                            "please verify your installation is not corrupted and try to reinstall LineSDK.")
         }
         return bundle
+    }()
+
+    static let frameworkBundle: Bundle = {
+        return Bundle(for: LoginManager.self)
     }()
 }

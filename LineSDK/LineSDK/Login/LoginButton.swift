@@ -157,7 +157,7 @@ open class LoginButton: UIButton {
         
         // Without animation to prevent blinking on first setup.
         UIView.performWithoutAnimation {
-            buttonText = NSLocalizedString("linesdk.login.button.login", bundle: .frameworkBundle, comment: "")
+            buttonText = NSLocalizedString("linesdk.login.button.login", bundle: .frameworkResourceBundle, comment: "")
             buttonSize = .normal
         }
         

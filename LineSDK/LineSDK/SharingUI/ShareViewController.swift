@@ -88,6 +88,8 @@ public class ShareViewController: UINavigationController {
         let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
         let pages = ColummIndex.allCases.map { index -> PageViewController.Page in
             let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
+            // Force load view for pages to setup table view initial state.
+            _ = controller.view
             return .init(viewController: controller, title: index.title)
         }
         let rootViewController = PageViewController(pages: pages)
@@ -116,7 +118,8 @@ public class ShareViewController: UINavigationController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         // Wait for child view controllers setup themselves.
-        DispatchQueue.main.async { self.loadGraphList() }
+
+        loadGraphList()
     }
 
     // MARK: - Setup & Style

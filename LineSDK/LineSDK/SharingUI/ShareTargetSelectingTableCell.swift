@@ -52,7 +52,7 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = Design.bgColor
-        selectionStyle = .none
+        selectionStyle = .gray
         separatorInset = Design.separatorInset
 
         setupSubviews()
@@ -110,7 +110,8 @@ extension ShareTargetSelectingTableCell {
         avatarImageView.setImage(target.avatarURL)
 
         let selectedImage = selected ?
-            UIImage(named: "shareBtnCheckOn", in: Bundle.frameworkBundle, compatibleWith: nil) :
-            UIImage(named: "shareBtnCheckOff", in: Bundle.frameworkBundle, compatibleWith: nil)
+            UIImage(named: "friend_check_on", in: Bundle.frameworkBundle, compatibleWith: nil) :
+            UIImage(named: "friend_check_off", in: Bundle.frameworkBundle, compatibleWith: nil)
+        tickImageView.image = selectedImage
     }
 }
