@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Allow additional application bundle ID of LINE apps to grant authorization code.
+
 ## [5.1.0] - 2019-02-26
 
 ### Added
