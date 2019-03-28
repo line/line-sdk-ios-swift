@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.1.1] - 2019-03-28
+
 ### Fixed
 
 - Allow additional application bundle ID of LINE apps to grant authorization code.
@@ -61,3 +63,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.0.2]: https://github.com/line/line-sdk-ios-swift/compare/5.0.1...5.0.2
 [5.0.3]: https://github.com/line/line-sdk-ios-swift/compare/5.0.2...5.0.3
 [5.1.0]: https://github.com/line/line-sdk-ios-swift/compare/5.0.3...5.1.0
+[5.1.1]: https://github.com/line/line-sdk-ios-swift/compare/5.1.0...5.1.1
