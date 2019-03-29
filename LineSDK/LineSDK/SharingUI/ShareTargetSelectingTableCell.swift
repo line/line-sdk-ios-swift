@@ -46,6 +46,9 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
     let avatarImageView = UIImageView(frame: .zero)
     let displayNameLabel = UILabel(frame: .zero)
 
+    private let randomUserProfileImage = UIImage.randomUserProfileImage
+    private var currentImageDownloadToken: ImageManager.DownloadTaskToken?
+
     static let reuseIdentifier = "\(ShareTargetSelectingTableCell.self)"
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -107,11 +110,24 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
 extension ShareTargetSelectingTableCell {
     func setShareTarget(_ target: ShareTarget, selected: Bool) {
         displayNameLabel.text = target.displayName
-        avatarImageView.setImage(target.avatarURL)
+
+        let token = avatarImageView.setImage(
+            target.avatarURL,
+            placeholder: randomUserProfileImage,
+            verifier: { $0 == self.currentImageDownloadToken }
+        )
+        currentImageDownloadToken = token
 
         let selectedImage = selected ?
             UIImage(named: "friend_check_on", in: Bundle.frameworkBundle, compatibleWith: nil) :
             UIImage(named: "friend_check_off", in: Bundle.frameworkBundle, compatibleWith: nil)
         tickImageView.image = selectedImage
+    }
+}
+
+extension UIImage {
+    static var randomUserProfileImage: UIImage? {
+        let number = Int.random(in: 0..<5)
+        return UIImage(named: "unknown_user_small_0\(number)", in:  Bundle.frameworkBundle, compatibleWith: nil)
     }
 }

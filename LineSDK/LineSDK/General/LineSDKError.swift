@@ -201,6 +201,9 @@ public enum LineSDKError: Error {
         
         /// The method is invoked with an invalid parameter. Code 4002.
         case parameterError(parameterName: String, description: String)
+
+        /// The image download task finished but it is not the original task issued. Code 4003.
+        case notOriginalTask(token: UInt)
     }
     
     case requestFailed(reason: RequestErrorReason)
@@ -581,6 +584,8 @@ extension LineSDKError.GeneralErrorReason {
             return "Cannot convert target \"\(text)\" to valid data under \(encoding) encoding."
         case .parameterError(let parameterName, let reason):
             return "Method invoked with an invalid parameter \"\(parameterName)\". Reason: \(reason)"
+        case .notOriginalTask(let token):
+            return "Image downloading finished but it is not the original one. Token \"\(token)\"."
         }
     }
     
@@ -588,6 +593,7 @@ extension LineSDKError.GeneralErrorReason {
         switch self {
         case .conversionError(_, _): return 4001
         case .parameterError(_, _):  return 4002
+        case .notOriginalTask(_):    return 4003
         }
     }
     
@@ -600,6 +606,7 @@ extension LineSDKError.GeneralErrorReason {
         case .parameterError(let parameterName, let reason):
             userInfo[.parameterName] = parameterName
             userInfo[.reason] = reason
+        case .notOriginalTask: break
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }

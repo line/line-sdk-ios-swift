@@ -24,6 +24,19 @@ import Foundation
 typealias ImageSettingResult = Result<UIImage, LineSDKError>
 
 class ImageManager {
+
+    typealias DownloadTaskToken = UInt
+
+    private var currentToken: DownloadTaskToken = 0
+    func nextToken(_ url: URL) -> DownloadTaskToken? {
+        let nsURL = url as NSURL
+        if let _ = cache.object(forKey: nsURL) {
+            return nil
+        }
+        currentToken += 1
+        return currentToken
+    }
+
     static let shared = ImageManager()
 
     let downloader = ImageDownloader()

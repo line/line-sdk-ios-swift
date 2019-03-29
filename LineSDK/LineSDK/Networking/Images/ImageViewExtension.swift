@@ -25,18 +25,40 @@ extension UIImageView {
     func setImage(
         _ url: URL?,
         placeholder: UIImage? = nil,
-        completion: ((ImageSettingResult) -> Void)? = nil)
+        verifier: ((ImageManager.DownloadTaskToken) -> Bool)? = nil,
+        completion: ((ImageSettingResult) -> Void)? = nil) -> ImageManager.DownloadTaskToken?
     {
         image = placeholder
         guard let url = url else {
             completion?(.success(placeholder ?? UIImage()))
-            return
+            return nil
         }
+        let token = ImageManager.shared.nextToken(url)
         ImageManager.shared.getImage(url) { result in
-            if let image = try? result.get() {
-                self.image = image
+            guard let image = try? result.get() else { // Error case
+                completion?(result)
+                return
             }
-            completion?(result)
+
+            guard let token = token else { // No download task token. Loaded from cache.
+                self.image = image
+                completion?(result)
+                return
+            }
+
+            guard let verifier = verifier else { // No verifier, just ignore download/reuse order.
+                self.image = image
+                completion?(result)
+                return
+            }
+
+            if verifier(token) { // Only set image when it is the one initializing the request
+                self.image = image
+                completion?(result)
+            } else {
+                completion?(.failure(LineSDKError.generalError(reason: .notOriginalTask(token: token))))
+            }
         }
+        return token
     }
 }
