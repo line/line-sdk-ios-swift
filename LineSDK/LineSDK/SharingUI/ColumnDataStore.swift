@@ -120,5 +120,11 @@ class ColumnDataStore<T> {
         return true
     }
 
+    func indexes(atColumn column: Int, filtered: ((T) -> Bool)) -> [ColumnIndex] {
+        return data(atColumn: column)
+            .enumerated()
+            .filter { _, elem in filtered(elem) }
+            .map { ColumnIndex(row: $0.offset, column: column) }
+    }
 }
 

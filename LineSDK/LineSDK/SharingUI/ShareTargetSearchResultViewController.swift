@@ -21,27 +21,121 @@
 
 import UIKit
 
-final class ShareTargetSearchResultViewController: UITableViewController {
+final class ShareTargetSearchResultViewController: UITableViewController, ShareTargetTableViewStyling {
+
+    typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
+
+    var store: ColumnDataStore<ShareTarget>!
+
+    var selectingObserver: NotificationToken!
+    var deselectingObserver: NotificationToken!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        automaticallyAdjustsScrollViewInsets = false
+        setupTableView()
+    }
 
+    deinit {
+        print("Deinit: \(self)")
+    }
+
+    var searchText: String = "" {
+        didSet {
+            guard searchText != oldValue else { return }
+            filteredIndexes = MessageShareTargetType.allCases.map {
+                store.indexes(atColumn: $0.rawValue) { $0.displayName.contains(searchText) }
+            }
+        }
+    }
+
+    var filteredIndexes: [[ColumnIndex]] = [] {
+        didSet { tableView.reloadData() }
+    }
+
+    func start() {
+        setupObservers()
+    }
+
+    func clear() {
+        stopObservers()
+        searchText = ""
+    }
+
+    private func setupObservers() {
+        selectingObserver = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidSelect, object: store, queue: nil)
+        {
+            [unowned self] noti in
+            self.handleSelectingChange(noti)
+        }
+
+        deselectingObserver = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidDeselect, object: store, queue: nil)
+        {
+            [unowned self] noti in
+            self.handleSelectingChange(noti)
+        }
+    }
+
+    private func stopObservers() {
+        selectingObserver = nil
+        deselectingObserver = nil
+    }
+
+    private func handleSelectingChange(_ notification: Notification) {
+        guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
+            assertionFailure("The `columnDataStoreSelected` notification should contain " +
+                "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
+            return
+        }
+
+        guard let row = filteredIndexes[index.column].firstIndex(of: index) else {
+            return
+        }
+
+        let indexPath = IndexPath(row: row, section: index.column)
+
+        if let cell = tableView.cellForRow(at: indexPath) as? ShareTargetSelectingTableCell {
+            let target = store.data(at: index)
+            let selected = store.isSelected(at: index)
+            cell.setShareTarget(target, selected: selected)
+        }
+    }
+
+    private func setupTableView() {
+        setupTableViewStyle()
+        automaticallyAdjustsScrollViewInsets = false
         tableView.contentInset = UIEdgeInsets(top: expectedSearchBarHeight, left: 0, bottom: 0, right: 0)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return filteredIndexes.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return filteredIndexes[section].count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "\(indexPath.section) - \(indexPath.row)"
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: ShareTargetSelectingTableCell.reuseIdentifier,
+            for: indexPath) as! ShareTargetSelectingTableCell
+
+        let dataIndex = filteredIndexes[indexPath.section][indexPath.row]
+        let target = store.data(at: dataIndex)
+        let selected = store.isSelected(at: dataIndex)
+        cell.setShareTarget(target, selected: selected)
         return cell
+    }
+}
+
+extension ShareTargetSearchResultViewController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let selectedIndex = filteredIndexes[indexPath.section][indexPath.row]
+        let toggled = store.toggleSelect(atColumn: selectedIndex.column, row: selectedIndex.row)
+        if !toggled {
+            print("Max!")
+        }
     }
 }

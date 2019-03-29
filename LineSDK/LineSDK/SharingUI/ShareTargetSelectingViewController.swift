@@ -21,11 +21,7 @@
 
 import UIKit
 
-final class ShareTargetSelectingViewController: UITableViewController {
-
-    enum Design {
-        static let separatorColor = UIColor(hex6: 0xE6E7EA)
-    }
+final class ShareTargetSelectingViewController: UITableViewController, ShareTargetTableViewStyling {
 
     typealias AppendingIndexRange = ColumnDataStore<ShareTarget>.AppendingIndexRange
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
@@ -47,6 +43,7 @@ final class ShareTargetSelectingViewController: UITableViewController {
         super.init(style: .plain)
 
         let resultTableViewController = ShareTargetSearchResultViewController()
+        resultTableViewController.store = store
         self.resultTableViewController = resultTableViewController
 
         let searchController = ShareTargetSearchController(searchResultsController: resultTableViewController)
@@ -70,13 +67,7 @@ final class ShareTargetSelectingViewController: UITableViewController {
     }
 
     private func setupTableView() {
-        tableView.register(
-            ShareTargetSelectingTableCell.self,
-            forCellReuseIdentifier: ShareTargetSelectingTableCell.reuseIdentifier)
-        tableView.rowHeight = ShareTargetSelectingTableCell.Design.height
-        tableView.tableFooterView = UIView(frame: .init(x: 0, y: 0, width: 0, height: 60))
-        tableView.showsVerticalScrollIndicator = false
-        tableView.separatorColor = Design.separatorColor
+        setupTableViewStyle()
         tableView.tableHeaderView = searchController.searchBar
     }
 
@@ -174,9 +165,11 @@ extension ShareTargetSelectingViewController {
 // MARK: - Search Results Updating
 extension ShareTargetSelectingViewController: UISearchResultsUpdating {
     public func updateSearchResults(for searchController: UISearchController) {
-        let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces)
-        print(text ?? "")
         resultTableViewController.tableView.isHidden = false
+        guard let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces) else {
+            return
+        }
+        resultTableViewController.searchText = text
     }
 }
 
@@ -187,6 +180,13 @@ extension ShareTargetSelectingViewController: UISearchBarDelegate {
 }
 
 extension ShareTargetSelectingViewController: UISearchControllerDelegate {
+    func didPresentSearchController(_ searchController: UISearchController) {
+        resultTableViewController.start()
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+        resultTableViewController.clear()
+    }
 }
 
 extension UIColor {
