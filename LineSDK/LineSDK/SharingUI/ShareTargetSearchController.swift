@@ -53,5 +53,6 @@ class ShareTargetSearchController: UISearchController {
         searchBar.spellCheckingType = .no
         searchBar.returnKeyType = .done
         searchBar.tintColor = Design.searchBarTintColor
+        searchBar.placeholder = Localization.string("friends.share.search")
     }
 }

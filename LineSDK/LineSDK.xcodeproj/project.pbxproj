@@ -34,6 +34,7 @@
 		4B2D1503212FAB5A000DD5BE /* LineSDKAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D1502212FAB5A000DD5BE /* LineSDKAPIError.swift */; };
 		4B2D1505212FABD2000DD5BE /* LineSDKAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D1504212FABD2000DD5BE /* LineSDKAPI.swift */; };
 		4B392662224DC06F006485B4 /* ShareTargetTableViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B392661224DC06F006485B4 /* ShareTargetTableViewStyling.swift */; };
+		4B392664224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */; };
 		4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */; };
 		4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */; };
 		4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B39D1E121104C7A00A45510 /* LoginManagerExtension.swift */; };
@@ -317,6 +318,7 @@
 		4B2D1502212FAB5A000DD5BE /* LineSDKAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LineSDKAPIError.swift; path = LineSDKObjC/Networking/LineSDKAPIError.swift; sourceTree = SOURCE_ROOT; };
 		4B2D1504212FABD2000DD5BE /* LineSDKAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAPI.swift; sourceTree = "<group>"; };
 		4B392661224DC06F006485B4 /* ShareTargetTableViewStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetTableViewStyling.swift; sourceTree = "<group>"; };
+		4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSelectingSectionHeaderView.swift; sourceTree = "<group>"; };
 		4B39D1DD211044B000A45510 /* PostTokenExchangeRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTokenExchangeRequestTests.swift; sourceTree = "<group>"; };
 		4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequestTests.swift; sourceTree = "<group>"; };
 		4B39D1E121104C7A00A45510 /* LoginManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerExtension.swift; sourceTree = "<group>"; };
@@ -708,6 +710,7 @@
 			isa = PBXGroup;
 			children = (
 				4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */,
+				4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */,
 				4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */,
 				4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */,
 				D16D5323224872A300BAA3B4 /* ShareTarget.swift */,
@@ -1652,6 +1655,7 @@
 				4B1C44692137E1EE0094C1D4 /* JWTHelpers.swift in Sources */,
 				4B5EE2E4212BCE1A0009DF2E /* FlexBlockStyle.swift in Sources */,
 				4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */,
+				4B392664224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift in Sources */,
 				4B25A815213687A400C74B87 /* RSA.swift in Sources */,
 				DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */,
 				4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */,

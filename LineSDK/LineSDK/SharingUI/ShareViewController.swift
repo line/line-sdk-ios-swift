@@ -43,8 +43,8 @@ public enum MessageShareTargetType: Int, CaseIterable {
 
     var title: String {
         switch self {
-        case .friends: return "Friends"
-        case .groups: return "Groups"
+        case .friends: return Localization.string("shareRecipient.section.friends.title")
+        case .groups: return Localization.string("shareRecipient.section.groups.title")
         }
     }
 

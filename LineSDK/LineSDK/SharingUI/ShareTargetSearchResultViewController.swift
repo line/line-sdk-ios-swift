@@ -127,6 +127,22 @@ final class ShareTargetSearchResultViewController: UITableViewController, ShareT
         cell.setShareTarget(target, selected: selected)
         return cell
     }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if filteredIndexes[section].isEmpty {
+            return 0
+        }
+        return ShareTargetSelectingSectionHeaderView.Design.height
+    }
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if filteredIndexes[section].isEmpty {
+            return nil
+        }
+        let view = ShareTargetSelectingSectionHeaderView(frame: .zero)
+        view.titleLabel.text = MessageShareTargetType(rawValue: section)?.title
+        return view
+    }
 }
 
 extension ShareTargetSearchResultViewController {
