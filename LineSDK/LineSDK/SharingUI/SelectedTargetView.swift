@@ -72,9 +72,14 @@ class SelectedTargetView: UIView {
         case hide
     }
 
-    var mode = Mode.hide
+    func setMode(_ mode: Mode, animated: Bool) {
+        self.mode = mode
+        updateLayout(animated: animated)
+    }
 
-    func updateLayout(animated: Bool) {
+    private(set) var mode = Mode.hide
+
+    private func updateLayout(animated: Bool) {
         self.slideAnimationViewTopConstraint.isActive = false
         let anchor: NSLayoutYAxisAnchor
         let alpha: CGFloat

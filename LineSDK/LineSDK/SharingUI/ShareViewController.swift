@@ -49,8 +49,8 @@ public class ShareViewController: UINavigationController {
 
     @objc
     func foo() {
-        selectedTargetView.mode = (selectedTargetView.mode == .show) ? .hide : .show
-        selectedTargetView.updateLayout(animated: true)
+        selectedTargetView.setMode((selectedTargetView.mode == .show) ? .hide : .show,
+                                   animated: true)
     }
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -70,8 +70,7 @@ public class ShareViewController: UINavigationController {
         setupLayouts()
 
         // default
-        selectedTargetView.mode = .hide
-        selectedTargetView.updateLayout(animated: false)
+        selectedTargetView.setMode(.hide, animated: false)
 
         // TODO: Remove this mocked entry
         let btn = UIButton(type: .system)
