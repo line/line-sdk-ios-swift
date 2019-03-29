@@ -65,9 +65,9 @@ public enum MessageShareAuthorizationStatus {
 public class ShareViewController: UINavigationController {
 
     enum Design {
-        static let navigationBarTintColor = UIColor(hex6: 0x283145)
-        static let preferredStatusBarStyle = UIStatusBarStyle.lightContent
-        static let navigationBarTextColor = UIColor.white
+        static var navigationBarTintColor: UIColor { return .init(hex6: 0x283145) }
+        static var preferredStatusBarStyle: UIStatusBarStyle  { return  .lightContent }
+        static var navigationBarTextColor:  UIColor { return  .white }
     }
 
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex

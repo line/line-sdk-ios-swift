@@ -24,22 +24,22 @@ import UIKit
 final class ShareTargetSelectingTableCell: UITableViewCell {
 
     enum Design {
-        static let height: CGFloat = 54.0
+        static var height: CGFloat { return 54.0 }
 
-        static let tickLeading: CGFloat = 10.0
-        static let tickWidth: CGFloat = 22.0
+        static var tickLeading: CGFloat { return 10.0 }
+        static var tickWidth: CGFloat { return 22.0 }
 
-        static let avatarLeading: CGFloat = 10.0
-        static let avatarWidth: CGFloat = 44.0
+        static var avatarLeading: CGFloat { return 10.0 }
+        static var avatarWidth: CGFloat { return 44.0 }
 
-        static let displayNameLeading: CGFloat = 10.0
-        static let displayNameTrailing: CGFloat = 10.0
+        static var displayNameLeading: CGFloat { return 10.0 }
+        static var displayNameTrailing: CGFloat { return 10.0 }
 
-        static let separatorInset = UIEdgeInsets(top: 0, left: 96, bottom: 0, right: 0)
-        static let separatorColorRGB =  UIColor(hex6: 0xE6E7EA)
-        static let bgColor = UIColor.white
-        static let highlightedBgColor = UIColor(hex6: 0xF5F5F5)
-        static let highlightedNameColor = UIColor(hex6: 0x13C84D)
+        static var separatorInset: UIEdgeInsets { return .init(top: 0, left: 96, bottom: 0, right: 0) }
+        static var separatorColorRGB:  UIColor { return .init(hex6: 0xE6E7EA) }
+        static var bgColor: UIColor { return .white }
+        static var highlightedBgColor: UIColor { return .init(hex6: 0xF5F5F5) }
+        static var highlightedNameColor: UIColor { return .init(hex6: 0x13C84D) }
     }
 
     let tickImageView = UIImageView.init(frame: .zero)

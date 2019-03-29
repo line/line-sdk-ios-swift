@@ -29,11 +29,11 @@ class PageTabView: UIView {
 
     class TabView: UIControl {
         enum Design {
-            static let titleColor = UIColor.gray
-            static let selectedTitleColor = UIColor.black
+            static var titleColor: UIColor { return .gray }
+            static var selectedTitleColor: UIColor { return .black }
 
-            static let titleFont = UIFont.systemFont(ofSize: 15)
-            static let selectedTitleFont = UIFont.systemFont(ofSize: 15, weight: .semibold)
+            static var titleFont: UIFont { return .systemFont(ofSize: 15) }
+            static var selectedTitleFont: UIFont { return .systemFont(ofSize: 15, weight: .semibold) }
         }
 
         let index: Int
@@ -79,14 +79,14 @@ class PageTabView: UIView {
     class Underline: UIView {
 
         enum Design {
-            static let height: CGFloat = 3
-            static let widthMargin: CGFloat = 4
-            static func color() -> UIColor { return .black }
+            static var height: CGFloat { return 3 }
+            static var widthMargin: CGFloat { return 4 }
+            static var color: UIColor { return .black }
         }
 
         private let underline: UIView = {
             let underline = UIView()
-            underline.backgroundColor = Design.color()
+            underline.backgroundColor = Design.color
             return underline
         }()
 

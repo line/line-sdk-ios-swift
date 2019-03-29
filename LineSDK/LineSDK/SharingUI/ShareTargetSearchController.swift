@@ -24,8 +24,8 @@ import UIKit
 class ShareTargetSearchController: UISearchController {
 
     enum Design {
-        static let searchBarTintColor = UIColor(hex6: 0x283145)
-        static let searchBarBackgroundColor = UIColor(hex6: 0xEAEAEE)
+        static var searchBarTintColor: UIColor { return .init(hex6: 0x283145) }
+        static var searchBarBackgroundColor: UIColor { return .init(hex6: 0xEAEAEE) }
     }
 
     override init(searchResultsController: UIViewController?) {
