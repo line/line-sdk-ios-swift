@@ -96,6 +96,9 @@ class SelectedTargetView: UIView {
                 self.alpha = alpha
                 self.layoutIfNeeded()
             }
+        } else {
+            self.alpha = alpha
+            self.layoutIfNeeded()
         }
     }
 }
