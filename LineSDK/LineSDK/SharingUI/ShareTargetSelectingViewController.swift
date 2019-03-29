@@ -37,10 +37,25 @@ final class ShareTargetSelectingViewController: UITableViewController {
     var selectingObserver: NotificationToken!
     var deselectingObserver: NotificationToken!
 
+    // Search
+    private var searchController: ShareTargetSearchController!
+    private var resultTableViewController: ShareTargetSearchResultViewController!
+
     init(store: ColumnDataStore<ShareTarget>, columnIndex: Int) {
         self.store = store
         self.columnIndex = columnIndex
         super.init(style: .plain)
+
+        let resultTableViewController = ShareTargetSearchResultViewController()
+        self.resultTableViewController = resultTableViewController
+
+        let searchController = ShareTargetSearchController(searchResultsController: resultTableViewController)
+
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.delegate = self
+
+        self.searchController = searchController
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -62,6 +77,7 @@ final class ShareTargetSelectingViewController: UITableViewController {
         tableView.tableFooterView = UIView(frame: .init(x: 0, y: 0, width: 0, height: 60))
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorColor = Design.separatorColor
+        tableView.tableHeaderView = searchController.searchBar
     }
 
     private func setupObservers() {
@@ -152,5 +168,35 @@ extension ShareTargetSelectingViewController {
             print("Max!")
         }
     }
+}
 
+
+// MARK: - Search Results Updating
+extension ShareTargetSelectingViewController: UISearchResultsUpdating {
+    public func updateSearchResults(for searchController: UISearchController) {
+        let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces)
+        print(text ?? "")
+        resultTableViewController.tableView.isHidden = false
+    }
+}
+
+extension ShareTargetSelectingViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+
+    }
+}
+
+extension ShareTargetSelectingViewController: UISearchControllerDelegate {
+    func willPresentSearchController(_ searchController: UISearchController) {
+        resultTableViewController.updateTableViewContentInsetTop(searchController.searchBar.frame.height)
+    }
+}
+
+extension UIColor {
+    func image(_ size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
+        return UIGraphicsImageRenderer(size: size).image { rendererContext in
+            self.setFill()
+            rendererContext.fill(CGRect(origin: .zero, size: size))
+        }
+    }
 }

@@ -76,13 +76,17 @@ public class ShareViewController: UINavigationController {
     public var navigationBarTextColor = Design.navigationBarTextColor { didSet { updateNavigationStyles() } }
     public var statusBarStyle = Design.preferredStatusBarStyle { didSet { updateNavigationStyles() } }
 
+    // Root & Data
     private var rootViewController: UIViewController! { didSet { print("Set") } }
     private var store: ColumnDataStore<ShareTarget>!
 
+    // States
     private var allLoaded: Bool = false
 
-    var selectingObserver: NotificationToken!
-    var deselectingObserver: NotificationToken!
+    // Observers
+    private var selectingObserver: NotificationToken!
+    private var deselectingObserver: NotificationToken!
+
 
     public weak var shareDelegate: ShareViewControllerDelegate?
 

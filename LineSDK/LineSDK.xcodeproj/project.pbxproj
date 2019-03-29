@@ -96,6 +96,7 @@
 		4B7FEE0F221E466E003F7369 /* ResultExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7FEE0E221E466E003F7369 /* ResultExtensions.swift */; };
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
+		4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */; };
 		4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8A965621100A5800760219 /* LoginConfigurationTests.swift */; };
 		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
 		4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
@@ -227,6 +228,7 @@
 		4BFC09F5213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F4213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift */; };
 		4BFC09F7213CF68000F4594D /* GetJWKSetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */; };
 		4BFC09F9213CFB6000F4594D /* GetJWKSetRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F8213CFB6000F4594D /* GetJWKSetRequestTests.swift */; };
+		4BFCD204224CAF6100CD9544 /* ShareTargetSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD203224CAF6100CD9544 /* ShareTargetSearchResultViewController.swift */; };
 		4BFD605A212A875F009E9838 /* FlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */; };
 		4BFD605C212A8775009E9838 /* FlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605B212A8775009E9838 /* FlexTextComponent.swift */; };
 		4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */; };
@@ -377,6 +379,7 @@
 		4B7FEE0E221E466E003F7369 /* ResultExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultExtensions.swift; sourceTree = "<group>"; };
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
+		4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchController.swift; sourceTree = "<group>"; };
 		4B8A965621100A5800760219 /* LoginConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurationTests.swift; sourceTree = "<group>"; };
 		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 		4B8FF48A21056B3800890AEF /* CallbackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
@@ -514,6 +517,7 @@
 		4BFC09F4213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDiscoveryDocumentRequestTests.swift; sourceTree = "<group>"; };
 		4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetJWKSetRequest.swift; sourceTree = "<group>"; };
 		4BFC09F8213CFB6000F4594D /* GetJWKSetRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetJWKSetRequestTests.swift; sourceTree = "<group>"; };
+		4BFCD203224CAF6100CD9544 /* ShareTargetSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultViewController.swift; sourceTree = "<group>"; };
 		4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBoxComponent.swift; sourceTree = "<group>"; };
 		4BFD605B212A8775009E9838 /* FlexTextComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponent.swift; sourceTree = "<group>"; };
 		4BFD605D212A8BA6009E9838 /* FlexComponentMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexComponentMessageTests.swift; sourceTree = "<group>"; };
@@ -706,6 +710,8 @@
 				4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */,
 				D16D5323224872A300BAA3B4 /* ShareTarget.swift */,
 				D16D5325224873C700BAA3B4 /* ShareTargetSelectingViewController.swift */,
+				4BFCD203224CAF6100CD9544 /* ShareTargetSearchResultViewController.swift */,
+				4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */,
 				D16D53292248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift */,
 				D16D5327224876B900BAA3B4 /* ColumnDataStore.swift */,
 			);
@@ -1587,6 +1593,7 @@
 				4B9A303F2121277400174C6F /* LocationMessage.swift in Sources */,
 				4B9A304B21213DBB00174C6F /* TemplateMessagePayload.swift in Sources */,
 				4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */,
+				4BFCD204224CAF6100CD9544 /* ShareTargetSearchResultViewController.swift in Sources */,
 				4B3D78BB22420BEA00DE27D1 /* PageTabView.swift in Sources */,
 				4B45257621019EFB00A39D4F /* Session.swift in Sources */,
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
@@ -1621,6 +1628,7 @@
 				4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */,
 				4B6A0FF3212AA15D00B3ED1F /* FlexButtonComponent.swift in Sources */,
 				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
+				4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
 				D16D5328224876B900BAA3B4 /* ColumnDataStore.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
