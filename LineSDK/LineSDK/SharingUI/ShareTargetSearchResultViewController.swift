@@ -26,11 +26,9 @@ final class ShareTargetSearchResultViewController: UITableViewController {
         super.viewDidLoad()
         
         automaticallyAdjustsScrollViewInsets = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    }
 
-    func updateTableViewContentInsetTop(_ top: CGFloat) {
-        tableView.contentInset = UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: expectedSearchBarHeight, left: 0, bottom: 0, right: 0)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

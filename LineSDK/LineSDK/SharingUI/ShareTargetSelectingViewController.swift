@@ -187,9 +187,6 @@ extension ShareTargetSelectingViewController: UISearchBarDelegate {
 }
 
 extension ShareTargetSelectingViewController: UISearchControllerDelegate {
-    func willPresentSearchController(_ searchController: UISearchController) {
-        resultTableViewController.updateTableViewContentInsetTop(searchController.searchBar.frame.height)
-    }
 }
 
 extension UIColor {

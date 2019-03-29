@@ -97,6 +97,20 @@ extension UIViewController {
     }
 }
 
+extension UIViewController {
+    var expectedSearchBarHeight: CGFloat {
+        if #available(iOS 11.0, *) {
+            if UIApplication.shared.keyWindow?.safeAreaInsets.top == 20 {
+                return 44
+            } else {
+                return 54
+            }
+        } else {
+            return 44
+        }
+    }
+}
+
 extension UIView {
     // Add a subview as `self` is a container. Layout the added `child` to match `self` size.
     func addChildSubview(_ child: UIView) {
