@@ -41,3 +41,12 @@ extension ShareTargetTableViewStyling {
         tableView.separatorColor = ShareTargetTableViewDesign.separatorColor
     }
 }
+
+extension ShareTargetTableViewStyling where Self: UIViewController {
+    func popSelectingLimitAlert(max: Int) {
+        let message = String(format: Localization.string("chat.multi.fwd.confirm"), max)
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(.init(title: Localization.string("common.ok"), style: .default))
+        present(alert, animated: true)
+    }
+}

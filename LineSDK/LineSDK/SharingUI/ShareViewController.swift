@@ -125,7 +125,6 @@ public class ShareViewController: UINavigationController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         // Wait for child view controllers setup themselves.
-
         loadGraphList()
         setupObservers()
     }
@@ -138,8 +137,13 @@ public class ShareViewController: UINavigationController {
     private func updateNavigationStyles() {
 
         rootViewController.title = "LINE"
-        rootViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel, target: self, action: #selector(cancelSharing))
+
+        rootViewController.navigationItem.leftBarButtonItem =
+            UIBarButtonItem(
+                title: Localization.string("common.action.close"),
+                style: .plain,
+                target: self,
+                action: #selector(cancelSharing))
 
         navigationBar.shadowImage = UIImage()
         navigationBar.barTintColor = navigationBarTintColor
@@ -220,8 +224,9 @@ extension ShareViewController {
         if count == 0 {
             rootViewController.navigationItem.rightBarButtonItem = nil
         } else {
+            let title = Localization.string("common.action.send")
             rootViewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: "Send (\(count))", style: .plain, target: self, action: #selector(sendMessage))
+                title: "\(title) (\(count))", style: .plain, target: self, action: #selector(sendMessage))
         }
     }
 

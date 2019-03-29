@@ -123,8 +123,7 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
         guard range.column == columnIndex else {
             return
         }
-        let indexPaths = (range.startIndex..<range.endIndex).map { IndexPath(row: $0, section: 0) }
-        tableView.insertRows(at: indexPaths, with: .none)
+        tableView.reloadData()
     }
 
     deinit {
@@ -156,7 +155,7 @@ extension ShareTargetSelectingViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         let toggled = store.toggleSelect(atColumn: columnIndex, row: indexPath.row)
         if !toggled {
-            print("Max!")
+            popSelectingLimitAlert(max: store.maximumSelectedCount)
         }
     }
 }

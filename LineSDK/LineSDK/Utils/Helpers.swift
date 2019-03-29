@@ -132,3 +132,9 @@ func guardSharedProperty<T>(_ input: T?) -> T {
     }
     return shared
 }
+
+enum Localization {
+    static func string(_ key: String) -> String {
+        return NSLocalizedString(key, bundle: .frameworkResourceBundle, comment: "")
+    }
+}

@@ -135,7 +135,7 @@ extension ShareTargetSearchResultViewController {
         let selectedIndex = filteredIndexes[indexPath.section][indexPath.row]
         let toggled = store.toggleSelect(atColumn: selectedIndex.column, row: selectedIndex.row)
         if !toggled {
-            print("Max!")
+            popSelectingLimitAlert(max: store.maximumSelectedCount)
         }
     }
 }
