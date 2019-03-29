@@ -29,7 +29,7 @@ class SelectedTargetView: UIView {
         static var borderWidth: CGFloat { return 0.5 }
     }
 
-    private var slideAnimationViewTopConstraint: NSLayoutConstraint?
+    private var slideAnimationViewTopConstraint: NSLayoutConstraint!
 
     private let slideAnimationView: UIView = {
         let view = UIView(frame: .zero)
@@ -59,7 +59,7 @@ class SelectedTargetView: UIView {
     private func setupLayouts() {
         slideAnimationView.translatesAutoresizingMaskIntoConstraints = false
         slideAnimationViewTopConstraint = slideAnimationView.topAnchor.constraint(equalTo: topAnchor)
-        slideAnimationViewTopConstraint?.isActive = true
+        slideAnimationViewTopConstraint.isActive = true
         NSLayoutConstraint.activate([
             slideAnimationView.leadingAnchor.constraint(equalTo: leadingAnchor),
             slideAnimationView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -75,7 +75,7 @@ class SelectedTargetView: UIView {
     var mode = Mode.hide
 
     func updateLayout(withAnimated animated: Bool) {
-        self.slideAnimationViewTopConstraint?.isActive = false
+        self.slideAnimationViewTopConstraint.isActive = false
         let anchor: NSLayoutYAxisAnchor
         let alpha: CGFloat
         switch self.mode {
@@ -89,7 +89,7 @@ class SelectedTargetView: UIView {
             alpha = 0
         }
         self.slideAnimationViewTopConstraint = slideAnimationView.topAnchor.constraint(equalTo: anchor)
-        self.slideAnimationViewTopConstraint?.isActive = true
+        self.slideAnimationViewTopConstraint.isActive = true
 
         if animated {
             UIView.animate(withDuration: 0.2) {
