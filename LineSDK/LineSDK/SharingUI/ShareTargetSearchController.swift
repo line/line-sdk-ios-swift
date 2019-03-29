@@ -22,6 +22,12 @@
 import UIKit
 
 class ShareTargetSearchController: UISearchController {
+
+    enum Design {
+        static let searchBarTintColor = UIColor(hex6: 0x283145)
+        static let searchBarBackgroundColor = UIColor(hex6: 0xEAEAEE)
+    }
+
     override init(searchResultsController: UIViewController?) {
         super.init(searchResultsController: searchResultsController)
         setupSearchBar()
@@ -36,16 +42,16 @@ class ShareTargetSearchController: UISearchController {
     }
 
     private func setupSearchBar() {
-        let searchBarBackgroundImage = UIColor(hex6: 0xEAEAEE).image()
-        let positions: [UIBarPosition] = [.top, .topAttached]
-        let metrics: [UIBarMetrics] = [.default, .defaultPrompt]
-        positions.forEach { position in
-            metrics.forEach { singleMetrics in
-                searchBar.setBackgroundImage(searchBarBackgroundImage, for: position, barMetrics: singleMetrics)
-            }
-        }
+        let searchBarBackgroundImage = Design.searchBarBackgroundColor.image()
+        [UIBarPosition.top, .topAttached]     .forEach { position in
+        [UIBarMetrics.default, .defaultPrompt].forEach { metrics in
+            searchBar.setBackgroundImage(searchBarBackgroundImage, for: position, barMetrics: metrics)
+        }}
 
         searchBar.autocapitalizationType = .none
         searchBar.autocorrectionType = .no
+        searchBar.spellCheckingType = .no
+        searchBar.returnKeyType = .done
+        searchBar.tintColor = Design.searchBarTintColor
     }
 }
