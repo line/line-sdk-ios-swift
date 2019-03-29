@@ -23,18 +23,19 @@ import UIKit
 
 class SelectedTargetView: UIView {
     enum Design {
-        static let height = CGFloat(79)
-        static let bgColor = "#F7F8FA"
-        static let borderColor = "#E6E7EA"
+        static var height: CGFloat { return 79 }
+        static var bgColor: UIColor { return .init(hex6: 0xF7F8FA) }
+        static var borderColor: UIColor { return .init(hex6: 0xE6E7EA) }
+        static var borderWidth: CGFloat { return 0.5 }
     }
 
     private var slideAnimationViewTopConstraint: NSLayoutConstraint?
 
     private let slideAnimationView: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = UIColor(rgb: Design.bgColor)
-        view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor(rgb: Design.bgColor).cgColor
+        view.backgroundColor = Design.bgColor
+        view.layer.borderWidth = Design.borderWidth
+        view.layer.borderColor = Design.borderColor.cgColor
         return view
     }()
 
