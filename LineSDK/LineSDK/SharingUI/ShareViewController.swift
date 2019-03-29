@@ -90,17 +90,12 @@ public class ShareViewController: UINavigationController {
 
     private func setupLayouts() {
         selectedTargetView.translatesAutoresizingMaskIntoConstraints = false
-        let yAnchor: NSLayoutYAxisAnchor
-        if #available(iOS 11, *) {
-            yAnchor = view.safeAreaLayoutGuide.bottomAnchor
-        } else {
-            yAnchor = bottomLayoutGuide.topAnchor
-        }
         NSLayoutConstraint.activate([
             selectedTargetView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             selectedTargetView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             selectedTargetView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            selectedTargetView.topAnchor.constraint(equalTo: yAnchor, constant: -SelectedTargetView.Design.height)
+            selectedTargetView.topAnchor.constraint(equalTo: safeBottomAnchor,
+                                                    constant: -SelectedTargetView.Design.height)
             ])
     }
 }
