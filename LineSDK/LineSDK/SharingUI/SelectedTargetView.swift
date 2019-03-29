@@ -74,7 +74,7 @@ class SelectedTargetView: UIView {
 
     var mode = Mode.hide
 
-    func updateLayout(withAnimated animated: Bool) {
+    func updateLayout(animated: Bool) {
         self.slideAnimationViewTopConstraint.isActive = false
         let anchor: NSLayoutYAxisAnchor
         let alpha: CGFloat
