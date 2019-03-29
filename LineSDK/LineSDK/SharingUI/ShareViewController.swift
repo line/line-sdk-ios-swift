@@ -284,5 +284,5 @@ extension ShareViewController {
             return .lackOfPermissions(lackPermissions)
         }
         return .authorized
-    
+    }
 }
