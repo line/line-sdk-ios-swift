@@ -74,7 +74,6 @@ class PageViewController: UIViewController {
 
         // Layout current views for getting correct page tab size.
         view.layoutIfNeeded()
-        pageTabView.selectIndex(0)
 
         pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) { [weak self] scrollView, change in
             guard let self = self else { return }

@@ -185,6 +185,8 @@ class PageTabView: UIView {
             underline.heightAnchor.constraint(equalToConstant: Underline.Design.height),
             underline.bottomAnchor.constraint(equalTo: bottomAnchor),
             ])
+
+        updateSelectedIndex(selectedIndex)
     }
 
     // Select a certain index.
