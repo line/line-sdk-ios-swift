@@ -87,8 +87,9 @@ public class ShareViewController: UINavigationController {
     private var selectingObserver: NotificationToken!
     private var deselectingObserver: NotificationToken!
 
-
     public weak var shareDelegate: ShareViewControllerDelegate?
+
+    private lazy var selectedTargetView = SelectedTargetView()
 
     // MARK: - Initializers
     public init() {
@@ -113,6 +114,12 @@ public class ShareViewController: UINavigationController {
         ImageManager.shared.purgeCache()
     }
 
+    @objc
+    func foo() {
+        selectedTargetView.setMode((selectedTargetView.mode == .show) ? .hide : .show,
+                                   animated: true)
+    }
+
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -124,6 +131,13 @@ public class ShareViewController: UINavigationController {
     // MARK: - Lift Cycle
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupSubviews()
+        setupLayouts()
+
+        // default
+        selectedTargetView.setMode(.hide, animated: false)
+
         // Wait for child view controllers setup themselves.
         loadGraphList()
         setupObservers()
@@ -165,6 +179,21 @@ public class ShareViewController: UINavigationController {
             [unowned self] noti in
             self.handleSelectingChange(noti)
         }
+    }
+  
+    private func setupSubviews() {
+        view.addSubview(selectedTargetView)
+    }
+
+    private func setupLayouts() {
+        selectedTargetView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            selectedTargetView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            selectedTargetView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            selectedTargetView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            selectedTargetView.topAnchor.constraint(equalTo: safeBottomAnchor,
+                                                    constant: -SelectedTargetView.Design.height)
+            ])
     }
 }
 
@@ -255,5 +284,5 @@ extension ShareViewController {
             return .lackOfPermissions(lackPermissions)
         }
         return .authorized
-    }
+    
 }
