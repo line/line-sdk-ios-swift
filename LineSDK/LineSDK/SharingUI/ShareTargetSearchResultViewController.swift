@@ -43,7 +43,9 @@ final class ShareTargetSearchResultViewController: UITableViewController, ShareT
         didSet {
             guard searchText != oldValue else { return }
             filteredIndexes = MessageShareTargetType.allCases.map {
-                store.indexes(atColumn: $0.rawValue) { $0.displayName.contains(searchText) }
+                store.indexes(atColumn: $0.rawValue) {
+                    $0.displayName.localizedCaseInsensitiveContains(searchText)
+                }
             }
         }
     }
