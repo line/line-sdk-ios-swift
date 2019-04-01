@@ -98,7 +98,7 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
             displayNameLabel.centerYAnchor
                 .constraint(equalTo: contentView.centerYAnchor),
             displayNameLabel.trailingAnchor
-                .constraint(greaterThanOrEqualTo: contentView.trailingAnchor, constant: Design.displayNameTrailing)
+                .constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -Design.displayNameTrailing)
         ])
     }
 

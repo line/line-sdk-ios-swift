@@ -298,20 +298,24 @@ extension ShareViewController {
     }
 }
 
+// MARK: - Selecting view controller delegate
 extension ShareViewController: ShareTargetSelectingViewControllerDelegate {
     func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool {
-        if !allLoaded {
-            addLoadingIndicator()
-            loadedObserver = observe(\.allLoaded, options: .new) { [weak self] controller, change in
-                guard let self = self else { return }
-                if let loaded = change.newValue, loaded {
-                    self.removeLoadingIndicator()
-                    self.loadedObserver = nil
-                    viewController.continueSearch()
-                }
+        if allLoaded {
+            return true
+        }
+
+        addLoadingIndicator()
+        loadedObserver = observe(\.allLoaded, options: .new) { [weak self] controller, change in
+            guard let self = self else { return }
+            if let loaded = change.newValue, loaded {
+                self.removeLoadingIndicator()
+                self.loadedObserver = nil
+                viewController.continueSearch()
             }
         }
-        return allLoaded
+
+        return false
     }
 
     private func addLoadingIndicator() {
