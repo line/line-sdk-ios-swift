@@ -30,12 +30,53 @@ class SampleUIHomeViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == Cell.shareMessage.rawValue {
-            presentShareViewController()
+
+            let canSendToFriends = ShareViewController.authorizationStatusForSendingMessage(to: .friends)
+            let canSendToGroups = ShareViewController.authorizationStatusForSendingMessage(to: .groups)
+
+            switch (canSendToFriends, canSendToGroups) {
+            case (.authorized, .authorized):
+                presentShareViewController()
+            case (.lackOfPermissions(let p), _): fallthrough
+            case (_ , .lackOfPermissions(let p)):
+                UIAlertController.present(
+                    in: self,
+                    title: nil,
+                    message: "Lack of permissions: \(p)",
+                    actions: [.init(title: "OK", style: .cancel)]
+                )
+            case (.lackOfToken, _): fallthrough
+            case (_, .lackOfToken):
+                UIAlertController.present(
+                    in: self,
+                    title: nil,
+                    message: "Please login first.",
+                    actions: [.init(title: "OK", style: .cancel)]
+                )
+            }
         }
     }
 
     private func presentShareViewController() {
         let viewController = ShareViewController()
+        viewController.shareDelegate = self
         present(viewController, animated: true)
+    }
+}
+
+extension SampleUIHomeViewController: ShareViewControllerDelegate {
+    func shareViewController(
+        _ controller: ShareViewController,
+        didFailLoadingListType shareType: MessageShareTargetType,
+        withError error: LineSDKError)
+    {
+        controller.dismiss(animated: true) {
+            UIAlertController.present(in: self, error: error)
+        }
+    }
+
+    func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {
+        UIAlertController.present(
+            in: self, title: nil, message: "User Cancelled", actions: [.init(title: "OK", style: .cancel)])
     }
 }
