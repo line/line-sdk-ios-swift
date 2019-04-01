@@ -81,31 +81,42 @@ public class ShareViewController: UINavigationController {
     private var store: ColumnDataStore<ShareTarget>!
 
     // States
-    private var allLoaded: Bool = false
+    @objc dynamic private var allLoaded: Bool = false
 
     // Observers
     private var selectingObserver: NotificationToken!
     private var deselectingObserver: NotificationToken!
 
+    private var loadedObserver: NSKeyValueObservation?
+
     public weak var shareDelegate: ShareViewControllerDelegate?
 
     private lazy var selectedTargetView = SelectedTargetView()
 
+    private var indicatorContainer: UIView?
+
     // MARK: - Initializers
     public init() {
         let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
-        let pages = MessageShareTargetType.allCases.map { index -> PageViewController.Page in
+        let controllers = MessageShareTargetType.allCases.map { index -> ShareTargetSelectingViewController in
             let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
             // Force load view for pages to setup table view initial state.
             _ = controller.view
+            return controller
+        }
+
+        let pages = zip(MessageShareTargetType.allCases, controllers).map {
+            index, controller -> PageViewController.Page in
             return .init(viewController: controller, title: index.title)
         }
+
         let rootViewController = PageViewController(pages: pages)
 
         super.init(rootViewController: rootViewController)
 
         self.store = store
         self.rootViewController = rootViewController
+        controllers.forEach { $0.delegate = self }
 
         updateNavigationStyles()
     }
@@ -219,11 +230,7 @@ extension ShareViewController {
             self.store.append(data: response.groups, to: MessageShareTargetType.groups.rawValue)
         }
 
-
         let sendingDispatchGroup = DispatchGroup()
-        sendingDispatchGroup.notify(queue: .main) {
-            self.allLoaded = true
-        }
 
         sendingDispatchGroup.enter()
         Session.shared.send(chainedFriendsRequest) { result in
@@ -245,6 +252,10 @@ extension ShareViewController {
             case .failure(let error):
                 self.shareDelegate?.shareViewController(self, didFailLoadingListType: .groups, withError: error)
             }
+        }
+
+        sendingDispatchGroup.notify(queue: .main) {
+            self.allLoaded = true
         }
     }
 
@@ -284,5 +295,50 @@ extension ShareViewController {
             return .lackOfPermissions(lackPermissions)
         }
         return .authorized
+    }
+}
+
+extension ShareViewController: ShareTargetSelectingViewControllerDelegate {
+    func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool {
+        if !allLoaded {
+            addLoadingIndicator()
+            loadedObserver = observe(\.allLoaded, options: .new) { [weak self] controller, change in
+                guard let self = self else { return }
+                if let loaded = change.newValue, loaded {
+                    self.removeLoadingIndicator()
+                    self.loadedObserver = nil
+                    viewController.continueSearch()
+                }
+            }
+        }
+        return allLoaded
+    }
+
+    private func addLoadingIndicator() {
+        let container = UIView(frame: .zero)
+        let indicator = UIActivityIndicatorView(style: .whiteLarge)
+        indicator.color = .gray
+
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(indicator)
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+        ])
+
+        // Add the loading indicator container to root view controller (page), so user has a chance to
+        // close the sharing UI by tapping "Close" button in the navigation bar.
+        rootViewController.view.addChildSubview(container)
+
+        indicator.startAnimating()
+
+        indicatorContainer = container
+    }
+
+    private func removeLoadingIndicator() {
+        guard let container = indicatorContainer else {
+            return
+        }
+        container.removeFromSuperview()
     }
 }

@@ -21,6 +21,10 @@
 
 import UIKit
 
+protocol ShareTargetSelectingViewControllerDelegate: AnyObject {
+    func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool
+}
+
 final class ShareTargetSelectingViewController: UITableViewController, ShareTargetTableViewStyling {
 
     typealias AppendingIndexRange = ColumnDataStore<ShareTarget>.AppendingIndexRange
@@ -32,6 +36,8 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
     var dataAppendingObserver: NotificationToken!
     var selectingObserver: NotificationToken!
     var deselectingObserver: NotificationToken!
+
+    weak var delegate: ShareTargetSelectingViewControllerDelegate?
 
     // Search
     private var searchController: ShareTargetSearchController!
@@ -173,8 +179,12 @@ extension ShareTargetSelectingViewController: UISearchResultsUpdating {
 }
 
 extension ShareTargetSelectingViewController: UISearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        return delegate?.shouldSearchStart(self) ?? true
+    }
 
+    func continueSearch() {
+        searchController.searchBar.becomeFirstResponder()
     }
 }
 
