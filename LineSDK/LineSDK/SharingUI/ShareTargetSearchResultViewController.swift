@@ -98,7 +98,7 @@ final class ShareTargetSearchResultViewController: UITableViewController, ShareT
         if let cell = tableView.cellForRow(at: indexPath) as? ShareTargetSelectingTableCell {
             let target = store.data(at: index)
             let selected = store.isSelected(at: index)
-            cell.setShareTarget(target, selected: selected)
+            cell.setShareTarget(target, selected: selected, highlightText: searchText)
         }
     }
 
@@ -124,7 +124,7 @@ final class ShareTargetSearchResultViewController: UITableViewController, ShareT
         let dataIndex = filteredIndexes[indexPath.section][indexPath.row]
         let target = store.data(at: dataIndex)
         let selected = store.isSelected(at: dataIndex)
-        cell.setShareTarget(target, selected: selected)
+        cell.setShareTarget(target, selected: selected, highlightText: searchText)
         return cell
     }
 

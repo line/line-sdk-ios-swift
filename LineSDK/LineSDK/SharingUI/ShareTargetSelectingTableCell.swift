@@ -34,12 +34,13 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
 
         static var displayNameLeading: CGFloat { return 10.0 }
         static var displayNameTrailing: CGFloat { return 10.0 }
+        static var displayNameTextColor: UIColor { return .black }
+        static var displayNameFont: UIFont { return .systemFont(ofSize: 16) }
+        static var displayNameHighlightedNameColor: UIColor { return .init(hex6: 0x13C84D) }
 
         static var separatorInset: UIEdgeInsets { return .init(top: 0, left: 96, bottom: 0, right: 0) }
         static var separatorColorRGB:  UIColor { return .init(hex6: 0xE6E7EA) }
         static var bgColor: UIColor { return .white }
-        static var highlightedBgColor: UIColor { return .init(hex6: 0xF5F5F5) }
-        static var highlightedNameColor: UIColor { return .init(hex6: 0x13C84D) }
     }
 
     let tickImageView = UIImageView.init(frame: .zero)
@@ -108,8 +109,28 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
 }
 
 extension ShareTargetSelectingTableCell {
-    func setShareTarget(_ target: ShareTarget, selected: Bool) {
-        displayNameLabel.text = target.displayName
+
+    func displayNameAttributedString(_ name: String, highlightText: String? = nil) -> NSAttributedString {
+        let displayNameAttributedString = NSMutableAttributedString(
+            string: name,
+            attributes: [
+                .font: Design.displayNameFont,
+                .foregroundColor: Design.displayNameTextColor
+            ])
+        if let highlightText = highlightText {
+            let range = NSString(string: name).range(of: highlightText, options: .caseInsensitive)
+            if range.location != NSNotFound {
+                displayNameAttributedString.addAttribute(
+                    .foregroundColor, value: Design.displayNameHighlightedNameColor, range: range)
+            }
+        }
+        return displayNameAttributedString
+    }
+
+    func setShareTarget(_ target: ShareTarget, selected: Bool, highlightText: String? = nil) {
+
+        displayNameLabel.attributedText =
+            displayNameAttributedString(target.displayName, highlightText: highlightText)
 
         let token = avatarImageView.setImage(
             target.avatarURL,
