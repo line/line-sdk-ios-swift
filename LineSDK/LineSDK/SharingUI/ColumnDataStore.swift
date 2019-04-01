@@ -35,8 +35,8 @@ extension LineSDKNotificationKey {
 class ColumnDataStore<T> {
 
     struct ColumnIndex: Equatable {
-        let row: Int
         let column: Int
+        let row: Int
     }
 
     struct AppendingIndexRange {
@@ -105,7 +105,7 @@ class ColumnDataStore<T> {
             )
         }
 
-        let targetIndex = ColumnIndex(row: rowIndex, column: columnIndex)
+        let targetIndex = ColumnIndex(column: columnIndex, row: rowIndex)
         if let index = selected.firstIndex(of: targetIndex) {
             selected.remove(at: index)
             notifySelectingChange(selected: false, targetIndex: targetIndex)
@@ -120,11 +120,15 @@ class ColumnDataStore<T> {
         return true
     }
 
-    func indexes(atColumn column: Int, filtered: ((T) -> Bool)) -> [ColumnIndex] {
+    func indexes(atColumn column: Int, where filtered: ((T) -> Bool)) -> [ColumnIndex] {
         return data(atColumn: column)
             .enumerated()
             .filter { _, elem in filtered(elem) }
-            .map { ColumnIndex(row: $0.offset, column: column) }
+            .map { ColumnIndex(column: column, row: $0.offset) }
+    }
+
+    func indexes(where filtered: ((T) -> Bool)) -> [[ColumnIndex]] {
+        return (0 ..< data.count).map { indexes(atColumn: $0, where: filtered) }
     }
 }
 
