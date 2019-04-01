@@ -47,7 +47,6 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
     let avatarImageView = UIImageView(frame: .zero)
     let displayNameLabel = UILabel(frame: .zero)
 
-    private let randomUserProfileImage = UIImage.randomUserProfileImage
     private var currentImageDownloadToken: ImageManager.DownloadTaskToken?
 
     static let reuseIdentifier = "\(ShareTargetSelectingTableCell.self)"
@@ -127,6 +126,11 @@ extension ShareTargetSelectingTableCell {
         return displayNameAttributedString
     }
 
+    func placeholderUserImage(for name: String) -> UIImage? {
+        let value = name.count % 4 + 1
+        return UIImage(named: "unknown_user_small_0\(value)", in: Bundle.frameworkBundle, compatibleWith: nil)
+    }
+
     func setShareTarget(_ target: ShareTarget, selected: Bool, highlightText: String? = nil) {
 
         displayNameLabel.attributedText =
@@ -134,7 +138,7 @@ extension ShareTargetSelectingTableCell {
 
         let token = avatarImageView.setImage(
             target.avatarURL,
-            placeholder: randomUserProfileImage,
+            placeholder: placeholderUserImage(for: target.displayName),
             verifier: { $0 == self.currentImageDownloadToken }
         )
         currentImageDownloadToken = token
@@ -143,12 +147,5 @@ extension ShareTargetSelectingTableCell {
             UIImage(named: "friend_check_on", in: Bundle.frameworkBundle, compatibleWith: nil) :
             UIImage(named: "friend_check_off", in: Bundle.frameworkBundle, compatibleWith: nil)
         tickImageView.image = selectedImage
-    }
-}
-
-extension UIImage {
-    static var randomUserProfileImage: UIImage? {
-        let number = Int.random(in: 0..<5)
-        return UIImage(named: "unknown_user_small_0\(number)", in:  Bundle.frameworkBundle, compatibleWith: nil)
     }
 }
