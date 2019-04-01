@@ -25,6 +25,7 @@ import XCTest
 class ColumnDataStoreTests: XCTestCase {
 
     var store: ColumnDataStore<Int>!
+    var token: NotificationToken!
 
     override func setUp() {
         super.setUp()
@@ -33,6 +34,7 @@ class ColumnDataStoreTests: XCTestCase {
 
     override func tearDown() {
         store = nil
+        token = nil
         super.tearDown()
     }
 
@@ -108,5 +110,72 @@ class ColumnDataStoreTests: XCTestCase {
         let result = store.indexes { $0 % 2 == 0 }
         let values = result.map { indexes in indexes.map { store.data(at: $0) } }
         XCTAssertEqual(values, [[2], [4, 6], [8]])
+    }
+
+    func testAppendingDataNotification() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+
+        token = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidAppendData,
+            object: nil,
+            queue: .main)
+        {
+            noti in
+            let range = noti.userInfo?[LineSDKNotificationKey.appendDataIndexRange]
+                as? ColumnDataStore<Int>.AppendingIndexRange
+            XCTAssertNotNil(range)
+            XCTAssertEqual(range!.column, 0)
+            XCTAssertEqual(range!.startIndex, 0)
+            XCTAssertEqual(range!.endIndex, 3)
+            expect.fulfill()
+        }
+
+        store.append(data: [1,2,3], to: 0)
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testSelectingDataNotification() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+
+        token = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidSelect,
+            object: nil,
+            queue: .main)
+        {
+            noti in
+            let index = noti.userInfo?[LineSDKNotificationKey.selectingIndex]
+                as? ColumnDataStore<Int>.ColumnIndex
+            XCTAssertNotNil(index)
+            XCTAssertEqual(index!.column, 0)
+            XCTAssertEqual(index!.row, 2)
+            expect.fulfill()
+        }
+
+        store.append(data: [1,2,3], to: 0)
+        _ = store.toggleSelect(atColumn: 0, row: 2)
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testDeselectingDataNotification() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+
+        token = NotificationCenter.default.addObserver(
+            forName: .columnDataStoreDidDeselect,
+            object: nil,
+            queue: .main)
+        {
+            noti in
+            let index = noti.userInfo?[LineSDKNotificationKey.selectingIndex]
+                as? ColumnDataStore<Int>.ColumnIndex
+            XCTAssertNotNil(index)
+            XCTAssertEqual(index!.column, 0)
+            XCTAssertEqual(index!.row, 2)
+            expect.fulfill()
+        }
+
+        store.append(data: [1,2,3], to: 0)
+        _ = store.toggleSelect(atColumn: 0, row: 2)
+        _ = store.toggleSelect(atColumn: 0, row: 2)
+        waitForExpectations(timeout: 1, handler: nil)
     }
 }
