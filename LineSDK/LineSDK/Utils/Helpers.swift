@@ -49,23 +49,6 @@ struct Log {
 /// Possible keys in the `userInfo` property of notifications related to the LINE Platform.
 public struct LineSDKNotificationKey {}
 
-extension UIAlertController {
-    static func presentAlert(in viewController: UIViewController?,
-                             title: String?,
-                             message: String?,
-                             style: UIAlertController.Style = .alert,
-                             actions: [UIAlertAction]) -> Bool
-    {
-        guard let presenting = viewController ?? .topMost else {
-            return false
-        }
-        let alert = UIAlertController(title: title, message: message, preferredStyle: style)
-        actions.forEach(alert.addAction)
-        presenting.present(alert, animated: true, completion: nil)
-        return true
-    }
-}
-
 extension UIApplication {
     func openLINEInAppStore() {
         let url = URL(string: "https://itunes.apple.com/app/id443904275?mt=8")!
