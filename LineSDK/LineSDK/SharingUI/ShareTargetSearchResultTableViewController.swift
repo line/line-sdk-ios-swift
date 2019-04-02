@@ -1,5 +1,5 @@
 //
-//  ShareTargetSearchResultViewController.swift
+//  ShareTargetSearchResultTableViewController.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,7 +21,7 @@
 
 import UIKit
 
-final class ShareTargetSearchResultViewController: UITableViewController, ShareTargetTableViewStyling {
+final class ShareTargetSearchResultTableViewController: UITableViewController, ShareTargetTableViewStyling {
 
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
@@ -154,7 +154,7 @@ final class ShareTargetSearchResultViewController: UITableViewController, ShareT
     }
 }
 
-extension ShareTargetSearchResultViewController {
+extension ShareTargetSearchResultTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedIndex = filteredIndexes[indexPath.section][indexPath.row]

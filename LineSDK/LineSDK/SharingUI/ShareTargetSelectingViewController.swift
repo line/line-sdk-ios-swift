@@ -41,13 +41,13 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
 
     // Search
     private let searchController: ShareTargetSearchController
-    private let resultTableViewController: ShareTargetSearchResultViewController
+    private let resultTableViewController: ShareTargetSearchResultTableViewController
 
     init(store: ColumnDataStore<ShareTarget>, columnIndex: Int) {
         self.store = store
         self.columnIndex = columnIndex
 
-        let resultTableViewController = ShareTargetSearchResultViewController(store: store)
+        let resultTableViewController = ShareTargetSearchResultTableViewController(store: store)
         self.resultTableViewController = resultTableViewController
 
         let searchController = ShareTargetSearchController(searchResultsController: resultTableViewController)
