@@ -97,6 +97,24 @@ extension UIViewController {
     }
 }
 
+extension UIViewController {
+    var expectedSearchBarHeight: CGFloat {
+        if #available(iOS 11.0, *) {
+            // On iOS 11, the window safeAreaInsets.top returns wrong value (0).
+            let topInset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+            if topInset == 20 || // Normal screen on iOS 12+.
+               topInset == 0     // Normal screen on iOS 11.
+            {
+                return 44
+            } else {             // Notch screen.
+                return 54
+            }
+        } else {
+            return 44
+        }
+    }
+}
+
 extension UIView {
     // Add a subview as `self` is a container. Layout the added `child` to match `self` size.
     func addChildSubview(_ child: UIView) {
@@ -117,4 +135,10 @@ func guardSharedProperty<T>(_ input: T?) -> T {
             "Please call `LoginManager.setup` before you do any other things in LineSDK.")
     }
     return shared
+}
+
+enum Localization {
+    static func string(_ key: String) -> String {
+        return NSLocalizedString(key, bundle: .frameworkResourceBundle, comment: "")
+    }
 }

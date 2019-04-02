@@ -34,6 +34,16 @@ public struct Group: Decodable {
     /// The URL of the group picture
     public let pictureURL: URL?
 
+    /// The large image URL of the group. `nil` if the group has not set a profile image.
+    public var pictureURLLarge: URL? {
+        return pictureURL?.appendingPathComponent("/large")
+    }
+
+    /// The small image URL of the group. `nil` if the group has not set a profile image.
+    public var pictureURLSmall: URL? {
+        return pictureURL?.appendingPathComponent("/small")
+    }
+
     enum CodingKeys: String, CodingKey {
         case groupID = "groupId"
         case groupName

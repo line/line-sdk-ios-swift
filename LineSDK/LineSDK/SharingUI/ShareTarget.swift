@@ -1,5 +1,5 @@
 //
-//  ImageViewExtension.swift
+//  ShareTarget.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,20 +19,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
-extension UIImageView {
-    func setImage(
-        _ url: URL,
-        placeholder: UIImage? = nil,
-        completion: ((ImageSettingResult) -> Void)? = nil)
-    {
-        image = placeholder
-        ImageManager.shared.getImage(url) { result in
-            if let image = try? result.get() {
-                self.image = image
-            }
-            completion?(result)
-        }
-    }
+protocol ShareTarget {
+    var targetID: String { get }
+    var displayName: String { get }
+    var avatarURL: URL? { get }
+}
+
+extension User: ShareTarget {
+    var targetID: String { return userID }
+    var avatarURL: URL? { return pictureURLSmall }
+}
+
+extension Group: ShareTarget {
+    var targetID: String { return groupID }
+    var displayName: String { return groupName }
+    var avatarURL: URL? { return pictureURLSmall }
 }

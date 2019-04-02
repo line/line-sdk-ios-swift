@@ -39,6 +39,16 @@ class ImageDownloader {
                 callbackQueue.execute { completion(result) }
             }
 
+            guard let response = response as? HTTPURLResponse else {
+                callback(.failure(.responseFailed(reason: .nonHTTPURLResponse)))
+                return
+            }
+
+            guard response.statusCode < 300 && response.statusCode >= 200 else {
+                callback(.failure(.responseFailed(reason: .nonHTTPURLResponse)))
+                return
+            }
+
             if let data = data {
                 if let image = UIImage(data: data) {
                     callback(.success(image))

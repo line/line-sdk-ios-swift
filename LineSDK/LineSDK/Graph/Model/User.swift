@@ -34,6 +34,16 @@ public struct User: Decodable {
     /// Profile image URL. Not included in the response if the user doesn't have a profile image.
     public let pictureURL: URL?
 
+    /// The large image URL of the user. `nil` if the user has not set a profile image.
+    public var pictureURLLarge: URL? {
+        return pictureURL?.appendingPathComponent("/large")
+    }
+
+    /// The small image URL of the user. `nil` if the user has not set a profile image.
+    public var pictureURLSmall: URL? {
+        return pictureURL?.appendingPathComponent("/small")
+    }
+
     enum CodingKeys: String, CodingKey {
         case userID = "userId"
         case displayName

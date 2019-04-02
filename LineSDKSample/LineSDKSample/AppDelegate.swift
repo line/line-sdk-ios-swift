@@ -44,9 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             fatalError("Please set correct channel ID in Config.xcconfig file.")
         }
-
-        window?.rootViewController = ShareViewController()
-
+        
         return true
     }
 
