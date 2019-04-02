@@ -25,14 +25,9 @@ typealias ImageSettingResult = Result<UIImage, LineSDKError>
 
 class ImageManager {
 
-    typealias DownloadTaskToken = UInt
-
-    private var currentToken: DownloadTaskToken = 0
-    func nextToken(_ url: URL) -> DownloadTaskToken? {
-        let nsURL = url as NSURL
-        if let _ = cache.object(forKey: nsURL) {
-            return nil
-        }
+    typealias TaskToken = UInt
+    private var currentToken: TaskToken = 0
+    func nextToken() -> TaskToken {
         currentToken += 1
         return currentToken
     }
@@ -49,20 +44,28 @@ class ImageManager {
 
     func getImage(
         _ url: URL,
+        taskToken: TaskToken,
         callbackQueue: CallbackQueue = .currentMainOrAsync,
-        completion: @escaping (ImageSettingResult) -> Void)
+        completion: @escaping (ImageSettingResult, TaskToken) -> Void)
     {
         let nsURL = url as NSURL
         if let image = cache.object(forKey: nsURL) {
-            callbackQueue.execute { completion(.success(image)) }
+            callbackQueue.execute { completion(.success(image), taskToken) }
             return
         }
+
         downloader.download(url: url, callbackQueue: callbackQueue) { result in
-            if let image = try? result.get() {
+
+            let callbackResult: ImageSettingResult
+            switch result {
+            case .success(let image):
                 self.cache.setObject(image, forKey: nsURL)
+                callbackResult = .success(image)
+            case .failure(let error):
+                callbackResult = .failure(error)
             }
 
-            callbackQueue.execute { completion(result) }
+            callbackQueue.execute { completion(callbackResult, taskToken) }
         }
     }
 

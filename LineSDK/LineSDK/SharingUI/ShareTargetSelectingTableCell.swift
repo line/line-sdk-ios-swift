@@ -44,10 +44,8 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
     }
 
     let tickImageView = UIImageView.init(frame: .zero)
-    let avatarImageView = UIImageView(frame: .zero)
+    let avatarImageView = DownloadableImageView(frame: .zero)
     let displayNameLabel = UILabel(frame: .zero)
-
-    private var currentImageDownloadToken: ImageManager.DownloadTaskToken?
 
     static let reuseIdentifier = "\(ShareTargetSelectingTableCell.self)"
 
@@ -136,12 +134,7 @@ extension ShareTargetSelectingTableCell {
         displayNameLabel.attributedText =
             displayNameAttributedString(target.displayName, highlightText: highlightText)
 
-        let token = avatarImageView.setImage(
-            target.avatarURL,
-            placeholder: placeholderUserImage(for: target.displayName),
-            verifier: { $0 == self.currentImageDownloadToken }
-        )
-        currentImageDownloadToken = token
+        avatarImageView.setImage(target.avatarURL, placeholder: placeholderUserImage(for: target.displayName))
 
         let selectedImage = selected ?
             UIImage(named: "friend_check_on", in: Bundle.frameworkBundle, compatibleWith: nil) :
