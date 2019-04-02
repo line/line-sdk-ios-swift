@@ -25,10 +25,19 @@ final class ShareTargetSearchResultViewController: UITableViewController, ShareT
 
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
-    var store: ColumnDataStore<ShareTarget>!
+    private let store: ColumnDataStore<ShareTarget>
 
     var selectingObserver: NotificationToken!
     var deselectingObserver: NotificationToken!
+
+    init(store: ColumnDataStore<ShareTarget>) {
+        self.store = store
+        super.init(style: .plain)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
