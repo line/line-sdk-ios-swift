@@ -47,8 +47,7 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
         self.store = store
         self.columnIndex = columnIndex
 
-        let resultTableViewController = ShareTargetSearchResultViewController()
-        resultTableViewController.store = store
+        let resultTableViewController = ShareTargetSearchResultViewController(store: store)
         self.resultTableViewController = resultTableViewController
 
         let searchController = ShareTargetSearchController(searchResultsController: resultTableViewController)
