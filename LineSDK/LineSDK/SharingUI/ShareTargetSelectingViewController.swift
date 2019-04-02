@@ -40,25 +40,25 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
     weak var delegate: ShareTargetSelectingViewControllerDelegate?
 
     // Search
-    private var searchController: ShareTargetSearchController!
-    private var resultTableViewController: ShareTargetSearchResultViewController!
+    private let searchController: ShareTargetSearchController
+    private let resultTableViewController: ShareTargetSearchResultViewController
 
     init(store: ColumnDataStore<ShareTarget>, columnIndex: Int) {
         self.store = store
         self.columnIndex = columnIndex
-        super.init(style: .plain)
 
         let resultTableViewController = ShareTargetSearchResultViewController()
         resultTableViewController.store = store
         self.resultTableViewController = resultTableViewController
 
         let searchController = ShareTargetSearchController(searchResultsController: resultTableViewController)
+        self.searchController = searchController
+
+        super.init(style: .plain)
 
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.delegate = self
-
-        self.searchController = searchController
     }
 
     required init?(coder aDecoder: NSCoder) {
