@@ -147,7 +147,7 @@ extension ShareTargetSelectingViewController {
             withIdentifier: ShareTargetSelectingTableCell.reuseIdentifier,
             for: indexPath) as! ShareTargetSelectingTableCell
 
-        let dataIndex = ColumnIndex(row: indexPath.row, column: columnIndex)
+        let dataIndex = ColumnIndex(column: columnIndex, row: indexPath.row)
 
         let target = store.data(at: dataIndex)
         let selected = store.isSelected(at: dataIndex)

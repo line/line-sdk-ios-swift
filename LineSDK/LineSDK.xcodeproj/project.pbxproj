@@ -204,6 +204,7 @@
 		4BDD2C342133F32200DD563D /* LineSDKFlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C332133F32200DD563D /* LineSDKFlexSeparatorComponent.swift */; };
 		4BDD2C362133F32F00DD563D /* LineSDKSpacerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C352133F32F00DD563D /* LineSDKSpacerComponent.swift */; };
 		4BDD2C382133F34300DD563D /* LineSDKFlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C372133F34300DD563D /* LineSDKFlexBoxComponent.swift */; };
+		4BE4E0FC2251CEE10071FC60 /* ColumnDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */; };
 		4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */; };
 		4BEB491C212B992B00BA946A /* FlexImageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */; };
 		4BEB491E212B9E5500BA946A /* FlexFillerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */; };
@@ -495,6 +496,7 @@
 		4BDD2C332133F32200DD563D /* LineSDKFlexSeparatorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKFlexSeparatorComponent.swift; sourceTree = "<group>"; };
 		4BDD2C352133F32F00DD563D /* LineSDKSpacerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSpacerComponent.swift; sourceTree = "<group>"; };
 		4BDD2C372133F34300DD563D /* LineSDKFlexBoxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKFlexBoxComponent.swift; sourceTree = "<group>"; };
+		4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnDataStoreTests.swift; sourceTree = "<group>"; };
 		4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponent.swift; sourceTree = "<group>"; };
 		4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponentTests.swift; sourceTree = "<group>"; };
 		4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexFillerComponent.swift; sourceTree = "<group>"; };
@@ -824,6 +826,7 @@
 		4B90588521006E5D004D717F /* LineSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				4BE4E0FA2251C9090071FC60 /* Sharing */,
 				DB0AFF5F2247FB06002729AD /* UI */,
 				4B15EEF9211D5BE800866E6C /* Message */,
 				4B792FB421103CFD00EDDD1E /* API */,
@@ -1115,6 +1118,14 @@
 				4BDD2C352133F32F00DD563D /* LineSDKSpacerComponent.swift */,
 			);
 			path = Component;
+			sourceTree = "<group>";
+		};
+		4BE4E0FA2251C9090071FC60 /* Sharing */ = {
+			isa = PBXGroup;
+			children = (
+				4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */,
+			);
+			path = Sharing;
 			sourceTree = "<group>";
 		};
 		4BF45A872137B27F00CCD28E /* Crypto */ = {
@@ -1742,6 +1753,7 @@
 				4BEB491C212B992B00BA946A /* FlexImageComponentTests.swift in Sources */,
 				4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */,
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
+				4BE4E0FC2251CEE10071FC60 /* ColumnDataStoreTests.swift in Sources */,
 				4B5EE2E6212BD53E0009DF2E /* FlexBubbleContainerTests.swift in Sources */,
 				4BF45A8B2137B2C500CCD28E /* RSAKeyTests.swift in Sources */,
 				4BFC09F5213CF5B200F4594D /* GetDiscoveryDocumentRequestTests.swift in Sources */,

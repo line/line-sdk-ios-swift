@@ -126,7 +126,7 @@ extension ShareTargetSelectingTableCell {
 
     func placeholderUserImage(for name: String) -> UIImage? {
         let value = name.count % 4 + 1
-        return UIImage(named: "unknown_user_small_0\(value)", in: Bundle.frameworkBundle, compatibleWith: nil)
+        return UIImage(named: "unknown_user_small_0\(value)", in: .frameworkBundle, compatibleWith: nil)
     }
 
     func setShareTarget(_ target: ShareTarget, selected: Bool, highlightText: String? = nil) {
@@ -137,8 +137,8 @@ extension ShareTargetSelectingTableCell {
         avatarImageView.setImage(target.avatarURL, placeholder: placeholderUserImage(for: target.displayName))
 
         let selectedImage = selected ?
-            UIImage(named: "friend_check_on", in: Bundle.frameworkBundle, compatibleWith: nil) :
-            UIImage(named: "friend_check_off", in: Bundle.frameworkBundle, compatibleWith: nil)
+            UIImage(named: "friend_check_on", in: .frameworkBundle, compatibleWith: nil) :
+            UIImage(named: "friend_check_off", in: .frameworkBundle, compatibleWith: nil)
         tickImageView.image = selectedImage
     }
 }

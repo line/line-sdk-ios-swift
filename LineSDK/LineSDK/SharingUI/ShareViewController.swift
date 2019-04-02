@@ -25,7 +25,7 @@ public protocol ShareViewControllerDelegate: AnyObject {
     func shareViewController(
         _ controller: ShareViewController,
         didFailLoadingListType shareType: MessageShareTargetType,
-        withError: LineSDKError)
+        withError error: LineSDKError)
     func shareViewControllerDidCancelSharing(_ controller: ShareViewController)
 }
 
@@ -33,7 +33,7 @@ extension ShareViewControllerDelegate {
     public func shareViewController(
         _ controller: ShareViewController,
         didFailLoadingListType shareType: MessageShareTargetType,
-        withError: LineSDKError) { }
+        withError error: LineSDKError) { }
     public func shareViewControllerDidCancelSharing(_ controller: ShareViewController) { }
 }
 
