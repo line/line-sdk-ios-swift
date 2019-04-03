@@ -22,17 +22,10 @@
 import UIKit
 
 protocol ShareRootViewControllerDelegate: AnyObject {
-    func shareViewController(
+    func shareRootViewController(
         _ controller: ShareRootViewController,
         didFailLoadingListType shareType: MessageShareTargetType,
         withError error: LineSDKError)
-}
-
-extension ShareRootViewControllerDelegate {
-    func shareViewController(
-        _ controller: ShareRootViewController,
-        didFailLoadingListType shareType: MessageShareTargetType,
-        withError error: LineSDKError) { }
 }
 
 class ShareRootViewController: UIViewController {
@@ -151,7 +144,7 @@ extension ShareRootViewController {
             case .success:
                 break
             case .failure(let error):
-                self.shareDelegate?.shareViewController(self, didFailLoadingListType: .friends, withError: error)
+                self.shareDelegate?.shareRootViewController(self, didFailLoadingListType: .friends, withError: error)
             }
         }
 
@@ -162,7 +155,7 @@ extension ShareRootViewController {
             case .success:
                 break
             case .failure(let error):
-                self.shareDelegate?.shareViewController(self, didFailLoadingListType: .groups, withError: error)
+                self.shareDelegate?.shareRootViewController(self, didFailLoadingListType: .groups, withError: error)
             }
         }
 

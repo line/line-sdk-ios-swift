@@ -147,9 +147,9 @@ extension ShareViewController {
 }
 
 extension ShareViewController: ShareRootViewControllerDelegate {
-    func shareViewController(_ controller: ShareRootViewController,
-                             didFailLoadingListType shareType: MessageShareTargetType,
-                             withError error: LineSDKError) {
+    func shareRootViewController(_ controller: ShareRootViewController,
+                                 didFailLoadingListType shareType: MessageShareTargetType,
+                                 withError error: LineSDKError) {
         shareDelegate?.shareViewController(self, didFailLoadingListType: shareType, withError: error)
     }
 }
