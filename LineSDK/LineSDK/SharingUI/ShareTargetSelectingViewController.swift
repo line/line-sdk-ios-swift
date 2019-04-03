@@ -41,16 +41,16 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
 
     // Search
     private let searchController: ShareTargetSearchController
-    private let resultTableViewController: ShareTargetSearchResultViewController
+    private let resultViewController: ShareTargetSearchResultViewController
 
     init(store: ColumnDataStore<ShareTarget>, columnIndex: Int) {
         self.store = store
         self.columnIndex = columnIndex
 
-        let resultTableViewController = ShareTargetSearchResultViewController(store: store)
-        self.resultTableViewController = resultTableViewController
+        let resultViewController = ShareTargetSearchResultViewController(store: store)
+        self.resultViewController = resultViewController
 
-        let searchController = ShareTargetSearchController(searchResultsController: resultTableViewController)
+        let searchController = ShareTargetSearchController(searchResultsController: resultViewController)
         self.searchController = searchController
 
         super.init(style: .plain)
@@ -169,11 +169,11 @@ extension ShareTargetSelectingViewController {
 // MARK: - Search Results Updating
 extension ShareTargetSelectingViewController: UISearchResultsUpdating {
     public func updateSearchResults(for searchController: UISearchController) {
-        resultTableViewController.tableView.isHidden = false
+        resultViewController.view.isHidden = false
         guard let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces) else {
             return
         }
-        resultTableViewController.searchText = text
+        resultViewController.tableViewController.searchText = text
     }
 }
 
@@ -189,11 +189,11 @@ extension ShareTargetSelectingViewController: UISearchBarDelegate {
 
 extension ShareTargetSelectingViewController: UISearchControllerDelegate {
     func didPresentSearchController(_ searchController: UISearchController) {
-        resultTableViewController.start()
+        resultViewController.tableViewController.start()
     }
 
     func willDismissSearchController(_ searchController: UISearchController) {
-        resultTableViewController.clear()
+        resultViewController.tableViewController.clear()
     }
 }
 
