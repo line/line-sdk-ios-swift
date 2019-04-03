@@ -173,7 +173,7 @@ extension ShareTargetSelectingViewController: UISearchResultsUpdating {
         guard let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces) else {
             return
         }
-        resultViewController.tableViewController.searchText = text
+        resultViewController.searchText = text
     }
 }
 
@@ -189,11 +189,11 @@ extension ShareTargetSelectingViewController: UISearchBarDelegate {
 
 extension ShareTargetSelectingViewController: UISearchControllerDelegate {
     func didPresentSearchController(_ searchController: UISearchController) {
-        resultViewController.tableViewController.start()
+        resultViewController.start()
     }
 
     func willDismissSearchController(_ searchController: UISearchController) {
-        resultViewController.tableViewController.clear()
+        resultViewController.clear()
     }
 }
 

@@ -23,9 +23,18 @@ import UIKit
 
 class ShareTargetSearchResultViewController: UIViewController {
 
-    let store: ColumnDataStore<ShareTarget>
+    var searchText: String {
+        get {
+            return tableViewController.searchText
+        }
+        set {
+            tableViewController.searchText = newValue
+        }
+    }
 
-    let tableViewController: ShareTargetSearchResultTableViewController
+    private let store: ColumnDataStore<ShareTarget>
+
+    private let tableViewController: ShareTargetSearchResultTableViewController
 
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
@@ -41,6 +50,14 @@ class ShareTargetSearchResultViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func start() {
+        tableViewController.start()
+    }
+
+    func clear() {
+        tableViewController.clear()
     }
 }
 
