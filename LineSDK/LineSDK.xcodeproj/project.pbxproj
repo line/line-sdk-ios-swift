@@ -260,7 +260,8 @@
 		DBF20278212C137D00780358 /* GetApproversInGroupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */; };
 		DBF2027B212D58FC00780358 /* GetGroupsRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF2027A212D58FC00780358 /* GetGroupsRequestTests.swift */; };
 		DBF2027D212D5B5200780358 /* GetApproversInGroupRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF2027C212D5B5200780358 /* GetApproversInGroupRequestTests.swift */; };
-		DBFBD439224B85F500A74D44 /* SelectedTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBD438224B85F500A74D44 /* SelectedTargetView.swift */; };
+		DBFBD439224B85F500A74D44 /* SelectedTargetPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBD438224B85F500A74D44 /* SelectedTargetPanelViewController.swift */; };
+		DBFBD43F224E7D0500A74D44 /* SelectedTargetPanelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBD43E224E7D0500A74D44 /* SelectedTargetPanelCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -555,7 +556,8 @@
 		DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInGroupRequest.swift; sourceTree = "<group>"; };
 		DBF2027A212D58FC00780358 /* GetGroupsRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetGroupsRequestTests.swift; sourceTree = "<group>"; };
 		DBF2027C212D5B5200780358 /* GetApproversInGroupRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInGroupRequestTests.swift; sourceTree = "<group>"; };
-		DBFBD438224B85F500A74D44 /* SelectedTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTargetView.swift; sourceTree = "<group>"; };
+		DBFBD438224B85F500A74D44 /* SelectedTargetPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTargetPanelViewController.swift; sourceTree = "<group>"; };
+		DBFBD43E224E7D0500A74D44 /* SelectedTargetPanelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTargetPanelCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -730,7 +732,8 @@
 				D16D53292248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift */,
 				D16D5327224876B900BAA3B4 /* ColumnDataStore.swift */,
 				4B392661224DC06F006485B4 /* ShareTargetTableViewStyling.swift */,
-				DBFBD438224B85F500A74D44 /* SelectedTargetView.swift */,
+				DBFBD438224B85F500A74D44 /* SelectedTargetPanelViewController.swift */,
+				DBFBD43E224E7D0500A74D44 /* SelectedTargetPanelCell.swift */,
 			);
 			path = SharingUI;
 			sourceTree = "<group>";
@@ -1668,6 +1671,7 @@
 				4B9A303B212121FC00174C6F /* MessageProtocols.swift in Sources */,
 				4B1658052252EF3C0008E441 /* DownloadableImageView.swift in Sources */,
 				4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */,
+				DBFBD43F224E7D0500A74D44 /* SelectedTargetPanelCell.swift in Sources */,
 				4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */,
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
 				4B3CCB762152295300F51D76 /* CryptoData.swift in Sources */,
@@ -1692,7 +1696,7 @@
 				4BFD605C212A8775009E9838 /* FlexTextComponent.swift in Sources */,
 				4B9A305421215A1A00174C6F /* TemplateConfirmPayload.swift in Sources */,
 				4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */,
-				DBFBD439224B85F500A74D44 /* SelectedTargetView.swift in Sources */,
+				DBFBD439224B85F500A74D44 /* SelectedTargetPanelViewController.swift in Sources */,
 				4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */,
 				4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,

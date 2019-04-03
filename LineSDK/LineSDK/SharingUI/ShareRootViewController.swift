@@ -47,7 +47,7 @@ class ShareRootViewController: UIViewController {
     private var deselectingObserver: NotificationToken!
 
     private var loadedObserver: NSKeyValueObservation?
-    private lazy var selectedTargetView = SelectedTargetView()
+
     private var indicatorContainer: UIView?
 
     let onCancelled = Delegate<(), Void>()
@@ -57,6 +57,8 @@ class ShareRootViewController: UIViewController {
     let onSendingSuccess = Delegate<OnSendingSuccessData, Void>()
     let onSendingFailure = Delegate<OnSendingFailureData, Void>()
     let onShouldDismiss = Delegate<(), Bool>()
+
+    private lazy var panelViewController = SelectedTargetPanelViewController(store: store)
 
     var messages: [MessageConvertible]?
 
@@ -97,9 +99,6 @@ class ShareRootViewController: UIViewController {
         setupSubviews()
         setupLayouts()
 
-        // default
-        selectedTargetView.setMode(.hide, animated: false)
-
         // Wait for child view controllers setup themselves.
         loadGraphList()
         setupObservers()
@@ -123,17 +122,20 @@ class ShareRootViewController: UIViewController {
 
     private func setupSubviews() {
         addChild(pageViewController, to: view)
-        view.addSubview(selectedTargetView)
+
+        addChild(panelViewController)
+        view.addSubview(panelViewController.view)
+        panelViewController.didMove(toParent: self)
     }
 
     private func setupLayouts() {
-        selectedTargetView.translatesAutoresizingMaskIntoConstraints = false
+        panelViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            selectedTargetView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            selectedTargetView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            selectedTargetView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            selectedTargetView.topAnchor.constraint(equalTo: safeBottomAnchor,
-                                                    constant: -SelectedTargetView.Design.height)
+            panelViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            panelViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            panelViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            panelViewController.view.topAnchor.constraint(equalTo: safeBottomAnchor,
+                                                          constant: -SelectedTargetPanelViewController.Design.height)
             ])
     }
 }
