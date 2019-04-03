@@ -30,13 +30,14 @@ class DownloadableImageView: UIImageView {
         placeholder: UIImage? = nil,
         completion: ((Result<UIImage, LineSDKError>) -> Void)? = nil)
     {
+        taskToken = ImageManager.shared.nextToken()
         image = placeholder
         guard let url = url else {
             completion?(.success(placeholder ?? UIImage()))
             return
         }
 
-        taskToken = ImageManager.shared.nextToken()
+        
         ImageManager.shared.getImage(url, taskToken: taskToken!) { result, token in
 
             guard token == self.taskToken else {
