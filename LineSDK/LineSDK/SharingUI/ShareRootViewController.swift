@@ -21,13 +21,6 @@
 
 import UIKit
 
-protocol ShareRootViewControllerDelegate: class {
-    func shareRootViewController(
-        _ controller: ShareRootViewController,
-        didFailLoadingListType shareType: MessageShareTargetType,
-        withError error: LineSDKError)
-}
-
 class ShareRootViewController: UIViewController {
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
@@ -41,12 +34,11 @@ class ShareRootViewController: UIViewController {
     private var deselectingObserver: NotificationToken!
 
     private var loadedObserver: NSKeyValueObservation?
-
-    weak var shareDelegate: ShareRootViewControllerDelegate?
-
     private lazy var selectedTargetView = SelectedTargetView()
-
     private var indicatorContainer: UIView?
+
+    var onCancelled = Delegate<(), Void>()
+    var onLoadingFailed = Delegate<(MessageShareTargetType, LineSDKError), Void>()
 
     private lazy var pageViewController: PageViewController = {
         let controllers = MessageShareTargetType.allCases.map { index -> ShareTargetSelectingViewController in
@@ -73,8 +65,16 @@ class ShareRootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupSubviews()
+        title = "LINE"
+        navigationItem.leftBarButtonItem =
+            UIBarButtonItem(
+                title: Localization.string("common.action.close"),
+                style: .plain,
+                target: self,
+                action: #selector(cancelSharing))
 
+
+        setupSubviews()
         setupLayouts()
 
         // default
@@ -120,6 +120,16 @@ class ShareRootViewController: UIViewController {
 
 // MARK: - Controller Actions
 extension ShareRootViewController {
+    @objc private func cancelSharing() {
+        dismiss(animated: true) {
+            self.onCancelled.call()
+        }
+    }
+}
+
+
+// MARK: - Controller Actions
+extension ShareRootViewController {
 
     private func loadGraphList() {
 
@@ -144,7 +154,7 @@ extension ShareRootViewController {
             case .success:
                 break
             case .failure(let error):
-                self.shareDelegate?.shareRootViewController(self, didFailLoadingListType: .friends, withError: error)
+                self.onLoadingFailed.call((.friends, error))
             }
         }
 
@@ -155,7 +165,7 @@ extension ShareRootViewController {
             case .success:
                 break
             case .failure(let error):
-                self.shareDelegate?.shareRootViewController(self, didFailLoadingListType: .groups, withError: error)
+                self.onLoadingFailed.call((.groups, error))
             }
         }
 

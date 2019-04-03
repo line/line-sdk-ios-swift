@@ -74,15 +74,23 @@ public class ShareViewController: UINavigationController {
     public var navigationBarTextColor = Design.navigationBarTextColor { didSet { updateNavigationStyles() } }
     public var statusBarStyle = Design.preferredStatusBarStyle { didSet { updateNavigationStyles() } }
 
-    // Root & Data
-    private let rootViewController = ShareRootViewController()
-
     public weak var shareDelegate: ShareViewControllerDelegate?
 
     // MARK: - Initializers
     public init() {
         super.init(nibName: nil, bundle: nil)
+
+        let rootViewController = ShareRootViewController()
+        rootViewController.onCancelled.delegate(on: self) { (self, _) in
+            self.shareDelegate?.shareViewControllerDidCancelSharing(self)
+        }
+        rootViewController.onLoadingFailed.delegate(on: self) { (self, value) in
+            let (type, error) = value
+            self.shareDelegate?.shareViewController(self, didFailLoadingListType: type, withError: error)
+        }
+
         self.viewControllers = [rootViewController]
+
         updateNavigationStyles()
     }
 
@@ -96,31 +104,12 @@ public class ShareViewController: UINavigationController {
     }
 
     private func updateNavigationStyles() {
-
-        rootViewController.title = "LINE"
-
-        rootViewController.navigationItem.leftBarButtonItem =
-            UIBarButtonItem(
-                title: Localization.string("common.action.close"),
-                style: .plain,
-                target: self,
-                action: #selector(cancelSharing))
-
         navigationBar.shadowImage = UIImage()
         navigationBar.barTintColor = navigationBarTintColor
         navigationBar.tintColor = navigationBarTextColor
         navigationBar.titleTextAttributes = [.foregroundColor: navigationBarTextColor]
     }
 
-}
-
-// MARK: - Controller Actions
-extension ShareViewController {
-    @objc private func cancelSharing() {
-        dismiss(animated: true) {
-            self.shareDelegate?.shareViewControllerDidCancelSharing(self)
-        }
-    }
 }
 
 // MARK: - Authorization Helpers
@@ -143,13 +132,5 @@ extension ShareViewController {
             return .lackOfPermissions(lackPermissions)
         }
         return .authorized
-    }
-}
-
-extension ShareViewController: ShareRootViewControllerDelegate {
-    func shareRootViewController(_ controller: ShareRootViewController,
-                                 didFailLoadingListType shareType: MessageShareTargetType,
-                                 withError error: LineSDKError) {
-        shareDelegate?.shareViewController(self, didFailLoadingListType: shareType, withError: error)
     }
 }
