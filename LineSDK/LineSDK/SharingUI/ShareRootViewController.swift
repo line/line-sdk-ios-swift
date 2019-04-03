@@ -21,7 +21,7 @@
 
 import UIKit
 
-protocol ShareRootViewControllerDelegate: AnyObject {
+protocol ShareRootViewControllerDelegate: class {
     func shareRootViewController(
         _ controller: ShareRootViewController,
         didFailLoadingListType shareType: MessageShareTargetType,
