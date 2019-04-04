@@ -21,19 +21,19 @@
 
 import Foundation
 
-protocol ShareTarget {
+public protocol ShareTarget {
     var targetID: String { get }
     var displayName: String { get }
     var avatarURL: URL? { get }
 }
 
 extension User: ShareTarget {
-    var targetID: String { return userID }
-    var avatarURL: URL? { return pictureURLSmall }
+    public var targetID: String { return userID }
+    public var avatarURL: URL? { return pictureURLSmall }
 }
 
 extension Group: ShareTarget {
-    var targetID: String { return groupID }
-    var displayName: String { return groupName }
-    var avatarURL: URL? { return pictureURLSmall }
+    public var targetID: String { return groupID }
+    public var displayName: String { return groupName }
+    public var avatarURL: URL? { return pictureURLSmall }
 }

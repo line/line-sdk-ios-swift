@@ -21,12 +21,33 @@
 
 import UIKit
 
+public typealias ShareSendingResult = PostMultisendMessagesRequest.Response.SendingResult
+
 public protocol ShareViewControllerDelegate: AnyObject {
     func shareViewController(
         _ controller: ShareViewController,
         didFailLoadingListType shareType: MessageShareTargetType,
         withError error: LineSDKError)
+
     func shareViewControllerDidCancelSharing(_ controller: ShareViewController)
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        didFailSendingMessages messages: [MessageConvertible],
+        toTargets targets: [ShareTarget],
+        withError error: LineSDKError)
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        didSendMessages messages: [MessageConvertible],
+        toTargets targets: [ShareTarget],
+        sendingResults results: [ShareSendingResult])
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        messagesForSendingToTargets targets: [ShareTarget]) -> [MessageConvertible]
+
+    func shareViewControllerShouldDismiss(_ controller: ShareViewController) -> Bool
 }
 
 extension ShareViewControllerDelegate {
@@ -35,6 +56,33 @@ extension ShareViewControllerDelegate {
         didFailLoadingListType shareType: MessageShareTargetType,
         withError error: LineSDKError) { }
     public func shareViewControllerDidCancelSharing(_ controller: ShareViewController) { }
+    public func shareViewController(
+        _ controller: ShareViewController,
+        didFailSendingMessages messages: [MessageConvertible],
+        toTargets targets: [ShareTarget],
+        withError error: LineSDKError) { }
+    public func shareViewController(
+        _ controller: ShareViewController,
+        didSendMessages messages: [MessageConvertible],
+        toTargets targets: [ShareTarget],
+        sendingResults results: [ShareSendingResult]) { }
+    public func shareViewController(
+        _ controller: ShareViewController,
+        messagesForSendingToTargets targets: [ShareTarget]) -> [MessageConvertible]
+    {
+        guard let messages = controller.messages else {
+            Log.fatalError(
+                """
+                You need at least set the `ShareViewController.message` or implement
+                `shareViewController(:messageForSendingToTargets:)` before sharing a message.")
+                """
+            )
+        }
+        return messages
+    }
+    public func shareViewControllerShouldDismiss(_ controller: ShareViewController) -> Bool {
+        return true
+    }
 }
 
 public enum MessageShareTargetType: Int, CaseIterable {
@@ -76,21 +124,19 @@ public class ShareViewController: UINavigationController {
 
     public weak var shareDelegate: ShareViewControllerDelegate?
 
+    public var messages: [MessageConvertible]? {
+        set { rootViewController.messages = newValue }
+        get { return rootViewController.messages }
+    }
+
+    private let rootViewController = ShareRootViewController()
+
     // MARK: - Initializers
     public init() {
+
         super.init(nibName: nil, bundle: nil)
-
-        let rootViewController = ShareRootViewController()
-        rootViewController.onCancelled.delegate(on: self) { (self, _) in
-            self.shareDelegate?.shareViewControllerDidCancelSharing(self)
-        }
-        rootViewController.onLoadingFailed.delegate(on: self) { (self, value) in
-            let (type, error) = value
-            self.shareDelegate?.shareViewController(self, didFailLoadingListType: type, withError: error)
-        }
-
+        setupRootDelegates()
         self.viewControllers = [rootViewController]
-
         updateNavigationStyles()
     }
 
@@ -101,6 +147,50 @@ public class ShareViewController: UINavigationController {
     // MARK: - Setup & Style
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return statusBarStyle
+    }
+
+    private func setupRootDelegates() {
+        rootViewController.onCancelled.delegate(on: self) { (self, _) in
+            self.shareDelegate?.shareViewControllerDidCancelSharing(self)
+        }
+        rootViewController.onLoadingFailed.delegate(on: self) { (self, value) in
+            let (type, error) = value
+            self.shareDelegate?.shareViewController(self, didFailLoadingListType: type, withError: error)
+        }
+        rootViewController.onSendingMessage.delegate(on: self) { (self, targets) in
+
+            if let messages = self.shareDelegate?.shareViewController(self, messagesForSendingToTargets: targets) {
+                return messages
+            }
+
+            guard let messages = self.messages else {
+                Log.fatalError(
+                    """
+                    You need at least set the `ShareViewController.message` or implement
+                    `shareViewController(:messageForSendingToTargets:)` before sharing a message.")
+                    """
+                )
+            }
+
+            return messages
+        }
+        rootViewController.onSendingSuccess.delegate(on: self) { (self, success) in
+            self.shareDelegate?.shareViewController(
+                self,
+                didSendMessages: success.messages,
+                toTargets: success.targets,
+                sendingResults: success.results)
+        }
+        rootViewController.onSendingFailure.delegate(on: self) { (self, failure) in
+            self.shareDelegate?.shareViewController(
+                self,
+                didFailSendingMessages: failure.messages,
+                toTargets: failure.targets,
+                withError: failure.error)
+        }
+        rootViewController.onShouldDismiss.delegate(on: self) { (self, _) in
+            return self.shareDelegate?.shareViewControllerShouldDismiss(self) ?? true
+        }
     }
 
     private func updateNavigationStyles() {
