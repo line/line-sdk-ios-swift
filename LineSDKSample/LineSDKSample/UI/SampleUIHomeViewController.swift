@@ -59,6 +59,7 @@ class SampleUIHomeViewController: UITableViewController {
 
     private func presentShareViewController() {
         let viewController = ShareViewController()
+        viewController.messages = [TextMessage(text: "Greeting from LINE SDK!")]
         viewController.shareDelegate = self
         present(viewController, animated: true)
     }
@@ -70,6 +71,7 @@ extension SampleUIHomeViewController: ShareViewControllerDelegate {
         didFailLoadingListType shareType: MessageShareTargetType,
         withError error: LineSDKError)
     {
+        print("Sharing list did not finish loading. Error: \(error)")
         controller.dismiss(animated: true) {
             UIAlertController.present(in: self, error: error)
         }
@@ -78,5 +80,41 @@ extension SampleUIHomeViewController: ShareViewControllerDelegate {
     func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {
         UIAlertController.present(
             in: self, title: nil, message: "User Cancelled", actions: [.init(title: "OK", style: .cancel)])
+    }
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        messagesForSendingToTargets targets: [ShareTarget]) -> [MessageConvertible]
+    {
+        print("LineSDK will send message \(controller.messages!) to \(targets).")
+        return controller.messages!
+    }
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        didSendMessages messages: [MessageConvertible],
+        toTargets targets: [ShareTarget],
+        sendingResults results: [ShareSendingResult])
+    {
+        print("Sharing is done. Result: \(results)")
+        controller.dismiss(animated: true) {
+            UIAlertController.present(in: self, successResult: "Share done.")
+        }
+    }
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        didFailSendingMessages messages: [MessageConvertible],
+        toTargets targets: [ShareTarget],
+        withError error: LineSDKError)
+    {
+        print("Sharing finished with error: \(error)")
+        controller.dismiss(animated: true) {
+            UIAlertController.present(in: self, error: error)
+        }
+    }
+
+    func shareViewControllerShouldDismiss(_ controller: ShareViewController) -> Bool {
+        return false
     }
 }

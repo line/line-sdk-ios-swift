@@ -22,6 +22,19 @@
 import UIKit
 
 class ShareRootViewController: UIViewController {
+
+    struct OnSendingSuccessData {
+        let messages: [MessageConvertible]
+        let targets: [ShareTarget]
+        let results: [ShareSendingResult]
+    }
+
+    struct OnSendingFailureData {
+        let messages: [MessageConvertible]
+        let targets: [ShareTarget]
+        let error: LineSDKError
+    }
+
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
     private let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
@@ -37,8 +50,15 @@ class ShareRootViewController: UIViewController {
     private lazy var selectedTargetView = SelectedTargetView()
     private var indicatorContainer: UIView?
 
-    var onCancelled = Delegate<(), Void>()
-    var onLoadingFailed = Delegate<(MessageShareTargetType, LineSDKError), Void>()
+    let onCancelled = Delegate<(), Void>()
+    let onLoadingFailed = Delegate<(MessageShareTargetType, LineSDKError), Void>()
+    let onSendingMessage = Delegate<[ShareTarget], [MessageConvertible]>()
+
+    let onSendingSuccess = Delegate<OnSendingSuccessData, Void>()
+    let onSendingFailure = Delegate<OnSendingFailureData, Void>()
+    let onShouldDismiss = Delegate<(), Bool>()
+
+    var messages: [MessageConvertible]?
 
     private lazy var pageViewController: PageViewController = {
         let controllers = MessageShareTargetType.allCases.map { index -> ShareTargetSelectingViewController in
@@ -186,7 +206,29 @@ extension ShareRootViewController {
     }
 
     @objc private func sendMessage() {
-        print("Send")
+        addLoadingIndicator()
+        let selected = store.allSelectedData
+
+        // `onSendingMessage` is expected to be always delegated.
+        let messages = onSendingMessage.call(selected)!
+        API.multiSendMessages(messages, to: selected.map { $0.targetID }) { result in
+
+            self.removeLoadingIndicator()
+
+            switch result {
+            case .success(let response):
+                let successData = OnSendingSuccessData(messages: messages, targets: selected, results: response.results)
+                self.onSendingSuccess.call(successData)
+            case .failure(let error):
+                let failureData = OnSendingFailureData(messages: messages, targets: selected, error: error)
+                self.onSendingFailure.call(failureData)
+            }
+
+            let shouldDismiss = self.onShouldDismiss.call() ?? true
+            if shouldDismiss {
+                self.dismiss(animated: true)
+            }
+        }
     }
 }
 
@@ -211,6 +253,9 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
     }
 
     private func addLoadingIndicator() {
+
+        if let _ = indicatorContainer { return }
+
         let container = UIView(frame: .zero)
         let indicator = UIActivityIndicatorView(style: .whiteLarge)
         indicator.color = .gray
@@ -236,5 +281,6 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
             return
         }
         container.removeFromSuperview()
+        indicatorContainer = nil
     }
 }

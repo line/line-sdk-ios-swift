@@ -48,6 +48,10 @@ class ColumnDataStore<T> {
     private var data: [[T]]
     private(set) var selected: [ColumnIndex] = []
 
+    var allSelectedData: [T] {
+        return selected.map { data(at: $0) }
+    }
+
     private var columnCount: Int { return data.count }
 
     var maximumSelectedCount = 10
