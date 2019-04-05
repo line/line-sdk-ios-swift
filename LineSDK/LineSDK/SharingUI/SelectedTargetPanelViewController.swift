@@ -63,10 +63,6 @@ class SelectedTargetPanelViewController: UIViewController {
     private var deselectingObserver: NotificationToken!
     private let store: ColumnDataStore<ShareTarget>
 
-    deinit {
-        print(#file, #function)
-    }
-
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
         super.init(nibName: nil, bundle: nil)
@@ -82,7 +78,8 @@ class SelectedTargetPanelViewController: UIViewController {
         setupSubviews()
         setupLayouts()
         setupObservers()
-        setMode(.hide, animated: false)
+
+        setMode(modeFromSelection(), animated: false)
     }
 
     private func setupSubviews() {
@@ -129,16 +126,16 @@ class SelectedTargetPanelViewController: UIViewController {
     }
 
     private func handleSelectingChange(_ notification: Notification) {
-        if store.selected.isEmpty {
-            setMode(.hide, animated: true)
-        } else {
-            setMode(.show, animated: true)
-        }
+        setMode(modeFromSelection(), animated: true)
     }
 
     enum Mode {
         case show
         case hide
+    }
+
+    private func modeFromSelection() -> Mode {
+        return store.selected.isEmpty ? .hide : .show
     }
 
     private func setMode(_ mode: Mode, animated: Bool) {

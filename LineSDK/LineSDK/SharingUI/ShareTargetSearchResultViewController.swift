@@ -41,16 +41,27 @@ class ShareTargetSearchResultViewController: UIViewController {
         set { tableViewController.sectionOrder = newValue }
     }
 
+    var keyboardObserver: [NotificationToken] = []
+    private var keyboardInfo: KeyboardInfo?
+
+    private lazy var panelViewController = SelectedTargetPanelViewController(store: store)
+    private var panelViewControllerTopConstraint: NSLayoutConstraint?
+
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
         self.tableViewController = ShareTargetSearchResultTableViewController(store: store)
         super.init(nibName: nil, bundle: nil)
+        addKeyboardObserver()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         automaticallyAdjustsScrollViewInsets = false
+
         addChild(tableViewController, to: view)
+
+        setupSelectPanel()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -66,3 +77,62 @@ class ShareTargetSearchResultViewController: UIViewController {
     }
 }
 
+// MARK: - SelectedTargetPanelViewController
+
+extension ShareTargetSearchResultViewController {
+    private func setupSelectPanel() {
+        addChild(panelViewController)
+        view.addSubview(panelViewController.view)
+        panelViewController.didMove(toParent: self)
+        panelViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            panelViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            panelViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            panelViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            ])
+        panelViewControllerTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
+    }
+
+    private func newPanelTopConstraint(keyboardInfo: KeyboardInfo?) -> NSLayoutConstraint {
+        let constraint: NSLayoutConstraint
+        if keyboardInfo?.isVisible == true, let y = keyboardInfo?.endFrame?.origin.y {
+            constraint = panelViewController.view.topAnchor.constraint(
+                equalTo: view.topAnchor,
+                constant: y - SelectedTargetPanelViewController.Design.height
+            )
+        } else {
+            constraint = panelViewController.view.topAnchor.constraint(
+                equalTo: safeBottomAnchor,
+                constant: -SelectedTargetPanelViewController.Design.height
+            )
+        }
+        constraint.isActive = true
+        return constraint
+    }
+
+    private func handleKeyboardChange(_ keyboardInfo: KeyboardInfo) {
+        self.keyboardInfo = keyboardInfo
+        guard viewIfLoaded?.window != nil else { return }
+
+        panelViewControllerTopConstraint?.isActive = false
+        panelViewControllerTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
+
+        UIView.animate(
+            withDuration: keyboardInfo.duration,
+            delay: 0,
+            options: .beginFromCurrentState,
+            animations: {
+                UIView.setAnimationCurve(keyboardInfo.animationCurve)
+                self.view.layoutIfNeeded()
+            },
+            completion: nil
+        )
+    }
+}
+
+extension ShareTargetSearchResultViewController: KeyboardObservable {
+    func keyboardInfoWillChange(keyboardInfo: KeyboardInfo) {
+        handleKeyboardChange(keyboardInfo)
+    }
+}

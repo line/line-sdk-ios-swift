@@ -250,6 +250,7 @@
 		DB0AFF612247FB2E002729AD /* PageTabViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */; };
 		DB115EF822537F1000C16B0C /* ShareTargetSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */; };
 		DB115EFA2254660C00C16B0C /* ShareRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF92254660C00C16B0C /* ShareRootViewController.swift */; };
+		DB5035BB22571D3B003CD0B9 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */; };
 		DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
 		DBDCFD342126CB6300E8327A /* GetApproversInFriendsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */; };
 		DBE4E36D211D6C1A00184D66 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36C211D6C1A00184D66 /* User.swift */; };
@@ -546,6 +547,7 @@
 		DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTabViewTests.swift; sourceTree = "<group>"; };
 		DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultViewController.swift; sourceTree = "<group>"; };
 		DB115EF92254660C00C16B0C /* ShareRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRootViewController.swift; sourceTree = "<group>"; };
+		DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
 		DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsRequest.swift; sourceTree = "<group>"; };
 		DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsTests.swift; sourceTree = "<group>"; };
 		DBE4E36C211D6C1A00184D66 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -893,6 +895,7 @@
 				4B4F0B8121083CDB006D17F5 /* Constant.swift */,
 				4B6A7025210956B600D71C66 /* KeychainStore.swift */,
 				4BEE5B34210AC2D000846C6D /* NotificationToken.swift */,
+				DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1672,6 +1675,7 @@
 				4B1658052252EF3C0008E441 /* DownloadableImageView.swift in Sources */,
 				4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */,
 				DBFBD43F224E7D0500A74D44 /* SelectedTargetPanelCell.swift in Sources */,
+				DB5035BB22571D3B003CD0B9 /* KeyboardObservable.swift in Sources */,
 				4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */,
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
 				4B3CCB762152295300F51D76 /* CryptoData.swift in Sources */,
