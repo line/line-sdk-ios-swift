@@ -110,7 +110,7 @@ public enum MessageShareAuthorizationStatus {
     case authorized
 }
 
-public class ShareViewController: UINavigationController {
+open class ShareViewController: UINavigationController {
 
     enum Design {
         static var navigationBarTintColor: UIColor { return .init(hex6: 0x283145) }
@@ -140,12 +140,12 @@ public class ShareViewController: UINavigationController {
         updateNavigationStyles()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Setup & Style
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
         return statusBarStyle
     }
 

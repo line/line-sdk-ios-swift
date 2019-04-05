@@ -26,6 +26,19 @@ import LineSDK
 @objcMembers
 public class LineSDKMessage: NSObject {
 
+    public static func message(with input: MessageConvertible) -> LineSDKMessage? {
+        switch input.message {
+        case .text(let m): return LineSDKTextMessage(m)
+        case .image(let m): return LineSDKImageMessage(m)
+        case .video(let m): return LineSDKVideoMessage(m)
+        case .audio(let m): return LineSDKAudioMessage(m)
+        case .location(let m): return LineSDKLocationMessage(m)
+        case .template(let m): return LineSDKTemplateMessage(m)
+        case .flex(let m): return LineSDKFlexMessage(m)
+        case .unknown: return nil
+        }
+    }
+
     public var textMessage: LineSDKTextMessage? {
         return unwrapped.asTextMessage.map { .init($0) }
     }
