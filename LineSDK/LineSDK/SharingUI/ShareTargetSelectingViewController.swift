@@ -48,6 +48,16 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
         self.columnIndex = columnIndex
 
         let resultViewController = ShareTargetSearchResultViewController(store: store)
+
+        switch MessageShareTargetType(rawValue: columnIndex) {
+        case .friends?:
+            resultViewController.sectionOrder = [.friends, .groups]
+        case .groups?:
+            resultViewController.sectionOrder = [.groups, .friends]
+        case .none:
+            fatalError("The input column index should match a message share target type.")
+        }
+
         self.resultViewController = resultViewController
 
         let searchController = ShareTargetSearchController(searchResultsController: resultViewController)

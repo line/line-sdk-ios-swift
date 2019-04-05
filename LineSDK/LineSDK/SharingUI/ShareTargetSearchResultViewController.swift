@@ -36,6 +36,11 @@ class ShareTargetSearchResultViewController: UIViewController {
 
     private let tableViewController: ShareTargetSearchResultTableViewController
 
+    var sectionOrder: [MessageShareTargetType] {
+        get { return tableViewController.sectionOrder }
+        set { tableViewController.sectionOrder = newValue }
+    }
+
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
         self.tableViewController = ShareTargetSearchResultTableViewController(store: store)

@@ -48,6 +48,9 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         print("Deinit: \(self)")
     }
 
+    // The order of search result section.
+    var sectionOrder: [MessageShareTargetType] = [.friends, .groups]
+
     var searchText: String = "" {
         didSet {
             guard searchText != oldValue else { return }
@@ -102,7 +105,8 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
             return
         }
 
-        let indexPath = IndexPath(row: row, section: index.column)
+        let section = actualSection(index.column)
+        let indexPath = IndexPath(row: row, section: section)
 
         if let cell = tableView.cellForRow(at: indexPath) as? ShareTargetSelectingTableCell {
             let target = store.data(at: index)
@@ -122,7 +126,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredIndexes[section].count
+        return filteredIndexes[actualSection(section)].count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,7 +134,8 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
             withIdentifier: ShareTargetSelectingTableCell.reuseIdentifier,
             for: indexPath) as! ShareTargetSelectingTableCell
 
-        let dataIndex = filteredIndexes[indexPath.section][indexPath.row]
+        let section = actualSection(indexPath.section)
+        let dataIndex = filteredIndexes[section][indexPath.row]
         let target = store.data(at: dataIndex)
         let selected = store.isSelected(at: dataIndex)
         cell.setShareTarget(target, selected: selected, highlightText: searchText)
@@ -138,6 +143,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let section = actualSection(section)
         if filteredIndexes[section].isEmpty {
             return 0
         }
@@ -145,6 +151,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let section = actualSection(section)
         if filteredIndexes[section].isEmpty {
             return nil
         }
@@ -152,12 +159,17 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         view.titleLabel.text = MessageShareTargetType(rawValue: section)?.title
         return view
     }
+
+    private func actualSection(_ section: Int) -> Int {
+        return sectionOrder[section].rawValue
+    }
 }
 
 extension ShareTargetSearchResultTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedIndex = filteredIndexes[indexPath.section][indexPath.row]
+        let section = actualSection(indexPath.section)
+        let selectedIndex = filteredIndexes[section][indexPath.row]
         let toggled = store.toggleSelect(atColumn: selectedIndex.column, row: selectedIndex.row)
         if !toggled {
             popSelectingLimitAlert(max: store.maximumSelectedCount)
