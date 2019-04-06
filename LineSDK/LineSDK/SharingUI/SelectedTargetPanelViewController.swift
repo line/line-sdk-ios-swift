@@ -22,6 +22,8 @@
 import UIKit
 
 class SelectedTargetPanelViewController: UIViewController {
+    typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
+
     enum Design {
         static var height: CGFloat { return 79 }
         static var bgColor: UIColor { return .init(hex6: 0xF7F8FA) }
@@ -61,6 +63,7 @@ class SelectedTargetPanelViewController: UIViewController {
     // Observers
     private var selectingObserver: NotificationToken!
     private var deselectingObserver: NotificationToken!
+
     private let store: ColumnDataStore<ShareTarget>
 
     init(store: ColumnDataStore<ShareTarget>) {
@@ -114,19 +117,40 @@ class SelectedTargetPanelViewController: UIViewController {
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
             [unowned self] noti in
-            self.handleSelectingChange(noti)
+            self.handleSelectingChange(noti, isSelecting: true)
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
             [unowned self] noti in
-            self.handleSelectingChange(noti)
+            self.handleSelectingChange(noti, isSelecting: false)
         }
     }
 
-    private func handleSelectingChange(_ notification: Notification) {
+    private func handleSelectingChange(_ notification: Notification, isSelecting: Bool) {
         setMode(modeFromSelection(), animated: true)
+
+        guard let positionInSelected = notification.userInfo?[LineSDKNotificationKey.positionInSelected] as? Int else {
+            return
+        }
+
+        let indexPath = IndexPath(row: positionInSelected, section: 0)
+        collectionView.performBatchUpdates({
+            if isSelecting {
+                self.collectionView.insertItems(at: [indexPath])
+            } else {
+                self.collectionView.deleteItems(at: [indexPath])
+            }
+        }, completion: { _ in
+            self.scrollToLast()
+        })
+    }
+
+    private func scrollToLast() {
+        guard !store.selected.isEmpty else { return }
+        let indexPath = IndexPath(item: store.selected.count - 1, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
     }
 
     enum Mode {
@@ -140,7 +164,6 @@ class SelectedTargetPanelViewController: UIViewController {
 
     private func setMode(_ mode: Mode, animated: Bool) {
         self.mode = mode
-        collectionView.reloadData()
         updateLayout(animated: animated)
     }
 
@@ -183,7 +206,7 @@ extension SelectedTargetPanelViewController: UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectedTargetPanelCell.reuseIdentifier,
                                                       for: indexPath) as! SelectedTargetPanelCell
-        let target = store.allSelectedData[indexPath.item]
+        let target = store.data(at: store.selected[indexPath.item])
         cell.setShareTarget(target)
         return cell
     }
