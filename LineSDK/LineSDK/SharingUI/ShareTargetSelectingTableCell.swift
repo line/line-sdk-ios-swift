@@ -124,17 +124,12 @@ extension ShareTargetSelectingTableCell {
         return displayNameAttributedString
     }
 
-    func placeholderUserImage(for name: String) -> UIImage? {
-        let value = name.count % 4 + 1
-        return UIImage(named: "unknown_user_small_0\(value)", in: .frameworkBundle, compatibleWith: nil)
-    }
-
     func setShareTarget(_ target: ShareTarget, selected: Bool, highlightText: String? = nil) {
 
         displayNameLabel.attributedText =
             displayNameAttributedString(target.displayName, highlightText: highlightText)
 
-        avatarImageView.setImage(target.avatarURL, placeholder: placeholderUserImage(for: target.displayName))
+        avatarImageView.setImage(target.avatarURL, placeholder: target.placeholderImage())
 
         let selectedImage = selected ?
             UIImage(named: "friend_check_on", in: .frameworkBundle, compatibleWith: nil) :

@@ -58,7 +58,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
 
     func setShareTarget(_ target: ShareTarget) {
         nameLabel.text = target.displayName
-        avatarImageView.setImage(target.avatarURL)
+        avatarImageView.setImage(target.avatarURL, placeholder: target.placeholderImage())
     }
 
     required init?(coder aDecoder: NSCoder) {

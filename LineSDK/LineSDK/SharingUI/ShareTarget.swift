@@ -37,3 +37,10 @@ extension Group: ShareTarget {
     public var displayName: String { return groupName }
     public var avatarURL: URL? { return pictureURLSmall }
 }
+
+extension ShareTarget {
+    func placeholderImage() -> UIImage? {
+        let value = displayName.count % 4 + 1
+        return UIImage(named: "unknown_user_small_0\(value)", in: .frameworkBundle, compatibleWith: nil)
+    }
+}
