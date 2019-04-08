@@ -49,6 +49,12 @@
 		4B3D78BB22420BEA00DE27D1 /* PageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */; };
 		4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5B210EF12C00FD19BC /* APIError.swift */; };
 		4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5D210F077700FD19BC /* RequestStubs.swift */; };
+		4B415938225AE40E003AE63A /* ShareViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415937225AE40E003AE63A /* ShareViewControllerDelegate.swift */; };
+		4B41593A225AE464003AE63A /* MessageShareTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415939225AE464003AE63A /* MessageShareTargetType.swift */; };
+		4B41593C225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */; };
+		4B41593E225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */; };
+		4B415940225AE65A003AE63A /* LineSDKShareTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */; };
+		4B415942225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */; };
 		4B42816621ED9CE6004A0846 /* JSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B42816521ED9CE6004A0846 /* JSONConverter.swift */; };
 		4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */; };
 		4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256A2101810D00A39D4F /* LoginProcess.swift */; };
@@ -247,6 +253,8 @@
 		D17C6FB022237CB1007BA517 /* ResultUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17C6FAF22237CB1007BA517 /* ResultUtilsTests.swift */; };
 		D1A591272139489E00AC080D /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
 		D1A591292139495B00AC080D /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
+		D1F4E716225743F3002639AC /* LineSDKShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */; };
+		D1F4E718225744CE002639AC /* LineSDKViewControllerInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */; };
 		DB0AFF612247FB2E002729AD /* PageTabViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */; };
 		DB115EF822537F1000C16B0C /* ShareTargetSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */; };
 		DB115EFA2254660C00C16B0C /* ShareRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF92254660C00C16B0C /* ShareRootViewController.swift */; };
@@ -337,6 +345,12 @@
 		4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTabView.swift; sourceTree = "<group>"; };
 		4B414D5B210EF12C00FD19BC /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4B414D5D210F077700FD19BC /* RequestStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestStubs.swift; sourceTree = "<group>"; };
+		4B415937225AE40E003AE63A /* ShareViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewControllerDelegate.swift; sourceTree = "<group>"; };
+		4B415939225AE464003AE63A /* MessageShareTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageShareTargetType.swift; sourceTree = "<group>"; };
+		4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareViewControllerDelegate.swift; sourceTree = "<group>"; };
+		4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageShareTargetType.swift; sourceTree = "<group>"; };
+		4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareTarget.swift; sourceTree = "<group>"; };
+		4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageShareAuthorizationStatus.swift; sourceTree = "<group>"; };
 		4B42816521ED9CE6004A0846 /* JSONConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverter.swift; sourceTree = "<group>"; };
 		4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageProperties.swift; sourceTree = "<group>"; };
 		4B45256A2101810D00A39D4F /* LoginProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcess.swift; sourceTree = "<group>"; };
@@ -542,6 +556,8 @@
 		D17C6FAF22237CB1007BA517 /* ResultUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtilsTests.swift; sourceTree = "<group>"; };
 		D1A591262139489E00AC080D /* JWK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWK.swift; sourceTree = "<group>"; };
 		D1A591282139495B00AC080D /* JWKSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKSet.swift; sourceTree = "<group>"; };
+		D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareViewController.swift; sourceTree = "<group>"; };
+		D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKViewControllerInterfaceTests.m; sourceTree = "<group>"; };
 		DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTabViewTests.swift; sourceTree = "<group>"; };
 		DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultViewController.swift; sourceTree = "<group>"; };
 		DB115EF92254660C00C16B0C /* ShareRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRootViewController.swift; sourceTree = "<group>"; };
@@ -718,6 +734,8 @@
 			isa = PBXGroup;
 			children = (
 				4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */,
+				4B415937225AE40E003AE63A /* ShareViewControllerDelegate.swift */,
+				4B415939225AE464003AE63A /* MessageShareTargetType.swift */,
 				DB115EF92254660C00C16B0C /* ShareRootViewController.swift */,
 				4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */,
 				4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */,
@@ -973,6 +991,7 @@
 		4BBEA993212EAF9F00858627 /* LineSDKObjC */ = {
 			isa = PBXGroup;
 			children = (
+				D1F4E714225743D3002639AC /* SharingUI */,
 				D102A6A221646AA100804C7C /* Friendship */,
 				4B2422ED2134FBD6007200C2 /* General */,
 				4BBEA9AD212EAFFB00858627 /* Login */,
@@ -993,6 +1012,7 @@
 				4B2D14EC212F931D000DD5BE /* LineSDKModelInterfaceTests.m */,
 				4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */,
 				4BC9B2DA212FB0210071C736 /* LineSDKAPIInterfaceTests.m */,
+				D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */,
 			);
 			path = LineSDKObjCInterfaceTests;
 			sourceTree = "<group>";
@@ -1322,6 +1342,18 @@
 			path = JWK;
 			sourceTree = "<group>";
 		};
+		D1F4E714225743D3002639AC /* SharingUI */ = {
+			isa = PBXGroup;
+			children = (
+				D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */,
+				4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */,
+				4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */,
+				4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */,
+				4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */,
+			);
+			path = SharingUI;
+			sourceTree = "<group>";
+		};
 		DB0AFF5F2247FB06002729AD /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1602,6 +1634,7 @@
 				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,
 				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
 				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,
+				4B41593A225AE464003AE63A /* MessageShareTargetType.swift in Sources */,
 				4B1C446B2137E98D0094C1D4 /* JWTCoder.swift in Sources */,
 				DBE4E370211D6CF500184D66 /* GetFriendsRequest.swift in Sources */,
 				4B6A0FF5212AA82500B3ED1F /* HexColor.swift in Sources */,
@@ -1625,6 +1658,7 @@
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
 				4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */,
 				4BF5337E222E33E30080D138 /* ChainedPaginatedRequest.swift in Sources */,
+				4B415938225AE40E003AE63A /* ShareViewControllerDelegate.swift in Sources */,
 				4BD191B4211154DF00E2C481 /* API.swift in Sources */,
 				4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */,
 				4B5B0EF32241DEA900BA59A0 /* ShareViewController.swift in Sources */,
@@ -1804,7 +1838,10 @@
 				4BDD2C2A2133DD9300DD563D /* LineSDKFlexTextComponent.swift in Sources */,
 				4B2D14E3212F8EDA000DD5BE /* LineSDKUserProfile.swift in Sources */,
 				4B2D14EF212F9468000DD5BE /* LineSDKLoginManagerOptions.swift in Sources */,
+				4B415942225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift in Sources */,
+				4B415940225AE65A003AE63A /* LineSDKShareTarget.swift in Sources */,
 				4BC4B3D9212FEB9000750794 /* LineSDKTextMessage.swift in Sources */,
+				4B41593C225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift in Sources */,
 				4BDD2C1E2133C15300DD563D /* LineSDKFlexMessage.swift in Sources */,
 				4BC9B2E7212FCA130071C736 /* LineSDKMessagingResponse.swift in Sources */,
 				4BC4B3DB212FEBA600750794 /* LineSDKImageMessage.swift in Sources */,
@@ -1820,8 +1857,10 @@
 				4BC4B3DD212FED4300750794 /* LineSDKVideoMessage.swift in Sources */,
 				4BC4B3E4212FF86100750794 /* LineSDKAudioMessage.swift in Sources */,
 				4BDD2C212133C1CD00DD563D /* LineSDKFlexMessageContainer.swift in Sources */,
+				4B41593E225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift in Sources */,
 				4BDD2C232133C61F00DD563D /* LineSDKFlexBubbleContainer.swift in Sources */,
 				D102A6A421646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift in Sources */,
+				D1F4E716225743F3002639AC /* LineSDKShareViewController.swift in Sources */,
 				4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */,
 				4BDD2C162133970800DD563D /* Log.swift in Sources */,
 				4BDD2C302133F2FA00DD563D /* LineSDKFlexFillerComponent.swift in Sources */,
@@ -1841,6 +1880,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B2D14ED212F931D000DD5BE /* LineSDKModelInterfaceTests.m in Sources */,
+				D1F4E718225744CE002639AC /* LineSDKViewControllerInterfaceTests.m in Sources */,
 				4BB2E6612135188900885687 /* LineSDKMessagingModelTests.m in Sources */,
 				4BC9B2DB212FB0210071C736 /* LineSDKAPIInterfaceTests.m in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-//  LineSDKGroup.swift
+//  LineSDKShareTarget.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -23,13 +23,31 @@
 import LineSDK
 #endif
 
-@objcMembers
-public class LineSDKGroup: NSObject {
-    let _value: Group
-    init(_ value: Group) { _value = value }
-    
-    public var groupID: String { return _value.groupID }
-    public var groupName: String { return _value.groupName }
-    public var pictureURL: URL? { return _value.pictureURL }
-    public var pictureURLSmall: URL? { return _value.pictureURLSmall }
+@objc public protocol LineSDKShareTarget {
+    var targetID: String { get }
+    var displayName: String { get }
+    var avatarURL: URL? { get }
+}
+
+extension LineSDKUser: LineSDKShareTarget {
+    public var targetID: String { return userID }
+    public var avatarURL: URL? { return pictureURLSmall }
+}
+
+extension LineSDKGroup: LineSDKShareTarget {
+    public var targetID: String { return groupID }
+    public var displayName: String { return groupName }
+    public var avatarURL: URL? { return pictureURLSmall }
+}
+
+extension ShareTarget {
+    var sdkShareTarget: LineSDKShareTarget {
+        if let user = self as? User {
+            return LineSDKUser(user)
+        } else if let group = self as? Group {
+            return LineSDKGroup(group)
+        } else {
+            Log.fatalError("Cannot convert share target to objc compatible target. \(self)")
+        }
+    }
 }

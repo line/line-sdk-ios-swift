@@ -1,5 +1,5 @@
 //
-//  LineSDKGroup.swift
+//  LineSDKMessageShareTargetType.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -23,13 +23,21 @@
 import LineSDK
 #endif
 
-@objcMembers
-public class LineSDKGroup: NSObject {
-    let _value: Group
-    init(_ value: Group) { _value = value }
-    
-    public var groupID: String { return _value.groupID }
-    public var groupName: String { return _value.groupName }
-    public var pictureURL: URL? { return _value.pictureURL }
-    public var pictureURLSmall: URL? { return _value.pictureURLSmall }
+@objc public enum LineSDKMessageShareTargetType: Int {
+    case friends
+    case groups
+
+    var value: MessageShareTargetType {
+        switch self {
+        case .friends: return .friends
+        case .groups: return .groups
+        }
+    }
+
+    init(_ value: MessageShareTargetType) {
+        switch value {
+        case .friends: self = .friends
+        case .groups: self = .groups
+        }
+    }
 }
