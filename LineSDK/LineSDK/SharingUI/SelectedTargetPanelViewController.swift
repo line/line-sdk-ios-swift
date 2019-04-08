@@ -29,6 +29,9 @@ class SelectedTargetPanelViewController: UIViewController {
         static var bgColor: UIColor { return .init(hex6: 0xF7F8FA) }
         static var borderColor: UIColor { return .init(hex6: 0xE6E7EA) }
         static var borderWidth: CGFloat { return 0.5 }
+
+        // CollectionView
+        static var minimumLineSpacing: CGFloat { return 10 }
     }
 
     private var slideAnimationViewTopConstraint: NSLayoutConstraint!
@@ -43,7 +46,7 @@ class SelectedTargetPanelViewController: UIViewController {
 
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 10
+        layout.minimumLineSpacing = Design.minimumLineSpacing
         layout.scrollDirection = .horizontal
         layout.itemSize = SelectedTargetPanelCell.Design.size
 
