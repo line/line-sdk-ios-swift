@@ -58,6 +58,7 @@ class ShareRootViewController: UIViewController {
     let onSendingFailure = Delegate<OnSendingFailureData, Void>()
     let onShouldDismiss = Delegate<(), Bool>()
 
+    private lazy var panelContainer = UILayoutGuide()
     private lazy var panelViewController = SelectedTargetPanelViewController(store: store)
 
     var messages: [MessageConvertible]?
@@ -123,19 +124,17 @@ class ShareRootViewController: UIViewController {
     private func setupSubviews() {
         addChild(pageViewController, to: view)
 
-        addChild(panelViewController)
-        view.addSubview(panelViewController.view)
-        panelViewController.didMove(toParent: self)
+        view.addLayoutGuide(panelContainer)
+        addChild(panelViewController, to: panelContainer)
     }
 
     private func setupLayouts() {
-        panelViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            panelViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            panelViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            panelViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            panelViewController.view.topAnchor.constraint(equalTo: safeBottomAnchor,
-                                                          constant: -SelectedTargetPanelViewController.Design.height)
+            panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            panelContainer.topAnchor.constraint(equalTo: safeBottomAnchor,
+                                                constant: -SelectedTargetPanelViewController.Design.height)
             ])
     }
 }

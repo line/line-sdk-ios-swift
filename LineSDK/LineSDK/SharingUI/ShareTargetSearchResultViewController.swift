@@ -45,7 +45,8 @@ class ShareTargetSearchResultViewController: UIViewController {
     private var keyboardInfo: KeyboardInfo?
 
     private lazy var panelViewController = SelectedTargetPanelViewController(store: store)
-    private var panelViewControllerTopConstraint: NSLayoutConstraint?
+    private lazy var panelContainer = UILayoutGuide()
+    private var panelTopConstraint: NSLayoutConstraint?
 
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
@@ -81,28 +82,27 @@ class ShareTargetSearchResultViewController: UIViewController {
 
 extension ShareTargetSearchResultViewController {
     private func setupSelectPanel() {
-        addChild(panelViewController)
-        view.addSubview(panelViewController.view)
-        panelViewController.didMove(toParent: self)
-        panelViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addLayoutGuide(panelContainer)
+        addChild(panelViewController, to: panelContainer)
+
         NSLayoutConstraint.activate([
-            panelViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            panelViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            panelViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             ])
-        panelViewControllerTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
+        panelTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
     }
 
     private func newPanelTopConstraint(keyboardInfo: KeyboardInfo?) -> NSLayoutConstraint {
         let constraint: NSLayoutConstraint
         if keyboardInfo?.isVisible == true, let y = keyboardInfo?.endFrame?.origin.y {
-            constraint = panelViewController.view.topAnchor.constraint(
+            constraint = panelContainer.topAnchor.constraint(
                 equalTo: view.topAnchor,
                 constant: y - SelectedTargetPanelViewController.Design.height
             )
         } else {
-            constraint = panelViewController.view.topAnchor.constraint(
+            constraint = panelContainer.topAnchor.constraint(
                 equalTo: safeBottomAnchor,
                 constant: -SelectedTargetPanelViewController.Design.height
             )
@@ -115,8 +115,8 @@ extension ShareTargetSearchResultViewController {
         self.keyboardInfo = keyboardInfo
         guard viewIfLoaded?.window != nil else { return }
 
-        panelViewControllerTopConstraint?.isActive = false
-        panelViewControllerTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
+        panelTopConstraint?.isActive = false
+        panelTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
 
         UIView.animate(
             withDuration: keyboardInfo.duration,
