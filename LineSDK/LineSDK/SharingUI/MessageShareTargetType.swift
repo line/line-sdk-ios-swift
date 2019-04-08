@@ -1,5 +1,5 @@
 //
-//  LineSDKGroup.swift
+//  MessageShareTargetType.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,17 +19,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
-import LineSDK
-#endif
+public enum MessageShareTargetType: Int, CaseIterable {
+    case friends
+    case groups
 
-@objcMembers
-public class LineSDKGroup: NSObject {
-    let _value: Group
-    init(_ value: Group) { _value = value }
-    
-    public var groupID: String { return _value.groupID }
-    public var groupName: String { return _value.groupName }
-    public var pictureURL: URL? { return _value.pictureURL }
-    public var pictureURLSmall: URL? { return _value.pictureURLSmall }
+    var title: String {
+        switch self {
+        case .friends: return Localization.string("shareRecipient.section.friends.title")
+        case .groups: return Localization.string("shareRecipient.section.groups.title")
+        }
+    }
+
+    var requiredGraphPermission: LoginPermission? {
+        switch self {
+        case .friends: return .friends
+        case .groups: return .groups
+        }
+    }
 }

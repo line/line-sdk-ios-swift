@@ -20,16 +20,21 @@
 //
 
 import UIKit
+#if !LineSDKCocoaPods
 import LineSDK
+#endif
 
 @objcMembers
 public class LineSDKShareViewController: ShareViewController {
-    public var shareBarTintColor: UIColor {
+
+    var delegateProxy: LineSDKShareViewControllerDelegateProxy?
+
+    public var shareNavigationBarTintColor: UIColor {
         get { return super.navigationBarTintColor }
         set { super.navigationBarTintColor = newValue }
     }
 
-    public var shareBarTextColor: UIColor {
+    public var shareNavigationBarTextColor: UIColor {
         get { return super.navigationBarTextColor }
         set { super.navigationBarTextColor = newValue }
     }
@@ -48,5 +53,91 @@ public class LineSDKShareViewController: ShareViewController {
         }
     }
 
-    
+    public var shareProxyDelegate: LineSDKShareViewControllerDelegate? {
+        get { return delegateProxy?.proxy }
+        set {
+            delegateProxy = newValue.map { .init(proxy: $0, owner: self) }
+            shareDelegate = delegateProxy
+        }
+    }
+
+    @objc public static func authorizationStatusForSendingMessage(to type: LineSDKMessageShareTargetType)
+        -> [LineSDKMessageShareAuthorizationStatus]
+    {
+        return LineSDKMessageShareAuthorizationStatus.status(
+            from: super.authorizationStatusForSendingMessage(to: type.value))
+    }
+}
+
+class LineSDKShareViewControllerDelegateProxy: ShareViewControllerDelegate {
+
+    weak var proxy: LineSDKShareViewControllerDelegate?
+    unowned var owner: LineSDKShareViewController
+
+    init(proxy: LineSDKShareViewControllerDelegate, owner: LineSDKShareViewController) {
+        self.proxy = proxy
+        self.owner = owner
+    }
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        didFailLoadingListType shareType: MessageShareTargetType,
+        withError error: LineSDKError)
+    {
+        proxy?.shareViewController?(owner, didFailLoadingListType: .init(shareType), withError: error)
+    }
+
+    func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {
+        proxy?.shareViewControllerDidCancelSharing?(owner)
+    }
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        didFailSendingMessages messages: [MessageConvertible],
+        toTargets targets: [ShareTarget],
+        withError error: LineSDKError)
+    {
+        proxy?.shareViewController?(
+            owner,
+            didFailSendingMessages: messages.compactMap { LineSDKMessage.message(with: $0) },
+            toTargets: targets.map { $0.sdkShareTarget },
+            withError: error)
+    }
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        didSendMessages messages: [MessageConvertible],
+        toTargets targets: [ShareTarget],
+        sendingResults results: [ShareSendingResult])
+    {
+        proxy?.shareViewController?(
+            owner,
+            didSendMessages: messages.compactMap { LineSDKMessage.message(with: $0) },
+            toTargets: targets.map { $0.sdkShareTarget },
+            sendingResults: results.map { .init($0) })
+    }
+
+    func shareViewController(
+        _ controller: ShareViewController,
+        messagesForSendingToTargets targets: [ShareTarget]) -> [MessageConvertible]
+    {
+        guard let messages = controller.messages else {
+            Log.fatalError(
+                """
+                You need at least set the `ShareViewController.message` or implement
+                `shareViewController(:messageForSendingToTargets:)` before sharing a message.")
+                """
+            )
+        }
+        guard let proxy = proxy else { return messages }
+        let targets = targets.map { $0.sdkShareTarget }
+        guard let sdkMessages = proxy.shareViewController?(owner, messagesForSendingToTargets: targets) else {
+            return messages
+        }
+        return sdkMessages.map { $0.unwrapped }
+    }
+
+    func shareViewControllerShouldDismiss(_ controller: ShareViewController) -> Bool {
+        return proxy?.shareViewControllerShouldDismiss?(owner) ?? true
+    }
 }

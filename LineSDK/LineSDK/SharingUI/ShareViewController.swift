@@ -23,93 +23,6 @@ import UIKit
 
 public typealias ShareSendingResult = PostMultisendMessagesRequest.Response.SendingResult
 
-public protocol ShareViewControllerDelegate: AnyObject {
-    func shareViewController(
-        _ controller: ShareViewController,
-        didFailLoadingListType shareType: MessageShareTargetType,
-        withError error: LineSDKError)
-
-    func shareViewControllerDidCancelSharing(_ controller: ShareViewController)
-
-    func shareViewController(
-        _ controller: ShareViewController,
-        didFailSendingMessages messages: [MessageConvertible],
-        toTargets targets: [ShareTarget],
-        withError error: LineSDKError)
-
-    func shareViewController(
-        _ controller: ShareViewController,
-        didSendMessages messages: [MessageConvertible],
-        toTargets targets: [ShareTarget],
-        sendingResults results: [ShareSendingResult])
-
-    func shareViewController(
-        _ controller: ShareViewController,
-        messagesForSendingToTargets targets: [ShareTarget]) -> [MessageConvertible]
-
-    func shareViewControllerShouldDismiss(_ controller: ShareViewController) -> Bool
-}
-
-extension ShareViewControllerDelegate {
-    public func shareViewController(
-        _ controller: ShareViewController,
-        didFailLoadingListType shareType: MessageShareTargetType,
-        withError error: LineSDKError) { }
-    public func shareViewControllerDidCancelSharing(_ controller: ShareViewController) { }
-    public func shareViewController(
-        _ controller: ShareViewController,
-        didFailSendingMessages messages: [MessageConvertible],
-        toTargets targets: [ShareTarget],
-        withError error: LineSDKError) { }
-    public func shareViewController(
-        _ controller: ShareViewController,
-        didSendMessages messages: [MessageConvertible],
-        toTargets targets: [ShareTarget],
-        sendingResults results: [ShareSendingResult]) { }
-    public func shareViewController(
-        _ controller: ShareViewController,
-        messagesForSendingToTargets targets: [ShareTarget]) -> [MessageConvertible]
-    {
-        guard let messages = controller.messages else {
-            Log.fatalError(
-                """
-                You need at least set the `ShareViewController.message` or implement
-                `shareViewController(:messageForSendingToTargets:)` before sharing a message.")
-                """
-            )
-        }
-        return messages
-    }
-    public func shareViewControllerShouldDismiss(_ controller: ShareViewController) -> Bool {
-        return true
-    }
-}
-
-public enum MessageShareTargetType: Int, CaseIterable {
-    case friends
-    case groups
-
-    var title: String {
-        switch self {
-        case .friends: return Localization.string("shareRecipient.section.friends.title")
-        case .groups: return Localization.string("shareRecipient.section.groups.title")
-        }
-    }
-
-    var requiredGraphPermission: LoginPermission? {
-        switch self {
-        case .friends: return .friends
-        case .groups: return .groups
-        }
-    }
-}
-
-public enum MessageShareAuthorizationStatus {
-    case lackOfToken
-    case lackOfPermissions([LoginPermission])
-    case authorized
-}
-
 open class ShareViewController: UINavigationController {
 
     enum Design {
@@ -200,6 +113,12 @@ open class ShareViewController: UINavigationController {
         navigationBar.titleTextAttributes = [.foregroundColor: navigationBarTextColor]
     }
 
+}
+
+public enum MessageShareAuthorizationStatus {
+    case lackOfToken
+    case lackOfPermissions([LoginPermission])
+    case authorized
 }
 
 // MARK: - Authorization Helpers

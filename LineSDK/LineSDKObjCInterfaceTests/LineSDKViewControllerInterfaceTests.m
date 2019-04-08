@@ -22,7 +22,7 @@
 #import <XCTest/XCTest.h>
 @import LineSDKObjC;
 
-@interface LineSDKViewControllerInterfaceTests : XCTestCase
+@interface LineSDKViewControllerInterfaceTests : XCTestCase <LineSDKShareViewControllerDelegate>
 
 @end
 
@@ -30,15 +30,21 @@
 
 - (void)testShareViewControllerCreating {
     LineSDKShareViewController *controller = [[LineSDKShareViewController alloc] init];
+    XCTAssertNotNil(controller);
+}
+
+- (void)testShareViewControllerPropertiesSetting {
+
+    LineSDKShareViewController *controller = [[LineSDKShareViewController alloc] init];
 
     UIColor *color = [UIColor redColor];
-    XCTAssertNotEqual(controller.shareBarTintColor, color);
-    controller.shareBarTintColor = color;
-    XCTAssertEqual(controller.shareBarTintColor, color);
+    XCTAssertNotEqual(controller.shareNavigationBarTintColor, color);
+    controller.shareNavigationBarTintColor = color;
+    XCTAssertEqual(controller.shareNavigationBarTintColor, color);
 
-    XCTAssertNotEqual(controller.shareBarTextColor, color);
-    controller.shareBarTextColor = color;
-    XCTAssertEqual(controller.shareBarTextColor, color);
+    XCTAssertNotEqual(controller.shareNavigationBarTextColor, color);
+    controller.shareNavigationBarTextColor = color;
+    XCTAssertEqual(controller.shareNavigationBarTextColor, color);
 
     XCTAssertEqual(controller.shareStatusBarStyle, UIStatusBarStyleLightContent);
     controller.shareStatusBarStyle = UIStatusBarStyleDefault;
@@ -53,6 +59,10 @@
 
     controller.shareMessages = @[m1, m2];
     XCTAssertEqual(controller.shareMessages.count, 2);
+
+    XCTAssertNil(controller.shareProxyDelegate);
+    controller.shareProxyDelegate = self;
+    XCTAssertNotNil(controller.shareProxyDelegate);
 }
 
 @end

@@ -173,6 +173,7 @@
     XCTAssertNil(user.userID);
     XCTAssertNil(user.displayName);
     XCTAssertNil(user.pictureURL);
+    XCTAssertNil(user.pictureURLSmall);
 }
 
 - (void)testGroupInterface {
@@ -180,6 +181,7 @@
     XCTAssertNil(group.groupID);
     XCTAssertNil(group.groupName);
     XCTAssertNil(group.pictureURL);
+    XCTAssertNil(group.pictureURLSmall);
 }
 
 - (void)testGetFriendsResponseInterface {
@@ -270,6 +272,13 @@
     
 - (void)testConstantInterface {
     XCTAssertNotNil(LineSDKConstant.SDKVersion);
+}
+
+- (void)testShareViewControllerAuthorizationStatus {
+    NSArray<LineSDKMessageShareAuthorizationStatus *> *status =
+        [LineSDKShareViewController authorizationStatusForSendingMessageTo: LineSDKMessageShareTargetTypeFriends];
+    XCTAssertEqual([status count], 1);
+    XCTAssertTrue([status containsObject:[LineSDKMessageShareAuthorizationStatus lackOfToken]]);
 }
 
 @end
