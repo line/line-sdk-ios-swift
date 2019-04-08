@@ -85,7 +85,7 @@ class SelectedTargetPanelViewController: UIViewController {
         setupLayouts()
         setupObservers()
 
-        setMode(modeFromSelection(), animated: false)
+        setMode(modeFromSelection, animated: false)
     }
 
     private func setupSubviews() {
@@ -131,7 +131,7 @@ class SelectedTargetPanelViewController: UIViewController {
     }
 
     private func handleSelectingChange(_ notification: Notification, isSelecting: Bool) {
-        setMode(modeFromSelection(), animated: true)
+        setMode(modeFromSelection, animated: true)
 
         guard let positionInSelected = notification.userInfo?[LineSDKNotificationKey.positionInSelected] as? Int else {
             return
@@ -160,7 +160,7 @@ class SelectedTargetPanelViewController: UIViewController {
         case hide
     }
 
-    private func modeFromSelection() -> Mode {
+    private var modeFromSelection: Mode {
         return store.selected.isEmpty ? .hide : .show
     }
 
