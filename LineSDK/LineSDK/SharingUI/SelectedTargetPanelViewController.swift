@@ -89,11 +89,10 @@ class SelectedTargetPanelViewController: UIViewController {
     }
 
     private func setupSubviews() {
-        view.addSubview(slideAnimationView)
-
         collectionView.dataSource = self
         collectionView.delegate = self
         slideAnimationView.addSubview(collectionView)
+        view.addSubview(slideAnimationView)
     }
 
     private func setupLayouts() {
