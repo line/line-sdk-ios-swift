@@ -23,7 +23,7 @@ import Foundation
 
 protocol KeyboardObservable: AnyObject {
 
-    var keyboardObserver: [NotificationToken] { get set }
+    var keyboardObservers: [NotificationToken] { get set }
 
     func addKeyboardObserver()
 
@@ -34,7 +34,7 @@ protocol KeyboardObservable: AnyObject {
 
 extension KeyboardObservable {
     func addKeyboardObserver() {
-        keyboardObserver = [
+        keyboardObservers = [
             NotificationCenter.default.addObserver(
                 forName: UIResponder.keyboardWillChangeFrameNotification,
                 object: nil,
@@ -50,7 +50,7 @@ extension KeyboardObservable {
     }
 
     func removeKeyboardObserver() {
-        keyboardObserver.removeAll()
+        keyboardObservers.removeAll()
     }
 }
 

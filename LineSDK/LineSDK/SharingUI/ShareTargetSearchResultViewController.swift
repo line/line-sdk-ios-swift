@@ -41,7 +41,7 @@ class ShareTargetSearchResultViewController: UIViewController {
         set { tableViewController.sectionOrder = newValue }
     }
 
-    var keyboardObserver: [NotificationToken] = []
+    var keyboardObservers: [NotificationToken] = []
     private var keyboardInfo: KeyboardInfo?
 
     private lazy var panelViewController = SelectedTargetPanelViewController(store: store)
