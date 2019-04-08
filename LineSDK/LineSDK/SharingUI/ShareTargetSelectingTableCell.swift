@@ -129,7 +129,7 @@ extension ShareTargetSelectingTableCell {
         displayNameLabel.attributedText =
             displayNameAttributedString(target.displayName, highlightText: highlightText)
 
-        avatarImageView.setImage(target.avatarURL, placeholder: target.placeholderImage())
+        avatarImageView.setImage(target.avatarURL, placeholder: target.placeholderImage)
 
         let selectedImage = selected ?
             UIImage(named: "friend_check_on", in: .frameworkBundle, compatibleWith: nil) :

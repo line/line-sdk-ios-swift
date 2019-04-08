@@ -39,7 +39,7 @@ extension Group: ShareTarget {
 }
 
 extension ShareTarget {
-    func placeholderImage() -> UIImage? {
+    var placeholderImage: UIImage? {
         let value = displayName.count % 4 + 1
         return UIImage(named: "unknown_user_small_0\(value)", in: .frameworkBundle, compatibleWith: nil)
     }
