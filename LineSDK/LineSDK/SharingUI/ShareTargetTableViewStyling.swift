@@ -36,7 +36,10 @@ extension ShareTargetTableViewStyling {
             ShareTargetSelectingTableCell.self,
             forCellReuseIdentifier: ShareTargetSelectingTableCell.reuseIdentifier)
         tableView.rowHeight = ShareTargetSelectingTableCell.Design.height
-        tableView.tableFooterView = UIView(frame: .init(x: 0, y: 0, width: tableView.frame.width, height: 60))
+        let selectedPanelHeight = SelectedTargetPanelViewController.Design.height
+        tableView.tableFooterView = UIView(frame:
+            .init(x: 0, y: 0, width: tableView.frame.width, height: selectedPanelHeight)
+        )
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorColor = ShareTargetTableViewDesign.separatorColor
     }

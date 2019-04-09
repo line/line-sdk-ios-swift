@@ -30,6 +30,7 @@ extension Notification.Name {
 extension LineSDKNotificationKey {
     static let appendDataIndexRange = "appendDataIndexRange"
     static let selectingIndex = "selectingIndex"
+    static let positionInSelected = "positionInSelected"
 }
 
 class ColumnDataStore<T> {
@@ -101,24 +102,25 @@ class ColumnDataStore<T> {
     // Return `false` if the toggle failed due to `maximumSelectedCount` reached.
     func toggleSelect(atColumn columnIndex: Int, row rowIndex: Int) -> Bool {
 
-        func notifySelectingChange(selected: Bool, targetIndex: ColumnIndex) {
+        func notifySelectingChange(selected: Bool, targetIndex: ColumnIndex, positionInSelected: Int) {
             NotificationCenter.default.post(
                 name: selected ? .columnDataStoreDidSelect : .columnDataStoreDidDeselect,
                 object: self,
-                userInfo: [LineSDKNotificationKey.selectingIndex: targetIndex]
+                userInfo: [LineSDKNotificationKey.selectingIndex: targetIndex,
+                           LineSDKNotificationKey.positionInSelected: positionInSelected]
             )
         }
 
         let targetIndex = ColumnIndex(column: columnIndex, row: rowIndex)
         if let index = selected.firstIndex(of: targetIndex) {
             selected.remove(at: index)
-            notifySelectingChange(selected: false, targetIndex: targetIndex)
+            notifySelectingChange(selected: false, targetIndex: targetIndex, positionInSelected: index)
         } else {
             guard selected.count < maximumSelectedCount else {
                 return false
             }
             selected.append(targetIndex)
-            notifySelectingChange(selected: true, targetIndex: targetIndex)
+            notifySelectingChange(selected: true, targetIndex: targetIndex, positionInSelected: selected.count - 1)
         }
 
         return true

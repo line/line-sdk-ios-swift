@@ -60,7 +60,8 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         }
     }
 
-    var filteredIndexes: [[ColumnIndex]] = [] {
+    var filteredIndexes = [[ColumnIndex]](repeating: [], count: MessageShareTargetType.allCases.count)
+    {
         didSet { tableView.reloadData() }
     }
 

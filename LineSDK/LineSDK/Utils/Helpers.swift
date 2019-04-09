@@ -95,6 +95,20 @@ extension UIViewController {
         containerView.addChildSubview(viewController.view)
         viewController.didMove(toParent: self)
     }
+
+    func addChild(_ viewController: UIViewController, to layoutGuide: UILayoutGuide) {
+        addChild(viewController)
+        view.addSubview(viewController.view)
+        viewController.didMove(toParent: self)
+
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            viewController.view.topAnchor.constraint(equalTo: layoutGuide.topAnchor),
+            viewController.view.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor),
+            viewController.view.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor),
+            ])
+    }
 }
 
 extension UIViewController {

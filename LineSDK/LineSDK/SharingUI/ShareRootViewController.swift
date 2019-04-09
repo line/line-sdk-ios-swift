@@ -47,7 +47,7 @@ class ShareRootViewController: UIViewController {
     private var deselectingObserver: NotificationToken!
 
     private var loadedObserver: NSKeyValueObservation?
-    private lazy var selectedTargetView = SelectedTargetView()
+
     private var indicatorContainer: UIView?
 
     let onCancelled = Delegate<(), Void>()
@@ -57,6 +57,9 @@ class ShareRootViewController: UIViewController {
     let onSendingSuccess = Delegate<OnSendingSuccessData, Void>()
     let onSendingFailure = Delegate<OnSendingFailureData, Void>()
     let onShouldDismiss = Delegate<(), Bool>()
+
+    private lazy var panelContainer = UILayoutGuide()
+    private lazy var panelViewController = SelectedTargetPanelViewController(store: store)
 
     var messages: [MessageConvertible]?
 
@@ -97,9 +100,6 @@ class ShareRootViewController: UIViewController {
         setupSubviews()
         setupLayouts()
 
-        // default
-        selectedTargetView.setMode(.hide, animated: false)
-
         // Wait for child view controllers setup themselves.
         loadGraphList()
         setupObservers()
@@ -123,17 +123,18 @@ class ShareRootViewController: UIViewController {
 
     private func setupSubviews() {
         addChild(pageViewController, to: view)
-        view.addSubview(selectedTargetView)
+
+        view.addLayoutGuide(panelContainer)
+        addChild(panelViewController, to: panelContainer)
     }
 
     private func setupLayouts() {
-        selectedTargetView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            selectedTargetView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            selectedTargetView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            selectedTargetView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            selectedTargetView.topAnchor.constraint(equalTo: safeBottomAnchor,
-                                                    constant: -SelectedTargetView.Design.height)
+            panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            panelContainer.topAnchor.constraint(equalTo: safeBottomAnchor,
+                                                constant: -SelectedTargetPanelViewController.Design.height)
             ])
     }
 }
@@ -252,6 +253,13 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
         return false
     }
 
+    func correspondingSelectedPanelViewController(
+        for viewController: ShareTargetSelectingViewController) -> SelectedTargetPanelViewController
+    {
+        return panelViewController
+    }
+
+    // TODO: Find a better place for the loading indicator things. Maybe in helpers.
     private func addLoadingIndicator() {
 
         if let _ = indicatorContainer { return }
