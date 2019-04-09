@@ -210,17 +210,10 @@ extension UIColor {
 
 extension ShareTargetSelectingViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-
-        for indexPath in indexPaths{
-            
-            let cell = tableView.dequeueReusableCell(
-                withIdentifier: ShareTargetSelectingTableCell.reuseIdentifier,
-                for: indexPath) as! ShareTargetSelectingTableCell
-            let preIndex = ColumnIndex(column: columnIndex, row: indexPath[1])
-            let target = store.data(at: preIndex)
-            let selected = store.isSelected(at: preIndex)
-            cell.setShareTarget(target, selected: selected)
-            
+        indexPaths.forEach { indexPath in
+            let index = ColumnIndex(column: columnIndex, row: indexPath.row)
+            guard let url = store.data(at: index).avatarURL else { return }
+            ImageManager.shared.getImage(url)
         }
     }
 }
