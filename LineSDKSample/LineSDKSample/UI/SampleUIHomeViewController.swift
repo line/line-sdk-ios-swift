@@ -31,8 +31,8 @@ class SampleUIHomeViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == Cell.shareMessage.rawValue {
 
-            let canSendToFriends = ShareViewController.authorizationStatusForSendingMessage(to: .friends)
-            let canSendToGroups = ShareViewController.authorizationStatusForSendingMessage(to: .groups)
+            let canSendToFriends = ShareViewController.localAuthorizationStatusForSendingMessage(to: .friends)
+            let canSendToGroups = ShareViewController.localAuthorizationStatusForSendingMessage(to: .groups)
 
             switch (canSendToFriends, canSendToGroups) {
             case (.authorized, .authorized):
@@ -72,14 +72,16 @@ extension SampleUIHomeViewController: ShareViewControllerDelegate {
         withError error: LineSDKError)
     {
         print("Sharing list did not finish loading. Error: \(error)")
-        controller.dismiss(animated: true) {
+        dismiss(animated: true) {
             UIAlertController.present(in: self, error: error)
         }
     }
 
     func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {
-        UIAlertController.present(
-            in: self, title: nil, message: "User Cancelled", actions: [.init(title: "OK", style: .cancel)])
+        dismiss(animated: true) {
+            UIAlertController.present(
+                in: self, title: nil, message: "User Cancelled", actions: [.init(title: "OK", style: .cancel)])
+        }
     }
 
     func shareViewController(
@@ -97,7 +99,7 @@ extension SampleUIHomeViewController: ShareViewControllerDelegate {
         sendingResults results: [ShareSendingResult])
     {
         print("Sharing is done. Result: \(results)")
-        controller.dismiss(animated: true) {
+        dismiss(animated: true) {
             UIAlertController.present(in: self, successResult: "Share done.")
         }
     }
@@ -109,12 +111,12 @@ extension SampleUIHomeViewController: ShareViewControllerDelegate {
         withError error: LineSDKError)
     {
         print("Sharing finished with error: \(error)")
-        controller.dismiss(animated: true) {
+        dismiss(animated: true) {
             UIAlertController.present(in: self, error: error)
         }
     }
 
-    func shareViewControllerShouldDismiss(_ controller: ShareViewController) -> Bool {
+    func shareViewControllerShouldDismissAfterSending(_ controller: ShareViewController) -> Bool {
         return false
     }
 }

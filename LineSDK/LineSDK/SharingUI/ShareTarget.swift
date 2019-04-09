@@ -21,9 +21,17 @@
 
 import Foundation
 
+/// Represents the share target in a share action.
+/// A target can be either a friend of current user, or a group in which current user attends in.
 public protocol ShareTarget {
+
+    /// The ID of this share target.
     var targetID: String { get }
+
+    /// The display name of this share target.
     var displayName: String { get }
+
+    /// The profile image of this share target.
     var avatarURL: URL? { get }
 }
 

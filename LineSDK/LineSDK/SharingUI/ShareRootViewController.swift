@@ -141,9 +141,7 @@ class ShareRootViewController: UIViewController {
 // MARK: - Controller Actions
 extension ShareRootViewController {
     @objc private func cancelSharing() {
-        dismiss(animated: true) {
-            self.onCancelled.call()
-        }
+        onCancelled.call()
     }
 }
 

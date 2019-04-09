@@ -276,7 +276,7 @@
 
 - (void)testShareViewControllerAuthorizationStatus {
     NSArray<LineSDKMessageShareAuthorizationStatus *> *status =
-        [LineSDKShareViewController authorizationStatusForSendingMessageTo: LineSDKMessageShareTargetTypeFriends];
+        [LineSDKShareViewController localAuthorizationStatusForSendingMessageTo: LineSDKMessageShareTargetTypeFriends];
     XCTAssertEqual([status count], 1);
     XCTAssertTrue([status containsObject:[LineSDKMessageShareAuthorizationStatus lackOfToken]]);
 }

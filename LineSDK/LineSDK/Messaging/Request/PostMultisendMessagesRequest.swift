@@ -57,16 +57,16 @@ public struct PostMultisendMessagesRequest: Request {
     /// Server response of `PostMultisendMessagesRequest`.
     public struct Response: Decodable {
         
-        /// Represents a result pair of message sending behavior
+        /// Represents a result pair of message sending behavior.
         public struct SendingResult: Decodable {
-            /// The destination user ID of this result.
+            /// The destination user or group ID of this result.
             public let to: String
             /// Represents the sending status.
             public let status: MessageSendingStatus
         }
         
         /// Represents sending results of this request. Each `SendingResult` in this array represents a result for a
-        /// specified user in `userIDs` of request. If a server error
+        /// specified user in `userIDs` of request.
         public let results: [SendingResult]
     }
 }

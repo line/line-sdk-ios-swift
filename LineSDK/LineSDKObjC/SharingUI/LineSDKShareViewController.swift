@@ -61,11 +61,11 @@ public class LineSDKShareViewController: ShareViewController {
         }
     }
 
-    @objc public static func authorizationStatusForSendingMessage(to type: LineSDKMessageShareTargetType)
+    @objc public static func localAuthorizationStatusForSendingMessage(to type: LineSDKMessageShareTargetType)
         -> [LineSDKMessageShareAuthorizationStatus]
     {
         return LineSDKMessageShareAuthorizationStatus.status(
-            from: super.authorizationStatusForSendingMessage(to: type.value))
+            from: super.localAuthorizationStatusForSendingMessage(to: type.value))
     }
 }
 
@@ -88,7 +88,11 @@ class LineSDKShareViewControllerDelegateProxy: ShareViewControllerDelegate {
     }
 
     func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {
-        proxy?.shareViewControllerDidCancelSharing?(owner)
+        if let proxy = proxy {
+            proxy.shareViewControllerDidCancelSharing?(owner) ?? owner.dismiss(animated: true)
+        } else {
+            owner.dismiss(animated: true)
+        }
     }
 
     func shareViewController(
@@ -137,7 +141,7 @@ class LineSDKShareViewControllerDelegateProxy: ShareViewControllerDelegate {
         return sdkMessages.map { $0.unwrapped }
     }
 
-    func shareViewControllerShouldDismiss(_ controller: ShareViewController) -> Bool {
-        return proxy?.shareViewControllerShouldDismiss?(owner) ?? true
+    func shareViewControllerShouldDismissAfterSending(_ controller: ShareViewController) -> Bool {
+        return proxy?.shareViewControllerShouldDismissAfterSending?(owner) ?? true
     }
 }
