@@ -145,7 +145,7 @@ class SelectedTargetPanelViewController: UIViewController {
                 self.collectionView.deleteItems(at: [indexPath])
             }
         }, completion: { _ in
-            self.scrollToLast()
+            if isSelecting { self.scrollToLast() }
         })
     }
 
