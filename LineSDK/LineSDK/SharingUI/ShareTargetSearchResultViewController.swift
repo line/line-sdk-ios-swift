@@ -69,11 +69,15 @@ class ShareTargetSearchResultViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    var animated: Bool = false
+
     func start() {
+        animated = true
         tableViewController.start()
     }
 
     func clear() {
+        animated = false
         tableViewController.clear()
     }
 }
@@ -113,10 +117,14 @@ extension ShareTargetSearchResultViewController {
 
     private func handleKeyboardChange(_ keyboardInfo: KeyboardInfo) {
         self.keyboardInfo = keyboardInfo
-        guard viewIfLoaded?.window != nil else { return }
+        guard isViewLoaded else { return }
 
         panelTopConstraint?.isActive = false
         panelTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
+
+        if !animated {
+            return
+        }
 
         UIView.animate(
             withDuration: keyboardInfo.duration,
