@@ -44,7 +44,7 @@ class ShareTargetSearchResultViewController: UIViewController {
     var keyboardObservers: [NotificationToken] = []
     private var keyboardInfo: KeyboardInfo?
 
-    private lazy var panelViewController = SelectedTargetPanelViewController(store: store)
+    private (set) lazy var panelViewController = SelectedTargetPanelViewController(store: store)
     private lazy var panelContainer = UILayoutGuide()
     private var panelTopConstraint: NSLayoutConstraint?
 

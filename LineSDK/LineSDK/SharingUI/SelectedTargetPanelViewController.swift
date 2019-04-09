@@ -63,6 +63,11 @@ class SelectedTargetPanelViewController: UIViewController {
         return collectionView
     }()
 
+    var collectionViewContentOffset: CGPoint {
+        get { return collectionView.contentOffset }
+        set { collectionView.setContentOffset(newValue, animated: false) }
+    }
+
     // Observers
     private var selectingObserver: NotificationToken!
     private var deselectingObserver: NotificationToken!

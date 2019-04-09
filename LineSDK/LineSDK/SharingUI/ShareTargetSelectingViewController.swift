@@ -23,6 +23,9 @@ import UIKit
 
 protocol ShareTargetSelectingViewControllerDelegate: AnyObject {
     func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool
+
+    func correspondingSelectedPanelViewController(for viewController: ShareTargetSelectingViewController)
+        -> SelectedTargetPanelViewController
 }
 
 final class ShareTargetSelectingViewController: UITableViewController, ShareTargetTableViewStyling {
@@ -198,12 +201,28 @@ extension ShareTargetSelectingViewController: UISearchBarDelegate {
 }
 
 extension ShareTargetSelectingViewController: UISearchControllerDelegate {
+
+    func willPresentSearchController(_ searchController: UISearchController) {
+        if let selectingPanel = delegate?.correspondingSelectedPanelViewController(for: self) {
+            // Sync selected panel collection view content offset from selecting vc to search result vc.
+            syncContentOffset(from: selectingPanel, to: resultViewController.panelViewController)
+        }
+    }
+
     func didPresentSearchController(_ searchController: UISearchController) {
         resultViewController.start()
     }
 
     func willDismissSearchController(_ searchController: UISearchController) {
+        if let selectingPanel = delegate?.correspondingSelectedPanelViewController(for: self) {
+            // Sync selected panel collection view content offset from search result vc to selecting vc.
+            syncContentOffset(from: resultViewController.panelViewController, to: selectingPanel)
+        }
         resultViewController.clear()
+    }
+
+    private func syncContentOffset(from: SelectedTargetPanelViewController, to: SelectedTargetPanelViewController) {
+        to.collectionViewContentOffset = from.collectionViewContentOffset
     }
 }
 
