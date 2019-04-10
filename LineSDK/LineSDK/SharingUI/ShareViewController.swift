@@ -92,7 +92,7 @@ open class ShareViewController: UINavigationController {
 
     /// The delegate object of this share view controller.
     ///
-    /// The delegate receives events when the friends/groups list loading fails, user cancells the sharing view
+    /// The delegate receives events when the friends/groups list loading fails, user cancels the sharing view
     /// controller or the sharing finishes successfully. You can choose to implement one or more methods to provide
     /// your users better experience when an event happens.
     ///
@@ -108,7 +108,7 @@ open class ShareViewController: UINavigationController {
     /// `shareViewController(_:messagesForSendingToTargets:)` method in the delegate object, the value from
     /// this property will be used as the messages to be sent.
     ///
-    /// You need at least either set this property to a non-nil value, or implmenet the
+    /// You need at least either set this property to a non-nil value, or implement the
     /// `shareViewController(_:messagesForSendingToTargets:)` delegate method and return a valid message array.
     /// Otherwise, a trap will be triggered. If you implemented both, the returned value from delegate method will
     /// overwrite value in this property.

@@ -156,7 +156,7 @@ public protocol ShareViewControllerDelegate: AnyObject {
     ///
     /// If you didn't set a delegate object for `ShareViewController` or you didn't implement this method in the
     /// delegate object, the value from `ShareViewController.messages` property will be used as the messages to be sent.
-    /// You need at least either set the `ShareViewController.messages` to a non-nil value, or implmenet this method
+    /// You need at least either set the `ShareViewController.messages` to a non-nil value, or implement this method
     /// and return a valid message array. Otherwise, a trap will be triggered. If you implemented both, the returned
     /// value from this method will overwrite the `messages` in `ShareViewController`.
     ///
