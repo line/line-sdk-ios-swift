@@ -69,13 +69,12 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
 
         setupTableView()
         setupObservers()
-        
-        tableView?.prefetchDataSource = self
     }
 
     private func setupTableView() {
         setupTableViewStyle()
         tableView.tableHeaderView = searchController.searchBar
+        tableView.prefetchDataSource = self
     }
 
     private func setupObservers() {
