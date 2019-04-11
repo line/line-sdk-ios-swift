@@ -28,7 +28,11 @@ class ImageManager {
     typealias TaskToken = UInt
     private var currentToken: TaskToken = 0
     func nextToken() -> TaskToken {
-        currentToken += 1
+        if currentToken < TaskToken.max - 1 {
+            currentToken += 1
+        } else {
+            currentToken = 1
+        }
         return currentToken
     }
 
@@ -48,9 +52,19 @@ class ImageManager {
         callbackQueue: CallbackQueue = .currentMainOrAsync,
         completion: @escaping (ImageSettingResult, TaskToken) -> Void)
     {
+        getImage(url, callbackQueue: callbackQueue) { completion($0, taskToken) }
+    }
+
+    func getImage(
+        _ url: URL,
+        callbackQueue: CallbackQueue = .currentMainOrAsync,
+        completion: ((ImageSettingResult) -> Void)? = nil)
+    {
         let nsURL = url as NSURL
         if let image = cache.object(forKey: nsURL) {
-            callbackQueue.execute { completion(.success(image), taskToken) }
+            if let completion = completion {
+                callbackQueue.execute { completion(.success(image)) }
+            }
             return
         }
 
@@ -65,7 +79,9 @@ class ImageManager {
                 callbackResult = .failure(error)
             }
 
-            callbackQueue.execute { completion(callbackResult, taskToken) }
+            if let completion = completion {
+                callbackQueue.execute { completion(callbackResult) }
+            }
         }
     }
 

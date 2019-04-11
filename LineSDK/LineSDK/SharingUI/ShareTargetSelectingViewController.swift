@@ -87,6 +87,7 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
     private func setupTableView() {
         setupTableViewStyle()
         tableView.tableHeaderView = searchController.searchBar
+        tableView.prefetchDataSource = self
     }
 
     private func setupObservers() {
@@ -234,3 +235,19 @@ extension UIColor {
         }
     }
 }
+
+extension ShareTargetSelectingViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach { indexPath in
+            let index = ColumnIndex(column: columnIndex, row: indexPath.row)
+            guard let url = store.data(at: index).avatarURL else { return }
+            ImageManager.shared.getImage(url)
+        }
+    }
+}
+    
+
+
+
+
+
