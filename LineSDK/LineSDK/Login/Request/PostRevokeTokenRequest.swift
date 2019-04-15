@@ -21,26 +21,17 @@
 
 import Foundation
 
-struct PostRevokeTokenRequest: Request {
-    let channelID: String
-    let accessToken: String
-    
-    let method: HTTPMethod = .post
-    let path = "/oauth2/v2.1/revoke"
-    let contentType: ContentType = .formUrlEncoded
-    let authentication: AuthenticateMethod = .none
-    
-    var parameters: [String : Any]? {
-        return [
-            "client_id": channelID,
-            "access_token": accessToken
-        ]
-    }
-    
-    typealias Response = Unit
-    
+protocol RevokeTokenRequest: Request {
+    var channelID: String { get }
+}
+
+extension RevokeTokenRequest {
+    var method: HTTPMethod { return .post }
+    var path: String { return "/oauth2/v2.1/revoke" }
+    var contentType: ContentType { return .formUrlEncoded }
+    var authentication: AuthenticateMethod { return .none }
     var prefixPipelines: [ResponsePipeline]? {
-        
+
         // Convert empty data to an empty JSON `{}`
         let isDataEmpty: ((Data) -> Bool) = { $0.isEmpty }
         let dataTransformer = DataTransformRedirector(condition: isDataEmpty) { _ in
@@ -50,4 +41,32 @@ struct PostRevokeTokenRequest: Request {
             .redirector(dataTransformer)
         ]
     }
+}
+
+struct PostRevokeTokenRequest: RevokeTokenRequest {
+    let channelID: String
+    let accessToken: String
+    
+    var parameters: [String : Any]? {
+        return [
+            "client_id": channelID,
+            "access_token": accessToken
+        ]
+    }
+    
+    typealias Response = Unit
+}
+
+struct PostRevokeRefreshTokenRequest: RevokeTokenRequest {
+    let channelID: String
+    let refreshToken: String
+
+    var parameters: [String : Any]? {
+        return [
+            "client_id": channelID,
+            "refresh_token": refreshToken
+        ]
+    }
+
+    typealias Response = Unit
 }
