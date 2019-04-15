@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Logging out a user now revokes refresh token and its corresponding access tokens, instead of the current access token only. [#45](https://github.com/line/line-sdk-ios-swift/pull/45)
+
 ## [5.1.1] - 2019-03-28
 
 ### Fixed
