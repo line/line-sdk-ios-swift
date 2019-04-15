@@ -69,15 +69,11 @@ class ShareTargetSearchResultViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var animated: Bool = false
-
     func start() {
-        animated = true
         tableViewController.start()
     }
 
     func clear() {
-        animated = false
         tableViewController.clear()
     }
 }
@@ -99,32 +95,34 @@ extension ShareTargetSearchResultViewController {
     }
 
     private func newPanelTopConstraint(keyboardInfo: KeyboardInfo?) -> NSLayoutConstraint {
-        let constraint: NSLayoutConstraint
-        if keyboardInfo?.isVisible == true, let y = keyboardInfo?.endFrame?.origin.y {
-            constraint = panelContainer.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: y - SelectedTargetPanelViewController.Design.height
-            )
-        } else {
+        var constraint: NSLayoutConstraint?
+        if keyboardInfo?.isVisible == true, let origin = keyboardInfo?.endFrame?.origin {
+            let converted = view.convert(origin, from: nil)
+            if converted.y < view.bounds.maxY {
+                constraint = panelContainer.topAnchor.constraint(
+                    equalTo: view.topAnchor,
+                    constant: converted.y - SelectedTargetPanelViewController.Design.height
+                )
+                constraint!.priority = .defaultHigh
+            }
+        }
+
+        if constraint == nil {
             constraint = panelContainer.topAnchor.constraint(
                 equalTo: safeBottomAnchor,
                 constant: -SelectedTargetPanelViewController.Design.height
             )
         }
-        constraint.isActive = true
-        return constraint
+        constraint!.isActive = true
+        return constraint!
     }
 
     private func handleKeyboardChange(_ keyboardInfo: KeyboardInfo) {
         self.keyboardInfo = keyboardInfo
-        guard isViewLoaded else { return }
+        guard let _ = viewIfLoaded?.window else { return }
 
         panelTopConstraint?.isActive = false
         panelTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
-
-        if !animated {
-            return
-        }
 
         UIView.animate(
             withDuration: keyboardInfo.duration,
