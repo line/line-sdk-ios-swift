@@ -229,11 +229,11 @@ public class LoginManager {
         }
     }
     
-    /// Logs out the current user by revoking the access token.
+    /// Logs out the current user by revoking the refresh token and all its corresponding access tokens.
     ///
     /// - Parameter completion: The completion closure to be invoked when the logout action is finished.
     public func logout(completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void) {
-        API.revokeAccessToken(completionHandler: completion)
+        API.revokeRefreshToken(completionHandler: completion)
     }
     
     /// Asks this `LoginManager` object to handle a URL callback from either the LINE app or the web login flow.
