@@ -31,6 +31,7 @@ class PageViewController: UIViewController {
     let pages: [Page]
 
     private var pageScrollViewObserver: NSKeyValueObservation?
+    private var pageTabHeightConstraint: NSLayoutConstraint?
 
     private lazy var pageContainerView: UIView = {
         let pageContainerView = UIView()
@@ -39,6 +40,7 @@ class PageViewController: UIViewController {
 
     private lazy var pageTabView: PageTabView = {
         let pageTabView = PageTabView(titles: pages.map { $0.title })
+        pageTabView.clipsToBounds = true
         pageTabView.delegate = self
 
         return pageTabView
@@ -115,12 +117,19 @@ class PageViewController: UIViewController {
             ])
 
         pageTabView.translatesAutoresizingMaskIntoConstraints = false
+        pageTabHeightConstraint = pageTabView.heightAnchor.constraint(
+            equalToConstant: PageTabView.TabView.Design.height)
         NSLayoutConstraint.activate([
-            pageTabView.heightAnchor  .constraint(equalToConstant: 45),
+            pageTabHeightConstraint!,
             pageTabView.leadingAnchor .constraint(equalTo: view.leadingAnchor),
             pageTabView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             pageTabView.topAnchor     .constraint(equalTo: safeTopAnchor)
             ])
+    }
+
+    func setPageTabViewHidden(_ hidden: Bool) {
+        pageTabHeightConstraint?.constant = hidden ? 0 : PageTabView.TabView.Design.height
+        view.layoutIfNeeded()
     }
 }
 

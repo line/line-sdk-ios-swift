@@ -34,6 +34,7 @@ class PageTabView: UIView {
 
             static var titleFont: UIFont { return .systemFont(ofSize: 15) }
             static var selectedTitleFont: UIFont { return .systemFont(ofSize: 15, weight: .semibold) }
+            static var height: CGFloat { return 45.0 }
         }
 
         let index: Int

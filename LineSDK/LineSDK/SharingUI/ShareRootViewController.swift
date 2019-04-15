@@ -259,6 +259,10 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
         return panelViewController
     }
 
+    func pageViewController(for viewController: ShareTargetSelectingViewController) -> PageViewController {
+        return pageViewController
+    }
+
     // TODO: Find a better place for the loading indicator things. Maybe in helpers.
     private func addLoadingIndicator() {
 

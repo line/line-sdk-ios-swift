@@ -123,8 +123,8 @@ extension UIViewController {
             } else {             // Notch screen.
                 return 54
             }
-        } else {
-            return 44
+        } else { // iOS 10
+            return 44 + 20
         }
     }
 }

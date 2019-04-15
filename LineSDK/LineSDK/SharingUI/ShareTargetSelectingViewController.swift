@@ -26,6 +26,8 @@ protocol ShareTargetSelectingViewControllerDelegate: AnyObject {
 
     func correspondingSelectedPanelViewController(for viewController: ShareTargetSelectingViewController)
         -> SelectedTargetPanelViewController
+    func pageViewController(for viewController: ShareTargetSelectingViewController)
+        -> PageViewController
 }
 
 final class ShareTargetSelectingViewController: UITableViewController, ShareTargetTableViewStyling {
@@ -208,6 +210,10 @@ extension ShareTargetSelectingViewController: UISearchControllerDelegate {
             // Sync selected panel collection view content offset from selecting vc to search result vc.
             syncContentOffset(from: selectingPanel, to: resultViewController.panelViewController)
         }
+
+        if let pageViewController = delegate?.pageViewController(for: self) {
+            pageViewController.setPageTabViewHidden(true)
+        }
     }
 
     func didPresentSearchController(_ searchController: UISearchController) {
@@ -220,6 +226,12 @@ extension ShareTargetSelectingViewController: UISearchControllerDelegate {
             syncContentOffset(from: resultViewController.panelViewController, to: selectingPanel)
         }
         resultViewController.clear()
+    }
+
+    func didDismissSearchController(_ searchController: UISearchController) {
+        if let pageViewController = delegate?.pageViewController(for: self) {
+            pageViewController.setPageTabViewHidden(false)
+        }
     }
 
     private func syncContentOffset(from: SelectedTargetPanelViewController, to: SelectedTargetPanelViewController) {
