@@ -41,18 +41,17 @@ class ShareTargetSearchResultViewController: UIViewController {
         set { tableViewController.sectionOrder = newValue }
     }
 
+    // Conforming to `KeyboardObservable`
     var keyboardObservers: [NotificationToken] = []
-    private var keyboardInfo: KeyboardInfo?
 
     private (set) lazy var panelViewController = SelectedTargetPanelViewController(store: store)
-    private lazy var panelContainer = UILayoutGuide()
-    private var panelTopConstraint: NSLayoutConstraint?
+    private let panelContainer = UILayoutGuide()
+    private var panelBottomConstraint: NSLayoutConstraint?
 
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
         self.tableViewController = ShareTargetSearchResultTableViewController(store: store)
         super.init(nibName: nil, bundle: nil)
-        addKeyboardObserver()
     }
 
     override func viewDidLoad() {
@@ -61,23 +60,19 @@ class ShareTargetSearchResultViewController: UIViewController {
         automaticallyAdjustsScrollViewInsets = false
 
         addChild(tableViewController, to: view)
-
         setupSelectPanel()
+        addKeyboardObserver()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    var animated: Bool = false
-
     func start() {
-        animated = true
         tableViewController.start()
     }
 
     func clear() {
-        animated = false
         tableViewController.clear()
     }
 }
@@ -92,50 +87,39 @@ extension ShareTargetSearchResultViewController {
         NSLayoutConstraint.activate([
             panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
+            panelContainer.heightAnchor.constraint(equalToConstant: SelectedTargetPanelViewController.Design.height)
             ])
-        panelTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
+        updatePanelBottomConstraint(keyboardInfo: nil)
     }
 
-    private func newPanelTopConstraint(keyboardInfo: KeyboardInfo?) -> NSLayoutConstraint {
-        let constraint: NSLayoutConstraint
-        if keyboardInfo?.isVisible == true, let y = keyboardInfo?.endFrame?.origin.y {
-            constraint = panelContainer.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: y - SelectedTargetPanelViewController.Design.height
-            )
+    private func updatePanelBottomConstraint(keyboardInfo: KeyboardInfo?) {
+
+        panelBottomConstraint?.isActive = false
+
+        let keyboardOverlayHeight: CGFloat
+        if let keyboardInfo = keyboardInfo,
+           keyboardInfo.isVisible,
+           let keyboardOrigin = keyboardInfo.endFrame?.origin
+        {
+            let viewFrameInWindow = view.convert(view.bounds, to: nil)
+            keyboardOverlayHeight = max(0, viewFrameInWindow.maxY - keyboardOrigin.y)
         } else {
-            constraint = panelContainer.topAnchor.constraint(
-                equalTo: safeBottomAnchor,
-                constant: -SelectedTargetPanelViewController.Design.height
-            )
+            keyboardOverlayHeight = 0
         }
+
+        let constraint = panelContainer.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor,
+            constant: -keyboardOverlayHeight)
         constraint.isActive = true
-        return constraint
+        panelBottomConstraint = constraint
     }
 
     private func handleKeyboardChange(_ keyboardInfo: KeyboardInfo) {
-        self.keyboardInfo = keyboardInfo
-        guard isViewLoaded else { return }
-
-        panelTopConstraint?.isActive = false
-        panelTopConstraint = newPanelTopConstraint(keyboardInfo: keyboardInfo)
-
-        if !animated {
-            return
+        // Wait for iOS layout the current vc. It happens when presenting `self`
+        // with a `.formSheet` style in landscape mode.
+        DispatchQueue.main.async {
+            self.updatePanelBottomConstraint(keyboardInfo: keyboardInfo)
         }
-
-        UIView.animate(
-            withDuration: keyboardInfo.duration,
-            delay: 0,
-            options: .beginFromCurrentState,
-            animations: {
-                UIView.setAnimationCurve(keyboardInfo.animationCurve)
-                self.view.layoutIfNeeded()
-            },
-            completion: nil
-        )
     }
 }
 
