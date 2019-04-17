@@ -737,23 +737,12 @@
 		4B5B0EF12241DE4600BA59A0 /* SharingUI */ = {
 			isa = PBXGroup;
 			children = (
-				4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */,
-				4B415937225AE40E003AE63A /* ShareViewControllerDelegate.swift */,
-				4B415939225AE464003AE63A /* MessageShareTargetType.swift */,
-				DB115EF92254660C00C16B0C /* ShareRootViewController.swift */,
-				4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */,
-				4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */,
-				4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */,
-				D16D5323224872A300BAA3B4 /* ShareTarget.swift */,
-				D16D5325224873C700BAA3B4 /* ShareTargetSelectingViewController.swift */,
-				4BFCD203224CAF6100CD9544 /* ShareTargetSearchResultTableViewController.swift */,
-				DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */,
-				4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */,
-				D16D53292248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift */,
-				D16D5327224876B900BAA3B4 /* ColumnDataStore.swift */,
-				4B392661224DC06F006485B4 /* ShareTargetTableViewStyling.swift */,
-				DBFBD438224B85F500A74D44 /* SelectedTargetPanelViewController.swift */,
-				DBFBD43E224E7D0500A74D44 /* SelectedTargetPanelCell.swift */,
+				4BB080CC226720EF00783C60 /* Public */,
+				4BB080D0226721C600783C60 /* Model */,
+				4BB080CE2267215000783C60 /* PageViewController */,
+				4BB080CD2267211700783C60 /* TargetSelecting */,
+				4BB080CF2267218500783C60 /* TargetSearch */,
+				4BB080D1226721DE00783C60 /* SelectedPanel */,
 			);
 			path = SharingUI;
 			sourceTree = "<group>";
@@ -984,6 +973,65 @@
 				4B1658042252EF3C0008E441 /* DownloadableImageView.swift */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		4BB080CC226720EF00783C60 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */,
+				4B415937225AE40E003AE63A /* ShareViewControllerDelegate.swift */,
+				4B415939225AE464003AE63A /* MessageShareTargetType.swift */,
+				D16D5323224872A300BAA3B4 /* ShareTarget.swift */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		4BB080CD2267211700783C60 /* TargetSelecting */ = {
+			isa = PBXGroup;
+			children = (
+				DB115EF92254660C00C16B0C /* ShareRootViewController.swift */,
+				D16D5325224873C700BAA3B4 /* ShareTargetSelectingViewController.swift */,
+				4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */,
+				D16D53292248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift */,
+				4B392661224DC06F006485B4 /* ShareTargetTableViewStyling.swift */,
+			);
+			path = TargetSelecting;
+			sourceTree = "<group>";
+		};
+		4BB080CE2267215000783C60 /* PageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */,
+				4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */,
+			);
+			path = PageViewController;
+			sourceTree = "<group>";
+		};
+		4BB080CF2267218500783C60 /* TargetSearch */ = {
+			isa = PBXGroup;
+			children = (
+				4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */,
+				DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */,
+				4BFCD203224CAF6100CD9544 /* ShareTargetSearchResultTableViewController.swift */,
+			);
+			path = TargetSearch;
+			sourceTree = "<group>";
+		};
+		4BB080D0226721C600783C60 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D16D5327224876B900BAA3B4 /* ColumnDataStore.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4BB080D1226721DE00783C60 /* SelectedPanel */ = {
+			isa = PBXGroup;
+			children = (
+				DBFBD438224B85F500A74D44 /* SelectedTargetPanelViewController.swift */,
+				DBFBD43E224E7D0500A74D44 /* SelectedTargetPanelCell.swift */,
+			);
+			path = SelectedPanel;
 			sourceTree = "<group>";
 		};
 		4BBAFC432101BB8200E7BFF6 /* General */ = {
