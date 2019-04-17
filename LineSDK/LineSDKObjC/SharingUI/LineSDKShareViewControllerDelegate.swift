@@ -45,5 +45,6 @@ import LineSDK
         _ controller: LineSDKShareViewController,
         messagesForSendingToTargets targets: [LineSDKShareTarget]) -> [LineSDKMessage]
 
-    @objc optional func shareViewControllerShouldDismiss(_ controller: LineSDKShareViewController) -> Bool
+    @objc optional func shareViewControllerShouldDismissAfterSending(
+        _ controller: LineSDKShareViewController) -> Bool
 }

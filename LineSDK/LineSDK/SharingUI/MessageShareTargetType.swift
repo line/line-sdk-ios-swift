@@ -19,8 +19,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+/// Represents the share target type.
 public enum MessageShareTargetType: Int, CaseIterable {
+
+    /// Share to friends of current user.
     case friends
+
+    /// Share to groups of which current user is a member.
     case groups
 
     var title: String {

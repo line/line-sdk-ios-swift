@@ -25,34 +25,34 @@ import Foundation
 public struct LoginPermission: Hashable {
     /// The raw value of the permission. A `LoginPermission` object is composed of a plain raw string.
     public let rawValue: String
-    
+
     /// Initializes a `LoginPermission` value with a plain string. Use this method to set permissions that
     /// are not defined in the framework.
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
-    
+
     /// The permission to get an ID token in the login response.
     public static let openID                         = LoginPermission(rawValue: "openid")
-    
+
     /// The permission to get the user's profile including the user ID, display name, and the profile image
     /// URL in the login response.
     public static let profile                        = LoginPermission(rawValue: "profile")
-    
+
     /// :nodoc:
     /// LINE internal use only. The permission to get friends information of current user.
     public static let friends                        = LoginPermission(rawValue: "friends")
-    
+
     /// :nodoc:
     /// LINE internal use only. The permission to get groups information of current user.
     public static let groups                         = LoginPermission(rawValue: "groups")
-    
+
     /// :nodoc:
     /// LINE internal use only. The permission to write a message as current user.
     public static let messageWrite                   = LoginPermission(rawValue: "message.write")
 }
 
-/// Subpermissions of .openID. Permissions in this extension will not be included in the `permissions` property of
+/// Sub-permissions of .openID. Permissions in this extension will not be included in the `permissions` property of
 /// issued access token.
 extension LoginPermission {
     /// The permission to get the user's email from an ID Token in the login response. This permission
@@ -62,26 +62,26 @@ extension LoginPermission {
 }
 
 /// :nodoc:
-/// LINE internal use only. Subpermissions of .openID. Permissions in this extension will not be included in
+/// LINE internal use only. Sub-permissions of .openID. Permissions in this extension will not be included in
 /// the `permissions` property of issued access token.
 extension LoginPermission {
-    /// Whether could access user's phone inside ID Token. Requires `.openID` set.
+    /// Whether you can access user's phone inside ID Token. Requires `.openID` set.
     /// Only available to LINE internal partners.
     public static let phone                          = LoginPermission(rawValue: "phone")
-    
-    /// Whether could access user's gender inside ID Token. Requires `.openID` set.
+
+    /// Whether you can access user's gender inside ID Token. Requires `.openID` set.
     /// Only available to LINE internal partners.
     public static let gender                         = LoginPermission(rawValue: "gender")
-    
-    /// Whether could access user's birthdate inside ID Token. Requires `.openID` set.
+
+    /// Whether you can access user's date of birth inside ID Token. Requires `.openID` set.
     /// Only available to LINE internal partners.
     public static let birthdate                      = LoginPermission(rawValue: "birthdate")
-    
-    /// Whether could access user's address inside ID Token. Requires `.openID` set.
+
+    /// Whether you can access user's address inside ID Token. Requires `.openID` set.
     /// Only available to LINE internal partners.
     public static let address                        = LoginPermission(rawValue: "address")
-    
-    /// Whether could access user's real name inside ID Token. Requires `.openID` set.
+
+    /// Whether you can access user's real name inside ID Token. Requires `.openID` set.
     /// Only available to LINE internal partners.
     public static let realName                      = LoginPermission(rawValue: "real_name")
 }
