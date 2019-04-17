@@ -23,10 +23,10 @@ import UIKit
 
 class SelectedTargetPanelCell: UICollectionViewCell {
     enum Design {
-        static let size = CGSize(width: 50, height: 65)
+        static let size = CGSize(width: 50, height: 66)
         static let avatarFrame = CGRect(x: 0, y: 4, width: 45, height: 45)
         static let nameFrame = CGRect(x: 0, y: 52, width: 50, height: 10)
-        static let deleteFrame = CGRect(x: 29, y: 0, width: 21, height: 21)
+        static let deleteSize = CGSize(width: 21, height: 21)
 
         static var textColor: UIColor { return .init(hex6: 0x596478) }
         static var font: UIFont { return .systemFont(ofSize: 12) }
@@ -51,7 +51,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
     }()
 
     private let deleteIcon: UIImageView = {
-        let imageView = UIImageView(frame: Design.deleteFrame)
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "list_icon_delete_normal", in: .frameworkBundle, compatibleWith: nil)
         return imageView
     }()
@@ -68,11 +68,43 @@ class SelectedTargetPanelCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
+        setupLayouts()
     }
 
     private func setupSubviews() {
         contentView.addSubview(avatarImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(deleteIcon)
+    }
+
+    private func setupLayouts() {
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        deleteIcon.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                                 constant: Design.avatarFrame.origin.y),
+            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                     constant: Design.avatarFrame.origin.x),
+            avatarImageView.widthAnchor.constraint(equalToConstant: Design.avatarFrame.width),
+            avatarImageView.heightAnchor.constraint(equalToConstant: Design.avatarFrame.height),
+            ])
+
+        NSLayoutConstraint.activate([
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                           constant: Design.nameFrame.origin.y),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                               constant: Design.nameFrame.origin.x),
+            nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: Design.nameFrame.width),
+            nameLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor),
+            ])
+
+        NSLayoutConstraint.activate([
+            deleteIcon.topAnchor.constraint(equalTo: contentView.topAnchor),
+            deleteIcon.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            deleteIcon.widthAnchor.constraint(equalToConstant: Design.deleteSize.width),
+            deleteIcon.heightAnchor.constraint(equalToConstant: Design.deleteSize.height),
+            ])
     }
 }
