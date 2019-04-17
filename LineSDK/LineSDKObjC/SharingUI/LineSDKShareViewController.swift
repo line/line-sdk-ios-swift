@@ -61,11 +61,12 @@ public class LineSDKShareViewController: ShareViewController {
         }
     }
 
-    @objc public static func localAuthorizationStatusForSendingMessage(to type: LineSDKMessageShareTargetType)
+    @objc public static func localAuthorizationStatusForSendingMessage()
         -> [LineSDKMessageShareAuthorizationStatus]
     {
         return LineSDKMessageShareAuthorizationStatus.status(
-            from: super.localAuthorizationStatusForSendingMessage(to: type.value))
+            from: super.localAuthorizationStatusForSendingMessage()
+        )
     }
 }
 

@@ -222,33 +222,31 @@ public enum MessageShareAuthorizationStatus {
 // MARK: - Authorization Helpers
 extension ShareViewController {
 
-    /// Gets the local authorization status for sending message to a specified share target type.
+    /// Gets the local authorization status for sending message to friends and groups.
     ///
-    /// - Parameter type: The target share type to which the share action would happen.
     /// - Returns: The local authorization status from current stored token and its permissions.
     ///
     /// - Note:
     ///
-    /// Even if you get `.authorized` status, it is not enough to jump to a conclusion that the sharing would not
-    /// fail due to token or permission issues. The token status is local and might not be synchronized with server
-    /// status. It is still possible that the token is expired or revoked by server or from another client. To get
-    /// the accurate result of sharing behavior, set the `ShareViewController.shareDelegate` and implement methods
-    /// in `ShareViewControllerDelegate`.
+    /// If the return value is `.authorized`, you can present an `ShareViewController` instance for sharing purpose.
+    /// But even if you get `.authorized` status, it is not enough to get a conclusion that the sharing would success
+    /// without a token or permission issue. The token status is a local state and might not be synchronized with the
+    /// server status. It is still possible that the token is expired or revoked by server or from another client.
     ///
-    public static func localAuthorizationStatusForSendingMessage(to type: MessageShareTargetType)
+    /// To get the accurate result of sharing behavior, set the `ShareViewController.shareDelegate` and implement
+    /// methods in `ShareViewControllerDelegate`.
+    ///
+    public static func localAuthorizationStatusForSendingMessage()
         -> MessageShareAuthorizationStatus
     {
         guard let token = AccessTokenStore.shared.current else {
             return .lackOfToken
         }
 
-        var lackPermissions = [LoginPermission]()
-        if let required = type.requiredGraphPermission, !token.permissions.contains(required) {
-            lackPermissions.append(required)
+        let lackPermissions = [.friends, .groups, .messageWrite].filter {
+            token.permissions.contains($0)
         }
-        if !token.permissions.contains(.messageWrite) {
-            lackPermissions.append(.messageWrite)
-        }
+
         guard lackPermissions.isEmpty else {
             return .lackOfPermissions(lackPermissions)
         }

@@ -31,22 +31,18 @@ class SampleUIHomeViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == Cell.shareMessage.rawValue {
 
-            let canSendToFriends = ShareViewController.localAuthorizationStatusForSendingMessage(to: .friends)
-            let canSendToGroups = ShareViewController.localAuthorizationStatusForSendingMessage(to: .groups)
-
-            switch (canSendToFriends, canSendToGroups) {
-            case (.authorized, .authorized):
+            let status = ShareViewController.localAuthorizationStatusForSendingMessage()
+            switch status {
+            case .authorized:
                 presentShareViewController()
-            case (.lackOfPermissions(let p), _): fallthrough
-            case (_ , .lackOfPermissions(let p)):
+            case .lackOfPermissions(let p):
                 UIAlertController.present(
                     in: self,
                     title: nil,
                     message: "Lack of permissions: \(p)",
                     actions: [.init(title: "OK", style: .cancel)]
                 )
-            case (.lackOfToken, _): fallthrough
-            case (_, .lackOfToken):
+            case .lackOfToken:
                 UIAlertController.present(
                     in: self,
                     title: nil,

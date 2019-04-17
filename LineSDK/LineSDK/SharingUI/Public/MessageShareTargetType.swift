@@ -34,11 +34,4 @@ public enum MessageShareTargetType: Int, CaseIterable {
         case .groups: return Localization.string("shareRecipient.section.groups.title")
         }
     }
-
-    var requiredGraphPermission: LoginPermission? {
-        switch self {
-        case .friends: return .friends
-        case .groups: return .groups
-        }
-    }
 }

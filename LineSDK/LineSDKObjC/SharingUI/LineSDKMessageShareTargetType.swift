@@ -27,13 +27,6 @@ import LineSDK
     case friends
     case groups
 
-    var value: MessageShareTargetType {
-        switch self {
-        case .friends: return .friends
-        case .groups: return .groups
-        }
-    }
-
     init(_ value: MessageShareTargetType) {
         switch value {
         case .friends: self = .friends
