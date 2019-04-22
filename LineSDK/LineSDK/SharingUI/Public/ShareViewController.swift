@@ -243,8 +243,14 @@ extension ShareViewController {
             return .lackOfToken
         }
 
+        return localAuthorizationStatusForSendingMessage(permissions: token.permissions)
+    }
+
+    static func localAuthorizationStatusForSendingMessage(permissions: [LoginPermission])
+        -> MessageShareAuthorizationStatus
+    {
         let lackPermissions = [.friends, .groups, .messageWrite].filter {
-            token.permissions.contains($0)
+            !permissions.contains($0)
         }
 
         guard lackPermissions.isEmpty else {
