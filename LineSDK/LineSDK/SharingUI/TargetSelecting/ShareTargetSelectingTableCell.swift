@@ -43,7 +43,7 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
         static var bgColor: UIColor { return .white }
     }
 
-    let tickImageView = UIImageView.init(frame: .zero)
+    let tickImageView = UIImageView(frame: .zero)
     let avatarImageView = DownloadableImageView(frame: .zero)
     let displayNameLabel = UILabel(frame: .zero)
 

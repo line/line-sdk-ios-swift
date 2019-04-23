@@ -234,9 +234,7 @@ extension ShareRootViewController {
 // MARK: - Selecting view controller delegate
 extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
     func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool {
-        if allLoaded {
-            return true
-        }
+        if allLoaded { return true }
 
         addLoadingIndicator()
         loadedObserver = observe(\.allLoaded, options: .new) { [weak self] controller, change in

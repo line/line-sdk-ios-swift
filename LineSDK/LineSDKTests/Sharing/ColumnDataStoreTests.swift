@@ -152,7 +152,7 @@ class ColumnDataStoreTests: XCTestCase {
         }
 
         store.append(data: [1,2,3], to: 0)
-        _ = store.toggleSelect(atColumn: 0, row: 2)
+        store.toggleSelect(atColumn: 0, row: 2)
         waitForExpectations(timeout: 1, handler: nil)
     }
 
@@ -174,8 +174,21 @@ class ColumnDataStoreTests: XCTestCase {
         }
 
         store.append(data: [1,2,3], to: 0)
-        _ = store.toggleSelect(atColumn: 0, row: 2)
-        _ = store.toggleSelect(atColumn: 0, row: 2)
+        store.toggleSelect(atColumn: 0, row: 2)
+        store.toggleSelect(atColumn: 0, row: 2)
         waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testAllSelectedData() {
+        store.append(data: [1,2,3], to: 0)
+        store.append(data: [4,5,6], to: 1)
+        store.append(data: [7,8,9], to: 2)
+
+        store.toggleSelect(atColumn: 0, row: 0)
+        store.toggleSelect(atColumn: 1, row: 1)
+        store.toggleSelect(atColumn: 2, row: 2)
+
+        let allSelected = store.allSelectedData
+        XCTAssertEqual(allSelected, [1, 5, 9])
     }
 }

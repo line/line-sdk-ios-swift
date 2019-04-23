@@ -37,13 +37,13 @@ public protocol ShareTarget {
 
 extension User: ShareTarget {
     public var targetID: String { return userID }
-    public var avatarURL: URL? { return pictureURLSmall }
+    public var avatarURL: URL? { return pictureURL }
 }
 
 extension Group: ShareTarget {
     public var targetID: String { return groupID }
     public var displayName: String { return groupName }
-    public var avatarURL: URL? { return pictureURLSmall }
+    public var avatarURL: URL? { return pictureURL }
 }
 
 extension ShareTarget {

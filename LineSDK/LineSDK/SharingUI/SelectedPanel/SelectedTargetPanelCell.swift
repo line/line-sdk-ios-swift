@@ -25,7 +25,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
     enum Design {
         static let size = CGSize(width: 50, height: 66)
         static let avatarFrame = CGRect(x: 0, y: 4, width: 45, height: 45)
-        static let nameFrame = CGRect(x: 0, y: 52, width: 50, height: 10)
+        static let nameLabelTopSpacing: CGFloat = 1
         static let deleteSize = CGSize(width: 21, height: 21)
 
         static var textColor: UIColor { return .init(hex6: 0x596478) }
@@ -42,7 +42,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
     }()
 
     private let nameLabel: UILabel = {
-        let label = UILabel(frame: Design.nameFrame)
+        let label = UILabel(frame: .zero)
         label.font = Design.font
         label.textColor = Design.textColor
         label.numberOfLines = 1
@@ -78,25 +78,14 @@ class SelectedTargetPanelCell: UICollectionViewCell {
     }
 
     private func setupLayouts() {
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         deleteIcon.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor,
-                                                 constant: Design.avatarFrame.origin.y),
-            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                                     constant: Design.avatarFrame.origin.x),
-            avatarImageView.widthAnchor.constraint(equalToConstant: Design.avatarFrame.width),
-            avatarImageView.heightAnchor.constraint(equalToConstant: Design.avatarFrame.height),
-            ])
-
-        NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,
-                                           constant: Design.nameFrame.origin.y),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                               constant: Design.nameFrame.origin.x),
-            nameLabel.widthAnchor.constraint(lessThanOrEqualToConstant: Design.nameFrame.width),
+            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: Design.nameLabelTopSpacing),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                constant: Design.avatarFrame.maxX - Design.size.width),
             nameLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor),
             ])
 

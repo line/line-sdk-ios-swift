@@ -847,7 +847,6 @@
 			isa = PBXGroup;
 			children = (
 				4BE4E0FA2251C9090071FC60 /* Sharing */,
-				DB0AFF5F2247FB06002729AD /* UI */,
 				4B15EEF9211D5BE800866E6C /* Message */,
 				4B792FB421103CFD00EDDD1E /* API */,
 				4B8A9655211009A400760219 /* Login */,
@@ -1205,6 +1204,8 @@
 		4BE4E0FA2251C9090071FC60 /* Sharing */ = {
 			isa = PBXGroup;
 			children = (
+				DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */,
+				4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */,
 				4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */,
 			);
 			path = Sharing;
@@ -1408,15 +1409,6 @@
 				4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */,
 			);
 			path = SharingUI;
-			sourceTree = "<group>";
-		};
-		DB0AFF5F2247FB06002729AD /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */,
-				4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		DBE4E36E211D6C2600184D66 /* Graph */ = {

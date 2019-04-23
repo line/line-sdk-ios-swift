@@ -100,6 +100,7 @@ class ColumnDataStore<T> {
     }
 
     // Return `false` if the toggle failed due to `maximumSelectedCount` reached.
+    @discardableResult
     func toggleSelect(atColumn columnIndex: Int, row rowIndex: Int) -> Bool {
 
         func notifySelectingChange(selected: Bool, targetIndex: ColumnIndex, positionInSelected: Int) {
