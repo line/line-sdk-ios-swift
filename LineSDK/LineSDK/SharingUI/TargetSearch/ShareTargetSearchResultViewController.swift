@@ -46,7 +46,9 @@ class ShareTargetSearchResultViewController: UIViewController {
 
     private (set) lazy var panelViewController = SelectedTargetPanelViewController(store: store)
     private let panelContainer = UILayoutGuide()
+
     private var panelBottomConstraint: NSLayoutConstraint?
+    private var panelHeightConstraint: NSLayoutConstraint?
 
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
@@ -86,8 +88,7 @@ extension ShareTargetSearchResultViewController {
 
         NSLayoutConstraint.activate([
             panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            panelContainer.heightAnchor.constraint(equalToConstant: SelectedTargetPanelViewController.Design.height)
+            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
         updatePanelBottomConstraint(keyboardInfo: nil)
     }
@@ -95,23 +96,31 @@ extension ShareTargetSearchResultViewController {
     private func updatePanelBottomConstraint(keyboardInfo: KeyboardInfo?) {
 
         panelBottomConstraint?.isActive = false
+        panelHeightConstraint?.isActive = false
 
         let keyboardOverlayHeight: CGFloat
+        let panelHeight: CGFloat
         if let keyboardInfo = keyboardInfo,
            keyboardInfo.isVisible,
            let keyboardOrigin = keyboardInfo.endFrame?.origin
         {
             let viewFrameInWindow = view.convert(view.bounds, to: nil)
             keyboardOverlayHeight = max(0, viewFrameInWindow.maxY - keyboardOrigin.y)
+            panelHeight = SelectedTargetPanelViewController.Design.height
         } else {
             keyboardOverlayHeight = 0
+            panelHeight = SelectedTargetPanelViewController.Design.height + safeAreaInsets.bottom
         }
 
-        let constraint = panelContainer.bottomAnchor.constraint(
+        let bottomConstraint = panelContainer.bottomAnchor.constraint(
             equalTo: view.bottomAnchor,
             constant: -keyboardOverlayHeight)
-        constraint.isActive = true
-        panelBottomConstraint = constraint
+        bottomConstraint.isActive = true
+        panelBottomConstraint = bottomConstraint
+
+        let heightConstraint = panelContainer.heightAnchor.constraint(equalToConstant: panelHeight)
+        heightConstraint.isActive = true
+        panelHeightConstraint = heightConstraint
     }
 
     private func handleKeyboardChange(_ keyboardInfo: KeyboardInfo) {

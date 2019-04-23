@@ -90,6 +90,14 @@ extension UIViewController {
         }
     }
 
+    var safeAreaInsets: UIEdgeInsets {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaInsets
+        } else {
+            return .zero
+        }
+    }
+
     func addChild(_ viewController: UIViewController, to containerView: UIView) {
         addChild(viewController)
         containerView.addChildSubview(viewController.view)
