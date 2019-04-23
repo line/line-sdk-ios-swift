@@ -194,7 +194,7 @@ extension ShareRootViewController {
     }
 
     private func handleSelectingChange(_ notification: Notification) {
-        let count = store.selected.count
+        let count = store.selectedIndexes.count
         if count == 0 {
             navigationItem.rightBarButtonItem = nil
         } else {
@@ -206,7 +206,7 @@ extension ShareRootViewController {
 
     @objc private func sendMessage() {
         addLoadingIndicator()
-        let selected = store.allSelectedData
+        let selected = store.selectedData
 
         // `onSendingMessage` is expected to be always delegated.
         let messages = onSendingMessage.call(selected)!

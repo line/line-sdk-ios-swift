@@ -64,17 +64,17 @@ class ColumnDataStoreTests: XCTestCase {
 
     func testSelectData() {
         store.append(data: [1,2,3], to: 0)
-        XCTAssertTrue(store.selected.isEmpty)
+        XCTAssertTrue(store.selectedIndexes.isEmpty)
 
         let performed = store.toggleSelect(atColumn: 0, row: 1)
         XCTAssertTrue(performed)
 
-        XCTAssertEqual(store.selected.count, 1)
+        XCTAssertEqual(store.selectedIndexes.count, 1)
         XCTAssertTrue(store.isSelected(at: .init(column: 0, row: 1)))
 
         let deselectPerformed = store.toggleSelect(atColumn: 0, row: 1)
         XCTAssertTrue(deselectPerformed)
-        XCTAssertEqual(store.selected.count, 0)
+        XCTAssertEqual(store.selectedIndexes.count, 0)
         XCTAssertFalse(store.isSelected(at: .init(column: 0, row: 1)))
     }
 
@@ -188,7 +188,7 @@ class ColumnDataStoreTests: XCTestCase {
         store.toggleSelect(atColumn: 1, row: 1)
         store.toggleSelect(atColumn: 2, row: 2)
 
-        let allSelected = store.allSelectedData
+        let allSelected = store.selectedData
         XCTAssertEqual(allSelected, [1, 5, 9])
     }
 }

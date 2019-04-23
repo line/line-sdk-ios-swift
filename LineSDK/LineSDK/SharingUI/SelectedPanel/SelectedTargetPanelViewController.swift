@@ -156,8 +156,8 @@ class SelectedTargetPanelViewController: UIViewController {
     }
 
     private func scrollToLast() {
-        guard !store.selected.isEmpty else { return }
-        let indexPath = IndexPath(item: store.selected.count - 1, section: 0)
+        guard !store.selectedIndexes.isEmpty else { return }
+        let indexPath = IndexPath(item: store.selectedIndexes.count - 1, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
     }
 
@@ -167,7 +167,7 @@ class SelectedTargetPanelViewController: UIViewController {
     }
 
     private var modeFromSelection: Mode {
-        return store.selected.isEmpty ? .hide : .show
+        return store.selectedIndexes.isEmpty ? .hide : .show
     }
 
     private func setMode(_ mode: Mode, animated: Bool) {
@@ -208,7 +208,7 @@ class SelectedTargetPanelViewController: UIViewController {
 
 extension SelectedTargetPanelViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return store.selected.count
+        return store.selectedIndexes.count
     }
 
     func collectionView(
@@ -218,14 +218,14 @@ extension SelectedTargetPanelViewController: UICollectionViewDataSource, UIColle
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: SelectedTargetPanelCell.reuseIdentifier,
             for: indexPath) as! SelectedTargetPanelCell
-        let target = store.data(at: store.selected[indexPath.item])
+        let target = store.data(at: store.selectedIndexes[indexPath.item])
         cell.setShareTarget(target)
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let columnIndex = store.selected[indexPath.item]
+        let columnIndex = store.selectedIndexes[indexPath.item]
         store.toggleSelect(atColumn: columnIndex.column, row: columnIndex.row)
     }
 }
