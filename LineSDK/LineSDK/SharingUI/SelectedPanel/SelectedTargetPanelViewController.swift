@@ -22,6 +22,7 @@
 import UIKit
 
 class SelectedTargetPanelViewController: UIViewController {
+
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
     enum Design {
@@ -34,6 +35,11 @@ class SelectedTargetPanelViewController: UIViewController {
         static var minimumLineSpacing: CGFloat { return 10 }
     }
 
+    var collectionViewContentOffset: CGPoint {
+        get { return collectionView.contentOffset }
+        set { collectionView.setContentOffset(newValue, animated: false) }
+    }
+
     private var slideAnimationViewTopConstraint: NSLayoutConstraint!
 
     private let slideAnimationView: UIView = {
@@ -44,7 +50,7 @@ class SelectedTargetPanelViewController: UIViewController {
         return view
     }()
 
-    let collectionView: UICollectionView = {
+    private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = Design.minimumLineSpacing
         layout.scrollDirection = .horizontal
@@ -62,11 +68,6 @@ class SelectedTargetPanelViewController: UIViewController {
         )
         return collectionView
     }()
-
-    var collectionViewContentOffset: CGPoint {
-        get { return collectionView.contentOffset }
-        set { collectionView.setContentOffset(newValue, animated: false) }
-    }
 
     // Observers
     private var selectingObserver: NotificationToken!
@@ -145,9 +146,9 @@ class SelectedTargetPanelViewController: UIViewController {
         let indexPath = IndexPath(row: positionInSelected, section: 0)
         collectionView.performBatchUpdates({
             if isSelecting {
-                self.collectionView.insertItems(at: [indexPath])
+                collectionView.insertItems(at: [indexPath])
             } else {
-                self.collectionView.deleteItems(at: [indexPath])
+                collectionView.deleteItems(at: [indexPath])
             }
         }, completion: { _ in
             if isSelecting { self.scrollToLast() }
@@ -160,7 +161,7 @@ class SelectedTargetPanelViewController: UIViewController {
         collectionView.scrollToItem(at: indexPath, at: .left, animated: true)
     }
 
-    enum Mode {
+    private enum Mode {
         case show
         case hide
     }
@@ -174,13 +175,13 @@ class SelectedTargetPanelViewController: UIViewController {
         updateLayout(animated: animated)
     }
 
-    private(set) var mode = Mode.hide
+    private var mode = Mode.hide
 
     private func updateLayout(animated: Bool) {
-        self.slideAnimationViewTopConstraint.isActive = false
+        slideAnimationViewTopConstraint.isActive = false
         let anchor: NSLayoutYAxisAnchor
         let alpha: CGFloat
-        switch self.mode {
+        switch mode {
         case .show:
             anchor = view.topAnchor
             view.isUserInteractionEnabled = true
@@ -190,8 +191,8 @@ class SelectedTargetPanelViewController: UIViewController {
             view.isUserInteractionEnabled = false
             alpha = 0
         }
-        self.slideAnimationViewTopConstraint = slideAnimationView.topAnchor.constraint(equalTo: anchor)
-        self.slideAnimationViewTopConstraint.isActive = true
+        slideAnimationViewTopConstraint = slideAnimationView.topAnchor.constraint(equalTo: anchor)
+        slideAnimationViewTopConstraint.isActive = true
 
         if animated {
             UIView.animate(withDuration: 0.2) {
@@ -199,8 +200,8 @@ class SelectedTargetPanelViewController: UIViewController {
                 self.view.layoutIfNeeded()
             }
         } else {
-            self.view.alpha = alpha
-            self.view.layoutIfNeeded()
+            view.alpha = alpha
+            view.layoutIfNeeded()
         }
     }
 }
@@ -210,9 +211,13 @@ extension SelectedTargetPanelViewController: UICollectionViewDataSource, UIColle
         return store.selected.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectedTargetPanelCell.reuseIdentifier,
-                                                      for: indexPath) as! SelectedTargetPanelCell
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SelectedTargetPanelCell.reuseIdentifier,
+            for: indexPath) as! SelectedTargetPanelCell
         let target = store.data(at: store.selected[indexPath.item])
         cell.setShareTarget(target)
         return cell
@@ -221,6 +226,6 @@ extension SelectedTargetPanelViewController: UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let columnIndex = store.selected[indexPath.item]
-        _ = store.toggleSelect(atColumn: columnIndex.column, row: columnIndex.row)
+        store.toggleSelect(atColumn: columnIndex.column, row: columnIndex.row)
     }
 }
