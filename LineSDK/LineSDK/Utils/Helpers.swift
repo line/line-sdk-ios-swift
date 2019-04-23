@@ -156,3 +156,16 @@ enum Localization {
         return NSLocalizedString(key, bundle: .frameworkResourceBundle, comment: "")
     }
 }
+
+extension UIImage {
+
+    /// Creates a `UIImage` object in current framework bundle.
+    ///
+    /// - Parameters:
+    ///   - name: The image name.
+    ///   - trait: The traits associated with the intended environment for the image.
+    convenience init?(bundleNamed name: String, compatibleWith trait: UITraitCollection? = nil) {
+        self.init(named: name, in: .frameworkBundle, compatibleWith: trait)
+    }
+
+}

@@ -132,8 +132,8 @@ extension ShareTargetSelectingTableCell {
         avatarImageView.setImage(target.avatarURL, placeholder: target.placeholderImage)
 
         let selectedImage = selected ?
-            UIImage(named: "friend_check_on", in: .frameworkBundle, compatibleWith: nil) :
-            UIImage(named: "friend_check_off", in: .frameworkBundle, compatibleWith: nil)
+            UIImage(bundleNamed: "friend_check_on") :
+            UIImage(bundleNamed: "friend_check_off")
         tickImageView.image = selectedImage
     }
 }

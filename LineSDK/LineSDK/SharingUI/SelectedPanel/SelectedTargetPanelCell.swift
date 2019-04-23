@@ -52,7 +52,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
 
     private let deleteIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "list_icon_delete_normal", in: .frameworkBundle, compatibleWith: nil)
+        imageView.image = UIImage(bundleNamed: "list_icon_delete_normal")
         return imageView
     }()
 
