@@ -146,10 +146,6 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
         }
         tableView.reloadData()
     }
-
-    deinit {
-        print("Deinit: \(self)")
-    }
 }
 
 extension ShareTargetSelectingViewController {

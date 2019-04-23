@@ -44,10 +44,6 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         setupTableView()
     }
 
-    deinit {
-        print("Deinit: \(self)")
-    }
-
     // The order of search result section.
     var sectionOrder: [MessageShareTargetType] = [.friends, .groups]
 
