@@ -74,9 +74,12 @@ class PageViewController: UIViewController {
         // Layout current views for getting correct page tab size.
         view.layoutIfNeeded()
 
-        pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) { [weak self] scrollView, change in
+        pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) {
+            [weak self] scrollView, change in
+
             guard let self = self else { return }
             guard let newValue = change.newValue else { return }
+
             let width = self.pageViewController.view.bounds.width
             let progress = (newValue.x - width) / width
             self.pageTabView.updateScrollingProgress(progress)
@@ -166,7 +169,12 @@ extension PageViewController: UIPageViewControllerDataSource {
 
 extension PageViewController: UIPageViewControllerDelegate {
     // triggered when manually drag PageViewController to next page animation ended
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        didFinishAnimating finished: Bool,
+        previousViewControllers: [UIViewController],
+        transitionCompleted completed: Bool)
+    {
         guard let index = currentViewControllerIndex else {
             return
         }

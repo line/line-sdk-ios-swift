@@ -100,7 +100,6 @@ class ShareRootViewController: UIViewController {
         setupSubviews()
         setupLayouts()
 
-        // Wait for child view controllers setup themselves.
         loadGraphList()
         setupObservers()
     }
@@ -205,15 +204,14 @@ extension ShareRootViewController {
     }
 
     @objc private func sendMessage() {
-        addLoadingIndicator()
         let selected = store.selectedData
 
         // `onSendingMessage` is expected to be always delegated.
         let messages = onSendingMessage.call(selected)!
+
+        let indicator = LoadingIndicator.add(to: view)
         API.multiSendMessages(messages, to: selected.map { $0.targetID }) { result in
-
-            self.removeLoadingIndicator()
-
+            indicator.remove()
             switch result {
             case .success(let response):
                 let successData = OnSendingSuccessData(messages: messages, targets: selected, results: response.results)
@@ -236,11 +234,11 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
     func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool {
         if allLoaded { return true }
 
-        addLoadingIndicator()
+        let indicator = LoadingIndicator.add(to: view)
         loadedObserver = observe(\.allLoaded, options: .new) { [weak self] controller, change in
             guard let self = self else { return }
             if let loaded = change.newValue, loaded {
-                self.removeLoadingIndicator()
+                indicator.remove()
                 self.loadedObserver = nil
                 viewController.continueSearch()
             }
@@ -257,38 +255,5 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
 
     func pageViewController(for viewController: ShareTargetSelectingViewController) -> PageViewController {
         return pageViewController
-    }
-
-    // TODO: Find a better place for the loading indicator things. Maybe in helpers.
-    private func addLoadingIndicator() {
-
-        if let _ = indicatorContainer { return }
-
-        let container = UIView(frame: .zero)
-        let indicator = UIActivityIndicatorView(style: .whiteLarge)
-        indicator.color = .gray
-
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(indicator)
-        NSLayoutConstraint.activate([
-            indicator.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            indicator.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-            ])
-
-        // Add the loading indicator container to root view controller (page), so user has a chance to
-        // close the sharing UI by tapping "Close" button in the navigation bar.
-        view.addChildSubview(container)
-
-        indicator.startAnimating()
-
-        indicatorContainer = container
-    }
-
-    private func removeLoadingIndicator() {
-        guard let container = indicatorContainer else {
-            return
-        }
-        container.removeFromSuperview()
-        indicatorContainer = nil
     }
 }
