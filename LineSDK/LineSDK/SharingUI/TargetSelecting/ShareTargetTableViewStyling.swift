@@ -22,7 +22,7 @@
 import UIKit
 
 enum ShareTargetTableViewDesign {
-    static let separatorColor = UIColor(hex6: 0xE6E7EA)
+    static var separatorColor: UIColor { return .init(hex6: 0xE6E7EA) }
 }
 
 protocol ShareTargetTableViewStyling {

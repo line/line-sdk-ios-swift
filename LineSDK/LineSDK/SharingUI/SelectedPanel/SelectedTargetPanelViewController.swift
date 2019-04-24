@@ -194,14 +194,15 @@ class SelectedTargetPanelViewController: UIViewController {
         slideAnimationViewTopConstraint = slideAnimationView.topAnchor.constraint(equalTo: anchor)
         slideAnimationViewTopConstraint.isActive = true
 
-        if animated {
-            UIView.animate(withDuration: 0.2) {
-                self.view.alpha = alpha
-                self.view.layoutIfNeeded()
-            }
-        } else {
+        func applyChange() {
             view.alpha = alpha
             view.layoutIfNeeded()
+        }
+
+        if animated {
+            UIView.animate(withDuration: 0.2, animations: applyChange)
+        } else {
+            applyChange()
         }
     }
 }

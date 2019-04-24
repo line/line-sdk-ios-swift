@@ -995,8 +995,8 @@
 			children = (
 				DB115EF92254660C00C16B0C /* ShareRootViewController.swift */,
 				D16D5325224873C700BAA3B4 /* ShareTargetSelectingViewController.swift */,
-				4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */,
 				D16D53292248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift */,
+				4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */,
 				4B392661224DC06F006485B4 /* ShareTargetTableViewStyling.swift */,
 			);
 			path = TargetSelecting;
@@ -1014,9 +1014,9 @@
 		4BB080CF2267218500783C60 /* TargetSearch */ = {
 			isa = PBXGroup;
 			children = (
-				4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */,
 				DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */,
 				4BFCD203224CAF6100CD9544 /* ShareTargetSearchResultTableViewController.swift */,
+				4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */,
 			);
 			path = TargetSearch;
 			sourceTree = "<group>";

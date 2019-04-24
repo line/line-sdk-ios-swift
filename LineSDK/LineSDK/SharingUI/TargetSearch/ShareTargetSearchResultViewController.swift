@@ -24,17 +24,9 @@ import UIKit
 class ShareTargetSearchResultViewController: UIViewController {
 
     var searchText: String {
-        get {
-            return tableViewController.searchText
-        }
-        set {
-            tableViewController.searchText = newValue
-        }
+        get { return tableViewController.searchText }
+        set { tableViewController.searchText = newValue }
     }
-
-    private let store: ColumnDataStore<ShareTarget>
-
-    private let tableViewController: ShareTargetSearchResultTableViewController
 
     var sectionOrder: [MessageShareTargetType] {
         get { return tableViewController.sectionOrder }
@@ -43,6 +35,9 @@ class ShareTargetSearchResultViewController: UIViewController {
 
     // Conforming to `KeyboardObservable`
     var keyboardObservers: [NotificationToken] = []
+
+    private let store: ColumnDataStore<ShareTarget>
+    private let tableViewController: ShareTargetSearchResultTableViewController
 
     private (set) lazy var panelViewController = SelectedTargetPanelViewController(store: store)
     private let panelContainer = UILayoutGuide()
@@ -56,42 +51,46 @@ class ShareTargetSearchResultViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         automaticallyAdjustsScrollViewInsets = false
 
-        addChild(tableViewController, to: view)
-        setupSelectPanel()
+        setupSubviews()
+        setupLayouts()
         addKeyboardObserver()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private func setupSubviews() {
+        addChild(tableViewController, to: view)
 
-    func start() {
-        tableViewController.start()
-    }
-
-    func clear() {
-        tableViewController.clear()
-    }
-}
-
-// MARK: - SelectedTargetPanelViewController
-
-extension ShareTargetSearchResultViewController {
-    private func setupSelectPanel() {
         view.addLayoutGuide(panelContainer)
         addChild(panelViewController, to: panelContainer)
+    }
 
+    private func setupLayouts() {
         NSLayoutConstraint.activate([
             panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
         updatePanelBottomConstraint(keyboardInfo: nil)
     }
+
+    func start() {
+        tableViewController.startObserving()
+    }
+
+    func clear() {
+        tableViewController.stopObserving()
+    }
+}
+
+// MARK: - SelectedTargetPanelViewController
+extension ShareTargetSearchResultViewController {
 
     private func updatePanelBottomConstraint(keyboardInfo: KeyboardInfo?) {
 

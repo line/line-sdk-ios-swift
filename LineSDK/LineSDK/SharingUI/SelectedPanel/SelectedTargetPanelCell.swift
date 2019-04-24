@@ -22,6 +22,7 @@
 import UIKit
 
 class SelectedTargetPanelCell: UICollectionViewCell {
+
     enum Design {
         static let size = CGSize(width: 50, height: 66)
         static let avatarFrame = CGRect(x: 0, y: 4, width: 45, height: 45)
@@ -32,7 +33,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
         static var font: UIFont { return .systemFont(ofSize: 12) }
     }
 
-    static var reuseIdentifier: String { return String(describing: self) }
+    static let reuseIdentifier = String(describing: self)
 
     private let avatarImageView: DownloadableImageView = {
         let imageView = DownloadableImageView(frame: Design.avatarFrame)
@@ -50,7 +51,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
         return label
     }()
 
-    private let deleteIcon: UIImageView = {
+    private let deleteIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(bundleNamed: "list_icon_delete_normal")
         return imageView
@@ -74,11 +75,11 @@ class SelectedTargetPanelCell: UICollectionViewCell {
     private func setupSubviews() {
         contentView.addSubview(avatarImageView)
         contentView.addSubview(nameLabel)
-        contentView.addSubview(deleteIcon)
+        contentView.addSubview(deleteIconImageView)
     }
 
     private func setupLayouts() {
-        deleteIcon.translatesAutoresizingMaskIntoConstraints = false
+        deleteIconImageView.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -90,10 +91,10 @@ class SelectedTargetPanelCell: UICollectionViewCell {
             ])
 
         NSLayoutConstraint.activate([
-            deleteIcon.topAnchor.constraint(equalTo: contentView.topAnchor),
-            deleteIcon.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            deleteIcon.widthAnchor.constraint(equalToConstant: Design.deleteSize.width),
-            deleteIcon.heightAnchor.constraint(equalToConstant: Design.deleteSize.height),
+            deleteIconImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            deleteIconImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            deleteIconImageView.widthAnchor.constraint(equalToConstant: Design.deleteSize.width),
+            deleteIconImageView.heightAnchor.constraint(equalToConstant: Design.deleteSize.height),
             ])
     }
 }

@@ -48,8 +48,6 @@ class ShareRootViewController: UIViewController {
 
     private var loadedObserver: NSKeyValueObservation?
 
-    private var indicatorContainer: UIView?
-
     let onCancelled = Delegate<(), Void>()
     let onLoadingFailed = Delegate<(MessageShareTargetType, LineSDKError), Void>()
     let onSendingMessage = Delegate<[ShareTarget], [MessageConvertible]>()
@@ -104,6 +102,24 @@ class ShareRootViewController: UIViewController {
         setupObservers()
     }
 
+    private func setupSubviews() {
+        addChild(pageViewController, to: view)
+
+        view.addLayoutGuide(panelContainer)
+        addChild(panelViewController, to: panelContainer)
+    }
+
+    private func setupLayouts() {
+        NSLayoutConstraint.activate([
+            panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            panelContainer.topAnchor.constraint(
+                equalTo: safeBottomAnchor,
+                constant: -SelectedTargetPanelViewController.Design.height)
+            ])
+    }
+
     private func setupObservers() {
         selectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
@@ -118,23 +134,6 @@ class ShareRootViewController: UIViewController {
             [unowned self] noti in
             self.handleSelectingChange(noti)
         }
-    }
-
-    private func setupSubviews() {
-        addChild(pageViewController, to: view)
-
-        view.addLayoutGuide(panelContainer)
-        addChild(panelViewController, to: panelContainer)
-    }
-
-    private func setupLayouts() {
-        NSLayoutConstraint.activate([
-            panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            panelContainer.topAnchor.constraint(equalTo: safeBottomAnchor,
-                                                constant: -SelectedTargetPanelViewController.Design.height)
-            ])
     }
 }
 
