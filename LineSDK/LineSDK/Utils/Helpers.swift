@@ -90,6 +90,14 @@ extension UIViewController {
         }
     }
 
+    var safeAreaInsets: UIEdgeInsets {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaInsets
+        } else {
+            return .zero
+        }
+    }
+
     func addChild(_ viewController: UIViewController, to containerView: UIView) {
         addChild(viewController)
         containerView.addChildSubview(viewController.view)
@@ -154,5 +162,26 @@ func guardSharedProperty<T>(_ input: T?) -> T {
 enum Localization {
     static func string(_ key: String) -> String {
         return NSLocalizedString(key, bundle: .frameworkResourceBundle, comment: "")
+    }
+}
+
+extension UIImage {
+
+    /// Creates a `UIImage` object in current framework bundle.
+    ///
+    /// - Parameters:
+    ///   - name: The image name.
+    ///   - trait: The traits associated with the intended environment for the image.
+    convenience init?(bundleNamed name: String, compatibleWith trait: UITraitCollection? = nil) {
+        self.init(named: name, in: .frameworkBundle, compatibleWith: trait)
+    }
+}
+
+extension UIColor {
+    func image(_ size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
+        return UIGraphicsImageRenderer(size: size).image { rendererContext in
+            self.setFill()
+            rendererContext.fill(CGRect(origin: .zero, size: size))
+        }
     }
 }

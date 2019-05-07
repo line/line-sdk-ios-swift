@@ -48,8 +48,6 @@ class ShareRootViewController: UIViewController {
 
     private var loadedObserver: NSKeyValueObservation?
 
-    private var indicatorContainer: UIView?
-
     let onCancelled = Delegate<(), Void>()
     let onLoadingFailed = Delegate<(MessageShareTargetType, LineSDKError), Void>()
     let onSendingMessage = Delegate<[ShareTarget], [MessageConvertible]>()
@@ -100,9 +98,26 @@ class ShareRootViewController: UIViewController {
         setupSubviews()
         setupLayouts()
 
-        // Wait for child view controllers setup themselves.
         loadGraphList()
         setupObservers()
+    }
+
+    private func setupSubviews() {
+        addChild(pageViewController, to: view)
+
+        view.addLayoutGuide(panelContainer)
+        addChild(panelViewController, to: panelContainer)
+    }
+
+    private func setupLayouts() {
+        NSLayoutConstraint.activate([
+            panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            panelContainer.topAnchor.constraint(
+                equalTo: safeBottomAnchor,
+                constant: -SelectedTargetPanelViewController.Design.height)
+            ])
     }
 
     private func setupObservers() {
@@ -119,23 +134,6 @@ class ShareRootViewController: UIViewController {
             [unowned self] noti in
             self.handleSelectingChange(noti)
         }
-    }
-
-    private func setupSubviews() {
-        addChild(pageViewController, to: view)
-
-        view.addLayoutGuide(panelContainer)
-        addChild(panelViewController, to: panelContainer)
-    }
-
-    private func setupLayouts() {
-        NSLayoutConstraint.activate([
-            panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            panelContainer.topAnchor.constraint(equalTo: safeBottomAnchor,
-                                                constant: -SelectedTargetPanelViewController.Design.height)
-            ])
     }
 }
 
@@ -194,7 +192,7 @@ extension ShareRootViewController {
     }
 
     private func handleSelectingChange(_ notification: Notification) {
-        let count = store.selected.count
+        let count = store.selectedIndexes.count
         if count == 0 {
             navigationItem.rightBarButtonItem = nil
         } else {
@@ -205,15 +203,14 @@ extension ShareRootViewController {
     }
 
     @objc private func sendMessage() {
-        addLoadingIndicator()
-        let selected = store.allSelectedData
+        let selected = store.selectedData
 
         // `onSendingMessage` is expected to be always delegated.
         let messages = onSendingMessage.call(selected)!
+
+        let indicator = LoadingIndicator.add(to: view)
         API.multiSendMessages(messages, to: selected.map { $0.targetID }) { result in
-
-            self.removeLoadingIndicator()
-
+            indicator.remove()
             switch result {
             case .success(let response):
                 let successData = OnSendingSuccessData(messages: messages, targets: selected, results: response.results)
@@ -236,11 +233,11 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
     func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool {
         if allLoaded { return true }
 
-        addLoadingIndicator()
+        let indicator = LoadingIndicator.add(to: view)
         loadedObserver = observe(\.allLoaded, options: .new) { [weak self] controller, change in
             guard let self = self else { return }
             if let loaded = change.newValue, loaded {
-                self.removeLoadingIndicator()
+                indicator.remove()
                 self.loadedObserver = nil
                 viewController.continueSearch()
             }
@@ -257,38 +254,5 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
 
     func pageViewController(for viewController: ShareTargetSelectingViewController) -> PageViewController {
         return pageViewController
-    }
-
-    // TODO: Find a better place for the loading indicator things. Maybe in helpers.
-    private func addLoadingIndicator() {
-
-        if let _ = indicatorContainer { return }
-
-        let container = UIView(frame: .zero)
-        let indicator = UIActivityIndicatorView(style: .whiteLarge)
-        indicator.color = .gray
-
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(indicator)
-        NSLayoutConstraint.activate([
-            indicator.centerXAnchor.constraint(equalTo: container.centerXAnchor),
-            indicator.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-            ])
-
-        // Add the loading indicator container to root view controller (page), so user has a chance to
-        // close the sharing UI by tapping "Close" button in the navigation bar.
-        view.addChildSubview(container)
-
-        indicator.startAnimating()
-
-        indicatorContainer = container
-    }
-
-    private func removeLoadingIndicator() {
-        guard let container = indicatorContainer else {
-            return
-        }
-        container.removeFromSuperview()
-        indicatorContainer = nil
     }
 }

@@ -204,8 +204,8 @@ open class ShareViewController: UINavigationController {
 /// Before creating and presenting a message sharing UI, it is strongly recommended to check whether your app
 /// has a valid token and enough permissions to share messages.
 ///
-/// `ShareViewController.localAuthorizationStatusForSendingMessage(to:)` returns a `MessageShareAuthorizationStatus` value
-/// to indicated the current authorization status for a certain sharing target.
+/// `ShareViewController.localAuthorizationStatusForSendingMessage()` returns a `MessageShareAuthorizationStatus` value
+/// to indicate the current authorization status for sharing messages.
 ///
 /// - lackOfToken: There is no valid token in the token store locally. The user does not log in and authorize
 ///                your app yet.

@@ -26,23 +26,26 @@ protocol ShareTargetSelectingViewControllerDelegate: AnyObject {
 
     func correspondingSelectedPanelViewController(for viewController: ShareTargetSelectingViewController)
         -> SelectedTargetPanelViewController
+
     func pageViewController(for viewController: ShareTargetSelectingViewController)
         -> PageViewController
 }
 
 final class ShareTargetSelectingViewController: UITableViewController, ShareTargetTableViewStyling {
 
-    typealias AppendingIndexRange = ColumnDataStore<ShareTarget>.AppendingIndexRange
-    typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
-
-    var store: ColumnDataStore<ShareTarget>!
-    let columnIndex: Int
-
-    var dataAppendingObserver: NotificationToken!
-    var selectingObserver: NotificationToken!
-    var deselectingObserver: NotificationToken!
+    private typealias AppendingIndexRange = ColumnDataStore<ShareTarget>.AppendingIndexRange
+    private typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
     weak var delegate: ShareTargetSelectingViewControllerDelegate?
+
+    // Model
+    private var store: ColumnDataStore<ShareTarget>!
+    private let columnIndex: Int
+
+    // Observers
+    private var dataAppendingObserver: NotificationToken!
+    private var selectingObserver: NotificationToken!
+    private var deselectingObserver: NotificationToken!
 
     // Search
     private let searchController: ShareTargetSearchController
@@ -146,12 +149,9 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
         }
         tableView.reloadData()
     }
-
-    deinit {
-        print("Deinit: \(self)")
-    }
 }
 
+// MARK: - UITableViewDataSource
 extension ShareTargetSelectingViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return store.data(atColumn: columnIndex).count
@@ -171,6 +171,7 @@ extension ShareTargetSelectingViewController {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension ShareTargetSelectingViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -181,8 +182,18 @@ extension ShareTargetSelectingViewController {
     }
 }
 
+// MARK: - UITableViewPrefetching
+extension ShareTargetSelectingViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach { indexPath in
+            let index = ColumnIndex(column: columnIndex, row: indexPath.row)
+            guard let url = store.data(at: index).avatarURL else { return }
+            ImageManager.shared.getImage(url)
+        }
+    }
+}
 
-// MARK: - Search Results Updating
+// MARK: - Search Controller
 extension ShareTargetSelectingViewController: UISearchResultsUpdating {
     public func updateSearchResults(for searchController: UISearchController) {
         resultViewController.view.isHidden = false
@@ -238,28 +249,3 @@ extension ShareTargetSelectingViewController: UISearchControllerDelegate {
         to.collectionViewContentOffset = from.collectionViewContentOffset
     }
 }
-
-extension UIColor {
-    func image(_ size: CGSize = CGSize(width: 1, height: 1)) -> UIImage {
-        return UIGraphicsImageRenderer(size: size).image { rendererContext in
-            self.setFill()
-            rendererContext.fill(CGRect(origin: .zero, size: size))
-        }
-    }
-}
-
-extension ShareTargetSelectingViewController: UITableViewDataSourcePrefetching {
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach { indexPath in
-            let index = ColumnIndex(column: columnIndex, row: indexPath.row)
-            guard let url = store.data(at: index).avatarURL else { return }
-            ImageManager.shared.getImage(url)
-        }
-    }
-}
-    
-
-
-
-
-

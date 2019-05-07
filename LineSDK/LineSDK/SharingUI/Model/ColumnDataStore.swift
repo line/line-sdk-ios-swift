@@ -33,6 +33,7 @@ extension LineSDKNotificationKey {
     static let positionInSelected = "positionInSelected"
 }
 
+// A column based data structure. It provides easy ways to store and interact data in a 2D array.
 class ColumnDataStore<T> {
 
     struct ColumnIndex: Equatable {
@@ -46,16 +47,15 @@ class ColumnDataStore<T> {
         let column: Int
     }
 
-    private var data: [[T]]
-    private(set) var selected: [ColumnIndex] = []
-
-    var allSelectedData: [T] {
-        return selected.map { data(at: $0) }
+    var selectedData: [T] {
+        return selectedIndexes.map { data(at: $0) }
     }
 
-    private var columnCount: Int { return data.count }
-
     var maximumSelectedCount = 10
+
+    private var data: [[T]]
+    private(set) var selectedIndexes: [ColumnIndex] = []
+    private var columnCount: Int { return data.count }
 
     init(columnCount: Int) {
         data = .init(repeating: [], count: columnCount)
@@ -96,7 +96,7 @@ class ColumnDataStore<T> {
     }
 
     func isSelected(at index: ColumnIndex) -> Bool {
-        return selected.contains(index)
+        return selectedIndexes.contains(index)
     }
 
     // Return `false` if the toggle failed due to `maximumSelectedCount` reached.
@@ -113,15 +113,15 @@ class ColumnDataStore<T> {
         }
 
         let targetIndex = ColumnIndex(column: columnIndex, row: rowIndex)
-        if let index = selected.firstIndex(of: targetIndex) {
-            selected.remove(at: index)
+        if let index = selectedIndexes.firstIndex(of: targetIndex) {
+            selectedIndexes.remove(at: index)
             notifySelectingChange(selected: false, targetIndex: targetIndex, positionInSelected: index)
         } else {
-            guard selected.count < maximumSelectedCount else {
+            guard selectedIndexes.count < maximumSelectedCount else {
                 return false
             }
-            selected.append(targetIndex)
-            notifySelectingChange(selected: true, targetIndex: targetIndex, positionInSelected: selected.count - 1)
+            selectedIndexes.append(targetIndex)
+            notifySelectingChange(selected: true, targetIndex: targetIndex, positionInSelected: selectedIndexes.count - 1)
         }
 
         return true

@@ -47,7 +47,7 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
     let avatarImageView = DownloadableImageView(frame: .zero)
     let displayNameLabel = UILabel(frame: .zero)
 
-    static let reuseIdentifier = "\(ShareTargetSelectingTableCell.self)"
+    static let reuseIdentifier = String(describing: self)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -107,7 +107,7 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
 
 extension ShareTargetSelectingTableCell {
 
-    func displayNameAttributedString(_ name: String, highlightText: String? = nil) -> NSAttributedString {
+    private func displayNameAttributedString(_ name: String, highlightText: String? = nil) -> NSAttributedString {
         let displayNameAttributedString = NSMutableAttributedString(
             string: name,
             attributes: [
@@ -132,8 +132,8 @@ extension ShareTargetSelectingTableCell {
         avatarImageView.setImage(target.avatarURL, placeholder: target.placeholderImage)
 
         let selectedImage = selected ?
-            UIImage(named: "friend_check_on", in: .frameworkBundle, compatibleWith: nil) :
-            UIImage(named: "friend_check_off", in: .frameworkBundle, compatibleWith: nil)
+            UIImage(bundleNamed: "friend_check_on") :
+            UIImage(bundleNamed: "friend_check_off")
         tickImageView.image = selectedImage
     }
 }

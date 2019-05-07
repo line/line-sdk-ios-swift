@@ -23,8 +23,6 @@ import UIKit
 
 class ShareTargetSelectingSectionHeaderView: UIView {
 
-    static let identifier = "ShareTargetSelectingSectionHeaderView"
-
     enum Design {
         static var height: CGFloat { return 25 }
         static var fontSize: CGFloat { return 12 }
@@ -37,6 +35,7 @@ class ShareTargetSelectingSectionHeaderView: UIView {
     let titleLabel = UILabel(frame: .zero)
 
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 

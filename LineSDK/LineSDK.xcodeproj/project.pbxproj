@@ -80,6 +80,7 @@
 		4B5EE2E8212BE0D00009DF2E /* FlexCarouselContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */; };
 		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
 		4B6508B8211812CE001796E0 /* LoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */; };
+		4B688E3E226F029B002575CC /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B688E3D226F029B002575CC /* LoadingIndicator.swift */; };
 		4B6A0FF1212A99AD00B3ED1F /* FlexTextComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */; };
 		4B6A0FF3212AA15D00B3ED1F /* FlexButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF2212AA15D00B3ED1F /* FlexButtonComponent.swift */; };
 		4B6A0FF5212AA82500B3ED1F /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF4212AA82500B3ED1F /* HexColor.swift */; };
@@ -379,6 +380,7 @@
 		4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexCarouselContainerTests.swift; sourceTree = "<group>"; };
 		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
 		4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerOptions.swift; sourceTree = "<group>"; };
+		4B688E3D226F029B002575CC /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponentTests.swift; sourceTree = "<group>"; };
 		4B6A0FF2212AA15D00B3ED1F /* FlexButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexButtonComponent.swift; sourceTree = "<group>"; };
 		4B6A0FF4212AA82500B3ED1F /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
@@ -904,6 +906,7 @@
 				4B6A7025210956B600D71C66 /* KeychainStore.swift */,
 				4BEE5B34210AC2D000846C6D /* NotificationToken.swift */,
 				DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */,
+				4B688E3D226F029B002575CC /* LoadingIndicator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -992,8 +995,8 @@
 			children = (
 				DB115EF92254660C00C16B0C /* ShareRootViewController.swift */,
 				D16D5325224873C700BAA3B4 /* ShareTargetSelectingViewController.swift */,
-				4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */,
 				D16D53292248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift */,
+				4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */,
 				4B392661224DC06F006485B4 /* ShareTargetTableViewStyling.swift */,
 			);
 			path = TargetSelecting;
@@ -1011,9 +1014,9 @@
 		4BB080CF2267218500783C60 /* TargetSearch */ = {
 			isa = PBXGroup;
 			children = (
-				4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */,
 				DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */,
 				4BFCD203224CAF6100CD9544 /* ShareTargetSearchResultTableViewController.swift */,
+				4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */,
 			);
 			path = TargetSearch;
 			sourceTree = "<group>";
@@ -1731,6 +1734,7 @@
 				4B9058D8210078FB004D717F /* Result.swift in Sources */,
 				4B9A30352121182400174C6F /* VideoMessage.swift in Sources */,
 				4B9A304921213CE100174C6F /* TemplateButtonsPayload.swift in Sources */,
+				4B688E3E226F029B002575CC /* LoadingIndicator.swift in Sources */,
 				4B6508B8211812CE001796E0 /* LoginManagerOptions.swift in Sources */,
 				4BEB491E212B9E5500BA946A /* FlexFillerComponent.swift in Sources */,
 				D16D532A2248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift in Sources */,

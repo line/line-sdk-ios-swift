@@ -23,12 +23,23 @@ import UIKit
 
 final class ShareTargetSearchResultTableViewController: UITableViewController, ShareTargetTableViewStyling {
 
-    typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
+    // The order of search result section.
+    var sectionOrder: [MessageShareTargetType] = [.friends, .groups]
 
+    var searchText: String = "" {
+        didSet {
+            guard searchText != oldValue else { return }
+            filteredIndexes = store.indexes {
+                $0.displayName.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
+
+    private typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
     private let store: ColumnDataStore<ShareTarget>
 
-    var selectingObserver: NotificationToken!
-    var deselectingObserver: NotificationToken!
+    private var selectingObserver: NotificationToken!
+    private var deselectingObserver: NotificationToken!
 
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
@@ -44,32 +55,17 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         setupTableView()
     }
 
-    deinit {
-        print("Deinit: \(self)")
-    }
-
-    // The order of search result section.
-    var sectionOrder: [MessageShareTargetType] = [.friends, .groups]
-
-    var searchText: String = "" {
-        didSet {
-            guard searchText != oldValue else { return }
-            filteredIndexes = store.indexes { 
-                $0.displayName.localizedCaseInsensitiveContains(searchText)
-            }
-        }
-    }
-
-    var filteredIndexes = [[ColumnIndex]](repeating: [], count: MessageShareTargetType.allCases.count)
+    private var filteredIndexes = [[ColumnIndex]](
+        repeating: [], count: MessageShareTargetType.allCases.count)
     {
         didSet { tableView.reloadData() }
     }
 
-    func start() {
+    func startObserving() {
         setupObservers()
     }
 
-    func clear() {
+    func stopObserving() {
         stopObservers()
         searchText = ""
     }

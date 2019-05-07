@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EGj-Cs-n8q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EGj-Cs-n8q">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -211,14 +211,18 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wn8-RQ-Mfe">
                                                     <rect key="frame" x="16" y="11.5" width="118" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="zVG-u9-1qA"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="wn8-RQ-Mfe" firstAttribute="centerY" secondItem="aL5-yl-GZ4" secondAttribute="centerY" id="WtO-LW-DK4"/>
+                                                <constraint firstItem="wn8-RQ-Mfe" firstAttribute="top" secondItem="aL5-yl-GZ4" secondAttribute="top" constant="11.5" id="YFo-cz-dnC"/>
                                                 <constraint firstItem="wn8-RQ-Mfe" firstAttribute="leading" secondItem="aL5-yl-GZ4" secondAttribute="leading" constant="16" id="g2L-CB-9Dc"/>
+                                                <constraint firstAttribute="bottom" secondItem="wn8-RQ-Mfe" secondAttribute="bottom" constant="11" id="ish-8H-qyj"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wn8-RQ-Mfe" secondAttribute="trailing" constant="16" id="rea-GK-6ID"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -353,8 +357,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="api" width="37.5" height="37.5"/>
-        <image name="ui" width="37.5" height="37.5"/>
-        <image name="user" width="37.5" height="37.5"/>
+        <image name="api" width="25" height="25"/>
+        <image name="ui" width="25" height="25"/>
+        <image name="user" width="25" height="25"/>
     </resources>
 </document>
