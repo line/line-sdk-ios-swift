@@ -1,3 +1,7 @@
+target 'MyApp' do
+  supports_swift_versions '>= 3.0', '<= 5.0'
+  pod 'LineSDKSwift'
+end
 
 Pod::Spec.new do |s|
   s.name                = "LineSDKSwift"
