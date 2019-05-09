@@ -10,15 +10,9 @@ osx_image:
 - xcode10.2
 
 env:
-- LANE=sdk_tests SWIFT_VERSION=4.2
-- LANE=sdk_tests SWIFT_VERSION=5.0
 - LANE=lint_pod
 - LANE=lint_carthage
 
-matrix:
-  exclude:
-    - osx_image: xcode10.1
-      env: LANE=sdk_tests SWIFT_VERSION=5.0
 
 cache: bundler
 
