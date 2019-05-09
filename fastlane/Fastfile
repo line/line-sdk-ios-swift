@@ -25,8 +25,6 @@ platform :ios do
         scheme: "LineSDK",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
-
-    codecov_reporter if ENV["TRAVIS"] == "true"
     
     run_tests(
         workspace: "LineSDK.xcworkspace",
@@ -50,12 +48,9 @@ platform :ios do
     lint_pod
   end
 
-  lane :lint_pod_4 do
-    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version=4.2")
-  end
-
-  lane :lint_pod_5 do
-    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version=5.0")
+  lane :lint_pod do
+    swift_version = ENV["SWIFT_VERSION"] || "4.2"
+    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version=#{swift_version}")
   end
 
   lane :lint_carthage do
