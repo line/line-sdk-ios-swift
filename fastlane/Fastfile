@@ -51,7 +51,11 @@ platform :ios do
   end
 
   lane :lint_pod do
-    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version 4.2")
+    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec")
+  end
+
+  lane :lint_pod_4.2 do
+    Action.sh("bundle exec pod lib lint ../LineSDKSwift_4.2.podspec")
   end
 
   lane :lint_carthage do

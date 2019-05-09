@@ -11,8 +11,12 @@ osx_image:
 
 env:
 - LANE=lint_pod
-- LANE=lint_carthage
+- LANE=lint_pod_4.2
 
+matrix:
+  exclude:
+    - osx_image: xcode10.1
+      env: LANE=lint_pod
 
 cache: bundler
 
