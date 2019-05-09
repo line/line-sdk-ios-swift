@@ -70,7 +70,7 @@ class PostExchangeTokenRequestTests: APITests {
             optionalRedirectURI: "universal")
         runTestSuccess(for: request) { token in
             XCTAssertEqual(token.value, "123")
-            XCTAssertEqual(token.refreshToken, "abc")
+            XCTAssertEqual(token._refreshToken, "abc")
             XCTAssertEqual(token.tokenType, "Bearer")
             XCTAssertEqual(token.permissions, [LoginPermission.profile, LoginPermission(rawValue: "abcd")])
             XCTAssertEqual(token.expiresAt, token.createdAt.addingTimeInterval(token.expiresIn))
