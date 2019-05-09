@@ -51,7 +51,7 @@ public struct API {
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<AccessToken, LineSDKError>) -> Void)
     {
-        guard let token = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
+        guard let token = refreshToken ?? AccessTokenStore.shared.current?._refreshToken else {
             queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
             return
         }
@@ -154,7 +154,7 @@ public struct API {
             completion(result)
         }
 
-        guard let refreshToken = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
+        guard let refreshToken = refreshToken ?? AccessTokenStore.shared.current?._refreshToken else {
             // No token input or found in store, just recognize it as success.
             queue.execute { completion(.success(())) }
             return
