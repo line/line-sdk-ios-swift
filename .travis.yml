@@ -12,8 +12,8 @@ osx_image:
 env:
 - LANE=sdk_tests SWIFT_VERSION=4.2
 - LANE=sdk_tests SWIFT_VERSION=5.0
-- LANE=lint_pod_4.2
-- LANE=lint_pod_5.0
+- LANE=lint_pod_4
+- LANE=lint_pod_5
 - LANE=lint_carthage
 
 matrix:
@@ -21,7 +21,7 @@ matrix:
     - osx_image: xcode10.1
       env: LANE=sdk_tests SWIFT_VERSION=5.0
     - osx_image: xcode10.1
-      env: LANE=lint_pod_5.0
+      env: LANE=lint_pod_5
 cache: bundler
 
 before_install:

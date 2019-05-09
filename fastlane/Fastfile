@@ -50,11 +50,11 @@ platform :ios do
     lint_pod
   end
 
-  lane :lint_pod_4.2 do
+  lane :lint_pod_4 do
     Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version=4.2")
   end
 
-  lane :lint_pod_5.0 do
+  lane :lint_pod_5 do
     Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version=5.0")
   end
 
