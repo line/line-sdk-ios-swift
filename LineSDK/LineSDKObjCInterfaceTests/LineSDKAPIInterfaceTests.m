@@ -32,11 +32,8 @@
 
 - (void)_testRefreshAccessTokenInterface {
     [LineSDKAPI refreshAccessTokenWithCompletionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
-    [LineSDKAPI refreshAccessToken:nil
-                 completionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
-    [LineSDKAPI refreshAccessToken:nil
-                     callbackQueue:[LineSDKCallbackQueue asyncMain]
-                 completionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
+    [LineSDKAPI refreshAccessTokenWithCallbackQueue:[LineSDKCallbackQueue asyncMain]
+                                  completionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
 }
 
 - (void)_testRevokeAccessTokenInterface {

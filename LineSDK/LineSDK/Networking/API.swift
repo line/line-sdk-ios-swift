@@ -36,7 +36,6 @@ public struct API {
     /// Refreshes the access token with `refreshToken`.
     ///
     /// - Parameters:
-    ///   - refreshToken: A refresh token. Optional. If not specified, the current refresh token is used.
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the access token is refreshed.
@@ -47,11 +46,10 @@ public struct API {
     ///   manually because any API call will attempt to refresh the access token if necessary.
     ///
     public static func refreshAccessToken(
-        _ refreshToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<AccessToken, LineSDKError>) -> Void)
     {
-        guard let token = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
+        guard let token = AccessTokenStore.shared.current?._refreshToken else {
             queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
             return
         }
@@ -154,7 +152,7 @@ public struct API {
             completion(result)
         }
 
-        guard let refreshToken = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
+        guard let refreshToken = refreshToken ?? AccessTokenStore.shared.current?._refreshToken else {
             // No token input or found in store, just recognize it as success.
             queue.execute { completion(.success(())) }
             return

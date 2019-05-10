@@ -59,7 +59,11 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
     public let IDTokenRaw: String?
 
     /// The refresh token bound to the access token.
-    public let refreshToken: String
+    @available(*, unavailable,
+    message: "`refreshToken` is not publicly provided anymore. You should not access or store it yourself.")
+    public var refreshToken: String { Log.fatalError("`refreshToken` is not publicly provided anymore.") }
+
+    let _refreshToken: String
 
     /// Permissions of the access token.
     public let permissions: [LoginPermission]
@@ -100,7 +104,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
             IDToken = nil
         }
 
-        refreshToken = try container.decode(String.self, forKey: .refreshToken)
+        _refreshToken = try container.decode(String.self, forKey: .refreshToken)
         permissions = try container.decodeLoginPermissions(forKey: .scope)
         tokenType = try container.decode(String.self, forKey: .tokenType)
     }
@@ -112,7 +116,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         try container.encode(expiresIn, forKey: .expiresIn)
         try container.encode(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(IDTokenRaw, forKey: .IDTokenRaw)
-        try container.encode(refreshToken, forKey: .refreshToken)
+        try container.encode(_refreshToken, forKey: .refreshToken)
         try container.encodeLoginPermissions(permissions, forKey: .scope)
         try container.encode(tokenType, forKey: .tokenType)
     }

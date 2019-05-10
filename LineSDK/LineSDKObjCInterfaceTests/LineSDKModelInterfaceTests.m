@@ -55,7 +55,6 @@
     XCTAssertNil(token.value);
     XCTAssertNil(token.createdAt);
     XCTAssertNil(token.IDToken);
-    XCTAssertNil(token.refreshToken);
     XCTAssertNil(token.permissions);
     XCTAssertNil(token.expiresAt);
     XCTAssertNil(token.json);
