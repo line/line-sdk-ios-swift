@@ -41,6 +41,7 @@ public class LoginProcess {
         let processID: String
         let nonce: String?
         let botPrompt: BotPrompt?
+        let preferredWebPageLanguage: LoginManager.WebPageLanguage?
     }
     
     /// Observes application switching to foreground.
@@ -77,6 +78,7 @@ public class LoginProcess {
     let configuration: LoginConfiguration
     let scopes: Set<LoginPermission>
     let options: LoginManagerOptions
+    let preferredWebPageLanguage: LoginManager.WebPageLanguage?
     
     // Flows of login process. A flow will be `nil` until it is running, so we could tell which one should take
     // responsibility to handle a url callback response.
@@ -116,12 +118,14 @@ public class LoginProcess {
         configuration: LoginConfiguration,
         scopes: Set<LoginPermission>,
         options: LoginManagerOptions,
+        preferredWebPageLanguage: LoginManager.WebPageLanguage?,
         viewController: UIViewController?)
     {
         self.configuration = configuration
         self.processID = UUID().uuidString
         self.scopes = scopes
         self.options = options
+        self.preferredWebPageLanguage = preferredWebPageLanguage
         self.presentingViewController = viewController
         
         if scopes.contains(.openID) {
@@ -144,7 +148,8 @@ public class LoginProcess {
                     otp: otp,
                     processID: self.processID,
                     nonce: self.tokenIDNonce,
-                    botPrompt: self.options.botPrompt)
+                    botPrompt: self.options.botPrompt,
+                    preferredWebPageLanguage: self.preferredWebPageLanguage)
                 if self.options.contains(.onlyWebLogin) {
                     self.startWebLoginFlow(parameters)
                 } else {
@@ -425,10 +430,14 @@ extension String {
 extension URL {
     func appendedLoginQuery(_ flowParameters: LoginProcess.FlowParameters) -> URL {
         let returnUri = String.returnUri(flowParameters)
-        let parameters: [String: Any] = [
+        var parameters: [String: Any] = [
             "returnUri": returnUri,
             "loginChannelId": flowParameters.channelID
         ]
+        if let lang = flowParameters.preferredWebPageLanguage {
+            parameters["lang"] = lang.rawValue
+        }
+
         let encoder = URLQueryEncoder(parameters: parameters)
         return encoder.encoded(for: self)
     }

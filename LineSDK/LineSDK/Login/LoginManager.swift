@@ -24,7 +24,29 @@ import Foundation
 /// Represents a login manager. You can set up the LINE SDK configuration, log in and log out the user with the
 /// LINE authorization flow, and check the authorization status.
 public class LoginManager {
-    
+
+    /// Represents the language used in web page.
+    public enum WebPageLanguage: String {
+        case arabic = "ar"
+        case german = "de"
+        case english = "en"
+        case spanish = "es"
+        case french = "fr"
+        case indonesian = "id"
+        case italian = "it"
+        case japanese = "jp"
+        case korean = "ko"
+        case malay = "ms"
+        case portugueseBrazilian = "pt-BR"
+        case portugueseEuropean = "pt-PT"
+        case russian = "ru"
+        case thai = "th"
+        case turkish = "tr"
+        case vietnamese = "vi"
+        case chineseSimplified = "zh-Hans"
+        case chineseTraditional = "zh-Hant"
+    }
+
     let lock = NSLock()
     
     /// The shared instance of the login manager. Always use this instance to interact with the login process of
@@ -55,6 +77,17 @@ public class LoginManager {
     public var isAuthorizing: Bool {
         return currentProcess != nil
     }
+
+    /// Sets the preferred language used when login with the web authorization flow.
+    ///
+    /// If not set, the web authentication flow shows the web page for login with user's device language or English as
+    /// a fallback. Once set, the web page will be displayed in the preferred language.
+    ///
+    /// Note:
+    ///
+    /// This property does not affect the preferred language when LINE app is used for authorization.
+    /// The LINE app always shows itself and the login screen following the user's device language.
+    public var preferredWebPageLanguage: WebPageLanguage? = nil
     
     /// A flag to prevent setup multiple times
     var setup = false
@@ -140,6 +173,7 @@ public class LoginManager {
             configuration: LoginConfiguration.shared,
             scopes: permissions,
             options: options,
+            preferredWebPageLanguage: preferredWebPageLanguage,
             viewController: viewController)
         process.start()
         process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
