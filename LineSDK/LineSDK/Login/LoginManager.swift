@@ -25,28 +25,6 @@ import Foundation
 /// LINE authorization flow, and check the authorization status.
 public class LoginManager {
 
-    /// Represents the language used in web page.
-    public enum WebPageLanguage: String {
-        case arabic = "ar"
-        case german = "de"
-        case english = "en"
-        case spanish = "es"
-        case french = "fr"
-        case indonesian = "id"
-        case italian = "it"
-        case japanese = "jp"
-        case korean = "ko"
-        case malay = "ms"
-        case portugueseBrazilian = "pt-BR"
-        case portugueseEuropean = "pt-PT"
-        case russian = "ru"
-        case thai = "th"
-        case turkish = "tr"
-        case vietnamese = "vi"
-        case chineseSimplified = "zh-Hans"
-        case chineseTraditional = "zh-Hant"
-    }
-
     let lock = NSLock()
     
     /// The shared instance of the login manager. Always use this instance to interact with the login process of
@@ -374,5 +352,56 @@ extension LoginManager {
         try payload.verify(keyPath: \.expiration, laterThan: now.addingTimeInterval(-allowedClockSkew))
         try payload.verify(keyPath: \.issueAt, earlierThan: now.addingTimeInterval(allowedClockSkew))
         try payload.verify(keyPath: \.nonce, expected: process.tokenIDNonce!)
+    }
+}
+
+extension LoginManager {
+    /// Represents the language used in web page.
+    public struct WebPageLanguage {
+        public let rawValue: String
+
+        /// Creates a web page language with a given raw string language code value.
+        ///
+        /// - Parameter rawValue: The value represents the language code.
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+
+        /// The Arabic langauge.
+        public static let arabic = WebPageLanguage(rawValue: "ar")
+        /// The German langauge.
+        public static let german = WebPageLanguage(rawValue: "de")
+        /// The English langauge.
+        public static let english = WebPageLanguage(rawValue: "en")
+        /// The Spanish langauge.
+        public static let spanish = WebPageLanguage(rawValue: "es")
+        /// The French langauge.
+        public static let french = WebPageLanguage(rawValue: "fr")
+        /// The Indonesian langauge.
+        public static let indonesian = WebPageLanguage(rawValue: "id")
+        /// The Italian langauge.
+        public static let italian = WebPageLanguage(rawValue: "it")
+        /// The Japanese langauge.
+        public static let japanese = WebPageLanguage(rawValue: "jp")
+        /// The Korean langauge.
+        public static let korean = WebPageLanguage(rawValue: "ko")
+        /// The Malay langauge.
+        public static let malay = WebPageLanguage(rawValue: "ms")
+        /// The Brazilian Portuguese langauge.
+        public static let portugueseBrazilian = WebPageLanguage(rawValue: "pt-BR")
+        /// The European Portuguese langauge.
+        public static let portugueseEuropean = WebPageLanguage(rawValue: "pt-PT")
+        /// The Russian langauge.
+        public static let russian = WebPageLanguage(rawValue: "ru")
+        /// The Thai langauge.
+        public static let thai = WebPageLanguage(rawValue: "th")
+        /// The Turkish langauge.
+        public static let turkish = WebPageLanguage(rawValue: "tr")
+        /// The Vietnamese langauge.
+        public static let vietnamese = WebPageLanguage(rawValue: "vi")
+        /// The SimplifiedC Chinese langauge.
+        public static let chineseSimplified = WebPageLanguage(rawValue: "zh-Hans")
+        /// The TraditionalC  Chinese langauge.
+        public static let chineseTraditional = WebPageLanguage(rawValue: "zh-Hant")
     }
 }
