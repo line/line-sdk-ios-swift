@@ -399,9 +399,9 @@ extension LoginManager {
         public static let turkish = WebPageLanguage(rawValue: "tr")
         /// The Vietnamese langauge.
         public static let vietnamese = WebPageLanguage(rawValue: "vi")
-        /// The SimplifiedC Chinese langauge.
+        /// The Simplified Chinese langauge.
         public static let chineseSimplified = WebPageLanguage(rawValue: "zh-Hans")
-        /// The TraditionalC  Chinese langauge.
+        /// The Traditional Chinese langauge.
         public static let chineseTraditional = WebPageLanguage(rawValue: "zh-Hant")
     }
 }
