@@ -44,7 +44,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         processID: "abc",
         nonce: "kkk",
         botPrompt: .normal,
-        preferredWebPageLanguage: LoginManager.WebPageLanguage.chineseSimplified)
+        preferredWebPageLanguage: .chineseSimplified)
     
     // Login URL has a double escaped query.
     func testLoginQueryURLEncode() {

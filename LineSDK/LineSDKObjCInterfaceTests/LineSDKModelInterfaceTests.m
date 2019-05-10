@@ -118,6 +118,7 @@
     XCTAssertFalse(manager.isSetupFinished);
     XCTAssertFalse(manager.isAuthorized);
     XCTAssertFalse(manager.isAuthorizing);
+
     [manager setupWithChannelID:@"" universalLinkURL:nil];
     [manager loginWithPermissions:nil
                  inViewController:nil
@@ -139,6 +140,15 @@
     XCTAssertFalse(opened);
     
     XCTAssertNotNil([LineSDKLoginManager sharedManager]);
+}
+
+- (void)testLoginManagerLangSettingInterface {
+    LineSDKLoginManager *manager = [LineSDKLoginManager sharedManager];
+    XCTAssertNil(manager.preferredWebPageLanguage);
+    [manager setPreferredWebPageLanguage:@"zh-Hans"];
+    XCTAssertEqual(manager.preferredWebPageLanguage, @"zh-Hans");
+    manager.preferredWebPageLanguage = nil;
+    XCTAssertNil(manager.preferredWebPageLanguage);
 }
 
 - (void)testHexColorInterface {
