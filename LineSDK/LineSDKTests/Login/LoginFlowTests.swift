@@ -62,7 +62,6 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         var item: URLQueryItem
 
         item = items.first { $0.name == "loginChannelId" }!
-
         XCTAssertEqual(item.value, "123")
 
         item = items.first { $0.name == "returnUri" }!
