@@ -435,7 +435,7 @@ extension URL {
             "loginChannelId": flowParameters.channelID
         ]
         if let lang = flowParameters.preferredWebPageLanguage {
-            parameters["lang"] = lang.rawValue
+            parameters["ui_locales"] = lang.rawValue
         }
 
         let encoder = URLQueryEncoder(parameters: parameters)

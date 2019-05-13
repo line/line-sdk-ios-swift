@@ -96,7 +96,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertEqual(item.value?.removingPercentEncoding,
                        item.value?.removingPercentEncoding?.removingPercentEncoding)
 
-        item = items.first { $0.name == "lang" }!
+        item = items.first { $0.name == "ui_locales" }!
         XCTAssertEqual(item.value, "zh-Hans")
     }
     
