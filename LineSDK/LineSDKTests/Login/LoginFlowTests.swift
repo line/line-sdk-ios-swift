@@ -33,7 +33,18 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         otp: .init(otpId: "321", otp: "aaa"),
         processID: "abc",
         nonce: "kkk",
-        botPrompt: .normal)
+        botPrompt: .normal,
+        preferredWebPageLanguage: nil)
+
+    let parameterWithLanguage = LoginProcess.FlowParameters(
+        channelID: "123",
+        universalLinkURL: nil,
+        scopes: [.profile, .openID],
+        otp: .init(otpId: "321", otp: "aaa"),
+        processID: "abc",
+        nonce: "kkk",
+        botPrompt: .normal,
+        preferredWebPageLanguage: .chineseSimplified)
     
     // Login URL has a double escaped query.
     func testLoginQueryURLEncode() {
@@ -48,23 +59,45 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         let items = components!.queryItems!
         XCTAssertEqual(items.count, 2)
         
-        var hit = 0
-        for item in items {
-            if item.name == "loginChannelId" {
-                hit += 1
-                XCTAssertEqual(item.value, "123")
-            }
-            if (item.name == "returnUri") {
-                hit += 1
+        var item: URLQueryItem
 
-                XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
-                
-                // Should be already fully decoded (no double encoding in the url)
-                XCTAssertEqual(item.value?.removingPercentEncoding,
-                               item.value?.removingPercentEncoding?.removingPercentEncoding)
-            }
-        }
-        XCTAssertEqual(hit, 2)
+        item = items.first { $0.name == "loginChannelId" }!
+        XCTAssertEqual(item.value, "123")
+
+        item = items.first { $0.name == "returnUri" }!
+        XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
+
+        // Should be already fully decoded (no double encoding in the url)
+        XCTAssertEqual(item.value?.removingPercentEncoding,
+                       item.value?.removingPercentEncoding?.removingPercentEncoding)
+    }
+
+    func testLoginQueryWithLangURLEncode() {
+
+        let baseURL = URL(string: Constant.lineWebAuthUniversalURL)!
+        let result = baseURL.appendedLoginQuery(parameterWithLanguage)
+
+        let urlString = result.absoluteString.removingPercentEncoding
+        XCTAssertNotNil(urlString)
+
+        let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
+        let items = components!.queryItems!
+        XCTAssertEqual(items.count, 3)
+
+        var item: URLQueryItem
+
+        item = items.first { $0.name == "loginChannelId" }!
+        XCTAssertEqual(item.value, "123")
+
+        item = items.first { $0.name == "returnUri" }!
+        XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
+
+        // Should be already fully decoded (no double encoding in the url)
+        XCTAssertEqual(item.value?.removingPercentEncoding,
+                       item.value?.removingPercentEncoding?.removingPercentEncoding)
+
+        item = items.first { $0.name == "ui_locales" }!
+        XCTAssertEqual(item.value, "zh-Hans")
     }
     
     // URL Scheme has a triple escaped query.
@@ -78,21 +111,15 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
         let items = components!.queryItems!
         XCTAssertEqual(items.count, 1)
-        
-        var hit = 0
-        for item in items {
-            if (item.name == "loginUrl") {
-                hit += 1
-                XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
-                XCTAssertNotEqual(item.value?.removingPercentEncoding,
-                                  item.value?.removingPercentEncoding?.removingPercentEncoding)
-                
-                // Should be already fully decoded (no double encoding in the url)
-                XCTAssertEqual(item.value?.removingPercentEncoding?.removingPercentEncoding,
-                               item.value?.removingPercentEncoding?.removingPercentEncoding?.removingPercentEncoding)
-            }
-        }
-        XCTAssertEqual(hit, 1)
+
+        let item = items.first { $0.name == "loginUrl" }!
+        XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
+        XCTAssertNotEqual(item.value?.removingPercentEncoding,
+                          item.value?.removingPercentEncoding?.removingPercentEncoding)
+
+        // Should be already fully decoded (no double encoding in the url)
+        XCTAssertEqual(item.value?.removingPercentEncoding?.removingPercentEncoding,
+                       item.value?.removingPercentEncoding?.removingPercentEncoding?.removingPercentEncoding)
     }
     
     func testAppUniversalLinkFlow() {

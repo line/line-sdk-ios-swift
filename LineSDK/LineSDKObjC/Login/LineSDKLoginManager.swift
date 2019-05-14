@@ -33,6 +33,10 @@ public class LineSDKLoginManager: NSObject {
     public var isSetupFinished: Bool { return _value.isSetupFinished }
     public var isAuthorized: Bool { return _value.isAuthorized }
     public var isAuthorizing: Bool { return _value.isAuthorizing }
+    public var preferredWebPageLanguage: String? {
+        get { return _value.preferredWebPageLanguage?.rawValue }
+        set { _value.preferredWebPageLanguage = newValue.map { .init(rawValue: $0) } }
+    }
     public func setup(channelID: String, universalLinkURL: URL?) {
         _value.setup(channelID: channelID, universalLinkURL: universalLinkURL)
     }
