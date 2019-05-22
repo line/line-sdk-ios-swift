@@ -63,10 +63,10 @@ o2kQ+X5xK9cipRgEKwIDAQAB
    "name": "John Doe",
    "admin": true,
    "iat": 1516239022,
-   "amr": ["abc", "def"]
+   "amr": ["pwd", "lineautologin", "lineqr"]
  }
  */
-private let sample = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiYW1yIjpbImFiYyIsImRlZiJdfQ.KfkRyRPePefcNbHdbnI3lTlZft1XTroJa_Y2AgMU2qokAyc-Q9YC0xj7N3aFr4kIL7kd31-3ZPegqrPV17Wo4JXXIYwJhb7IbJ8tNdZ61w9paer-i3n55wBoeEnSlD92BJtrtwvJAaQ4rgRgT4BMTcnNxb7g6pGuqnL5MLp5b4M"
+private let sample = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiYW1yIjpbInB3ZCIsImxpbmVhdXRvbG9naW4iLCJsaW5lcXIiXX0.ENGgzjwLiupqIWlZfBQDyGlVyyxJbabmaq06oOpmSN_WsccH2lFRbpfMWpbC_Ir0uxu_PYFXJnS22lthPUJAEjnRU_fRY42cwtuWvtPgqDXTTm5E2ux5rNJnxvdfKtCKpNogd3okgLuu4is3g14bgIpisadq2oqJwTsgHRfZcEg"
 
 /*
  {
@@ -101,7 +101,7 @@ class JWTRSATests: XCTestCase {
         XCTAssertEqual(token.payload.subject, "1234567890")
         XCTAssertEqual(token.payload["iat", Int64.self], 1516239022)
         XCTAssertTrue(token.payload["admin", Bool.self]!)
-        XCTAssertEqual(token.payload.amr, ["abc", "def"])
+        XCTAssertEqual(token.payload.amr, ["pwd", "lineautologin", "lineqr"])
     }
     
     func testJWTSignatureVerify() {
