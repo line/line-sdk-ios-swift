@@ -62,10 +62,11 @@ o2kQ+X5xK9cipRgEKwIDAQAB
    "sub": "1234567890",
    "name": "John Doe",
    "admin": true,
-   "iat": 1516239022
+   "iat": 1516239022,
+   "amr": ["abc", "def"]
  }
  */
-private let sample = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.TCYt5XsITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUcX16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtjPAYuNzVBAh4vGHSrQyHUdBBPM"
+private let sample = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiYW1yIjpbImFiYyIsImRlZiJdfQ.KfkRyRPePefcNbHdbnI3lTlZft1XTroJa_Y2AgMU2qokAyc-Q9YC0xj7N3aFr4kIL7kd31-3ZPegqrPV17Wo4JXXIYwJhb7IbJ8tNdZ61w9paer-i3n55wBoeEnSlD92BJtrtwvJAaQ4rgRgT4BMTcnNxb7g6pGuqnL5MLp5b4M"
 
 /*
  {
@@ -96,9 +97,11 @@ class JWTRSATests: XCTestCase {
         XCTAssertEqual(token.header.tokenType, "JWT")
         
         XCTAssertEqual(token.payload["name", String.self], "John Doe")
-        XCTAssertEqual(token.payload["sub", String.self], "1234567890")
+        XCTAssertEqual(token.payload.name, "John Doe")
+        XCTAssertEqual(token.payload.subject, "1234567890")
         XCTAssertEqual(token.payload["iat", Int64.self], 1516239022)
         XCTAssertTrue(token.payload["admin", Bool.self]!)
+        XCTAssertEqual(token.payload.amr, ["abc", "def"])
     }
     
     func testJWTSignatureVerify() {

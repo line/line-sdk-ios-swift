@@ -262,6 +262,7 @@
     XCTAssertNil(payload.name);
     XCTAssertNil(payload.picture);
     XCTAssertNil(payload.email);
+    XCTAssertNil(payload.amr);
 }
 
 - (void)testLoginButtonInterface {

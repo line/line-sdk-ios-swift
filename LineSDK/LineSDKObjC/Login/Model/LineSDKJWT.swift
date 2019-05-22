@@ -63,4 +63,5 @@ public class LineSDKJWTPayload: NSObject {
     public var name: String? { return value.name }
     public var picture: URL? { return value.pictureURL }
     public var email: String? { return value.email }
+    public var amr: [String]? { return value.amr }
 }
