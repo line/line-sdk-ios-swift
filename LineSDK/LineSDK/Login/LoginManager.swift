@@ -367,41 +367,41 @@ extension LoginManager {
             self.rawValue = rawValue
         }
 
-        /// The Arabic langauge.
+        /// The Arabic language.
         public static let arabic = WebPageLanguage(rawValue: "ar")
-        /// The German langauge.
+        /// The German language.
         public static let german = WebPageLanguage(rawValue: "de")
-        /// The English langauge.
+        /// The English language.
         public static let english = WebPageLanguage(rawValue: "en")
-        /// The Spanish langauge.
+        /// The Spanish language.
         public static let spanish = WebPageLanguage(rawValue: "es")
-        /// The French langauge.
+        /// The French language.
         public static let french = WebPageLanguage(rawValue: "fr")
-        /// The Indonesian langauge.
+        /// The Indonesian language.
         public static let indonesian = WebPageLanguage(rawValue: "id")
-        /// The Italian langauge.
+        /// The Italian language.
         public static let italian = WebPageLanguage(rawValue: "it")
-        /// The Japanese langauge.
+        /// The Japanese language.
         public static let japanese = WebPageLanguage(rawValue: "jp")
-        /// The Korean langauge.
+        /// The Korean language.
         public static let korean = WebPageLanguage(rawValue: "ko")
-        /// The Malay langauge.
+        /// The Malay language.
         public static let malay = WebPageLanguage(rawValue: "ms")
-        /// The Brazilian Portuguese langauge.
+        /// The Brazilian Portuguese language.
         public static let portugueseBrazilian = WebPageLanguage(rawValue: "pt-BR")
-        /// The European Portuguese langauge.
+        /// The European Portuguese language.
         public static let portugueseEuropean = WebPageLanguage(rawValue: "pt-PT")
-        /// The Russian langauge.
+        /// The Russian language.
         public static let russian = WebPageLanguage(rawValue: "ru")
-        /// The Thai langauge.
+        /// The Thai language.
         public static let thai = WebPageLanguage(rawValue: "th")
-        /// The Turkish langauge.
+        /// The Turkish language.
         public static let turkish = WebPageLanguage(rawValue: "tr")
-        /// The Vietnamese langauge.
+        /// The Vietnamese language.
         public static let vietnamese = WebPageLanguage(rawValue: "vi")
-        /// The Simplified Chinese langauge.
+        /// The Simplified Chinese language.
         public static let chineseSimplified = WebPageLanguage(rawValue: "zh-Hans")
-        /// The Traditional Chinese langauge.
+        /// The Traditional Chinese language.
         public static let chineseTraditional = WebPageLanguage(rawValue: "zh-Hant")
     }
 }
