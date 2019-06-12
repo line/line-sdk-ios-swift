@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.2.0] - 2019-06-12
+
 ### Added
 
 - Support for customizing the language used when login through web page. Set `preferredWebPageLanguage` of `LoginManager` to apply the required language. The default behavior (using the system language on user's device) is not changed. [#61](https://github.com/line/line-sdk-ios-swift/pull/61)
@@ -82,3 +84,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.1.0]: https://github.com/line/line-sdk-ios-swift/compare/5.0.3...5.1.0
 [5.1.1]: https://github.com/line/line-sdk-ios-swift/compare/5.1.0...5.1.1
 [5.1.2]: https://github.com/line/line-sdk-ios-swift/compare/5.1.1...5.1.2
+[5.2.0]: https://github.com/line/line-sdk-ios-swift/compare/5.1.2...5.2.0
