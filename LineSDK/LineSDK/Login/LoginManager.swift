@@ -56,6 +56,17 @@ public class LoginManager {
         return currentProcess != nil
     }
 
+    /// Sets the preferred language used when login with the web authorization flow.
+    ///
+    /// If not set, the web authentication flow shows the web page for login with user's device language or English as
+    /// a fallback. Once set, the web page will be displayed in the preferred language.
+    ///
+    /// Note:
+    ///
+    /// This property does not affect the preferred language when LINE app is used for authorization.
+    /// The LINE app always shows itself and the login screen following the user's device language.
+    public var preferredWebPageLanguage: WebPageLanguage? = nil
+    
     /// A flag to prevent setup multiple times
     var setup = false
 
@@ -140,6 +151,7 @@ public class LoginManager {
             configuration: LoginConfiguration.shared,
             scopes: permissions,
             options: options,
+            preferredWebPageLanguage: preferredWebPageLanguage,
             viewController: viewController)
         process.start()
         process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
@@ -228,12 +240,12 @@ public class LoginManager {
             completion(result)
         }
     }
-
-    /// Logs out the current user by revoking the access token.
+    
+    /// Logs out the current user by revoking the refresh token and all its corresponding access tokens.
     ///
     /// - Parameter completion: The completion closure to be invoked when the logout action is finished.
     public func logout(completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void) {
-        API.revokeAccessToken(completionHandler: completion)
+        API.revokeRefreshToken(completionHandler: completion)
     }
 
     /// Asks this `LoginManager` object to handle a URL callback from either LINE or the web login flow.
@@ -340,5 +352,56 @@ extension LoginManager {
         try payload.verify(keyPath: \.expiration, laterThan: now.addingTimeInterval(-allowedClockSkew))
         try payload.verify(keyPath: \.issueAt, earlierThan: now.addingTimeInterval(allowedClockSkew))
         try payload.verify(keyPath: \.nonce, expected: process.tokenIDNonce!)
+    }
+}
+
+extension LoginManager {
+    /// Represents the language used in web page.
+    public struct WebPageLanguage {
+        public let rawValue: String
+
+        /// Creates a web page language with a given raw string language code value.
+        ///
+        /// - Parameter rawValue: The value represents the language code.
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+
+        /// The Arabic language.
+        public static let arabic = WebPageLanguage(rawValue: "ar")
+        /// The German language.
+        public static let german = WebPageLanguage(rawValue: "de")
+        /// The English language.
+        public static let english = WebPageLanguage(rawValue: "en")
+        /// The Spanish language.
+        public static let spanish = WebPageLanguage(rawValue: "es")
+        /// The French language.
+        public static let french = WebPageLanguage(rawValue: "fr")
+        /// The Indonesian language.
+        public static let indonesian = WebPageLanguage(rawValue: "id")
+        /// The Italian language.
+        public static let italian = WebPageLanguage(rawValue: "it")
+        /// The Japanese language.
+        public static let japanese = WebPageLanguage(rawValue: "jp")
+        /// The Korean language.
+        public static let korean = WebPageLanguage(rawValue: "ko")
+        /// The Malay language.
+        public static let malay = WebPageLanguage(rawValue: "ms")
+        /// The Brazilian Portuguese language.
+        public static let portugueseBrazilian = WebPageLanguage(rawValue: "pt-BR")
+        /// The European Portuguese language.
+        public static let portugueseEuropean = WebPageLanguage(rawValue: "pt-PT")
+        /// The Russian language.
+        public static let russian = WebPageLanguage(rawValue: "ru")
+        /// The Thai language.
+        public static let thai = WebPageLanguage(rawValue: "th")
+        /// The Turkish language.
+        public static let turkish = WebPageLanguage(rawValue: "tr")
+        /// The Vietnamese language.
+        public static let vietnamese = WebPageLanguage(rawValue: "vi")
+        /// The Simplified Chinese language.
+        public static let chineseSimplified = WebPageLanguage(rawValue: "zh-Hans")
+        /// The Traditional Chinese language.
+        public static let chineseTraditional = WebPageLanguage(rawValue: "zh-Hant")
     }
 }

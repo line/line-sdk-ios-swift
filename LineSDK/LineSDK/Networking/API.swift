@@ -36,7 +36,6 @@ public struct API {
     /// Refreshes the access token with `refreshToken`.
     ///
     /// - Parameters:
-    ///   - refreshToken: A refresh token. Optional. If not specified, the current refresh token is used.
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the access token is refreshed.
@@ -47,11 +46,10 @@ public struct API {
     ///   manually because any API call will attempt to refresh the access token if necessary.
     ///
     public static func refreshAccessToken(
-        _ refreshToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<AccessToken, LineSDKError>) -> Void)
     {
-        guard let token = refreshToken ?? AccessTokenStore.shared.current?.refreshToken else {
+        guard let token = AccessTokenStore.shared.current?._refreshToken else {
             queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
             return
         }
@@ -104,6 +102,64 @@ public struct API {
             return
         }
         let request = PostRevokeTokenRequest(channelID: LoginConfiguration.shared.channelID, accessToken: token)
+        Session.shared.send(request, callbackQueue: queue) { result in
+            switch result {
+            case .success(_):
+                handleSuccessResult()
+            case .failure(let error):
+                guard case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = error else {
+                    completion(.failure(error))
+                    return
+                }
+                // We recognize response 400 as a success for revoking (since the token itself is invalid).
+                if detail.code == 400 {
+                    Log.print(error.localizedDescription)
+                    handleSuccessResult()
+                }
+            }
+        }
+    }
+
+    /// Revokes the refresh token and all its corresponding access tokens.
+    ///
+    /// - Parameters:
+    ///   - refreshToken: The refresh token to be revoked. Optional. If not specified, the current refresh token will
+    ///            be revoked.
+    ///   - queue: The callback queue that is used for `completion`. The default value is
+    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
+    ///   - completion: The completion closure to be invoked when the access token is revoked.
+    /// - Note:
+    ///
+    ///   Do not pass an access token to the `refreshToken` parameter. To revoke an access token, use
+    ///   `revokeAccessToken(_:callbackQueue:completionHandler:)` instead.
+    ///
+    ///   The revoked token will be automatically removed from the keychain. If `refreshToken` has a `nil` value
+    ///   and the current refresh token does not exist, `completion` will be called with `.success`. The
+    ///   same applies when `refreshToken` has an invalid refresh token.
+    ///
+    ///   This API will revoke the given refresh token and all its corresponding access token. Once these tokens are
+    ///   revoked, you can neither call an API protected by an access token or refresh the access token with the refresh
+    ///   token. To access the resource owner's content, you need to ask your users to authorize you app again.
+    ///
+    ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token removed from the device.
+    public static func revokeRefreshToken(
+        _ refreshToken: String? = nil,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
+    {
+        func handleSuccessResult() {
+            let result = Result { try AccessTokenStore.shared.removeCurrentAccessToken() }
+            completion(result)
+        }
+
+        guard let refreshToken = refreshToken ?? AccessTokenStore.shared.current?._refreshToken else {
+            // No token input or found in store, just recognize it as success.
+            queue.execute { completion(.success(())) }
+            return
+        }
+        let request = PostRevokeRefreshTokenRequest(
+            channelID: LoginConfiguration.shared.channelID,
+            refreshToken: refreshToken)
         Session.shared.send(request, callbackQueue: queue) { result in
             switch result {
             case .success(_):

@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// A sets of connivence methods for manipulating the `Result` type.
+/// A set of convenience methods for manipulating the `Result` type.
 public enum ResultUtil {
 
     /// Evaluates the given transform closures to create a single output value.
@@ -77,8 +77,8 @@ public enum ResultUtil {
     }
 }
 
-// These helper methods are not public since we do not want them to be exposed or cause any conflicting.
-// However, they are just wrapper of `ResultUtil` static methods.
+// These helper methods are not public since we do not want them to be exposed or cause any conflicts.
+// They are merely a wrapper for the `ResultUtil` static methods.
 extension Result {
 
     /// Evaluates the given transform closures to create a single output value.

@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.2.0] - 2019-06-12
+
+### Added
+
+- Support for customizing the language used when login through web page. Set `preferredWebPageLanguage` of `LoginManager` to apply the required language. The default behavior (using the system language on user's device) is not changed. [#61](https://github.com/line/line-sdk-ios-swift/pull/61)
+- Support for accessing AMR (Authentication Methods References) value in ID Token. [#63](https://github.com/line/line-sdk-ios-swift/pull/63)
+- Now you can use either Swift 4.2 or Swift 5.0 when integrating LINE SDK with CocoaPods. [#60](https://github.com/line/line-sdk-ios-swift/pull/60)
+
+### Fixed
+
+- The `refreshToken` in `AccessToken` is now marked as `private`. We do not encourage you to use or store the refresh token yourself. Instead, always use the refresh token API from client when you want to get a new access token.
+
+
+## [5.1.2] - 2019-04-15
+
+### Fixed
+
+- Logging out a user now revokes refresh token and its corresponding access tokens, instead of the current access token only. [#45](https://github.com/line/line-sdk-ios-swift/pull/45)
+
+## [5.1.1] - 2019-03-28
+
+### Fixed
+
+- Allow additional application bundle ID of LINE apps to grant authorization code.
+
 ## [5.1.0] - 2019-02-26
 
 ### Added
@@ -57,3 +82,6 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.0.2]: https://github.com/line/line-sdk-ios-swift/compare/5.0.1...5.0.2
 [5.0.3]: https://github.com/line/line-sdk-ios-swift/compare/5.0.2...5.0.3
 [5.1.0]: https://github.com/line/line-sdk-ios-swift/compare/5.0.3...5.1.0
+[5.1.1]: https://github.com/line/line-sdk-ios-swift/compare/5.1.0...5.1.1
+[5.1.2]: https://github.com/line/line-sdk-ios-swift/compare/5.1.1...5.1.2
+[5.2.0]: https://github.com/line/line-sdk-ios-swift/compare/5.1.2...5.2.0

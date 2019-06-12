@@ -40,38 +40,42 @@ protocol AccessTokenType {}
 /// `current` property of an `AccessTokenStore` object.
 ///
 public struct AccessToken: Codable, AccessTokenType, Equatable {
-    
+
     /// The value of the access token.
     public let value: String
-    
+
     let expiresIn: TimeInterval
-    
+
     /// The creation time of the access token. It is the system time of the device that receives the current
     /// access token.
     public let createdAt: Date
-    
+
     /// The ID token bound to the access token. The value exists only if the access token is obtained with
     /// the `.openID` permission.
     public let IDToken: JWT?
 
-    /// The raw string value of ID token bound to the access token. The value exists only if the access token
+    /// The raw string value of the ID token bound to the access token. The value exists only if the access token
     /// is obtained with the `.openID` permission.
     public let IDTokenRaw: String?
-    
+
     /// The refresh token bound to the access token.
-    public let refreshToken: String
-    
+    @available(*, unavailable,
+    message: "`refreshToken` is not publicly provided anymore. You should not access or store it yourself.")
+    public var refreshToken: String { Log.fatalError("`refreshToken` is not publicly provided anymore.") }
+
+    let _refreshToken: String
+
     /// Permissions of the access token.
     public let permissions: [LoginPermission]
     let tokenType: String
-    
+
     /// The expiration time of the access token. It is calculated using `createdAt` and the validity period
     /// of the access token. This value might not be the actual expiration time because this value depends
     /// on the system time of the device when `createdAt` is determined.
     public var expiresAt: Date {
         return createdAt.addingTimeInterval(expiresIn)
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case value = "access_token"
         case expiresIn = "expires_in"
@@ -81,30 +85,30 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         case tokenType = "token_type"
         case createdAt
     }
-    
+
     /// :nodoc:
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         value = try container.decode(String.self, forKey: .value)
         expiresIn = try container.decode(TimeInterval.self, forKey: .expiresIn)
-        
+
         // Try to decode createdAt. If there is no such value, it means we are receiving it
         // from server and we should create a reference Date for it.
         // Otherwise, it is the case that loaded from keychain.
         createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt) ?? Date()
-        
+
         IDTokenRaw = try container.decodeIfPresent(String.self, forKey: .IDTokenRaw)
         if let tokenRaw = IDTokenRaw {
             IDToken = try JWT(text: tokenRaw)
         } else {
             IDToken = nil
         }
-        
-        refreshToken = try container.decode(String.self, forKey: .refreshToken)
+
+        _refreshToken = try container.decode(String.self, forKey: .refreshToken)
         permissions = try container.decodeLoginPermissions(forKey: .scope)
         tokenType = try container.decode(String.self, forKey: .tokenType)
     }
-    
+
     /// :nodoc:
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -112,9 +116,8 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         try container.encode(expiresIn, forKey: .expiresIn)
         try container.encode(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(IDTokenRaw, forKey: .IDTokenRaw)
-        try container.encode(refreshToken, forKey: .refreshToken)
+        try container.encode(_refreshToken, forKey: .refreshToken)
         try container.encodeLoginPermissions(permissions, forKey: .scope)
         try container.encode(tokenType, forKey: .tokenType)
     }
 }
-

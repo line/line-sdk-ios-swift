@@ -141,6 +141,8 @@ extension Result : Equatable where Success : Equatable, Failure: Equatable { }
 extension Result : Hashable where Success : Hashable, Failure : Hashable { }
 
 extension Result : CustomDebugStringConvertible {
+
+    /// A textual summary of the `Result`, to help with debugging.
     public var debugDescription: String {
         var output = "Result."
         switch self {
@@ -182,7 +184,7 @@ extension Result {
         }
     }
 
-    /// A Boolean value indicating whether the `Result` as a success.
+    /// A Boolean value indicating whether the `Result` was a success.
     @available(*, deprecated, message: "This method will be removed soon. Use methods defined in `Swift.Result`.")
     public var isSuccess: Bool {
         switch self {

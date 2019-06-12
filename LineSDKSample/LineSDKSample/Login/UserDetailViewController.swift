@@ -77,12 +77,10 @@ class UserDetailViewController: UITableViewController, CellCopyable {
         case 0:
             content = ("Access", token?.value ?? "N/A")
         case 1:
-            content = ("Refresh", token?.refreshToken ?? "N/A")
-        case 2:
             content = ("Created", token?.createdAt.description ?? "N/A")
-        case 3:
+        case 2:
             content = ("Expire", token?.expiresAt.description ?? "N/A")
-        case 4:
+        case 3:
             let permissions = token?.permissions ?? []
             let text = permissions.map { $0.rawValue }.joined(separator: " ")
             content = ("Permissions", text)
@@ -96,7 +94,7 @@ class UserDetailViewController: UITableViewController, CellCopyable {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Section(rawValue: section)! {
         case .user: return 4
-        case .token: return 5
+        case .token: return 4
         }
     }
 

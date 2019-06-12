@@ -187,6 +187,9 @@ extension JWT.Payload {
         }
         return Date(timeIntervalSince1970: timeInterval)
     }
+
+    /// The authentication methods references of the ID token.
+    public var amr: [String]? { return self["amr", [String].self] }
 }
 
 // MARK: - LINE-specific claims

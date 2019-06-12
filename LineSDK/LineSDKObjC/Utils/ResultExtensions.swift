@@ -22,7 +22,7 @@
 #if !LineSDKCocoaPods
 
 import LineSDK
-// These helper methods are not public since we do not want them to be exposed or cause any conflicting.
+// These helper methods are not public since we do not want them to be exposed or cause any conflicts.
 // However, they are just wrapper of `ResultUtil` static methods.
 //
 // When compiling with CocoaPods, the extensions under LineSDK target should be used.

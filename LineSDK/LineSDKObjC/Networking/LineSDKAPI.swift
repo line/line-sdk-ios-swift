@@ -30,22 +30,14 @@ public class LineSDKAPI: NSObject {
     public static func refreshAccessToken(
         completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void)
     {
-        refreshAccessToken(nil, completionHandler: completion)
+        refreshAccessToken(callbackQueue: .currentMainOrAsync, completionHandler: completion)
     }
     
     public static func refreshAccessToken(
-        _ refreshToken: String?,
-        completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void)
-    {
-        refreshAccessToken(refreshToken, callbackQueue: .currentMainOrAsync, completionHandler: completion)
-    }
-    
-    public static func refreshAccessToken(
-        _ refreshToken: String?,
         callbackQueue queue: LineSDKCallbackQueue,
         completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void)
     {
-        API.refreshAccessToken(refreshToken, callbackQueue: queue.unwrapped) { result in
+        API.refreshAccessToken(callbackQueue: queue.unwrapped) { result in
             result.map(LineSDKAccessToken.init).match(with: completion)
         }
     }
