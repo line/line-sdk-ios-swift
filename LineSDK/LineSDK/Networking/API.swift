@@ -128,8 +128,8 @@ public struct API {
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the access token is revoked.
-    /// - Note:
     ///
+    /// - Note:
     ///   Do not pass an access token to the `refreshToken` parameter. To revoke an access token, use
     ///   `revokeAccessToken(_:callbackQueue:completionHandler:)` instead.
     ///
