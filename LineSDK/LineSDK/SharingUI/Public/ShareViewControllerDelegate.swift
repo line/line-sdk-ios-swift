@@ -196,7 +196,7 @@ extension ShareViewControllerDelegate {
             Log.fatalError(
                 """
                 You need at least set the `ShareViewController.message` or implement
-                `shareViewController(:messageForSendingToTargets:)` before sharing a message.")
+                `shareViewController(:messageForSendingToTargets:)` before sharing a message.)
                 """
             )
         }
