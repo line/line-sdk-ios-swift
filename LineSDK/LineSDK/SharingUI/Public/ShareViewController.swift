@@ -42,7 +42,7 @@ public typealias ShareSendingResult = PostMultisendMessagesRequest.Response.Send
 
  1. Verify that the user has granted your app the necessary permissions. `ShareViewController` will show both
  Friends and Groups tabs. To get the friend list and group list, you need `LoginPermission.friends` and
- `Login.groups`. To send a message, you need `LoginPermisson.messageWrite`.
+ `LoginPermission.groups`. To send a message, you need `LoginPermisson.messageWrite`.
  Use `ShareViewController.localAuthorizationStatusForSendingMessage(to:)` to check whether you have a valid token with
  the necessary permissions. If you don't have them, you shouldn't create and show the `ShareViewController`,
  but prompt your user to authorize your app with these permissions.
