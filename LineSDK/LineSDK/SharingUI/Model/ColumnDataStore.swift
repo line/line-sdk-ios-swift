@@ -33,7 +33,7 @@ extension LineSDKNotificationKey {
     static let positionInSelected = "positionInSelected"
 }
 
-// A column based data structure. It provides easy ways to store and interact data in a 2D array.
+// A column-based data structure. It makes it easier to store and interact with data in a 2D array.
 class ColumnDataStore<T> {
 
     struct ColumnIndex: Equatable {
@@ -72,7 +72,7 @@ class ColumnDataStore<T> {
         let endIndex = column.count
         let indexRange = AppendingIndexRange(startIndex: startIndex, endIndex: endIndex, column: columnIndex)
 
-        // Make sure the notification is delivered on the main thread since it is often used to update UI.
+        // Make sure the notification is delivered on the main thread, because it's often used to update the UI.
         CallbackQueue.currentMainOrAsync.execute {
             NotificationCenter.default.post(
                 name: .columnDataStoreDidAppendData,
@@ -99,7 +99,7 @@ class ColumnDataStore<T> {
         return selectedIndexes.contains(index)
     }
 
-    // Return `false` if the toggle failed due to `maximumSelectedCount` reached.
+    // Return `false` if the toggle failed due to reaching `maximumSelectedCount`.
     @discardableResult
     func toggleSelect(atColumn columnIndex: Int, row rowIndex: Int) -> Bool {
 
@@ -138,4 +138,3 @@ class ColumnDataStore<T> {
         return (0 ..< data.count).map { indexes(atColumn: $0, where: filtered) }
     }
 }
-
