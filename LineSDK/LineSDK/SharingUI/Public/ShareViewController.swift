@@ -22,7 +22,7 @@
 import UIKit
 
 /// Represents the sending results when sending messages to friends or groups through `ShareViewController`.
-/// In the result, a destination user or group ID of this result and a `MessageSendingStatus` will be contained.
+/// The result contains 1) a destination user or group ID of this result and 2) a `MessageSendingStatus`.
 /// See `MessageSendingStatus` for more information on the sending status.
 public typealias ShareSendingResult = PostMultisendMessagesRequest.Response.SendingResult
 
@@ -32,31 +32,30 @@ public typealias ShareSendingResult = PostMultisendMessagesRequest.Response.Send
 
  ## Overview
 
- A `ShareViewController` allows users to use a default user interface to share a message to LINE.
- An authorized user can browse, search and select up to 10 users or groups in a tab based table view UI.
- After selecting share target, the user can tap the "Send" button to share a preset `Message` to the selected
- targets. These messages will be delivered to target users or groups in the name of the user himself/herself.
+ A `ShareViewController` allows users to share a message to LINE via a default UI.
+ An authorized user can browse, search, and select up to 10 users or groups in a tab-based table view UI.
+ After choosing their share targets, the user taps "Send" to share a preset `Message` to the targets. 
+ The message appears to the target recipients as having been sent by the user themselves.
 
- The `ShareViewController` is a subclass of `UINavigationController`, so you need to create and present it modally.
- To use the `ShareViewController`, follow these steps:
+ `ShareViewController` is a subclass of `UINavigationController`, so you need to create and present it modally.
+ To use `ShareViewController`, follow these steps:
 
- 1. Verify that the user has authorized your app with enough permission. `ShareViewController` will show both
+ 1. Verify that the user has granted your app the necessary permissions. `ShareViewController` will show both
  Friends and Groups tabs. To get the friend list and group list, you need `LoginPermission.friends` and
- `Login.groups`. To send a message, it also requires `LoginPermisson.messageWrite`.
+ `LoginPermission.groups`. To send a message, you need `LoginPermisson.messageWrite`.
  Use `ShareViewController.localAuthorizationStatusForSendingMessage(to:)` to check whether you have a valid token with
- enough permissions. If you do not have enough permissions, you should not create and show the `ShareViewController`,
+ the necessary permissions. If you don't have them, you shouldn't create and show the `ShareViewController`,
  but prompt your user to authorize your app with these permissions.
 
- 2. Create a `ShareViewController` instance. `ShareViewController` does not support to be initialized from Storyboard or
- XIB. You need to create one with the provided initializer `init()`.
+ 2. Create a `ShareViewController` instance. `ShareViewController` can't be initialized from Storyboard or
+ XIB. Use the provided initializer `init()`.
 
- 3. Set `messages` to tell the `ShareViewController` the `Message` values you want to share.
+ 3. Specify `messages` to tell the `ShareViewController` the `Message` values you want to share.
 
- 4. Presents the created `ShareViewController` in a modal way. Do this modally by calling the
- `present(_:animated:completion:)`.
+ 4. Present the created `ShareViewController` in a modal way. Do this modally by calling `present(_:animated:completion:)`.
 
  You can customize the `ShareViewController` navigation bar style and status bar content style to match your app.
- Use `navigationBarTintColor`, `navigationBarTextColor` and `statusBarStyle` for this purpose.
+ Use `navigationBarTintColor`, `navigationBarTextColor`, and `statusBarStyle` to do so.
 
  ## Share Delegate
 
@@ -67,10 +66,10 @@ public typealias ShareSendingResult = PostMultisendMessagesRequest.Response.Send
  See `ShareViewControllerDelegate` for more information.
 
  - Warning:
- Although `ShareViewController` is marked as `open`, it is not recommended to create a subclass for it. This class is
- intended to be used as-is and provide a default sharing experience across all LINE and LINE SDK integrations. The users
- may expect the same UI and interaction when they want to share a message to friends and groups in LINE.
- If it is important for you to provide a fully customized sharing interaction, you can use the related APIs to create
+ Although `ShareViewController` is marked as `open`, it's not recommended to create a subclass for it. The class is
+ intended to be used as-is and to provide a default sharing experience across all LINE and LINE SDK integrations. Users
+ expect a consistent UI and interaction across different apps when sharing messages to friends and groups in LINE.
+ If it's important for you to provide a fully customized sharing interaction, you can use the related APIs to create
  your own UIs.
  */
 open class ShareViewController: UINavigationController {
@@ -93,25 +92,25 @@ open class ShareViewController: UINavigationController {
     /// The delegate object of this share view controller.
     ///
     /// The delegate receives events when the friends/groups list loading fails, user cancels the sharing view
-    /// controller or the sharing finishes successfully. You can choose to implement one or more methods to provide
-    /// your users better experience when an event happens.
+    /// controller or the sharing finishes successfully. You can choose to implement one or more methods to offer
+    /// your users a better experience when an event happens.
     ///
     /// For information about the methods you can implement for your delegate object,
     /// see `ShareViewControllerDelegate`.
     ///
     public weak var shareDelegate: ShareViewControllerDelegate?
 
-    /// The `Message`s are about to be sent.
+    /// The `Message` objects about to be sent.
     ///
     /// - Note:
-    /// If you didn't set the `shareDelegate` for `ShareViewController` or you didn't implement the
+    /// If you didn't specify the `shareDelegate` for `ShareViewController` or you didn't implement the
     /// `shareViewController(_:messagesForSendingToTargets:)` method in the delegate object, the value from
     /// this property will be used as the messages to be sent.
     ///
-    /// You need at least either set this property to a non-nil value, or implement the
-    /// `shareViewController(_:messagesForSendingToTargets:)` delegate method and return a valid message array.
-    /// Otherwise, a trap will be triggered. If you implemented both, the returned value from delegate method will
-    /// overwrite value in this property.
+    /// You must either set this property to a non-nil value, or implement the 
+    /// `shareViewController(_:messagesForSendingToTargets:)` delegate method and return a valid message array. If you 
+    /// don't, a trap will be triggered. If you implemented both, the returned value from delegate method will overwrite 
+    /// the value in this property.
     ///
     public var messages: [MessageConvertible]? {
         set { rootViewController.messages = newValue }
@@ -122,7 +121,7 @@ open class ShareViewController: UINavigationController {
 
     // MARK: - Initializers
 
-    /// Creates a `ShareViewController` with default behavior. You should always use this initializer to create a
+    /// Creates a `ShareViewController` with default behavior. Always use this initializer to create a
     /// `ShareViewController` instance.
     public init() {
         super.init(nibName: nil, bundle: nil)
@@ -131,7 +130,7 @@ open class ShareViewController: UINavigationController {
         updateNavigationStyles()
     }
 
-    /// `ShareViewController` does not support to be created from Storyboard or XIB file. This method just throw a
+    /// `ShareViewController` can't be created from Storyboard or XIB file. This method merely throws a
     /// fatal error.
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -166,7 +165,7 @@ open class ShareViewController: UINavigationController {
                 Log.fatalError(
                     """
                     You need at least set the `ShareViewController.message` or implement
-                    `shareViewController(:messageForSendingToTargets:)` before sharing a message.")
+                    `shareViewController(:messageForSendingToTargets:)` before sharing a message.)
                     """
                 )
             }
@@ -201,17 +200,17 @@ open class ShareViewController: UINavigationController {
 }
 
 /// Represents the authorization status for sharing messages.
-/// Before creating and presenting a message sharing UI, it is strongly recommended to check whether your app
-/// has a valid token and enough permissions to share messages.
+/// Before creating and presenting a message sharing UI, we strongly recommend checking whether your app
+/// has a valid token and the necessary permissions to share messages.
 ///
 /// `ShareViewController.localAuthorizationStatusForSendingMessage()` returns a `MessageShareAuthorizationStatus` value
 /// to indicate the current authorization status for sharing messages.
 ///
-/// - lackOfToken: There is no valid token in the token store locally. The user does not log in and authorize
-///                your app yet.
-/// - lackOfPermissions: There is a valid token, but it does not contain enough permission to share a message. The
-///                      associated value is an array of `LoginPermission`, which contains all lacked permissions.
-/// - authorized: The token exists locally and it contains all necessary permissions to perform sharing.
+/// - lackOfToken:        There is no valid token in the token store locally. The user hasn't logged in and authorized
+///                       your app yet.
+/// - lackOfPermissions:  There is a valid token, but it doesn't contain the necessary permissions for sharing a message. 
+///                       The associated value is an array of `LoginPermission`, containing all lacking permissions.
+/// - authorized:         The token exists locally and contains the necessary permissions to share messages.
 ///
 public enum MessageShareAuthorizationStatus {
     case lackOfToken
@@ -222,19 +221,20 @@ public enum MessageShareAuthorizationStatus {
 // MARK: - Authorization Helpers
 extension ShareViewController {
 
-    /// Gets the local authorization status for sending message to friends and groups.
+    /// Gets the local authorization status for sending messages to friends and groups.
     ///
-    /// - Returns: The local authorization status from current stored token and its permissions.
+    /// - Returns: The local authorization status from the currently stored token and its permissions.
     ///
     /// - Note:
     ///
-    /// If the return value is `.authorized`, you can present an `ShareViewController` instance for sharing purpose.
-    /// But even if you get `.authorized` status, it is not enough to get a conclusion that the sharing would success
-    /// without a token or permission issue. The token status is a local state and might not be synchronized with the
-    /// server status. It is still possible that the token is expired or revoked by server or from another client.
+    /// If the return value is `.authorized`, you can present a `ShareViewController` instance for message sharing.
+    /// But `.authorized` status doesn't necessarily mean sharing would succeed; there may be problems with the 
+    /// token or permissions. 
+    /// The token status is stored locally and may not have been synchronized with the server-side status.
+    /// The token may have expired or been revoked by the server or via another client.
     ///
-    /// To get the accurate result of sharing behavior, set the `ShareViewController.shareDelegate` and implement
-    /// methods in `ShareViewControllerDelegate`.
+    /// To get the correct result about sharing behavior, specify `ShareViewController.shareDelegate` and implement
+    /// the methods in `ShareViewControllerDelegate`.
     ///
     public static func localAuthorizationStatusForSendingMessage()
         -> MessageShareAuthorizationStatus

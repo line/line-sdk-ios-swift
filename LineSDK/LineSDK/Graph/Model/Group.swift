@@ -22,7 +22,7 @@
 import Foundation
 
 /// LINE internal use only.
-/// Represents an `Group` object which LineSDK used in `group list` or `approvers in given group`.
+/// Represents a `Group` object which LineSDK used in `group list` or `approvers in given group`.
 public struct Group: Decodable {
 
     /// Identifier of the group
@@ -31,15 +31,15 @@ public struct Group: Decodable {
     /// The group's display name
     public let groupName: String
 
-    /// The URL of the group picture
+    /// URL of group picture
     public let pictureURL: URL?
 
-    /// The large image URL of the group. `nil` if the group has not set a profile image.
+    /// URL of group's large profile image. `nil` if no profile image is set.
     public var pictureURLLarge: URL? {
         return pictureURL?.appendingPathComponent("/large")
     }
 
-    /// The small image URL of the group. `nil` if the group has not set a profile image.
+    /// URL of group's small profile image. `nil` if no profile image is set.
     public var pictureURLSmall: URL? {
         return pictureURL?.appendingPathComponent("/small")
     }

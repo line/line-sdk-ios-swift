@@ -25,9 +25,10 @@
 
  ## Overview
 
- The methods of this protocol notify your delegate when there is an event happens in the owner `ShareViewController`.
- It is not a must that you provide a delgate object for `ShareViewController`. However, to know events like loading
- fails, user cancellation or message sent successfully, you need to implement the related methods.
+ The methods of this protocol notify your delegate when an event happens in the owner `ShareViewController`.
+ Although specifying a delegate object for `ShareViewController` isn't strictly required, we strongly recommend
+ that you do so. Without implementing the delegate methods, you can't retrieve information about events like 
+ loading failure, user cancellation, or message sending success.
 */
 public protocol ShareViewControllerDelegate: AnyObject {
 
@@ -36,22 +37,21 @@ public protocol ShareViewControllerDelegate: AnyObject {
     /// - Parameters:
     ///   - controller: The controller object managing the share interface.
     ///   - shareType: The type which fails to load.
-    ///   - error: A value contains information about the detail of the error.
+    ///   - error: A value containing the details of the error.
     ///
-    /// The `ShareViewController` will automatically load the user's friends and groups list, and use these data to
-    /// fill up the table view respectively. If an error happens during the loading process, this delegate method will
-    /// be called.
+    /// The `ShareViewController` will automatically load the user's friends and groups list, and use them to populate 
+    /// the respective table views. If an error happens during the loading process, this delegate method is called.
     ///
-    /// You can check the `error` parameter to determine what to do next. Usually, the loading failure could be caused
-    /// by a bad networking connection, invalid server responses or an API error. The `ShareViewController` does not
-    /// provide a way to retry the loading, so you may need to dismiss the current share view controller and let your
-    /// user to choose to present a new share view controller or discard the sharing action.
+    /// You can check the `error` parameter to decide what to do next. The loading failure could be caused by a bad 
+    /// network connection, invalid server responses, or an API error. `ShareViewController` doesn't offer a way to 
+    /// retry loading, so you may need to dismiss the current share view controller instance and prompt your user choose 
+    /// to start a new sharing action or cancel altogether.
     ///
-    /// This method can be called multiple times, since there are multiple list loading in the `ShareViewController`.
-    /// Each invocation contains a `shareType` parameter. For a single `shareType`, this method will be called no
-    /// more than once.
+    /// This method can be called multiple times, since there are multiple lists loading in the `ShareViewController`.
+    /// Each invocation contains a `shareType` parameter. For a single `shareType`, this method will be called no more 
+    /// than once.
     ///
-    /// See `LineSDKError` for more about handling the errors.
+    /// See `LineSDKError` for more about error handling.
     ///
     func shareViewController(
         _ controller: ShareViewController,
@@ -80,20 +80,20 @@ public protocol ShareViewControllerDelegate: AnyObject {
     ///   - targets: An array of `ShareTarget` values to which the `messages` should be sent to.
     ///   - error: A value contains information about the detail of the error.
     ///
-    /// This method is called when the user taps the "Send" button but an error happens during the network request
-    /// for sending the messages.
+    /// This method is called when the user taps "Send" but an error happens during the network request for sending the 
+    /// messages.
     ///
-    /// It means there is a problem when connecting to server, or the server refuses the sending request. There is no
-    /// message sent to selected users or groups.
+    /// It means there is a problem while connecting to the server, or the server refused the request. No message is 
+    /// sent to selected users or groups.
     ///
-    /// Check the `error` parameter to know the detail about the error. You may also want to dismiss the current share
-    /// view controller and show an error message to the user. See `LineSDKError` for more about handling the errors.
+    /// Check the `error` parameter for error details. You may also want to dismiss the current share view controller 
+    /// and show an error message to the user. See `LineSDKError` for more about error handling.
     ///
     /// - Note:
-    /// By default, when the message sent and the response received, the share view controller will be dismissed
-    /// automatically, unless you implemented the `shareViewControllerShouldDismissAfterSending(_:)` method
-    /// in the delegate object and returns `false` there. You can implement that and return `false`, then dismiss the
-    /// share view controller yourself if it is necessary.
+    /// By default, after the message is sent and the response received, the share view controller is dismissed
+    /// automatically. You can prevent this by implementing the `shareViewControllerShouldDismissAfterSending(_:)` 
+    /// method in the delegate object and returning `false` there. You can then dismiss the share view controller 
+    /// yourself if necessary.
     ///
     func shareViewController(
         _ controller: ShareViewController,
@@ -109,18 +109,17 @@ public protocol ShareViewControllerDelegate: AnyObject {
     ///   - targets: An array of `ShareTarget` values to which the `messages` should be sent to.
     ///   - results: The sending result which indicate delivering state of the message.
     ///
-    /// This method is called when user taps the "Send" button and the server accepted the messages. Delivering the
-    /// `messages` to server does not means it is delivered to the `targets`. There is a chance that the selected
-    /// target friends or groups block your channel or current user to send message to them, or the target friends or
-    /// groups can choose to not receive any messages from an unauthorized channel themselves. In these cases, the
-    /// `results` contains `.discarded` as its `status` value in the corresponding result. Check the `results` if
-    /// you care about whether the messages are delivered to the selected targets or not.
+    /// This method is called when the user taps "Send" and the server accepts the messages. Delivering the `messages` 
+    /// to the server doesn't mean they'll be delivered to the `targets`. The target friends or groups may have blocked 
+    /// your channel or the current user from sending them messages. They can also choose to block messages from 
+    /// unauthorized channels. In these cases, `results` contains `.discarded` as its `status` value in the 
+    /// corresponding result. Check `results` to see if messages were delivered to the selected targets or not.
     ///
     /// - Note:
-    /// By default, when the message sent and the response received, the share view controller will be dismissed
-    /// automatically, unless you implemented the `shareViewControllerShouldDismissAfterSending(_:)` method
-    /// in the delegate object and returns `false` there. You can implement that and return `false`, then dismiss the
-    /// share view controller yourself if it is necessary.
+    /// By default, after the message is sent and the response received, the share view controller is dismissed
+    /// automatically. You can prevent this by implementing the `shareViewControllerShouldDismissAfterSending(_:)` 
+    /// method in the delegate object and returning `false` there. You can then dismiss the share view controller 
+    /// yourself if necessary.
     ///
     func shareViewController(
         _ controller: ShareViewController,
@@ -133,13 +132,14 @@ public protocol ShareViewControllerDelegate: AnyObject {
     /// - Parameter controller: The controller object managing the share interface.
     /// - Returns: Whether the share view controller should dismiss itself after sending messages.
     ///
-    /// By default, when the message sent and the response received, the share view controller will be dismissed
-    /// automatically, unless you implemented this method in the delegate object and returns `false`.
-    /// You can implement it and return `false`, then dismiss the share view controller yourself.
+    /// By default, after the message is sent and the response received, the share view controller is dismissed
+    /// automatically. You can prevent this by implementing the `shareViewControllerShouldDismissAfterSending(_:)` 
+    /// method in the delegate object and returning `false` there. You can then dismiss the share view controller 
+    /// yourself if necessary.
     ///
     /// - Note:
-    /// Use this method to get control of the dismiss for share view controller. In the completion handler of your own
-    /// dismiss call, you can choose to display an alert in UI to notify users the result of sharing, for example.
+    /// Use this method to control dismissal of the share view controller. In the completion handler of your own dismiss 
+    /// call, you can choose to display an alert in UI to notify users the result of sharing, for example.
     ///
     func shareViewControllerShouldDismissAfterSending(_ controller: ShareViewController) -> Bool
 
@@ -150,15 +150,15 @@ public protocol ShareViewControllerDelegate: AnyObject {
     ///   - targets: The selected `ShareTarget` values to which user want to send messages.
     /// - Returns: An array of messages to be sent.
     ///
-    /// This method is called when user taps the "Send" button and the message sending request is about to be sent to
-    /// server. If implemented, the returned `MessageConvertible` array will be sent as the shared messages to selected
-    /// targets. It provides the last chance to modify and prepare the messages to send.
+    /// This method is called when the user taps "Send" and the message sending request is about to be sent to the 
+    /// server. If implemented, the messages in the returned `MessageConvertible` array are sent to the selected targets. 
+    /// This step provides a final chance to modify and prepare the messages to send.
     ///
     /// If you didn't set a delegate object for `ShareViewController` or you didn't implement this method in the
     /// delegate object, the value from `ShareViewController.messages` property will be used as the messages to be sent.
-    /// You need at least either set the `ShareViewController.messages` to a non-nil value, or implement this method
-    /// and return a valid message array. Otherwise, a trap will be triggered. If you implemented both, the returned
-    /// value from this method will overwrite the `messages` in `ShareViewController`.
+    /// You must either set the `ShareViewController.messages` to a non-nil value, or implement this method and return a 
+    /// valid message array. If you don't, a trap will be triggered. If you implemented both, the returned value from 
+    /// this method will overwrite the `messages` in `ShareViewController`.
     ///
     func shareViewController(
         _ controller: ShareViewController,
@@ -196,7 +196,7 @@ extension ShareViewControllerDelegate {
             Log.fatalError(
                 """
                 You need at least set the `ShareViewController.message` or implement
-                `shareViewController(:messageForSendingToTargets:)` before sharing a message.")
+                `shareViewController(:messageForSendingToTargets:)` before sharing a message.)
                 """
             )
         }
