@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,25 @@
 		4B9058A921006E9C004D717F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A721006E9C004D717F /* LaunchScreen.storyboard */; };
 		4B9058B421006E9C004D717F /* LineSDKSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058B321006E9C004D717F /* LineSDKSampleTests.swift */; };
 		4B9058BF21006E9C004D717F /* LineSDKSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058BE21006E9C004D717F /* LineSDKSampleUITests.swift */; };
+		4BAEEB6222C4B36A007B53D8 /* APIHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB8445C211BD41A005B60D7 /* APIHomeViewController.swift */; };
+		4BAEEB6322C4B36A007B53D8 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB84462211BF48F005B60D7 /* UIViewControllerExtensions.swift */; };
+		4BAEEB6422C4B36A007B53D8 /* APIResultEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDADDD5211C35230044D827 /* APIResultEntry.swift */; };
+		4BAEEB6522C4B36A007B53D8 /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */; };
+		4BAEEB6622C4B36A007B53D8 /* LineSDKSampleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B104807216ED51A00300C61 /* LineSDKSampleError.swift */; };
+		4BAEEB6722C4B36A007B53D8 /* IndicatorDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD279D2113FE9D00B90D8F /* IndicatorDisplay.swift */; };
+		4BAEEB6822C4B36A007B53D8 /* APIStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB8445E211BD4DF005B60D7 /* APIStore.swift */; };
+		4BAEEB6922C4B36A007B53D8 /* APIResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB84460211BE5E7005B60D7 /* APIResultViewController.swift */; };
+		4BAEEB6A22C4B36A007B53D8 /* LoginNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27A22114033000B90D8F /* LoginNavigationController.swift */; };
+		4BAEEB6B22C4B36A007B53D8 /* UIAlertControllerHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */; };
+		4BAEEB6D22C4B36A007B53D8 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27972113F95700B90D8F /* UserProfileViewController.swift */; };
+		4BAEEB6E22C4B36A007B53D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90589E21006E9C004D717F /* AppDelegate.swift */; };
+		4BAEEB7322C4B36A007B53D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A721006E9C004D717F /* LaunchScreen.storyboard */; };
+		4BAEEB7422C4B36A007B53D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A521006E9C004D717F /* Assets.xcassets */; };
+		4BAEEB7522C4B36A007B53D8 /* Placeholder.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B3687E0212AB62D00B6048A /* Placeholder.strings */; };
+		4BAEEB7622C4B36A007B53D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A221006E9C004D717F /* Main.storyboard */; };
+		4BAEEB8022C4B412007B53D8 /* LineSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4BAEEB7F22C4B412007B53D8 /* LineSDK */; };
+		4BAEEB8422C4B462007B53D8 /* LoginViewController+SPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAEEB8322C4B462007B53D8 /* LoginViewController+SPM.swift */; };
+		4BAEEB8722C4B560007B53D8 /* SampleUIHomeViewController+SPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAEEB8522C4B55D007B53D8 /* SampleUIHomeViewController+SPM.swift */; };
 		4BB8445D211BD41A005B60D7 /* APIHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB8445C211BD41A005B60D7 /* APIHomeViewController.swift */; };
 		4BB8445F211BD4DF005B60D7 /* APIStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB8445E211BD4DF005B60D7 /* APIStore.swift */; };
 		4BB84461211BE5E7005B60D7 /* APIResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB84460211BE5E7005B60D7 /* APIResultViewController.swift */; };
@@ -67,6 +86,16 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4BAEEB7722C4B36A007B53D8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +135,9 @@
 		4B9058BE21006E9C004D717F /* LineSDKSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSampleUITests.swift; sourceTree = "<group>"; };
 		4B9058C021006E9C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B9AB20D2159EE1500B8C22C /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		4BAEEB7C22C4B36A007B53D8 /* LineSDKSample(SPM).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LineSDKSample(SPM).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BAEEB8322C4B462007B53D8 /* LoginViewController+SPM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginViewController+SPM.swift"; sourceTree = "<group>"; };
+		4BAEEB8522C4B55D007B53D8 /* SampleUIHomeViewController+SPM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SampleUIHomeViewController+SPM.swift"; sourceTree = "<group>"; };
 		4BB8445C211BD41A005B60D7 /* APIHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHomeViewController.swift; sourceTree = "<group>"; };
 		4BB8445E211BD4DF005B60D7 /* APIStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStore.swift; sourceTree = "<group>"; };
 		4BB84460211BE5E7005B60D7 /* APIResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultViewController.swift; sourceTree = "<group>"; };
@@ -147,6 +179,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4BAEEB7022C4B36A007B53D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BAEEB8022C4B412007B53D8 /* LineSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -154,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */,
+				4BAEEB8522C4B55D007B53D8 /* SampleUIHomeViewController+SPM.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -183,6 +224,7 @@
 				4B90589B21006E9B004D717F /* LineSDKSample.app */,
 				4B9058AF21006E9C004D717F /* LineSDKSampleTests.xctest */,
 				4B9058BA21006E9C004D717F /* LineSDKSampleUITests.xctest */,
+				4BAEEB7C22C4B36A007B53D8 /* LineSDKSample(SPM).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -253,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				4B9058A021006E9C004D717F /* LoginViewController.swift */,
+				4BAEEB8322C4B462007B53D8 /* LoginViewController+SPM.swift */,
 				4BCD27972113F95700B90D8F /* UserProfileViewController.swift */,
 				4BCD27A22114033000B90D8F /* LoginNavigationController.swift */,
 				4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */,
@@ -344,6 +387,27 @@
 			productReference = 4B9058BA21006E9C004D717F /* LineSDKSampleUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		4BAEEB6022C4B36A007B53D8 /* LineSDKSample(SPM) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4BAEEB7922C4B36A007B53D8 /* Build configuration list for PBXNativeTarget "LineSDKSample(SPM)" */;
+			buildPhases = (
+				4BAEEB6122C4B36A007B53D8 /* Sources */,
+				4BAEEB7022C4B36A007B53D8 /* Frameworks */,
+				4BAEEB7222C4B36A007B53D8 /* Resources */,
+				4BAEEB7722C4B36A007B53D8 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "LineSDKSample(SPM)";
+			packageProductDependencies = (
+				4BAEEB7F22C4B412007B53D8 /* LineSDK */,
+			);
+			productName = LineSDKSample;
+			productReference = 4BAEEB7C22C4B36A007B53D8 /* LineSDKSample(SPM).app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -396,11 +460,15 @@
 				vi,
 			);
 			mainGroup = 4B90589221006E9B004D717F;
+			packageReferences = (
+				4BAEEB7E22C4B412007B53D8 /* XCRemoteSwiftPackageReference "line-sdk-ios-swift" */,
+			);
 			productRefGroup = 4B90589C21006E9B004D717F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				4B90589A21006E9B004D717F /* LineSDKSample */,
+				4BAEEB6022C4B36A007B53D8 /* LineSDKSample(SPM) */,
 				4B9058AE21006E9C004D717F /* LineSDKSampleTests */,
 				4B9058B921006E9C004D717F /* LineSDKSampleUITests */,
 			);
@@ -430,6 +498,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BAEEB7222C4B36A007B53D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BAEEB7322C4B36A007B53D8 /* LaunchScreen.storyboard in Resources */,
+				4BAEEB7422C4B36A007B53D8 /* Assets.xcassets in Resources */,
+				4BAEEB7522C4B36A007B53D8 /* Placeholder.strings in Resources */,
+				4BAEEB7622C4B36A007B53D8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +556,27 @@
 				65E6BDBB2154D8240024D7C1 /* APIHomePage.swift in Sources */,
 				4B9058BF21006E9C004D717F /* LineSDKSampleUITests.swift in Sources */,
 				65E6BDC22154D9300024D7C1 /* GraphAPITest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4BAEEB6122C4B36A007B53D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BAEEB6222C4B36A007B53D8 /* APIHomeViewController.swift in Sources */,
+				4BAEEB6322C4B36A007B53D8 /* UIViewControllerExtensions.swift in Sources */,
+				4BAEEB6422C4B36A007B53D8 /* APIResultEntry.swift in Sources */,
+				4BAEEB6522C4B36A007B53D8 /* UserDetailViewController.swift in Sources */,
+				4BAEEB6622C4B36A007B53D8 /* LineSDKSampleError.swift in Sources */,
+				4BAEEB8422C4B462007B53D8 /* LoginViewController+SPM.swift in Sources */,
+				4BAEEB6722C4B36A007B53D8 /* IndicatorDisplay.swift in Sources */,
+				4BAEEB6822C4B36A007B53D8 /* APIStore.swift in Sources */,
+				4BAEEB6922C4B36A007B53D8 /* APIResultViewController.swift in Sources */,
+				4BAEEB6A22C4B36A007B53D8 /* LoginNavigationController.swift in Sources */,
+				4BAEEB6B22C4B36A007B53D8 /* UIAlertControllerHelpers.swift in Sources */,
+				4BAEEB6D22C4B36A007B53D8 /* UserProfileViewController.swift in Sources */,
+				4BAEEB6E22C4B36A007B53D8 /* AppDelegate.swift in Sources */,
+				4BAEEB8722C4B560007B53D8 /* SampleUIHomeViewController+SPM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,6 +870,42 @@
 			};
 			name = Release;
 		};
+		4BAEEB7A22C4B36A007B53D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B9AB20D2159EE1500B8C22C /* Config.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LineSDKSample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.linesdk.sample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4BAEEB7B22C4B36A007B53D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B9AB20D2159EE1500B8C22C /* Config.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LineSDKSample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.linesdk.sample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -809,7 +945,35 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		4BAEEB7922C4B36A007B53D8 /* Build configuration list for PBXNativeTarget "LineSDKSample(SPM)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4BAEEB7A22C4B36A007B53D8 /* Debug */,
+				4BAEEB7B22C4B36A007B53D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4BAEEB7E22C4B412007B53D8 /* XCRemoteSwiftPackageReference "line-sdk-ios-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/line/line-sdk-ios-swift.git";
+			requirement = {
+				branch = "feature/spm-support";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4BAEEB7F22C4B412007B53D8 /* LineSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4BAEEB7E22C4B412007B53D8 /* XCRemoteSwiftPackageReference "line-sdk-ios-swift" */;
+			productName = LineSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4B90589321006E9B004D717F /* Project object */;
 }
