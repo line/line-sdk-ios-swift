@@ -107,6 +107,7 @@
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
 		4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */; };
+		4B85BB6B22C4A8E600DFE299 /* ResourceLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */; };
 		4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8A965621100A5800760219 /* LoginConfigurationTests.swift */; };
 		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
 		4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
@@ -408,6 +409,7 @@
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
 		4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchController.swift; sourceTree = "<group>"; };
+		4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoading.swift; sourceTree = "<group>"; };
 		4B8A965621100A5800760219 /* LoginConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurationTests.swift; sourceTree = "<group>"; };
 		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 		4B8FF48A21056B3800890AEF /* CallbackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
@@ -1218,6 +1220,7 @@
 			children = (
 				4B5B0EF12241DE4600BA59A0 /* SharingUI */,
 				3F75523021244502004AC047 /* LoginButton.swift */,
+				4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */,
 			);
 			path = LineSDKUI;
 			sourceTree = "<group>";
@@ -1764,6 +1767,7 @@
 				4B1658052252EF3C0008E441 /* DownloadableImageView.swift in Sources */,
 				4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */,
 				DBFBD43F224E7D0500A74D44 /* SelectedTargetPanelCell.swift in Sources */,
+				4B85BB6B22C4A8E600DFE299 /* ResourceLoading.swift in Sources */,
 				DB5035BB22571D3B003CD0B9 /* KeyboardObservable.swift in Sources */,
 				4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */,
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,

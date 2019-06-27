@@ -1,5 +1,5 @@
 //
-//  Constant.swift
+//  ResourceLoading.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,28 +21,36 @@
 
 import Foundation
 
-/// Constants used in the LINE SDK.
-public struct Constant {
-    
-    /// The version of the current LINE SDK.
-    public static let SDKVersion = "5.2.0"
-    
-    static var SDKVersionString: String {
-        return "LINE SDK iOS v\(SDKVersion)"
+enum Localization {
+    static func string(_ key: String) -> String {
+        return NSLocalizedString(key, bundle: .frameworkResourceBundle, comment: "")
     }
-    
-    static var thirdPartyAppReturnScheme: String {
-        guard let appID = Bundle.main.bundleIdentifier else {
-            Log.fatalError("You need to specify a bundle ID in your app's Info.plist")
+}
+
+extension UIImage {
+
+    /// Creates a `UIImage` object in current framework bundle.
+    ///
+    /// - Parameters:
+    ///   - name: The image name.
+    ///   - trait: The traits associated with the intended environment for the image.
+    convenience init?(bundleNamed name: String, compatibleWith trait: UITraitCollection? = nil) {
+        self.init(named: name, in: .frameworkBundle, compatibleWith: trait)
+    }
+}
+
+extension Bundle {
+    static let frameworkResourceBundle: Bundle = {
+        guard let path = frameworkBundle.path(forResource: "Resource", ofType: "bundle"),
+            let bundle = Bundle(path: path) else
+        {
+            Log.fatalError("SDK resource bundle cannot be found, " +
+                "please verify your installation is not corrupted and try to reinstall LineSDK.")
         }
-        return "\(Constant.thirdPartySchemePrefix).\(appID)"
-    }
-    
-    static var thirdPartyAppReturnURL: String {
-        return "\(Constant.thirdPartyAppReturnScheme)://authorize/"
-    }
-    
-    static var lineAppAuthURLv2: URL {
-        return URL(string: "\(Constant.lineAuthV2Scheme)://authorize/")!
-    }
+        return bundle
+    }()
+
+    static let frameworkBundle: Bundle = {
+        return Bundle(for: LoginManager.self)
+    }()
 }
