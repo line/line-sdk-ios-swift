@@ -8,6 +8,10 @@ let package = Package(
         .library(name: "LineSDK", targets: ["LineSDK"]),
     ],
     targets: [
-        .target(name: "LineSDK", path: "LineSDK/LineSDK")
+        .target(
+            name: "LineSDK",
+            path: "LineSDK/LineSDK",
+            exclude: ["LineSDK/LineSDK/LineSDKUI"]
+        )
     ]
 )

@@ -828,6 +828,7 @@
 		4B90587A21006E5C004D717F /* LineSDK */ = {
 			isa = PBXGroup;
 			children = (
+				4BE7E81822C4A14A00362661 /* LineSDKUI */,
 				4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */,
 				4BBAFC432101BB8200E7BFF6 /* General */,
 				4B9058CE210072B9004D717F /* Login */,
@@ -836,7 +837,6 @@
 				D102A6992164650A00804C7C /* Friendship */,
 				4B9058CD210072B0004D717F /* Networking */,
 				4B25A811213684F000C74B87 /* Crypto */,
-				4B5B0EF12241DE4600BA59A0 /* SharingUI */,
 				4B9058CF210072C3004D717F /* Utils */,
 				3F75522E2123D214004AC047 /* Assets.xcassets */,
 				4B90587B21006E5C004D717F /* LineSDK.h */,
@@ -879,7 +879,6 @@
 		4B9058CE210072B9004D717F /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				3F75523021244502004AC047 /* LoginButton.swift */,
 				4BF53534212A7A0700EA602A /* Request */,
 				4BF53533212A79FA00EA602A /* Model */,
 				4B9058D321007394004D717F /* LoginConfiguration.swift */,
@@ -1212,6 +1211,15 @@
 				4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */,
 			);
 			path = Sharing;
+			sourceTree = "<group>";
+		};
+		4BE7E81822C4A14A00362661 /* LineSDKUI */ = {
+			isa = PBXGroup;
+			children = (
+				4B5B0EF12241DE4600BA59A0 /* SharingUI */,
+				3F75523021244502004AC047 /* LoginButton.swift */,
+			);
+			path = LineSDKUI;
 			sourceTree = "<group>";
 		};
 		4BF45A872137B27F00CCD28E /* Crypto */ = {
