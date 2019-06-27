@@ -11,7 +11,7 @@ let package = Package(
         .target(
             name: "LineSDK",
             path: "LineSDK/LineSDK",
-            exclude: ["LineSDK/LineSDK/LineSDKUI"]
+            exclude: ["LineSDKUI"]
         )
     ]
 )
