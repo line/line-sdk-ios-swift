@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 /// Represents the share target in a share action.
 /// A target can be either a friend of current user, or a group of which the current user is a member.

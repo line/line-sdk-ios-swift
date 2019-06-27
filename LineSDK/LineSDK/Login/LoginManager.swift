@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 /// Represents a login manager. You can set up the LINE SDK configuration, log in and log out the user with the
 /// LINE authorization flow, and check the authorization status.

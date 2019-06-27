@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import Foundation
+
 /// LINE internal use only.
 /// Represents a message containing an video URL and a preview image URL.
 public struct VideoMessage: Codable, MessageTypeCompatible {

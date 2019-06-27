@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import Foundation
+
 /// LINE internal use only.
 /// Represents a template payload with multiple `Column`s which can be cycled like a carousel.
 /// The columns will be shown in order by scrolling horizontally.
