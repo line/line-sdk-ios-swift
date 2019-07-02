@@ -208,21 +208,38 @@ extension ShareRootViewController {
         // `onSendingMessage` is expected to be always delegated.
         let messages = onSendingMessage.call(selected)!
 
-        let indicator = LoadingIndicator.add(to: view)
-        API.multiSendMessages(messages, to: selected.map { $0.targetID }) { result in
-            indicator.remove()
-            switch result {
-            case .success(let response):
-                let successData = OnSendingSuccessData(messages: messages, targets: selected, results: response.results)
-                self.onSendingSuccess.call(successData)
-            case .failure(let error):
-                let failureData = OnSendingFailureData(messages: messages, targets: selected, error: error)
-                self.onSendingFailure.call(failureData)
-            }
+        func callbackFailure(_ error: LineSDKError) {
+            let failureData = OnSendingFailureData(messages: messages, targets: selected, error: error)
+            self.onSendingFailure.call(failureData)
+        }
 
-            let shouldDismiss = self.onShouldDismiss.call() ?? true
-            if shouldDismiss {
-                self.dismiss(animated: true)
+        func callbackSuccess(_ response: PostMultisendMessagesRequest.Response) {
+            let successData = OnSendingSuccessData(messages: messages, targets: selected, results: response.results)
+            self.onSendingSuccess.call(successData)
+        }
+
+        let indicator = LoadingIndicator.add(to: view)
+        API.getMessageSendingOneTimeToken(userIDs: selected.map { $0.targetID }) { result in
+            switch result {
+            case .success(let token):
+
+                // TODO: Send message with token instead.
+
+                API.multiSendMessages(messages, to: selected.map { $0.targetID }) { result in
+                    indicator.remove()
+                    switch result {
+                    case .success(let response): callbackSuccess(response)
+                    case .failure(let error):    callbackFailure(error)
+                    }
+
+                    let shouldDismiss = self.onShouldDismiss.call() ?? true
+                    if shouldDismiss {
+                        self.dismiss(animated: true)
+                    }
+                }
+            case .failure(let error):
+                indicator.remove()
+                callbackFailure(error)
             }
         }
     }
