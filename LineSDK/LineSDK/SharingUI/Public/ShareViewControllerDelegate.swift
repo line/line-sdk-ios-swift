@@ -172,9 +172,7 @@ extension ShareViewControllerDelegate {
         didFailLoadingListType shareType: MessageShareTargetType,
         withError error: LineSDKError) { }
 
-    public func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {
-        controller.dismiss(animated: true)
-    }
+    public func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {}
 
     public func shareViewController(
         _ controller: ShareViewController,
