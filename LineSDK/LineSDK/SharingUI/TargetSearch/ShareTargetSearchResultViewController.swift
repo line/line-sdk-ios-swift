@@ -62,7 +62,6 @@ class ShareTargetSearchResultViewController: UIViewController {
 
         setupSubviews()
         setupLayouts()
-        addKeyboardObserver()
     }
 
     private func setupSubviews() {
@@ -75,9 +74,15 @@ class ShareTargetSearchResultViewController: UIViewController {
     private func setupLayouts() {
         NSLayoutConstraint.activate([
             panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
-        updatePanelBottomConstraint(keyboardInfo: nil)
+
+        panelBottomConstraint = panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        panelBottomConstraint!.isActive = true
+
+        let panelHeight = SelectedTargetPanelViewController.Design.height + safeAreaInsets.bottom
+        panelHeightConstraint = panelContainer.heightAnchor.constraint(equalToConstant: panelHeight)
+        panelHeightConstraint!.isActive = true
     }
 
     func start() {
@@ -92,16 +97,14 @@ class ShareTargetSearchResultViewController: UIViewController {
 // MARK: - SelectedTargetPanelViewController
 extension ShareTargetSearchResultViewController {
 
-    private func updatePanelBottomConstraint(keyboardInfo: KeyboardInfo?) {
+    private func updatePanelBottomConstraint(keyboardInfo: KeyboardInfo) {
 
         panelBottomConstraint?.isActive = false
         panelHeightConstraint?.isActive = false
 
         let keyboardOverlayHeight: CGFloat
         let panelHeight: CGFloat
-        if let keyboardInfo = keyboardInfo,
-           keyboardInfo.isVisible,
-           let keyboardOrigin = keyboardInfo.endFrame?.origin
+        if keyboardInfo.isVisible, let keyboardOrigin = keyboardInfo.endFrame?.origin
         {
             let viewFrameInWindow = view.convert(view.bounds, to: nil)
             keyboardOverlayHeight = max(0, viewFrameInWindow.maxY - keyboardOrigin.y)
@@ -125,14 +128,21 @@ extension ShareTargetSearchResultViewController {
     private func handleKeyboardChange(_ keyboardInfo: KeyboardInfo) {
         // Wait for iOS layout the current vc. It happens when presenting `self`
         // with a `.formSheet` style in landscape mode.
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.updatePanelBottomConstraint(keyboardInfo: keyboardInfo)
+            UIView.animate(withDuration: keyboardInfo.duration) {
+                self.view.layoutIfNeeded()
+            }
         }
     }
 }
 
 extension ShareTargetSearchResultViewController: KeyboardObservable {
     func keyboardInfoWillChange(keyboardInfo: KeyboardInfo) {
+        if !isViewLoaded {
+            // Force load view to make initial layout
+            _ = view
+        }
         handleKeyboardChange(keyboardInfo)
     }
 }
