@@ -1,5 +1,5 @@
 //
-//  PostMessageSendingTokenRequest.swift
+//  PostMultisendMessagesTokenRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,32 +21,33 @@
 
 import Foundation
 
-public struct PostMessageSendingTokenRequest: Request {
+public struct PostMultisendMessagesTokenRequest: Request {
 
-    public typealias Response = MessageSendingToken
+    public typealias Response = Unit
 
-    public let userIDs: [String]
+    /// An array of user IDs to where messages will be sent. Up to 10 elements.
+    public let messageToken: MessageSendingToken
 
-    public init(userIDs: [String]) {
-        self.userIDs = userIDs
+    /// `Messages`s will be sent. Up to 5 elements.
+    public let messages: [Message]
+
+    public init(token: MessageSendingToken, messages: [MessageConvertible]) {
+        self.messageToken = token
+        self.messages = messages.map { $0.message }
     }
 
     public let method: HTTPMethod = .post
-    public let path = "/message/v3/ott"
+    public let path = "/message/v3/multisend"
     public let authentication: AuthenticateMethod = .token
+
+    public var pathQueries: [URLQueryItem]? {
+        return [URLQueryItem(name: "type", value: "ott")]
+    }
 
     public var parameters: [String: Any]? {
         return [
-            "userIds": userIDs
+            "token": messageToken.token,
+            "messages": try! messages.toJSON()
         ]
-    }
-}
-
-public struct MessageSendingToken: Decodable {
-
-    public let token: String
-
-    public init(value: String) {
-        self.token = value
     }
 }

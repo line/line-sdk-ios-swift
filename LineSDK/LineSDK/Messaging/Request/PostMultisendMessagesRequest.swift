@@ -26,13 +26,13 @@ import Foundation
 /// This request requires you have the `.messageWrite` permission, otherwise, you would get a 403 permission
 /// grant error.
 public struct PostMultisendMessagesRequest: Request {
-    
+
     /// An array of user IDs to where messages will be sent. Up to 10 elements.
     public let userIDs: [String]
-    
+
     /// `Messages`s will be sent. Up to 5 elements.
     public let messages: [Message]
-    
+
     /// Creates a request consisted of given `chatID` and `messages`.
     ///
     /// - Parameters:
@@ -53,7 +53,7 @@ public struct PostMultisendMessagesRequest: Request {
             "messages": try! messages.toJSON()
         ]
     }
-    
+
     /// Server response of `PostMultisendMessagesRequest`.
     public struct Response: Decodable {
         

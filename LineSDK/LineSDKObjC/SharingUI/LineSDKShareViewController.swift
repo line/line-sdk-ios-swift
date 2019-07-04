@@ -112,14 +112,13 @@ class LineSDKShareViewControllerDelegateProxy: ShareViewControllerDelegate {
     func shareViewController(
         _ controller: ShareViewController,
         didSendMessages messages: [MessageConvertible],
-        toTargets targets: [ShareTarget],
-        sendingResults results: [ShareSendingResult])
+        toTargets targets: [ShareTarget])
     {
         proxy?.shareViewController?(
             owner,
             didSendMessages: messages.compactMap { LineSDKMessage.message(with: $0) },
-            toTargets: targets.map { $0.sdkShareTarget },
-            sendingResults: results.map { .init($0) })
+            toTargets: targets.map { $0.sdkShareTarget }
+        )
     }
 
     func shareViewController(

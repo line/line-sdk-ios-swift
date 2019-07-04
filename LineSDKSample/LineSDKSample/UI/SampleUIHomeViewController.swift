@@ -91,10 +91,9 @@ extension SampleUIHomeViewController: ShareViewControllerDelegate {
     func shareViewController(
         _ controller: ShareViewController,
         didSendMessages messages: [MessageConvertible],
-        toTargets targets: [ShareTarget],
-        sendingResults results: [ShareSendingResult])
+        toTargets targets: [ShareTarget])
     {
-        print("Sharing is done. Result: \(results)")
+        print("Sharing is done.")
         dismiss(animated: true) {
             UIAlertController.present(in: self, successResult: "Share done.")
         }

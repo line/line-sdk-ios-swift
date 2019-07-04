@@ -107,13 +107,11 @@ public protocol ShareViewControllerDelegate: AnyObject {
     ///   - controller: The controller object managing the share interface.
     ///   - messages: An array of `Message` values which were sent.
     ///   - targets: An array of `ShareTarget` values to which the `messages` should be sent to.
-    ///   - results: The sending result which indicate delivering state of the message.
     ///
     /// This method is called when the user taps "Send" and the server accepts the messages. Delivering the `messages` 
-    /// to the server doesn't mean they'll be delivered to the `targets`. The target friends or groups may have blocked 
-    /// your channel or the current user from sending them messages. They can also choose to block messages from 
-    /// unauthorized channels. In these cases, `results` contains `.discarded` as its `status` value in the 
-    /// corresponding result. Check `results` to see if messages were delivered to the selected targets or not.
+    /// to the server doesn't mean they'll be actually delivered to the `targets`. The target friends or groups may
+    /// have blocked your channel or the current user from sending them messages. They can also choose to block
+    /// messages from unauthorized channels.
     ///
     /// - Note:
     /// By default, after the message is sent and the response received, the share view controller is dismissed
@@ -124,8 +122,7 @@ public protocol ShareViewControllerDelegate: AnyObject {
     func shareViewController(
         _ controller: ShareViewController,
         didSendMessages messages: [MessageConvertible],
-        toTargets targets: [ShareTarget],
-        sendingResults results: [ShareSendingResult])
+        toTargets targets: [ShareTarget])
 
     /// Controls whether the share view controller should dismiss itself after sending messages.
     ///
@@ -185,8 +182,7 @@ extension ShareViewControllerDelegate {
     public func shareViewController(
         _ controller: ShareViewController,
         didSendMessages messages: [MessageConvertible],
-        toTargets targets: [ShareTarget],
-        sendingResults results: [ShareSendingResult]) { }
+        toTargets targets: [ShareTarget]) { }
 
     public func shareViewController(
         _ controller: ShareViewController,

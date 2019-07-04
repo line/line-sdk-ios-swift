@@ -21,4 +21,4 @@
 
 import Foundation
 
-struct Unit: Decodable {}
+public struct Unit: Decodable {}

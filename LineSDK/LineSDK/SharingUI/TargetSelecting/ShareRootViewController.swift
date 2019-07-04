@@ -26,7 +26,6 @@ class ShareRootViewController: UIViewController {
     struct OnSendingSuccessData {
         let messages: [MessageConvertible]
         let targets: [ShareTarget]
-        let results: [ShareSendingResult]
     }
 
     struct OnSendingFailureData {
@@ -213,8 +212,8 @@ extension ShareRootViewController {
             self.onSendingFailure.call(failureData)
         }
 
-        func callbackSuccess(_ response: PostMultisendMessagesRequest.Response) {
-            let successData = OnSendingSuccessData(messages: messages, targets: selected, results: response.results)
+        func callbackSuccess(_ response: Unit) {
+            let successData = OnSendingSuccessData(messages: messages, targets: selected)
             self.onSendingSuccess.call(successData)
         }
 
@@ -222,10 +221,7 @@ extension ShareRootViewController {
         API.getMessageSendingOneTimeToken(userIDs: selected.map { $0.targetID }) { result in
             switch result {
             case .success(let token):
-
-                // TODO: Send message with token instead.
-
-                API.multiSendMessages(messages, to: selected.map { $0.targetID }) { result in
+                API.multiSendMessages(messages, withMessageToken: token) { result in
                     indicator.remove()
                     switch result {
                     case .success(let response): callbackSuccess(response)

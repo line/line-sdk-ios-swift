@@ -221,6 +221,7 @@
 		4BEB4924212BA0A300BA946A /* FlexIconComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4923212BA0A300BA946A /* FlexIconComponentTests.swift */; };
 		4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */; };
 		4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */; };
+		4BEC048422CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BEFF644226DCD960046DB66 /* ShareControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */; };
 		4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
@@ -528,6 +529,7 @@
 		4BEB4923212BA0A300BA946A /* FlexIconComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexIconComponentTests.swift; sourceTree = "<group>"; };
 		4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponent.swift; sourceTree = "<group>"; };
 		4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponentTests.swift; sourceTree = "<group>"; };
+		4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMultisendMessagesTokenRequest.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareControllerTests.swift; sourceTree = "<group>"; };
 		4BF3044E221D3620005ADADD /* ResultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtils.swift; sourceTree = "<group>"; };
@@ -1284,6 +1286,7 @@
 			children = (
 				4B9B9AA62123C6E400325B9B /* PostSendMessagesRequest.swift */,
 				4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */,
+				4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */,
 				4B62425122CAF2000092B92F /* PostMessageTokenRequest.swift */,
 			);
 			path = Request;
@@ -1748,6 +1751,7 @@
 				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
 				4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
+				4BEC048422CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift in Sources */,
 				D16D5328224876B900BAA3B4 /* ColumnDataStore.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B3CCB9C21523B1300F51D76 /* ECDSA.swift in Sources */,

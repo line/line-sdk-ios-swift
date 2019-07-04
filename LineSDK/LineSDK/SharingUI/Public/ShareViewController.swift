@@ -21,11 +21,6 @@
 
 import UIKit
 
-/// Represents the sending results when sending messages to friends or groups through `ShareViewController`.
-/// The result contains 1) a destination user or group ID of this result and 2) a `MessageSendingStatus`.
-/// See `MessageSendingStatus` for more information on the sending status.
-public typealias ShareSendingResult = PostMultisendMessagesRequest.Response.SendingResult
-
 /**
  A view controller that provides a default UI for selecting friends and groups,
  then share a `Message` to the selected targets.
@@ -176,8 +171,7 @@ open class ShareViewController: UINavigationController {
             self.shareDelegate?.shareViewController(
                 self,
                 didSendMessages: success.messages,
-                toTargets: success.targets,
-                sendingResults: success.results)
+                toTargets: success.targets)
         }
         rootViewController.onSendingFailure.delegate(on: self) { (self, failure) in
             self.shareDelegate?.shareViewController(
