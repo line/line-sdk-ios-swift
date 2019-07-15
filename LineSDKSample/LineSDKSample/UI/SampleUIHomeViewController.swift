@@ -74,10 +74,8 @@ extension SampleUIHomeViewController: ShareViewControllerDelegate {
     }
 
     func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {
-        dismiss(animated: true) {
-            UIAlertController.present(
-                in: self, title: nil, message: "User Cancelled", actions: [.init(title: "OK", style: .cancel)])
-        }
+        UIAlertController.present(
+            in: self, title: nil, message: "User Cancelled", actions: [.init(title: "OK", style: .cancel)])
     }
 
     func shareViewController(
