@@ -50,13 +50,14 @@
   height: 60px;
   display: flex;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 20px;
 }
 
 .header-left {
   display: flex;
   align-items: center;
   flex-grow: 1;
+  letter-spacing: normal;
 }
 
 
@@ -68,6 +69,8 @@ form[role=search] input {
   font-size: 18px;
   margin-right: 35px;
   white-space: nowrap;
+  font-family: 'Avenir Next W01,"ヒラギノ角ゴ Pro",Hiragino Kaku Gothic Pro,"游ゴシック体",Yu Gothic,YuGothic,"メイリオ",Meiryo,Arial Unicode MS,Tahoma,Helvetica,"ＭＳ Ｐゴシック",MS PGothic,sans-serif';
+
 }
 
 .GlobalHeaderNav > ul {
@@ -81,6 +84,8 @@ form[role=search] input {
     line-height: 1em;
     a {
       color: #D8D8D8;
+      font-family: 'Avenir Next W01,"ヒラギノ角ゴ Pro",Hiragino Kaku Gothic Pro,"游ゴシック体",Yu Gothic,YuGothic,"メイリオ",Meiryo,Arial Unicode MS,Tahoma,Helvetica,"ＭＳ Ｐゴシック",MS PGothic,sans-serif';
+      font-size: 13px;
     }
   }
 }
