@@ -149,13 +149,13 @@ extension ShareRootViewController {
 
     private func loadGraphList() {
 
-        let friendsRequest = GetFriendsRequest(sort: .relation, pageToken: nil)
+        let friendsRequest = GetFriendsRequest(sort: .relation, version: .v1)
         let chainedFriendsRequest = ChainedPaginatedRequest(originalRequest: friendsRequest)
         chainedFriendsRequest.onPageLoaded.delegate(on: self) { (self, response) in
             self.store.append(data: response.friends, to: MessageShareTargetType.friends.rawValue)
         }
 
-        let groupsRequest = GetGroupsRequest(pageToken: nil)
+        let groupsRequest = GetGroupsRequest(version: .v1)
         let chainedGroupsRequest = ChainedPaginatedRequest(originalRequest: groupsRequest)
         chainedGroupsRequest.onPageLoaded.delegate(on: self) { (self, response) in
             self.store.append(data: response.groups, to: MessageShareTargetType.groups.rawValue)
