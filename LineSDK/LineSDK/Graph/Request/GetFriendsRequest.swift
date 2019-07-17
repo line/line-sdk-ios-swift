@@ -57,7 +57,7 @@ public struct GetFriendsRequest: Request {
 
     public let method: HTTPMethod = .get
     public var path: String {
-        "/graph/\(version.rawValue)/friends"
+        return "/graph/\(version.rawValue)/friends"
     }
     public let authentication: AuthenticateMethod = .token
 

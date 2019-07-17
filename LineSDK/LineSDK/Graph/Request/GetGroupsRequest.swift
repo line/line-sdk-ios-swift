@@ -41,7 +41,7 @@ public struct GetGroupsRequest: Request {
 
     public let method: HTTPMethod = .get
     public var path: String {
-        "/graph/\(version.rawValue)/groups"
+        return "/graph/\(version.rawValue)/groups"
     }
     public let authentication: AuthenticateMethod = .token
 
