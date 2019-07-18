@@ -104,7 +104,9 @@ extension UIViewController {
 
 extension UIViewController {
     var expectedSearchBarHeight: CGFloat {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 13.0, *) {
+            return 54
+        } else if #available(iOS 11.0, *) {
             // On iOS 11, the window safeAreaInsets.top returns wrong value (0).
             let topInset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
             if topInset == 20 || // Normal screen on iOS 12+.

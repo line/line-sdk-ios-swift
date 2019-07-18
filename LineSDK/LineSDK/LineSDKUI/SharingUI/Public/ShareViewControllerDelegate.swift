@@ -62,14 +62,9 @@ public protocol ShareViewControllerDelegate: AnyObject {
     ///
     /// - Parameter controller: The controller object managing the share interface.
     ///
-    /// This method is called when the user cancels sharing action by tapping the "Close" button in the sharing UI.
-    ///
-    /// Your delegate’s implementation of this method should dismiss the share view controller by calling the
-    /// `dismiss(animated:completion:)` method on either the `controller` or on its presenting view controller.
-    ///
-    /// If you didn't set a delegate object for `ShareViewController` or you didn't implement this method in the
-    /// delegate object, the `ShareViewController` will be dismissed with animation for you.
-    ///
+    /// When the user cancels sharing action by tapping the "Close" button in the sharing UI, the `ShareViewController`
+    /// will be dismissed with an animation and this delegate method is called after the dismissing animation finished.
+    /// 
     func shareViewControllerDidCancelSharing(_ controller: ShareViewController)
 
     /// Tells the delegate that the message sending fails due to an error.
@@ -172,9 +167,7 @@ extension ShareViewControllerDelegate {
         didFailLoadingListType shareType: MessageShareTargetType,
         withError error: LineSDKError) { }
 
-    public func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {
-        controller.dismiss(animated: true)
-    }
+    public func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {}
 
     public func shareViewController(
         _ controller: ShareViewController,
