@@ -158,7 +158,13 @@ extension UIImage {
     ///   - name: The image name.
     ///   - trait: The traits associated with the intended environment for the image.
     convenience init?(bundleNamed name: String, compatibleWith trait: UITraitCollection? = nil) {
-        self.init(named: name, in: .frameworkBundle, compatibleWith: trait)
+        let bundle: Bundle
+#if LineSDKCocoaPods
+        bundle = .sdkBundle
+#else
+        bundle = .frameworkBundle
+#endif
+        self.init(named: name, in: bundle, compatibleWith: trait)
     }
 }
 

@@ -57,24 +57,32 @@ public struct Constant {
 
 extension Bundle {
     static let frameworkResourceBundle: Bundle = {
-        var resourcePath: String?
-
+        let parentBundle: Bundle
 #if LineSDKCocoaPods
-        if let sdkBundlePath = Bundle.frameworkBundle.path(forResource: "LineSDK", ofType: "bundle"),
-            let sdkBundle = Bundle(path: sdkBundlePath) {
-            resourcePath = sdkBundle.path(forResource: "Resource", ofType: "bundle")
-        }
+        parentBundle = sdkBundle
 #else
-        resourcePath = frameworkBundle.path(forResource: "Resource", ofType: "bundle")
+        parentBundle = frameworkBundle
 #endif
-
-        guard let path = resourcePath, let bundle = Bundle(path: path) else
+        
+        guard let path = parentBundle.path(forResource: "Resource", ofType: "bundle"),
+            let bundle = Bundle(path: path) else
         {
             Log.fatalError("SDK resource bundle cannot be found, " +
                            "please verify your installation is not corrupted and try to reinstall LineSDK.")
         }
         return bundle
     }()
+
+#if LineSDKCocoaPods
+    static let sdkBundle: Bundle = {
+        guard let path = Bundle.frameworkBundle.path(forResource: "LineSDK", ofType: "bundle"),
+            let bundle = Bundle(path: path) else {
+                Log.fatalError("LineSDK.bundle cannot be found, " +
+                    "please verify your installation is not corrupted and try to reinstall LineSDK.")
+        }
+        return bundle
+    }()
+#endif
 
     static let frameworkBundle: Bundle = {
         return Bundle(for: LoginManager.self)
