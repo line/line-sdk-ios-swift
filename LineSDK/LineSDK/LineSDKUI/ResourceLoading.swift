@@ -35,20 +35,46 @@ extension UIImage {
     ///   - name: The image name.
     ///   - trait: The traits associated with the intended environment for the image.
     convenience init?(bundleNamed name: String, compatibleWith trait: UITraitCollection? = nil) {
-        self.init(named: name, in: .frameworkBundle, compatibleWith: trait)
+        let bundle: Bundle
+        #if LineSDKCocoaPods
+        bundle = .sdkBundle
+        #else
+        bundle = .frameworkBundle
+        #endif
+        self.init(named: name, in: bundle, compatibleWith: trait)
     }
 }
 
 extension Bundle {
     static let frameworkResourceBundle: Bundle = {
-        guard let path = frameworkBundle.path(forResource: "Resource", ofType: "bundle"),
-            let bundle = Bundle(path: path) else
+        let parentBundle: Bundle
+        #if LineSDKCocoaPods
+        parentBundle = sdkBundle
+        #else
+        parentBundle = frameworkBundle
+        #endif
+
+        guard let path = parentBundle.path(forResource: "Resource", ofType: "bundle"),
+              let bundle = Bundle(path: path) else
         {
             Log.fatalError("SDK resource bundle cannot be found, " +
-                "please verify your installation is not corrupted and try to reinstall LineSDK.")
+                           "please verify your installation is not corrupted and try to reinstall LineSDK.")
         }
         return bundle
     }()
+
+    #if LineSDKCocoaPods
+    // SDK Bundle is for CocoaPods: ( sp.resource_bundles = { 'LineSDK' => [ ... ] } )
+    static let sdkBundle: Bundle = {
+        guard let path = Bundle.frameworkBundle.path(forResource: "LineSDK", ofType: "bundle"),
+              let bundle = Bundle(path: path) else
+        {
+            Log.fatalError("LineSDK.bundle cannot be found, " +
+                           "please verify your installation is not corrupted and try to reinstall LineSDK.")
+        }
+        return bundle
+    }()
+    #endif
 
     static let frameworkBundle: Bundle = {
         return Bundle(for: LoginManager.self)
