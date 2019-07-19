@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name                = "LineSDKSwift"
-  s.version             = "5.2.0"
+  s.version             = "5.2.1"
   s.summary             = "The LINE SDK for iOS Swift provides a modern way of implementing LINE APIs."
 
   s.description         = <<-DESC
