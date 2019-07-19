@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 struct Log {
     static func assertionFailure(
@@ -142,30 +142,6 @@ func guardSharedProperty<T>(_ input: T?) -> T {
             "Please call `LoginManager.setup` before you do any other things in LineSDK.")
     }
     return shared
-}
-
-enum Localization {
-    static func string(_ key: String) -> String {
-        return NSLocalizedString(key, bundle: .frameworkResourceBundle, comment: "")
-    }
-}
-
-extension UIImage {
-
-    /// Creates a `UIImage` object in current framework bundle.
-    ///
-    /// - Parameters:
-    ///   - name: The image name.
-    ///   - trait: The traits associated with the intended environment for the image.
-    convenience init?(bundleNamed name: String, compatibleWith trait: UITraitCollection? = nil) {
-        let bundle: Bundle
-#if LineSDKCocoaPods
-        bundle = .sdkBundle
-#else
-        bundle = .frameworkBundle
-#endif
-        self.init(named: name, in: bundle, compatibleWith: trait)
-    }
 }
 
 extension UIColor {

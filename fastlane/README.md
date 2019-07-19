@@ -76,6 +76,11 @@ fastlane ios change_log
 fastlane ios ensure_latest_carthage
 ```
 
+### ios bump_constant_version
+```
+fastlane ios bump_constant_version
+```
+
 
 ----
 

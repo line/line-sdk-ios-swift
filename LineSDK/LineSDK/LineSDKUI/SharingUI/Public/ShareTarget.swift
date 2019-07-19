@@ -1,5 +1,5 @@
 //
-//  Constant.swift
+//  ShareTarget.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,30 +19,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-/// Constants used in the LINE SDK.
-public struct Constant {
-    
-    /// The version of the current LINE SDK.
-    public static let SDKVersion = "5.2.0"
-    
-    static var SDKVersionString: String {
-        return "LINE SDK iOS v\(SDKVersion)"
-    }
-    
-    static var thirdPartyAppReturnScheme: String {
-        guard let appID = Bundle.main.bundleIdentifier else {
-            Log.fatalError("You need to specify a bundle ID in your app's Info.plist")
-        }
-        return "\(Constant.thirdPartySchemePrefix).\(appID)"
-    }
-    
-    static var thirdPartyAppReturnURL: String {
-        return "\(Constant.thirdPartyAppReturnScheme)://authorize/"
-    }
-    
-    static var lineAppAuthURLv2: URL {
-        return URL(string: "\(Constant.lineAuthV2Scheme)://authorize/")!
+/// Represents the share target in a share action.
+/// A target can be either a friend of current user, or a group of which the current user is a member.
+public protocol ShareTarget {
+
+    /// The ID of this share target.
+    var targetID: String { get }
+
+    /// The display name of this share target.
+    var displayName: String { get }
+
+    /// URL for the profile image of this share target.
+    var avatarURL: URL? { get }
+}
+
+extension User: ShareTarget {
+    public var targetID: String { return userID }
+    public var avatarURL: URL? { return pictureURL }
+}
+
+extension Group: ShareTarget {
+    public var targetID: String { return groupID }
+    public var displayName: String { return groupName }
+    public var avatarURL: URL? { return pictureURL }
+}
+
+extension ShareTarget {
+    var placeholderImage: UIImage? {
+        let value = displayName.count % 4 + 1
+        return UIImage(bundleNamed: "unknown_user_small_0\(value)")
     }
 }
