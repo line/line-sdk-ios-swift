@@ -108,6 +108,7 @@
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
 		4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */; };
+		4B85BB6B22C4A8E600DFE299 /* ResourceLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */; };
 		4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8A965621100A5800760219 /* LoginConfigurationTests.swift */; };
 		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
 		4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
@@ -411,6 +412,7 @@
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
 		4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchController.swift; sourceTree = "<group>"; };
+		4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoading.swift; sourceTree = "<group>"; };
 		4B8A965621100A5800760219 /* LoginConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurationTests.swift; sourceTree = "<group>"; };
 		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
 		4B8FF48A21056B3800890AEF /* CallbackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackQueue.swift; sourceTree = "<group>"; };
@@ -793,6 +795,15 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		4B87E44822E55755005AA4D2 /* LineSDKUI */ = {
+			isa = PBXGroup;
+			children = (
+				3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */,
+				D1F4E714225743D3002639AC /* SharingUI */,
+			);
+			path = LineSDKUI;
+			sourceTree = "<group>";
+		};
 		4B8A9655211009A400760219 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -832,6 +843,7 @@
 		4B90587A21006E5C004D717F /* LineSDK */ = {
 			isa = PBXGroup;
 			children = (
+				4BE7E81822C4A14A00362661 /* LineSDKUI */,
 				4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */,
 				4BBAFC432101BB8200E7BFF6 /* General */,
 				4B9058CE210072B9004D717F /* Login */,
@@ -840,7 +852,6 @@
 				D102A6992164650A00804C7C /* Friendship */,
 				4B9058CD210072B0004D717F /* Networking */,
 				4B25A811213684F000C74B87 /* Crypto */,
-				4B5B0EF12241DE4600BA59A0 /* SharingUI */,
 				4B9058CF210072C3004D717F /* Utils */,
 				3F75522E2123D214004AC047 /* Assets.xcassets */,
 				4B90587B21006E5C004D717F /* LineSDK.h */,
@@ -883,7 +894,6 @@
 		4B9058CE210072B9004D717F /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				3F75523021244502004AC047 /* LoginButton.swift */,
 				4BF53534212A7A0700EA602A /* Request */,
 				4BF53533212A79FA00EA602A /* Model */,
 				4B9058D321007394004D717F /* LoginConfiguration.swift */,
@@ -1053,7 +1063,7 @@
 		4BBEA993212EAF9F00858627 /* LineSDKObjC */ = {
 			isa = PBXGroup;
 			children = (
-				D1F4E714225743D3002639AC /* SharingUI */,
+				4B87E44822E55755005AA4D2 /* LineSDKUI */,
 				D102A6A221646AA100804C7C /* Friendship */,
 				4B2422ED2134FBD6007200C2 /* General */,
 				4BBEA9AD212EAFFB00858627 /* Login */,
@@ -1095,7 +1105,6 @@
 				4B2D14F0212F95B3000DD5BE /* LineSDKLoginResult.swift */,
 				4B2D14F2212F96A7000DD5BE /* LineSDKLoginProcess.swift */,
 				4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */,
-				3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1216,6 +1225,16 @@
 				4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */,
 			);
 			path = Sharing;
+			sourceTree = "<group>";
+		};
+		4BE7E81822C4A14A00362661 /* LineSDKUI */ = {
+			isa = PBXGroup;
+			children = (
+				4B5B0EF12241DE4600BA59A0 /* SharingUI */,
+				3F75523021244502004AC047 /* LoginButton.swift */,
+				4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */,
+			);
+			path = LineSDKUI;
 			sourceTree = "<group>";
 		};
 		4BF45A872137B27F00CCD28E /* Crypto */ = {
@@ -1764,6 +1783,7 @@
 				4B1658052252EF3C0008E441 /* DownloadableImageView.swift in Sources */,
 				4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */,
 				DBFBD43F224E7D0500A74D44 /* SelectedTargetPanelCell.swift in Sources */,
+				4B85BB6B22C4A8E600DFE299 /* ResourceLoading.swift in Sources */,
 				DB5035BB22571D3B003CD0B9 /* KeyboardObservable.swift in Sources */,
 				4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */,
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
@@ -2043,7 +2063,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 522;
+				CURRENT_PROJECT_VERSION = 532;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -2108,7 +2128,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 522;
+				CURRENT_PROJECT_VERSION = 532;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2140,7 +2160,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 522;
+				DYLIB_CURRENT_VERSION = 532;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LineSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -2165,7 +2185,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 522;
+				DYLIB_CURRENT_VERSION = 532;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LineSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -2225,7 +2245,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 522;
+				DYLIB_CURRENT_VERSION = 532;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LineSDKObjC/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -2250,7 +2270,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 522;
+				DYLIB_CURRENT_VERSION = 532;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LineSDKObjC/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

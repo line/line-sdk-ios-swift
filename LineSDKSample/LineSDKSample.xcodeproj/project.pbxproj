@@ -106,6 +106,8 @@
 		4B9058BE21006E9C004D717F /* LineSDKSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSampleUITests.swift; sourceTree = "<group>"; };
 		4B9058C021006E9C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B9AB20D2159EE1500B8C22C /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		4BAEEB8322C4B462007B53D8 /* LoginViewController+SPM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginViewController+SPM.swift"; sourceTree = "<group>"; };
+		4BAEEB8522C4B55D007B53D8 /* SampleUIHomeViewController+SPM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SampleUIHomeViewController+SPM.swift"; sourceTree = "<group>"; };
 		4BB8445C211BD41A005B60D7 /* APIHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHomeViewController.swift; sourceTree = "<group>"; };
 		4BB8445E211BD4DF005B60D7 /* APIStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStore.swift; sourceTree = "<group>"; };
 		4BB84460211BE5E7005B60D7 /* APIResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */,
+				4BAEEB8522C4B55D007B53D8 /* SampleUIHomeViewController+SPM.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				4B9058A021006E9C004D717F /* LoginViewController.swift */,
+				4BAEEB8322C4B462007B53D8 /* LoginViewController+SPM.swift */,
 				4BCD27972113F95700B90D8F /* UserProfileViewController.swift */,
 				4BCD27A22114033000B90D8F /* LoginNavigationController.swift */,
 				4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */,
@@ -396,6 +400,8 @@
 				vi,
 			);
 			mainGroup = 4B90589221006E9B004D717F;
+			packageReferences = (
+			);
 			productRefGroup = 4B90589C21006E9B004D717F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

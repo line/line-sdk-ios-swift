@@ -56,6 +56,7 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
         self.columnIndex = columnIndex
 
         let resultViewController = ShareTargetSearchResultViewController(store: store)
+        resultViewController.addKeyboardObserver()
 
         switch MessageShareTargetType(rawValue: columnIndex) {
         case .friends?:

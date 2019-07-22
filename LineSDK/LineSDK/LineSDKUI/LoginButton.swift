@@ -167,7 +167,6 @@ open class LoginButton: UIButton {
     // This method is called when the style of `LoginButton` is changed.
     // It will update the appearance of button to new style you set.
     func updateButtonStyle() {
-        let bundle = Bundle(for: LoginButton.self)
         let imagesPairs: [(String, UIControl.State)]
         switch buttonSize {
         case .small:
@@ -183,7 +182,7 @@ open class LoginButton: UIButton {
         }
         
         imagesPairs.forEach { (imageName, state) in
-            setBackgroundImage(UIImage(named: imageName, in: bundle, compatibleWith: nil), for: state)
+            setBackgroundImage(UIImage(bundleNamed: imageName), for: state)
         }
         
         titleEdgeInsets = UIEdgeInsets(

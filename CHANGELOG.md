@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.2.1] - 2019-07-19
+
+### Fixed
+
+- Align the behavior of `LineSDKLoginButton` (wrapper class) to LoginButton, when user click login, will only return if login process is ongoing. [#78](https://github.com/line/line-sdk-ios-swift/pull/78)
+
 ## [5.2.0] - 2019-06-12
 
 ### Added
@@ -85,3 +91,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.1.1]: https://github.com/line/line-sdk-ios-swift/compare/5.1.0...5.1.1
 [5.1.2]: https://github.com/line/line-sdk-ios-swift/compare/5.1.1...5.1.2
 [5.2.0]: https://github.com/line/line-sdk-ios-swift/compare/5.1.2...5.2.0
+[5.2.1]: https://github.com/line/line-sdk-ios-swift/compare/5.2.0...5.2.1

@@ -76,11 +76,8 @@ platform :ios do
         version_number: target_version,
         xcodeproj: "LineSDK/LineSDK.xcodeproj"
     )
-  
-    # Increase version numbers in resource info plist.
-    plistbuddy = "/usr/libexec/PlistBuddy"
-    Action.sh("#{plistbuddy} -c 'Set :CFBundleShortVersionString #{target_version}' ../LineSDK/LineSDK/Resource.bundle/Info.plist")
-    Action.sh("#{plistbuddy} -c 'Set :CFBundleVersion #{number_of_commits}' ../LineSDK/LineSDK/Resource.bundle/Info.plist")
+
+    bump_constant_version(version: target_version)
 
     version_bump_podspec(path: "LineSDKSwift.podspec", version_number: target_version)
     
@@ -123,4 +120,12 @@ platform :ios do
     Actions.sh("brew update")
     Actions.sh("brew outdated carthage || brew upgrade carthage")
   end
+
+  lane :bump_constant_version do |options|
+    target_version = options[:version]
+    replacing = "public static let SDKVersion = \"#{target_version}\""
+    regex = "public static let SDKVersion = .*"
+    Action.sh("sed -i -e 's/#{regex}/#{replacing}/g' ../LineSDK/LineSDK/Utils/Constant.swift")
+  end
+
 end

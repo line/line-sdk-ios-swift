@@ -1,5 +1,5 @@
 //
-//  ShareTarget.swift
+//  SampleUIHomeViewController.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,36 +19,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
+import LineSDK
 
-/// Represents the share target in a share action.
-/// A target can be either a friend of current user, or a group of which the current user is a member.
-public protocol ShareTarget {
+class SampleUIHomeViewController: UITableViewController {
 
-    /// The ID of this share target.
-    var targetID: String { get }
+    enum Cell: Int {
+        case shareMessage
+    }
 
-    /// The display name of this share target.
-    var displayName: String { get }
-
-    /// URL for the profile image of this share target.
-    var avatarURL: URL? { get }
-}
-
-extension User: ShareTarget {
-    public var targetID: String { return userID }
-    public var avatarURL: URL? { return pictureURL }
-}
-
-extension Group: ShareTarget {
-    public var targetID: String { return groupID }
-    public var displayName: String { return groupName }
-    public var avatarURL: URL? { return pictureURL }
-}
-
-extension ShareTarget {
-    var placeholderImage: UIImage? {
-        let value = displayName.count % 4 + 1
-        return UIImage(bundleNamed: "unknown_user_small_0\(value)")
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == Cell.shareMessage.rawValue {
+            UIAlertController.present(in: self, error: "UI is not supported yet with Swift Package Manager integration")
+        }
     }
 }

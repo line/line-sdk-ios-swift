@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name                = "LineSDKSwift"
-  s.version             = "5.2.0"
+  s.version             = "5.2.1"
   s.summary             = "The LINE SDK for iOS Swift provides a modern way of implementing LINE APIs."
 
   s.description         = <<-DESC
@@ -25,8 +25,8 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DLineSDKCocoaPods' }
 
   s.subspec "Core" do |sp|
-    sp.source_files  = ["LineSDK/LineSDK/**/*.swift", "LineSDK/LineSDK/LineSDK.h"]
-    sp.resources     = ["LineSDK/LineSDK/Assets.xcassets", "LineSDK/LineSDK/Resource.bundle"]
+    sp.source_files     = ["LineSDK/LineSDK/**/*.swift", "LineSDK/LineSDK/LineSDK.h"]
+    sp.resource_bundles = { 'LineSDK' => ["LineSDK/LineSDK/Assets.xcassets", "LineSDK/LineSDK/Resource.bundle"] }
   end
 
   s.subspec "ObjC" do |sp|

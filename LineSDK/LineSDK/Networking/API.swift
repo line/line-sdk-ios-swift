@@ -128,8 +128,8 @@ public struct API {
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the access token is revoked.
-    /// - Note:
     ///
+    /// - Note:
     ///   Do not pass an access token to the `refreshToken` parameter. To revoke an access token, use
     ///   `revokeAccessToken(_:callbackQueue:completionHandler:)` instead.
     ///
@@ -137,11 +137,11 @@ public struct API {
     ///   and the current refresh token does not exist, `completion` will be called with `.success`. The
     ///   same applies when `refreshToken` has an invalid refresh token.
     ///
-    ///   This API will revoke the given refresh token and all its corresponding access token. Once these tokens are
+    ///   This API will revoke the given refresh token and all its corresponding access tokens. Once these tokens are
     ///   revoked, you can neither call an API protected by an access token or refresh the access token with the refresh
-    ///   token. To access the resource owner's content, you need to ask your users to authorize you app again.
+    ///   token. To access the resource owner's content, you need to ask your users to authorize your app again.
     ///
-    ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token removed from the device.
+    ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token is removed from the device.
     public static func revokeRefreshToken(
         _ refreshToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,

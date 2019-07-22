@@ -121,6 +121,7 @@ open class ShareViewController: UINavigationController {
     public init() {
         super.init(nibName: nil, bundle: nil)
         setupRootDelegates()
+        setupPresentationDelegate()
         self.viewControllers = [rootViewController]
         updateNavigationStyles()
     }
@@ -141,7 +142,9 @@ open class ShareViewController: UINavigationController {
     private func setupRootDelegates() {
         rootViewController.onCancelled.delegate(on: self) { (self, _) in
             if let shareDelegate = self.shareDelegate {
-                shareDelegate.shareViewControllerDidCancelSharing(self)
+                self.dismiss(animated: true) {
+                    shareDelegate.shareViewControllerDidCancelSharing(self)
+                }
             } else {
                 self.dismiss(animated: true)
             }
@@ -183,6 +186,10 @@ open class ShareViewController: UINavigationController {
         rootViewController.onShouldDismiss.delegate(on: self) { (self, _) in
             return self.shareDelegate?.shareViewControllerShouldDismissAfterSending(self) ?? true
         }
+    }
+
+    private func setupPresentationDelegate() {
+        presentationController?.delegate = self
     }
 
     private func updateNavigationStyles() {
@@ -251,5 +258,11 @@ extension ShareViewController {
             return .lackOfPermissions(lackPermissions)
         }
         return .authorized
+    }
+}
+
+extension ShareViewController: UIAdaptivePresentationControllerDelegate {
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        shareDelegate?.shareViewControllerDidCancelSharing(self)
     }
 }

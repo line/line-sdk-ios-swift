@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 /// Adapts a request to another request. Adapters modify an input `URLRequest` object.
 public protocol RequestAdapter {

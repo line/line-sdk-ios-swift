@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 /// Represents a login manager. You can set up the LINE SDK configuration, log in and log out the user with the
 /// LINE authorization flow, and check the authorization status.
@@ -56,15 +56,14 @@ public class LoginManager {
         return currentProcess != nil
     }
 
-    /// Sets the preferred language used when login with the web authorization flow.
+    /// Sets the preferred language used when logging in with the web authorization flow.
     ///
-    /// If not set, the web authentication flow shows the web page for login with user's device language or English as
-    /// a fallback. Once set, the web page will be displayed in the preferred language.
+    /// If not set, the web authentication flow shows the login page in the user's device language, or falls
+    /// back to English. Once set, the web page will be displayed in the preferred language.
     ///
-    /// Note:
-    ///
-    /// This property does not affect the preferred language when LINE app is used for authorization.
-    /// The LINE app always shows itself and the login screen following the user's device language.
+    /// - Note:
+    ///   This property does not affect the preferred language when LINE is used for authorization.
+    ///   LINE and the login screen are always displayed in the user's device language.
     public var preferredWebPageLanguage: WebPageLanguage? = nil
     
     /// A flag to prevent setup multiple times
