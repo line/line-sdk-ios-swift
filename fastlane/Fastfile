@@ -85,8 +85,11 @@ platform :ios do
 
     change_log(version: target_version)
     
-    git_commit_all(message: "Bump version to #{target_version}") 
+    git_commit_all(message: "Bump version to #{target_version}")
     Actions.sh("git tag -u #{ENV["GPG_KEY_ID"]} #{target_version} -m ''")
+
+    xcframework
+
     push_to_git_remote
 
     set_github_release(
@@ -94,7 +97,8 @@ platform :ios do
       api_token: ENV["GITHUB_TOKEN"],
       name: target_version,
       tag_name: target_version,
-      description: release_content
+      description: release_content,
+      upload_assets: ["build/LineSDK.xcframework", "build/LineSDKObjC.xcframework"]
     )
 
     pod_push
@@ -128,4 +132,39 @@ platform :ios do
     Action.sh("sed -i -e 's/#{regex}/#{replacing}/g' ../LineSDK/LineSDK/Utils/Constant.swift")
   end
 
+  desc "Create binary frameworks with the `xcframework` format under the `build/` folder."
+  lane :xcframework do
+    xcversion(version: "~> 11.0")
+    FileUtils.rm_rf '../build'
+
+    # Remove this after archive bug fixed in a future Xcode version.
+    fix_xcode11_beta4_setting = {
+        'LD_VERIFY_BITCODE' => 'NO'
+    }
+
+    ["LineSDK", "LineSDKObjC"].each do |scheme|
+
+        frameworks = []
+
+        ["iphoneos", "iphonesimulator"].each do |sdk|
+            archive_path = "build/#{scheme} #{sdk}.xcarchive"
+            xcodebuild(
+                archive: true, 
+                archive_path: archive_path,
+                scheme: "#{scheme} xcframework", 
+                sdk: sdk,
+                build_settings: fix_xcode11_beta4_setting
+            )
+            frameworks.push("#{archive_path}/Products/Library/Frameworks/LineSDK.framework")
+        end
+
+        # `xcodebuild` action in fastlane does not support `-create-xcframework` arg yet.
+        # Change it back to use fastlane action later when it is prepared.
+        framework_args = frameworks.map { |framework_path| "-framework '#{framework_path}'"}
+        args = "-create-xcframework #{framework_args.join(" ")} -output 'build/#{scheme}.xcframework'"
+        Dir.chdir("..") do
+            Action.sh "xcodebuild #{args}"
+        end
+    end
+  end
 end

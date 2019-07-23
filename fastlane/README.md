@@ -81,6 +81,11 @@ fastlane ios ensure_latest_carthage
 fastlane ios bump_constant_version
 ```
 
+### ios xcframework
+```
+fastlane ios xcframework
+```
+
 
 ----
 
