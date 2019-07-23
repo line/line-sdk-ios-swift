@@ -85,7 +85,7 @@ fastlane ios bump_constant_version
 ```
 fastlane ios xcframework
 ```
-
+Create binary frameworks with the `xcframework` format under the `build/` folder.
 
 ----
 

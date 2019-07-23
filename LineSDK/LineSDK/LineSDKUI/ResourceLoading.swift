@@ -37,7 +37,7 @@ extension UIImage {
     convenience init?(bundleNamed name: String, compatibleWith trait: UITraitCollection? = nil) {
         let bundle: Bundle
         #if LineSDKCocoaPods
-        bundle = .sdkBundle
+        bundle = .podsBundle
         #else
         bundle = .frameworkBundle
         #endif
@@ -49,7 +49,7 @@ extension Bundle {
     static let frameworkResourceBundle: Bundle = {
         let parentBundle: Bundle
         #if LineSDKCocoaPods
-        parentBundle = sdkBundle
+        parentBundle = podsBundle
         #else
         parentBundle = frameworkBundle
         #endif
@@ -65,7 +65,7 @@ extension Bundle {
 
     #if LineSDKCocoaPods
     // SDK Bundle is for CocoaPods: ( sp.resource_bundles = { 'LineSDK' => [ ... ] } )
-    static let sdkBundle: Bundle = {
+    static let podsBundle: Bundle = {
         guard let path = Bundle.frameworkBundle.path(forResource: "LineSDK", ofType: "bundle"),
               let bundle = Bundle(path: path) else
         {
