@@ -151,7 +151,7 @@ platform :ios do
             xcodebuild(
                 archive: true, 
                 archive_path: archive_path,
-                scheme: "#{scheme} xcframework", 
+                scheme: "#{scheme}Binary", 
                 sdk: sdk,
                 build_settings: fix_xcode11_beta4_setting
             )
