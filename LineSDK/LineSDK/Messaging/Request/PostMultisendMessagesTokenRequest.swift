@@ -1,5 +1,5 @@
 //
-//  PostMultisendMessagesRequest.swift
+//  PostMultisendMessagesTokenRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,52 +21,33 @@
 
 import Foundation
 
-/// LINE internal use only.
-/// Represents the request of sending some messages to multiple users on behalf of the current authorized user.
-/// This request requires you have the `.messageWrite` permission, otherwise, you would get a 403 permission
-/// grant error.
-public struct PostMultisendMessagesRequest: Request {
+public struct PostMultisendMessagesTokenRequest: Request {
+
+    public typealias Response = Unit
 
     /// An array of user IDs to where messages will be sent. Up to 10 elements.
-    public let userIDs: [String]
+    public let messageToken: MessageSendingToken
 
     /// `Messages`s will be sent. Up to 5 elements.
     public let messages: [Message]
 
-    /// Creates a request consisted of given `chatID` and `messages`.
-    ///
-    /// - Parameters:
-    ///   - userIDs: An array of users' ID to where messages will be sent.
-    ///   - messages: `Messages`s will be sent. Up to 5 elements.
-    public init(userIDs: [String], messages: [MessageConvertible]) {
-        self.userIDs = userIDs
+    public init(token: MessageSendingToken, messages: [MessageConvertible]) {
+        self.messageToken = token
         self.messages = messages.map { $0.message }
     }
-    
+
     public let method: HTTPMethod = .post
     public let path = "/message/v3/multisend"
     public let authentication: AuthenticateMethod = .token
-    
-    public var parameters: [String: Any]? {
-        return [
-            "to": userIDs,
-            "messages": try! messages.toJSON()
-        ]
+
+    public var pathQueries: [URLQueryItem]? {
+        return [URLQueryItem(name: "type", value: "ott")]
     }
 
-    /// Server response of `PostMultisendMessagesRequest`.
-    public struct Response: Decodable {
-        
-        /// Represents a result pair of message sending behavior.
-        public struct SendingResult: Decodable {
-            /// The destination user or group ID of this result.
-            public let to: String
-            /// Represents the sending status.
-            public let status: MessageSendingStatus
-        }
-        
-        /// Represents sending results of this request. Each `SendingResult` in this array represents a result for a
-        /// specified user in `userIDs` of request.
-        public let results: [SendingResult]
+    public var parameters: [String: Any]? {
+        return [
+            "token": messageToken.token,
+            "messages": try! messages.toJSON()
+        ]
     }
 }

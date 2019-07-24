@@ -26,14 +26,23 @@ import Foundation
 /// This API returns a maximum of 200 groups per request.
 public struct GetGroupsRequest: Request {
 
-    public init(pageToken: String? = nil) {
+    public enum Version: String {
+        case v1 // Requires U2U Share license.
+        case v2 // Requires Message Sending licensen.
+    }
+
+    public init(pageToken: String? = nil, version: Version = .v2) {
         self.pageToken = pageToken
+        self.version = version
     }
 
     let pageToken: String?
+    let version: Version
 
     public let method: HTTPMethod = .get
-    public let path = "/graph/v2/groups"
+    public var path: String {
+        return "/graph/\(version.rawValue)/groups"
+    }
     public let authentication: AuthenticateMethod = .token
 
     public var parameters: [String : Any]? {

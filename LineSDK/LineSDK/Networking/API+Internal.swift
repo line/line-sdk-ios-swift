@@ -190,4 +190,23 @@ extension API {
         let request = PostMultisendMessagesRequest(userIDs: userIDs, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
+
+    public static func multiSendMessages(
+        _ messages: [MessageConvertible],
+        withMessageToken token: MessageSendingToken,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<Unit, LineSDKError>) -> Void)
+    {
+        let request = PostMultisendMessagesTokenRequest(token: token, messages: messages)
+        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+    }
+
+    public static func getMessageSendingOneTimeToken(
+        userIDs: [String],
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHander completion: @escaping (Result<MessageSendingToken, LineSDKError>) -> Void)
+    {
+        let request = PostMessageSendingTokenRequest(userIDs: userIDs)
+        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+    }
 }

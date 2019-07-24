@@ -38,8 +38,7 @@ import LineSDK
     @objc optional func shareViewController(
         _ controller: LineSDKShareViewController,
         didSendMessages messages: [LineSDKMessage],
-        toTargets targets: [LineSDKShareTarget],
-        sendingResults results: [LineSDKPostMultisendMessagesResponseSendingResult])
+        toTargets targets: [LineSDKShareTarget])
 
     @objc optional func shareViewController(
         _ controller: LineSDKShareViewController,

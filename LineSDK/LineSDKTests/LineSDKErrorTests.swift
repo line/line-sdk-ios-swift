@@ -79,7 +79,7 @@ class LineSDKErrorTests: XCTestCase {
     func testIsRefreshTokenError() {
         let err = APIError(InternalAPIError(message: "The refresh token expired"))
         let refresh = PostRefreshTokenRequest(channelID: "", refreshToken: "")
-        let urlString = refresh.baseURL.appendingPathComponentIfNotEmpty(refresh.path).absoluteString
+        let urlString = refresh.baseURL.appendingPathComponentIfNotEmpty(refresh).absoluteString
         let response = HTTPURLResponse.responseFromCode(400, urlString: urlString)
         let detail = LineSDKError.ResponseErrorReason.APIErrorDetail(
             code: 400, error: err, raw: response, rawString: "raw")

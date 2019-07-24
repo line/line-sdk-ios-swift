@@ -169,7 +169,10 @@ public class Session {
     /// - Returns: Configured request.
     /// - Throws: Any error might happen during creating the request.
     func create<T: Request>(_ request: T) throws -> URLRequest {
-        let url = request.baseURL.appendingPathComponentIfNotEmpty(request.path)
+        let url = request.baseURL
+            .appendingPathComponentIfNotEmpty(request)
+            .appendingPathQueryItems(request)
+
         let urlRequest = URLRequest(
             url: url,
             cachePolicy: request.cachePolicy,
@@ -355,7 +358,22 @@ extension SessionTask {
 }
 
 extension URL {
-    func appendingPathComponentIfNotEmpty(_ path: String) -> URL {
+    func appendingPathComponentIfNotEmpty<R: Request>(_ request: R) -> URL {
+        let path = request.path
         return path.isEmpty ? self : appendingPathComponent(path)
+    }
+
+    func appendingPathQueryItems<R: Request>(_ request: R) -> URL {
+        guard request.method != .get else {
+            return self
+        }
+        guard let items = request.pathQueries else {
+            return self
+        }
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
+            return self
+        }
+        components.queryItems = items
+        return components.url ?? self
     }
 }

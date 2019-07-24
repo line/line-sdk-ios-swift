@@ -27,6 +27,11 @@ import Foundation
 /// information, unless they specifically authorized the app.
 public struct GetFriendsRequest: Request {
 
+    public enum Version: String {
+        case v1 // Requires U2U Share license.
+        case v2 // Requires Message Sending licensen.
+    }
+
     /// Sorting method for the returned friend list.
     /// Only supports `name` currently.
     ///
@@ -40,16 +45,20 @@ public struct GetFriendsRequest: Request {
         case relation
     }
 
-    public init(sort: Sort? = nil, pageToken: String? = nil) {
+    public init(sort: Sort? = nil, pageToken: String? = nil, version: Version = .v2) {
         self.pageToken = pageToken
         self.sort = sort
+        self.version = version
     }
 
     let sort: Sort?
     let pageToken: String?
+    let version: Version
 
     public let method: HTTPMethod = .get
-    public let path = "/graph/v2/friends"
+    public var path: String {
+        return "/graph/\(version.rawValue)/friends"
+    }
     public let authentication: AuthenticateMethod = .token
 
     public var parameters: [String : Any]? {
