@@ -141,34 +141,57 @@ platform :ios do
     xcversion(version: "~> 11.0")
     FileUtils.rm_rf '../build'
 
-    # Remove this after archive bug fixed in a future Xcode version.
-    fix_xcode11_beta4_setting = {
-        'LD_VERIFY_BITCODE' => 'NO'
-    }
+    # Enable the binary framework schemes (this helps not building it for Carthage)
+    FileUtils.mv(
+        "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKObjCBinary.xcscheme.bak",
+        "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKObjCBinary.xcscheme"
+    )
+    FileUtils.mv(
+        "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKBinary.xcscheme.bak",
+        "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKBinary.xcscheme"
+    )
 
-    ["LineSDK", "LineSDKObjC"].each do |scheme|
+    begin
+        # Remove this after archive bug fixed in a future Xcode version.
+        fix_xcode11_beta4_setting = {
+            'LD_VERIFY_BITCODE' => 'NO'
+        }
 
-        frameworks = []
+        ["LineSDK", "LineSDKObjC"].each do |scheme|
 
-        ["iphoneos", "iphonesimulator"].each do |sdk|
-            archive_path = "build/#{scheme} #{sdk}.xcarchive"
-            xcodebuild(
-                archive: true, 
-                archive_path: archive_path,
-                scheme: "#{scheme}Binary", 
-                sdk: sdk,
-                build_settings: fix_xcode11_beta4_setting
-            )
-            frameworks.push("#{archive_path}/Products/Library/Frameworks/LineSDK.framework")
+            frameworks = []
+
+            ["iphoneos", "iphonesimulator"].each do |sdk|
+                archive_path = "build/#{scheme} #{sdk}.xcarchive"
+                xcodebuild(
+                    archive: true, 
+                    archive_path: archive_path,
+                    scheme: "#{scheme}Binary", 
+                    sdk: sdk,
+                    build_settings: fix_xcode11_beta4_setting
+                )
+                frameworks.push("#{archive_path}/Products/Library/Frameworks/LineSDK.framework")
+            end
+
+            # `xcodebuild` action in fastlane does not support `-create-xcframework` arg yet.
+            # Change it back to use fastlane action later when it is prepared.
+            framework_args = frameworks.map { |framework_path| "-framework '#{framework_path}'"}
+            args = "-create-xcframework #{framework_args.join(" ")} -output 'build/#{scheme}.xcframework'"
+            Dir.chdir("..") do
+                Action.sh "xcodebuild #{args}"
+            end
         end
-
-        # `xcodebuild` action in fastlane does not support `-create-xcframework` arg yet.
-        # Change it back to use fastlane action later when it is prepared.
-        framework_args = frameworks.map { |framework_path| "-framework '#{framework_path}'"}
-        args = "-create-xcframework #{framework_args.join(" ")} -output 'build/#{scheme}.xcframework'"
-        Dir.chdir("..") do
-            Action.sh "xcodebuild #{args}"
-        end
+    rescue => ex
+        raise ex
+    ensure
+        FileUtils.mv(
+            "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKObjCBinary.xcscheme",
+            "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKObjCBinary.xcscheme.bak"
+        )
+        FileUtils.mv(
+            "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKBinary.xcscheme",
+            "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKBinary.xcscheme.bak"
+        )
     end
   end
 end
