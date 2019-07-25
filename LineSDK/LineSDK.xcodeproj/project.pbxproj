@@ -389,6 +389,10 @@
 		4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A7025210956B600D71C66 /* KeychainStore.swift */; };
 		4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */; };
 		4B6A70312109793500D71C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A70302109793500D71C66 /* AppDelegate.swift */; };
+		4B6AA83922E97176005FFF9C /* PostMultisendMessagesTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */; };
+		4B6AA83A22E97176005FFF9C /* PostMultisendMessagesTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */; };
+		4B6AA83B22E97180005FFF9C /* PostMessageTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62425122CAF2000092B92F /* PostMessageTokenRequest.swift */; };
+		4B6AA83C22E97180005FFF9C /* PostMessageTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62425122CAF2000092B92F /* PostMessageTokenRequest.swift */; };
 		4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */; };
 		4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */; };
 		4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */; };
@@ -2091,6 +2095,7 @@
 				4B50EC7522E69B0D00225900 /* JWK.swift in Sources */,
 				4B50EC7622E69B0D00225900 /* Unit.swift in Sources */,
 				4B50EC7722E69B0D00225900 /* AccessTokenVerifyResult.swift in Sources */,
+				4B6AA83922E97176005FFF9C /* PostMultisendMessagesTokenRequest.swift in Sources */,
 				4B50EC7822E69B0D00225900 /* PostOTPRequest.swift in Sources */,
 				4B50EC7922E69B0D00225900 /* MessageShareTargetType.swift in Sources */,
 				4B50EC7A22E69B0D00225900 /* JWTCoder.swift in Sources */,
@@ -2175,6 +2180,7 @@
 				4B50ECC922E69B0D00225900 /* ShareTargetSelectingSectionHeaderView.swift in Sources */,
 				4B50ECCA22E69B0D00225900 /* RSA.swift in Sources */,
 				4B50ECCB22E69B0D00225900 /* GetApproversInFriendsRequest.swift in Sources */,
+				4B6AA83B22E97180005FFF9C /* PostMessageTokenRequest.swift in Sources */,
 				4B50ECCC22E69B0D00225900 /* FlexSpacerComponent.swift in Sources */,
 				4B50ECCD22E69B0D00225900 /* APIError.swift in Sources */,
 				4B50ECCE22E69B0D00225900 /* CryptoAlgorithm.swift in Sources */,
@@ -2247,6 +2253,7 @@
 				4B50EDB922E6ABFB00225900 /* LineSDKTemplateButtonsPayload.swift in Sources */,
 				4B50ED3F22E6A94100225900 /* KeychainStore.swift in Sources */,
 				4B50ED4022E6A94100225900 /* LocationMessage.swift in Sources */,
+				4B6AA83C22E97180005FFF9C /* PostMessageTokenRequest.swift in Sources */,
 				4B50ED4122E6A94100225900 /* TemplateMessagePayload.swift in Sources */,
 				4B50EDA822E6ABDD00225900 /* LineSDKMessageShareTargetType.swift in Sources */,
 				4B50EDB122E6ABEA00225900 /* LineSDKLoginManagerOptions.swift in Sources */,
@@ -2332,6 +2339,7 @@
 				4B50EDAE22E6ABEA00225900 /* LineSDKAccessTokenVerifyResult.swift in Sources */,
 				4B50ED7A22E6A94100225900 /* PostSendMessagesRequest.swift in Sources */,
 				4B50EDD122E6ABFB00225900 /* LineSDKFlexMessage.swift in Sources */,
+				4B6AA83A22E97176005FFF9C /* PostMultisendMessagesTokenRequest.swift in Sources */,
 				4B50EDD622E6AC0800225900 /* Log.swift in Sources */,
 				4B50ED7B22E6A94100225900 /* CryptoData.swift in Sources */,
 				4B50ED7C22E6A94100225900 /* CodingExtension.swift in Sources */,
