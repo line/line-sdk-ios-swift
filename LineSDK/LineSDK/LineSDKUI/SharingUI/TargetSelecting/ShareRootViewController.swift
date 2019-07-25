@@ -26,7 +26,6 @@ class ShareRootViewController: UIViewController {
     struct OnSendingSuccessData {
         let messages: [MessageConvertible]
         let targets: [ShareTarget]
-        let results: [ShareSendingResult]
     }
 
     struct OnSendingFailureData {
@@ -150,13 +149,13 @@ extension ShareRootViewController {
 
     private func loadGraphList() {
 
-        let friendsRequest = GetFriendsRequest(sort: .relation, pageToken: nil)
+        let friendsRequest = GetFriendsRequest(sort: .relation, version: .v1)
         let chainedFriendsRequest = ChainedPaginatedRequest(originalRequest: friendsRequest)
         chainedFriendsRequest.onPageLoaded.delegate(on: self) { (self, response) in
             self.store.append(data: response.friends, to: MessageShareTargetType.friends.rawValue)
         }
 
-        let groupsRequest = GetGroupsRequest(pageToken: nil)
+        let groupsRequest = GetGroupsRequest(version: .v1)
         let chainedGroupsRequest = ChainedPaginatedRequest(originalRequest: groupsRequest)
         chainedGroupsRequest.onPageLoaded.delegate(on: self) { (self, response) in
             self.store.append(data: response.groups, to: MessageShareTargetType.groups.rawValue)
@@ -208,21 +207,35 @@ extension ShareRootViewController {
         // `onSendingMessage` is expected to be always delegated.
         let messages = onSendingMessage.call(selected)!
 
-        let indicator = LoadingIndicator.add(to: view)
-        API.multiSendMessages(messages, to: selected.map { $0.targetID }) { result in
-            indicator.remove()
-            switch result {
-            case .success(let response):
-                let successData = OnSendingSuccessData(messages: messages, targets: selected, results: response.results)
-                self.onSendingSuccess.call(successData)
-            case .failure(let error):
-                let failureData = OnSendingFailureData(messages: messages, targets: selected, error: error)
-                self.onSendingFailure.call(failureData)
-            }
+        func callbackFailure(_ error: LineSDKError) {
+            let failureData = OnSendingFailureData(messages: messages, targets: selected, error: error)
+            self.onSendingFailure.call(failureData)
+        }
 
-            let shouldDismiss = self.onShouldDismiss.call() ?? true
-            if shouldDismiss {
-                self.dismiss(animated: true)
+        func callbackSuccess(_ response: Unit) {
+            let successData = OnSendingSuccessData(messages: messages, targets: selected)
+            self.onSendingSuccess.call(successData)
+        }
+
+        let indicator = LoadingIndicator.add(to: view)
+        API.getMessageSendingOneTimeToken(userIDs: selected.map { $0.targetID }) { result in
+            switch result {
+            case .success(let token):
+                API.multiSendMessages(messages, withMessageToken: token) { result in
+                    indicator.remove()
+                    switch result {
+                    case .success(let response): callbackSuccess(response)
+                    case .failure(let error):    callbackFailure(error)
+                    }
+
+                    let shouldDismiss = self.onShouldDismiss.call() ?? true
+                    if shouldDismiss {
+                        self.dismiss(animated: true)
+                    }
+                }
+            case .failure(let error):
+                indicator.remove()
+                callbackFailure(error)
             }
         }
     }

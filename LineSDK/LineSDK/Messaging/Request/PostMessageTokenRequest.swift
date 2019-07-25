@@ -1,5 +1,5 @@
 //
-//  Unit.swift
+//  PostMessageSendingTokenRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,4 +21,32 @@
 
 import Foundation
 
-public struct Unit: Decodable {}
+public struct PostMessageSendingTokenRequest: Request {
+
+    public typealias Response = MessageSendingToken
+
+    public let userIDs: [String]
+
+    public init(userIDs: [String]) {
+        self.userIDs = userIDs
+    }
+
+    public let method: HTTPMethod = .post
+    public let path = "/message/v3/ott"
+    public let authentication: AuthenticateMethod = .token
+
+    public var parameters: [String: Any]? {
+        return [
+            "userIds": userIDs
+        ]
+    }
+}
+
+public struct MessageSendingToken: Decodable {
+
+    public let token: String
+
+    public init(value: String) {
+        self.token = value
+    }
+}

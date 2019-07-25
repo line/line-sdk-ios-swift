@@ -377,6 +377,7 @@
 		4B5EE2E4212BCE1A0009DF2E /* FlexBlockStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E3212BCE1A0009DF2E /* FlexBlockStyle.swift */; };
 		4B5EE2E6212BD53E0009DF2E /* FlexBubbleContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E5212BD53E0009DF2E /* FlexBubbleContainerTests.swift */; };
 		4B5EE2E8212BE0D00009DF2E /* FlexCarouselContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */; };
+		4B62425222CAF2000092B92F /* PostMessageTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62425122CAF2000092B92F /* PostMessageTokenRequest.swift */; };
 		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
 		4B6508B8211812CE001796E0 /* LoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */; };
 		4B688E3E226F029B002575CC /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B688E3D226F029B002575CC /* LoadingIndicator.swift */; };
@@ -520,6 +521,7 @@
 		4BEB4924212BA0A300BA946A /* FlexIconComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4923212BA0A300BA946A /* FlexIconComponentTests.swift */; };
 		4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */; };
 		4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */; };
+		4BEC048422CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BEFF644226DCD960046DB66 /* ShareControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */; };
 		4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
@@ -680,6 +682,7 @@
 		4B5EE2E3212BCE1A0009DF2E /* FlexBlockStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBlockStyle.swift; sourceTree = "<group>"; };
 		4B5EE2E5212BD53E0009DF2E /* FlexBubbleContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBubbleContainerTests.swift; sourceTree = "<group>"; };
 		4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexCarouselContainerTests.swift; sourceTree = "<group>"; };
+		4B62425122CAF2000092B92F /* PostMessageTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageTokenRequest.swift; sourceTree = "<group>"; };
 		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
 		4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerOptions.swift; sourceTree = "<group>"; };
 		4B688E3D226F029B002575CC /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
@@ -829,6 +832,7 @@
 		4BEB4923212BA0A300BA946A /* FlexIconComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexIconComponentTests.swift; sourceTree = "<group>"; };
 		4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponent.swift; sourceTree = "<group>"; };
 		4BEB4927212BA8CF00BA946A /* FlexSeparatorComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSeparatorComponentTests.swift; sourceTree = "<group>"; };
+		4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMultisendMessagesTokenRequest.swift; sourceTree = "<group>"; };
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareControllerTests.swift; sourceTree = "<group>"; };
 		4BF3044E221D3620005ADADD /* ResultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtils.swift; sourceTree = "<group>"; };
@@ -1618,6 +1622,8 @@
 			children = (
 				4B9B9AA62123C6E400325B9B /* PostSendMessagesRequest.swift */,
 				4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */,
+				4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */,
+				4B62425122CAF2000092B92F /* PostMessageTokenRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -2436,6 +2442,7 @@
 				4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */,
 				4BB002C62244758000FB8BD8 /* ImageDownloader.swift in Sources */,
 				4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */,
+				4B62425222CAF2000092B92F /* PostMessageTokenRequest.swift in Sources */,
 				4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */,
 				DB115EFA2254660C00C16B0C /* ShareRootViewController.swift in Sources */,
 				3F75523121244502004AC047 /* LoginButton.swift in Sources */,
@@ -2459,6 +2466,7 @@
 				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
 				4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
+				4BEC048422CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift in Sources */,
 				D16D5328224876B900BAA3B4 /* ColumnDataStore.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B3CCB9C21523B1300F51D76 /* ECDSA.swift in Sources */,

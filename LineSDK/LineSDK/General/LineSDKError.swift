@@ -277,7 +277,7 @@ extension LineSDKError {
     /// access the LINE Platform.
     public var isRefreshTokenError: Bool {
         let refreshTokenRequest = PostRefreshTokenRequest(channelID: "", refreshToken: "")
-        let url = refreshTokenRequest.baseURL.appendingPathComponentIfNotEmpty(refreshTokenRequest.path)
+        let url = refreshTokenRequest.baseURL.appendingPathComponentIfNotEmpty(refreshTokenRequest)
         return isResponseError(statusCode: 400, url: url)
     }
 
