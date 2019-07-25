@@ -8,11 +8,18 @@ if (navigator.userAgent.match(/xcode/i)) {
   window.jazzy.docset = true
 }
 
-// On doc load, toggle the URL hash discussion if present
+// On doc load, toggle the URL hash discussion if present and remove "last updated" from pages other than index.html
 $(document).ready(function() {
   if (!window.jazzy.docset) {
     var linkToHash = $('a[href="' + window.location.hash +'"]');
     linkToHash.trigger("click");
+  }
+  // If the file path includes index.html, remove last updated
+  var filePath = location.pathname;
+  if (!filePath.includes("index.html")) {
+    var footerElement = document.getElementsByClassName("footer")[0];
+    var footerText = footerElement.textContent;
+    footerElement.innerHTML = footerText.substring(0, footerText.indexOf("(Last"));
   }
 });
 
