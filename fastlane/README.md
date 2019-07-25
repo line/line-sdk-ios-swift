@@ -81,6 +81,11 @@ fastlane ios ensure_latest_carthage
 fastlane ios bump_constant_version
 ```
 
+### ios xcframework
+```
+fastlane ios xcframework
+```
+Create binary frameworks with the `xcframework` format under the `build/` folder.
 
 ----
 

@@ -20,7 +20,7 @@
 //
 
 @_exported import Foundation
-#if !LineSDKCocoaPods
+#if !LineSDKCocoaPods && !LineSDKXCFramework
 import LineSDK
 #endif
 
