@@ -18,6 +18,7 @@
 		4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */; };
 		4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFC211D628000866E6C /* MessageSample.swift */; };
 		4B1658052252EF3C0008E441 /* DownloadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1658042252EF3C0008E441 /* DownloadableImageView.swift */; };
+		4B1A4EF722EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1A4EF622EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift */; };
 		4B1C44652137E0CA0094C1D4 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44642137E0CA0094C1D4 /* JWT.swift */; };
 		4B1C44692137E1EE0094C1D4 /* JWTHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */; };
 		4B1C446B2137E98D0094C1D4 /* JWTCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */; };
@@ -624,6 +625,7 @@
 		4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTests.swift; sourceTree = "<group>"; };
 		4B15EEFC211D628000866E6C /* MessageSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSample.swift; sourceTree = "<group>"; };
 		4B1658042252EF3C0008E441 /* DownloadableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableImageView.swift; sourceTree = "<group>"; };
+		4B1A4EF622EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageSendingTokenRequestTests.swift; sourceTree = "<group>"; };
 		4B1C44642137E0CA0094C1D4 /* JWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
 		4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTHelpers.swift; sourceTree = "<group>"; };
 		4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTCoder.swift; sourceTree = "<group>"; };
@@ -1110,6 +1112,7 @@
 				4B95F3FE21251BB300AD3A81 /* PostSendMessagesRequestTests.swift */,
 				4B95F4032125364500AD3A81 /* PostMultisendMessagesRequestTests.swift */,
 				D102A69F216467FE00804C7C /* GetBotFriendshipStatusTests.swift */,
+				4B1A4EF622EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -2564,6 +2567,7 @@
 				4B26F6AF221D266D00F33BF4 /* ResultUtils.swift in Sources */,
 				4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */,
 				4BEB4920212B9F6900BA946A /* FlexFillerComponentTests.swift in Sources */,
+				4B1A4EF722EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift in Sources */,
 				4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */,
 				4B95F4042125364500AD3A81 /* PostMultisendMessagesRequestTests.swift in Sources */,
 				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
