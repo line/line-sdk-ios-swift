@@ -479,6 +479,8 @@
 		4BC4B3DF212FEF8600750794 /* LineSDKLocationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3DE212FEF8600750794 /* LineSDKLocationMessage.swift */; };
 		4BC4B3E1212FF39D00750794 /* LineSDKTemplateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3E0212FF39D00750794 /* LineSDKTemplateMessage.swift */; };
 		4BC4B3E4212FF86100750794 /* LineSDKAudioMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3E3212FF86100750794 /* LineSDKAudioMessage.swift */; };
+		4BC66AE522EA8A6900546FB6 /* LineSDKMessageSendingToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC66AE422EA8A6900546FB6 /* LineSDKMessageSendingToken.swift */; };
+		4BC66AE622EA8A6900546FB6 /* LineSDKMessageSendingToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC66AE422EA8A6900546FB6 /* LineSDKMessageSendingToken.swift */; };
 		4BC9B2D9212FADD60071C736 /* LinsSDKCallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2D8212FADD60071C736 /* LinsSDKCallbackQueue.swift */; };
 		4BC9B2DB212FB0210071C736 /* LineSDKAPIInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2DA212FB0210071C736 /* LineSDKAPIInterfaceTests.m */; };
 		4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2DD212FB7230071C736 /* LineSDKUser.swift */; };
@@ -790,6 +792,7 @@
 		4BC4B3DE212FEF8600750794 /* LineSDKLocationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKLocationMessage.swift; sourceTree = "<group>"; };
 		4BC4B3E0212FF39D00750794 /* LineSDKTemplateMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateMessage.swift; sourceTree = "<group>"; };
 		4BC4B3E3212FF86100750794 /* LineSDKAudioMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAudioMessage.swift; sourceTree = "<group>"; };
+		4BC66AE422EA8A6900546FB6 /* LineSDKMessageSendingToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageSendingToken.swift; sourceTree = "<group>"; };
 		4BC9B2D8212FADD60071C736 /* LinsSDKCallbackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinsSDKCallbackQueue.swift; sourceTree = "<group>"; };
 		4BC9B2DA212FB0210071C736 /* LineSDKAPIInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKAPIInterfaceTests.m; sourceTree = "<group>"; };
 		4BC9B2DD212FB7230071C736 /* LineSDKUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKUser.swift; sourceTree = "<group>"; };
@@ -1389,6 +1392,7 @@
 				4B2422ED2134FBD6007200C2 /* General */,
 				4BBEA9AD212EAFFB00858627 /* Login */,
 				4BC9B2DC212FB7100071C736 /* Social */,
+				4BC66AE322EA8A4500546FB6 /* Sharing */,
 				4BC9B2E5212FC9E30071C736 /* Messaging */,
 				4B2D14FB212F9FA5000DD5BE /* Networking */,
 				4BC9B2D7212FAD9E0071C736 /* Utils */,
@@ -1451,6 +1455,14 @@
 				4BDD2C1B2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift */,
 			);
 			path = Template;
+			sourceTree = "<group>";
+		};
+		4BC66AE322EA8A4500546FB6 /* Sharing */ = {
+			isa = PBXGroup;
+			children = (
+				4BC66AE422EA8A6900546FB6 /* LineSDKMessageSendingToken.swift */,
+			);
+			path = Sharing;
 			sourceTree = "<group>";
 		};
 		4BC9B2D7212FAD9E0071C736 /* Utils */ = {
@@ -2294,6 +2306,7 @@
 				4B50ED5D22E6A94100225900 /* ImageManager.swift in Sources */,
 				4B50EDAC22E6ABEA00225900 /* LineSDKAccessToken.swift in Sources */,
 				4B50ED5E22E6A94100225900 /* Result.swift in Sources */,
+				4BC66AE622EA8A6900546FB6 /* LineSDKMessageSendingToken.swift in Sources */,
 				4B50ED5F22E6A94100225900 /* VideoMessage.swift in Sources */,
 				4B50EDD822E6AC0800225900 /* JSONConverter.swift in Sources */,
 				4B50EDAB22E6ABEA00225900 /* LineSDKAccessTokenStore.swift in Sources */,
@@ -2643,6 +2656,7 @@
 				4BDD2C322133F30A00DD563D /* LineSDKFlexIconComponent.swift in Sources */,
 				4BBEA9B6212EB41000858627 /* LineSDKAccessToken.swift in Sources */,
 				4BC4B3DD212FED4300750794 /* LineSDKVideoMessage.swift in Sources */,
+				4BC66AE522EA8A6900546FB6 /* LineSDKMessageSendingToken.swift in Sources */,
 				4BC4B3E4212FF86100750794 /* LineSDKAudioMessage.swift in Sources */,
 				4BDD2C212133C1CD00DD563D /* LineSDKFlexMessageContainer.swift in Sources */,
 				4B41593E225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift in Sources */,

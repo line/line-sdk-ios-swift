@@ -1,5 +1,5 @@
 //
-//  PostMessageSendingTokenRequest.swift
+//  LineSDKMessageSendingToken.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,34 +19,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+#if !LineSDKCocoaPods && !LineSDKXCFramework
+import LineSDK
+#endif
 
-public struct PostMessageSendingTokenRequest: Request {
+@objcMembers
+public class LineSDKMessageSendingToken: NSObject {
+    let _value: MessageSendingToken
+    init(_ value: MessageSendingToken) { _value = value }
+    public var token: String { return _value.token }
 
-    public typealias Response = MessageSendingToken
-
-    public let userIDs: [String]
-
-    public init(userIDs: [String]) {
-        self.userIDs = userIDs
-    }
-
-    public let method: HTTPMethod = .post
-    public let path = "/message/v3/ott"
-    public let authentication: AuthenticateMethod = .token
-
-    public var parameters: [String: Any]? {
-        return [
-            "userIds": userIDs
-        ]
-    }
-}
-
-public struct MessageSendingToken: Codable {
-
-    public let token: String
-
-    public init(value: String) {
-        self.token = value
-    }
+    public var json: String? { return toJSON(_value) }
 }
