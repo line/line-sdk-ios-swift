@@ -209,6 +209,25 @@ public class LineSDKAPI: NSObject {
             result.map(LineSDKPostSendMessagesResponse.init).match(with: completion)
         }
     }
+
+    public static func multiSendMessages(
+        _ messages: [LineSDKMessage],
+        to userIDs: [String],
+        completionHandler completion: @escaping (LineSDKPostMultisendMessagesResponse?, Error?) -> Void)
+    {
+        multiSendMessages(messages, to: userIDs, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+
+    public static func multiSendMessages(
+        _ messages: [LineSDKMessage],
+        to userIDs: [String],
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKPostMultisendMessagesResponse?, Error?) -> Void)
+    {
+        API.multiSendMessages(messages.map { $0.unwrapped }, to: userIDs, callbackQueue: queue.unwrapped) { result in
+            result.map(LineSDKPostMultisendMessagesResponse.init).match(with: completion)
+        }
+    }
     
     // - MARK: Friendship
     public static func getBotFriendshipStatus(
