@@ -24,6 +24,8 @@
 
 import Foundation
 
+#if compiler(>=5)
+#else
 /// A value that represents either a success or failure, capturing associated
 /// values in both cases.
 public enum Result<Success, Failure: Error> {
@@ -209,3 +211,4 @@ extension Result {
         }
     }
 }
+#endif

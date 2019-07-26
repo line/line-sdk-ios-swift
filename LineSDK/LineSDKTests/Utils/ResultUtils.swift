@@ -23,8 +23,7 @@
 import Foundation
 import LineSDK
 
-// Make tests happier with old Result type
-extension LineSDK.Result {
+extension Result {
 
     var value: Success? {
         switch self {
