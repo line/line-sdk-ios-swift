@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.2.2] - 2019-07-29
+
 ### Fixed
 
 - When verifying token, get the provider metadada `issuer` from open ID discovery document, instead of a fixed value. [#86](https://github.com/line/line-sdk-ios-swift/pull/86)
@@ -96,3 +98,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.1.2]: https://github.com/line/line-sdk-ios-swift/compare/5.1.1...5.1.2
 [5.2.0]: https://github.com/line/line-sdk-ios-swift/compare/5.1.2...5.2.0
 [5.2.1]: https://github.com/line/line-sdk-ios-swift/compare/5.2.0...5.2.1
+[5.2.2]: https://github.com/line/line-sdk-ios-swift/compare/5.2.1...5.2.2
