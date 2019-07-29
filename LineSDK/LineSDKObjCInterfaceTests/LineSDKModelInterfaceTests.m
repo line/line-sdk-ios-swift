@@ -291,6 +291,11 @@
     XCTAssertTrue([status containsObject:[LineSDKMessageShareAuthorizationStatus lackOfToken]]);
 }
 
+- (void)testLineSDKMessageSendingToken {
+    LineSDKMessageSendingToken *token = nil;
+    XCTAssertNil(token.token);
+}
+
 @end
 
 
