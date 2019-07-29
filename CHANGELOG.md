@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- When verifying token, get the provider metadada `issuer` from open ID discovery document, instead of a fixed value. [#86](https://github.com/line/line-sdk-ios-swift/pull/86)
+
 ## [5.2.1] - 2019-07-19
 
 ### Fixed
