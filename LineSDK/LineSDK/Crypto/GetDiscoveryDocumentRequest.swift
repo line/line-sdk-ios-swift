@@ -45,4 +45,9 @@ struct DiscoveryDocument: Decodable {
         case issuer
         case jwksURI = "jwks_uri"
     }
+
+    struct ResolvedProviderMetadata {
+        let issuer: String
+        let jwk: JWK
+    }
 }
