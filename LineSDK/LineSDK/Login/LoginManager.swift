@@ -188,7 +188,7 @@ public class LoginManager {
         
         var profile: UserProfile?
 
-        var expected: DiscoveryDocument.ResolvedProviderMetadata?
+        var providerMetadata: DiscoveryDocument.ResolvedProviderMetadata?
 
         // Any possible errors will be held here.
         var errors: [Error] = []
@@ -202,8 +202,8 @@ public class LoginManager {
         }
         
         if token.permissions.contains(.openID) {
-            getJWK(for: token, in: group) { result in
-                do { expected = try result.get() }
+            getProviderMetadata(for: token, in: group) { result in
+                do { providerMetadata = try result.get() }
                 catch { errors.append(error) }
             }
         }
@@ -215,9 +215,14 @@ public class LoginManager {
                 return
             }
             
-            if let expected = expected {
+            if let providerMetadata = providerMetadata {
                 do {
-                    try self.verifyIDToken(token.IDToken!, expected: expected, process: process, userID: profile?.userID)
+                    try self.verifyIDToken(
+                        token.IDToken!,
+                        providerMetadata: providerMetadata,
+                        process: process,
+                        userID: profile?.userID
+                    )
                 } catch {
                     if let cryptoError = error as? CryptoError {
                         completion(.failure(.authorizeFailed(reason: .cryptoError(error: cryptoError))))
@@ -287,7 +292,7 @@ extension LoginManager {
         }
     }
     
-    func getJWK(
+    func getProviderMetadata(
         for token: AccessToken,
         in group: DispatchGroup,
         handler: @escaping (Result<DiscoveryDocument.ResolvedProviderMetadata, LineSDKError>) -> Void)
@@ -322,7 +327,9 @@ extension LoginManager {
                             group.leave()
                             return
                         }
-                        handler(.success(DiscoveryDocument.ResolvedProviderMetadata(issuer: document.issuer, jwk: key)))
+                        handler(
+                            .success(DiscoveryDocument.ResolvedProviderMetadata(issuer: document.issuer, jwk: key))
+                        )
                         group.leave()
                     case .failure(let err):
                         handler(.failure(err))
@@ -336,12 +343,15 @@ extension LoginManager {
         }
     }
     
-    func verifyIDToken(_ token: JWT, expected: DiscoveryDocument.ResolvedProviderMetadata, process: LoginProcess, userID: String?) throws {
-        
-        try token.verify(with: expected.jwk)
+    func verifyIDToken(
+        _ token: JWT,
+        providerMetadata: DiscoveryDocument.ResolvedProviderMetadata,
+        process: LoginProcess, userID: String?) throws
+    {
+        try token.verify(with: providerMetadata.jwk)
         
         let payload = token.payload
-        try payload.verify(keyPath: \.issuer, expected: expected.issuer)
+        try payload.verify(keyPath: \.issuer, expected: providerMetadata.issuer)
         
         if let userID = userID {
             try payload.verify(keyPath: \.subject, expected: userID)
