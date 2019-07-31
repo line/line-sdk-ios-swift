@@ -109,6 +109,23 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         tokenType = try container.decode(String.self, forKey: .tokenType)
     }
 
+    // Internal helper for creating a new token object with current ID Token kept when refreshing.
+    init(token: AccessToken, currentIDTokenRaw: String?) throws {
+        self.value = token.value
+        self.expiresIn = token.expiresIn
+        self.createdAt = token.createdAt
+        self._refreshToken = token._refreshToken
+        self.permissions = token.permissions
+        self.tokenType = token.tokenType
+
+        self.IDTokenRaw = currentIDTokenRaw
+        if let tokenRaw = IDTokenRaw {
+            IDToken = try JWT(text: tokenRaw)
+        } else {
+            IDToken = nil
+        }
+    }
+
     /// :nodoc:
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)

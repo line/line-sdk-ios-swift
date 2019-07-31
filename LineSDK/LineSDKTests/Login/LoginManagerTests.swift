@@ -104,6 +104,29 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         }
         waitForExpectations(timeout: 1, handler: nil)
     }
-    
+
+    func testRefreshNotOverwriteStoredIDToken() {
+
+        let expect = expectation(description: "\(#file)_\(#line)")
+
+        setupTestToken()
+        XCTAssertTrue(LoginManager.shared.isAuthorized)
+        XCTAssertNotNil(AccessTokenStore.shared.current?.IDToken)
+
+        let delegateStub = SessionDelegateStub(
+            stubs: [.init(data: PostRefreshTokenRequest.successData, responseCode: 200)])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+
+        API.refreshAccessToken { result in
+            XCTAssertNotNil(AccessTokenStore.shared.current?.IDToken)
+            expect.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+
 }
 
