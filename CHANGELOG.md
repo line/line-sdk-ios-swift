@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- An issue that the stored ID Token will be overwritten when a refreshed token is issued. [#88](https://github.com/line/line-sdk-ios-swift/pull/88)
+
 ## [5.2.2] - 2019-07-29
 
 ### Fixed
 
-- When verifying token, get the provider metadada `issuer` from open ID discovery document, instead of a fixed value. [#86](https://github.com/line/line-sdk-ios-swift/pull/86)
+- When verifying token, get the provider metadata `issuer` from open ID discovery document, instead of a fixed value. [#86](https://github.com/line/line-sdk-ios-swift/pull/86)
 
 ## [5.2.1] - 2019-07-19
 
