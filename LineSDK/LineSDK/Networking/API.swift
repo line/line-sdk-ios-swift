@@ -60,12 +60,13 @@ public struct API {
         Session.shared.send(request, callbackQueue: queue) { result in
             switch result {
             case .success(let newToken):
-                let reuslt = Result {
-                    // Keep the ID Token in current stored token since we cannot receive new ID token from server.
-                    let combinedToken = try AccessToken(token: token, currentIDTokenRaw: token.IDTokenRaw)
+                do {
+                    let combinedToken = try AccessToken(token: newToken, currentIDTokenRaw: token.IDTokenRaw)
                     try AccessTokenStore.shared.setCurrentToken(combinedToken)
-                }.map { newToken }
-                completion(reuslt)
+                    completion(.success(combinedToken))
+                } catch {
+                    completion(.failure(error.sdkError))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
