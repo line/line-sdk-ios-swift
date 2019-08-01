@@ -152,11 +152,6 @@ platform :ios do
     )
 
     begin
-        # Remove this after archive bug fixed in a future Xcode version.
-        fix_xcode11_beta4_setting = {
-            'LD_VERIFY_BITCODE' => 'NO'
-        }
-
         ["LineSDK", "LineSDKObjC"].each do |scheme|
 
             frameworks = []
@@ -167,8 +162,7 @@ platform :ios do
                     archive: true, 
                     archive_path: archive_path,
                     scheme: "#{scheme}Binary", 
-                    sdk: sdk,
-                    build_settings: fix_xcode11_beta4_setting
+                    sdk: sdk
                 )
                 frameworks.push("#{archive_path}/Products/Library/Frameworks/LineSDK.framework")
             end
