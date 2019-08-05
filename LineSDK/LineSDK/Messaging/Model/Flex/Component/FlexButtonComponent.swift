@@ -73,12 +73,35 @@ public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
     /// Vertical alignment style. If not specified, `.top` will be used.
     /// If the `layout` property of the parent box is `.baseline`, the `gravity` property will be ignored.
     public var gravity: FlexMessageComponent.Gravity?
-    
+
     /// Creates a button component with given information.
-    ///
     /// - Parameter action: An action to perform when the button tapped.
-    public init(action: MessageActionConvertible) {
+    /// - Parameter flex: The ratio of the width or height of this box within the parent box. The default value for
+    ///                   the horizontal parent box is 1, and the default value for the vertical parent box is 0.
+    /// - Parameter margin: Minimum space between this component and the previous component in the parent box.
+    /// - Parameter height: Height of the button.
+    /// - Parameter style: Styles of the button.
+    /// - Parameter color: Character color when the `style` property is `.link`. Background color when the `style`
+    ///                    property is `.primary` or `.secondary`.
+    /// - Parameter gravity: Vertical alignment style. If not specified, `.top` will be used. If the `layout` property
+    ///                      of the parent box is `.baseline`, the `gravity` property will be ignored.
+    public init(
+        action: MessageActionConvertible,
+        flex: FlexMessageComponent.Ratio? = nil,
+        margin: FlexMessageComponent.Margin? = nil,
+        height: FlexMessageComponent.Height? = nil,
+        style: Style? = nil,
+        color: HexColor? = nil,
+        gravity: FlexMessageComponent.Gravity? = nil
+    )
+    {
         self.action = action.action
+        self.flex = flex
+        self.margin = margin
+        self.height = height
+        self.style = style
+        self.color = color
+        self.gravity = gravity
     }
 }
 
