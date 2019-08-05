@@ -83,6 +83,33 @@ public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible, Me
     public init(text: String) {
         self.text = text
     }
+
+    public init(
+        text: String,
+        flex: FlexMessageComponent.Ratio? = nil,
+        margin: FlexMessageComponent.Margin? = nil,
+        size: FlexMessageComponent.Size? = nil,
+        alignment: FlexMessageComponent.Alignment? = nil,
+        gravity: FlexMessageComponent.Gravity? = nil,
+        wrapping: Bool? = nil,
+        maxLines: UInt? = nil,
+        weight: FlexMessageComponent.Weight? = nil,
+        color: HexColor? = nil,
+        action: MessageAction? = nil
+    )
+    {
+        self.text = text
+        self.flex = flex
+        self.margin = margin
+        self.size = size
+        self.alignment = alignment
+        self.gravity = gravity
+        self.wrapping = wrapping
+        self.maxLines = maxLines
+        self.weight = weight
+        self.color = color
+        self.action = action
+    }
 }
 
 extension FlexTextComponent: FlexMessageComponentConvertible {

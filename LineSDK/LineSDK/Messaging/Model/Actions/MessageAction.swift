@@ -72,10 +72,10 @@ public enum MessageAction: Codable, MessageActionConvertible {
 
 public struct MessageURIAction: Codable, TemplateMessageActionTypeCompatible, MessageActionConvertible {
     let type = MessageActionType.URI
-    public let label: String
+    public let label: String?
     public let uri: URL
 
-    public init(label: String, uri: URL) {
+    public init(label: String? = nil, uri: URL) {
         self.label = label
         self.uri = uri
     }

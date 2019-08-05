@@ -30,6 +30,8 @@
 		4BCD27A32114033000B90D8F /* LoginNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27A22114033000B90D8F /* LoginNavigationController.swift */; };
 		4BCD27A521142A3400B90D8F /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */; };
 		4BDADDD6211C35230044D827 /* APIResultEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDADDD5211C35230044D827 /* APIResultEntry.swift */; };
+		4BFE511822F7BA8200500B72 /* ShareMessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFE511722F7BA8200500B72 /* ShareMessagesTableViewController.swift */; };
+		4BFE511B22F7BAC600500B72 /* MessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFE511A22F7BAC600500B72 /* MessageStore.swift */; };
 		65E6BDB92154D80A0024D7C1 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6BDB82154D80A0024D7C1 /* LoginPage.swift */; };
 		65E6BDBB2154D8240024D7C1 /* APIHomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6BDBA2154D8240024D7C1 /* APIHomePage.swift */; };
 		65E6BDC02154D8670024D7C1 /* LineLoginButtonTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6BDBF2154D8670024D7C1 /* LineLoginButtonTest.swift */; };
@@ -118,6 +120,8 @@
 		4BCD27A22114033000B90D8F /* LoginNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNavigationController.swift; sourceTree = "<group>"; };
 		4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
 		4BDADDD5211C35230044D827 /* APIResultEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultEntry.swift; sourceTree = "<group>"; };
+		4BFE511722F7BA8200500B72 /* ShareMessagesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMessagesTableViewController.swift; sourceTree = "<group>"; };
+		4BFE511A22F7BAC600500B72 /* MessageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStore.swift; sourceTree = "<group>"; };
 		65E6BDB82154D80A0024D7C1 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
 		65E6BDBA2154D8240024D7C1 /* APIHomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHomePage.swift; sourceTree = "<group>"; };
 		65E6BDBF2154D8670024D7C1 /* LineLoginButtonTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineLoginButtonTest.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 			children = (
 				4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */,
 				4BAEEB8522C4B55D007B53D8 /* SampleUIHomeViewController+SPM.swift */,
+				4BFE511722F7BA8200500B72 /* ShareMessagesTableViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 		4B90589D21006E9C004D717F /* LineSDKSample */ = {
 			isa = PBXGroup;
 			children = (
+				4BFE511922F7BAB800500B72 /* Model */,
 				4B3687DF212AB62D00B6048A /* Localization */,
 				4BB8445B211BD2B6005B60D7 /* API */,
 				4B121F112249DE2300473132 /* UI */,
@@ -262,6 +268,14 @@
 				4BCD27A421142A3400B90D8F /* UserDetailViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		4BFE511922F7BAB800500B72 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4BFE511A22F7BAC600500B72 /* MessageStore.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		65E6BDBE2154D83C0024D7C1 /* PageObject */ = {
@@ -452,6 +466,7 @@
 				4BCD27A521142A3400B90D8F /* UserDetailViewController.swift in Sources */,
 				4B104808216ED51A00300C61 /* LineSDKSampleError.swift in Sources */,
 				4BCD279E2113FE9D00B90D8F /* IndicatorDisplay.swift in Sources */,
+				4BFE511822F7BA8200500B72 /* ShareMessagesTableViewController.swift in Sources */,
 				4BB8445F211BD4DF005B60D7 /* APIStore.swift in Sources */,
 				4BB84461211BE5E7005B60D7 /* APIResultViewController.swift in Sources */,
 				4BCD27A32114033000B90D8F /* LoginNavigationController.swift in Sources */,
@@ -460,6 +475,7 @@
 				4BCD27982113F95700B90D8F /* UserProfileViewController.swift in Sources */,
 				4B90589F21006E9C004D717F /* AppDelegate.swift in Sources */,
 				4B121F132249DE4000473132 /* SampleUIHomeViewController.swift in Sources */,
+				4BFE511B22F7BAC600500B72 /* MessageStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

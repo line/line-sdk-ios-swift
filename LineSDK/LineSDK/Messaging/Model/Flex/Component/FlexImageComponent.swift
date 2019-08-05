@@ -75,6 +75,32 @@ public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible, M
         try assertHTTPSScheme(url: url, parameterName: "url")
         self.url = url
     }
+
+    public init(
+        url: URL,
+        flex: FlexMessageComponent.Ratio? = nil,
+        margin: FlexMessageComponent.Margin? = nil,
+        alignment: FlexMessageComponent.Alignment? = nil,
+        gravity: FlexMessageComponent.Gravity? = nil,
+        size: FlexMessageComponent.Size? = nil,
+        aspectRatio: FlexMessageComponent.AspectRatio? = nil,
+        aspectMode: FlexMessageComponent.AspectMode? = nil,
+        backgroundColor: HexColor? = nil,
+        action: MessageAction? = nil
+    ) throws
+    {
+        try assertHTTPSScheme(url: url, parameterName: "url")
+        self.url = url
+        self.flex = flex
+        self.margin = margin
+        self.alignment = alignment
+        self.gravity = gravity
+        self.size = size
+        self.aspectRatio = aspectRatio
+        self.aspectMode = aspectMode
+        self.backgroundColor = backgroundColor
+        self.action = action
+    }
 }
 
 extension FlexImageComponent: FlexMessageComponentConvertible {

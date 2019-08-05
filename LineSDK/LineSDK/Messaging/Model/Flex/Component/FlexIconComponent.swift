@@ -50,6 +50,19 @@ public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
         try assertHTTPSScheme(url: url, parameterName: "url")
         self.url = url
     }
+
+    public init(
+        url: URL,
+        margin: FlexMessageComponent.Margin? = nil,
+        size: FlexMessageComponent.Size? = nil,
+        aspectRatio: FlexMessageComponent.AspectRatio? = nil) throws
+    {
+        try assertHTTPSScheme(url: url, parameterName: "url")
+        self.url = url
+        self.margin = margin
+        self.size = size
+        self.aspectRatio = aspectRatio
+    }
 }
 
 extension FlexIconComponent: FlexMessageComponentConvertible {
