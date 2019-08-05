@@ -183,11 +183,13 @@ public class LoginManager {
         response: LoginProcessURLResponse,
         process: LoginProcess,
         completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void) {
-
+        
         let group = DispatchGroup()
-
+        
         var profile: UserProfile?
-        var webToken: JWK?
+
+        var providerMetadata: DiscoveryDocument.ResolvedProviderMetadata?
+
         // Any possible errors will be held here.
         var errors: [Error] = []
 
@@ -200,8 +202,8 @@ public class LoginManager {
         }
 
         if token.permissions.contains(.openID) {
-            getJWK(for: token, in: group) { result in
-                do { webToken = try result.get() }
+            getProviderMetadata(for: token, in: group) { result in
+                do { providerMetadata = try result.get() }
                 catch { errors.append(error) }
             }
         }
@@ -212,10 +214,15 @@ public class LoginManager {
                 completion(.failure(error.sdkError))
                 return
             }
-
-            if let key = webToken {
+            
+            if let providerMetadata = providerMetadata {
                 do {
-                    try self.verifyIDToken(token.IDToken!, key: key, process: process, userID: profile?.userID)
+                    try self.verifyIDToken(
+                        token.IDToken!,
+                        providerMetadata: providerMetadata,
+                        process: process,
+                        userID: profile?.userID
+                    )
                 } catch {
                     if let cryptoError = error as? CryptoError {
                         completion(.failure(.authorizeFailed(reason: .cryptoError(error: cryptoError))))
@@ -284,11 +291,11 @@ extension LoginManager {
             group.leave()
         }
     }
-
-    func getJWK(
+    
+    func getProviderMetadata(
         for token: AccessToken,
         in group: DispatchGroup,
-        handler: @escaping (Result<JWK, LineSDKError>) -> Void)
+        handler: @escaping (Result<DiscoveryDocument.ResolvedProviderMetadata, LineSDKError>) -> Void)
     {
         group.enter()
         // We need a valid ID Token existing to continue.
@@ -320,7 +327,9 @@ extension LoginManager {
                             group.leave()
                             return
                         }
-                        handler(.success(key))
+                        handler(
+                            .success(DiscoveryDocument.ResolvedProviderMetadata(issuer: document.issuer, jwk: key))
+                        )
                         group.leave()
                     case .failure(let err):
                         handler(.failure(err))
@@ -334,13 +343,17 @@ extension LoginManager {
         }
     }
 
-    func verifyIDToken(_ token: JWT, key: JWK, process: LoginProcess, userID: String?) throws {
+    func verifyIDToken(
+        _ token: JWT,
+        providerMetadata: DiscoveryDocument.ResolvedProviderMetadata,
+        process: LoginProcess, userID: String?) throws
+    {
 
-        try token.verify(with: key)
-
+        try token.verify(with: providerMetadata.jwk)
+        
         let payload = token.payload
-        try payload.verify(keyPath: \.issuer, expected: "https://access.line.me")
-
+        try payload.verify(keyPath: \.issuer, expected: providerMetadata.issuer)
+        
         if let userID = userID {
             try payload.verify(keyPath: \.subject, expected: userID)
         }

@@ -49,18 +49,24 @@ public struct API {
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<AccessToken, LineSDKError>) -> Void)
     {
-        guard let token = AccessTokenStore.shared.current?._refreshToken else {
+        guard let token = AccessTokenStore.shared.current else
+        {
             queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
             return
         }
-        let request = PostRefreshTokenRequest(channelID: LoginConfiguration.shared.channelID, refreshToken: token)
+        let request = PostRefreshTokenRequest(
+            channelID: LoginConfiguration.shared.channelID,
+            refreshToken: token._refreshToken)
         Session.shared.send(request, callbackQueue: queue) { result in
             switch result {
-            case .success(let token):
-                let reuslt = Result {
-                    try AccessTokenStore.shared.setCurrentToken(token)
-                }.map { token }
-                completion(reuslt)
+            case .success(let newToken):
+                do {
+                    let combinedToken = try AccessToken(token: newToken, currentIDTokenRaw: token.IDTokenRaw)
+                    try AccessTokenStore.shared.setCurrentToken(combinedToken)
+                    completion(.success(combinedToken))
+                } catch {
+                    completion(.failure(error.sdkError))
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
