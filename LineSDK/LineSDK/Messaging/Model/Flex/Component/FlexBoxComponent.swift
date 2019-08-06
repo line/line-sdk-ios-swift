@@ -100,6 +100,23 @@ public struct FlexBoxComponent: Codable, FlexMessageComponentTypeCompatible, Mes
         self.layout = layout
         self.contents = contents.map { $0.component }
     }
+
+    public init(
+        layout: FlexMessageComponent.Layout,
+        flex: FlexMessageComponent.Ratio? = nil,
+        spacing: FlexMessageComponent.Spacing? = nil,
+        margin: FlexMessageComponent.Margin? = nil,
+        action: MessageAction? = nil,
+        contents: (() -> [FlexMessageComponentConvertible])
+    )
+    {
+        self.layout = layout
+        self.flex = flex
+        self.spacing = spacing
+        self.margin = margin
+        self.action = action
+        self.contents = contents().map { $0.component }
+    }
     
     /// Appends a component to current `contents`.
     ///
