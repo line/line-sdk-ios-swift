@@ -24,9 +24,28 @@ import LineSDK
 
 class ShareMessagesTableViewController: UITableViewController {
 
+    private var obseverToken: NotificationToken?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "\(ShareMessagesTableViewController.self)")
+
+        obseverToken = NotificationCenter.default.addObserver(
+            forName: .messageStoreMessageInserted,
+            object: MessageStore.shared,
+            queue: .main,
+            using: { [weak self] _ in
+                self?.tableView.reloadData()
+            })
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add(_:)))
+        tableView.allowsMultipleSelection = true
+    }
+
+    var addButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add(_:)))
+    }
+
+    var sendButton: UIBarButtonItem {
+        return UIBarButtonItem(title: "Send", style: .plain, target: self, action: #selector(sendMessages(_:)))
     }
 
     // MARK: - Table view data source
@@ -35,16 +54,48 @@ class ShareMessagesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "\(ShareMessagesTableViewController.self)", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath)
         cell.textLabel?.text = MessageStore.shared.messages[indexPath.row].name
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let message = MessageStore.shared.messages[indexPath.row]
+        navigationItem.rightBarButtonItem = sendButton
+    }
+
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if tableView.indexPathsForSelectedRows == nil {
+            navigationItem.rightBarButtonItem = addButton
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            MessageStore.shared.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
+    @IBAction func unwindFromAdding(segue: UIStoryboardSegue) { }
+
+    @objc func add(_ sender: Any) {
+        performSegue(withIdentifier: "showMessageAdding", sender: self)
+    }
+
+    @objc func sendMessages(_ sender: Any) {
+        guard let indexes = tableView.indexPathsForSelectedRows else {
+            return
+        }
 
         let viewController = ShareViewController()
-        viewController.messages = [message.message]
+
+        let messages = indexes.map { MessageStore.shared.messages[$0.row].message }
+        viewController.messages = messages
+
         viewController.shareDelegate = self
         present(viewController, animated: true)
 

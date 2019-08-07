@@ -11,6 +11,8 @@
 		4B121F132249DE4000473132 /* SampleUIHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */; };
 		4B15EEF1211D322B00866E6C /* APIResultEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF0211D322B00866E6C /* APIResultEntryTests.swift */; };
 		4B3687E2212AB62D00B6048A /* Placeholder.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B3687E0212AB62D00B6048A /* Placeholder.strings */; };
+		4B38A3EF22FA70DB00A21F05 /* ShareMessageTemplateAddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B38A3EE22FA70DB00A21F05 /* ShareMessageTemplateAddingViewController.swift */; };
+		4B38A3F122FA77A700A21F05 /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B38A3F022FA77A700A21F05 /* NotificationToken.swift */; };
 		4B63F46F2106D43D003D1BF1 /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; };
 		4B63F4702106D43D003D1BF1 /* LineSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B90589F21006E9C004D717F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90589E21006E9C004D717F /* AppDelegate.swift */; };
@@ -93,6 +95,8 @@
 		4B3687F1212ABABE00B6048A /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Placeholder.strings; sourceTree = "<group>"; };
 		4B3687F2212ABAC500B6048A /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Placeholder.strings; sourceTree = "<group>"; };
 		4B3687F3212ABACB00B6048A /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Placeholder.strings; sourceTree = "<group>"; };
+		4B38A3EE22FA70DB00A21F05 /* ShareMessageTemplateAddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMessageTemplateAddingViewController.swift; sourceTree = "<group>"; };
+		4B38A3F022FA77A700A21F05 /* NotificationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4B63F46E2106D43C003D1BF1 /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90589B21006E9B004D717F /* LineSDKSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LineSDKSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90589E21006E9C004D717F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 				4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */,
 				4BAEEB8522C4B55D007B53D8 /* SampleUIHomeViewController+SPM.swift */,
 				4BFE511722F7BA8200500B72 /* ShareMessagesTableViewController.swift */,
+				4B38A3EE22FA70DB00A21F05 /* ShareMessageTemplateAddingViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 		4BCD279C2113FE9000B90D8F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4B38A3F022FA77A700A21F05 /* NotificationToken.swift */,
 				4BCD279D2113FE9D00B90D8F /* IndicatorDisplay.swift */,
 				4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */,
 				4BB84462211BF48F005B60D7 /* UIViewControllerExtensions.swift */,
@@ -472,8 +478,10 @@
 				4BCD27A32114033000B90D8F /* LoginNavigationController.swift in Sources */,
 				4BCD27A02114007500B90D8F /* UIAlertControllerHelpers.swift in Sources */,
 				4B9058A121006E9C004D717F /* LoginViewController.swift in Sources */,
+				4B38A3F122FA77A700A21F05 /* NotificationToken.swift in Sources */,
 				4BCD27982113F95700B90D8F /* UserProfileViewController.swift in Sources */,
 				4B90589F21006E9C004D717F /* AppDelegate.swift in Sources */,
+				4B38A3EF22FA70DB00A21F05 /* ShareMessageTemplateAddingViewController.swift in Sources */,
 				4B121F132249DE4000473132 /* SampleUIHomeViewController.swift in Sources */,
 				4BFE511B22F7BAC600500B72 /* MessageStore.swift in Sources */,
 			);

@@ -37,6 +37,11 @@ extension MessageConvertible {
     }
 }
 
+extension Notification.Name {
+    static let messageStoreMessageInserted =
+        Notification.Name(rawValue: "com.linecorp.linesdk.sample.messageStoreMessageInserted")
+}
+
 class MessageStore {
 
     struct StoredMessage: Codable {
@@ -46,13 +51,21 @@ class MessageStore {
 
     static let shared = MessageStore()
 
-    var messages: [StoredMessage]
-
-    private init() {
+    let url: URL = {
         let fileManager = FileManager.default
         let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
             .first!
             .appendingPathComponent("message_template.json")
+        return url
+    }()
+
+    var messages: [StoredMessage] {
+        didSet {
+            save()
+        }
+    }
+
+    private init() {
         do {
             let data = try Data(contentsOf: url)
             messages = try JSONDecoder().decode([StoredMessage].self, from: data)
@@ -68,9 +81,27 @@ class MessageStore {
                 MessageStore.SampleMessage.flexBubbleMessage,
                 MessageStore.SampleMessage.flexCarouselMessage
             ]
-            let data = try! JSONEncoder().encode(messages)
-            try! data.write(to: url)
+            save()
         }
+    }
+
+    func save() {
+        let data = try! JSONEncoder().encode(messages)
+        try! data.write(to: url)
+    }
+
+    func insert(_ message: Message, name: String, at index: Int? = nil) {
+        let storedMessage = StoredMessage(name: name, message: message)
+        if let index = index {
+            messages.insert(storedMessage, at: index)
+        } else {
+            messages.append(storedMessage)
+        }
+        NotificationCenter.default.post(name: .messageStoreMessageInserted, object: self)
+    }
+
+    func remove(at index: Int) {
+        messages.remove(at: index)
     }
 }
 
