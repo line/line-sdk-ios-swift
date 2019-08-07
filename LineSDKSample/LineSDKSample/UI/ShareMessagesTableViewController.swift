@@ -36,6 +36,16 @@ class ShareMessagesTableViewController: UITableViewController {
             using: { [weak self] _ in
                 self?.tableView.reloadData()
             })
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add(_:)))
+        tableView.allowsMultipleSelection = true
+    }
+
+    var addButton: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add(_:)))
+    }
+
+    var sendButton: UIBarButtonItem {
+        return UIBarButtonItem(title: "Send", style: .plain, target: self, action: #selector(sendMessages(_:)))
     }
 
     // MARK: - Table view data source
@@ -50,12 +60,13 @@ class ShareMessagesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let message = MessageStore.shared.messages[indexPath.row]
+        navigationItem.rightBarButtonItem = sendButton
+    }
 
-        let viewController = ShareViewController()
-        viewController.messages = [message.message]
-        viewController.shareDelegate = self
-        present(viewController, animated: true)
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if tableView.indexPathsForSelectedRows == nil {
+            navigationItem.rightBarButtonItem = addButton
+        }
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -70,6 +81,25 @@ class ShareMessagesTableViewController: UITableViewController {
     }
 
     @IBAction func unwindFromAdding(segue: UIStoryboardSegue) { }
+
+    @objc func add(_ sender: Any) {
+        performSegue(withIdentifier: "showMessageAdding", sender: self)
+    }
+
+    @objc func sendMessages(_ sender: Any) {
+        guard let indexes = tableView.indexPathsForSelectedRows else {
+            return
+        }
+
+        let viewController = ShareViewController()
+
+        let messages = indexes.map { MessageStore.shared.messages[$0.row].message }
+        viewController.messages = messages
+
+        viewController.shareDelegate = self
+        present(viewController, animated: true)
+
+    }
 }
 
 extension ShareMessagesTableViewController: ShareViewControllerDelegate {

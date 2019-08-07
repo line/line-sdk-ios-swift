@@ -267,13 +267,10 @@
                             <outlet property="delegate" destination="jMx-VA-bwO" id="88G-B6-btX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="JzQ-Q1-VGe">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="XNW-Ev-P7I">
-                            <connections>
-                                <segue destination="Prl-Ms-6Je" kind="presentation" id="O6J-Ri-aaZ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="JzQ-Q1-VGe"/>
+                    <connections>
+                        <segue destination="Prl-Ms-6Je" kind="show" identifier="showMessageAdding" id="enG-bp-hKf"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uxY-PS-Nfj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -288,9 +285,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="K4l-Ja-b4A">
-                                <rect key="frame" x="8" y="72" width="359" height="295"/>
+                                <rect key="frame" x="8" y="72" width="359" height="246"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">{
+                                <string key="text">{
   "type": "bubble",
   "styles": {
     "footer": {
@@ -502,7 +499,7 @@
       }
     ]
   }
-}</mutableString>
+}</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
