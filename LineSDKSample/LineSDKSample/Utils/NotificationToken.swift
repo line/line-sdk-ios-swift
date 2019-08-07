@@ -1,5 +1,5 @@
 //
-//  SampleUIHomeViewController.swift
+//  NotificationToken.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,35 +19,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
-import LineSDK
+import Foundation
 
-class SampleUIHomeViewController: UITableViewController {
-
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == "showMessageChooser" {
-            let status = ShareViewController.localAuthorizationStatusForSendingMessage()
-            switch status {
-            case .authorized:
-                return true
-            case .lackOfPermissions(let p):
-                UIAlertController.present(
-                    in: self,
-                    title: nil,
-                    message: "Lack of permissions: \(p)",
-                    actions: [.init(title: "OK", style: .cancel)]
-                )
-                return false
-            case .lackOfToken:
-                UIAlertController.present(
-                    in: self,
-                    title: nil,
-                    message: "Please login first.",
-                    actions: [.init(title: "OK", style: .cancel)]
-                )
-                return false
-            }
-        }
-        return true
+/// Wraps normal `Notification` observing method, to provide a behavior of releasing `token` automatically when
+/// observer gets deinit.
+class NotificationToken {
+    let token: NSObjectProtocol
+    let center: NotificationCenter
+    
+    init(token: NSObjectProtocol, in center: NotificationCenter) {
+        self.token = token
+        self.center = center
     }
+    
+    deinit {
+        center.removeObserver(token)
+    }
+}
+
+extension NotificationCenter {
+    func addObserver(
+        forName name: Notification.Name?,
+        object obj: Any?,
+        queue: OperationQueue?,
+        using block: @escaping (Notification) -> Swift.Void) -> NotificationToken
+    {
+        let token: NSObjectProtocol = addObserver(forName: name, object: obj, queue: queue, using: block)
+        return NotificationToken(token: token, in: self)
+    }
+
 }

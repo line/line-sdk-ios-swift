@@ -24,9 +24,18 @@ import LineSDK
 
 class ShareMessagesTableViewController: UITableViewController {
 
+    private var obseverToken: NotificationToken?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "\(ShareMessagesTableViewController.self)")
+
+        obseverToken = NotificationCenter.default.addObserver(
+            forName: .messageStoreMessageInserted,
+            object: MessageStore.shared,
+            queue: .main,
+            using: { [weak self] _ in
+                self?.tableView.reloadData()
+            })
     }
 
     // MARK: - Table view data source
@@ -35,7 +44,7 @@ class ShareMessagesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "\(ShareMessagesTableViewController.self)", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath)
         cell.textLabel?.text = MessageStore.shared.messages[indexPath.row].name
         return cell
     }
@@ -47,8 +56,20 @@ class ShareMessagesTableViewController: UITableViewController {
         viewController.messages = [message.message]
         viewController.shareDelegate = self
         present(viewController, animated: true)
-
     }
+
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            MessageStore.shared.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
+    @IBAction func unwindFromAdding(segue: UIStoryboardSegue) { }
 }
 
 extension ShareMessagesTableViewController: ShareViewControllerDelegate {
