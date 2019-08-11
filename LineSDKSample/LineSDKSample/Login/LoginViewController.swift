@@ -31,7 +31,7 @@ class LoginViewController: UIViewController, IndicatorDisplay {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let loginButton = LoginButton()
+        let loginButton = LineLoginButton()
         
         loginButton.delegate = self
         loginButton.presentingViewController = self
@@ -47,21 +47,21 @@ class LoginViewController: UIViewController, IndicatorDisplay {
     }
 }
 
-extension LoginViewController: LoginButtonDelegate {
+extension LoginViewController: LineLoginButtonDelegate {
     
-    func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) {
+    func LineloginButton(_ button: LineLoginButton, didSucceedLogin loginResult: LoginResult) {
         hideIndicator()
         UIAlertController.present(in: self, successResult: "\(loginResult)") {
             NotificationCenter.default.post(name: .userDidLogin, object: loginResult)
         }
     }
     
-    func loginButton(_ button: LoginButton, didFailLogin error: Error) {
+    func LineloginButton(_ button: LineLoginButton, didFailLogin error: Error) {
         hideIndicator()
         UIAlertController.present(in: self, error: error)
     }
     
-    func loginButtonDidStartLogin(_ button: LoginButton) {
+    func LineloginButtonDidStartLogin(_ button: LineLoginButton) {
         showIndicator()
     }
     
