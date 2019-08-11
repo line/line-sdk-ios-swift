@@ -23,25 +23,25 @@ import UIKit
 
 /// Defines methods that allow you to handle different login statuses if you use the predefined LINE Login
 /// button by using the `LoginButton` class.
-public protocol LoginButtonDelegate: class {
+public protocol LineLoginButtonDelegate: class {
 
     /// Called after the login action is started. Since LINE Login is an asynchronous operation, you might
     /// want to show an indicator or another visual effect to prevent the user from taking other actions.
-    func loginButtonDidStartLogin(_ button: LoginButton)
+    func LineloginButtonDidStartLogin(_ button: LineLoginButton)
 
     /// Called if the login action succeeded.
     ///
     /// - Parameters:
     ///   - button: The button which is used to start the login action.
     ///   - loginResult: The successful login result.
-    func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult)
+    func LineloginButton(_ button: LineLoginButton, didSucceedLogin loginResult: LoginResult)
 
     /// Called if the login action failed.
     ///
     /// - Parameters:
     ///   - button: The button which is used to start the login action.
     ///   - error: The error of the failed login.
-    func loginButton(_ button: LoginButton, didFailLogin error: Error)
+    func LineloginButton(_ button: LineLoginButton, didFailLogin error: Error)
 }
 
 /// Represents a login button which executes the login function when the user taps the button.
@@ -49,7 +49,7 @@ public protocol LoginButtonDelegate: class {
 /// - Note:
 /// To change the size of the button, use the `buttonSize` property instead of setting its frame or giving
 /// it some size constraints.
-open class LoginButton: UIButton {
+open class LineLoginButton: UIButton {
 
     /// Represents the size of the login button.
     ///
@@ -103,7 +103,7 @@ open class LoginButton: UIButton {
 
     /// Conforms to the `LoginButtonDelegate` protocol and implements the methods defined in the protocol
     /// to handle different login states.
-    public weak var delegate: LoginButtonDelegate?
+    public weak var delegate: LineLoginButtonDelegate?
 
     /// Determines the view controller that presents the login view controller. If the value is `nil`, the most 
     /// top view controller in the current view controller hierarchy will be used.
@@ -167,7 +167,7 @@ open class LoginButton: UIButton {
     // This method is called when the style of `LoginButton` is changed.
     // It will update the appearance of button to new style you set.
     func updateButtonStyle() {
-        let bundle = Bundle(for: LoginButton.self)
+        let bundle = Bundle(for: LineLoginButton.self)
         let imagesPairs: [(String, UIControl.State)]
         switch buttonSize {
         case .small:
@@ -223,13 +223,13 @@ open class LoginButton: UIButton {
             result in
             switch result {
             case .success(let loginResult):
-                self.delegate?.loginButton(self, didSucceedLogin: loginResult)
+                self.delegate?.LineloginButton(self, didSucceedLogin: loginResult)
             case .failure(let error):
-                self.delegate?.loginButton(self, didFailLogin: error)
+                self.delegate?.LineloginButton(self, didFailLogin: error)
             }
             self.isUserInteractionEnabled = true
         }
-        delegate?.loginButtonDidStartLogin(self)
+        delegate?.LineloginButtonDidStartLogin(self)
     }
 
 }
