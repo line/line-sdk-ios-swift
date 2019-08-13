@@ -321,5 +321,36 @@ class SessionTests: XCTestCase {
         }
         waitForExpectations(timeout: 1, handler: nil)
     }
+
+    func testSessionDelegateLock() {
+
+        // There should be no deadlock when sending requests from concurrent queue.
+
+        let expect = expectation(description: "\(#file)_\(#line)")
+
+        let range = 0 ..< 1000
+        let delegate = SessionDelegate()
+        let queue = DispatchQueue(label: "test", attributes: .concurrent)
+
+        let group = DispatchGroup()
+        for _ in range {
+            group.enter()
+            queue.async {
+                delegate.add(
+                    SessionTask(
+                        session: URLSession.shared,
+                        request: URLRequest(url: URL(string: "https://example.com")!)
+                    )
+                )
+                group.leave()
+            }
+        }
+
+        group.notify(queue: .main) {
+            expect.fulfill()
+        }
+
+        waitForExpectations(timeout: 1, handler: nil)
+    }
 }
 
