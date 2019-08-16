@@ -105,7 +105,8 @@ platform :ios do
 
   desc "Generate documentation"
   lane :doc do
-    jazzy
+    copyright = "jazzy --copyright '© " + Time.new.year.to_s + " [LINE Corporation.](https://line.me) All rights reserved.'"
+    Actions.sh(copyright)
   end
 
   desc "Generate documentation for internal usage"
