@@ -83,18 +83,4 @@ struct LoginConfiguration {
         
         return true
     }
-    
-    /// Checks whether the `appID` is on the white list of calling back source app.
-    ///
-    /// - Parameter appID: The app ID of the source app which opens current app by `open(:url:)`.
-    /// - Returns: `true` if `appID` is from a valid auth application.
-    func isValidSourceApplication(appID: String) -> Bool {
-        var validPrefixes = ["jp.naver", "com.apple", "com.linecorp"]
-        if let currentAppID = Bundle.main.bundleIdentifier {
-            validPrefixes.append(currentAppID)
-        }
-        
-        let valid = validPrefixes.contains { appID.hasPrefix($0) }
-        return valid
-    }
 }
