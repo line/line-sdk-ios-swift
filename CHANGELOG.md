@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Source application validation is removed. Login with LINE app now works correctly on iOS 13. [#97](https://github.com/line/line-sdk-ios-swift/pull/97)
+
 ## [5.2.3] - 2019-08-01
 
 ### Fixed
