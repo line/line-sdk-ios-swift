@@ -273,8 +273,7 @@ public class LoginManager {
         guard let url = url else { return false }
         guard let currentProcess = currentProcess else { return false }
         
-        let sourceApplication = options[.sourceApplication] as? String
-        return currentProcess.resumeOpenURL(url: url, sourceApplication: sourceApplication)
+        return currentProcess.resumeOpenURL(url: url)
     }
 }
 
