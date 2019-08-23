@@ -237,7 +237,7 @@ public class LoginProcess {
         webLoginFlow.start(in: presentingViewController)
     }
     
-    func resumeOpenURL(url: URL, sourceApplication: String?) -> Bool {
+    func resumeOpenURL(url: URL) -> Bool {
         
         let isValidUniversalLinkURL = configuration.isValidUniversalLinkURL(url: url)
         let isValidCustomizeURL = configuration.isValidCustomizeURL(url: url)
@@ -246,15 +246,6 @@ public class LoginProcess {
         {
             invokeFailure(error: LineSDKError.authorizeFailed(reason: .callbackURLSchemeNotMatching))
             return false
-        }
-        
-        // For universal link callback, we can skip source application checking.
-        // Just do it for customize URL scheme.
-        if isValidCustomizeURL {
-            guard let sourceApp = sourceApplication, configuration.isValidSourceApplication(appID: sourceApp) else {
-                invokeFailure(error: LineSDKError.authorizeFailed(reason: .invalidSourceApplication))
-                return false
-            }
         }
         
         // It is the callback url we could handle, so the app switching observer should be invalidated.
