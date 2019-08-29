@@ -100,7 +100,7 @@ public enum LineSDKError: Error {
     /// - callbackURLSchemeNotMatching: The received `URL` object while opening the app does not match the
     ///                                 defined URL scheme. Code 3005.
     /// - invalidSourceApplication: The source application is invalid and cannot finish the authorization
-    ///                             process. Code 3006.
+    ///                             process. Not in use anymore from LINE SDK 5.2.4. Code 3006.
     /// - malformedRedirectURL: The received `URL` object while opening the app is invalid or does not
     ///                         contain necessary information. Code 3007.
     /// - invalidLineURLResultCode: The received `URL` object while opening the app has an unknown result
@@ -137,8 +137,9 @@ public enum LineSDKError: Error {
 
         /// The received `URL` object while opening the app does not match the defined URL scheme. Code 3005.
         case callbackURLSchemeNotMatching
-
-        /// The source application is invalid and cannot finish the authorization process. Code 3006.
+        
+        /// The source application is invalid and cannot finish the authorization process.
+        /// Not in use anymore from LINE SDK 5.2.4. Code 3006.
         case invalidSourceApplication
 
         /// The received `URL` object while opening the app is invalid or does not

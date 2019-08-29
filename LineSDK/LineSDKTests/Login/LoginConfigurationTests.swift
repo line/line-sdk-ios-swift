@@ -71,14 +71,4 @@ class LoginConfigurationTests: XCTestCase {
         let result = config.isValidUniversalLinkURL(url: URL(string: "https://example.com")!)
         XCTAssertEqual(result, false)
     }
-    
-    func testValidSourceApplication() {
-        let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
-        let results = [
-            "jp.naver.line",
-            "com.apple.hello",
-            "com.company.app"
-        ].map(config.isValidSourceApplication)
-        XCTAssertEqual(results, [true, true, false])
-    }
 }
