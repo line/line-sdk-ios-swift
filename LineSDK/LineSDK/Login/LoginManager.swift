@@ -241,7 +241,8 @@ public class LoginManager {
                     accessToken: token,
                     permissions: Set(token.permissions),
                     userProfile: profile,
-                    friendshipStatusChanged: response.friendshipStatusChanged)
+                    friendshipStatusChanged: response.friendshipStatusChanged,
+                    IDTokenNonce: process.IDTokenNonce)
             }
             completion(result)
         }
@@ -361,7 +362,7 @@ extension LoginManager {
         let allowedClockSkew: TimeInterval = 5 * 60
         try payload.verify(keyPath: \.expiration, laterThan: now.addingTimeInterval(-allowedClockSkew))
         try payload.verify(keyPath: \.issueAt, earlierThan: now.addingTimeInterval(allowedClockSkew))
-        try payload.verify(keyPath: \.nonce, expected: process.tokenIDNonce!)
+        try payload.verify(keyPath: \.nonce, expected: process.IDTokenNonce!)
     }
 }
 

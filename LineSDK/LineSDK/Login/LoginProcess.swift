@@ -106,8 +106,8 @@ public class LoginProcess {
     /// A UUID string of current process. Used to verify with server `state` response.
     let processID: String
     
-    /// A string used to prevent replay attacks. This value is returned in an ID token.
-    let tokenIDNonce: String?
+    /// A string used to prevent replay attacks. This value will be returned in an ID token.
+    let IDTokenNonce: String?
     
     var otp: OneTimePassword!
     
@@ -129,9 +129,9 @@ public class LoginProcess {
         self.presentingViewController = viewController
         
         if scopes.contains(.openID) {
-            tokenIDNonce = UUID().uuidString
+            IDTokenNonce = UUID().uuidString
         } else {
-            tokenIDNonce = nil
+            IDTokenNonce = nil
         }
     }
     
@@ -147,7 +147,7 @@ public class LoginProcess {
                     scopes: self.scopes,
                     otp: otp,
                     processID: self.processID,
-                    nonce: self.tokenIDNonce,
+                    nonce: self.IDTokenNonce,
                     botPrompt: self.options.botPrompt,
                     preferredWebPageLanguage: self.preferredWebPageLanguage)
                 if self.options.contains(.onlyWebLogin) {
