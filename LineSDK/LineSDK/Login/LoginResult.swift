@@ -36,7 +36,7 @@ public struct LoginResult {
     /// Login channel at https://developers.line.me/en/docs/line-login/web/link-a-bot/.
     public let friendshipStatusChanged: Bool?
     /// The `nonce` value when requesting ID Token during login process. Use this value as a parameter when you
-    /// verify the ID Token against with LINE server. This value is `nil` if `.openID` permission is not requested.
+    /// verify the ID Token against the LINE server. This value is `nil` if `.openID` permission is not requested.
     public let IDTokenNonce: String?
 }
 
