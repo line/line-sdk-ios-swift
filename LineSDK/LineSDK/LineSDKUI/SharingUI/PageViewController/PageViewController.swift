@@ -78,12 +78,16 @@ class PageViewController: UIViewController {
             [weak self] scrollView, change in
 
             guard let self = self else { return }
-            guard let newValue = change.newValue else { return }
-
-            let width = self.pageViewController.view.bounds.width
-            let progress = (newValue.x - width) / width
-            self.pageTabView.updateScrollingProgress(progress)
+            self.pageTabView.updateScrollingProgress(self.tabProgress)
         }
+    }
+
+    private var tabProgress: CGFloat {
+        guard let pageScrollView = pageScrollView else {
+            return 0
+        }
+        let width = pageViewController.view.bounds.width
+        return (pageScrollView.contentOffset.x - width) / width
     }
 
     private func setupPageViewController() {
@@ -129,6 +133,12 @@ class PageViewController: UIViewController {
     func setPageTabViewHidden(_ hidden: Bool) {
         pageTabHeightConstraint?.constant = hidden ? 0 : PageTabView.TabView.Design.height
         view.layoutIfNeeded()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        pageTabView.layoutIfNeeded()
+        pageTabView.updateScrollingProgress(tabProgress)
     }
 }
 
