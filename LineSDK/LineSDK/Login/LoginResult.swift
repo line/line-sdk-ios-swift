@@ -35,7 +35,9 @@ public struct LoginResult {
     /// `LoginManagerOption` object when the user logs in. For more information, see Linking a bot with your LINE 
     /// Login channel at https://developers.line.me/en/docs/line-login/web/link-a-bot/.
     public let friendshipStatusChanged: Bool?
-
+    /// The `nonce` value when requesting ID Token during login process. Use this value as a parameter when you
+    /// verify the ID Token against the LINE server. This value is `nil` if `.openID` permission is not requested.
+    public let IDTokenNonce: String?
 }
 
 extension LoginResult: Encodable {
@@ -45,6 +47,7 @@ extension LoginResult: Encodable {
         case scope
         case userProfile
         case friendshipStatusChanged
+        case IDTokenNonce
     }
 
     /// :nodoc:
@@ -54,5 +57,6 @@ extension LoginResult: Encodable {
         try container.encodeLoginPermissions(Array(permissions), forKey: .scope)
         try container.encodeIfPresent(userProfile, forKey: .userProfile)
         try container.encodeIfPresent(friendshipStatusChanged, forKey: .friendshipStatusChanged)
+        try container.encodeIfPresent(IDTokenNonce, forKey: .IDTokenNonce)
     }
 }

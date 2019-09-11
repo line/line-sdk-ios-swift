@@ -109,7 +109,7 @@ public struct AccessToken: Codable, AccessTokenType, Equatable {
         tokenType = try container.decode(String.self, forKey: .tokenType)
     }
 
-    // Internal helper for creating a new token object with current ID Token kept when refreshing.
+    // Internal helper for creating a new token object while retaining current ID Token when refreshing.
     init(token: AccessToken, currentIDTokenRaw: String?) throws {
         self.value = token.value
         self.expiresIn = token.expiresIn

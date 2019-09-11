@@ -77,7 +77,7 @@ public class LineSDKLoginButton: LoginButton {
 
     override public func login() {
         if LineSDKLoginManager.sharedManager.isAuthorizing {
-            // Authorizing process is ongoing so not to call login again
+            // Don't allow login to be called again if authorization is already in progress.
             return
         }
         isUserInteractionEnabled = false
@@ -97,5 +97,3 @@ public class LineSDKLoginButton: LoginButton {
         self.loginDelegate?.loginButtonDidStartLogin(self)
     }
 }
-
-
