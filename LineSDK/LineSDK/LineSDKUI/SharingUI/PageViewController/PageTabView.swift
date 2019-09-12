@@ -199,7 +199,16 @@ class PageTabView: UIView {
         delegate?.pageTabView(self, didSelectIndex: index)
     }
 
-    // This only update the `selectedIndex` property and update style when neccessary.
+    func tabIndex(from progress: CGFloat) -> Int {
+        let divider = 1.0 / CGFloat(tabs.count)
+        return min(Int(progress / divider), tabs.count - 1)
+    }
+
+    func updateSelectedIndexForCurrentProgress() {
+        updateSelectedIndex(tabIndex(from: currentProgress))
+    }
+
+    // This only update the `selectedIndex` property and update style when necessary.
     func updateSelectedIndex(_ index: Int) {
         selectedIndex = index
 
