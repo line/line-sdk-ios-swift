@@ -6,3 +6,4 @@
 "common.ok" = "OK";
 "friends.share.search" = "Cari dengan Nama";
 "chat.multi.fwd.confirm" = "Anda dapat memilih maksimum %d.";
+"search.no.result" = "Tak Ada Hasil";

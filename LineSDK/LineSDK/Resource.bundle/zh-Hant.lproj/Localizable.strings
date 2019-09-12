@@ -6,3 +6,4 @@
 "common.ok" = "確定";
 "friends.share.search" = "利用名稱搜尋";
 "chat.multi.fwd.confirm" = "最多可選擇%d筆。";
+"search.no.result" = "找不到任何結果";
