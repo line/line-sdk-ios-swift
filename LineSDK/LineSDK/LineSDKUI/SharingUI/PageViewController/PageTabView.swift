@@ -229,6 +229,13 @@ class PageTabView: UIView {
         underline.setup(centerX: centerX, width: width)
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        reset()
+        updateScrollingProgress(0)
+        layoutIfNeeded()
+    }
+
     func normalizeProgress(_ progress: CGFloat) {
         // UIPageViewController resets the content offset when new page displayed.
         let diff = currentProgress - progress * nextSpacingFactor - currentDiff
@@ -254,7 +261,9 @@ class PageTabView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func resetSpacingFactor() {
+    func reset() {
         nextSpacingFactor = 1.0
+        currentDiff = 0
+        currentProgress = CGFloat(selectedIndex)
     }
 }

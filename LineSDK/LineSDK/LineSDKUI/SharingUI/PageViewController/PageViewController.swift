@@ -133,12 +133,6 @@ class PageViewController: UIViewController {
         pageTabHeightConstraint?.constant = hidden ? 0 : PageTabView.TabView.Design.height
         view.layoutIfNeeded()
     }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        pageTabView.layoutIfNeeded()
-        pageTabView.updateScrollingProgress(tabProgress)
-    }
 }
 
 extension PageViewController {
@@ -193,7 +187,7 @@ extension PageViewController: PageTabViewDelegate {
 extension PageViewController: UIScrollViewDelegate {
     // triggered when programmatically set the index of PageViewController and its animation ended
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        pageTabView.resetSpacingFactor()
+        pageTabView.reset()
     }
 
     // In some cases, `pageViewController(_:didFinishAnimating:previousViewControllers:transitionCompleted:)` is not
