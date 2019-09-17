@@ -4,6 +4,10 @@
   src: url(../fonts/icon-font/icon-font.eot?#iefix) format("eot"),url(../fonts/icon-font/icon-font.woff) format("woff"),url(../fonts/icon-font/icon-font.ttf) format("truetype");
 }
 
+body {
+  font-family: Avenir Next W01,"ヒラギノ角ゴ Pro",Hiragino Kaku Gothic Pro,"游ゴシック体",Yu Gothic,YuGothic,"メイリオ",Meiryo,Arial Unicode MS,Tahoma,Helvetica,"ＭＳ Ｐゴシック",MS PGothic,sans-serif;
+}
+
 /* Util */
 .d-flex {
   display: flex;
@@ -38,7 +42,7 @@
   content:"\EA33";
   position:absolute;
   line-height:inherit;
-  top:50%;
+  top: 7px;
   right:0;
   -webkit-transform:translateY(-50%);
   transform:translateY(-50%);
