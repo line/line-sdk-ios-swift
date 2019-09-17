@@ -8,11 +8,11 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Add `IDTokenNonce` to `LoginResult`. This value can be used againt the ID token verification API as a parameter.
+- Add `IDTokenNonce` to `LoginResult`. This value can be used against the ID token verification API as a parameter.
 
 #### Fixed
 
-- Some improvement on documentation spelling and grammar.
+- Some improvement in documentation spelling and grammar.
 
 
 ## [5.2.4] - 2019-08-23
