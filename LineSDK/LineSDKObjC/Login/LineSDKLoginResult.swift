@@ -32,6 +32,7 @@ public class LineSDKLoginResult: NSObject {
     public var permissions: Set<LineSDKLoginPermission> { return Set(_value.permissions.map { .init($0) }) }
     public var userProfile: LineSDKUserProfile? { return _value.userProfile.map { .init($0) } }
     public var friendshipStatusChanged: NSNumber? { return _value.friendshipStatusChanged.map { .init(value: $0) } }
+    public var IDTokenNonce: String? { return _value.IDTokenNonce }
 
     public var json: String? { return toJSON(_value) }
 }
