@@ -51,7 +51,6 @@ class ShareTargetSearchResultViewController: UIViewController {
     deinit {
         // https://bugs.swift.org/browse/SR-5752
         if #available(iOS 11.0, *) {} else {
-            hasSearchResultObserver?.invalidate()
             hasSearchResultObserver = nil
         }
     }
