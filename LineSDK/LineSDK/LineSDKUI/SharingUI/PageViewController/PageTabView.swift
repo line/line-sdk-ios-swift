@@ -200,7 +200,7 @@ class PageTabView: UIView {
     }
 
     func tabIndex(from progress: CGFloat) -> Int {
-        return min(Int(progress / divider), tabs.count - 1)
+        return min(Int(progress * CGFloat(tabs.count)), tabs.count - 1)
     }
 
     func updateSelectedIndexForCurrentProgress() {
