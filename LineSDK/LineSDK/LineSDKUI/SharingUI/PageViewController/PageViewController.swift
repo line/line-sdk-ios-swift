@@ -53,6 +53,14 @@ class PageViewController: UIViewController {
         return scrollView
     }()
 
+    deinit {
+        // https://bugs.swift.org/browse/SR-5752
+        if #available(iOS 11.0, *) {} else {
+            pageScrollViewObserver?.invalidate()
+            pageScrollViewObserver = nil
+        }
+    }
+
     init(pages: [Page]) {
         self.pages = pages
         super.init(nibName: nil, bundle: nil)
