@@ -179,7 +179,9 @@ extension PageViewController: PageTabViewDelegate {
             assertionFailure("Cannot get current index for page view controller. It should not happen.")
             direction = .forward
         }
-
+        // Prevents any interaction while the page is scrolling when triggered by page tab selecting.
+        pages.forEach { $0.viewController.view.isUserInteractionEnabled = false }
+        view.isUserInteractionEnabled = false
         pageViewController.setViewControllers([pages[index].viewController], direction: direction, animated: true)
     }
 }
@@ -188,6 +190,8 @@ extension PageViewController: UIScrollViewDelegate {
     // triggered when programmatically set the index of PageViewController and its animation ended
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         pageTabView.reset()
+        pages.forEach { $0.viewController.view.isUserInteractionEnabled = true }
+        view.isUserInteractionEnabled = true
     }
 
     // In some cases, `pageViewController(_:didFinishAnimating:previousViewControllers:transitionCompleted:)` is not
