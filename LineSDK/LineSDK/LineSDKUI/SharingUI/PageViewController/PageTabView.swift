@@ -199,7 +199,15 @@ class PageTabView: UIView {
         delegate?.pageTabView(self, didSelectIndex: index)
     }
 
-    // This only update the `selectedIndex` property and update style when neccessary.
+    func tabIndex(from progress: CGFloat) -> Int {
+        return min(Int(progress * CGFloat(tabs.count)), tabs.count - 1)
+    }
+
+    func updateSelectedIndexForCurrentProgress() {
+        updateSelectedIndex(tabIndex(from: currentProgress))
+    }
+
+    // This only update the `selectedIndex` property and update style when necessary.
     func updateSelectedIndex(_ index: Int) {
         selectedIndex = index
 
@@ -218,6 +226,13 @@ class PageTabView: UIView {
         let width = Underline.preferredWidth(progress: currentProgress,
                                              titleWidths: tabs.map { $0.textLabel.bounds.width })
         underline.setup(centerX: centerX, width: width)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        reset()
+        updateScrollingProgress(0)
+        layoutIfNeeded()
     }
 
     func normalizeProgress(_ progress: CGFloat) {
@@ -245,7 +260,9 @@ class PageTabView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func resetSpacingFactor() {
+    func reset() {
         nextSpacingFactor = 1.0
+        currentDiff = 0
+        currentProgress = CGFloat(selectedIndex)
     }
 }

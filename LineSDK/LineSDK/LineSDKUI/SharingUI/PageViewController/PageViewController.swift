@@ -100,7 +100,6 @@ class PageViewController: UIViewController {
 
         pageViewController.setViewControllers(initial, direction: .forward, animated: false)
         pageViewController.dataSource = self
-        pageViewController.delegate = self
 
         addChild(pageViewController, to: pageContainerLayout)
     }
@@ -133,12 +132,6 @@ class PageViewController: UIViewController {
     func setPageTabViewHidden(_ hidden: Bool) {
         pageTabHeightConstraint?.constant = hidden ? 0 : PageTabView.TabView.Design.height
         view.layoutIfNeeded()
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        pageTabView.layoutIfNeeded()
-        pageTabView.updateScrollingProgress(tabProgress)
     }
 }
 
@@ -177,21 +170,6 @@ extension PageViewController: UIPageViewControllerDataSource {
     }
 }
 
-extension PageViewController: UIPageViewControllerDelegate {
-    // triggered when manually drag PageViewController to next page animation ended
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        didFinishAnimating finished: Bool,
-        previousViewControllers: [UIViewController],
-        transitionCompleted completed: Bool)
-    {
-        guard let index = currentViewControllerIndex else {
-            return
-        }
-        pageTabView.updateSelectedIndex(index)
-    }
-}
-
 extension PageViewController: PageTabViewDelegate {
     func pageTabView(_ pageTabView: PageTabView, didSelectIndex index: Int) {
         let direction: UIPageViewController.NavigationDirection
@@ -209,6 +187,13 @@ extension PageViewController: PageTabViewDelegate {
 extension PageViewController: UIScrollViewDelegate {
     // triggered when programmatically set the index of PageViewController and its animation ended
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        pageTabView.resetSpacingFactor()
+        pageTabView.reset()
+    }
+
+    // In some cases, `pageViewController(_:didFinishAnimating:previousViewControllers:transitionCompleted:)` is not
+    // called correctly by UIKit. To prevent that case, use `updateSelectedIndexForCurrentProgress` from
+    // this delegate method.
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        pageTabView.updateSelectedIndexForCurrentProgress()
     }
 }
