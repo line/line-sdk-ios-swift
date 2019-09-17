@@ -6,3 +6,4 @@
 "common.ok" = "OK";
 "friends.share.search" = "Cerca per nome";
 "chat.multi.fwd.confirm" = "Puoi selezionarne fino a %d.";
+"search.no.result" = "Nessun risultato";

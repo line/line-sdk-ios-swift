@@ -26,12 +26,15 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
     // The order of search result section.
     var sectionOrder: [MessageShareTargetType] = [.friends, .groups]
 
+    @objc dynamic var hasSearchResult: Bool = true
+    
     var searchText: String = "" {
         didSet {
             guard searchText != oldValue else { return }
             filteredIndexes = store.indexes {
                 $0.displayName.localizedCaseInsensitiveContains(searchText)
             }
+            hasSearchResult = searchText.isEmpty || filteredIndexes.contains { !$0.isEmpty }
         }
     }
 

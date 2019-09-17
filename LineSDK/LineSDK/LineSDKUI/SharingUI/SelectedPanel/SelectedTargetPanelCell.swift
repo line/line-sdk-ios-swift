@@ -79,9 +79,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
     }
 
     private func setupLayouts() {
-        deleteIconImageView.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: Design.nameLabelTopSpacing),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -90,6 +88,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
             nameLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor),
             ])
 
+        deleteIconImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             deleteIconImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             deleteIconImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),

@@ -6,3 +6,4 @@
 "common.ok" = "ОК";
 "friends.share.search" = "Поиск по имени";
 "chat.multi.fwd.confirm" = "Можно выбрать не более %d.";
+"search.no.result" = "Ничего не найдено";

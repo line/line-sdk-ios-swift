@@ -42,12 +42,23 @@ class ShareTargetSearchResultViewController: UIViewController {
     private (set) lazy var panelViewController = SelectedTargetPanelViewController(store: store)
     private let panelContainer = UILayoutGuide()
 
+    private let emptyResultLabel: UILabel
+    private var hasSearchResultObserver: NSKeyValueObservation?
+
     private var panelBottomConstraint: NSLayoutConstraint?
     private var panelHeightConstraint: NSLayoutConstraint?
+
+    deinit {
+        // https://bugs.swift.org/browse/SR-5752
+        if #available(iOS 11.0, *) {} else {
+            hasSearchResultObserver = nil
+        }
+    }
 
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
         self.tableViewController = ShareTargetSearchResultTableViewController(store: store)
+        self.emptyResultLabel = UILabel(frame: .zero)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -69,12 +80,30 @@ class ShareTargetSearchResultViewController: UIViewController {
 
         view.addLayoutGuide(panelContainer)
         addChild(panelViewController, to: panelContainer)
+
+        emptyResultLabel.text = Localization.string("search.no.result")
+        emptyResultLabel.textColor = .gray
+        view.addSubview(emptyResultLabel)
+        hasSearchResultObserver = tableViewController
+            .observe(\.hasSearchResult, options: [.initial, .new]) {
+                [weak self] _, change in
+                guard let self = self else { return }
+                if let hasSearchResult = change.newValue {
+                    self.emptyResultLabel.isHidden = hasSearchResult
+                }
+            }
     }
 
     private func setupLayouts() {
+        emptyResultLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            emptyResultLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyResultLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 3)
+        ])
+
         NSLayoutConstraint.activate([
             panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
 
         panelBottomConstraint = panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
