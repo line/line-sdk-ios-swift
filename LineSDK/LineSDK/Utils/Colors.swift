@@ -99,7 +99,7 @@ extension UIColor {
     }
 
     static var LineSDKPanelBackground: UIColor {
-        return compatibleColor(light: .init(hex6: 0xF7F8FA), dark: .init(hex6: 0x1C1C1E))
+        return compatibleColor(light: .init(hex6: 0xF7F8FA), dark: .init(hex6: 0x2C2C2E))
     }
 
     static func compatibleColor(
