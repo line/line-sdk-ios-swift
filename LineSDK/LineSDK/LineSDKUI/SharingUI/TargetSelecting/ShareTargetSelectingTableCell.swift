@@ -42,7 +42,9 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
 
         static var separatorInset: UIEdgeInsets { return .init(top: 0, left: 96, bottom: 0, right: 0) }
         static var backgroundColor: UIColor { return .LineSDKSystemBackground }
-        static var selectionTickColor: UIColor { return .LineSDKTertiarySystemBackground }
+        static var selectionTickColor: UIColor {
+            return .compatibleColor(light: .init(hex6: 0xEFF1F6), dark: .LineSDKTertiarySystemBackground)
+        }
     }
 
     let tickImageView = UIImageView(frame: .zero)

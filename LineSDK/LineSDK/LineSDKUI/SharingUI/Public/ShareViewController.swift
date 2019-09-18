@@ -70,7 +70,9 @@ import UIKit
 open class ShareViewController: UINavigationController {
 
     enum Design {
-        static var navigationBarTintColor: UIColor { return .init(hex6: 0x283145) }
+        static var navigationBarTintColor: UIColor {
+            return .compatibleColor(light: 0x283145, dark: 0x161B26)
+        }
         static var preferredStatusBarStyle: UIStatusBarStyle  { return  .lightContent }
         static var navigationBarTextColor:  UIColor { return  .white }
     }
@@ -264,5 +266,9 @@ extension ShareViewController {
 extension ShareViewController: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         shareDelegate?.shareViewControllerDidCancelSharing(self)
+    }
+
+    public func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        return rootViewController.selectedCount == 0
     }
 }

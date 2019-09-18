@@ -50,6 +50,10 @@ class SelectedTargetPanelViewController: UIViewController {
         return view
     }()
 
+    private func updateColorAppearance() {
+        slideAnimationView.layer.borderColor = Design.borderColor.cgColor
+    }
+
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = Design.minimumLineSpacing
@@ -99,6 +103,8 @@ class SelectedTargetPanelViewController: UIViewController {
         collectionView.delegate = self
         slideAnimationView.addSubview(collectionView)
         view.addSubview(slideAnimationView)
+
+        updateColorAppearance()
     }
 
     private func setupLayouts() {
@@ -204,6 +210,16 @@ class SelectedTargetPanelViewController: UIViewController {
         } else {
             applyChange()
         }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        #if compiler(>=5.1)
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateColorAppearance()
+            }
+        }
+        #endif
     }
 }
 

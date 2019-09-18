@@ -203,22 +203,19 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" id="Dza-jR-TTz">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dza-jR-TTz" id="aL5-yl-GZ4">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dza-jR-TTz" id="aL5-yl-GZ4">
                                             <rect key="frame" x="0.0" y="0.0" width="347.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wn8-RQ-Mfe">
-                                                    <rect key="frame" x="16" y="11.5" width="118" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="zVG-u9-1qA"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="16" y="11" width="118" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="wn8-RQ-Mfe" firstAttribute="top" secondItem="aL5-yl-GZ4" secondAttribute="top" constant="11.5" id="YFo-cz-dnC"/>
+                                                <constraint firstItem="wn8-RQ-Mfe" firstAttribute="top" secondItem="aL5-yl-GZ4" secondAttribute="top" constant="11" id="YFo-cz-dnC"/>
                                                 <constraint firstItem="wn8-RQ-Mfe" firstAttribute="leading" secondItem="aL5-yl-GZ4" secondAttribute="leading" constant="16" id="g2L-CB-9Dc"/>
                                                 <constraint firstAttribute="bottom" secondItem="wn8-RQ-Mfe" secondAttribute="bottom" constant="11" id="ish-8H-qyj"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wn8-RQ-Mfe" secondAttribute="trailing" constant="16" id="rea-GK-6ID"/>

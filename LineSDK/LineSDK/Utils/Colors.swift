@@ -44,6 +44,7 @@ extension UIColor {
     static let separator = UIColor(hex8: 0x3c3c4349)
     static let opaqueSeparator = UIColor(hex8: 0xc6c6c8ff)
     static let link = UIColor(hex8: 0x007affff)
+    static let systemGray = UIColor(hex8: 0x8e8e93ff)
     static let systemGray2 = UIColor(hex8: 0xaeaeb2ff)
     static let systemGray3 = UIColor(hex8: 0xc7c7ccff)
     static let systemGray4 = UIColor(hex8: 0xd1d1d6ff)
@@ -72,6 +73,14 @@ extension UIColor {
     static var LineSDKSystemBackground: UIColor {
         if #available(iOS 13.0, *) {
             return .systemBackground
+        } else {
+            return .white
+        }
+    }
+
+    static var LineSDKSecondarySystemBackground: UIColor {
+        if #available(iOS 13.0, *) {
+            return .secondarySystemBackground
         } else {
             return .white
         }
@@ -111,6 +120,6 @@ extension UIColor {
     }
 
     static func compatibleColor(light: UInt32, dark: UInt32) -> UIColor {
-        compatibleColor(light: .init(hex6: light), dark: .init(hex6: dark))
+        return compatibleColor(light: .init(hex6: light), dark: .init(hex6: dark))
     }
 }

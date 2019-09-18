@@ -24,8 +24,12 @@ import UIKit
 class ShareTargetSearchController: UISearchController {
 
     enum Design {
-        static var searchBarTintColor: UIColor { return .compatibleColor(light: 0x283145, dark: 0xffffff) }
-        static var searchBarBackgroundColor: UIColor { return .LineSDKTertiarySystemBackground }
+        static var searchBarTintColor: UIColor {
+            return .compatibleColor(light: 0x283145, dark: 0xffffff)
+        }
+        static var searchBarBackgroundColor: UIColor {
+            return .compatibleColor(light: .init(hex6: 0xEAEAEE), dark: .LineSDKSystemBackground)
+        }
     }
 
     override init(searchResultsController: UIViewController?) {
@@ -42,17 +46,20 @@ class ShareTargetSearchController: UISearchController {
     }
 
     private func setupSearchBar() {
+        updateColorAppearance()
+        searchBar.autocapitalizationType = .none
+        searchBar.autocorrectionType = .no
+        searchBar.spellCheckingType = .no
+        searchBar.returnKeyType = .done
+        searchBar.placeholder = Localization.string("friends.share.search")
+    }
+
+    func updateColorAppearance() {
         let searchBarBackgroundImage = Design.searchBarBackgroundColor.image()
         [UIBarPosition.top, .topAttached]     .forEach { position in
         [UIBarMetrics.default, .defaultPrompt].forEach { metrics in
             searchBar.setBackgroundImage(searchBarBackgroundImage, for: position, barMetrics: metrics)
         }}
-
-        searchBar.autocapitalizationType = .none
-        searchBar.autocorrectionType = .no
-        searchBar.spellCheckingType = .no
-        searchBar.returnKeyType = .done
         searchBar.tintColor = Design.searchBarTintColor
-        searchBar.placeholder = Localization.string("friends.share.search")
     }
 }
