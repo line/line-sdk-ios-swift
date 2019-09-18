@@ -155,9 +155,16 @@ extension ShareTargetSearchResultViewController {
     }
 
     private func handleKeyboardChange(_ keyboardInfo: KeyboardInfo) {
-        // Wait for iOS layout the current vc. It happens when presenting `self`
-        // with a `.formSheet` style in landscape mode.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        if view.window == nil {
+            // Force iOS to layout the current view. Otherwise, a wrong initial layout happens when presenting `self`
+            // with a `.formSheet` style.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                if self.view.window != nil {
+                    self.updatePanelBottomConstraint(keyboardInfo: keyboardInfo)
+                    self.view.layoutIfNeeded()
+                }
+            }
+        } else {
             self.updatePanelBottomConstraint(keyboardInfo: keyboardInfo)
             UIView.animate(withDuration: keyboardInfo.duration) {
                 self.view.layoutIfNeeded()
