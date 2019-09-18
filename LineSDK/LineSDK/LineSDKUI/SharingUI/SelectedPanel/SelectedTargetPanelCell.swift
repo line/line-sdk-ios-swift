@@ -29,7 +29,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
         static let nameLabelTopSpacing: CGFloat = 1
         static let deleteSize = CGSize(width: 21, height: 21)
 
-        static var textColor: UIColor { return .init(hex6: 0x596478) }
+        static var textColor: UIColor { return .compatibleColor(light: 0x596478, dark: 0xEBEBF5) }
         static var font: UIFont { return .systemFont(ofSize: 12) }
     }
 
