@@ -67,6 +67,8 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
 
         avatarImageView.layer.cornerRadius = Design.avatarWidth / 2;
         avatarImageView.clipsToBounds = true
+
+        displayNameLabel.lineBreakMode = .byTruncatingMiddle
     }
 
     private func setupLayouts() {
