@@ -52,6 +52,8 @@ class ShareTargetSearchResultViewController: UIViewController {
     private var panelBottomConstraint: NSLayoutConstraint?
     private var panelHeightConstraint: NSLayoutConstraint?
 
+    private var temporaryKeyboardInfo: KeyboardInfo?
+
     deinit {
         // https://bugs.swift.org/browse/SR-5752
         if #available(iOS 11.0, *) {} else {
@@ -159,23 +161,29 @@ extension ShareTargetSearchResultViewController {
     }
 
     private func handleKeyboardChange(_ keyboardInfo: KeyboardInfo) {
-        // Wait for iOS layout the current vc. It happens when presenting `self`
-        // with a `.formSheet` style in landscape mode.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.updatePanelBottomConstraint(keyboardInfo: keyboardInfo)
-            UIView.animate(withDuration: keyboardInfo.duration) {
-                self.view.layoutIfNeeded()
-            }
+        updatePanelBottomConstraint(keyboardInfo: keyboardInfo)
+        UIView.animate(withDuration: keyboardInfo.duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        if let keyboardInfo = temporaryKeyboardInfo {
+            handleKeyboardChange(keyboardInfo)
+            temporaryKeyboardInfo = nil
         }
     }
 }
 
 extension ShareTargetSearchResultViewController: KeyboardObservable {
     func keyboardInfoWillChange(keyboardInfo: KeyboardInfo) {
-        if !isViewLoaded {
-            // Force load view to make initial layout
-            _ = view
+        // `self.view` is not yet added to current view hierarchy.
+        if view.window == nil {
+            // Wait for iOS to layout the current view. Otherwise, a wrong initial layout happens when presenting `self`
+            // with a `.formSheet` style.
+            temporaryKeyboardInfo = keyboardInfo
+        } else {
+            handleKeyboardChange(keyboardInfo)
         }
-        handleKeyboardChange(keyboardInfo)
     }
 }
