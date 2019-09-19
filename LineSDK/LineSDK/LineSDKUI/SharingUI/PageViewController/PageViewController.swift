@@ -23,6 +23,10 @@ import UIKit
 
 class PageViewController: UIViewController {
 
+    enum Design {
+        static var backgroundColor: UIColor { return .LineSDKSystemBackground }
+    }
+
     struct Page {
         let viewController: UIViewController
         let title: String
@@ -72,14 +76,11 @@ class PageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
+        view.backgroundColor = Design.backgroundColor
 
         setupSubviews()
         setupPageViewController()
         setupLayouts()
-
-        // Layout current views for getting correct page tab size.
-        view.layoutIfNeeded()
 
         pageScrollViewObserver = pageScrollView?.observe(\.contentOffset, options: [.new]) {
             [weak self] scrollView, change in

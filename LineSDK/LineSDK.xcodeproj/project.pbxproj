@@ -12,6 +12,9 @@
 		3F946A212126D13A009914ED /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F946A202126D13A009914ED /* Default-568h@2x.png */; };
 		3FE8E370214A6E70009E91BD /* LineSDKLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */; };
 		4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */; };
+		4B0FD5822330D0270054A4E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0FD5812330D0270054A4E8 /* Colors.swift */; };
+		4B0FD5832330D1050054A4E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0FD5812330D0270054A4E8 /* Colors.swift */; };
+		4B0FD5842330D1050054A4E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0FD5812330D0270054A4E8 /* Colors.swift */; };
 		4B15EEF4211D466D00866E6C /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF3211D466D00866E6C /* TextMessage.swift */; };
 		4B15EEF6211D46FF00866E6C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF5211D46FF00866E6C /* Message.swift */; };
 		4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF7211D473400866E6C /* MessageSender.swift */; };
@@ -621,6 +624,7 @@
 		3F946A202126D13A009914ED /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKLoginButton.swift; sourceTree = "<group>"; };
 		4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSDKErrorTests.swift; sourceTree = "<group>"; };
+		4B0FD5812330D0270054A4E8 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		4B15EEF3211D466D00866E6C /* TextMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessage.swift; sourceTree = "<group>"; };
 		4B15EEF5211D46FF00866E6C /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		4B15EEF7211D473400866E6C /* MessageSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSender.swift; sourceTree = "<group>"; };
@@ -1248,6 +1252,7 @@
 				4BEE5B34210AC2D000846C6D /* NotificationToken.swift */,
 				DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */,
 				4B688E3D226F029B002575CC /* LoadingIndicator.swift */,
+				4B0FD5812330D0270054A4E8 /* Colors.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2198,6 +2203,7 @@
 				4B6AA83B22E97180005FFF9C /* PostMessageTokenRequest.swift in Sources */,
 				4B50ECCC22E69B0D00225900 /* FlexSpacerComponent.swift in Sources */,
 				4B50ECCD22E69B0D00225900 /* APIError.swift in Sources */,
+				4B0FD5832330D1050054A4E8 /* Colors.swift in Sources */,
 				4B50ECCE22E69B0D00225900 /* CryptoAlgorithm.swift in Sources */,
 				4B50ECCF22E69B0D00225900 /* GetJWKSetRequest.swift in Sources */,
 				4B50ECD022E69B0D00225900 /* Group.swift in Sources */,
@@ -2390,6 +2396,7 @@
 				4B50EDA622E6ABDD00225900 /* LineSDKShareTarget.swift in Sources */,
 				4B50ED8D22E6A94100225900 /* Request.swift in Sources */,
 				4B50ED8E22E6A94100225900 /* FlexTextComponent.swift in Sources */,
+				4B0FD5842330D1050054A4E8 /* Colors.swift in Sources */,
 				4B50ED8F22E6A94100225900 /* TemplateConfirmPayload.swift in Sources */,
 				4B50ED9022E6A94100225900 /* CryptoError.swift in Sources */,
 				4B50ED9122E6A94100225900 /* SelectedTargetPanelViewController.swift in Sources */,
@@ -2518,6 +2525,7 @@
 				DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */,
 				4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */,
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
+				4B0FD5822330D0270054A4E8 /* Colors.swift in Sources */,
 				4B3CCB78215229DC00F51D76 /* CryptoAlgorithm.swift in Sources */,
 				4BFC09F7213CF68000F4594D /* GetJWKSetRequest.swift in Sources */,
 				DBF20274212C114D00780358 /* Group.swift in Sources */,

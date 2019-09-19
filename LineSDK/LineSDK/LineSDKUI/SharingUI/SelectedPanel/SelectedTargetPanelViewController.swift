@@ -27,8 +27,8 @@ class SelectedTargetPanelViewController: UIViewController {
 
     enum Design {
         static var height: CGFloat { return 79 }
-        static var bgColor: UIColor { return .init(hex6: 0xF7F8FA) }
-        static var borderColor: UIColor { return .init(hex6: 0xE6E7EA) }
+        static var backgroundColor: UIColor { return .LineSDKPanelBackground }
+        static var borderColor: UIColor { return .LineSDKPanelBorder }
         static var borderWidth: CGFloat { return 0.5 }
 
         // CollectionView
@@ -44,11 +44,15 @@ class SelectedTargetPanelViewController: UIViewController {
 
     private let slideAnimationView: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = Design.bgColor
+        view.backgroundColor = Design.backgroundColor
         view.layer.borderWidth = Design.borderWidth
         view.layer.borderColor = Design.borderColor.cgColor
         return view
     }()
+
+    private func updateColorAppearance() {
+        slideAnimationView.layer.borderColor = Design.borderColor.cgColor
+    }
 
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -58,7 +62,7 @@ class SelectedTargetPanelViewController: UIViewController {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = Design.bgColor
+        collectionView.backgroundColor = Design.backgroundColor
         collectionView.alwaysBounceHorizontal = true
         collectionView.scrollsToTop = false
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
@@ -99,6 +103,8 @@ class SelectedTargetPanelViewController: UIViewController {
         collectionView.delegate = self
         slideAnimationView.addSubview(collectionView)
         view.addSubview(slideAnimationView)
+
+        updateColorAppearance()
     }
 
     private func setupLayouts() {
@@ -204,6 +210,16 @@ class SelectedTargetPanelViewController: UIViewController {
         } else {
             applyChange()
         }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        #if compiler(>=5.1)
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateColorAppearance()
+            }
+        }
+        #endif
     }
 }
 

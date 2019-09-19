@@ -24,12 +24,12 @@ import LineSDK
 
 class ShareMessagesTableViewController: UITableViewController {
 
-    private var obseverToken: NotificationToken?
+    private var observerToken: NotificationToken?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        obseverToken = NotificationCenter.default.addObserver(
+        observerToken = NotificationCenter.default.addObserver(
             forName: .messageStoreMessageInserted,
             object: MessageStore.shared,
             queue: .main,

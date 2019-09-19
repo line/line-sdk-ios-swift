@@ -60,6 +60,10 @@ class ShareRootViewController: UIViewController {
 
     var messages: [MessageConvertible]?
 
+    var selectedCount: Int {
+        return store.selectedIndexes.count
+    }
+
     private lazy var pageViewController: PageViewController = {
         let controllers = MessageShareTargetType.allCases.map { index -> ShareTargetSelectingViewController in
             let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
@@ -191,13 +195,12 @@ extension ShareRootViewController {
     }
 
     private func handleSelectingChange(_ notification: Notification) {
-        let count = store.selectedIndexes.count
-        if count == 0 {
+        if selectedCount == 0 {
             navigationItem.rightBarButtonItem = nil
         } else {
             let title = Localization.string("common.action.send")
             navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: "\(title) (\(count))", style: .plain, target: self, action: #selector(sendMessage))
+                title: "\(title) (\(selectedCount))", style: .plain, target: self, action: #selector(sendMessage))
         }
     }
 

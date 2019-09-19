@@ -34,13 +34,17 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
 
         static var displayNameLeading: CGFloat { return 10.0 }
         static var displayNameTrailing: CGFloat { return 10.0 }
-        static var displayNameTextColor: UIColor { return .black }
+        static var displayNameTextColor: UIColor { return .LineSDKLabel }
         static var displayNameFont: UIFont { return .systemFont(ofSize: 16) }
-        static var displayNameHighlightedNameColor: UIColor { return .init(hex6: 0x13C84D) }
+        static var displayNameHighlightedNameColor: UIColor {
+            return .compatibleColor(light: 0x13C84D, dark: 0x14DE54)
+        }
 
         static var separatorInset: UIEdgeInsets { return .init(top: 0, left: 96, bottom: 0, right: 0) }
-        static var separatorColorRGB:  UIColor { return .init(hex6: 0xE6E7EA) }
-        static var bgColor: UIColor { return .white }
+        static var backgroundColor: UIColor { return .LineSDKSystemBackground }
+        static var selectionTickColor: UIColor {
+            return .compatibleColor(light: .init(hex6: 0xEFF1F6), dark: .LineSDKTertiarySystemBackground)
+        }
     }
 
     let tickImageView = UIImageView(frame: .zero)
@@ -52,7 +56,7 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
-        backgroundColor = Design.bgColor
+        backgroundColor = Design.backgroundColor
         selectionStyle = .gray
         separatorInset = Design.separatorInset
 
@@ -134,8 +138,9 @@ extension ShareTargetSelectingTableCell {
         avatarImageView.setImage(target.avatarURL, placeholder: target.placeholderImage)
 
         let selectedImage = selected ?
-            UIImage(bundleNamed: "friend_check_on") :
-            UIImage(bundleNamed: "friend_check_off")
+                UIImage(bundleNamed: "friend_check_on") :
+                UIImage(bundleNamed: "friend_check_off")
+        tickImageView.tintColor = Design.selectionTickColor
         tickImageView.image = selectedImage
     }
 }

@@ -23,6 +23,10 @@ import UIKit
 
 class ShareTargetSearchResultViewController: UIViewController {
 
+    enum Design {
+        static var emptyResultLabelColor: UIColor { return .LineSDKSecondaryLabel }
+    }
+
     var searchText: String {
         get { return tableViewController.searchText }
         set { tableViewController.searchText = newValue }
@@ -82,7 +86,7 @@ class ShareTargetSearchResultViewController: UIViewController {
         addChild(panelViewController, to: panelContainer)
 
         emptyResultLabel.text = Localization.string("search.no.result")
-        emptyResultLabel.textColor = .gray
+        emptyResultLabel.textColor = Design.emptyResultLabelColor
         view.addSubview(emptyResultLabel)
         hasSearchResultObserver = tableViewController
             .observe(\.hasSearchResult, options: [.initial, .new]) {
