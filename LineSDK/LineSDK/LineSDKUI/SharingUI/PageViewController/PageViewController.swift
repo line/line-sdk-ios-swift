@@ -212,6 +212,15 @@ extension PageViewController: UIScrollViewDelegate {
         setUserInteractionEnabled(false)
     }
 
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        // In some cases, dragging will not trigger a deceleration.
+        // So we need to set interaction enabled immediately.
+        // If `willDecelerate`, it is handled in `scrollViewDidEndDecelerating`
+        if !decelerate {
+            setUserInteractionEnabled(true)
+        }
+    }
+
     private func setUserInteractionEnabled(_ enabled: Bool) {
         pages.forEach { $0.viewController.view.isUserInteractionEnabled = enabled }
         view.isUserInteractionEnabled = enabled
