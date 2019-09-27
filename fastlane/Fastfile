@@ -82,11 +82,10 @@ platform :ios do
     )
 
     bump_constant_version(version: target_version)
-
+    bump_reference_top_version(version: target_version)
     version_bump_podspec(path: "LineSDKSwift.podspec", version_number: target_version)
     
     release_content = read_changelog(excluded_markdown_elements: [])
-
     change_log(version: target_version)
     
     git_commit_all(message: "Bump version to #{target_version}")
@@ -134,7 +133,16 @@ platform :ios do
     target_version = options[:version]
     replacing = "public static let SDKVersion = \"#{target_version}\""
     regex = "public static let SDKVersion = .*"
-    Action.sh("sed -i -e 's/#{regex}/#{replacing}/g' ../LineSDK/LineSDK/Utils/Constant.swift")
+    constant_file = "../LineSDK/LineSDK/Utils/Constant.swift"
+    Action.sh("sed -e 's/#{regex}/#{replacing}/g' #{constant_file} | tee #{constant_file}")
+  end
+
+  lane :bump_reference_top_version do |options|
+    target_version = options[:version]
+    target_version_to_minor = target_version.split(".")[0...-1].join(".")
+    lines = File.readlines("../REFERENCETOP.md")
+    lines[0] = "# LINE SDK v#{target_version_to_minor} for iOS Swift\n"
+    File.open("../REFERENCETOP.md", "w") { |f| f.write(lines.join) }
   end
 
   desc "Create binary frameworks with the `xcframework` format under the `build/` folder."
