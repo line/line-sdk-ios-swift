@@ -238,7 +238,7 @@ public class LoginProcess {
     }
     
     func resumeOpenURL(url: URL) -> Bool {
-        
+
         let isValidUniversalLinkURL = configuration.isValidUniversalLinkURL(url: url)
         let isValidCustomizeURL = configuration.isValidCustomizeURL(url: url)
         
@@ -259,6 +259,11 @@ public class LoginProcess {
         // So as a workaround, we need wait for a while before continuing.
         //
         // ref: https://github.com/AFNetworking/AFNetworking/issues/4279
+        //
+        // https://github.com/AFNetworking/AFNetworking/issues/4279#issuecomment-447108981
+        // It seems that plan A in the comment above also works great (even when the background execution time
+        // expired). But I cannot explain why the `URLSession` can retry the request even when background task ends.
+        // Maybe it is some internal implementation. Delay the request now works fine so we choose it as a workaround.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             do {
                 let response = try LoginProcessURLResponse(from: url, validatingWith: self.processID)
@@ -278,7 +283,7 @@ public class LoginProcess {
                 self.invokeFailure(error: error)
             }
         }
-        
+
         return true
     }
     
