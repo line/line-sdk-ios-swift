@@ -88,20 +88,19 @@ platform :ios do
     release_content = read_changelog(excluded_markdown_elements: [])
     change_log(version: target_version)
     
+    xcframework(version: target_version)
+
     git_commit_all(message: "Bump version to #{target_version}")
     Actions.sh("git tag -u #{ENV["GPG_KEY_ID"]} #{target_version} -m ''")
-
-    xcframework
-
+    
     push_to_git_remote
-
     set_github_release(
       repository_name: "line/line-sdk-ios-swift",
       api_token: ENV["GITHUB_TOKEN"],
       name: target_version,
       tag_name: target_version,
       description: release_content,
-      upload_assets: ["build/LineSDK.xcframework", "build/LineSDKObjC.xcframework"]
+      upload_assets: ["build/LineSDK-#{target_version}.zip", "build/LineSDKObjC-#{target_version}.zip"]
     )
 
     pod_push
@@ -146,7 +145,9 @@ platform :ios do
   end
 
   desc "Create binary frameworks with the `xcframework` format under the `build/` folder."
-  lane :xcframework do
+  lane :xcframework do |options|
+    version = options[:version]
+    target_version = "LineSDK-#{version}"
     xcversion(version: "~> 11.0")
     FileUtils.rm_rf '../build'
 
@@ -163,6 +164,9 @@ platform :ios do
     begin
         ["LineSDK", "LineSDKObjC"].each do |scheme|
 
+            artifact_root = "../build/#{target_version}/#{scheme}"
+            supporting_root = "#{artifact_root}/Supporting Files"
+
             frameworks = []
 
             ["iphoneos", "iphonesimulator"].each do |sdk|
@@ -174,15 +178,30 @@ platform :ios do
                     sdk: sdk
                 )
                 frameworks.push("#{archive_path}/Products/Library/Frameworks/LineSDK.framework")
+
+                dSYM_path = "../#{archive_path}/dSYMs/LineSDK.framework.dSYM"
+                FileUtils.mkdir_p("#{supporting_root}/dSYMs/")
+                FileUtils.cp_r(dSYM_path, "#{supporting_root}/dSYMs/#{scheme}-#{sdk}.framework.dSYM")
+
+                bitcode_symbol_map_path = "../#{archive_path}/BCSymbolMaps/"
+                if Dir.exist?(bitcode_symbol_map_path)
+                    FileUtils.mkdir_p("#{supporting_root}/BCSymbolMaps/")
+                    FileUtils.cp_r(bitcode_symbol_map_path, supporting_root)
+                end
             end
 
             # `xcodebuild` action in fastlane does not support `-create-xcframework` arg yet.
             # Change it back to use fastlane action later when it is prepared.
             framework_args = frameworks.map { |framework_path| "-framework '#{framework_path}'"}
-            args = "-create-xcframework #{framework_args.join(" ")} -output 'build/#{scheme}.xcframework'"
+            args = "-create-xcframework #{framework_args.join(" ")} -output 'build/#{target_version}/#{scheme}/#{scheme}.xcframework'"
             Dir.chdir("..") do
                 Action.sh "xcodebuild #{args}"
             end
+
+            zip(
+                path: "build/#{target_version}/#{scheme}",
+                output_path: "build/#{scheme}-#{version}.zip"
+            )
         end
     rescue => ex
         raise ex
