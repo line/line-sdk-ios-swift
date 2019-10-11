@@ -190,6 +190,11 @@ public enum LineSDKError: Error {
         /// `CryptoError`. Code 3016.
         /// - error: Underlying `CryptoError` value.
         case cryptoError(error: CryptoError)
+
+        /// The process is discarded when a new login process is going to be created. This only
+        /// happens when the `LoginManagerOptions.allowRecreatingLoginProcess` is set and users are trying
+        /// to create another login process. Code 3017.
+        case processDiscarded(LoginProcess)
     }
 
     /// The possible underlying reasons `.generalError` occurs.
@@ -518,6 +523,8 @@ extension LineSDKError.AuthorizeErrorReason {
             return "Cannot find a JWT public key in JWKs for Key ID: \(keyID ?? "nil")"
         case .cryptoError(let error):
             return "CryptoError: \(error.errorDescription ?? "nil")"
+        case .processDiscarded(let process):
+            return "Current process is discarded. \(process)"
         }
     }
 
@@ -539,6 +546,7 @@ extension LineSDKError.AuthorizeErrorReason {
         case .lackOfIDToken:                 return 3014
         case .JWTPublicKeyNotFound:          return 3015
         case .cryptoError:                   return 3016
+        case .processDiscarded:              return 3017
         }
     }
 
@@ -573,6 +581,8 @@ extension LineSDKError.AuthorizeErrorReason {
             if let keyID = keyID { userInfo[.raw] = keyID }
         case .cryptoError(let error):
             userInfo[.underlyingError] = error
+        case .processDiscarded(let process):
+            userInfo[.process] = process
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }
@@ -641,4 +651,5 @@ public enum LineSDKErrorUserInfoKey: String {
     case index
     case key
     case got
+    case process
 }

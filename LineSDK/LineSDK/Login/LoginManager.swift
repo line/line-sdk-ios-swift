@@ -140,10 +140,27 @@ public class LoginManager {
         lock.lock()
         defer { lock.unlock() }
 
-        guard currentProcess == nil else {
-            Log.assertionFailure("Trying to start another login process " +
-                "while the previous one still valid is not permitted.")
+        #if targetEnvironment(macCatalyst)
+        var options = options
+        options.insert(.allowRecreatingLoginProcess)
+        #endif
+
+        if !options.isRecreatingLoginProcessAllowed && isAuthorizing {
+            Log.print("Trying to start another login process while the previous one still valid. " +
+                "This login process is ignore. Set `LoginManagerOptions.allowRecreatingLoginProcess` " +
+                "if you want to allow this action.")
             return nil
+        }
+
+        if options.isRecreatingLoginProcessAllowed && isAuthorizing {
+            if let process = currentProcess {
+                self.currentProcess?.onFail.call(
+                    LineSDKError.authorizeFailed(reason: .processDiscarded(process))
+                )
+            } else {
+                Log.assertionFailure("The current process should exist. If you trigger this failure," +
+                    " please report on the issue page: https://github.com/line/line-sdk-ios-swift/issues")
+            }
         }
 
         let process = LoginProcess(

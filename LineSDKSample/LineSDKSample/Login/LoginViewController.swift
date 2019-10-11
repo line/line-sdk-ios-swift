@@ -56,13 +56,24 @@ extension LoginViewController: LoginButtonDelegate {
         }
     }
     
-    func loginButton(_ button: LoginButton, didFailLogin error: Error) {
+    func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError) {
         hideIndicator()
+
+        #if targetEnvironment(macCatalyst)
+        // For macCatalyst app, we allow process discarding so just ignore this error.
+        if case .authorizeFailed(reason: .processDiscarded(let p)) = error {
+            print("Process discarded: \(p)")
+            return
+        }
+        #endif
+
         UIAlertController.present(in: self, error: error)
     }
     
     func loginButtonDidStartLogin(_ button: LoginButton) {
+        #if !targetEnvironment(macCatalyst)
         showIndicator()
+        #endif
     }
     
 }

@@ -23,7 +23,7 @@ import UIKit
 
 /// Defines methods that allow you to handle different login statuses if you use the predefined LINE Login
 /// button by using the `LoginButton` class.
-public protocol LoginButtonDelegate: class {
+public protocol LoginButtonDelegate: AnyObject {
 
     /// Called after the login action is started. Since LINE Login is an asynchronous operation, you might
     /// want to show an indicator or another visual effect to prevent the user from taking other actions.
@@ -41,7 +41,7 @@ public protocol LoginButtonDelegate: class {
     /// - Parameters:
     ///   - button: The button which is used to start the login action.
     ///   - error: The error of the failed login.
-    func loginButton(_ button: LoginButton, didFailLogin error: Error)
+    func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError)
 }
 
 /// Represents a login button which executes the login function when the user taps the button.
@@ -209,11 +209,6 @@ open class LoginButton: UIButton {
 
     // Executes the login action when the user taps the login button.
     @objc open func login() {
-        if LoginManager.shared.isAuthorizing {
-            // Authorizing process is ongoing so not to call login again
-            return
-        }
-        isUserInteractionEnabled = false
         LoginManager.shared.login(
             permissions: permissions,
             in: presentingViewController,
@@ -226,7 +221,6 @@ open class LoginButton: UIButton {
             case .failure(let error):
                 self.delegate?.loginButton(self, didFailLogin: error)
             }
-            self.isUserInteractionEnabled = true
         }
         delegate?.loginButtonDidStartLogin(self)
     }

@@ -127,7 +127,6 @@ public class LoginProcess {
         self.options = options
         self.preferredWebPageLanguage = preferredWebPageLanguage
         self.presentingViewController = viewController
-        
         if scopes.contains(.openID) {
             IDTokenNonce = UUID().uuidString
         } else {
@@ -150,11 +149,17 @@ public class LoginProcess {
                     nonce: self.IDTokenNonce,
                     botPrompt: self.options.botPrompt,
                     preferredWebPageLanguage: self.preferredWebPageLanguage)
+
+                #if targetEnvironment(macCatalyst)
+                // On macCatalyst we only support web login
+                self.startWebLoginFlow(parameters)
+                #else
                 if self.options.contains(.onlyWebLogin) {
                     self.startWebLoginFlow(parameters)
                 } else {
                     self.startAppUniversalLinkFlow(parameters)
                 }
+                #endif
             case .failure(let error):
                 self.invokeFailure(error: error)
             }
@@ -388,8 +393,12 @@ class WebLoginFlow: NSObject {
 
 extension WebLoginFlow: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        // macCatalyst calls `didFinish` immediately when open page in Safari.
+        // It should not be a cancellation.
+        #if !targetEnvironment(macCatalyst)
         // This happens when user tap "Cancel" in the SFSafariViewController.
         onCancel.call()
+        #endif
     }
 }
 

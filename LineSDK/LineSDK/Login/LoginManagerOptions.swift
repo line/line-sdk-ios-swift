@@ -45,7 +45,17 @@ public struct LoginManagerOptions: OptionSet {
     /// screen. If `.botPromptNormal` and `.botPromptAggressive` is set at the same time,
     /// `.botPromptAggressive` will be used.
     public static let botPromptAggressive = LoginManagerOptions(rawValue: 1 << 2)
-    
+
+    /// Allows creating a new login process while the previous is still running.
+    /// If this option is set, and an existing login process is running, a `processDiscarded` error will be
+    /// thrown before a new process is created when you call the `login` method. If not set, LineSDK will ignore
+    /// any invocation of the `login` method.
+    public static let allowRecreatingLoginProcess = LoginManagerOptions(rawValue: 1 << 3)
+
+    var isRecreatingLoginProcessAllowed: Bool {
+        contains(.allowRecreatingLoginProcess)
+    }
+
     var botPrompt: LoginProcess.BotPrompt? {
         if contains(.botPromptAggressive) { return .aggressive }
         if contains(.botPromptNormal) { return .normal }
