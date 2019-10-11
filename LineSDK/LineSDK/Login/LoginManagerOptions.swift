@@ -53,7 +53,7 @@ public struct LoginManagerOptions: OptionSet {
     public static let allowRecreatingLoginProcess = LoginManagerOptions(rawValue: 1 << 3)
 
     var isRecreatingLoginProcessAllowed: Bool {
-        contains(.allowRecreatingLoginProcess)
+        return contains(.allowRecreatingLoginProcess)
     }
 
     var botPrompt: LoginProcess.BotPrompt? {
