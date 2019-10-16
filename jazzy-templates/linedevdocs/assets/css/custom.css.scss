@@ -97,6 +97,12 @@ form[role=search] input {
   }
 }
 
+.header-col {
+  overflow: hidden;
+}
+.header-link {
+  white-space: nowrap;
+}
 
 /* サイドナビ */
 .navigation {
