@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.3.0] - 2019-09-17
+
+### Added
+
+- Add `IDTokenNonce` to `LoginResult`. This value can be used against the ID token verification API as a parameter.
+
+### Fixed
+
+- Some improvement in documentation spelling and grammar.
+
+
 ## [5.2.4] - 2019-08-23
 
 ### Fixed
@@ -113,3 +124,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.2.2]: https://github.com/line/line-sdk-ios-swift/compare/5.2.1...5.2.2
 [5.2.3]: https://github.com/line/line-sdk-ios-swift/compare/5.2.2...5.2.3
 [5.2.4]: https://github.com/line/line-sdk-ios-swift/compare/5.2.3...5.2.4
+[5.3.0]: https://github.com/line/line-sdk-ios-swift/compare/5.2.4...5.3.0
