@@ -534,6 +534,12 @@
 		4BEC048422CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */; };
 		4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
 		4BEFF644226DCD960046DB66 /* ShareControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */; };
+		4BF3B0D6236143F70059CE93 /* GetShareFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D5236143F70059CE93 /* GetShareFriendsRequest.swift */; };
+		4BF3B0D8236145530059CE93 /* GetShareGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D7236145530059CE93 /* GetShareGroupsRequest.swift */; };
+		4BF3B0D92361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D7236145530059CE93 /* GetShareGroupsRequest.swift */; };
+		4BF3B0DA2361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D7236145530059CE93 /* GetShareGroupsRequest.swift */; };
+		4BF3B0DB2361455D0059CE93 /* GetShareFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D5236143F70059CE93 /* GetShareFriendsRequest.swift */; };
+		4BF3B0DC2361455E0059CE93 /* GetShareFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D5236143F70059CE93 /* GetShareFriendsRequest.swift */; };
 		4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
 		4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* CryptoHelpers.swift */; };
 		4BF45A892137B29300CCD28E /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A882137B29300CCD28E /* RSATests.swift */; };
@@ -849,6 +855,8 @@
 		4BEE5B34210AC2D000846C6D /* NotificationToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
 		4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareControllerTests.swift; sourceTree = "<group>"; };
 		4BF3044E221D3620005ADADD /* ResultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtils.swift; sourceTree = "<group>"; };
+		4BF3B0D5236143F70059CE93 /* GetShareFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShareFriendsRequest.swift; sourceTree = "<group>"; };
+		4BF3B0D7236145530059CE93 /* GetShareGroupsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetShareGroupsRequest.swift; sourceTree = "<group>"; };
 		4BF45A8121377DCF00CCD28E /* CryptoError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoError.swift; sourceTree = "<group>"; };
 		4BF45A85213783D000CCD28E /* CryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoHelpers.swift; sourceTree = "<group>"; };
 		4BF45A882137B29300CCD28E /* RSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
@@ -1729,6 +1737,8 @@
 				DBF20275212C11A600780358 /* GetGroupsRequest.swift */,
 				DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */,
 				DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */,
+				4BF3B0D5236143F70059CE93 /* GetShareFriendsRequest.swift */,
+				4BF3B0D7236145530059CE93 /* GetShareGroupsRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -2146,6 +2156,7 @@
 				4B50EC9322E69B0D00225900 /* FlexMessageProperties.swift in Sources */,
 				4B50EC9422E69B0D00225900 /* ShareViewController.swift in Sources */,
 				4B50EC9522E69B0D00225900 /* User.swift in Sources */,
+				4BF3B0DB2361455D0059CE93 /* GetShareFriendsRequest.swift in Sources */,
 				4B50EC9622E69B0D00225900 /* CallbackQueue.swift in Sources */,
 				4B50EC9722E69B0D00225900 /* GetBotFriendshipStatus.swift in Sources */,
 				4B50EC9822E69B0D00225900 /* CryptoKey.swift in Sources */,
@@ -2214,6 +2225,7 @@
 				4B50ECD522E69B0D00225900 /* Request.swift in Sources */,
 				4B50ECD622E69B0D00225900 /* FlexTextComponent.swift in Sources */,
 				4B50ECD722E69B0D00225900 /* TemplateConfirmPayload.swift in Sources */,
+				4BF3B0D92361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */,
 				4B50ECD822E69B0D00225900 /* CryptoError.swift in Sources */,
 				4B50ECD922E69B0D00225900 /* SelectedTargetPanelViewController.swift in Sources */,
 				4B50ECDA22E69B0D00225900 /* FlexMessageComponent.swift in Sources */,
@@ -2374,6 +2386,7 @@
 				4B50EDA422E6ABDD00225900 /* LineSDKShareViewController.swift in Sources */,
 				4B50EDCD22E6ABFB00225900 /* LineSDKVideoMessage.swift in Sources */,
 				4B50ED7F22E6A94100225900 /* FlexBlockStyle.swift in Sources */,
+				4BF3B0DA2361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */,
 				4B50EDBC22E6ABFB00225900 /* LineSDKTemplateImageCarouselPayload.swift in Sources */,
 				4B50EDC222E6ABFB00225900 /* LineSDKFlexFillerComponent.swift in Sources */,
 				4B50ED8022E6A94100225900 /* LoginProcessURLResponse.swift in Sources */,
@@ -2402,6 +2415,7 @@
 				4B50ED9122E6A94100225900 /* SelectedTargetPanelViewController.swift in Sources */,
 				4B50EDBD22E6ABFB00225900 /* LineSDKFlexMessageComponent.swift in Sources */,
 				4B50ED9222E6A94100225900 /* FlexMessageComponent.swift in Sources */,
+				4BF3B0DC2361455E0059CE93 /* GetShareFriendsRequest.swift in Sources */,
 				4B50ED9322E6A94100225900 /* TemplateMessageProperties.swift in Sources */,
 				4B50ED9422E6A94100225900 /* LoginProcess.swift in Sources */,
 				4B50ED9522E6A94100225900 /* ImageMessage.swift in Sources */,
@@ -2496,6 +2510,7 @@
 				4B6A0FF3212AA15D00B3ED1F /* FlexButtonComponent.swift in Sources */,
 				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
 				4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */,
+				4BF3B0D8236145530059CE93 /* GetShareGroupsRequest.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
 				4BEC048422CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift in Sources */,
 				D16D5328224876B900BAA3B4 /* ColumnDataStore.swift in Sources */,
@@ -2503,6 +2518,7 @@
 				4B3CCB9C21523B1300F51D76 /* ECDSA.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
 				4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */,
+				4BF3B0D6236143F70059CE93 /* GetShareFriendsRequest.swift in Sources */,
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,
 				4BEB4922212BA05500BA946A /* FlexIconComponent.swift in Sources */,
 				4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */,
