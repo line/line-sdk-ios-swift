@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Web page preference language for Japanese now works properly with correct language code. [#113](https://github.com/line/line-sdk-ios-swift/pull/113)
+
 ## [5.3.0] - 2019-09-17
 
 ### Added
