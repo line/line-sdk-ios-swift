@@ -393,7 +393,7 @@ extension LoginManager {
         /// The Italian language.
         public static let italian = WebPageLanguage(rawValue: "it")
         /// The Japanese language.
-        public static let japanese = WebPageLanguage(rawValue: "jp")
+        public static let japanese = WebPageLanguage(rawValue: "ja")
         /// The Korean language.
         public static let korean = WebPageLanguage(rawValue: "ko")
         /// The Malay language.
