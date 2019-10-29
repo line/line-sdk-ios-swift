@@ -62,11 +62,22 @@ public enum LineSDKError: Error {
     /// - invalidHTTPStatusAPIError: The received response contains an invalid HTTP status code. Code 2004.
     public enum ResponseErrorReason {
         
+        /// The error detail of a `ResponseErrorReason`. When an error with `ResponseErrorReason` as its error occurred,
+        /// it has an `APIErrorDetail` as its associated value. This type explains the HTTP status code and the error
+        /// messages received from LINE server.
         public struct APIErrorDetail {
-            let code: Int
-            let error: APIError?
-            let raw: HTTPURLResponse
-            let rawString: String?
+            
+            /// The error code received from server. Usually it is the HTTP status code.
+            public let code: Int
+            
+            /// An `APIError` object if the response data can be converted to it. Otherwise, `nil`.
+            public let error: APIError?
+            
+            /// The raw response when this `invalidHTTPStatusAPIError` happens.
+            public let raw: HTTPURLResponse
+            
+            /// The plain error text converted from the response body data if existing.
+            public let rawString: String?
         }
         
         /// An error occurred in the underlying `URLSession` object. Code 2001.
