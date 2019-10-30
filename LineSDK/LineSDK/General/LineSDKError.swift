@@ -62,9 +62,9 @@ public enum LineSDKError: Error {
     /// - invalidHTTPStatusAPIError: The received response contains an invalid HTTP status code. Code 2004.
     public enum ResponseErrorReason {
         
-        /// The error detail of a `ResponseErrorReason`. When an error with `ResponseErrorReason` as its error occurred,
-        /// it has an `APIErrorDetail` as its associated value. This type explains the HTTP status code and the error
-        /// messages received from LINE server.
+        /// The error detail of a `ResponseErrorReason`. When an error with `ResponseErrorReason` as its reason occurred,
+        /// there would be an `APIErrorDetail` as the associated value of that reason. This type explains the HTTP
+        /// status code and the error messages received from LINE server.
         public struct APIErrorDetail {
             
             /// The error code received from server. Usually it is the HTTP status code.
