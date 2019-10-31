@@ -1,0 +1,143 @@
+@font-face {
+  font-family: icon;
+  src: url(../fonts/icon-font/icon-font.eot);
+  src: url(../fonts/icon-font/icon-font.eot?#iefix) format("eot"),url(../fonts/icon-font/icon-font.woff) format("woff"),url(../fonts/icon-font/icon-font.ttf) format("truetype");
+}
+
+body {
+  font-size: 14px;
+  font-family: Avenir Next W01,"ヒラギノ角ゴ Pro",Hiragino Kaku Gothic Pro,"游ゴシック体",Yu Gothic,YuGothic,"メイリオ",Meiryo,Arial Unicode MS,Tahoma,Helvetica,"ＭＳ Ｐゴシック",MS PGothic,sans-serif;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+/* Util */
+.d-flex {
+  display: flex;
+}
+.align-items-center {
+  align-items: center;
+}
+
+// 外部リンク
+.Link-blank {
+  display:inline-block;
+  position:relative;
+  padding-right:16px;
+}
+.Link-blank:after {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  font-family: icon;
+  font-style: normal;
+  font-weight: 400;
+  -webkit-font-feature-settings: normal;
+  font-feature-settings: normal;
+  font-variant: normal;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content:"\EA33";
+  position:absolute;
+  line-height:inherit;
+  top: 7px;
+  right:0;
+  -webkit-transform:translateY(-50%);
+  transform:translateY(-50%);
+  color:#bec8d2;
+}
+
+/* ヘッダー */
+.header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  letter-spacing: normal;
+}
+
+
+form[role=search] input {
+  border-radius: 6px;
+}
+.header-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 35px;
+  white-space: nowrap;
+  font-family: Avenir Next W01,"ヒラギノ角ゴ Pro",Hiragino Kaku Gothic Pro,"游ゴシック体",Yu Gothic,YuGothic,"メイリオ",Meiryo,Arial Unicode MS,Tahoma,Helvetica,"ＭＳ Ｐゴシック",MS PGothic,sans-serif;
+
+}
+
+.GlobalHeaderNav > ul {
+  display: flex;
+  flex-wrap: nowrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  > li {
+    padding: 0 10px ;
+    line-height: 1em;
+    a {
+      color: #fff;
+      font-family: Avenir Next W01,"ヒラギノ角ゴ Pro",Hiragino Kaku Gothic Pro,"游ゴシック体",Yu Gothic,YuGothic,"メイリオ",Meiryo,Arial Unicode MS,Tahoma,Helvetica,"ＭＳ Ｐゴシック",MS PGothic,sans-serif;
+      font-size: 13px;
+    }
+  }
+}
+
+.header-col {
+  overflow: hidden;
+}
+.header-link {
+  white-space: nowrap;
+}
+
+/* サイドナビ */
+.navigation {
+  background-color: #fff;
+}
+.nav-group-name-link {
+  font-size: 14px;
+  color: #444;
+}
+.nav-group-task-link {
+  color: #444;
+}
+.nav-group-task {
+  font-size: 14px;
+  line-height: 32px;
+}
+
+/* メインコンテンツ部 */
+.main-content h1 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 14px;
+}
+.item .token {
+  font-size: 14px;
+}
+.language {
+  border-left: 5px solid #16C464;
+}
+.language .aside-title {
+  color: #16C464;
+}
+
+.declaration .highlight {
+  background-color: #F7F7F7;
+  padding-left: 16px;
+}

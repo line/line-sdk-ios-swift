@@ -103,6 +103,7 @@
     XCTAssertNil(result.accessToken);
     XCTAssertNil(result.permissions);
     XCTAssertNil(result.userProfile);
+    XCTAssertNil(result.IDTokenNonce);
 }
 
 - (void)testLoginProcessInterface {

@@ -1,5 +1,5 @@
 //
-//  ShareControllerTests.swift
+//  GetShareGroupsRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,38 +19,41 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-@testable import LineSDK
+import Foundation
 
-class ShareControllerTests: XCTestCase {
+public struct GetShareGroupsRequest: Request {
 
-    func testLocalAuthorizationStatus() {
-
-        let status1 = ShareViewController
-            .localAuthorizationStatusForSendingMessage(permissions: [])
-        guard case .lackOfPermissions(let p1) = status1 else {
-            XCTFail()
-            return
-        }
-        XCTAssertEqual(p1, [.share])
-
-        let status2 = ShareViewController
-            .localAuthorizationStatusForSendingMessage(permissions: [.share])
-        guard case .authorized = status2 else {
-            XCTFail()
-            return
-        }
+    public init(pageToken: String? = nil) {
+        self.pageToken = pageToken
     }
 
-    func testNoTokenStatus() {
-        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
-        defer { LoginManager.shared.reset() }
+    let pageToken: String?
 
-        let status = ShareViewController
-            .localAuthorizationStatusForSendingMessage()
-        guard case .lackOfToken = status else {
-            XCTFail()
-            return
-        }
+    public let method: HTTPMethod = .get
+    public var path: String {
+        return "/graph/v2/shareGroups"
     }
+    public let authentication: AuthenticateMethod = .token
+
+    public var parameters: [String : Any]? {
+        var param: [String : Any] = [:]
+        if let pageToken = pageToken {
+            param["pageToken"] = pageToken
+        }
+        return param
+    }
+
+    public struct Response: Decodable {
+
+        /// An array of `Group` that the user belongs to.
+        public let groups: [Group]
+
+        /// If there are more objects in the subsequent pages, use this value as the index in the next page request.
+        /// This field is omitted when there is no more objects in subsequent pages.
+        public let pageToken: String?
+    }
+}
+
+extension GetShareGroupsRequest.Response: PaginatedResponse {
+    var paginatedValues: [Group] { return groups }
 }

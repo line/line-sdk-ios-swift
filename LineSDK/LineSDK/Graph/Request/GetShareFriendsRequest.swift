@@ -1,5 +1,5 @@
 //
-//  GetFriendsRequest.swift
+//  GetShareFriendsRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,21 +21,11 @@
 
 import Foundation
 
-/// LINE internal use only.
-/// Represents a request for a user's friends list. Returns a list of current user's friends.
-/// The list will not include users who blocked external apps from getting their profile 
-/// information, unless they specifically authorized the app.
-public struct GetFriendsRequest: Request {
+public struct GetShareFriendsRequest: Request {
     
     let sort: Sort?
     let pageToken: String?
-
     
-    /// Sorting method for the returned friend list.
-    /// Only supports `name` currently.
-    ///
-    /// - name: Sort by `displayName`
-    /// - relation: Sort by relationship.
     public enum Sort: String {
         /// Sort by `displayName`
         case name
@@ -44,18 +34,18 @@ public struct GetFriendsRequest: Request {
         /// the user sent to a friend recently, the higher that friend is sorted.
         case relation
     }
-
+    
     public init(sort: Sort? = nil, pageToken: String? = nil) {
         self.pageToken = pageToken
         self.sort = sort
     }
-
+    
     public let method: HTTPMethod = .get
     public var path: String {
-        return "/graph/v2/friends"
+        return "/graph/v2/shareFriends"
     }
     public let authentication: AuthenticateMethod = .token
-
+    
     public var parameters: [String : Any]? {
         var param: [String : Any] = [:]
         if let sort = sort {
@@ -66,7 +56,7 @@ public struct GetFriendsRequest: Request {
         }
         return param
     }
-
+    
     public struct Response: Decodable {
 
         /// An array of `User` of current user's friends.
@@ -78,10 +68,10 @@ public struct GetFriendsRequest: Request {
     }
 }
 
-extension GetFriendsRequest: SortParameterRequest {
+extension GetShareFriendsRequest: SortParameterRequest {
     var sortParameter: String? { return sort?.rawValue }
 }
 
-extension GetFriendsRequest.Response: PaginatedResponse {
+extension GetShareFriendsRequest.Response: PaginatedResponse {
     var paginatedValues: [User] { return friends }
 }
