@@ -179,7 +179,7 @@ extension MessageStore {
         }
 
         static var flexBubbleMessage: StoredMessage {
-            return  FlexMessage(
+            return FlexMessage(
                 altText: "Flex Message (Bubble)",
                 container:FlexBubbleItem.lineSDK.bubbleContainer
             ).named("Flex Message (Bubble)")

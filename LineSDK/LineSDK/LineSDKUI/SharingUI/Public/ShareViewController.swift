@@ -37,7 +37,7 @@ import UIKit
 
  1. Verify that the user has granted your app the necessary permissions. `ShareViewController` will show both
  Friends and Groups tabs. To get the friend list and group list, you need `LoginPermission.friends` and
- `LoginPermission.groups`. To send a message, you need `LoginPermisson.messageWrite`.
+ `LoginPermission.groups`. To send a message, you need `LoginPermission.messageWrite`.
  Use `ShareViewController.localAuthorizationStatusForSendingMessage(to:)` to check whether you have a valid token with
  the necessary permissions. If you don't have them, you shouldn't create and show the `ShareViewController`,
  but prompt your user to authorize your app with these permissions.
@@ -47,7 +47,8 @@ import UIKit
 
  3. Specify `messages` to tell the `ShareViewController` the `Message` values you want to share.
 
- 4. Present the created `ShareViewController` in a modal way. Do this modally by calling `present(_:animated:completion:)`.
+ 4. Present the created `ShareViewController` in a modal way. Do this modally presenting by calling
+    `present(_:animated:completion:)`.
 
  You can customize the `ShareViewController` navigation bar style and status bar content style to match your app.
  Use `navigationBarTintColor`, `navigationBarTextColor`, and `statusBarStyle` to do so.
@@ -73,8 +74,8 @@ open class ShareViewController: UINavigationController {
         static var navigationBarTintColor: UIColor {
             return .compatibleColor(light: 0x283145, dark: 0x161B26)
         }
-        static var preferredStatusBarStyle: UIStatusBarStyle  { return  .lightContent }
-        static var navigationBarTextColor:  UIColor { return  .white }
+        static var preferredStatusBarStyle: UIStatusBarStyle  { return .lightContent }
+        static var navigationBarTextColor:  UIColor { return .white }
     }
 
     /// The bar tint color of the navigation bar.
