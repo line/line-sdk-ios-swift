@@ -77,7 +77,7 @@ class MessageStore {
                 MessageStore.SampleMessage.audioMessage,
                 MessageStore.SampleMessage.locationMessage,
                 MessageStore.SampleMessage.templateButtonsMessage,
-                MessageStore.SampleMessage.templateComfirmMessage,
+                MessageStore.SampleMessage.templateConfirmMessage,
                 MessageStore.SampleMessage.flexBubbleMessage,
                 MessageStore.SampleMessage.flexCarouselMessage
             ]
@@ -162,7 +162,7 @@ extension MessageStore {
             .named("Template Message (Buttons)")
         }
 
-        static var templateComfirmMessage: StoredMessage {
+        static var templateConfirmMessage: StoredMessage {
             return TemplateMessage(
                 altText: "Template Message (Buttons)",
                 payload: TemplateConfirmPayload(
