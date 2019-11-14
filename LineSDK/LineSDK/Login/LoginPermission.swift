@@ -39,9 +39,8 @@ public struct LoginPermission: Hashable {
     /// URL in the login response.
     public static let profile                        = LoginPermission(rawValue: "profile")
     
-    /// The permission to pick friends/groups and share a message to the targets. This requires a sharing
-    /// feature license installed in your channel.
-    public static let share                          = LoginPermission(rawValue: "share")
+    /// The permission to pick friends/groups and share a message to the targets.
+    public static let share                          = LoginPermission(rawValue: "onetime.share")
 
     /// :nodoc:
     /// LINE internal use only. The permission to get friends information of current user.

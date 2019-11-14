@@ -32,7 +32,7 @@ public struct PostMessageSendingTokenRequest: Request {
     }
 
     public let method: HTTPMethod = .post
-    public let path = "/message/v3/ott"
+    public let path = "/message/v3/ott/issue"
     public let authentication: AuthenticateMethod = .token
 
     public var parameters: [String: Any]? {
