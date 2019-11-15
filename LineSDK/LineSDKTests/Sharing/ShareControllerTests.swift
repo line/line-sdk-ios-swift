@@ -32,10 +32,10 @@ class ShareControllerTests: XCTestCase {
             XCTFail()
             return
         }
-        XCTAssertEqual(p1, [.share])
+        XCTAssertEqual(p1, [.oneTimeShare])
 
         let status2 = ShareViewController
-            .localAuthorizationStatusForSendingMessage(permissions: [.share])
+            .localAuthorizationStatusForSendingMessage(permissions: [.oneTimeShare])
         guard case .authorized = status2 else {
             XCTFail()
             return

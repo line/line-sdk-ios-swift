@@ -31,7 +31,7 @@ public struct GetShareGroupsRequest: Request {
 
     public let method: HTTPMethod = .get
     public var path: String {
-        return "/graph/v2/shareGroups"
+        return "/graph/v2/ots/groups"
     }
     public let authentication: AuthenticateMethod = .token
 

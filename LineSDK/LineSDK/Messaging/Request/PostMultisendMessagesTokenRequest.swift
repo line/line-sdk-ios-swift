@@ -37,12 +37,8 @@ public struct PostMultisendMessagesTokenRequest: Request {
     }
 
     public let method: HTTPMethod = .post
-    public let path = "/message/v3/multisend"
+    public let path = "/message/v3/ott/share"
     public let authentication: AuthenticateMethod = .token
-
-    public var pathQueries: [URLQueryItem]? {
-        return [URLQueryItem(name: "type", value: "ott")]
-    }
 
     public var parameters: [String: Any]? {
         return [
