@@ -45,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             fatalError("Please set correct channel ID in Config.xcconfig file.")
         }
         
+        window!.tintColor = UIColor(red: 91 / 255, green: 192 / 255, blue: 110 / 255, alpha: 1.0)
+        
         return true
     }
 

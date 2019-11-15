@@ -40,7 +40,7 @@ public struct LoginPermission: Hashable {
     public static let profile                        = LoginPermission(rawValue: "profile")
     
     /// The permission to pick friends/groups and share a message to the targets.
-    public static let share                          = LoginPermission(rawValue: "onetime.share")
+    public static let oneTimeShare                   = LoginPermission(rawValue: "onetime.share")
 
     /// :nodoc:
     /// LINE internal use only. The permission to get friends information of current user.
@@ -86,7 +86,7 @@ extension LoginPermission {
 
     /// Whether you can access user's real name inside ID Token. Requires `.openID` set.
     /// Only available to LINE internal partners.
-    public static let realName                      = LoginPermission(rawValue: "real_name")
+    public static let realName                       = LoginPermission(rawValue: "real_name")
 }
 
 /// :nodoc:
