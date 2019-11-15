@@ -42,6 +42,7 @@ public class LineSDKLoginPermission: NSObject {
     public static let profile                        = LineSDKLoginPermission(.profile)
     public static let friends                        = LineSDKLoginPermission(.friends)
     public static let groups                         = LineSDKLoginPermission(.groups)
+    public static let oneTimeShare                   = LineSDKLoginPermission(.oneTimeShare)
     public static let messageWrite                   = LineSDKLoginPermission(.messageWrite)
     
     public static let email                          = LineSDKLoginPermission(.email)
