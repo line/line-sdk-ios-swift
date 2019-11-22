@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import Foundation
+
 /// LINE internal use only.
 /// Represents an image component in a flex message.
 public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible, MessageActionContainer {
@@ -56,22 +58,53 @@ public struct FlexImageComponent: Codable, FlexMessageComponentTypeCompatible, M
     public var backgroundColor: HexColor?
     
     /// An action to perform when the box tapped.
-    /// Use `setAction` method if you want to set a `MessageActionConvertible` as the action of current component.
     public var action: MessageAction?
     
     enum CodingKeys: String, CodingKey {
         case type, url, flex, margin, gravity, size, aspectRatio, aspectMode, backgroundColor, action
         case alignment = "align"
     }
-    
+
     /// Creates an image component with given information.
-    ///
     /// - Parameter url: Image URL. It should start with "https".
+    /// - Parameter flex: The ratio of the width or height of this box within the parent box. The default value for
+    ///                   the horizontal parent box is 1, and the default value for the vertical parent box is 0.
+    /// - Parameter margin: Minimum space between this component and the previous component in the parent box.
+    /// - Parameter alignment: Horizontal alignment style. If not specified, `.start` will be used.
+    /// - Parameter gravity: Vertical alignment style. If not specified, `.top` will be used. If the `layout` property
+    ///                      of the parent box is `.baseline`, the `gravity` property will be ignored.
+    /// - Parameter size: Maximum size of the image width. If not specified, `.md` will be used.
+    /// - Parameter aspectRatio: Aspect ratio for the image. Width versus height. If not specified, `.ratio_1x1` will be used.
+    /// - Parameter aspectMode: Aspect scaling mode for the image. If not specified, `.fit` will be used.
+    /// - Parameter backgroundColor: Background color of the image.
+    /// - Parameter action: An action to perform when the box tapped.
+    ///
     /// - Throws: An error if something wrong during creating the message. It's usually due to you provided invalid
     ///           parameter.
-    public init(url: URL) throws {
+    public init(
+        url: URL,
+        flex: FlexMessageComponent.Ratio? = nil,
+        margin: FlexMessageComponent.Margin? = nil,
+        alignment: FlexMessageComponent.Alignment? = nil,
+        gravity: FlexMessageComponent.Gravity? = nil,
+        size: FlexMessageComponent.Size? = nil,
+        aspectRatio: FlexMessageComponent.AspectRatio? = nil,
+        aspectMode: FlexMessageComponent.AspectMode? = nil,
+        backgroundColor: HexColor? = nil,
+        action: MessageActionConvertible? = nil
+    ) throws
+    {
         try assertHTTPSScheme(url: url, parameterName: "url")
         self.url = url
+        self.flex = flex
+        self.margin = margin
+        self.alignment = alignment
+        self.gravity = gravity
+        self.size = size
+        self.aspectRatio = aspectRatio
+        self.aspectMode = aspectMode
+        self.backgroundColor = backgroundColor
+        self.action = action?.action
     }
 }
 

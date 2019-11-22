@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
+#if !LineSDKCocoaPods && !LineSDKXCFramework
 import LineSDK
 #endif
 
@@ -31,4 +31,5 @@ public class LineSDKUser: NSObject {
     public var userID: String { return _value.userID }
     public var displayName: String { return _value.displayName }
     public var pictureURL: URL? { return _value.pictureURL }
+    public var pictureURLSmall: URL? { return _value.pictureURLSmall }
 }

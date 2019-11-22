@@ -27,7 +27,7 @@ enum MessageActionType: String, Codable {
     case URI = "uri"
 }
 
-/// Represents an action in the LINE SDK Message types. Users can interact with the actions in the LINE app.
+/// Represents an action in the LINE SDK Message types. Users can interact with the actions in LINE.
 ///
 /// - URI: Represents an action navigates users to a URI resource.
 /// - unknown: An action type is not defined in the LINE SDK yet.
@@ -36,11 +36,11 @@ public enum MessageAction: Codable, MessageActionConvertible {
     case URI(MessageURIAction)
     /// An action type is not defined in the LINE SDK yet.
     case unknown
-    
+
     enum CodingKeys: String, CodingKey {
         case type
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try? container.decode(MessageActionType.self, forKey: .type)
@@ -52,7 +52,7 @@ public enum MessageAction: Codable, MessageActionConvertible {
             self = .unknown
         }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         switch self {
         case .URI(let action):
@@ -61,24 +61,24 @@ public enum MessageAction: Codable, MessageActionConvertible {
             Log.assertionFailure("Cannot encode unknown message type.")
         }
     }
-    
+
     public var asURIAction: MessageURIAction? {
         if case .URI(let action) = self  { return action }
         return nil
     }
-    
+
     public var action: MessageAction { return self }
 }
 
 public struct MessageURIAction: Codable, TemplateMessageActionTypeCompatible, MessageActionConvertible {
     let type = MessageActionType.URI
-    public let label: String
+    public let label: String?
     public let uri: URL
-    
-    public init(label: String, uri: URL) {
+
+    public init(label: String? = nil, uri: URL) {
         self.label = label
         self.uri = uri
     }
-    
+
     public var action: MessageAction { return .URI(self) }
 }

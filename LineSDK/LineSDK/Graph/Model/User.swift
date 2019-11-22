@@ -22,7 +22,7 @@
 import Foundation
 
 /// LINE internal use only.
-/// Represents an `User` object which LineSDK used in `friend list` or `approvers in friend list`.
+/// Represents a `User` object which LineSDK used in `friend list` or `approvers in friend list`.
 public struct User: Decodable {
 
     /// Identifier of the user
@@ -33,6 +33,16 @@ public struct User: Decodable {
 
     /// Profile image URL. Not included in the response if the user doesn't have a profile image.
     public let pictureURL: URL?
+
+    /// URL of user's large profile image. `nil` if no profile image is set.
+    public var pictureURLLarge: URL? {
+        return pictureURL?.appendingPathComponent("/large")
+    }
+
+    /// URL of user's small profile image. `nil` if no profile image is set.
+    public var pictureURLSmall: URL? {
+        return pictureURL?.appendingPathComponent("/small")
+    }
 
     enum CodingKeys: String, CodingKey {
         case userID = "userId"

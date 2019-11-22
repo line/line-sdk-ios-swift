@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
+#if !LineSDKCocoaPods && !LineSDKXCFramework
 import LineSDK
 #endif
 
@@ -31,4 +31,5 @@ public class LineSDKGroup: NSObject {
     public var groupID: String { return _value.groupID }
     public var groupName: String { return _value.groupName }
     public var pictureURL: URL? { return _value.pictureURL }
+    public var pictureURLSmall: URL? { return _value.pictureURLSmall }
 }

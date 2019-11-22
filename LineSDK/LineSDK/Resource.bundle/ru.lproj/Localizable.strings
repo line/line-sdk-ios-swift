@@ -1,1 +1,9 @@
 "linesdk.login.button.login" = "Войти в LINE";
+"common.action.close" = "Закрыть";
+"shareRecipient.section.friends.title" = "Друзья";
+"shareRecipient.section.groups.title" = "Группы";
+"common.action.send" = "Отправить";
+"common.ok" = "ОК";
+"friends.share.search" = "Поиск по имени";
+"chat.multi.fwd.confirm" = "Можно выбрать не более %d.";
+"search.no.result" = "Ничего не найдено";

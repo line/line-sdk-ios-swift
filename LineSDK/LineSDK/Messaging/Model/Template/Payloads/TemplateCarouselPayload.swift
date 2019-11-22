@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import Foundation
+
 /// LINE internal use only.
 /// Represents a template payload with multiple `Column`s which can be cycled like a carousel.
 /// The columns will be shown in order by scrolling horizontally.
@@ -38,25 +40,37 @@ public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompat
         
         /// Action when image is tapped. Set for the entire image, title, and text area of the column.
         /// To set the `defaultAction` with any `MessageActionConvertible` type, use `setDefaultAction` method.
-        public var defaultAction: MessageAction? = nil
+        public var defaultAction: MessageAction?
         
         /// An image to display in the chat bubble. It should start with "https".
-        public var thumbnailImageURL: URL? = nil
+        public var thumbnailImageURL: URL?
         
         /// Background color of image. If not specified, white color will be used.
-        public var imageBackgroundColor: HexColor? = nil
-        
+        public var imageBackgroundColor: HexColor?
+
         /// Creates a column with given information.
-        ///
-        /// - Parameters:
-        ///   - title: Message title of the column.
-        ///   - text: Message text of the column.
-        ///   - actions: Actions to perform when tapped.
-        ///
-        public init(title: String? = nil, text: String, actions: [MessageActionConvertible] = []) {
+        /// - Parameter title: Message title of the column.
+        /// - Parameter text: Message text of the column.
+        /// - Parameter actions: Actions to perform when tapped.
+        /// - Parameter defaultAction: Action when image is tapped. Set for the entire image, title, and text area of
+        ///                            the column. To set the `defaultAction` with any `MessageActionConvertible` type,
+        ///                            use `setDefaultAction` method.
+        /// - Parameter thumbnailImageURL: An image to display in the chat bubble. It should start with "https".
+        /// - Parameter imageBackgroundColor: Background color of image. If not specified, white color will be used.
+        public init(
+            title: String? = nil,
+            text: String,
+            actions: [MessageActionConvertible] = [],
+            defaultAction: MessageActionConvertible? = nil,
+            thumbnailImageURL: URL? = nil,
+            imageBackgroundColor: HexColor? = nil
+        ) {
             self.text = text
             self.title = title
             self.actions = actions.map { $0.action }
+            self.defaultAction = defaultAction?.action
+            self.thumbnailImageURL = thumbnailImageURL
+            self.imageBackgroundColor = imageBackgroundColor
         }
         
         /// Appends an action to current `actions` list.

@@ -131,6 +131,10 @@ public protocol Request {
     
     /// The API entry path for the request.
     var path: String { get }
+
+    /// The query items which should be appended to the path. Only applies to POST requests.
+    /// For GET request, use `parameters` to specify the path queries.
+    var pathQueries: [URLQueryItem]? { get }
     
     /// Parameters to be encoded and sent. The default value is `nil`.
     var parameters: Parameters? { get }
@@ -195,7 +199,10 @@ public extension Request {
     var adapters: [RequestAdapter] {
         
         // Default header, UA etc
-        var adapters: [RequestAdapter] = [HeaderAdapter.default, method.adapter]
+        var adapters: [RequestAdapter] = [
+            HeaderAdapter.default,
+            method.adapter
+        ]
         
         // Parameter adapters
         if let parameters = parameters {
@@ -232,7 +239,8 @@ public extension Request {
         ])
         return pipelines
     }
-    
+
+    var pathQueries: [URLQueryItem]? { return nil }
     var suffixAdapters: [RequestAdapter]? { return nil }
     var prefixPipelines: [ResponsePipeline]? { return nil }
     var dataParser: ResponsePipelineTerminator {

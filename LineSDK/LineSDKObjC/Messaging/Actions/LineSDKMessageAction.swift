@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
+#if !LineSDKCocoaPods && !LineSDKXCFramework
 import LineSDK
 #endif
 
@@ -45,14 +45,14 @@ public class LineSDKMessageAction: NSObject {
 @objcMembers
 public class LineSDKMessageURIAction: LineSDKMessageAction {
 
-    public var label: String
+    public var label: String?
     public var uri: URL
     
     convenience init(_ value: MessageURIAction) {
         self.init(label: value.label, uri: value.uri)
     }
     
-    public init(label: String, uri: URL) {
+    public init(label: String?, uri: URL) {
         self.label = label
         self.uri = uri
     }

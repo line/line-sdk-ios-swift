@@ -1,1 +1,9 @@
 "linesdk.login.button.login" = "ล็อกอินด้วย LINE";
+"common.action.close" = "ปิด";
+"shareRecipient.section.friends.title" = "เพื่อน";
+"shareRecipient.section.groups.title" = "กลุ่ม";
+"common.action.send" = "ส่ง";
+"common.ok" = "ตกลง";
+"friends.share.search" = "ค้นหาด้วยชื่อ";
+"chat.multi.fwd.confirm" = "คุณสามารถเลือกได้ไม่เกิน %d รายการ";
+"search.no.result" = "ไม่พบผลการค้นหา";

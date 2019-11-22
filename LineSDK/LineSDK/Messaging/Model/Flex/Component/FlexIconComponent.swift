@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import Foundation
+
 /// LINE internal use only.
 /// Represents an icon component. It is used to embed into a baseline layout and its flex is fixed to 0.
 public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
@@ -47,6 +49,19 @@ public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
     public init(url: URL) throws {
         try assertHTTPSScheme(url: url, parameterName: "url")
         self.url = url
+    }
+
+    public init(
+        url: URL,
+        margin: FlexMessageComponent.Margin? = nil,
+        size: FlexMessageComponent.Size? = nil,
+        aspectRatio: FlexMessageComponent.AspectRatio? = nil) throws
+    {
+        try assertHTTPSScheme(url: url, parameterName: "url")
+        self.url = url
+        self.margin = margin
+        self.size = size
+        self.aspectRatio = aspectRatio
     }
 }
 

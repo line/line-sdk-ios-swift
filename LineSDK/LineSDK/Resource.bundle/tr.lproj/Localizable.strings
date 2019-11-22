@@ -1,1 +1,9 @@
 "linesdk.login.button.login" = "LINE ile oturum açın";
+"common.action.close" = "Kapat";
+"shareRecipient.section.friends.title" = "Arkadaşlar";
+"shareRecipient.section.groups.title" = "Gruplar";
+"common.action.send" = "Gönder";
+"common.ok" = "Tamam";
+"friends.share.search" = "İsme Göre Ara";
+"chat.multi.fwd.confirm" = "En çok %d mesaj seçin.";
+"search.no.result" = "Sonuç Yok";

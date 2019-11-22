@@ -1,1 +1,9 @@
 "linesdk.login.button.login" = "用LINE帐号登录";
+"common.action.close" = "关闭";
+"shareRecipient.section.friends.title" = "好友";
+"shareRecipient.section.groups.title" = "群";
+"common.action.send" = "发送";
+"common.ok" = "确认";
+"friends.share.search" = "使用姓名搜索";
+"chat.multi.fwd.confirm" = "最多可选择%d个。";
+"search.no.result" = "无结果";

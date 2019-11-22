@@ -53,9 +53,7 @@ extension UIAlertController {
         viewController.present(alert, animated: true, completion: nil)
         return true
     }
-    
-    
-    
+
     @discardableResult
     static func present(
         in viewController: UIViewController,
@@ -66,6 +64,22 @@ extension UIAlertController {
             in: viewController,
             title: "Error",
             message: "\(error.localizedDescription)",
+            actions: [
+                .init(title: "OK", style: .cancel) { _ in done?() }
+            ]
+        )
+    }
+
+    @discardableResult
+    static func present(
+        in viewController: UIViewController,
+        error: String,
+        done: (() -> Void)? = nil) -> Bool
+    {
+        return present(
+            in: viewController,
+            title: "Error",
+            message: error,
             actions: [
                 .init(title: "OK", style: .cancel) { _ in done?() }
             ]

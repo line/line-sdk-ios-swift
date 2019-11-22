@@ -22,28 +22,28 @@
 import Foundation
 
 struct LoginConfiguration {
-    
+
     static var _shared: LoginConfiguration?
     static var shared: LoginConfiguration {
         return guardSharedProperty(_shared)
     }
-    
+
     let channelID: String
     let universalLinkURL: URL?
-    
+
     init(channelID: String, universalLinkURL: URL?) {
         self.channelID = channelID
-        
+
         if let url = universalLinkURL, url.scheme?.lowercased() != "https" {
             Log.assertionFailure("Universal link is required to start with https scheme.")
         }
-        
+
         self.universalLinkURL = universalLinkURL
     }
-    
-    /// Whether a `url` is a valid  customize URL scheme of current app.
+
+    /// Whether a `url` is a valid customize URL scheme of current app.
     ///
-    /// - Parameter url: The input URL from LINE client or web login flow.
+    /// - Parameter url: The input URL from LINE or web login flow.
     /// - Returns: `true` if the `url` is a valid app URL scheme for current app. Otherwise, `false`.
     func isValidCustomizeURL(url: URL) -> Bool {
         guard let scheme = url.scheme else {
@@ -56,31 +56,31 @@ struct LoginConfiguration {
             return false
         }
         return true
-        
+
     }
 
     /// Compares `url` with current set `universalLinkURL`, to check whether `url` is a valid universal URL or not.
     ///
-    /// - Parameter url: The input URL from LINE client or web login flow.
+    /// - Parameter url: The input URL from LINE or web login flow.
     /// - Returns: `true` if the `url` is a valid app universal link for current app. Otherwise, `false`.
     func isValidUniversalLinkURL(url: URL) -> Bool {
-        
+
         guard let setURL = universalLinkURL else {
             return false
         }
-        
+
         guard setURL.scheme?.lowercased() == url.scheme?.lowercased() else {
             return false
         }
-        
+
         guard setURL.host?.lowercased() == url.host?.lowercased() else {
             return false
         }
-        
+
         guard setURL.path.lowercased() == url.path.lowercased() else {
             return false
         }
-        
+
         return true
     }
 }

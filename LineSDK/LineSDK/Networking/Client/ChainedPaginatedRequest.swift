@@ -21,7 +21,7 @@
 
 import Foundation
 
-protocol SortParameterReqeust {
+protocol SortParameterRequest {
     var sortParameter: String? { get }
 }
 
@@ -43,6 +43,9 @@ class ChainedPaginatedRequest<T: Request> : Request where T.Response: PaginatedR
         self.originalRequest = originalRequest
     }
 
+    /// Called when every time a page is loaded and parsed. This would be invoked in the session's delegate queue.
+    let onPageLoaded = Delegate<T.Response, Void>()
+
     let originalRequest: T
 
     var items: Response = []
@@ -50,7 +53,7 @@ class ChainedPaginatedRequest<T: Request> : Request where T.Response: PaginatedR
 
     var parameters: Parameters? {
         var param: [String : Any] = [:]
-        if let s = originalRequest as? SortParameterReqeust, let sort = s.sortParameter {
+        if let s = originalRequest as? SortParameterRequest, let sort = s.sortParameter {
             param["sort"] = sort
         }
         if let pageToken = currentPageToken {
@@ -66,7 +69,13 @@ class ChainedPaginatedRequest<T: Request> : Request where T.Response: PaginatedR
         }
 
         pipelines.append(.redirector(BadHTTPStatusRedirector(valid: 200..<300)))
-        pipelines.append(.redirector(PaginatedParseRedirector(request: self, parser: defaultJSONParser)))
+
+        let intermediateParser = PaginatedParseRedirector(request: self, parser: defaultJSONParser)
+        intermediateParser.onParsed.delegate(on: self) { (self, response) in
+            self.onPageLoaded.call(response)
+        }
+
+        pipelines.append(.redirector(intermediateParser))
         pipelines.append(.terminator(PaginatedResultTerminator(request: self)))
 
         return pipelines
@@ -78,6 +87,8 @@ class PaginatedParseRedirector<Wrapped: Request>: ResponsePipelineRedirector whe
 
     let parser: JSONDecoder
     let chainedPaginatedRequest: ChainedPaginatedRequest<Wrapped>
+
+    let onParsed = Delegate<Wrapped.Response, Void>()
 
     init(request: ChainedPaginatedRequest<Wrapped>, parser: JSONDecoder) {
         self.chainedPaginatedRequest = request
@@ -95,6 +106,8 @@ class PaginatedParseRedirector<Wrapped: Request>: ResponsePipelineRedirector whe
         done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
     {
         let paginatedValue = try parser.decode(Wrapped.Response.self, from: data)
+        onParsed.call(paginatedValue)
+
         chainedPaginatedRequest.items.append(contentsOf: paginatedValue.paginatedValues)
 
         if let nextPageToken = paginatedValue.pageToken {

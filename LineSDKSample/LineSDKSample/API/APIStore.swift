@@ -20,6 +20,7 @@
 //
 
 import Foundation
+import UIKit
 import LineSDK
 
 enum ApplicationError: Error, LocalizedError {
@@ -48,14 +49,19 @@ class APIStore {
     private(set) var friendshipAPIs: [APIItem] = []
     private(set) var graphAPIs: [APIItem] = []
     private(set) var messagingAPIs: [APIItem] = []
+
+    private var tokenDidUpdateObserver: NotificationToken?
+    private var tokenDidRemoveObserver: NotificationToken?
     
     private init() {
         refresh()
         let center = NotificationCenter.default
-        center.addObserver(forName: .LineSDKAccessTokenDidUpdate , object: nil, queue: nil) { _ in
+        tokenDidUpdateObserver = center.addObserver(forName: .LineSDKAccessTokenDidUpdate , object: nil, queue: nil) {
+            _ in
             self.refresh()
         }
-        center.addObserver(forName: .LineSDKAccessTokenDidRemove , object: nil, queue: nil) { _ in
+        tokenDidRemoveObserver = center.addObserver(forName: .LineSDKAccessTokenDidRemove , object: nil, queue: nil) {
+            _ in
             self.refresh()
         }
     }

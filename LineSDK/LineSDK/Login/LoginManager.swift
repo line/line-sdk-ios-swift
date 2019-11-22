@@ -19,22 +19,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 /// Represents a login manager. You can set up the LINE SDK configuration, log in and log out the user with the
 /// LINE authorization flow, and check the authorization status.
 public class LoginManager {
 
     let lock = NSLock()
-    
+
     /// The shared instance of the login manager. Always use this instance to interact with the login process of
     /// the LINE SDK.
     public static let shared = LoginManager()
-    
+
     /// The current login process. A non-`nil` value indicates that there is an ongoing process and the LINE SDK
     /// is waiting for the login result; `nil` otherwise.
     public private(set) var currentProcess: LoginProcess?
-    
+
     /// Checks and returns whether the current `LoginManager` instance is ready to use. Call the `setup`
     /// method to set up the LINE SDK with basic information before you call any other methods or properties
     /// in the LINE SDK.
@@ -43,14 +43,14 @@ public class LoginManager {
         defer { lock.unlock() }
         return setup
     }
-    
+
     /// Checks and returns whether the user was authorized and an access token exists locally. This method
     /// does not check whether the access token has been expired. To verify an access token, use the
     /// `API.verifyAccessToken` method.
     public var isAuthorized: Bool {
         return AccessTokenStore.shared.current != nil
     }
-    
+
     /// Checks and returns whether the authorizing process is currently ongoing.
     public var isAuthorizing: Bool {
         return currentProcess != nil
@@ -68,42 +68,42 @@ public class LoginManager {
     
     /// A flag to prevent setup multiple times
     var setup = false
-    
+
     private init() { }
-    
+
     /// Sets up the current `LoginManager` instance.
     ///
     /// - Parameters:
     ///   - channelID: The channel ID for your app.
-    ///   - universalLinkURL: The universal link used to navigate back to your app from the LINE app.
+    ///   - universalLinkURL: The universal link used to navigate back to your app from LINE.
     /// - Note:
     ///   Call this method before you access any other methods or properties in the LINE SDK. Call this method
     ///   only once because the login manager cannot be set up multiple times.
     ///
     ///   We strongly suggest that you specify a valid universal link URL. Set up your own universal link
     ///   callback for your channel by following the guide on the LINE Developers site. When the callback is set
-    ///   properly, the LINE app will try to bring up your app with the universal link first, which improves the
+    ///   properly, LINE will try to bring up your app with the universal link first, which improves the
     ///   security of the authorization flow and protects your data. If the `universalLinkURL` parameter is
-    ///   `nil`, only a custom URL scheme will be used to open your app after the authorization in the LINE app
+    ///   `nil`, only a custom URL scheme will be used to open your app after the authorization in LINE
     ///   is complete.
     ///
     public func setup(channelID: String, universalLinkURL: URL?) {
-        
+
         lock.lock()
         defer { lock.unlock() }
-        
+
         guard !setup else {
             Log.assertionFailure("Trying to set configuration multiple times is not permitted.")
             return
         }
         defer { setup = true }
-        
+
         let config = LoginConfiguration(channelID: channelID, universalLinkURL: universalLinkURL)
         LoginConfiguration._shared = config
         AccessTokenStore._shared = AccessTokenStore(configuration: config)
         Session._shared = Session(configuration: config)
     }
-    
+
     /// Logs in to the LINE Platform.
     ///
     /// - Parameters:
@@ -124,10 +124,10 @@ public class LoginManager {
     ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
     ///   more information, see `UserProfile`.
     ///
-    ///   An access token will be issued if the user authorizes your app. This token and a refresh token 
+    ///   An access token will be issued if the user authorizes your app. This token and a refresh token
     ///   will be automatically stored in the keychain of your app for later use. You do not need to
     ///   refresh the access token manually because any API call will attempt to refresh the access token if
-    ///   necessary. However, if you would like to refresh the access token manually, use the
+    ///   necessary. However, if you need to refresh the access token manually, use the
     ///   `API.refreshAccessToken(with:)` method.
     ///
     @discardableResult
@@ -139,13 +139,13 @@ public class LoginManager {
     {
         lock.lock()
         defer { lock.unlock() }
-        
+
         guard currentProcess == nil else {
             Log.assertionFailure("Trying to start another login process " +
                 "while the previous one still valid is not permitted.")
             return nil
         }
-        
+
         let process = LoginProcess(
             configuration: LoginConfiguration.shared,
             scopes: permissions,
@@ -165,11 +165,11 @@ public class LoginManager {
             self.currentProcess = nil
             completion(.failure(error.sdkError))
         }
-        
+
         self.currentProcess = process
         return currentProcess
     }
-    
+
     /// Actions after auth process finishes. We do something like storing token, getting user profile and ID
     /// token verification before we can inform framework users every thing is done.
     ///
@@ -192,7 +192,7 @@ public class LoginManager {
 
         // Any possible errors will be held here.
         var errors: [Error] = []
-        
+
         if token.permissions.contains(.profile) {
             // We need to pass token since it is not stored in keychain yet.
             getUserProfile(with: token, in: group) { result in
@@ -200,7 +200,7 @@ public class LoginManager {
                 catch { errors.append(error) }
             }
         }
-        
+
         if token.permissions.contains(.openID) {
             getProviderMetadata(for: token, in: group) { result in
                 do { providerMetadata = try result.get() }
@@ -232,7 +232,7 @@ public class LoginManager {
                     return
                 }
             }
-            
+
             // Everything goes fine now. Store token.
             let result = Result {
                 try AccessTokenStore.shared.setCurrentToken(token)
@@ -254,8 +254,8 @@ public class LoginManager {
     public func logout(completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void) {
         API.revokeRefreshToken(completionHandler: completion)
     }
-    
-    /// Asks this `LoginManager` object to handle a URL callback from either the LINE app or the web login flow.
+
+    /// Asks this `LoginManager` object to handle a URL callback from either LINE or the web login flow.
     ///
     /// - Parameters:
     ///   - app: The singleton app object.
@@ -273,7 +273,7 @@ public class LoginManager {
     {
         guard let url = url else { return false }
         guard let currentProcess = currentProcess else { return false }
-        
+
         return currentProcess.resumeOpenURL(url: url)
     }
 }
@@ -285,7 +285,7 @@ extension LoginManager {
         handler: @escaping (Result<UserProfile, LineSDKError>) -> Void)
     {
         group.enter()
-        
+
         Session.shared.send(GetUserProfileRequestInjectedToken(token: token.value)) { profileResult in
             handler(profileResult)
             group.leave()
@@ -312,8 +312,8 @@ extension LoginManager {
             group.leave()
             return
         }
-        
-        // Use Discovery Document to find JWKs URI. How about introducing some promise mechanism 
+
+        // Use Discovery Document to find JWKs URI. How about introducing some promise mechanism
         Session.shared.send(GetDiscoveryDocumentRequest()) { documentResult in
             switch documentResult {
             case .success(let document):
@@ -342,12 +342,13 @@ extension LoginManager {
             }
         }
     }
-    
+
     func verifyIDToken(
         _ token: JWT,
         providerMetadata: DiscoveryDocument.ResolvedProviderMetadata,
         process: LoginProcess, userID: String?) throws
     {
+
         try token.verify(with: providerMetadata.jwk)
         
         let payload = token.payload
@@ -357,7 +358,7 @@ extension LoginManager {
             try payload.verify(keyPath: \.subject, expected: userID)
         }
         try payload.verify(keyPath: \.audience, expected: process.configuration.channelID)
-        
+
         let now = Date()
         let allowedClockSkew: TimeInterval = 5 * 60
         try payload.verify(keyPath: \.expiration, laterThan: now.addingTimeInterval(-allowedClockSkew))

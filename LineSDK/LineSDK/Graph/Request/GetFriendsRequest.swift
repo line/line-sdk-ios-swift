@@ -22,17 +22,27 @@
 import Foundation
 
 /// LINE internal use only.
-/// Represents the request of getting friends list, returns a friend list of current user.
-/// Unless already having granted the channel, users who've configured the privacy filter are excluded from the list.
+/// Represents a request for a user's friends list. Returns a list of current user's friends.
+/// The list will not include users who blocked external apps from getting their profile 
+/// information, unless they specifically authorized the app.
 public struct GetFriendsRequest: Request {
+    
+    let sort: Sort?
+    let pageToken: String?
 
+    
     /// Sorting method for the returned friend list.
-    /// Only a value of `name` is supported.
+    /// Only supports `name` currently.
     ///
     /// - name: Sort by `displayName`
+    /// - relation: Sort by relationship.
     public enum Sort: String {
         /// Sort by `displayName`
         case name
+
+        /// Sort by relationship between current user and friend. Usually, the more messages
+        /// the user sent to a friend recently, the higher that friend is sorted.
+        case relation
     }
 
     public init(sort: Sort? = nil, pageToken: String? = nil) {
@@ -40,11 +50,10 @@ public struct GetFriendsRequest: Request {
         self.sort = sort
     }
 
-    let sort: Sort?
-    let pageToken: String?
-
     public let method: HTTPMethod = .get
-    public let path = "/graph/v2/friends"
+    public var path: String {
+        return "/graph/v2/friends"
+    }
     public let authentication: AuthenticateMethod = .token
 
     public var parameters: [String : Any]? {
@@ -69,7 +78,7 @@ public struct GetFriendsRequest: Request {
     }
 }
 
-extension GetFriendsRequest: SortParameterReqeust {
+extension GetFriendsRequest: SortParameterRequest {
     var sortParameter: String? { return sort?.rawValue }
 }
 

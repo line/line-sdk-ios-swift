@@ -134,7 +134,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             XCTAssertTrue(handled)
         }
 
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 2, handler: nil)
     }
     
     func testLogout() {

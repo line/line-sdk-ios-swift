@@ -27,7 +27,7 @@ typealias CryptoDigest = (
     _ length: CC_LONG,
     _ md: UnsafeMutablePointer<UInt8>?) -> UnsafeMutablePointer<UInt8>?
 
-/// Represents an algorithm used in crypto.
+/// Represents an algorithm used in cryptography.
 protocol CryptoAlgorithm {
     var length: CC_LONG { get }
     var signatureAlgorithm: SecKeyAlgorithm { get }

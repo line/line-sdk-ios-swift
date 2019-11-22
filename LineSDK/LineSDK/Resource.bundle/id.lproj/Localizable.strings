@@ -1,1 +1,9 @@
 "linesdk.login.button.login" = "Masuk dengan LINE";
+"common.action.close" = "Tutup";
+"shareRecipient.section.friends.title" = "Teman";
+"shareRecipient.section.groups.title" = "Grup";
+"common.action.send" = "Kirim";
+"common.ok" = "OK";
+"friends.share.search" = "Cari dengan Nama";
+"chat.multi.fwd.confirm" = "Anda dapat memilih maksimum %d.";
+"search.no.result" = "Tak Ada Hasil";

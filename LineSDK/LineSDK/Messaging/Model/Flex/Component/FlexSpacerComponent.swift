@@ -33,7 +33,7 @@ public struct FlexSpacerComponent: Codable, FlexMessageComponentTypeCompatible {
     ///
     /// - Parameter size: Size of the space.
     ///                   You can specify one from: `[.xs, .sm, .md, .lg, .xl, .xxl]`.
-    public init(size: FlexMessageComponent.Size?) {
+    public init(size: FlexMessageComponent.Size? = nil) {
         self.size = size
     }
 }

@@ -1,1 +1,9 @@
 "linesdk.login.button.login" = "LINEでログイン";
+"common.action.close" = "閉じる";
+"shareRecipient.section.friends.title" = "友だち";
+"shareRecipient.section.groups.title" = "グループ";
+"common.action.send" = "送信";
+"common.ok" = "OK";
+"friends.share.search" = "名前で検索";
+"chat.multi.fwd.confirm" = "最大%d件まで選択できます。";
+"search.no.result" = "検索結果がありません";

@@ -1,1 +1,9 @@
 "linesdk.login.button.login" = "LINE으로 로그인";
+"common.action.close" = "닫기";
+"shareRecipient.section.friends.title" = "친구";
+"shareRecipient.section.groups.title" = "그룹";
+"common.action.send" = "전송";
+"common.ok" = "확인";
+"friends.share.search" = "이름으로 검색";
+"chat.multi.fwd.confirm" = "최대 %d개까지 선택할 수 있습니다.";
+"search.no.result" = "검색 결과 없음";

@@ -1,1 +1,9 @@
 "linesdk.login.button.login" = "Đăng nhập với LINE";
+"common.action.close" = "Đóng";
+"shareRecipient.section.friends.title" = "Bạn bè";
+"shareRecipient.section.groups.title" = "Nhóm";
+"common.action.send" = "Gửi";
+"common.ok" = "OK";
+"friends.share.search" = "Tìm theo tên";
+"chat.multi.fwd.confirm" = "Có thể chọn tối đa %d.";
+"search.no.result" = "Không có kết quả";

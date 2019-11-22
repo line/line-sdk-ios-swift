@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+import Foundation
+
 /// LINE internal use only.
 /// Represents a template payload with an image, title, text, and multiple action buttons.
 /// The message bubble size is the same with a regular message. It may include an image at most.
@@ -53,21 +55,39 @@ public struct TemplateButtonsPayload: Codable, TemplateMessagePayloadTypeCompati
     
     /// Message agent who sends this message on behalf of the sender.
     public var sender: MessageSender?
-    
+
     /// Creates a buttons payload with given information.
-    ///
-    /// - Parameters:
-    ///   - title: Message title of chat bubble.
-    ///   - text: Message text in the chat bubble.
-    ///   - actions: Actions to perform when tapped. Default is empty.
+    /// - Parameter title: Message title of chat bubble.
+    /// - Parameter text: Message text in the chat bubble.
+    /// - Parameter defaultAction: Action when image is tapped.
+    /// - Parameter thumbnailImageURL: An image to display in the chat bubble. It should start with "https".
+    /// - Parameter imageAspectRatio: Aspect ratio of the image. Specify to `.rectangle` or `.square`.
+    ///                               If not specified, `.rectangle` will be used.
+    /// - Parameter imageContentMode: Size of the image. Specify to `.aspectFill` or `.aspectFit`.
+    ///                               If not specified, `.aspectFill` will be used.
+    /// - Parameter imageBackgroundColor: Background color of image. If not specified, white color will be used.
+    /// - Parameter sender: Message agent who sends this message on behalf of the sender.
+    /// - Parameter actions: Actions to perform when tapped. Default is empty.
     public init(
         title: String? = nil,
         text: String,
-        actions: [MessageActionConvertible] = [])
+        defaultAction: MessageAction? = nil,
+        thumbnailImageURL: URL? = nil,
+        imageAspectRatio: TemplateMessagePayload.ImageAspectRatio? = nil,
+        imageContentMode: TemplateMessagePayload.ImageContentMode? = nil,
+        imageBackgroundColor: HexColor? = nil,
+        sender: MessageSender? = nil,
+        actions: [MessageActionConvertible] = []
+    )
     {
         self.text = text
         self.title = title
-        
+        self.defaultAction = defaultAction
+        self.thumbnailImageURL = thumbnailImageURL
+        self.imageAspectRatio = imageAspectRatio
+        self.imageContentMode = imageContentMode
+        self.imageBackgroundColor = imageBackgroundColor
+        self.sender = sender
         self.actions = actions.map { $0.action }
     }
     

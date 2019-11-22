@@ -1,1 +1,9 @@
 "linesdk.login.button.login" = "تسجيل دخول باستخدام LINE";
+"common.action.close" = "إغلاق";
+"shareRecipient.section.friends.title" = "الأصدقاء";
+"shareRecipient.section.groups.title" = "المجموعات";
+"common.action.send" = "إرسال";
+"common.ok" = "موافق";
+"friends.share.search" = "بحث";
+"chat.multi.fwd.confirm" = "يمكنك تحديد عددٍ يصل إلى %d.";
+"search.no.result" = "لا توجد نتائج";

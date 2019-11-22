@@ -76,12 +76,51 @@ public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible, Me
         case wrapping = "wrap"
         case alignment = "align"
     }
-    
+
     /// Creates a text component with given information.
-    ///
     /// - Parameter text: Content text of this component.
-    public init(text: String) {
+    /// - Parameter flex: The ratio of the width or height of this box within the parent box. The default value for
+    ///                   the horizontal parent box is 1, and the default value for the vertical parent box is 0.
+    /// - Parameter margin: Minimum space between this component and the previous component in the parent box.
+    ///                     If not specified, the `spacing` of parent box will be used. If this component is the first
+    ///                     component in the parent box, this margin property will be ignored.
+    /// - Parameter size: Font size used for the text. You cannot specify a `.full` size. If not specified, `.md`
+    ///                   will be used.
+    /// - Parameter alignment: Horizontal alignment style. If not specified, `.start` will be used.
+    /// - Parameter gravity: Vertical alignment style. If not specified, `.top` will be used.
+    ///                      If the `layout` property of the parent box is `.baseline`, the `gravity` property will be
+    ///                      ignored.
+    /// - Parameter wrapping: Whether the text should be wrapped. If not specified, `false` will be used. If set to
+    ///                       true, you can use a new line character ("\n") to begin on a new line.
+    /// - Parameter maxLines: Max number of lines.
+    /// - Parameter weight: Weight of font used in this component.
+    /// - Parameter color: Color of font used in this component.
+    /// - Parameter action: An action to perform when the box tapped.
+    public init(
+        text: String,
+        flex: FlexMessageComponent.Ratio? = nil,
+        margin: FlexMessageComponent.Margin? = nil,
+        size: FlexMessageComponent.Size? = nil,
+        alignment: FlexMessageComponent.Alignment? = nil,
+        gravity: FlexMessageComponent.Gravity? = nil,
+        wrapping: Bool? = nil,
+        maxLines: UInt? = nil,
+        weight: FlexMessageComponent.Weight? = nil,
+        color: HexColor? = nil,
+        action: MessageAction? = nil
+    )
+    {
         self.text = text
+        self.flex = flex
+        self.margin = margin
+        self.size = size
+        self.alignment = alignment
+        self.gravity = gravity
+        self.wrapping = wrapping
+        self.maxLines = maxLines
+        self.weight = weight
+        self.color = color
+        self.action = action
     }
 }
 
