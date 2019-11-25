@@ -49,6 +49,7 @@ extension LoginManager {
         /// in received ID token locally.
         public var IDTokenNonce: String? = nil
         
+        /// Creates a default `LoginManager.Parameters` value.
         public init() {}
         
         // MARK: - Deprecated

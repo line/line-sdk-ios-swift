@@ -120,7 +120,7 @@ public class LoginProcess {
         self.presentingViewController = viewController
         
         if scopes.contains(.openID) {
-            IDTokenNonce = UUID().uuidString
+            IDTokenNonce = self.parameters.IDTokenNonce ?? UUID().uuidString
         } else {
             IDTokenNonce = nil
         }
