@@ -22,13 +22,36 @@
 import Foundation
 
 extension LoginManager {
-
+    
+    /// Parameters used while login.
     public struct Parameters {
+        
+        /// Forces to use the web authentication flow instead of the LINE app-to-app authentication flow.
         public var onlyWebLogin: Bool = false
+        
+        /// The style to show and prompt for adding a bot as friend on the consent screen.
         public var botPromptStyle: BotPrompt? = nil
+        
+        /// Sets the preferred language used when logging in with the web authorization flow.
+        ///
+        /// If not set, the web authentication flow shows the login page in the user's device language, or falls
+        /// back to English. Once set, the web page will be displayed in the preferred language.
+        ///
+        /// - Note:
+        ///   This property does not affect the preferred language when LINE is used for authorization.
+        ///   LINE and the login screen are always displayed in the user's device language.
+        ///
         public var preferredWebPageLanguage: WebPageLanguage? = nil
         
+        /// Sets the nonce value for ID token verification. This value is used when requesting user authorization
+        /// with `.openID` permission to prevent replay attacks to your backend server. If not set, LINE SDK will
+        /// generate a random value as the token nonce. Whether set or not, LINE SDK verifies against the nonce value
+        /// in received ID token locally.
+        public var IDTokenNonce: String? = nil
+        
         public init() {}
+        
+        // MARK: - Deprecated
         
         @available(*, deprecated, message: "Internally deprecated.")
         init(options: LoginManagerOptions, language: WebPageLanguage?) {
@@ -41,8 +64,12 @@ extension LoginManager {
 
 extension LoginManager {
     
+    /// The style to show and prompt for adding a bot as friend on the consent screen.
     public enum BotPrompt: String {
+        /// Includes an option to add a bot as friend on the consent screen.
         case normal
+        /// Opens a new screen to add a bot as a friend after the user agrees to the permissions on the consent
+        /// screen.
         case aggressive
     }
     

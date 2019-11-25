@@ -161,7 +161,7 @@ extension Result : CustomDebugStringConvertible {
     }
 }
 
-// Deprecated
+// MARK: - Deprecated
 extension Result {
 
     /// The stored value of a successful `Result`. `nil` if the `Result` was a failure.
