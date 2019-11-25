@@ -97,10 +97,12 @@
     param.onlyWebLogin = YES;
     param.botPromptStyle = [LineSDKLoginManagerBotPrompt normal];
     param.preferredWebPageLanguage = @"ja";
+    param.IDTokenNonce = @"test";
     
     XCTAssertTrue([param onlyWebLogin]);
     XCTAssertTrue([[param.botPromptStyle rawValue] isEqualToString: @"normal"]);
     XCTAssertTrue([param.preferredWebPageLanguage isEqualToString: @"ja"]);
+    XCTAssertTrue([param.IDTokenNonce isEqualToString: @"test"]);
 }
 
 - (void)testLoginResultInterface {

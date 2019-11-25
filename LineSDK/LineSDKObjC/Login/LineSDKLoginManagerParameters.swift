@@ -49,6 +49,11 @@ public class LineSDKLoginManagerParameters: NSObject {
         get { _value.preferredWebPageLanguage?.rawValue }
         set { _value.preferredWebPageLanguage = newValue.map { .init(rawValue: $0) } }
     }
+    
+    public var IDTokenNonce: String? {
+        get { _value.IDTokenNonce }
+        set { _value.IDTokenNonce = newValue }
+    }
 }
 
 @objcMembers
