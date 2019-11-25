@@ -13,4 +13,4 @@ readme: REFERENCETOP.md
 exclude: 
   - "LineSDK/LineSDK/Messaging/*"
   - "LineSDK/LineSDK/Graph/*"
-  - "LineSDK/LineSDK/Networking/API+Internal.swift"
+  - "LineSDK/LineSDK/Networking/API/API+Internal.swift"
