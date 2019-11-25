@@ -24,12 +24,12 @@ import Foundation
 /// Represents a utility structure for calling the LINE Platform.
 ///
 /// - Note:
-/// For most API calls, using the interfaces in the `API` structure is equivalent to using and sending an
+/// For most API calls, using the methods in the `API` is equivalent to using and sending an
 /// underlying `Request` object with a `Session` object. However, some methods in the `API` provides
 /// additional useful features such as working with the keychain and redirecting the final result in a more
 /// reasonable way.
 ///
-/// Using the `API` structure to interact with the LINE Platform is highly recommended unless you are familiar
+/// Using methods in `API` to interact with the LINE Platform is highly recommended unless you are familiar
 /// with and want to extend the LINE SDK to send unimplemented API requests to the LINE Platform.
 ///
 public enum API {

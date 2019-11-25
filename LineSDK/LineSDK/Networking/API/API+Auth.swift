@@ -21,7 +21,12 @@
 
 import Foundation
 
+// MARK: - Auth API
 extension API {
+    
+    /// Auth related APIs. Methods in this type will not refresh the access token automatically like other public APIs.
+    /// Make sure you are not using these methods as a means of refreshing current access token.
+    ///
     public enum Auth {
         /// Refreshes the access token with `refreshToken`.
         ///
@@ -183,6 +188,9 @@ extension API {
         ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
         ///   - completion: The completion closure to be invoked when the access token is verified.
         ///
+        /// - Note:
+        /// This method does not try to refresh the current access token when it is invalid or expired.
+        /// Instead, when the verification fails, it just returns the server response as an error to you.
         public static func verifyAccessToken(
             _ token: String? = nil,
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,

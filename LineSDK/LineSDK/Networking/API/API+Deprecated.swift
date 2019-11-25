@@ -37,7 +37,7 @@ extension API {
     @available(*, deprecated,
     message: """
         Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing then use methods in `API.Auth` instead.
+        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
         """,
     renamed: "Auth.refreshAccessToken"
     )
@@ -70,7 +70,7 @@ extension API {
     @available(*, deprecated,
     message: """
         Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing then use methods in `API.Auth` instead.
+        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
         """,
     renamed: "Auth.revokeAccessToken"
     )
@@ -133,7 +133,7 @@ extension API {
     @available(*, deprecated,
     message: """
         Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing then use methods in `API.Auth` instead.
+        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
         """,
     renamed: "Auth.revokeRefreshToken"
     )
@@ -185,7 +185,7 @@ extension API {
     @available(*, deprecated,
     message: """
         Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing then use methods in `API.Auth` instead.
+        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
         """,
     renamed: "Auth.verifyAccessToken"
     )
