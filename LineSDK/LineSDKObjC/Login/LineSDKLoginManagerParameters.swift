@@ -59,4 +59,6 @@ public class LineSDKLoginManagerBotPrompt: NSObject {
     
     public static let normal = LineSDKLoginManagerBotPrompt(.normal)
     public static let aggressive = LineSDKLoginManagerBotPrompt(.aggressive)
+    
+    public var rawValue: String { _value.rawValue }
 }
