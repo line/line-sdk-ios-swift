@@ -503,6 +503,9 @@
 		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
 		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
 		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
+		4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
+		4BD33EE4238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
+		4BD33EE5238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
@@ -823,6 +826,7 @@
 		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
 		4BD24CF4213E278700606411 /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
 		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
+		4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerParameters.swift; sourceTree = "<group>"; };
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4BDD2C152133970800DD563D /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -1238,6 +1242,7 @@
 				4B9058D321007394004D717F /* LoginConfiguration.swift */,
 				4B9058D5210073E6004D717F /* LoginManager.swift */,
 				4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */,
+				4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */,
 				4B9058DB21007C8C004D717F /* LoginResult.swift */,
 				4B45256A2101810D00A39D4F /* LoginProcess.swift */,
 				4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */,
@@ -2228,6 +2233,7 @@
 				4BF3B0D92361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */,
 				4B50ECD822E69B0D00225900 /* CryptoError.swift in Sources */,
 				4B50ECD922E69B0D00225900 /* SelectedTargetPanelViewController.swift in Sources */,
+				4BD33EE4238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */,
 				4B50ECDA22E69B0D00225900 /* FlexMessageComponent.swift in Sources */,
 				4B50ECDB22E69B0D00225900 /* TemplateMessageProperties.swift in Sources */,
 				4B50ECDC22E69B0D00225900 /* LoginProcess.swift in Sources */,
@@ -2362,6 +2368,7 @@
 				4B50ED6F22E6A94100225900 /* PostExchangeTokenRequest.swift in Sources */,
 				4B50ED7022E6A94100225900 /* AccessToken.swift in Sources */,
 				4B50ED7122E6A94100225900 /* FlexIconComponent.swift in Sources */,
+				4BD33EE5238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */,
 				4B50ED7222E6A94100225900 /* NotificationToken.swift in Sources */,
 				4B50ED7322E6A94100225900 /* MessageProtocols.swift in Sources */,
 				4B50ED7422E6A94100225900 /* DownloadableImageView.swift in Sources */,
@@ -2554,6 +2561,7 @@
 				4B9A305421215A1A00174C6F /* TemplateConfirmPayload.swift in Sources */,
 				4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */,
 				DBFBD439224B85F500A74D44 /* SelectedTargetPanelViewController.swift in Sources */,
+				4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */,
 				4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */,
 				4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,

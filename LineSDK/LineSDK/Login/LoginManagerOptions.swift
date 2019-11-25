@@ -46,7 +46,7 @@ public struct LoginManagerOptions: OptionSet {
     /// `.botPromptAggressive` will be used.
     public static let botPromptAggressive = LoginManagerOptions(rawValue: 1 << 2)
     
-    var botPrompt: LoginProcess.BotPrompt? {
+    var botPrompt: LoginManager.BotPrompt? {
         if contains(.botPromptAggressive) { return .aggressive }
         if contains(.botPromptNormal) { return .normal }
         return nil

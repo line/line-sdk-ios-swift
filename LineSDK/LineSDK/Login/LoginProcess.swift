@@ -27,12 +27,6 @@ import SafariServices
 /// login flows will run serially. If a flow logs in the user successfully, subsequent flows will not be
 /// executed.
 public class LoginProcess {
-    
-    enum BotPrompt: String {
-        case normal
-        case aggressive
-    }
-    
     struct FlowParameters {
         let channelID: String
         let universalLinkURL: URL?
@@ -40,7 +34,7 @@ public class LoginProcess {
         let otp: OneTimePassword
         let processID: String
         let nonce: String?
-        let botPrompt: BotPrompt?
+        let botPrompt: LoginManager.BotPrompt?
         let preferredWebPageLanguage: LoginManager.WebPageLanguage?
     }
     
