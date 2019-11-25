@@ -34,27 +34,30 @@ public class LineSDKLoginManager: NSObject {
     public var isSetupFinished: Bool { return _value.isSetupFinished }
     public var isAuthorized: Bool { return _value.isAuthorized }
     public var isAuthorizing: Bool { return _value.isAuthorizing }
+    
+    @available(*, deprecated,
+    message: "Set `preferredWebPageLanguage` in `LineSDKLoginManagerParameters` instead.")
     public var preferredWebPageLanguage: String? {
         get { return _value.preferredWebPageLanguage?.rawValue }
         set { _value.preferredWebPageLanguage = newValue.map { .init(rawValue: $0) } }
     }
+    
     public func setup(channelID: String, universalLinkURL: URL?) {
         _value.setup(channelID: channelID, universalLinkURL: universalLinkURL)
     }
+    
     @discardableResult
     public func login(
         permissions: Set<LineSDKLoginPermission>?,
         inViewController viewController: UIViewController?,
-        options: [LineSDKLoginManagerOptions]?,
-        completionHandler completion: @escaping (LineSDKLoginResult?, Error?) -> Void) -> LineSDKLoginProcess?
+        parameters: LineSDKLoginManagerParameters?,
+        completionHandler completion: @escaping (LineSDKLoginResult?, Error?) -> Void
+    ) -> LineSDKLoginProcess?
     {
-        let options: LoginManagerOptions = (options ?? []).reduce([]) { (result, option) in
-            result.union(option.unwrapped)
-        }
         let process = _value.login(
             permissions: Set((permissions ?? [.profile]).map { $0.unwrapped }),
             in: viewController,
-            options: options)
+            parameters: parameters?.unwrapped)
         {
             result in
             result
@@ -63,7 +66,7 @@ public class LineSDKLoginManager: NSObject {
         }
         return process.map { .init($0) }
     }
-    
+
     public func logout(completionHandler completion: @escaping (Error?) -> Void) {
         _value.logout { result in result.matchFailure(with: completion) }
     }
@@ -74,5 +77,35 @@ public class LineSDKLoginManager: NSObject {
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
     {
         return _value.application(app, open: url, options: options)
+    }
+    
+    // MARK: - Deprecated
+    
+    @available(*, deprecated, message: """
+    Convert the `options` to a `LoginManager.Parameters` value and
+    use `login(permissions:inViewController:parameters:completionHandler:)` instead.")
+    """)
+    @discardableResult
+    public func login(
+        permissions: Set<LineSDKLoginPermission>?,
+        inViewController viewController: UIViewController?,
+        options: [LineSDKLoginManagerOptions]?,
+        completionHandler completion: @escaping (LineSDKLoginResult?, Error?) -> Void
+    ) -> LineSDKLoginProcess?
+    {
+        let options: LoginManagerOptions = (options ?? []).reduce([]) { (result, option) in
+            result.union(option.unwrapped)
+        }
+        
+        let parameters = LoginManager.Parameters(
+            options: options,
+            language: preferredWebPageLanguage.map { .init(rawValue: $0) }
+        )
+        return login(
+            permissions: permissions,
+            inViewController: viewController,
+            parameters: .init(parameters),
+            completionHandler: completion
+        )
     }
 }

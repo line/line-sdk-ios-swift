@@ -553,6 +553,8 @@
 		4BF53539212A7C9100EA602A /* FlexMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53538212A7C9100EA602A /* FlexMessage.swift */; };
 		4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */; };
 		4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */; };
+		4BF79915238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */; };
+		4BF79916238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
 		4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09EE213CCE7700F4594D /* JWKTests.swift */; };
 		4BFC09F1213CDFC300F4594D /* JWKDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */; };
@@ -871,6 +873,7 @@
 		4BF53538212A7C9100EA602A /* FlexMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessage.swift; sourceTree = "<group>"; };
 		4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBubbleContainer.swift; sourceTree = "<group>"; };
 		4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexCarouselContainer.swift; sourceTree = "<group>"; };
+		4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKLoginManagerParameters.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
 		4BFC09EE213CCE7700F4594D /* JWKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKTests.swift; sourceTree = "<group>"; };
 		4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKDataTests.swift; sourceTree = "<group>"; };
@@ -1448,6 +1451,7 @@
 				4BBEA9AE212EB01C00858627 /* Model */,
 				4B2D14F4212F97A6000DD5BE /* LineSDKLoginManager.swift */,
 				4B2D14EE212F9468000DD5BE /* LineSDKLoginManagerOptions.swift */,
+				4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */,
 				4B2D14F0212F95B3000DD5BE /* LineSDKLoginResult.swift */,
 				4B2D14F2212F96A7000DD5BE /* LineSDKLoginProcess.swift */,
 				4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */,
@@ -2261,6 +2265,7 @@
 				4B50ED2922E6A94100225900 /* Helpers.swift in Sources */,
 				4B50EDB622E6ABEE00225900 /* LineSDKGroup.swift in Sources */,
 				4B50ED2A22E6A94100225900 /* MessageAction.swift in Sources */,
+				4BF79916238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */,
 				4B50ED2B22E6A94100225900 /* LoginPermission.swift in Sources */,
 				4B50ED2C22E6A94100225900 /* FlexMessage.swift in Sources */,
 				4B50ED2D22E6A94100225900 /* JWK.swift in Sources */,
@@ -2678,6 +2683,7 @@
 				4B415942225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift in Sources */,
 				4B415940225AE65A003AE63A /* LineSDKShareTarget.swift in Sources */,
 				4BC4B3D9212FEB9000750794 /* LineSDKTextMessage.swift in Sources */,
+				4BF79915238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */,
 				4B41593C225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift in Sources */,
 				4BDD2C1E2133C15300DD563D /* LineSDKFlexMessage.swift in Sources */,
 				4BC9B2E7212FCA130071C736 /* LineSDKMessagingResponse.swift in Sources */,

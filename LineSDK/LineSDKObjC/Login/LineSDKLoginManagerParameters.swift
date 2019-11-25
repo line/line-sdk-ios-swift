@@ -1,5 +1,5 @@
 //
-//  LineSDKLoginManagerOptions.swift
+//  LineSDKLoginManagerParameters.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -23,20 +23,40 @@
 import LineSDK
 #endif
 
-@available(*, deprecated, message: "Use `LineSDKLoginManagerParameters` instead.")
 @objcMembers
-public class LineSDKLoginManagerOptions: NSObject {
-    let _value: LoginManagerOptions
-    convenience init(_ value: LoginManagerOptions) {
-        self.init(rawValue: value.rawValue)
-    }
-    public init(rawValue: Int) {
-        _value = .init(rawValue: rawValue)
+public class LineSDKLoginManagerParameters: NSObject {
+    
+    var _value: LoginManager.Parameters
+    
+    public override init() {
+        _value = LoginManager.Parameters()
     }
     
-    var unwrapped: LoginManagerOptions { return _value }
+    init(_ value: LoginManager.Parameters) { _value = value }
+    var unwrapped: LoginManager.Parameters { return _value }
     
-    public static let onlyWebLogin = LineSDKLoginManagerOptions(.onlyWebLogin)
-    public static let botPromptNormal = LineSDKLoginManagerOptions(.botPromptNormal)
-    public static let botPromptAggressive = LineSDKLoginManagerOptions(.botPromptAggressive)
+    public var onlyWebLogin: Bool {
+        get { _value.onlyWebLogin }
+        set { _value.onlyWebLogin = newValue }
+    }
+    
+    public var botPromptStyle: LineSDKLoginManagerBotPrompt? {
+        get { _value.botPromptStyle.map(LineSDKLoginManagerBotPrompt.init) }
+        set { _value.botPromptStyle = newValue?._value }
+    }
+    
+    public var preferredWebPageLanguage: String? {
+        get { _value.preferredWebPageLanguage?.rawValue }
+        set { _value.preferredWebPageLanguage = newValue.map { .init(rawValue: $0) } }
+    }
+}
+
+@objcMembers
+public class LineSDKLoginManagerBotPrompt: NSObject {
+    
+    let _value: LoginManager.BotPrompt
+    init(_ value: LoginManager.BotPrompt) { _value = value }
+    
+    public static let normal = LineSDKLoginManagerBotPrompt(.normal)
+    public static let aggressive = LineSDKLoginManagerBotPrompt(.aggressive)
 }
