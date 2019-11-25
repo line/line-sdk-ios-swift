@@ -503,6 +503,9 @@
 		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
 		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
 		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
+		4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
+		4BD33ED3238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
+		4BD33ED4238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
@@ -823,6 +826,7 @@
 		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
 		4BD24CF4213E278700606411 /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
 		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
+		4BD33ED1238B627200C1E8A9 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4BDD2C152133970800DD563D /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -1226,6 +1230,7 @@
 				4B4525792101A4DE00A39D4F /* Model */,
 				4BD191B3211154DF00E2C481 /* API.swift */,
 				4BB95E45215B7C2F00D213AD /* API+Internal.swift */,
+				4BD33ED1238B627200C1E8A9 /* API+Auth.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -2191,6 +2196,7 @@
 				4B50ECB522E69B0D00225900 /* ECDSA.swift in Sources */,
 				4B50ECB622E69B0D00225900 /* LoginManager.swift in Sources */,
 				4B50ECB722E69B0D00225900 /* PostExchangeTokenRequest.swift in Sources */,
+				4BD33ED3238B627200C1E8A9 /* API+Auth.swift in Sources */,
 				4B50ECB822E69B0D00225900 /* AccessToken.swift in Sources */,
 				4B50ECB922E69B0D00225900 /* FlexIconComponent.swift in Sources */,
 				4B50ECBA22E69B0D00225900 /* NotificationToken.swift in Sources */,
@@ -2409,6 +2415,7 @@
 				4B50EDA622E6ABDD00225900 /* LineSDKShareTarget.swift in Sources */,
 				4B50ED8D22E6A94100225900 /* Request.swift in Sources */,
 				4B50ED8E22E6A94100225900 /* FlexTextComponent.swift in Sources */,
+				4BD33ED4238B627200C1E8A9 /* API+Auth.swift in Sources */,
 				4B0FD5842330D1050054A4E8 /* Colors.swift in Sources */,
 				4B50ED8F22E6A94100225900 /* TemplateConfirmPayload.swift in Sources */,
 				4B50ED9022E6A94100225900 /* CryptoError.swift in Sources */,
@@ -2517,6 +2524,7 @@
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B3CCB9C21523B1300F51D76 /* ECDSA.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
+				4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */,
 				4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */,
 				4BF3B0D6236143F70059CE93 /* GetShareFriendsRequest.swift in Sources */,
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,

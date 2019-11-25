@@ -252,7 +252,7 @@ public class LoginManager {
     ///
     /// - Parameter completion: The completion closure to be invoked when the logout action is finished.
     public func logout(completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void) {
-        API.revokeRefreshToken(completionHandler: completion)
+        API.Auth.revokeRefreshToken(completionHandler: completion)
     }
 
     /// Asks this `LoginManager` object to handle a URL callback from either LINE or the web login flow.

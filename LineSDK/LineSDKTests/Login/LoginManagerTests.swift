@@ -167,7 +167,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             delegate: delegateStub
         )
 
-        API.refreshAccessToken { result in
+        API.Auth.refreshAccessToken { result in
             XCTAssertNotNil(AccessTokenStore.shared.current?.IDToken)
             expect.fulfill()
         }
