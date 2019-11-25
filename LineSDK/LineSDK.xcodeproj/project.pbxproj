@@ -509,6 +509,8 @@
 		4BD33ED7238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
 		4BD33ED8238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
 		4BD33ED9238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
+		4BD33EDE238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
+		4BD33EDF238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
@@ -831,6 +833,7 @@
 		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
 		4BD33ED1238B627200C1E8A9 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
 		4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Deprecated.swift"; sourceTree = "<group>"; };
+		4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAuthAPI.swift; sourceTree = "<group>"; };
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4BDD2C152133970800DD563D /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -1053,6 +1056,7 @@
 				4B2D14FF212FA9CA000DD5BE /* CustomizeCoding */,
 				4B2D1502212FAB5A000DD5BE /* LineSDKAPIError.swift */,
 				4B2D1504212FABD2000DD5BE /* LineSDKAPI.swift */,
+				4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -2401,6 +2405,7 @@
 				4B50ED7D22E6A94100225900 /* FlexImageComponent.swift in Sources */,
 				4B50EDD722E6AC0800225900 /* LineSDKConstant.swift in Sources */,
 				4B50EDB422E6ABEA00225900 /* LineSDKLoginPermission.swift in Sources */,
+				4BD33EDF238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */,
 				4B50ED7E22E6A94100225900 /* JWTHelpers.swift in Sources */,
 				4B50EDC322E6ABFB00225900 /* LineSDKFlexIconComponent.swift in Sources */,
 				4B50EDC722E6ABFB00225900 /* LineSDKFlexBubbleContainer.swift in Sources */,
@@ -2675,6 +2680,7 @@
 				4BDD2C1C2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift in Sources */,
 				4BC4B3E1212FF39D00750794 /* LineSDKTemplateMessage.swift in Sources */,
 				4B7FEE0F221E466E003F7369 /* ResultExtensions.swift in Sources */,
+				4BD33EDE238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */,
 				4B2D1505212FABD2000DD5BE /* LineSDKAPI.swift in Sources */,
 				4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */,
 				4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */,
