@@ -22,6 +22,7 @@
 import Foundation
 
 /// Represents options for logging in to the LINE Platform using the `LoginManager` class.
+@available(*, deprecated, message: "Use `LoginManager.Parameters` type instead.")
 public struct LoginManagerOptions: OptionSet {
     
     /// The raw value of an option.

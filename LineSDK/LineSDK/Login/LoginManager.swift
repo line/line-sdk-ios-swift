@@ -103,6 +103,73 @@ public class LoginManager {
         AccessTokenStore._shared = AccessTokenStore(configuration: config)
         Session._shared = Session(configuration: config)
     }
+    
+    /// Logs in to the LINE Platform.
+    ///
+    /// - Parameters:
+    ///   - permissions: The set of permissions requested by your app. The default value is
+    ///                  `[.profile]`.
+    ///   - viewController: The the view controller that presents the login view controller. If `nil`, the topmost
+    ///                     view controller in the current view controller hierarchy will be used.
+    ///   - parameters: The parameters used during the login process. For more information,
+    ///                 see `LoginManager.Parameters`.
+    ///   - completion: The completion closure to be invoked when the login action is finished.
+    /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.
+    ///
+    /// - Note:
+    ///   Only one process can be started at a time. Do not call this method again to start a new login process
+    ///   before `completion` is invoked.
+    ///
+    ///   If the value of `permissions` is `.profile`, the user profile will be retrieved during the login
+    ///   process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
+    ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
+    ///   more information, see `UserProfile`.
+    ///
+    ///   An access token will be issued if the user authorizes your app. This token and a refresh token
+    ///   will be automatically stored in the keychain of your app for later use. You do not need to
+    ///   refresh the access token manually because any API call will attempt to refresh the access token if
+    ///   necessary. However, if you need to refresh the access token manually, use the
+    ///   `API.refreshAccessToken(with:)` method.
+    ///
+    @discardableResult
+    public func login(
+        permissions: Set<LoginPermission> = [.profile],
+        in viewController: UIViewController? = nil,
+        parameters: LoginManager.Parameters? = nil,
+        completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void
+    ) -> LoginProcess?
+    {
+        lock.lock()
+        defer { lock.unlock() }
+
+        guard currentProcess == nil else {
+            Log.assertionFailure("Trying to start another login process " +
+                "while the previous one still valid is not permitted.")
+            return nil
+        }
+
+        let process = LoginProcess(
+            configuration: LoginConfiguration.shared,
+            scopes: permissions,
+            parameters: parameters,
+            viewController: viewController)
+        process.start()
+        process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
+            self.currentProcess = nil
+            self.postLogin(
+                token: result.token,
+                response: result.response,
+                process: process,
+                completionHandler: completion)
+        }
+        process.onFail.delegate(on: self) { (self, error) in
+            self.currentProcess = nil
+            completion(.failure(error.sdkError))
+        }
+
+        self.currentProcess = process
+        return currentProcess
+    }
 
     /// Logs in to the LINE Platform.
     ///
@@ -130,44 +197,26 @@ public class LoginManager {
     ///   necessary. However, if you need to refresh the access token manually, use the
     ///   `API.refreshAccessToken(with:)` method.
     ///
+    @available(
+    *, deprecated,
+    message: """
+        Convert the `options` to a `LoginManager.Parameters` value and
+        use `login(permissions:in:parameters:completionHandler:)` instead.")
+    """)
     @discardableResult
     public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
-        options: LoginManagerOptions = [],
+        options: LoginManagerOptions,
         completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void) -> LoginProcess?
     {
-        lock.lock()
-        defer { lock.unlock() }
-
-        guard currentProcess == nil else {
-            Log.assertionFailure("Trying to start another login process " +
-                "while the previous one still valid is not permitted.")
-            return nil
-        }
-
-        let process = LoginProcess(
-            configuration: LoginConfiguration.shared,
-            scopes: permissions,
-            options: options,
-            preferredWebPageLanguage: preferredWebPageLanguage,
-            viewController: viewController)
-        process.start()
-        process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
-            self.currentProcess = nil
-            self.postLogin(
-                token: result.token,
-                response: result.response,
-                process: process,
-                completionHandler: completion)
-        }
-        process.onFail.delegate(on: self) { (self, error) in
-            self.currentProcess = nil
-            completion(.failure(error.sdkError))
-        }
-
-        self.currentProcess = process
-        return currentProcess
+        let parameters = Parameters(options: options, language: preferredWebPageLanguage)
+        return login(
+            permissions: permissions,
+            in: viewController,
+            parameters: parameters,
+            completionHandler: completion
+        )
     }
 
     /// Actions after auth process finishes. We do something like storing token, getting user profile and ID

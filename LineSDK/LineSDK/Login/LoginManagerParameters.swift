@@ -27,6 +27,15 @@ extension LoginManager {
         public var onlyWebLogin: Bool = false
         public var botPromptStyle: BotPrompt? = nil
         public var preferredWebPageLanguage: WebPageLanguage? = nil
+        
+        public init() {}
+        
+        @available(*, deprecated, message: "Internally deprecated.")
+        init(options: LoginManagerOptions, language: WebPageLanguage?) {
+            self.onlyWebLogin = options.contains(.onlyWebLogin)
+            self.botPromptStyle = options.botPrompt
+            self.preferredWebPageLanguage = language
+        }
     }
 }
 
