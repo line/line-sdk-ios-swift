@@ -36,22 +36,22 @@ public class LineSDKLoginManagerParameters: NSObject {
     var unwrapped: LoginManager.Parameters { return _value }
     
     public var onlyWebLogin: Bool {
-        get { _value.onlyWebLogin }
+        get { return _value.onlyWebLogin }
         set { _value.onlyWebLogin = newValue }
     }
     
     public var botPromptStyle: LineSDKLoginManagerBotPrompt? {
-        get { _value.botPromptStyle.map(LineSDKLoginManagerBotPrompt.init) }
+        get { return _value.botPromptStyle.map(LineSDKLoginManagerBotPrompt.init) }
         set { _value.botPromptStyle = newValue?._value }
     }
     
     public var preferredWebPageLanguage: String? {
-        get { _value.preferredWebPageLanguage?.rawValue }
+        get { return _value.preferredWebPageLanguage?.rawValue }
         set { _value.preferredWebPageLanguage = newValue.map { .init(rawValue: $0) } }
     }
     
     public var IDTokenNonce: String? {
-        get { _value.IDTokenNonce }
+        get { return _value.IDTokenNonce }
         set { _value.IDTokenNonce = newValue }
     }
 }
@@ -65,5 +65,5 @@ public class LineSDKLoginManagerBotPrompt: NSObject {
     public static let normal = LineSDKLoginManagerBotPrompt(.normal)
     public static let aggressive = LineSDKLoginManagerBotPrompt(.aggressive)
     
-    public var rawValue: String { _value.rawValue }
+    public var rawValue: String { return _value.rawValue }
 }
