@@ -39,7 +39,7 @@ public struct LoginPermission: Hashable {
     /// URL in the login response.
     public static let profile                        = LoginPermission(rawValue: "profile")
     
-    /// The permission to pick friends/groups and share a message to the targets.
+    /// The permission to select friends or groups and share content with them.
     public static let oneTimeShare                   = LoginPermission(rawValue: "onetime.share")
 
     /// :nodoc:
