@@ -33,7 +33,6 @@ public class LineSDKLoginManagerParameters: NSObject {
     }
     
     init(_ value: LoginManager.Parameters) { _value = value }
-    var unwrapped: LoginManager.Parameters { return _value }
     
     public var onlyWebLogin: Bool {
         get { return _value.onlyWebLogin }

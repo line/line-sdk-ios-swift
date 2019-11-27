@@ -57,7 +57,7 @@ public class LineSDKLoginManager: NSObject {
         let process = _value.login(
             permissions: Set((permissions ?? [.profile]).map { $0.unwrapped }),
             in: viewController,
-            parameters: parameters?.unwrapped)
+            parameters: parameters?._value)
         {
             result in
             result
