@@ -55,7 +55,7 @@ public class LineSDKLoginButton: LoginButton {
     public weak var buttonPresentingViewController: UIViewController?
 
     public var loginPermissions: Set<LineSDKLoginPermission> = [.profile]
-    public var loginManagerOptions: [LineSDKLoginManagerOptions]?
+    public var loginManagerParameters: LineSDKLoginManagerParameters?
 
     public var buttonSizeValue: LineSDKLoginButtonSize {
         set {
@@ -84,7 +84,7 @@ public class LineSDKLoginButton: LoginButton {
         LineSDKLoginManager.sharedManager.login(
             permissions: loginPermissions,
             inViewController: buttonPresentingViewController,
-            options: loginManagerOptions
+            parameters: loginManagerParameters
         ) {
             result, error in
             if error == nil {
@@ -96,4 +96,8 @@ public class LineSDKLoginButton: LoginButton {
         }
         self.loginDelegate?.loginButtonDidStartLogin(self)
     }
+    
+    // MARK: - Deprecated
+    @available(*, deprecated, message: "Use `loginManagerParameters` instead.")
+    public var loginManagerOptions: [LineSDKLoginManagerOptions]?
 }

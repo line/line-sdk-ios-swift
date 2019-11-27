@@ -132,9 +132,9 @@ open class LoginButton: UIButton {
     /// The default value is `[.profile]`.
     public var permissions: Set<LoginPermission> = [.profile]
 
-    /// Represents a set of options.
-    /// The default value is empty.
-    public var options: LoginManagerOptions = []
+    /// Represents the parameters used while login.
+    /// The default value is `nil`.
+    public var parameters: LoginManager.Parameters? = nil
 
     /// The size of the login button. The default value is `normal`.
     public var buttonSize: ButtonSize = .normal {
@@ -236,7 +236,7 @@ open class LoginButton: UIButton {
         LoginManager.shared.login(
             permissions: permissions,
             in: presentingViewController,
-            options: options
+            parameters: parameters
         ) {
             result in
             switch result {
@@ -249,5 +249,13 @@ open class LoginButton: UIButton {
         }
         delegate?.loginButtonDidStartLogin(self)
     }
-
+    
+    // MARK: - Deprecated
+    
+    /// Represents a set of options.
+    /// The default value is empty.
+    @available(
+    *, deprecated,
+    message: "Convert this value into a `LoginManager.Parameters` and use `parameters` instead.")
+    public var options: LoginManagerOptions = []
 }

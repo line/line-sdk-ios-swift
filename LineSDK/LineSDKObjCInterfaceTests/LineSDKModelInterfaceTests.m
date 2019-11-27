@@ -90,12 +90,19 @@
     XCTAssertEqual(result.expiresIn, 0);
 }
 
-- (void)testLoginManagerOptionInterface {
-    XCTAssertNotNil(LineSDKLoginManagerOptions.onlyWebLogin);
-    XCTAssertNotNil(LineSDKLoginManagerOptions.botPromptNormal);
-    XCTAssertNotNil(LineSDKLoginManagerOptions.botPromptAggressive);
+- (void)testLoginManagerParametersInterface {
+    LineSDKLoginManagerParameters *param = [[LineSDKLoginManagerParameters alloc] init];
+    XCTAssertNotNil(param);
     
-    XCTAssertNotNil([[LineSDKLoginManagerOptions alloc] initWithRawValue:1]);
+    param.onlyWebLogin = YES;
+    param.botPromptStyle = [LineSDKLoginManagerBotPrompt normal];
+    param.preferredWebPageLanguage = @"ja";
+    param.IDTokenNonce = @"test";
+    
+    XCTAssertTrue([param onlyWebLogin]);
+    XCTAssertTrue([[param.botPromptStyle rawValue] isEqualToString: @"normal"]);
+    XCTAssertTrue([param.preferredWebPageLanguage isEqualToString: @"ja"]);
+    XCTAssertTrue([param.IDTokenNonce isEqualToString: @"test"]);
 }
 
 - (void)testLoginResultInterface {
@@ -122,7 +129,7 @@
     [manager setupWithChannelID:@"" universalLinkURL:nil];
     [manager loginWithPermissions:nil
                  inViewController:nil
-                          options:nil
+                       parameters:nil
                 completionHandler:^(LineSDKLoginResult *result, NSError *error)
     {
         XCTAssertNil([result accessToken]);
@@ -140,15 +147,6 @@
     XCTAssertFalse(opened);
     
     XCTAssertNotNil([LineSDKLoginManager sharedManager]);
-}
-
-- (void)testLoginManagerLangSettingInterface {
-    LineSDKLoginManager *manager = [LineSDKLoginManager sharedManager];
-    XCTAssertNil(manager.preferredWebPageLanguage);
-    [manager setPreferredWebPageLanguage:@"zh-Hans"];
-    XCTAssertEqual(manager.preferredWebPageLanguage, @"zh-Hans");
-    manager.preferredWebPageLanguage = nil;
-    XCTAssertNil(manager.preferredWebPageLanguage);
 }
 
 - (void)testHexColorInterface {
@@ -274,7 +272,7 @@
     button.buttonPresentingViewController = nil;
     button.loginDelegate = nil;
     button.loginPermissions = [NSSet setWithObject:[LineSDKLoginPermission profile]];
-    button.loginManagerOptions = @[[LineSDKLoginManagerOptions onlyWebLogin]];
+    button.loginManagerParameters = [[LineSDKLoginManagerParameters alloc] init];
     button.buttonSizeValue = LineSDKLoginButtonSizeSmall;
     button.buttonTextValue = @"Hello";
     button = nil;

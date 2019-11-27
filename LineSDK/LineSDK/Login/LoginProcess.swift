@@ -27,12 +27,6 @@ import SafariServices
 /// login flows will run serially. If a flow logs in the user successfully, subsequent flows will not be
 /// executed.
 public class LoginProcess {
-    
-    enum BotPrompt: String {
-        case normal
-        case aggressive
-    }
-    
     struct FlowParameters {
         let channelID: String
         let universalLinkURL: URL?
@@ -40,7 +34,7 @@ public class LoginProcess {
         let otp: OneTimePassword
         let processID: String
         let nonce: String?
-        let botPrompt: BotPrompt?
+        let botPrompt: LoginManager.BotPrompt?
         let preferredWebPageLanguage: LoginManager.WebPageLanguage?
     }
     
@@ -77,8 +71,7 @@ public class LoginProcess {
     
     let configuration: LoginConfiguration
     let scopes: Set<LoginPermission>
-    let options: LoginManagerOptions
-    let preferredWebPageLanguage: LoginManager.WebPageLanguage?
+    let parameters: LoginManager.Parameters
     
     // Flows of login process. A flow will be `nil` until it is running, so we could tell which one should take
     // responsibility to handle a url callback response.
@@ -117,19 +110,17 @@ public class LoginProcess {
     init(
         configuration: LoginConfiguration,
         scopes: Set<LoginPermission>,
-        options: LoginManagerOptions,
-        preferredWebPageLanguage: LoginManager.WebPageLanguage?,
+        parameters: LoginManager.Parameters?,
         viewController: UIViewController?)
     {
         self.configuration = configuration
         self.processID = UUID().uuidString
         self.scopes = scopes
-        self.options = options
-        self.preferredWebPageLanguage = preferredWebPageLanguage
+        self.parameters = parameters ?? LoginManager.Parameters()
         self.presentingViewController = viewController
         
         if scopes.contains(.openID) {
-            IDTokenNonce = UUID().uuidString
+            IDTokenNonce = self.parameters.IDTokenNonce ?? UUID().uuidString
         } else {
             IDTokenNonce = nil
         }
@@ -148,9 +139,9 @@ public class LoginProcess {
                     otp: otp,
                     processID: self.processID,
                     nonce: self.IDTokenNonce,
-                    botPrompt: self.options.botPrompt,
-                    preferredWebPageLanguage: self.preferredWebPageLanguage)
-                if self.options.contains(.onlyWebLogin) {
+                    botPrompt: self.parameters.botPromptStyle,
+                    preferredWebPageLanguage: self.parameters.preferredWebPageLanguage)
+                if self.parameters.onlyWebLogin {
                     self.startWebLoginFlow(parameters)
                 } else {
                     self.startAppUniversalLinkFlow(parameters)
