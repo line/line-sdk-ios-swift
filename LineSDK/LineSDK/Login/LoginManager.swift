@@ -55,16 +55,6 @@ public class LoginManager {
     public var isAuthorizing: Bool {
         return currentProcess != nil
     }
-
-    /// Sets the preferred language used when logging in with the web authorization flow.
-    ///
-    /// If not set, the web authentication flow shows the login page in the user's device language, or falls
-    /// back to English. Once set, the web page will be displayed in the preferred language.
-    ///
-    /// - Note:
-    ///   This property does not affect the preferred language when LINE is used for authorization.
-    ///   LINE and the login screen are always displayed in the user's device language.
-    public var preferredWebPageLanguage: WebPageLanguage? = nil
     
     /// A flag to prevent setup multiple times
     var setup = false
@@ -103,7 +93,7 @@ public class LoginManager {
         AccessTokenStore._shared = AccessTokenStore(configuration: config)
         Session._shared = Session(configuration: config)
     }
-
+    
     /// Logs in to the LINE Platform.
     ///
     /// - Parameters:
@@ -111,7 +101,8 @@ public class LoginManager {
     ///                  `[.profile]`.
     ///   - viewController: The the view controller that presents the login view controller. If `nil`, the topmost
     ///                     view controller in the current view controller hierarchy will be used.
-    ///   - options: The options used during the login process. For more information, see `LoginManagerOptions`.
+    ///   - parameters: The parameters used during the login process. For more information,
+    ///                 see `LoginManager.Parameters`.
     ///   - completion: The completion closure to be invoked when the login action is finished.
     /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.
     ///
@@ -134,8 +125,9 @@ public class LoginManager {
     public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
-        options: LoginManagerOptions = [],
-        completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void) -> LoginProcess?
+        parameters: LoginManager.Parameters? = nil,
+        completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void
+    ) -> LoginProcess?
     {
         lock.lock()
         defer { lock.unlock() }
@@ -149,8 +141,7 @@ public class LoginManager {
         let process = LoginProcess(
             configuration: LoginConfiguration.shared,
             scopes: permissions,
-            options: options,
-            preferredWebPageLanguage: preferredWebPageLanguage,
+            parameters: parameters,
             viewController: viewController)
         process.start()
         process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
@@ -276,6 +267,72 @@ public class LoginManager {
 
         return currentProcess.resumeOpenURL(url: url)
     }
+    
+    // MARK: - Deprecated
+    
+    /// Sets the preferred language used when logging in with the web authorization flow.
+    ///
+    /// If not set, the web authentication flow shows the login page in the user's device language, or falls
+    /// back to English. Once set, the web page will be displayed in the preferred language.
+    ///
+    /// - Note:
+    ///   This property does not affect the preferred language when LINE is used for authorization.
+    ///   LINE and the login screen are always displayed in the user's device language.
+    @available(
+    *, deprecated,
+    message: """
+    Set the preferred language in a `LoginManager.Parameters` value and use
+    `login(permissions:in:parameters:completionHandler:)` instead.")
+    """)
+    public var preferredWebPageLanguage: WebPageLanguage? = nil
+    
+    /// Logs in to the LINE Platform.
+    ///
+    /// - Parameters:
+    ///   - permissions: The set of permissions requested by your app. The default value is
+    ///                  `[.profile]`.
+    ///   - viewController: The the view controller that presents the login view controller. If `nil`, the topmost
+    ///                     view controller in the current view controller hierarchy will be used.
+    ///   - options: The options used during the login process. For more information, see `LoginManagerOptions`.
+    ///   - completion: The completion closure to be invoked when the login action is finished.
+    /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.
+    ///
+    /// - Note:
+    ///   Only one process can be started at a time. Do not call this method again to start a new login process
+    ///   before `completion` is invoked.
+    ///
+    ///   If the value of `permissions` is `.profile`, the user profile will be retrieved during the login
+    ///   process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
+    ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
+    ///   more information, see `UserProfile`.
+    ///
+    ///   An access token will be issued if the user authorizes your app. This token and a refresh token
+    ///   will be automatically stored in the keychain of your app for later use. You do not need to
+    ///   refresh the access token manually because any API call will attempt to refresh the access token if
+    ///   necessary. However, if you need to refresh the access token manually, use the
+    ///   `API.refreshAccessToken(with:)` method.
+    ///
+    @available(
+    *, deprecated,
+    message: """
+    Convert the `options` to a `LoginManager.Parameters` value and
+    use `login(permissions:in:parameters:completionHandler:)` instead.")
+    """)
+    @discardableResult
+    public func login(
+        permissions: Set<LoginPermission> = [.profile],
+        in viewController: UIViewController? = nil,
+        options: LoginManagerOptions,
+        completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void) -> LoginProcess?
+    {
+        let parameters = Parameters(options: options, language: preferredWebPageLanguage)
+        return login(
+            permissions: permissions,
+            in: viewController,
+            parameters: parameters,
+            completionHandler: completion
+        )
+    }
 }
 
 extension LoginManager {
@@ -367,53 +424,3 @@ extension LoginManager {
     }
 }
 
-extension LoginManager {
-    /// Represents the language used in web page.
-    public struct WebPageLanguage {
-        public let rawValue: String
-
-        /// Creates a web page language with a given raw string language code value.
-        ///
-        /// - Parameter rawValue: The value represents the language code.
-        public init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-
-        /// The Arabic language.
-        public static let arabic = WebPageLanguage(rawValue: "ar")
-        /// The German language.
-        public static let german = WebPageLanguage(rawValue: "de")
-        /// The English language.
-        public static let english = WebPageLanguage(rawValue: "en")
-        /// The Spanish language.
-        public static let spanish = WebPageLanguage(rawValue: "es")
-        /// The French language.
-        public static let french = WebPageLanguage(rawValue: "fr")
-        /// The Indonesian language.
-        public static let indonesian = WebPageLanguage(rawValue: "id")
-        /// The Italian language.
-        public static let italian = WebPageLanguage(rawValue: "it")
-        /// The Japanese language.
-        public static let japanese = WebPageLanguage(rawValue: "ja")
-        /// The Korean language.
-        public static let korean = WebPageLanguage(rawValue: "ko")
-        /// The Malay language.
-        public static let malay = WebPageLanguage(rawValue: "ms")
-        /// The Brazilian Portuguese language.
-        public static let portugueseBrazilian = WebPageLanguage(rawValue: "pt-BR")
-        /// The European Portuguese language.
-        public static let portugueseEuropean = WebPageLanguage(rawValue: "pt-PT")
-        /// The Russian language.
-        public static let russian = WebPageLanguage(rawValue: "ru")
-        /// The Thai language.
-        public static let thai = WebPageLanguage(rawValue: "th")
-        /// The Turkish language.
-        public static let turkish = WebPageLanguage(rawValue: "tr")
-        /// The Vietnamese language.
-        public static let vietnamese = WebPageLanguage(rawValue: "vi")
-        /// The Simplified Chinese language.
-        public static let chineseSimplified = WebPageLanguage(rawValue: "zh-Hans")
-        /// The Traditional Chinese language.
-        public static let chineseTraditional = WebPageLanguage(rawValue: "zh-Hant")
-    }
-}

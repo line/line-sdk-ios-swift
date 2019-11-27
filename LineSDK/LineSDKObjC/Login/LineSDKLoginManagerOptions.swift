@@ -23,6 +23,7 @@
 import LineSDK
 #endif
 
+@available(*, deprecated, message: "Use `LineSDKLoginManagerParameters` instead.")
 @objcMembers
 public class LineSDKLoginManagerOptions: NSObject {
     let _value: LoginManagerOptions

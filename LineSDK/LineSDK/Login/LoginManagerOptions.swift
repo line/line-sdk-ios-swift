@@ -22,6 +22,7 @@
 import Foundation
 
 /// Represents options for logging in to the LINE Platform using the `LoginManager` class.
+@available(*, deprecated, message: "Use `LoginManager.Parameters` type instead.")
 public struct LoginManagerOptions: OptionSet {
     
     /// The raw value of an option.
@@ -46,7 +47,7 @@ public struct LoginManagerOptions: OptionSet {
     /// `.botPromptAggressive` will be used.
     public static let botPromptAggressive = LoginManagerOptions(rawValue: 1 << 2)
     
-    var botPrompt: LoginProcess.BotPrompt? {
+    var botPrompt: LoginManager.BotPrompt? {
         if contains(.botPromptAggressive) { return .aggressive }
         if contains(.botPromptNormal) { return .normal }
         return nil

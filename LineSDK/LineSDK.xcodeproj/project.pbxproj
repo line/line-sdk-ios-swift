@@ -511,6 +511,9 @@
 		4BD33ED9238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
 		4BD33EDE238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
 		4BD33EDF238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
+		4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
+		4BD33EE4238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
+		4BD33EE5238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
@@ -558,6 +561,8 @@
 		4BF53539212A7C9100EA602A /* FlexMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53538212A7C9100EA602A /* FlexMessage.swift */; };
 		4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */; };
 		4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */; };
+		4BF79915238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */; };
+		4BF79916238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
 		4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09EE213CCE7700F4594D /* JWKTests.swift */; };
 		4BFC09F1213CDFC300F4594D /* JWKDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */; };
@@ -834,6 +839,7 @@
 		4BD33ED1238B627200C1E8A9 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
 		4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Deprecated.swift"; sourceTree = "<group>"; };
 		4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAuthAPI.swift; sourceTree = "<group>"; };
+		4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerParameters.swift; sourceTree = "<group>"; };
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4BDD2C152133970800DD563D /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -878,6 +884,7 @@
 		4BF53538212A7C9100EA602A /* FlexMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessage.swift; sourceTree = "<group>"; };
 		4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBubbleContainer.swift; sourceTree = "<group>"; };
 		4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexCarouselContainer.swift; sourceTree = "<group>"; };
+		4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKLoginManagerParameters.swift; sourceTree = "<group>"; };
 		4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRefreshTokenRequest.swift; sourceTree = "<group>"; };
 		4BFC09EE213CCE7700F4594D /* JWKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKTests.swift; sourceTree = "<group>"; };
 		4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKDataTests.swift; sourceTree = "<group>"; };
@@ -1249,6 +1256,7 @@
 				4B9058D321007394004D717F /* LoginConfiguration.swift */,
 				4B9058D5210073E6004D717F /* LoginManager.swift */,
 				4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */,
+				4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */,
 				4B9058DB21007C8C004D717F /* LoginResult.swift */,
 				4B45256A2101810D00A39D4F /* LoginProcess.swift */,
 				4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */,
@@ -1454,6 +1462,7 @@
 				4BBEA9AE212EB01C00858627 /* Model */,
 				4B2D14F4212F97A6000DD5BE /* LineSDKLoginManager.swift */,
 				4B2D14EE212F9468000DD5BE /* LineSDKLoginManagerOptions.swift */,
+				4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */,
 				4B2D14F0212F95B3000DD5BE /* LineSDKLoginResult.swift */,
 				4B2D14F2212F96A7000DD5BE /* LineSDKLoginProcess.swift */,
 				4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */,
@@ -2252,6 +2261,7 @@
 				4BF3B0D92361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */,
 				4B50ECD822E69B0D00225900 /* CryptoError.swift in Sources */,
 				4B50ECD922E69B0D00225900 /* SelectedTargetPanelViewController.swift in Sources */,
+				4BD33EE4238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */,
 				4B50ECDA22E69B0D00225900 /* FlexMessageComponent.swift in Sources */,
 				4B50ECDB22E69B0D00225900 /* TemplateMessageProperties.swift in Sources */,
 				4B50ECDC22E69B0D00225900 /* LoginProcess.swift in Sources */,
@@ -2279,6 +2289,7 @@
 				4B50ED2922E6A94100225900 /* Helpers.swift in Sources */,
 				4B50EDB622E6ABEE00225900 /* LineSDKGroup.swift in Sources */,
 				4B50ED2A22E6A94100225900 /* MessageAction.swift in Sources */,
+				4BF79916238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */,
 				4B50ED2B22E6A94100225900 /* LoginPermission.swift in Sources */,
 				4B50ED2C22E6A94100225900 /* FlexMessage.swift in Sources */,
 				4B50ED2D22E6A94100225900 /* JWK.swift in Sources */,
@@ -2387,6 +2398,7 @@
 				4B50ED6F22E6A94100225900 /* PostExchangeTokenRequest.swift in Sources */,
 				4B50ED7022E6A94100225900 /* AccessToken.swift in Sources */,
 				4B50ED7122E6A94100225900 /* FlexIconComponent.swift in Sources */,
+				4BD33EE5238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */,
 				4B50ED7222E6A94100225900 /* NotificationToken.swift in Sources */,
 				4B50ED7322E6A94100225900 /* MessageProtocols.swift in Sources */,
 				4B50ED7422E6A94100225900 /* DownloadableImageView.swift in Sources */,
@@ -2583,6 +2595,7 @@
 				4B9A305421215A1A00174C6F /* TemplateConfirmPayload.swift in Sources */,
 				4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */,
 				DBFBD439224B85F500A74D44 /* SelectedTargetPanelViewController.swift in Sources */,
+				4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */,
 				4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */,
 				4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
@@ -2700,6 +2713,7 @@
 				4B415942225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift in Sources */,
 				4B415940225AE65A003AE63A /* LineSDKShareTarget.swift in Sources */,
 				4BC4B3D9212FEB9000750794 /* LineSDKTextMessage.swift in Sources */,
+				4BF79915238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */,
 				4B41593C225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift in Sources */,
 				4BDD2C1E2133C15300DD563D /* LineSDKFlexMessage.swift in Sources */,
 				4BC9B2E7212FCA130071C736 /* LineSDKMessagingResponse.swift in Sources */,
