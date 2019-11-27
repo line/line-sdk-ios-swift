@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 public struct GetShareGroupsRequest: Request {
 
     public init(pageToken: String? = nil) {

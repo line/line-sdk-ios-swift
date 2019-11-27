@@ -21,6 +21,8 @@
 
 import Foundation
 
+/// LINE internal use only.
+
 public struct GetShareFriendsRequest: Request {
     
     let sort: Sort?

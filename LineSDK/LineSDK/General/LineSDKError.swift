@@ -62,21 +62,21 @@ public enum LineSDKError: Error {
     /// - invalidHTTPStatusAPIError: The received response contains an invalid HTTP status code. Code 2004.
     public enum ResponseErrorReason {
         
-        /// The error detail of a `ResponseErrorReason`. When an error with `ResponseErrorReason` as its reason occurred,
-        /// there would be an `APIErrorDetail` as the associated value of that reason. This type explains the HTTP
-        /// status code and the error messages received from LINE server.
+        /// Error details for `invalidHTTPStatusAPIError`. When `ResponseErrorReason` is `invalidHTTPStatusAPIError`, 
+        /// `APIErrorDetail` is the associated value. It contains the HTTP status code and the error 
+        /// messages returned by the LINE server.
         public struct APIErrorDetail {
             
-            /// The error code received from server. Usually it is the HTTP status code.
+            /// Error code received from server. This is usually the HTTP status code.
             public let code: Int
             
-            /// An `APIError` object if the response data can be converted to it. Otherwise, `nil`.
+            /// An `APIError` object, if the response data can be converted to it. If not: `nil`.
             public let error: APIError?
             
             /// The raw response when this `invalidHTTPStatusAPIError` happens.
             public let raw: HTTPURLResponse
             
-            /// The plain error text converted from the response body data if existing.
+            /// The plain error text converted from the response body data, if existing.
             public let rawString: String?
         }
 
@@ -92,11 +92,7 @@ public enum LineSDKError: Error {
 
         /// The received response contains an invalid HTTP status code. Code 2004.
         ///
-        /// Associated `APIErrorDetail`
-        /// contains information about the error detail. If the response data can be converted to an `APIError` object,
-        /// it will be associated with `APIErrorDetail`. The `error` property in `APIErrorDetail` indicates the cause
-        /// of an error. Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and
-        /// `detail.rawString` will contain the plain response and error text respectively.
+        /// The associated value `APIErrorDetail` contains error details.
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
 

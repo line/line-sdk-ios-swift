@@ -23,19 +23,19 @@ import Foundation
 
 extension LoginManager {
     
-    /// Parameters used while login.
+    /// Parameters used during login.
     public struct Parameters {
         
-        /// Forces to use the web authentication flow instead of the LINE app-to-app authentication flow.
+        /// Forces the use of web authentication flow instead of LINE app-to-app authentication flow.
         public var onlyWebLogin: Bool = false
         
-        /// The style to show and prompt for adding a bot as friend on the consent screen.
+        /// The style for showing the "Add bot as friend" prompt on the consent screen.
         public var botPromptStyle: BotPrompt? = nil
         
         /// Sets the preferred language used when logging in with the web authorization flow.
         ///
         /// If not set, the web authentication flow shows the login page in the user's device language, or falls
-        /// back to English. Once set, the web page will be displayed in the preferred language.
+        /// back to English. Once set, the web page is displayed in the preferred language.
         ///
         /// - Note:
         ///   This property does not affect the preferred language when LINE is used for authorization.
@@ -65,7 +65,7 @@ extension LoginManager {
 
 extension LoginManager {
     
-    /// The style to show and prompt for adding a bot as friend on the consent screen.
+    /// The style for showing the "Add bot as friend" prompt on the consent screen.
     public enum BotPrompt: String {
         /// Includes an option to add a bot as friend on the consent screen.
         case normal
@@ -74,7 +74,7 @@ extension LoginManager {
         case aggressive
     }
     
-    /// Represents the language used in web page.
+    /// Represents the language used in the web page.
     public struct WebPageLanguage {
         public let rawValue: String
 

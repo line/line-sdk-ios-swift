@@ -47,8 +47,7 @@ import UIKit
 
  3. Specify `messages` to tell the `ShareViewController` the `Message` values you want to share.
 
- 4. Present the created `ShareViewController` in a modal way. Do this modally presenting by calling
-    `present(_:animated:completion:)`.
+ 4. Present the created `ShareViewController` modally by calling `present(_:animated:completion:)`.
 
  You can customize the `ShareViewController` navigation bar style and status bar content style to match your app.
  Use `navigationBarTintColor`, `navigationBarTextColor`, and `statusBarStyle` to do so.
