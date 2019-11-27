@@ -62,8 +62,8 @@ public enum LineSDKError: Error {
     /// - invalidHTTPStatusAPIError: The received response contains an invalid HTTP status code. Code 2004.
     public enum ResponseErrorReason {
         
-        /// Error detail of `invalidHTTPStatusAPIError`. When an error occurs due to a `invalidHTTPStatusAPIError`, 
-        /// `APIErrorDetail` is the associated value. This type explains the HTTP status code and the error 
+        /// Error details for `invalidHTTPStatusAPIError`. When `ResponseErrorReason` is `invalidHTTPStatusAPIError`, 
+        /// `APIErrorDetail` is the associated value. It contains the HTTP status code and the error 
         /// messages returned by the LINE server.
         public struct APIErrorDetail {
             
@@ -92,11 +92,7 @@ public enum LineSDKError: Error {
 
         /// The received response contains an invalid HTTP status code. Code 2004.
         ///
-        /// Associated `APIErrorDetail`
-        /// contains information about the error detail. If the response data can be converted to an `APIError` object,
-        /// it will be associated with `APIErrorDetail`. The `error` property in `APIErrorDetail` indicates the cause
-        /// of an error. Otherwise, the `detail.error` will be `nil`. In both cases, `detail.raw` and
-        /// `detail.rawString` will contain the plain response and error text respectively.
+        /// The associated value `APIErrorDetail` contains error details.
         case invalidHTTPStatusAPIError(detail: APIErrorDetail)
     }
 
