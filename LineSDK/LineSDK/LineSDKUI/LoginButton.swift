@@ -23,7 +23,7 @@ import UIKit
 
 /// Defines methods that allow you to handle different login statuses if you use the predefined LINE Login
 /// button by using the `LoginButton` class.
-public protocol LoginButtonDelegate: class {
+public protocol LoginButtonDelegate: AnyObject {
 
     /// Called after the login action is started. Since LINE Login is an asynchronous operation, you might
     /// want to show an indicator or another visual effect to prevent the user from taking other actions.
@@ -40,8 +40,27 @@ public protocol LoginButtonDelegate: class {
     ///
     /// - Parameters:
     ///   - button: The button which is used to start the login action.
+    ///   - error: The strong typed `LineSDKError` of the failed login.
+    func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError)
+
+    /// Called if the login action failed.
+    ///
+    /// - Parameters:
+    ///   - button: The button which is used to start the login action.
     ///   - error: The error of the failed login.
+    /// - Note:
+    /// **DEPRECATED** Use the same delegate method which receives `LineSDKError` instead. It provides a strong typed
+    ///                and consistent error for the login failure.
     func loginButton(_ button: LoginButton, didFailLogin error: Error)
+}
+
+public extension LoginButtonDelegate {
+    func loginButtonDidStartLogin(_ button: LoginButton) { }
+    func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) { }
+    func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError) {
+        loginButton(button, didFailLogin: error as Error)
+    }
+    func loginButton(_ button: LoginButton, didFailLogin error: Error) { }
 }
 
 /// Represents a login button which executes the login function when the user taps the button.
