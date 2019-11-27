@@ -125,17 +125,29 @@ public class LoginManager {
     public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
-        parameters: LoginManager.Parameters? = nil,
+        parameters: LoginManager.Parameters = .init(),
         completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void
     ) -> LoginProcess?
     {
         lock.lock()
         defer { lock.unlock() }
 
-        guard currentProcess == nil else {
-            Log.assertionFailure("Trying to start another login process " +
-                "while the previous one still valid is not permitted.")
+        if !parameters.allowRecreatingLoginProcess && isAuthorizing {
+            Log.print("Trying to start another login process while the previous one still valid. " +
+            "This login process is ignore. Set `allowRecreatingLoginProcess` in login parameter" +
+            "if you want to allow this action.")
             return nil
+        }
+        
+        if parameters.allowRecreatingLoginProcess && isAuthorizing {
+            if let process = currentProcess {
+                self.currentProcess?.onFail.call(
+                    LineSDKError.generalError(reason: .processDiscarded(process))
+                )
+            } else {
+                Log.assertionFailure("The current process should exist. If you trigger this failure," +
+                    " please report on the issue page: https://github.com/line/line-sdk-ios-swift/issues")
+            }
         }
 
         let process = LoginProcess(
