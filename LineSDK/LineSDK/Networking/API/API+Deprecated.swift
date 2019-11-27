@@ -1,5 +1,5 @@
 //
-//  API.swift
+//  API+Deprecated.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,18 +21,7 @@
 
 import Foundation
 
-/// Represents a utility structure for calling the LINE Platform.
-///
-/// - Note:
-/// For most API calls, using the interfaces in the `API` structure is equivalent to using and sending an
-/// underlying `Request` object with a `Session` object. However, some methods in the `API` provides
-/// additional useful features such as working with the keychain and redirecting the final result in a more
-/// reasonable way.
-///
-/// Using the `API` structure to interact with the LINE Platform is highly recommended unless you are familiar
-/// with and want to extend the LINE SDK to send unimplemented API requests to the LINE Platform.
-///
-public struct API {
+extension API {
     /// Refreshes the access token with `refreshToken`.
     ///
     /// - Parameters:
@@ -45,32 +34,18 @@ public struct API {
     ///   `.LineSDKAccessTokenDidUpdate` notification. Normally, you do not need to refresh the access token
     ///   manually because any API call will attempt to refresh the access token if necessary.
     ///
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
+        """,
+    renamed: "Auth.refreshAccessToken"
+    )
     public static func refreshAccessToken(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<AccessToken, LineSDKError>) -> Void)
     {
-        guard let token = AccessTokenStore.shared.current else
-        {
-            queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
-            return
-        }
-        let request = PostRefreshTokenRequest(
-            channelID: LoginConfiguration.shared.channelID,
-            refreshToken: token._refreshToken)
-        Session.shared.send(request, callbackQueue: queue) { result in
-            switch result {
-            case .success(let newToken):
-                do {
-                    let combinedToken = try AccessToken(token: newToken, currentIDTokenRaw: token.IDTokenRaw)
-                    try AccessTokenStore.shared.setCurrentToken(combinedToken)
-                    completion(.success(combinedToken))
-                } catch {
-                    completion(.failure(error.sdkError))
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        Auth.refreshAccessToken(callbackQueue: queue, completionHandler: completion)
     }
     
     /// Revokes the access token.
@@ -92,6 +67,13 @@ public struct API {
     ///   LINE Platform.
     ///
     ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token removed from the device.
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
+        """,
+    renamed: "Auth.revokeAccessToken"
+    )
     public static func revokeAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -148,6 +130,13 @@ public struct API {
     ///   token. To access the resource owner's content, you need to ask your users to authorize your app again.
     ///
     ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token is removed from the device.
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
+        """,
+    renamed: "Auth.revokeRefreshToken"
+    )
     public static func revokeRefreshToken(
         _ refreshToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -193,6 +182,13 @@ public struct API {
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the access token is verified.
     ///
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
+        """,
+    renamed: "Auth.verifyAccessToken"
+    )
     public static func verifyAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -203,38 +199,6 @@ public struct API {
             return
         }
         let request = GetVerifyTokenRequest(accessToken: token)
-        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
-    }
-    
-    /// Gets the user's profile.
-    ///
-    /// - Parameters:
-    ///   - queue: The callback queue that is used for `completion`. The default value is
-    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
-    ///   - completion: The completion closure to be invoked when the user's profile is returned.
-    /// - Note: The `.profile` permission is required.
-    ///
-    public static func getProfile(
-        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<UserProfile, LineSDKError>) -> Void)
-    {
-        let request = GetUserProfileRequest()
-        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
-    }
-    
-    /// Gets the friendship status of the user and the bot linked to your LINE Login channel.
-    ///
-    /// - Parameters:
-    ///   - queue: The callback queue that is used for `completion`. The default value is
-    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
-    ///   - completion: The completion closure to be invoked when the friendship status is returned.
-    /// - Note: The `.profile` permission is required.
-    ///
-    public static func getBotFriendshipStatus(
-        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetBotFriendshipStatusRequest.Response, LineSDKError>) -> Void)
-    {
-        let request = GetBotFriendshipStatusRequest()
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
 }

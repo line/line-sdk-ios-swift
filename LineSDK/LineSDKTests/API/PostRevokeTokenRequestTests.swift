@@ -52,7 +52,7 @@ class PostRevokeTokenRequestTests: APITests {
         Session._shared = Session(configuration: config, delegate: stub)
         setupTestToken()
         
-        API.revokeAccessToken {result in
+        API.Auth.revokeAccessToken {result in
             XCTAssertNotNil(result.value)
             expect.fulfill()
         }

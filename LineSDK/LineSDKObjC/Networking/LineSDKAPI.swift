@@ -26,70 +26,6 @@ import LineSDK
 @objcMembers
 public class LineSDKAPI: NSObject {
     
-    // MARK: - refreshAccessToken
-    public static func refreshAccessToken(
-        completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void)
-    {
-        refreshAccessToken(callbackQueue: .currentMainOrAsync, completionHandler: completion)
-    }
-    
-    public static func refreshAccessToken(
-        callbackQueue queue: LineSDKCallbackQueue,
-        completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void)
-    {
-        API.refreshAccessToken(callbackQueue: queue.unwrapped) { result in
-            result.map(LineSDKAccessToken.init).match(with: completion)
-        }
-    }
-    
-    // MARK: - revokeAccessToken
-    public static func revokeAccessToken(
-        completionHandler completion: @escaping (Error?) -> Void)
-    {
-        revokeAccessToken(nil, completionHandler: completion)
-    }
-    
-    public static func revokeAccessToken(
-        _ token: String?,
-        completionHandler completion: @escaping (Error?) -> Void)
-    {
-        revokeAccessToken(token, callbackQueue: .currentMainOrAsync, completionHandler: completion)
-    }
-    
-    public static func revokeAccessToken(
-        _ token: String?,
-        callbackQueue queue: LineSDKCallbackQueue,
-        completionHandler completion: @escaping (Error?) -> Void)
-    {
-        API.revokeAccessToken(token, callbackQueue: queue.unwrapped) { result in
-            result.matchFailure(with: completion)
-        }
-    }
-    
-    // MARK: - verifyAccessToken
-    public static func verifyAccessToken(
-        completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
-    {
-        verifyAccessToken(nil, completionHandler: completion)
-    }
-    
-    public static func verifyAccessToken(
-        _ token: String?,
-        completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
-    {
-        verifyAccessToken(token, callbackQueue: .currentMainOrAsync, completionHandler: completion)
-    }
-    
-    public static func verifyAccessToken(
-        _ token: String?,
-        callbackQueue queue: LineSDKCallbackQueue,
-        completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
-    {
-        API.verifyAccessToken(token, callbackQueue: queue.unwrapped) { result in
-            result.map(LineSDKAccessTokenVerifyResult.init).match(with: completion)
-        }
-    }
-    
     // MARK: - getProfile
     public static func getProfile(
         completionHandler completion: @escaping (LineSDKUserProfile?, Error?) -> Void)
@@ -286,3 +222,119 @@ public class LineSDKAPI: NSObject {
     }
 }
 
+// MARK: - getGroups
+extension LineSDKAPI {
+    // MARK: - refreshAccessToken
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        """,
+    renamed: "LineSDKAuthAPI.refreshAccessToken"
+    )
+    public static func refreshAccessToken(
+        completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void)
+    {
+        refreshAccessToken(callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+    
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        """,
+    renamed: "LineSDKAuthAPI.refreshAccessToken"
+    )
+    public static func refreshAccessToken(
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void)
+    {
+        LineSDKAuthAPI.refreshAccessToken(callbackQueue: queue, completionHandler: completion)
+    }
+    
+    // MARK: - revokeAccessToken
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        """,
+    renamed: "LineSDKAuthAPI.revokeAccessToken"
+    )
+    public static func revokeAccessToken(
+        completionHandler completion: @escaping (Error?) -> Void)
+    {
+        revokeAccessToken(nil, completionHandler: completion)
+    }
+    
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        """,
+    renamed: "LineSDKAuthAPI.revokeAccessToken"
+    )
+    public static func revokeAccessToken(
+        _ token: String?,
+        completionHandler completion: @escaping (Error?) -> Void)
+    {
+        revokeAccessToken(token, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+    
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        """,
+    renamed: "LineSDKAuthAPI.revokeAccessToken"
+    )
+    public static func revokeAccessToken(
+        _ token: String?,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (Error?) -> Void)
+    {
+        LineSDKAuthAPI.revokeAccessToken(token, callbackQueue: queue, completionHandler: completion)
+    }
+    
+    // MARK: - verifyAccessToken
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        """,
+    renamed: "LineSDKAuthAPI.verifyAccessToken"
+    )
+    public static func verifyAccessToken(
+        completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
+    {
+        verifyAccessToken(nil, completionHandler: completion)
+    }
+    
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        """,
+    renamed: "LineSDKAuthAPI.verifyAccessToken"
+    )
+    public static func verifyAccessToken(
+        _ token: String?,
+        completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
+    {
+        verifyAccessToken(token, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+    
+    @available(*, deprecated,
+    message: """
+        Auth related APIs are not refreshing access token automatically.
+        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        """,
+    renamed: "LineSDKAuthAPI.verifyAccessToken"
+    )
+    public static func verifyAccessToken(
+        _ token: String?,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
+    {
+        LineSDKAuthAPI.verifyAccessToken(token, callbackQueue: queue, completionHandler: completion)
+    }
+}

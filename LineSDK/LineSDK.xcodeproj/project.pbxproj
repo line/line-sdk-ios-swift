@@ -503,6 +503,14 @@
 		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
 		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
 		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
+		4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
+		4BD33ED3238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
+		4BD33ED4238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
+		4BD33ED7238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
+		4BD33ED8238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
+		4BD33ED9238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
+		4BD33EDE238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
+		4BD33EDF238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
 		4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
 		4BD33EE4238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
 		4BD33EE5238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
@@ -828,6 +836,9 @@
 		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
 		4BD24CF4213E278700606411 /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
 		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
+		4BD33ED1238B627200C1E8A9 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
+		4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Deprecated.swift"; sourceTree = "<group>"; };
+		4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAuthAPI.swift; sourceTree = "<group>"; };
 		4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerParameters.swift; sourceTree = "<group>"; };
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
@@ -1052,6 +1063,7 @@
 				4B2D14FF212FA9CA000DD5BE /* CustomizeCoding */,
 				4B2D1502212FAB5A000DD5BE /* LineSDKAPIError.swift */,
 				4B2D1504212FABD2000DD5BE /* LineSDKAPI.swift */,
+				4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1228,11 +1240,10 @@
 		4B9058CD210072B0004D717F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				4BD33ED5238B6E6600C1E8A9 /* API */,
 				4BB002C4224474F800FB8BD8 /* Images */,
 				4B45257C2101A77300A39D4F /* Client */,
 				4B4525792101A4DE00A39D4F /* Model */,
-				4BD191B3211154DF00E2C481 /* API.swift */,
-				4BB95E45215B7C2F00D213AD /* API+Internal.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1538,6 +1549,17 @@
 				4B6A0FF4212AA82500B3ED1F /* HexColor.swift */,
 			);
 			path = CustomizeCoding;
+			sourceTree = "<group>";
+		};
+		4BD33ED5238B6E6600C1E8A9 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				4BD191B3211154DF00E2C481 /* API.swift */,
+				4BB95E45215B7C2F00D213AD /* API+Internal.swift */,
+				4BD33ED1238B627200C1E8A9 /* API+Auth.swift */,
+				4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		4BDD2C1021338B8600DD563D /* Actions */ = {
@@ -2136,6 +2158,7 @@
 				4B50EC7722E69B0D00225900 /* AccessTokenVerifyResult.swift in Sources */,
 				4B6AA83922E97176005FFF9C /* PostMultisendMessagesTokenRequest.swift in Sources */,
 				4B50EC7822E69B0D00225900 /* PostOTPRequest.swift in Sources */,
+				4BD33ED8238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */,
 				4B50EC7922E69B0D00225900 /* MessageShareTargetType.swift in Sources */,
 				4B50EC7A22E69B0D00225900 /* JWTCoder.swift in Sources */,
 				4B50EC7B22E69B0D00225900 /* GetFriendsRequest.swift in Sources */,
@@ -2200,6 +2223,7 @@
 				4B50ECB522E69B0D00225900 /* ECDSA.swift in Sources */,
 				4B50ECB622E69B0D00225900 /* LoginManager.swift in Sources */,
 				4B50ECB722E69B0D00225900 /* PostExchangeTokenRequest.swift in Sources */,
+				4BD33ED3238B627200C1E8A9 /* API+Auth.swift in Sources */,
 				4B50ECB822E69B0D00225900 /* AccessToken.swift in Sources */,
 				4B50ECB922E69B0D00225900 /* FlexIconComponent.swift in Sources */,
 				4B50ECBA22E69B0D00225900 /* NotificationToken.swift in Sources */,
@@ -2367,6 +2391,7 @@
 				4B50EDBB22E6ABFB00225900 /* LineSDKTemplateCarouselPayload.swift in Sources */,
 				4B50ED6C22E6A94100225900 /* LoginConfiguration.swift in Sources */,
 				4B50EDB522E6ABEE00225900 /* LineSDKUser.swift in Sources */,
+				4BD33ED9238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */,
 				4B50ED6D22E6A94100225900 /* ECDSA.swift in Sources */,
 				4B50EDC522E6ABFB00225900 /* LineSDKSpacerComponent.swift in Sources */,
 				4B50ED6E22E6A94100225900 /* LoginManager.swift in Sources */,
@@ -2392,6 +2417,7 @@
 				4B50ED7D22E6A94100225900 /* FlexImageComponent.swift in Sources */,
 				4B50EDD722E6AC0800225900 /* LineSDKConstant.swift in Sources */,
 				4B50EDB422E6ABEA00225900 /* LineSDKLoginPermission.swift in Sources */,
+				4BD33EDF238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */,
 				4B50ED7E22E6A94100225900 /* JWTHelpers.swift in Sources */,
 				4B50EDC322E6ABFB00225900 /* LineSDKFlexIconComponent.swift in Sources */,
 				4B50EDC722E6ABFB00225900 /* LineSDKFlexBubbleContainer.swift in Sources */,
@@ -2421,6 +2447,7 @@
 				4B50EDA622E6ABDD00225900 /* LineSDKShareTarget.swift in Sources */,
 				4B50ED8D22E6A94100225900 /* Request.swift in Sources */,
 				4B50ED8E22E6A94100225900 /* FlexTextComponent.swift in Sources */,
+				4BD33ED4238B627200C1E8A9 /* API+Auth.swift in Sources */,
 				4B0FD5842330D1050054A4E8 /* Colors.swift in Sources */,
 				4B50ED8F22E6A94100225900 /* TemplateConfirmPayload.swift in Sources */,
 				4B50ED9022E6A94100225900 /* CryptoError.swift in Sources */,
@@ -2465,6 +2492,7 @@
 				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
 				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,
 				4B41593A225AE464003AE63A /* MessageShareTargetType.swift in Sources */,
+				4BD33ED7238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */,
 				4B1C446B2137E98D0094C1D4 /* JWTCoder.swift in Sources */,
 				DBE4E370211D6CF500184D66 /* GetFriendsRequest.swift in Sources */,
 				4B6A0FF5212AA82500B3ED1F /* HexColor.swift in Sources */,
@@ -2529,6 +2557,7 @@
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
 				4B3CCB9C21523B1300F51D76 /* ECDSA.swift in Sources */,
 				4B9058D6210073E6004D717F /* LoginManager.swift in Sources */,
+				4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */,
 				4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */,
 				4BF3B0D6236143F70059CE93 /* GetShareFriendsRequest.swift in Sources */,
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,
@@ -2664,6 +2693,7 @@
 				4BDD2C1C2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift in Sources */,
 				4BC4B3E1212FF39D00750794 /* LineSDKTemplateMessage.swift in Sources */,
 				4B7FEE0F221E466E003F7369 /* ResultExtensions.swift in Sources */,
+				4BD33EDE238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */,
 				4B2D1505212FABD2000DD5BE /* LineSDKAPI.swift in Sources */,
 				4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */,
 				4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */,

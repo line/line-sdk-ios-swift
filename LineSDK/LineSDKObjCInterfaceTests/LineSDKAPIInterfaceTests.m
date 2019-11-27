@@ -32,25 +32,34 @@
 @implementation LineSDKAPIInterfaceTests
 
 - (void)_testRefreshAccessTokenInterface {
-    [LineSDKAPI refreshAccessTokenWithCompletionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
-    [LineSDKAPI refreshAccessTokenWithCallbackQueue:[LineSDKCallbackQueue asyncMain]
+    [LineSDKAuthAPI refreshAccessTokenWithCompletionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
+    [LineSDKAuthAPI refreshAccessTokenWithCallbackQueue:[LineSDKCallbackQueue asyncMain]
                                   completionHandler:^(LineSDKAccessToken * token, NSError * error) {}];
 }
 
 - (void)_testRevokeAccessTokenInterface {
-    [LineSDKAPI revokeAccessTokenWithCompletionHandler:^(NSError * error) {}];
-    [LineSDKAPI revokeAccessToken:nil
+    [LineSDKAuthAPI revokeAccessTokenWithCompletionHandler:^(NSError * error) {}];
+    [LineSDKAuthAPI revokeAccessToken:nil
                 completionHandler:^(NSError * error) {}];
-    [LineSDKAPI revokeAccessToken:nil
+    [LineSDKAuthAPI revokeAccessToken:nil
+                    callbackQueue:[LineSDKCallbackQueue asyncMain]
+                completionHandler:^(NSError * error) {}];
+}
+
+- (void)_testRevokeRefreshTokenInterface {
+    [LineSDKAuthAPI revokeRefreshTokenWithCompletionHandler:^(NSError * error) {}];
+    [LineSDKAuthAPI revokeRefreshToken:nil
+                completionHandler:^(NSError * error) {}];
+    [LineSDKAuthAPI revokeRefreshToken:nil
                     callbackQueue:[LineSDKCallbackQueue asyncMain]
                 completionHandler:^(NSError * error) {}];
 }
 
 - (void)_testVerifyAccessTokenInterface {
-    [LineSDKAPI verifyAccessTokenWithCompletionHandler:^(LineSDKAccessTokenVerifyResult *result, NSError * error) {}];
-    [LineSDKAPI verifyAccessToken:nil
+    [LineSDKAuthAPI verifyAccessTokenWithCompletionHandler:^(LineSDKAccessTokenVerifyResult *result, NSError * error) {}];
+    [LineSDKAuthAPI verifyAccessToken:nil
                 completionHandler:^(LineSDKAccessTokenVerifyResult *result, NSError * error) {}];
-    [LineSDKAPI verifyAccessToken:nil
+    [LineSDKAuthAPI verifyAccessToken:nil
                     callbackQueue:[LineSDKCallbackQueue asyncMain]
                 completionHandler:^(LineSDKAccessTokenVerifyResult *result, NSError * error) {}];
 }
@@ -61,7 +70,7 @@
                           completionHandler:^(LineSDKUserProfile *result, NSError * error) {}];
 }
 
-- (void)_testGetFriendsInterfale {
+- (void)_testGetFriendsInterface {
     [LineSDKAPI getFriendsWithPageToken:nil
                       completionHandler:^(LineSDKGetFriendsResponse *result, NSError *error) {}];
     [LineSDKAPI getFriendsWithSort:LineSDKGetFriendsRequestSortName

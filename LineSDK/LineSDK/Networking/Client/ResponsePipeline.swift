@@ -141,7 +141,7 @@ class RefreshTokenRedirector: ResponsePipelineRedirector {
         response: HTTPURLResponse,
         done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
     {
-        API.refreshAccessToken { result in
+        API.Auth.refreshAccessToken { result in
             switch result {
             case .success(_):
                 try? closure(.restartWithout(.redirector(self)))

@@ -279,7 +279,7 @@ extension LineSDKError {
     }
 
     /// Checks and returns whether the `LineSDKError` is a refresh token error. Typically, when the user uses
-    /// an expired access token to send an API request, an automatic token refresh operation with the
+    /// an expired access token to send a public API request, an automatic token refresh operation with the
     /// current refresh token will be triggered. This error typically occurs when the refresh token also
     /// expires or is invalid. If this error occurs, let the user log in again before you can continue to
     /// access the LINE Platform.
