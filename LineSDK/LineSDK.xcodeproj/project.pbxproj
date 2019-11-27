@@ -13,8 +13,6 @@
 		3FE8E370214A6E70009E91BD /* LineSDKLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */; };
 		4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B08F9C12119863500B140DF /* LineSDKErrorTests.swift */; };
 		4B0FD5822330D0270054A4E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0FD5812330D0270054A4E8 /* Colors.swift */; };
-		4B0FD5832330D1050054A4E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0FD5812330D0270054A4E8 /* Colors.swift */; };
-		4B0FD5842330D1050054A4E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0FD5812330D0270054A4E8 /* Colors.swift */; };
 		4B15EEF4211D466D00866E6C /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF3211D466D00866E6C /* TextMessage.swift */; };
 		4B15EEF6211D46FF00866E6C /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF5211D46FF00866E6C /* Message.swift */; };
 		4B15EEF8211D473400866E6C /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF7211D473400866E6C /* MessageSender.swift */; };
@@ -74,305 +72,6 @@
 		4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8121083CDB006D17F5 /* Constant.swift */; };
 		4B4F0B8421084755006D17F5 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8321084755006D17F5 /* UserProfile.swift */; };
 		4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */; };
-		4B50EC6922E69B0D00225900 /* GetGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20275212C11A600780358 /* GetGroupsRequest.swift */; };
-		4B50EC6A22E69B0D00225900 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */; };
-		4B50EC6B22E69B0D00225900 /* GetDiscoveryDocumentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F2213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift */; };
-		4B50EC6C22E69B0D00225900 /* OneTimePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257A2101A4E900A39D4F /* OneTimePassword.swift */; };
-		4B50EC6D22E69B0D00225900 /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
-		4B50EC6E22E69B0D00225900 /* TemplateImageCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305B21216D2E00174C6F /* TemplateImageCarouselPayload.swift */; };
-		4B50EC6F22E69B0D00225900 /* ResponsePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48C210598F500890AEF /* ResponsePipeline.swift */; };
-		4B50EC7022E69B0D00225900 /* TemplateCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30572121613500174C6F /* TemplateCarouselPayload.swift */; };
-		4B50EC7122E69B0D00225900 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256C2101829F00A39D4F /* Helpers.swift */; };
-		4B50EC7222E69B0D00225900 /* MessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304D2121405300174C6F /* MessageAction.swift */; };
-		4B50EC7322E69B0D00225900 /* LoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256E210188C300A39D4F /* LoginPermission.swift */; };
-		4B50EC7422E69B0D00225900 /* FlexMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53538212A7C9100EA602A /* FlexMessage.swift */; };
-		4B50EC7522E69B0D00225900 /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
-		4B50EC7622E69B0D00225900 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B721116C4C00E2C481 /* Unit.swift */; };
-		4B50EC7722E69B0D00225900 /* AccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */; };
-		4B50EC7822E69B0D00225900 /* PostOTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257721019FCC00A39D4F /* PostOTPRequest.swift */; };
-		4B50EC7922E69B0D00225900 /* MessageShareTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415939225AE464003AE63A /* MessageShareTargetType.swift */; };
-		4B50EC7A22E69B0D00225900 /* JWTCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */; };
-		4B50EC7B22E69B0D00225900 /* GetFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */; };
-		4B50EC7C22E69B0D00225900 /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF4212AA82500B3ED1F /* HexColor.swift */; };
-		4B50EC7D22E69B0D00225900 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF5211D46FF00866E6C /* Message.swift */; };
-		4B50EC7E22E69B0D00225900 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
-		4B50EC7F22E69B0D00225900 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
-		4B50EC8022E69B0D00225900 /* ShareTargetSelectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D5325224873C700BAA3B4 /* ShareTargetSelectingViewController.swift */; };
-		4B50EC8122E69B0D00225900 /* GetVerifyTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */; };
-		4B50EC8222E69B0D00225900 /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF7211D473400866E6C /* MessageSender.swift */; };
-		4B50EC8322E69B0D00225900 /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
-		4B50EC8422E69B0D00225900 /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF3211D466D00866E6C /* TextMessage.swift */; };
-		4B50EC8522E69B0D00225900 /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
-		4B50EC8622E69B0D00225900 /* GetUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */; };
-		4B50EC8722E69B0D00225900 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A7025210956B600D71C66 /* KeychainStore.swift */; };
-		4B50EC8822E69B0D00225900 /* LocationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303E2121277400174C6F /* LocationMessage.swift */; };
-		4B50EC8922E69B0D00225900 /* TemplateMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */; };
-		4B50EC8A22E69B0D00225900 /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* CryptoHelpers.swift */; };
-		4B50EC8B22E69B0D00225900 /* ShareTargetSearchResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD203224CAF6100CD9544 /* ShareTargetSearchResultTableViewController.swift */; };
-		4B50EC8C22E69B0D00225900 /* PageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */; };
-		4B50EC8D22E69B0D00225900 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257521019EFB00A39D4F /* Session.swift */; };
-		4B50EC8E22E69B0D00225900 /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
-		4B50EC8F22E69B0D00225900 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8121083CDB006D17F5 /* Constant.swift */; };
-		4B50EC9022E69B0D00225900 /* ChainedPaginatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5337D222E33E30080D138 /* ChainedPaginatedRequest.swift */; };
-		4B50EC9122E69B0D00225900 /* ShareViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415937225AE40E003AE63A /* ShareViewControllerDelegate.swift */; };
-		4B50EC9222E69B0D00225900 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B3211154DF00E2C481 /* API.swift */; };
-		4B50EC9322E69B0D00225900 /* FlexMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605F212A8F00009E9838 /* FlexMessageProperties.swift */; };
-		4B50EC9422E69B0D00225900 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */; };
-		4B50EC9522E69B0D00225900 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36C211D6C1A00184D66 /* User.swift */; };
-		4B50EC9622E69B0D00225900 /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
-		4B50EC9722E69B0D00225900 /* GetBotFriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */; };
-		4B50EC9822E69B0D00225900 /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9921523A2600F51D76 /* CryptoKey.swift */; };
-		4B50EC9922E69B0D00225900 /* FlexMessageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */; };
-		4B50EC9A22E69B0D00225900 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C52244758000FB8BD8 /* ImageDownloader.swift */; };
-		4B50EC9B22E69B0D00225900 /* FlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */; };
-		4B50EC9C22E69B0D00225900 /* FlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */; };
-		4B50EC9D22E69B0D00225900 /* ShareRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF92254660C00C16B0C /* ShareRootViewController.swift */; };
-		4B50EC9E22E69B0D00225900 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75523021244502004AC047 /* LoginButton.swift */; };
-		4B50EC9F22E69B0D00225900 /* AccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */; };
-		4B50ECA022E69B0D00225900 /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
-		4B50ECA122E69B0D00225900 /* API+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB95E45215B7C2F00D213AD /* API+Internal.swift */; };
-		4B50ECA222E69B0D00225900 /* ShareTargetTableViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B392661224DC06F006485B4 /* ShareTargetTableViewStyling.swift */; };
-		4B50ECA322E69B0D00225900 /* TemplateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3046212139C000174C6F /* TemplateMessage.swift */; };
-		4B50ECA422E69B0D00225900 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44642137E0CA0094C1D4 /* JWT.swift */; };
-		4B50ECA522E69B0D00225900 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C72244788A00FB8BD8 /* ImageManager.swift */; };
-		4B50ECA622E69B0D00225900 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
-		4B50ECA722E69B0D00225900 /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30342121182400174C6F /* VideoMessage.swift */; };
-		4B50ECA822E69B0D00225900 /* TemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304821213CE100174C6F /* TemplateButtonsPayload.swift */; };
-		4B50ECA922E69B0D00225900 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B688E3D226F029B002575CC /* LoadingIndicator.swift */; };
-		4B50ECAA22E69B0D00225900 /* LoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */; };
-		4B50ECAB22E69B0D00225900 /* FlexFillerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */; };
-		4B50ECAC22E69B0D00225900 /* ShareTargetSelectingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D53292248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift */; };
-		4B50ECAD22E69B0D00225900 /* ShareTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D5323224872A300BAA3B4 /* ShareTarget.swift */; };
-		4B50ECAE22E69B0D00225900 /* PostRevokeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */; };
-		4B50ECAF22E69B0D00225900 /* FlexButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF2212AA15D00B3ED1F /* FlexButtonComponent.swift */; };
-		4B50ECB022E69B0D00225900 /* AudioMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303821211EC400174C6F /* AudioMessage.swift */; };
-		4B50ECB122E69B0D00225900 /* ShareTargetSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */; };
-		4B50ECB222E69B0D00225900 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48E2105B27600890AEF /* URLs.swift */; };
-		4B50ECB322E69B0D00225900 /* ColumnDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D5327224876B900BAA3B4 /* ColumnDataStore.swift */; };
-		4B50ECB422E69B0D00225900 /* LoginConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D321007394004D717F /* LoginConfiguration.swift */; };
-		4B50ECB522E69B0D00225900 /* ECDSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9B21523B1300F51D76 /* ECDSA.swift */; };
-		4B50ECB622E69B0D00225900 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D5210073E6004D717F /* LoginManager.swift */; };
-		4B50ECB722E69B0D00225900 /* PostExchangeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */; };
-		4B50ECB822E69B0D00225900 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7F21080D69006D17F5 /* AccessToken.swift */; };
-		4B50ECB922E69B0D00225900 /* FlexIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4921212BA05500BA946A /* FlexIconComponent.swift */; };
-		4B50ECBA22E69B0D00225900 /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
-		4B50ECBB22E69B0D00225900 /* MessageProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303A212121FC00174C6F /* MessageProtocols.swift */; };
-		4B50ECBC22E69B0D00225900 /* DownloadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1658042252EF3C0008E441 /* DownloadableImageView.swift */; };
-		4B50ECBD22E69B0D00225900 /* FlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */; };
-		4B50ECBE22E69B0D00225900 /* SelectedTargetPanelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBD43E224E7D0500A74D44 /* SelectedTargetPanelCell.swift */; };
-		4B50ECBF22E69B0D00225900 /* ResourceLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */; };
-		4B50ECC022E69B0D00225900 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */; };
-		4B50ECC122E69B0D00225900 /* PostMultisendMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */; };
-		4B50ECC222E69B0D00225900 /* PostSendMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B9AA62123C6E400325B9B /* PostSendMessagesRequest.swift */; };
-		4B50ECC322E69B0D00225900 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB752152295300F51D76 /* CryptoData.swift */; };
-		4B50ECC422E69B0D00225900 /* CodingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27922113EC6C00B90D8F /* CodingExtension.swift */; };
-		4B50ECC522E69B0D00225900 /* FlexImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */; };
-		4B50ECC622E69B0D00225900 /* JWTHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */; };
-		4B50ECC722E69B0D00225900 /* FlexBlockStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E3212BCE1A0009DF2E /* FlexBlockStyle.swift */; };
-		4B50ECC822E69B0D00225900 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
-		4B50ECC922E69B0D00225900 /* ShareTargetSelectingSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */; };
-		4B50ECCA22E69B0D00225900 /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A814213687A400C74B87 /* RSA.swift */; };
-		4B50ECCB22E69B0D00225900 /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
-		4B50ECCC22E69B0D00225900 /* FlexSpacerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */; };
-		4B50ECCD22E69B0D00225900 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5B210EF12C00FD19BC /* APIError.swift */; };
-		4B50ECCE22E69B0D00225900 /* CryptoAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB77215229DC00F51D76 /* CryptoAlgorithm.swift */; };
-		4B50ECCF22E69B0D00225900 /* GetJWKSetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */; };
-		4B50ECD022E69B0D00225900 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20273212C114D00780358 /* Group.swift */; };
-		4B50ECD122E69B0D00225900 /* ResultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3044E221D3620005ADADD /* ResultUtils.swift */; };
-		4B50ECD222E69B0D00225900 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8321084755006D17F5 /* UserProfile.swift */; };
-		4B50ECD322E69B0D00225900 /* FlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */; };
-		4B50ECD422E69B0D00225900 /* ShareTargetSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */; };
-		4B50ECD522E69B0D00225900 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4525702101938F00A39D4F /* Request.swift */; };
-		4B50ECD622E69B0D00225900 /* FlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605B212A8775009E9838 /* FlexTextComponent.swift */; };
-		4B50ECD722E69B0D00225900 /* TemplateConfirmPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305321215A1A00174C6F /* TemplateConfirmPayload.swift */; };
-		4B50ECD822E69B0D00225900 /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
-		4B50ECD922E69B0D00225900 /* SelectedTargetPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBD438224B85F500A74D44 /* SelectedTargetPanelViewController.swift */; };
-		4B50ECDA22E69B0D00225900 /* FlexMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */; };
-		4B50ECDB22E69B0D00225900 /* TemplateMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */; };
-		4B50ECDC22E69B0D00225900 /* LoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256A2101810D00A39D4F /* LoginProcess.swift */; };
-		4B50ECDD22E69B0D00225900 /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303021210FE700174C6F /* ImageMessage.swift */; };
-		4B50ECDE22E69B0D00225900 /* GetApproversInGroupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */; };
-		4B50ECDF22E69B0D00225900 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
-		4B50ECE222E69B0D00225900 /* LineSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B90587B21006E5C004D717F /* LineSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4B50ECE422E69B0D00225900 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
-		4B50ECE522E69B0D00225900 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F75522E2123D214004AC047 /* Assets.xcassets */; };
-		4B50ED2122E6A94100225900 /* GetGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20275212C11A600780358 /* GetGroupsRequest.swift */; };
-		4B50ED2222E6A94100225900 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */; };
-		4B50ED2322E6A94100225900 /* GetDiscoveryDocumentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F2213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift */; };
-		4B50ED2422E6A94100225900 /* OneTimePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257A2101A4E900A39D4F /* OneTimePassword.swift */; };
-		4B50ED2522E6A94100225900 /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
-		4B50ED2622E6A94100225900 /* TemplateImageCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305B21216D2E00174C6F /* TemplateImageCarouselPayload.swift */; };
-		4B50ED2722E6A94100225900 /* ResponsePipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48C210598F500890AEF /* ResponsePipeline.swift */; };
-		4B50ED2822E6A94100225900 /* TemplateCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30572121613500174C6F /* TemplateCarouselPayload.swift */; };
-		4B50ED2922E6A94100225900 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256C2101829F00A39D4F /* Helpers.swift */; };
-		4B50ED2A22E6A94100225900 /* MessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304D2121405300174C6F /* MessageAction.swift */; };
-		4B50ED2B22E6A94100225900 /* LoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256E210188C300A39D4F /* LoginPermission.swift */; };
-		4B50ED2C22E6A94100225900 /* FlexMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53538212A7C9100EA602A /* FlexMessage.swift */; };
-		4B50ED2D22E6A94100225900 /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
-		4B50ED2E22E6A94100225900 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B721116C4C00E2C481 /* Unit.swift */; };
-		4B50ED2F22E6A94100225900 /* AccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */; };
-		4B50ED3022E6A94100225900 /* PostOTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257721019FCC00A39D4F /* PostOTPRequest.swift */; };
-		4B50ED3122E6A94100225900 /* MessageShareTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415939225AE464003AE63A /* MessageShareTargetType.swift */; };
-		4B50ED3222E6A94100225900 /* JWTCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C446A2137E98D0094C1D4 /* JWTCoder.swift */; };
-		4B50ED3322E6A94100225900 /* GetFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36F211D6CF500184D66 /* GetFriendsRequest.swift */; };
-		4B50ED3422E6A94100225900 /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF4212AA82500B3ED1F /* HexColor.swift */; };
-		4B50ED3522E6A94100225900 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF5211D46FF00866E6C /* Message.swift */; };
-		4B50ED3622E6A94100225900 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
-		4B50ED3722E6A94100225900 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
-		4B50ED3822E6A94100225900 /* ShareTargetSelectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D5325224873C700BAA3B4 /* ShareTargetSelectingViewController.swift */; };
-		4B50ED3922E6A94100225900 /* GetVerifyTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD278D2113E9A900B90D8F /* GetVerifyTokenRequest.swift */; };
-		4B50ED3A22E6A94100225900 /* MessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF7211D473400866E6C /* MessageSender.swift */; };
-		4B50ED3B22E6A94100225900 /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
-		4B50ED3C22E6A94100225900 /* TextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF3211D466D00866E6C /* TextMessage.swift */; };
-		4B50ED3D22E6A94100225900 /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
-		4B50ED3E22E6A94100225900 /* GetUserProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */; };
-		4B50ED3F22E6A94100225900 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A7025210956B600D71C66 /* KeychainStore.swift */; };
-		4B50ED4022E6A94100225900 /* LocationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303E2121277400174C6F /* LocationMessage.swift */; };
-		4B50ED4122E6A94100225900 /* TemplateMessagePayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304A21213DBB00174C6F /* TemplateMessagePayload.swift */; };
-		4B50ED4222E6A94100225900 /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* CryptoHelpers.swift */; };
-		4B50ED4322E6A94100225900 /* ShareTargetSearchResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFCD203224CAF6100CD9544 /* ShareTargetSearchResultTableViewController.swift */; };
-		4B50ED4422E6A94100225900 /* PageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3D78BA22420BEA00DE27D1 /* PageTabView.swift */; };
-		4B50ED4522E6A94100225900 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257521019EFB00A39D4F /* Session.swift */; };
-		4B50ED4622E6A94100225900 /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
-		4B50ED4722E6A94100225900 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8121083CDB006D17F5 /* Constant.swift */; };
-		4B50ED4822E6A94100225900 /* ChainedPaginatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5337D222E33E30080D138 /* ChainedPaginatedRequest.swift */; };
-		4B50ED4922E6A94100225900 /* ShareViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415937225AE40E003AE63A /* ShareViewControllerDelegate.swift */; };
-		4B50ED4A22E6A94100225900 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B3211154DF00E2C481 /* API.swift */; };
-		4B50ED4B22E6A94100225900 /* FlexMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605F212A8F00009E9838 /* FlexMessageProperties.swift */; };
-		4B50ED4C22E6A94100225900 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */; };
-		4B50ED4D22E6A94100225900 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36C211D6C1A00184D66 /* User.swift */; };
-		4B50ED4E22E6A94100225900 /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
-		4B50ED4F22E6A94100225900 /* GetBotFriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A69D2164658D00804C7C /* GetBotFriendshipStatus.swift */; };
-		4B50ED5022E6A94100225900 /* CryptoKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9921523A2600F51D76 /* CryptoKey.swift */; };
-		4B50ED5122E6A94100225900 /* FlexMessageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */; };
-		4B50ED5222E6A94100225900 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C52244758000FB8BD8 /* ImageDownloader.swift */; };
-		4B50ED5322E6A94100225900 /* FlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4925212BA2FD00BA946A /* FlexSeparatorComponent.swift */; };
-		4B50ED5422E6A94100225900 /* FlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */; };
-		4B50ED5522E6A94100225900 /* ShareRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF92254660C00C16B0C /* ShareRootViewController.swift */; };
-		4B50ED5622E6A94100225900 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75523021244502004AC047 /* LoginButton.swift */; };
-		4B50ED5722E6A94100225900 /* AccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */; };
-		4B50ED5822E6A94100225900 /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
-		4B50ED5922E6A94100225900 /* API+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB95E45215B7C2F00D213AD /* API+Internal.swift */; };
-		4B50ED5A22E6A94100225900 /* ShareTargetTableViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B392661224DC06F006485B4 /* ShareTargetTableViewStyling.swift */; };
-		4B50ED5B22E6A94100225900 /* TemplateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A3046212139C000174C6F /* TemplateMessage.swift */; };
-		4B50ED5C22E6A94100225900 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44642137E0CA0094C1D4 /* JWT.swift */; };
-		4B50ED5D22E6A94100225900 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C72244788A00FB8BD8 /* ImageManager.swift */; };
-		4B50ED5E22E6A94100225900 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
-		4B50ED5F22E6A94100225900 /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A30342121182400174C6F /* VideoMessage.swift */; };
-		4B50ED6022E6A94100225900 /* TemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A304821213CE100174C6F /* TemplateButtonsPayload.swift */; };
-		4B50ED6122E6A94100225900 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B688E3D226F029B002575CC /* LoadingIndicator.swift */; };
-		4B50ED6222E6A94100225900 /* LoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */; };
-		4B50ED6322E6A94100225900 /* FlexFillerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */; };
-		4B50ED6422E6A94100225900 /* ShareTargetSelectingTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D53292248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift */; };
-		4B50ED6522E6A94100225900 /* ShareTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D5323224872A300BAA3B4 /* ShareTarget.swift */; };
-		4B50ED6622E6A94100225900 /* PostRevokeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B521115ED800E2C481 /* PostRevokeTokenRequest.swift */; };
-		4B50ED6722E6A94100225900 /* FlexButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF2212AA15D00B3ED1F /* FlexButtonComponent.swift */; };
-		4B50ED6822E6A94100225900 /* AudioMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303821211EC400174C6F /* AudioMessage.swift */; };
-		4B50ED6922E6A94100225900 /* ShareTargetSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */; };
-		4B50ED6A22E6A94100225900 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48E2105B27600890AEF /* URLs.swift */; };
-		4B50ED6B22E6A94100225900 /* ColumnDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16D5327224876B900BAA3B4 /* ColumnDataStore.swift */; };
-		4B50ED6C22E6A94100225900 /* LoginConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D321007394004D717F /* LoginConfiguration.swift */; };
-		4B50ED6D22E6A94100225900 /* ECDSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9B21523B1300F51D76 /* ECDSA.swift */; };
-		4B50ED6E22E6A94100225900 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D5210073E6004D717F /* LoginManager.swift */; };
-		4B50ED6F22E6A94100225900 /* PostExchangeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */; };
-		4B50ED7022E6A94100225900 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7F21080D69006D17F5 /* AccessToken.swift */; };
-		4B50ED7122E6A94100225900 /* FlexIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4921212BA05500BA946A /* FlexIconComponent.swift */; };
-		4B50ED7222E6A94100225900 /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEE5B34210AC2D000846C6D /* NotificationToken.swift */; };
-		4B50ED7322E6A94100225900 /* MessageProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303A212121FC00174C6F /* MessageProtocols.swift */; };
-		4B50ED7422E6A94100225900 /* DownloadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1658042252EF3C0008E441 /* DownloadableImageView.swift */; };
-		4B50ED7522E6A94100225900 /* FlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */; };
-		4B50ED7622E6A94100225900 /* SelectedTargetPanelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBD43E224E7D0500A74D44 /* SelectedTargetPanelCell.swift */; };
-		4B50ED7722E6A94100225900 /* ResourceLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */; };
-		4B50ED7822E6A94100225900 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */; };
-		4B50ED7922E6A94100225900 /* PostMultisendMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B95F40121252D2F00AD3A81 /* PostMultisendMessagesRequest.swift */; };
-		4B50ED7A22E6A94100225900 /* PostSendMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B9AA62123C6E400325B9B /* PostSendMessagesRequest.swift */; };
-		4B50ED7B22E6A94100225900 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB752152295300F51D76 /* CryptoData.swift */; };
-		4B50ED7C22E6A94100225900 /* CodingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCD27922113EC6C00B90D8F /* CodingExtension.swift */; };
-		4B50ED7D22E6A94100225900 /* FlexImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */; };
-		4B50ED7E22E6A94100225900 /* JWTHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */; };
-		4B50ED7F22E6A94100225900 /* FlexBlockStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E3212BCE1A0009DF2E /* FlexBlockStyle.swift */; };
-		4B50ED8022E6A94100225900 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
-		4B50ED8122E6A94100225900 /* ShareTargetSelectingSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B392663224DE2E1006485B4 /* ShareTargetSelectingSectionHeaderView.swift */; };
-		4B50ED8222E6A94100225900 /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A814213687A400C74B87 /* RSA.swift */; };
-		4B50ED8322E6A94100225900 /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
-		4B50ED8422E6A94100225900 /* FlexSpacerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */; };
-		4B50ED8522E6A94100225900 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B414D5B210EF12C00FD19BC /* APIError.swift */; };
-		4B50ED8622E6A94100225900 /* CryptoAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB77215229DC00F51D76 /* CryptoAlgorithm.swift */; };
-		4B50ED8722E6A94100225900 /* GetJWKSetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F6213CF68000F4594D /* GetJWKSetRequest.swift */; };
-		4B50ED8822E6A94100225900 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20273212C114D00780358 /* Group.swift */; };
-		4B50ED8922E6A94100225900 /* ResultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3044E221D3620005ADADD /* ResultUtils.swift */; };
-		4B50ED8A22E6A94100225900 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8321084755006D17F5 /* UserProfile.swift */; };
-		4B50ED8B22E6A94100225900 /* FlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6059212A875F009E9838 /* FlexBoxComponent.swift */; };
-		4B50ED8C22E6A94100225900 /* ShareTargetSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */; };
-		4B50ED8D22E6A94100225900 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4525702101938F00A39D4F /* Request.swift */; };
-		4B50ED8E22E6A94100225900 /* FlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD605B212A8775009E9838 /* FlexTextComponent.swift */; };
-		4B50ED8F22E6A94100225900 /* TemplateConfirmPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A305321215A1A00174C6F /* TemplateConfirmPayload.swift */; };
-		4B50ED9022E6A94100225900 /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
-		4B50ED9122E6A94100225900 /* SelectedTargetPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBD438224B85F500A74D44 /* SelectedTargetPanelViewController.swift */; };
-		4B50ED9222E6A94100225900 /* FlexMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFD6061212A8F55009E9838 /* FlexMessageComponent.swift */; };
-		4B50ED9322E6A94100225900 /* TemplateMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */; };
-		4B50ED9422E6A94100225900 /* LoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256A2101810D00A39D4F /* LoginProcess.swift */; };
-		4B50ED9522E6A94100225900 /* ImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A303021210FE700174C6F /* ImageMessage.swift */; };
-		4B50ED9622E6A94100225900 /* GetApproversInGroupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF20277212C137D00780358 /* GetApproversInGroupRequest.swift */; };
-		4B50ED9722E6A94100225900 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
-		4B50ED9A22E6A94100225900 /* LineSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B90587B21006E5C004D717F /* LineSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4B50ED9C22E6A94100225900 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
-		4B50ED9D22E6A94100225900 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F75522E2123D214004AC047 /* Assets.xcassets */; };
-		4B50EDA322E6ABD800225900 /* LineSDKLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */; };
-		4B50EDA422E6ABDD00225900 /* LineSDKShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */; };
-		4B50EDA522E6ABDD00225900 /* LineSDKMessageShareAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */; };
-		4B50EDA622E6ABDD00225900 /* LineSDKShareTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */; };
-		4B50EDA722E6ABDD00225900 /* LineSDKShareViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */; };
-		4B50EDA822E6ABDD00225900 /* LineSDKMessageShareTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */; };
-		4B50EDA922E6ABE100225900 /* LineSDKGetBotFriendshipStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D102A6A321646AE200804C7C /* LineSDKGetBotFriendshipStatusResponse.swift */; };
-		4B50EDAA22E6ABE400225900 /* LineSDKErrorConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2422EE2134FBE8007200C2 /* LineSDKErrorConstant.swift */; };
-		4B50EDAB22E6ABEA00225900 /* LineSDKAccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9B3212EB35000858627 /* LineSDKAccessTokenStore.swift */; };
-		4B50EDAC22E6ABEA00225900 /* LineSDKAccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9B5212EB41000858627 /* LineSDKAccessToken.swift */; };
-		4B50EDAD22E6ABEA00225900 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
-		4B50EDAE22E6ABEA00225900 /* LineSDKAccessTokenVerifyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E8212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift */; };
-		4B50EDAF22E6ABEA00225900 /* LineSDKUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */; };
-		4B50EDB022E6ABEA00225900 /* LineSDKLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14F4212F97A6000DD5BE /* LineSDKLoginManager.swift */; };
-		4B50EDB122E6ABEA00225900 /* LineSDKLoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14EE212F9468000DD5BE /* LineSDKLoginManagerOptions.swift */; };
-		4B50EDB222E6ABEA00225900 /* LineSDKLoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14F0212F95B3000DD5BE /* LineSDKLoginResult.swift */; };
-		4B50EDB322E6ABEA00225900 /* LineSDKLoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14F2212F96A7000DD5BE /* LineSDKLoginProcess.swift */; };
-		4B50EDB422E6ABEA00225900 /* LineSDKLoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */; };
-		4B50EDB522E6ABEE00225900 /* LineSDKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2DD212FB7230071C736 /* LineSDKUser.swift */; };
-		4B50EDB622E6ABEE00225900 /* LineSDKGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2DF212FB7B60071C736 /* LineSDKGroup.swift */; };
-		4B50EDB722E6ABEE00225900 /* LineSDKGraphResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2E1212FB8390071C736 /* LineSDKGraphResponse.swift */; };
-		4B50EDB822E6ABFB00225900 /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
-		4B50EDB922E6ABFB00225900 /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
-		4B50EDBA22E6ABFB00225900 /* LineSDKTemplateConfirmPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C172133A26900DD563D /* LineSDKTemplateConfirmPayload.swift */; };
-		4B50EDBB22E6ABFB00225900 /* LineSDKTemplateCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C192133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift */; };
-		4B50EDBC22E6ABFB00225900 /* LineSDKTemplateImageCarouselPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1B2133B97600DD563D /* LineSDKTemplateImageCarouselPayload.swift */; };
-		4B50EDBD22E6ABFB00225900 /* LineSDKFlexMessageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C272133D2B300DD563D /* LineSDKFlexMessageComponent.swift */; };
-		4B50EDBE22E6ABFB00225900 /* LineSDKFlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C372133F34300DD563D /* LineSDKFlexBoxComponent.swift */; };
-		4B50EDBF22E6ABFB00225900 /* LineSDKFlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C292133DD9300DD563D /* LineSDKFlexTextComponent.swift */; };
-		4B50EDC022E6ABFB00225900 /* LineSDKFlexButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C2B2133F2D400DD563D /* LineSDKFlexButtonComponent.swift */; };
-		4B50EDC122E6ABFB00225900 /* LineSDKFlexImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C2D2133F2EA00DD563D /* LineSDKFlexImageComponent.swift */; };
-		4B50EDC222E6ABFB00225900 /* LineSDKFlexFillerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C2F2133F2FA00DD563D /* LineSDKFlexFillerComponent.swift */; };
-		4B50EDC322E6ABFB00225900 /* LineSDKFlexIconComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C312133F30A00DD563D /* LineSDKFlexIconComponent.swift */; };
-		4B50EDC422E6ABFB00225900 /* LineSDKFlexSeparatorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C332133F32200DD563D /* LineSDKFlexSeparatorComponent.swift */; };
-		4B50EDC522E6ABFB00225900 /* LineSDKSpacerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C352133F32F00DD563D /* LineSDKSpacerComponent.swift */; };
-		4B50EDC622E6ABFB00225900 /* LineSDKFlexMessageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C202133C1CD00DD563D /* LineSDKFlexMessageContainer.swift */; };
-		4B50EDC722E6ABFB00225900 /* LineSDKFlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C222133C61F00DD563D /* LineSDKFlexBubbleContainer.swift */; };
-		4B50EDC822E6ABFB00225900 /* LineSDKFlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C242133CA1800DD563D /* LineSDKFlexCarouselContainer.swift */; };
-		4B50EDC922E6ABFB00225900 /* LineSDKMessagingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2E6212FCA130071C736 /* LineSDKMessagingResponse.swift */; };
-		4B50EDCA22E6ABFB00225900 /* LineSDKMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3D6212FD76C00750794 /* LineSDKMessage.swift */; };
-		4B50EDCB22E6ABFB00225900 /* LineSDKTextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3D8212FEB9000750794 /* LineSDKTextMessage.swift */; };
-		4B50EDCC22E6ABFB00225900 /* LineSDKImageMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3DA212FEBA600750794 /* LineSDKImageMessage.swift */; };
-		4B50EDCD22E6ABFB00225900 /* LineSDKVideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3DC212FED4300750794 /* LineSDKVideoMessage.swift */; };
-		4B50EDCE22E6ABFB00225900 /* LineSDKAudioMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3E3212FF86100750794 /* LineSDKAudioMessage.swift */; };
-		4B50EDCF22E6ABFB00225900 /* LineSDKLocationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3DE212FEF8600750794 /* LineSDKLocationMessage.swift */; };
-		4B50EDD022E6ABFB00225900 /* LineSDKTemplateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3E0212FF39D00750794 /* LineSDKTemplateMessage.swift */; };
-		4B50EDD122E6ABFB00225900 /* LineSDKFlexMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1D2133C15300DD563D /* LineSDKFlexMessage.swift */; };
-		4B50EDD222E6AC0100225900 /* LineSDKHexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D1500212FA9EE000DD5BE /* LineSDKHexColor.swift */; };
-		4B50EDD322E6AC0100225900 /* LineSDKAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D1502212FAB5A000DD5BE /* LineSDKAPIError.swift */; };
-		4B50EDD422E6AC0100225900 /* LineSDKAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D1504212FABD2000DD5BE /* LineSDKAPI.swift */; };
-		4B50EDD522E6AC0800225900 /* LinsSDKCallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2D8212FADD60071C736 /* LinsSDKCallbackQueue.swift */; };
-		4B50EDD622E6AC0800225900 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
-		4B50EDD722E6AC0800225900 /* LineSDKConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A9AF22159FCF700915054 /* LineSDKConstant.swift */; };
-		4B50EDD822E6AC0800225900 /* JSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B42816521ED9CE6004A0846 /* JSONConverter.swift */; };
-		4B50EDD922E6AC0800225900 /* ResultExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7FEE0E221E466E003F7369 /* ResultExtensions.swift */; };
 		4B5B0EF32241DEA900BA59A0 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */; };
 		4B5B0EF52241DF3E00BA59A0 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */; };
 		4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */; };
@@ -393,10 +92,6 @@
 		4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A7025210956B600D71C66 /* KeychainStore.swift */; };
 		4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */; };
 		4B6A70312109793500D71C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A70302109793500D71C66 /* AppDelegate.swift */; };
-		4B6AA83922E97176005FFF9C /* PostMultisendMessagesTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */; };
-		4B6AA83A22E97176005FFF9C /* PostMultisendMessagesTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEC048322CDA65300C95B3B /* PostMultisendMessagesTokenRequest.swift */; };
-		4B6AA83B22E97180005FFF9C /* PostMessageTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62425122CAF2000092B92F /* PostMessageTokenRequest.swift */; };
-		4B6AA83C22E97180005FFF9C /* PostMessageTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62425122CAF2000092B92F /* PostMessageTokenRequest.swift */; };
 		4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */; };
 		4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */; };
 		4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */; };
@@ -484,7 +179,6 @@
 		4BC4B3E1212FF39D00750794 /* LineSDKTemplateMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3E0212FF39D00750794 /* LineSDKTemplateMessage.swift */; };
 		4BC4B3E4212FF86100750794 /* LineSDKAudioMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3E3212FF86100750794 /* LineSDKAudioMessage.swift */; };
 		4BC66AE522EA8A6900546FB6 /* LineSDKMessageSendingToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC66AE422EA8A6900546FB6 /* LineSDKMessageSendingToken.swift */; };
-		4BC66AE622EA8A6900546FB6 /* LineSDKMessageSendingToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC66AE422EA8A6900546FB6 /* LineSDKMessageSendingToken.swift */; };
 		4BC9B2D9212FADD60071C736 /* LinsSDKCallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2D8212FADD60071C736 /* LinsSDKCallbackQueue.swift */; };
 		4BC9B2DB212FB0210071C736 /* LineSDKAPIInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2DA212FB0210071C736 /* LineSDKAPIInterfaceTests.m */; };
 		4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC9B2DD212FB7230071C736 /* LineSDKUser.swift */; };
@@ -504,16 +198,9 @@
 		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
 		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
 		4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
-		4BD33ED3238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
-		4BD33ED4238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
 		4BD33ED7238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
-		4BD33ED8238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
-		4BD33ED9238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
 		4BD33EDE238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
-		4BD33EDF238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
 		4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
-		4BD33EE4238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
-		4BD33EE5238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
@@ -547,10 +234,6 @@
 		4BEFF644226DCD960046DB66 /* ShareControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */; };
 		4BF3B0D6236143F70059CE93 /* GetShareFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D5236143F70059CE93 /* GetShareFriendsRequest.swift */; };
 		4BF3B0D8236145530059CE93 /* GetShareGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D7236145530059CE93 /* GetShareGroupsRequest.swift */; };
-		4BF3B0D92361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D7236145530059CE93 /* GetShareGroupsRequest.swift */; };
-		4BF3B0DA2361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D7236145530059CE93 /* GetShareGroupsRequest.swift */; };
-		4BF3B0DB2361455D0059CE93 /* GetShareFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D5236143F70059CE93 /* GetShareFriendsRequest.swift */; };
-		4BF3B0DC2361455E0059CE93 /* GetShareFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B0D5236143F70059CE93 /* GetShareFriendsRequest.swift */; };
 		4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8121377DCF00CCD28E /* CryptoError.swift */; };
 		4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* CryptoHelpers.swift */; };
 		4BF45A892137B29300CCD28E /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A882137B29300CCD28E /* RSATests.swift */; };
@@ -562,7 +245,6 @@
 		4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353A212A7DB200EA602A /* FlexBubbleContainer.swift */; };
 		4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5353C212A7E8E00EA602A /* FlexCarouselContainer.swift */; };
 		4BF79915238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */; };
-		4BF79916238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */; };
 		4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */; };
 		4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09EE213CCE7700F4594D /* JWKTests.swift */; };
 		4BFC09F1213CDFC300F4594D /* JWKDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC09F0213CDFC300F4594D /* JWKDataTests.swift */; };
@@ -703,8 +385,6 @@
 		4B4F0B8121083CDB006D17F5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		4B4F0B8321084755006D17F5 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileRequest.swift; sourceTree = "<group>"; };
-		4B50ECE922E69B0D00225900 /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B50EDA122E6A94100225900 /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		4B5B0EF42241DF3E00BA59A0 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		4B5EE2DC212BAF2C0009DF2E /* FlexSpacerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexSpacerComponent.swift; sourceTree = "<group>"; };
@@ -929,20 +609,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4B50ECE022E69B0D00225900 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4B50ED9822E6A94100225900 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4B6A702B2109793500D71C66 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1192,8 +858,6 @@
 				4B6A702E2109793500D71C66 /* TestHost.app */,
 				4BBEA992212EAF9F00858627 /* LineSDKObjC.framework */,
 				4BBEA99E212EAFBB00858627 /* LineSDKObjCInterfaceTests.xctest */,
-				4B50ECE922E69B0D00225900 /* LineSDK.framework */,
-				4B50EDA122E6A94100225900 /* LineSDK.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1833,22 +1497,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		4B50ECE122E69B0D00225900 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B50ECE222E69B0D00225900 /* LineSDK.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4B50ED9922E6A94100225900 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B50ED9A22E6A94100225900 /* LineSDK.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4B90587521006E5C004D717F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1868,42 +1516,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		4B50EC6722E69B0D00225900 /* LineSDKBinary */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4B50ECE622E69B0D00225900 /* Build configuration list for PBXNativeTarget "LineSDKBinary" */;
-			buildPhases = (
-				4B50EC6822E69B0D00225900 /* Sources */,
-				4B50ECE022E69B0D00225900 /* Frameworks */,
-				4B50ECE122E69B0D00225900 /* Headers */,
-				4B50ECE322E69B0D00225900 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LineSDKBinary;
-			productName = LineSDK;
-			productReference = 4B50ECE922E69B0D00225900 /* LineSDK.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		4B50ED1F22E6A94100225900 /* LineSDKObjCBinary */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4B50ED9E22E6A94100225900 /* Build configuration list for PBXNativeTarget "LineSDKObjCBinary" */;
-			buildPhases = (
-				4B50ED2022E6A94100225900 /* Sources */,
-				4B50ED9822E6A94100225900 /* Frameworks */,
-				4B50ED9922E6A94100225900 /* Headers */,
-				4B50ED9B22E6A94100225900 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LineSDKObjCBinary;
-			productName = LineSDK;
-			productReference = 4B50EDA122E6A94100225900 /* LineSDK.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		4B6A702D2109793500D71C66 /* TestHost */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B6A703D2109793700D71C66 /* Build configuration list for PBXNativeTarget "TestHost" */;
@@ -2062,31 +1674,11 @@
 				4B6A702D2109793500D71C66 /* TestHost */,
 				4BBEA991212EAF9F00858627 /* LineSDKObjC */,
 				4BBEA99D212EAFBB00858627 /* LineSDKObjCInterfaceTests */,
-				4B50EC6722E69B0D00225900 /* LineSDKBinary */,
-				4B50ED1F22E6A94100225900 /* LineSDKObjCBinary */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4B50ECE322E69B0D00225900 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B50ECE422E69B0D00225900 /* Resource.bundle in Resources */,
-				4B50ECE522E69B0D00225900 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4B50ED9B22E6A94100225900 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B50ED9C22E6A94100225900 /* Resource.bundle in Resources */,
-				4B50ED9D22E6A94100225900 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4B6A702C2109793500D71C66 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2137,332 +1729,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4B50EC6822E69B0D00225900 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B50EC6922E69B0D00225900 /* GetGroupsRequest.swift in Sources */,
-				4B50EC6A22E69B0D00225900 /* PageViewController.swift in Sources */,
-				4B50EC6B22E69B0D00225900 /* GetDiscoveryDocumentRequest.swift in Sources */,
-				4B50EC6C22E69B0D00225900 /* OneTimePassword.swift in Sources */,
-				4B50EC6D22E69B0D00225900 /* RequestAdapter.swift in Sources */,
-				4B50EC6E22E69B0D00225900 /* TemplateImageCarouselPayload.swift in Sources */,
-				4B50EC6F22E69B0D00225900 /* ResponsePipeline.swift in Sources */,
-				4B50EC7022E69B0D00225900 /* TemplateCarouselPayload.swift in Sources */,
-				4B50EC7122E69B0D00225900 /* Helpers.swift in Sources */,
-				4B50EC7222E69B0D00225900 /* MessageAction.swift in Sources */,
-				4B50EC7322E69B0D00225900 /* LoginPermission.swift in Sources */,
-				4B50EC7422E69B0D00225900 /* FlexMessage.swift in Sources */,
-				4B50EC7522E69B0D00225900 /* JWK.swift in Sources */,
-				4B50EC7622E69B0D00225900 /* Unit.swift in Sources */,
-				4B50EC7722E69B0D00225900 /* AccessTokenVerifyResult.swift in Sources */,
-				4B6AA83922E97176005FFF9C /* PostMultisendMessagesTokenRequest.swift in Sources */,
-				4B50EC7822E69B0D00225900 /* PostOTPRequest.swift in Sources */,
-				4BD33ED8238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */,
-				4B50EC7922E69B0D00225900 /* MessageShareTargetType.swift in Sources */,
-				4B50EC7A22E69B0D00225900 /* JWTCoder.swift in Sources */,
-				4B50EC7B22E69B0D00225900 /* GetFriendsRequest.swift in Sources */,
-				4B50EC7C22E69B0D00225900 /* HexColor.swift in Sources */,
-				4B50EC7D22E69B0D00225900 /* Message.swift in Sources */,
-				4B50EC7E22E69B0D00225900 /* LineSDKError.swift in Sources */,
-				4B50EC7F22E69B0D00225900 /* JWA.swift in Sources */,
-				4B50EC8022E69B0D00225900 /* ShareTargetSelectingViewController.swift in Sources */,
-				4B50EC8122E69B0D00225900 /* GetVerifyTokenRequest.swift in Sources */,
-				4B50EC8222E69B0D00225900 /* MessageSender.swift in Sources */,
-				4B50EC8322E69B0D00225900 /* ParametersAdapter.swift in Sources */,
-				4B50EC8422E69B0D00225900 /* TextMessage.swift in Sources */,
-				4B50EC8522E69B0D00225900 /* JWKSet.swift in Sources */,
-				4B50EC8622E69B0D00225900 /* GetUserProfileRequest.swift in Sources */,
-				4B50EC8722E69B0D00225900 /* KeychainStore.swift in Sources */,
-				4B50EC8822E69B0D00225900 /* LocationMessage.swift in Sources */,
-				4B50EC8922E69B0D00225900 /* TemplateMessagePayload.swift in Sources */,
-				4B50EC8A22E69B0D00225900 /* CryptoHelpers.swift in Sources */,
-				4B50EC8B22E69B0D00225900 /* ShareTargetSearchResultTableViewController.swift in Sources */,
-				4B50EC8C22E69B0D00225900 /* PageTabView.swift in Sources */,
-				4B50EC8D22E69B0D00225900 /* Session.swift in Sources */,
-				4B50EC8E22E69B0D00225900 /* Delegate.swift in Sources */,
-				4B50EC8F22E69B0D00225900 /* Constant.swift in Sources */,
-				4B50EC9022E69B0D00225900 /* ChainedPaginatedRequest.swift in Sources */,
-				4B50EC9122E69B0D00225900 /* ShareViewControllerDelegate.swift in Sources */,
-				4B50EC9222E69B0D00225900 /* API.swift in Sources */,
-				4B50EC9322E69B0D00225900 /* FlexMessageProperties.swift in Sources */,
-				4B50EC9422E69B0D00225900 /* ShareViewController.swift in Sources */,
-				4B50EC9522E69B0D00225900 /* User.swift in Sources */,
-				4BF3B0DB2361455D0059CE93 /* GetShareFriendsRequest.swift in Sources */,
-				4B50EC9622E69B0D00225900 /* CallbackQueue.swift in Sources */,
-				4B50EC9722E69B0D00225900 /* GetBotFriendshipStatus.swift in Sources */,
-				4B50EC9822E69B0D00225900 /* CryptoKey.swift in Sources */,
-				4B50EC9922E69B0D00225900 /* FlexMessageContainer.swift in Sources */,
-				4B50EC9A22E69B0D00225900 /* ImageDownloader.swift in Sources */,
-				4B50EC9B22E69B0D00225900 /* FlexSeparatorComponent.swift in Sources */,
-				4B50EC9C22E69B0D00225900 /* FlexCarouselContainer.swift in Sources */,
-				4B50EC9D22E69B0D00225900 /* ShareRootViewController.swift in Sources */,
-				4B50EC9E22E69B0D00225900 /* LoginButton.swift in Sources */,
-				4B50EC9F22E69B0D00225900 /* AccessTokenStore.swift in Sources */,
-				4B50ECA022E69B0D00225900 /* LoginResult.swift in Sources */,
-				4B50ECA122E69B0D00225900 /* API+Internal.swift in Sources */,
-				4B50ECA222E69B0D00225900 /* ShareTargetTableViewStyling.swift in Sources */,
-				4B50ECA322E69B0D00225900 /* TemplateMessage.swift in Sources */,
-				4B50ECA422E69B0D00225900 /* JWT.swift in Sources */,
-				4B50ECA522E69B0D00225900 /* ImageManager.swift in Sources */,
-				4B50ECA622E69B0D00225900 /* Result.swift in Sources */,
-				4B50ECA722E69B0D00225900 /* VideoMessage.swift in Sources */,
-				4B50ECA822E69B0D00225900 /* TemplateButtonsPayload.swift in Sources */,
-				4B50ECA922E69B0D00225900 /* LoadingIndicator.swift in Sources */,
-				4B50ECAA22E69B0D00225900 /* LoginManagerOptions.swift in Sources */,
-				4B50ECAB22E69B0D00225900 /* FlexFillerComponent.swift in Sources */,
-				4B50ECAC22E69B0D00225900 /* ShareTargetSelectingTableCell.swift in Sources */,
-				4B50ECAD22E69B0D00225900 /* ShareTarget.swift in Sources */,
-				4B50ECAE22E69B0D00225900 /* PostRevokeTokenRequest.swift in Sources */,
-				4B50ECAF22E69B0D00225900 /* FlexButtonComponent.swift in Sources */,
-				4B50ECB022E69B0D00225900 /* AudioMessage.swift in Sources */,
-				4B50ECB122E69B0D00225900 /* ShareTargetSearchController.swift in Sources */,
-				4B50ECB222E69B0D00225900 /* URLs.swift in Sources */,
-				4B50ECB322E69B0D00225900 /* ColumnDataStore.swift in Sources */,
-				4B50ECB422E69B0D00225900 /* LoginConfiguration.swift in Sources */,
-				4B50ECB522E69B0D00225900 /* ECDSA.swift in Sources */,
-				4B50ECB622E69B0D00225900 /* LoginManager.swift in Sources */,
-				4B50ECB722E69B0D00225900 /* PostExchangeTokenRequest.swift in Sources */,
-				4BD33ED3238B627200C1E8A9 /* API+Auth.swift in Sources */,
-				4B50ECB822E69B0D00225900 /* AccessToken.swift in Sources */,
-				4B50ECB922E69B0D00225900 /* FlexIconComponent.swift in Sources */,
-				4B50ECBA22E69B0D00225900 /* NotificationToken.swift in Sources */,
-				4B50ECBB22E69B0D00225900 /* MessageProtocols.swift in Sources */,
-				4B50ECBC22E69B0D00225900 /* DownloadableImageView.swift in Sources */,
-				4B50ECBD22E69B0D00225900 /* FlexBubbleContainer.swift in Sources */,
-				4B50ECBE22E69B0D00225900 /* SelectedTargetPanelCell.swift in Sources */,
-				4B50ECBF22E69B0D00225900 /* ResourceLoading.swift in Sources */,
-				4B50ECC022E69B0D00225900 /* KeyboardObservable.swift in Sources */,
-				4B50ECC122E69B0D00225900 /* PostMultisendMessagesRequest.swift in Sources */,
-				4B50ECC222E69B0D00225900 /* PostSendMessagesRequest.swift in Sources */,
-				4B50ECC322E69B0D00225900 /* CryptoData.swift in Sources */,
-				4B50ECC422E69B0D00225900 /* CodingExtension.swift in Sources */,
-				4B50ECC522E69B0D00225900 /* FlexImageComponent.swift in Sources */,
-				4B50ECC622E69B0D00225900 /* JWTHelpers.swift in Sources */,
-				4B50ECC722E69B0D00225900 /* FlexBlockStyle.swift in Sources */,
-				4B50ECC822E69B0D00225900 /* LoginProcessURLResponse.swift in Sources */,
-				4B50ECC922E69B0D00225900 /* ShareTargetSelectingSectionHeaderView.swift in Sources */,
-				4B50ECCA22E69B0D00225900 /* RSA.swift in Sources */,
-				4B50ECCB22E69B0D00225900 /* GetApproversInFriendsRequest.swift in Sources */,
-				4B6AA83B22E97180005FFF9C /* PostMessageTokenRequest.swift in Sources */,
-				4B50ECCC22E69B0D00225900 /* FlexSpacerComponent.swift in Sources */,
-				4B50ECCD22E69B0D00225900 /* APIError.swift in Sources */,
-				4B0FD5832330D1050054A4E8 /* Colors.swift in Sources */,
-				4B50ECCE22E69B0D00225900 /* CryptoAlgorithm.swift in Sources */,
-				4B50ECCF22E69B0D00225900 /* GetJWKSetRequest.swift in Sources */,
-				4B50ECD022E69B0D00225900 /* Group.swift in Sources */,
-				4B50ECD122E69B0D00225900 /* ResultUtils.swift in Sources */,
-				4B50ECD222E69B0D00225900 /* UserProfile.swift in Sources */,
-				4B50ECD322E69B0D00225900 /* FlexBoxComponent.swift in Sources */,
-				4B50ECD422E69B0D00225900 /* ShareTargetSearchResultViewController.swift in Sources */,
-				4B50ECD522E69B0D00225900 /* Request.swift in Sources */,
-				4B50ECD622E69B0D00225900 /* FlexTextComponent.swift in Sources */,
-				4B50ECD722E69B0D00225900 /* TemplateConfirmPayload.swift in Sources */,
-				4BF3B0D92361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */,
-				4B50ECD822E69B0D00225900 /* CryptoError.swift in Sources */,
-				4B50ECD922E69B0D00225900 /* SelectedTargetPanelViewController.swift in Sources */,
-				4BD33EE4238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */,
-				4B50ECDA22E69B0D00225900 /* FlexMessageComponent.swift in Sources */,
-				4B50ECDB22E69B0D00225900 /* TemplateMessageProperties.swift in Sources */,
-				4B50ECDC22E69B0D00225900 /* LoginProcess.swift in Sources */,
-				4B50ECDD22E69B0D00225900 /* ImageMessage.swift in Sources */,
-				4B50ECDE22E69B0D00225900 /* GetApproversInGroupRequest.swift in Sources */,
-				4B50ECDF22E69B0D00225900 /* PostRefreshTokenRequest.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4B50ED2022E6A94100225900 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4B50ED2122E6A94100225900 /* GetGroupsRequest.swift in Sources */,
-				4B50ED2222E6A94100225900 /* PageViewController.swift in Sources */,
-				4B50EDD422E6AC0100225900 /* LineSDKAPI.swift in Sources */,
-				4B50ED2322E6A94100225900 /* GetDiscoveryDocumentRequest.swift in Sources */,
-				4B50ED2422E6A94100225900 /* OneTimePassword.swift in Sources */,
-				4B50EDD222E6AC0100225900 /* LineSDKHexColor.swift in Sources */,
-				4B50ED2522E6A94100225900 /* RequestAdapter.swift in Sources */,
-				4B50EDD322E6AC0100225900 /* LineSDKAPIError.swift in Sources */,
-				4B50ED2622E6A94100225900 /* TemplateImageCarouselPayload.swift in Sources */,
-				4B50ED2722E6A94100225900 /* ResponsePipeline.swift in Sources */,
-				4B50ED2822E6A94100225900 /* TemplateCarouselPayload.swift in Sources */,
-				4B50ED2922E6A94100225900 /* Helpers.swift in Sources */,
-				4B50EDB622E6ABEE00225900 /* LineSDKGroup.swift in Sources */,
-				4B50ED2A22E6A94100225900 /* MessageAction.swift in Sources */,
-				4BF79916238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */,
-				4B50ED2B22E6A94100225900 /* LoginPermission.swift in Sources */,
-				4B50ED2C22E6A94100225900 /* FlexMessage.swift in Sources */,
-				4B50ED2D22E6A94100225900 /* JWK.swift in Sources */,
-				4B50ED2E22E6A94100225900 /* Unit.swift in Sources */,
-				4B50EDB322E6ABEA00225900 /* LineSDKLoginProcess.swift in Sources */,
-				4B50ED2F22E6A94100225900 /* AccessTokenVerifyResult.swift in Sources */,
-				4B50ED3022E6A94100225900 /* PostOTPRequest.swift in Sources */,
-				4B50ED3122E6A94100225900 /* MessageShareTargetType.swift in Sources */,
-				4B50EDC622E6ABFB00225900 /* LineSDKFlexMessageContainer.swift in Sources */,
-				4B50ED3222E6A94100225900 /* JWTCoder.swift in Sources */,
-				4B50EDA722E6ABDD00225900 /* LineSDKShareViewControllerDelegate.swift in Sources */,
-				4B50ED3322E6A94100225900 /* GetFriendsRequest.swift in Sources */,
-				4B50EDB022E6ABEA00225900 /* LineSDKLoginManager.swift in Sources */,
-				4B50ED3422E6A94100225900 /* HexColor.swift in Sources */,
-				4B50EDC822E6ABFB00225900 /* LineSDKFlexCarouselContainer.swift in Sources */,
-				4B50ED3522E6A94100225900 /* Message.swift in Sources */,
-				4B50ED3622E6A94100225900 /* LineSDKError.swift in Sources */,
-				4B50ED3722E6A94100225900 /* JWA.swift in Sources */,
-				4B50ED3822E6A94100225900 /* ShareTargetSelectingViewController.swift in Sources */,
-				4B50ED3922E6A94100225900 /* GetVerifyTokenRequest.swift in Sources */,
-				4B50EDD922E6AC0800225900 /* ResultExtensions.swift in Sources */,
-				4B50ED3A22E6A94100225900 /* MessageSender.swift in Sources */,
-				4B50ED3B22E6A94100225900 /* ParametersAdapter.swift in Sources */,
-				4B50ED3C22E6A94100225900 /* TextMessage.swift in Sources */,
-				4B50EDCC22E6ABFB00225900 /* LineSDKImageMessage.swift in Sources */,
-				4B50ED3D22E6A94100225900 /* JWKSet.swift in Sources */,
-				4B50EDB222E6ABEA00225900 /* LineSDKLoginResult.swift in Sources */,
-				4B50ED3E22E6A94100225900 /* GetUserProfileRequest.swift in Sources */,
-				4B50EDB922E6ABFB00225900 /* LineSDKTemplateButtonsPayload.swift in Sources */,
-				4B50ED3F22E6A94100225900 /* KeychainStore.swift in Sources */,
-				4B50ED4022E6A94100225900 /* LocationMessage.swift in Sources */,
-				4B6AA83C22E97180005FFF9C /* PostMessageTokenRequest.swift in Sources */,
-				4B50ED4122E6A94100225900 /* TemplateMessagePayload.swift in Sources */,
-				4B50EDA822E6ABDD00225900 /* LineSDKMessageShareTargetType.swift in Sources */,
-				4B50EDB122E6ABEA00225900 /* LineSDKLoginManagerOptions.swift in Sources */,
-				4B50ED4222E6A94100225900 /* CryptoHelpers.swift in Sources */,
-				4B50ED4322E6A94100225900 /* ShareTargetSearchResultTableViewController.swift in Sources */,
-				4B50ED4422E6A94100225900 /* PageTabView.swift in Sources */,
-				4B50ED4522E6A94100225900 /* Session.swift in Sources */,
-				4B50ED4622E6A94100225900 /* Delegate.swift in Sources */,
-				4B50ED4722E6A94100225900 /* Constant.swift in Sources */,
-				4B50ED4822E6A94100225900 /* ChainedPaginatedRequest.swift in Sources */,
-				4B50ED4922E6A94100225900 /* ShareViewControllerDelegate.swift in Sources */,
-				4B50ED4A22E6A94100225900 /* API.swift in Sources */,
-				4B50ED4B22E6A94100225900 /* FlexMessageProperties.swift in Sources */,
-				4B50EDD522E6AC0800225900 /* LinsSDKCallbackQueue.swift in Sources */,
-				4B50ED4C22E6A94100225900 /* ShareViewController.swift in Sources */,
-				4B50ED4D22E6A94100225900 /* User.swift in Sources */,
-				4B50EDCE22E6ABFB00225900 /* LineSDKAudioMessage.swift in Sources */,
-				4B50ED4E22E6A94100225900 /* CallbackQueue.swift in Sources */,
-				4B50ED4F22E6A94100225900 /* GetBotFriendshipStatus.swift in Sources */,
-				4B50EDD022E6ABFB00225900 /* LineSDKTemplateMessage.swift in Sources */,
-				4B50ED5022E6A94100225900 /* CryptoKey.swift in Sources */,
-				4B50ED5122E6A94100225900 /* FlexMessageContainer.swift in Sources */,
-				4B50EDAA22E6ABE400225900 /* LineSDKErrorConstant.swift in Sources */,
-				4B50ED5222E6A94100225900 /* ImageDownloader.swift in Sources */,
-				4B50ED5322E6A94100225900 /* FlexSeparatorComponent.swift in Sources */,
-				4B50ED5422E6A94100225900 /* FlexCarouselContainer.swift in Sources */,
-				4B50ED5522E6A94100225900 /* ShareRootViewController.swift in Sources */,
-				4B50EDC422E6ABFB00225900 /* LineSDKFlexSeparatorComponent.swift in Sources */,
-				4B50EDBE22E6ABFB00225900 /* LineSDKFlexBoxComponent.swift in Sources */,
-				4B50ED5622E6A94100225900 /* LoginButton.swift in Sources */,
-				4B50ED5722E6A94100225900 /* AccessTokenStore.swift in Sources */,
-				4B50ED5822E6A94100225900 /* LoginResult.swift in Sources */,
-				4B50ED5922E6A94100225900 /* API+Internal.swift in Sources */,
-				4B50ED5A22E6A94100225900 /* ShareTargetTableViewStyling.swift in Sources */,
-				4B50EDCB22E6ABFB00225900 /* LineSDKTextMessage.swift in Sources */,
-				4B50ED5B22E6A94100225900 /* TemplateMessage.swift in Sources */,
-				4B50ED5C22E6A94100225900 /* JWT.swift in Sources */,
-				4B50ED5D22E6A94100225900 /* ImageManager.swift in Sources */,
-				4B50EDAC22E6ABEA00225900 /* LineSDKAccessToken.swift in Sources */,
-				4B50ED5E22E6A94100225900 /* Result.swift in Sources */,
-				4BC66AE622EA8A6900546FB6 /* LineSDKMessageSendingToken.swift in Sources */,
-				4B50ED5F22E6A94100225900 /* VideoMessage.swift in Sources */,
-				4B50EDD822E6AC0800225900 /* JSONConverter.swift in Sources */,
-				4B50EDAB22E6ABEA00225900 /* LineSDKAccessTokenStore.swift in Sources */,
-				4B50ED6022E6A94100225900 /* TemplateButtonsPayload.swift in Sources */,
-				4B50ED6122E6A94100225900 /* LoadingIndicator.swift in Sources */,
-				4B50EDC922E6ABFB00225900 /* LineSDKMessagingResponse.swift in Sources */,
-				4B50ED6222E6A94100225900 /* LoginManagerOptions.swift in Sources */,
-				4B50EDB722E6ABEE00225900 /* LineSDKGraphResponse.swift in Sources */,
-				4B50EDA322E6ABD800225900 /* LineSDKLoginButton.swift in Sources */,
-				4B50ED6322E6A94100225900 /* FlexFillerComponent.swift in Sources */,
-				4B50ED6422E6A94100225900 /* ShareTargetSelectingTableCell.swift in Sources */,
-				4B50ED6522E6A94100225900 /* ShareTarget.swift in Sources */,
-				4B50EDB822E6ABFB00225900 /* LineSDKMessageAction.swift in Sources */,
-				4B50ED6622E6A94100225900 /* PostRevokeTokenRequest.swift in Sources */,
-				4B50EDAD22E6ABEA00225900 /* LineSDKJWT.swift in Sources */,
-				4B50ED6722E6A94100225900 /* FlexButtonComponent.swift in Sources */,
-				4B50ED6822E6A94100225900 /* AudioMessage.swift in Sources */,
-				4B50ED6922E6A94100225900 /* ShareTargetSearchController.swift in Sources */,
-				4B50EDC122E6ABFB00225900 /* LineSDKFlexImageComponent.swift in Sources */,
-				4B50EDA922E6ABE100225900 /* LineSDKGetBotFriendshipStatusResponse.swift in Sources */,
-				4B50EDA522E6ABDD00225900 /* LineSDKMessageShareAuthorizationStatus.swift in Sources */,
-				4B50EDCF22E6ABFB00225900 /* LineSDKLocationMessage.swift in Sources */,
-				4B50EDBA22E6ABFB00225900 /* LineSDKTemplateConfirmPayload.swift in Sources */,
-				4B50ED6A22E6A94100225900 /* URLs.swift in Sources */,
-				4B50ED6B22E6A94100225900 /* ColumnDataStore.swift in Sources */,
-				4B50EDBB22E6ABFB00225900 /* LineSDKTemplateCarouselPayload.swift in Sources */,
-				4B50ED6C22E6A94100225900 /* LoginConfiguration.swift in Sources */,
-				4B50EDB522E6ABEE00225900 /* LineSDKUser.swift in Sources */,
-				4BD33ED9238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */,
-				4B50ED6D22E6A94100225900 /* ECDSA.swift in Sources */,
-				4B50EDC522E6ABFB00225900 /* LineSDKSpacerComponent.swift in Sources */,
-				4B50ED6E22E6A94100225900 /* LoginManager.swift in Sources */,
-				4B50ED6F22E6A94100225900 /* PostExchangeTokenRequest.swift in Sources */,
-				4B50ED7022E6A94100225900 /* AccessToken.swift in Sources */,
-				4B50ED7122E6A94100225900 /* FlexIconComponent.swift in Sources */,
-				4BD33EE5238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */,
-				4B50ED7222E6A94100225900 /* NotificationToken.swift in Sources */,
-				4B50ED7322E6A94100225900 /* MessageProtocols.swift in Sources */,
-				4B50ED7422E6A94100225900 /* DownloadableImageView.swift in Sources */,
-				4B50ED7522E6A94100225900 /* FlexBubbleContainer.swift in Sources */,
-				4B50ED7622E6A94100225900 /* SelectedTargetPanelCell.swift in Sources */,
-				4B50ED7722E6A94100225900 /* ResourceLoading.swift in Sources */,
-				4B50ED7822E6A94100225900 /* KeyboardObservable.swift in Sources */,
-				4B50ED7922E6A94100225900 /* PostMultisendMessagesRequest.swift in Sources */,
-				4B50EDAE22E6ABEA00225900 /* LineSDKAccessTokenVerifyResult.swift in Sources */,
-				4B50ED7A22E6A94100225900 /* PostSendMessagesRequest.swift in Sources */,
-				4B50EDD122E6ABFB00225900 /* LineSDKFlexMessage.swift in Sources */,
-				4B6AA83A22E97176005FFF9C /* PostMultisendMessagesTokenRequest.swift in Sources */,
-				4B50EDD622E6AC0800225900 /* Log.swift in Sources */,
-				4B50ED7B22E6A94100225900 /* CryptoData.swift in Sources */,
-				4B50ED7C22E6A94100225900 /* CodingExtension.swift in Sources */,
-				4B50ED7D22E6A94100225900 /* FlexImageComponent.swift in Sources */,
-				4B50EDD722E6AC0800225900 /* LineSDKConstant.swift in Sources */,
-				4B50EDB422E6ABEA00225900 /* LineSDKLoginPermission.swift in Sources */,
-				4BD33EDF238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */,
-				4B50ED7E22E6A94100225900 /* JWTHelpers.swift in Sources */,
-				4B50EDC322E6ABFB00225900 /* LineSDKFlexIconComponent.swift in Sources */,
-				4B50EDC722E6ABFB00225900 /* LineSDKFlexBubbleContainer.swift in Sources */,
-				4B50EDA422E6ABDD00225900 /* LineSDKShareViewController.swift in Sources */,
-				4B50EDCD22E6ABFB00225900 /* LineSDKVideoMessage.swift in Sources */,
-				4B50ED7F22E6A94100225900 /* FlexBlockStyle.swift in Sources */,
-				4BF3B0DA2361455B0059CE93 /* GetShareGroupsRequest.swift in Sources */,
-				4B50EDBC22E6ABFB00225900 /* LineSDKTemplateImageCarouselPayload.swift in Sources */,
-				4B50EDC222E6ABFB00225900 /* LineSDKFlexFillerComponent.swift in Sources */,
-				4B50ED8022E6A94100225900 /* LoginProcessURLResponse.swift in Sources */,
-				4B50ED8122E6A94100225900 /* ShareTargetSelectingSectionHeaderView.swift in Sources */,
-				4B50ED8222E6A94100225900 /* RSA.swift in Sources */,
-				4B50ED8322E6A94100225900 /* GetApproversInFriendsRequest.swift in Sources */,
-				4B50ED8422E6A94100225900 /* FlexSpacerComponent.swift in Sources */,
-				4B50ED8522E6A94100225900 /* APIError.swift in Sources */,
-				4B50EDBF22E6ABFB00225900 /* LineSDKFlexTextComponent.swift in Sources */,
-				4B50ED8622E6A94100225900 /* CryptoAlgorithm.swift in Sources */,
-				4B50EDCA22E6ABFB00225900 /* LineSDKMessage.swift in Sources */,
-				4B50ED8722E6A94100225900 /* GetJWKSetRequest.swift in Sources */,
-				4B50ED8822E6A94100225900 /* Group.swift in Sources */,
-				4B50ED8922E6A94100225900 /* ResultUtils.swift in Sources */,
-				4B50ED8A22E6A94100225900 /* UserProfile.swift in Sources */,
-				4B50EDAF22E6ABEA00225900 /* LineSDKUserProfile.swift in Sources */,
-				4B50EDC022E6ABFB00225900 /* LineSDKFlexButtonComponent.swift in Sources */,
-				4B50ED8B22E6A94100225900 /* FlexBoxComponent.swift in Sources */,
-				4B50ED8C22E6A94100225900 /* ShareTargetSearchResultViewController.swift in Sources */,
-				4B50EDA622E6ABDD00225900 /* LineSDKShareTarget.swift in Sources */,
-				4B50ED8D22E6A94100225900 /* Request.swift in Sources */,
-				4B50ED8E22E6A94100225900 /* FlexTextComponent.swift in Sources */,
-				4BD33ED4238B627200C1E8A9 /* API+Auth.swift in Sources */,
-				4B0FD5842330D1050054A4E8 /* Colors.swift in Sources */,
-				4B50ED8F22E6A94100225900 /* TemplateConfirmPayload.swift in Sources */,
-				4B50ED9022E6A94100225900 /* CryptoError.swift in Sources */,
-				4B50ED9122E6A94100225900 /* SelectedTargetPanelViewController.swift in Sources */,
-				4B50EDBD22E6ABFB00225900 /* LineSDKFlexMessageComponent.swift in Sources */,
-				4B50ED9222E6A94100225900 /* FlexMessageComponent.swift in Sources */,
-				4BF3B0DC2361455E0059CE93 /* GetShareFriendsRequest.swift in Sources */,
-				4B50ED9322E6A94100225900 /* TemplateMessageProperties.swift in Sources */,
-				4B50ED9422E6A94100225900 /* LoginProcess.swift in Sources */,
-				4B50ED9522E6A94100225900 /* ImageMessage.swift in Sources */,
-				4B50ED9622E6A94100225900 /* GetApproversInGroupRequest.swift in Sources */,
-				4B50ED9722E6A94100225900 /* PostRefreshTokenRequest.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4B6A702A2109793500D71C66 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2786,106 +2052,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		4B50ECE722E69B0D00225900 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 532;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LineSDK/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDK;
-				PRODUCT_NAME = LineSDK;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		4B50ECE822E69B0D00225900 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 532;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LineSDK/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDK;
-				PRODUCT_NAME = LineSDK;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		4B50ED9F22E6A94100225900 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 532;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LineSDK/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_SWIFT_FLAGS = "-DLineSDKXCFramework";
-				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDK;
-				PRODUCT_NAME = LineSDK;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		4B50EDA022E6A94100225900 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 532;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = LineSDK/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				OTHER_SWIFT_FLAGS = "-DLineSDKXCFramework";
-				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDK;
-				PRODUCT_NAME = LineSDK;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		4B6A703E2109793700D71C66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3215,24 +2381,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4B50ECE622E69B0D00225900 /* Build configuration list for PBXNativeTarget "LineSDKBinary" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4B50ECE722E69B0D00225900 /* Debug */,
-				4B50ECE822E69B0D00225900 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4B50ED9E22E6A94100225900 /* Build configuration list for PBXNativeTarget "LineSDKObjCBinary" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4B50ED9F22E6A94100225900 /* Debug */,
-				4B50EDA022E6A94100225900 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4B6A703D2109793700D71C66 /* Build configuration list for PBXNativeTarget "TestHost" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

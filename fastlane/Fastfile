@@ -87,8 +87,6 @@ platform :ios do
     
     release_content = read_changelog(excluded_markdown_elements: [])
     change_log(version: target_version)
-    
-    xcframework(version: target_version)
 
     git_commit_all(message: "Bump version to #{target_version}")
     Actions.sh("git tag -u #{ENV["GPG_KEY_ID"]} #{target_version} -m ''")
@@ -99,8 +97,7 @@ platform :ios do
       api_token: ENV["GITHUB_TOKEN"],
       name: target_version,
       tag_name: target_version,
-      description: release_content,
-      upload_assets: ["build/LineSDK-#{target_version}.zip", "build/LineSDKObjC-#{target_version}.zip"]
+      description: release_content
     )
 
     pod_push
