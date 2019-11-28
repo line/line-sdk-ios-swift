@@ -45,19 +45,35 @@ public class LineSDKLoginManager: NSObject {
     public func setup(channelID: String, universalLinkURL: URL?) {
         _value.setup(channelID: channelID, universalLinkURL: universalLinkURL)
     }
-    
+
     @discardableResult
     public func login(
         permissions: Set<LineSDKLoginPermission>?,
         inViewController viewController: UIViewController?,
-        parameters: LineSDKLoginManagerParameters?,
+        completionHandler completion: @escaping (LineSDKLoginResult?, Error?) -> Void
+    ) -> LineSDKLoginProcess?
+    {
+        let parameters = LineSDKLoginManagerParameters()
+        return login(
+            permissions: permissions,
+            inViewController: viewController,
+            parameters: parameters,
+            completionHandler: completion
+        )
+    }
+
+    @discardableResult
+    public func login(
+        permissions: Set<LineSDKLoginPermission>?,
+        inViewController viewController: UIViewController?,
+        parameters: LineSDKLoginManagerParameters,
         completionHandler completion: @escaping (LineSDKLoginResult?, Error?) -> Void
     ) -> LineSDKLoginProcess?
     {
         let process = _value.login(
             permissions: Set((permissions ?? [.profile]).map { $0.unwrapped }),
             in: viewController,
-            parameters: parameters?._value)
+            parameters: parameters._value)
         {
             result in
             result

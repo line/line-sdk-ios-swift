@@ -127,9 +127,21 @@
     XCTAssertFalse(manager.isAuthorizing);
 
     [manager setupWithChannelID:@"" universalLinkURL:nil];
+
     [manager loginWithPermissions:nil
                  inViewController:nil
-                       parameters:nil
+                completionHandler:^(LineSDKLoginResult *result, NSError *error)
+    {
+        XCTAssertNil([result accessToken]);
+        XCTAssertNil([result permissions]);
+        XCTAssertNil([result userProfile]);
+        XCTAssertNil([result friendshipStatusChanged]);
+    }];
+
+    LineSDKLoginManagerParameters *parameters = [[LineSDKLoginManagerParameters alloc] init];
+    [manager loginWithPermissions:nil
+                 inViewController:nil
+                       parameters:parameters
                 completionHandler:^(LineSDKLoginResult *result, NSError *error)
     {
         XCTAssertNil([result accessToken]);
