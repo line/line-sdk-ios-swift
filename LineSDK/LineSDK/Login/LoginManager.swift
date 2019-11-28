@@ -155,7 +155,6 @@ public class LoginManager {
             scopes: permissions,
             parameters: parameters,
             viewController: viewController)
-        process.start()
         process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
             self.currentProcess = nil
             self.postLogin(
@@ -169,6 +168,8 @@ public class LoginManager {
             completion(.failure(error.sdkError))
         }
 
+        process.start()
+        
         self.currentProcess = process
         return currentProcess
     }
