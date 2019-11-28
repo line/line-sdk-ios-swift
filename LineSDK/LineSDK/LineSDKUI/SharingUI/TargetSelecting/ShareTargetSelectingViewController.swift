@@ -24,17 +24,19 @@ import UIKit
 protocol ShareTargetSelectingViewControllerDelegate: AnyObject {
     func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool
 
-    func correspondingSelectedPanelViewController(for viewController: ShareTargetSelectingViewController)
-        -> SelectedTargetPanelViewController
+    func correspondingSelectedPanelViewController(
+        for viewController: ShareTargetSelectingViewController
+    ) -> SelectedTargetPanelViewController
 
-    func pageViewController(for viewController: ShareTargetSelectingViewController)
-        -> PageViewController
+    func pageViewController(
+        for viewController: ShareTargetSelectingViewController
+    ) -> PageViewController
 }
 
 final class ShareTargetSelectingViewController: UITableViewController, ShareTargetTableViewStyling {
 
     private typealias AppendingIndexRange = ColumnDataStore<ShareTarget>.AppendingIndexRange
-    private typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
+    private typealias ColumnIndex         = ColumnDataStore<ShareTarget>.ColumnIndex
 
     weak var delegate: ShareTargetSelectingViewControllerDelegate?
 
@@ -44,11 +46,11 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
 
     // Observers
     private var dataAppendingObserver: NotificationToken!
-    private var selectingObserver: NotificationToken!
-    private var deselectingObserver: NotificationToken!
+    private var selectingObserver:     NotificationToken!
+    private var deselectingObserver:   NotificationToken!
 
     // Search
-    private let searchController: ShareTargetSearchController
+    private let searchController:     ShareTargetSearchController
     private let resultViewController: ShareTargetSearchResultViewController
 
     init(store: ColumnDataStore<ShareTarget>, columnIndex: Int) {
@@ -100,22 +102,22 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
         dataAppendingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidAppendData, object: store, queue: nil)
         {
-            [unowned self] noti in
-            self.handleDataAppended(noti)
+            [unowned self] notification in
+            self.handleDataAppended(notification)
         }
 
         selectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
-            [unowned self] noti in
-            self.handleSelectingChange(noti)
+            [unowned self] notification in
+            self.handleSelectingChange(notification)
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
-            [unowned self] noti in
-            self.handleSelectingChange(noti)
+            [unowned self] notification in
+            self.handleSelectingChange(notification)
         }
     }
 

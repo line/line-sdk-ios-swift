@@ -174,7 +174,7 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let rawString = String(data: data, encoding: .utf8)
         do {
-            // There are two possible error format now.
+            // There are two possible error formats now.
             // First, try to parse the error into a auth related error
             let error = try decoder.decode(InternalAuthError.self, from: data)
             let detail = LineSDKError.ResponseErrorReason.APIErrorDetail(

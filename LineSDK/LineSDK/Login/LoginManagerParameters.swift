@@ -54,7 +54,8 @@ extension LoginManager {
         
         // MARK: - Deprecated
         
-        @available(*, deprecated, message: "Internally deprecated.")
+        @available(*, deprecated,
+        message: "Internally deprecated to suppress warning. Set properties in `Parameters` instead.")
         public init(options: LoginManagerOptions, language: WebPageLanguage?) {
             self.onlyWebLogin = options.contains(.onlyWebLogin)
             self.botPromptStyle = options.botPrompt

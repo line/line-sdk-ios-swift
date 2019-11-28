@@ -171,7 +171,7 @@ open class LoginButton: UIButton {
         // set accessibility label for sample UI test
         accessibilityLabel = "login.button"
         
-        titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 11)
+        titleLabel?.font = .boldSystemFont(ofSize: 11)
         titleLabel?.textAlignment = .center
         setTitleColor(.white, for: .normal)
         
@@ -191,27 +191,27 @@ open class LoginButton: UIButton {
         switch buttonSize {
         case .small:
             imagesPairs = [
-                ("small_btn_login_base", .normal),
-                ("small_btn_login_press", .highlighted),
+                ("small_btn_login_base",    .normal),
+                ("small_btn_login_press",   .highlighted),
                 ("small_btn_login_disable", .disabled)]
         case .normal:
             imagesPairs = [
-                ("normal_btn_login_base", .normal),
-                ("normal_btn_login_press", .highlighted),
+                ("normal_btn_login_base",    .normal),
+                ("normal_btn_login_press",   .highlighted),
                 ("normal_btn_login_disable", .disabled)]
         }
         
         imagesPairs.forEach { (imageName, state) in
             setBackgroundImage(UIImage(bundleNamed: imageName), for: state)
         }
-        
+
         titleEdgeInsets = UIEdgeInsets(
-            top: CGFloat(buttonSize.constant.bubbleWidth / 2),
-            left: CGFloat(buttonSize.constant.iconWidth +
-                          buttonSize.constant.separatorWidth +
-                          buttonSize.constant.leftPadding),
+            top:    CGFloat(buttonSize.constant.bubbleWidth / 2),
+            left:   CGFloat(buttonSize.constant.iconWidth +
+                            buttonSize.constant.separatorWidth +
+                            buttonSize.constant.leftPadding),
             bottom: CGFloat(buttonSize.constant.bubbleWidth / 2),
-            right: CGFloat(buttonSize.constant.rightPadding)
+            right:  CGFloat(buttonSize.constant.rightPadding)
         )
         
         setTitle(buttonText, for: .normal)

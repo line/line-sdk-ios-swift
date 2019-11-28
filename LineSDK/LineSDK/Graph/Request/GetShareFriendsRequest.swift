@@ -22,7 +22,12 @@
 import Foundation
 
 /// LINE internal use only.
-
+/// Represents a request for a user's friends list for sharing. Returns a list of current user's friends.
+/// The list will not include users who blocked external apps from getting their profile
+/// information, unless they specifically authorized the app.
+///
+/// `LoginPermission.oneTimeShare` is required.
+///
 public struct GetShareFriendsRequest: Request {
     
     let sort: Sort?

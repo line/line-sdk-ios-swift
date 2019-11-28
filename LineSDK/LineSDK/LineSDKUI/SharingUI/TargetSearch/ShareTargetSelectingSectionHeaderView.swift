@@ -24,12 +24,12 @@ import UIKit
 class ShareTargetSelectingSectionHeaderView: UIView {
 
     enum Design {
-        static var height: CGFloat { return 25 }
-        static var fontSize: CGFloat { return 12 }
-        static var fontColor: UIColor { return .compatibleColor(light: 0x797F8C, dark: 0xF5F5F5) }
+        static var height:          CGFloat { return 25 }
+        static var fontSize:        CGFloat { return 12 }
+        static var fontColor:       UIColor { return .compatibleColor(light: 0x797F8C, dark: 0xF5F5F5) }
         static var backgroundColor: UIColor { return .compatibleColor(light: 0xF9F9F9, dark: 0x000000) }
-        static var borderColor: UIColor { return .compatibleColor(light: 0xEDEDF1, dark: 0x171717) }
-        static var borderWidth: CGFloat { return 0.5 }
+        static var borderColor:     UIColor { return .compatibleColor(light: 0xEDEDF1, dark: 0x171717) }
+        static var borderWidth:     CGFloat { return 0.5 }
     }
 
     let titleLabel = UILabel(frame: .zero)

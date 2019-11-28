@@ -26,10 +26,10 @@ class SelectedTargetPanelViewController: UIViewController {
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
     enum Design {
-        static var height: CGFloat { return 79 }
+        static var height:          CGFloat { return 79 }
         static var backgroundColor: UIColor { return .LineSDKPanelBackground }
-        static var borderColor: UIColor { return .LineSDKPanelBorder }
-        static var borderWidth: CGFloat { return 0.5 }
+        static var borderColor:     UIColor { return .LineSDKPanelBorder }
+        static var borderWidth:     CGFloat { return 0.5 }
 
         // CollectionView
         static var minimumLineSpacing: CGFloat { return 10 }
@@ -44,7 +44,7 @@ class SelectedTargetPanelViewController: UIViewController {
 
     private let slideAnimationView: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = Design.backgroundColor
+        view.backgroundColor   = Design.backgroundColor
         view.layer.borderWidth = Design.borderWidth
         view.layer.borderColor = Design.borderColor.cgColor
         return view

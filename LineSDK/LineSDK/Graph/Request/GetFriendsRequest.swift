@@ -30,7 +30,6 @@ public struct GetFriendsRequest: Request {
     let sort: Sort?
     let pageToken: String?
 
-    
     /// Sorting method for the returned friend list.
     /// Only supports `name` currently.
     ///

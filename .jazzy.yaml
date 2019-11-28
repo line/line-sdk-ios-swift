@@ -14,3 +14,4 @@ exclude:
   - "LineSDK/LineSDK/Messaging/*"
   - "LineSDK/LineSDK/Graph/*"
   - "LineSDK/LineSDK/Networking/API/API+Internal.swift"
+  - "LineSDK/LineSDKUI/SharingUI/*"

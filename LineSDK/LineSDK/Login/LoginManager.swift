@@ -46,7 +46,7 @@ public class LoginManager {
 
     /// Checks and returns whether the user was authorized and an access token exists locally. This method
     /// does not check whether the access token has been expired. To verify an access token, use the
-    /// `API.verifyAccessToken` method.
+    /// `API.Auth.verifyAccessToken` method.
     public var isAuthorized: Bool {
         return AccessTokenStore.shared.current != nil
     }
@@ -110,7 +110,7 @@ public class LoginManager {
     ///   Only one process can be started at a time. Do not call this method again to start a new login process
     ///   before `completion` is invoked.
     ///
-    ///   If the value of `permissions` is `.profile`, the user profile will be retrieved during the login
+    ///   If the value of `permissions` contains `.profile`, the user profile will be retrieved during the login
     ///   process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
     ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
     ///   more information, see `UserProfile`.
@@ -119,7 +119,7 @@ public class LoginManager {
     ///   will be automatically stored in the keychain of your app for later use. You do not need to
     ///   refresh the access token manually because any API call will attempt to refresh the access token if
     ///   necessary. However, if you need to refresh the access token manually, use the
-    ///   `API.refreshAccessToken(with:)` method.
+    ///   `API.Auth.refreshAccessToken(with:)` method.
     ///
     @discardableResult
     public func login(
@@ -310,7 +310,7 @@ public class LoginManager {
     ///   will be automatically stored in the keychain of your app for later use. You do not need to
     ///   refresh the access token manually because any API call will attempt to refresh the access token if
     ///   necessary. However, if you need to refresh the access token manually, use the
-    ///   `API.refreshAccessToken(with:)` method.
+    ///   `API.Auth.refreshAccessToken(with:)` method.
     ///
     @available(
     *, deprecated,

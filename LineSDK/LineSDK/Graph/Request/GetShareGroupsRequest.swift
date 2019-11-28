@@ -22,7 +22,10 @@
 import Foundation
 
 /// LINE internal use only.
-
+/// Represents the request of returning a list of groups that the user belongs to.
+///
+/// `LoginPermission.oneTimeShare` is required.
+///
 public struct GetShareGroupsRequest: Request {
 
     public init(pageToken: String? = nil) {

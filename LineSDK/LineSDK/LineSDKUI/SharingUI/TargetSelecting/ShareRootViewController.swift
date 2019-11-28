@@ -47,13 +47,13 @@ class ShareRootViewController: UIViewController {
 
     private var loadedObserver: NSKeyValueObservation?
 
-    let onCancelled = Delegate<(), Void>()
-    let onLoadingFailed = Delegate<(MessageShareTargetType, LineSDKError), Void>()
+    let onCancelled      = Delegate<(), Void>()
+    let onLoadingFailed  = Delegate<(MessageShareTargetType, LineSDKError), Void>()
     let onSendingMessage = Delegate<[ShareTarget], [MessageConvertible]>()
 
     let onSendingSuccess = Delegate<OnSendingSuccessData, Void>()
     let onSendingFailure = Delegate<OnSendingFailureData, Void>()
-    let onShouldDismiss = Delegate<(), Bool>()
+    let onShouldDismiss  = Delegate<(), Bool>()
 
     private lazy var panelContainer = UILayoutGuide()
     private lazy var panelViewController = SelectedTargetPanelViewController(store: store)
@@ -65,12 +65,13 @@ class ShareRootViewController: UIViewController {
     }
 
     private lazy var pageViewController: PageViewController = {
-        let controllers = MessageShareTargetType.allCases.map { index -> ShareTargetSelectingViewController in
-            let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
-            // Force load view for pages to setup table view initial state.
-            _ = controller.view
-            return controller
-        }
+        let controllers = MessageShareTargetType.allCases
+            .map { index -> ShareTargetSelectingViewController in
+                let controller = ShareTargetSelectingViewController(store: store, columnIndex: index.rawValue)
+                // Force load view for pages to setup table view initial state.
+                _ = controller.view
+                return controller
+            }
 
         controllers.forEach { $0.delegate = self }
 
@@ -263,12 +264,16 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
     }
 
     func correspondingSelectedPanelViewController(
-        for viewController: ShareTargetSelectingViewController) -> SelectedTargetPanelViewController
+        for viewController: ShareTargetSelectingViewController
+    ) -> SelectedTargetPanelViewController
     {
         return panelViewController
     }
 
-    func pageViewController(for viewController: ShareTargetSelectingViewController) -> PageViewController {
+    func pageViewController(
+        for viewController: ShareTargetSelectingViewController
+    ) -> PageViewController
+    {
         return pageViewController
     }
 }

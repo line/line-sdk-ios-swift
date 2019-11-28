@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-extension PostMessageSendingTokenRequest: ResponseDataStub {
+extension PostMessageSendingTokenIssueRequest: ResponseDataStub {
     static let success = """
     {
         "token": "abc123"
@@ -32,7 +32,7 @@ extension PostMessageSendingTokenRequest: ResponseDataStub {
 
 class PostMessageSendingTokenRequestTests: APITests {
     func testSuccess() {
-            let request = PostMessageSendingTokenRequest(userIDs: ["1", "2"])
+            let request = PostMessageSendingTokenIssueRequest(userIDs: ["1", "2"])
             runTestSuccess(for: request) { result in
                 XCTAssertEqual(result.token, "abc123")
             }

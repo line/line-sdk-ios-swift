@@ -77,15 +77,15 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         selectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
-            [unowned self] noti in
-            self.handleSelectingChange(noti)
+            [unowned self] notification in
+            self.handleSelectingChange(notification)
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
-            [unowned self] noti in
-            self.handleSelectingChange(noti)
+            [unowned self] notification in
+            self.handleSelectingChange(notification)
         }
     }
 
@@ -132,7 +132,8 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: ShareTargetSelectingTableCell.reuseIdentifier,
-            for: indexPath) as! ShareTargetSelectingTableCell
+            for: indexPath
+        ) as! ShareTargetSelectingTableCell
 
         let section = actualSection(indexPath.section)
         let dataIndex = filteredIndexes[section][indexPath.row]

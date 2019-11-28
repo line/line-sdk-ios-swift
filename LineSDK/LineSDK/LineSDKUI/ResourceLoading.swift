@@ -35,26 +35,13 @@ extension UIImage {
     ///   - name: The image name.
     ///   - trait: The traits associated with the intended environment for the image.
     convenience init?(bundleNamed name: String, compatibleWith trait: UITraitCollection? = nil) {
-        let bundle: Bundle
-        #if LineSDKCocoaPods
-        bundle = .podsBundle
-        #else
-        bundle = .frameworkBundle
-        #endif
-        self.init(named: name, in: bundle, compatibleWith: trait)
+        self.init(named: name, in: .sdkBundle, compatibleWith: trait)
     }
 }
 
 extension Bundle {
     static let frameworkResourceBundle: Bundle = {
-        let parentBundle: Bundle
-        #if LineSDKCocoaPods
-        parentBundle = podsBundle
-        #else
-        parentBundle = frameworkBundle
-        #endif
-
-        guard let path = parentBundle.path(forResource: "Resource", ofType: "bundle"),
+        guard let path = sdkBundle.path(forResource: "Resource", ofType: "bundle"),
               let bundle = Bundle(path: path) else
         {
             Log.fatalError("SDK resource bundle cannot be found, " +
@@ -65,7 +52,7 @@ extension Bundle {
 
     #if LineSDKCocoaPods
     // SDK Bundle is for CocoaPods: ( sp.resource_bundles = { 'LineSDK' => [ ... ] } )
-    static let podsBundle: Bundle = {
+    static let sdkBundle: Bundle = {
         guard let path = Bundle.frameworkBundle.path(forResource: "LineSDK", ofType: "bundle"),
               let bundle = Bundle(path: path) else
         {
@@ -74,9 +61,9 @@ extension Bundle {
         }
         return bundle
     }()
-    #endif
-
-    static let frameworkBundle: Bundle = {
+    #else
+    static let sdkBundle: Bundle = {
         return Bundle(for: LoginManager.self)
     }()
+    #endif
 }

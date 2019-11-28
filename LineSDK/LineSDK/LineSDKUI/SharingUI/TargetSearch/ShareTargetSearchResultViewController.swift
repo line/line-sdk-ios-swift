@@ -110,7 +110,7 @@ class ShareTargetSearchResultViewController: UIViewController {
         NSLayoutConstraint.activate([
             panelContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             panelContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
+        ])
 
         panelBottomConstraint = panelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         panelBottomConstraint!.isActive = true

@@ -23,7 +23,7 @@ import UIKit
 
 /**
  A view controller that provides a default UI for selecting friends and groups,
- then share a `Message` to the selected targets.
+ then share some `Message`s to the selected targets.
 
  ## Overview
 
@@ -36,11 +36,10 @@ import UIKit
  To use `ShareViewController`, follow these steps:
 
  1. Verify that the user has granted your app the necessary permissions. `ShareViewController` will show both
- Friends and Groups tabs. To get the friend list and group list, you need `LoginPermission.friends` and
- `LoginPermission.groups`. To send a message, you need `LoginPermission.messageWrite`.
- Use `ShareViewController.localAuthorizationStatusForSendingMessage(to:)` to check whether you have a valid token with
- the necessary permissions. If you don't have them, you shouldn't create and show the `ShareViewController`,
- but prompt your user to authorize your app with these permissions.
+ Friends and Groups tabs. To get the friend list and group list, and send a message, you need
+ `LoginPermission.oneTimeShare`. Use `ShareViewController.localAuthorizationStatusForSendingMessage(to:)` to check
+ whether you have a valid token with the necessary permission. If you don't have them, you shouldn't create and
+ show the `ShareViewController`, but prompt your user to authorize your app with these permissions.
 
  2. Create a `ShareViewController` instance. `ShareViewController` can't be initialized from Storyboard or
  XIB. Use the provided initializer `init()`.
@@ -64,8 +63,8 @@ import UIKit
  Although `ShareViewController` is marked as `open`, it's not recommended to create a subclass for it. The class is
  intended to be used as-is and to provide a default sharing experience across all LINE and LINE SDK integrations. Users
  expect a consistent UI and interaction across different apps when sharing messages to friends and groups in LINE.
- If it's important for you to provide a fully customized sharing interaction, you can use the related APIs to create
- your own UIs.
+ But if it's so important for you to provide a fully customized sharing interaction, you can still use the related APIs
+ to create your own UIs.
  */
 open class ShareViewController: UINavigationController {
 

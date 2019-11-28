@@ -199,7 +199,7 @@ extension API {
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHander completion: @escaping (Result<MessageSendingToken, LineSDKError>) -> Void)
     {
-        let request = PostMessageSendingTokenRequest(userIDs: userIDs)
+        let request = PostMessageSendingTokenIssueRequest(userIDs: userIDs)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
 
@@ -209,7 +209,7 @@ extension API {
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<Unit, LineSDKError>) -> Void)
     {
-        let request = PostMultisendMessagesTokenRequest(token: token, messages: messages)
+        let request = PostMultisendMessagesWithTokenRequest(token: token, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
 }

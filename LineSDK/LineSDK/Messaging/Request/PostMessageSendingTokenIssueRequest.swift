@@ -1,5 +1,5 @@
 //
-//  PostMultisendMessagesTokenRequest.swift
+//  PostMessageSendingTokenIssueRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,29 +21,37 @@
 
 import Foundation
 
-public struct PostMultisendMessagesTokenRequest: Request {
+/// LINE internal use only.
+/// Represents a request for issuing a one time token for sharing messages.
+///
+/// `LoginPermission.oneTimeShare` is required.
+///
+public struct PostMessageSendingTokenIssueRequest: Request {
 
-    public typealias Response = Unit
+    public typealias Response = MessageSendingToken
 
-    /// An array of user IDs to where messages will be sent. Up to 10 elements.
-    public let messageToken: MessageSendingToken
+    public let userIDs: [String]
 
-    /// `Messages`s will be sent. Up to 5 elements.
-    public let messages: [Message]
-
-    public init(token: MessageSendingToken, messages: [MessageConvertible]) {
-        self.messageToken = token
-        self.messages = messages.map { $0.message }
+    public init(userIDs: [String]) {
+        self.userIDs = userIDs
     }
 
     public let method: HTTPMethod = .post
-    public let path = "/message/v3/ott/share"
+    public let path = "/message/v3/ott/issue"
     public let authentication: AuthenticateMethod = .token
 
     public var parameters: [String: Any]? {
         return [
-            "token": messageToken.token,
-            "messages": try! messages.toJSON()
+            "userIds": userIDs
         ]
+    }
+}
+
+public struct MessageSendingToken: Codable {
+
+    public let token: String
+
+    public init(value: String) {
+        self.token = value
     }
 }

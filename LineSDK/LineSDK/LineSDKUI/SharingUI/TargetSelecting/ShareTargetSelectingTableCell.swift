@@ -24,18 +24,18 @@ import UIKit
 final class ShareTargetSelectingTableCell: UITableViewCell {
 
     enum Design {
-        static var height: CGFloat { return 54.0 }
+        static var height:              CGFloat { return 54.0 }
+        static var tickLeading:         CGFloat { return 10.0 }
+        static var tickWidth:           CGFloat { return 22.0 }
 
-        static var tickLeading: CGFloat { return 10.0 }
-        static var tickWidth: CGFloat { return 22.0 }
+        static var avatarLeading:       CGFloat { return 10.0 }
+        static var avatarWidth:         CGFloat { return 44.0 }
 
-        static var avatarLeading: CGFloat { return 10.0 }
-        static var avatarWidth: CGFloat { return 44.0 }
-
-        static var displayNameLeading: CGFloat { return 10.0 }
+        static var displayNameLeading:  CGFloat { return 10.0 }
         static var displayNameTrailing: CGFloat { return 10.0 }
+
         static var displayNameTextColor: UIColor { return .LineSDKLabel }
-        static var displayNameFont: UIFont { return .systemFont(ofSize: 16) }
+        static var displayNameFont:      UIFont  { return .systemFont(ofSize: 16) }
         static var displayNameHighlightedNameColor: UIColor {
             return .compatibleColor(light: 0x13C84D, dark: 0x14DE54)
         }
@@ -76,26 +76,35 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
     }
 
     private func setupLayouts() {
-        tickImageView.translatesAutoresizingMaskIntoConstraints = false
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        tickImageView.translatesAutoresizingMaskIntoConstraints    = false
+        avatarImageView.translatesAutoresizingMaskIntoConstraints  = false
         displayNameLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        // tickImageView
         NSLayoutConstraint.activate([
-            tickImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Design.tickLeading),
-            tickImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            tickImageView.widthAnchor  .constraint(equalToConstant: Design.tickWidth),
-            tickImageView.heightAnchor .constraint(equalTo: tickImageView.widthAnchor)
+            tickImageView.leadingAnchor
+                .constraint(equalTo: contentView.leadingAnchor, constant: Design.tickLeading),
+            tickImageView.centerYAnchor
+                .constraint(equalTo: contentView.centerYAnchor),
+            tickImageView.widthAnchor
+                .constraint(equalToConstant: Design.tickWidth),
+            tickImageView.heightAnchor
+                .constraint(equalTo: tickImageView.widthAnchor)
         ])
 
+        // avatarImageView
         NSLayoutConstraint.activate([
             avatarImageView.leadingAnchor
                 .constraint(equalTo: tickImageView.trailingAnchor, constant: Design.avatarLeading),
             avatarImageView.centerYAnchor
                 .constraint(equalTo: contentView.centerYAnchor),
-            avatarImageView.widthAnchor.constraint(equalToConstant: Design.avatarWidth),
-            avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor)
+            avatarImageView.widthAnchor
+                .constraint(equalToConstant: Design.avatarWidth),
+            avatarImageView.heightAnchor
+                .constraint(equalTo: avatarImageView.widthAnchor)
         ])
 
+        // displayNameLabel
         NSLayoutConstraint.activate([
             displayNameLabel.leadingAnchor
                 .constraint(equalTo: avatarImageView.trailingAnchor, constant: Design.displayNameLeading),
