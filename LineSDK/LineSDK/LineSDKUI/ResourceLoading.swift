@@ -62,8 +62,10 @@ extension Bundle {
         return bundle
     }()
     #else
-    static let sdkBundle: Bundle = {
+    static let sdkBundle: Bundle = .frameworkBundle
+    #endif
+
+    static let frameworkBundle: Bundle = {
         return Bundle(for: LoginManager.self)
     }()
-    #endif
 }
