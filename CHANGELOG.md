@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.4.0] - 2019-11-29
+
 ### Added
 
 - Sharing UI support. Now you can request `.oneTimeShare` permission and present a `ShareViewController` to let users select messages and share these messages to their friends or groups. LINE SDK provides a pre-defined UI for sharing messages. You can also build your own UI based on public methods in the SDK. [#79](https://github.com/line/line-sdk-ios-swift/pull/79)
@@ -157,3 +159,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.2.4]: https://github.com/line/line-sdk-ios-swift/compare/5.2.3...5.2.4
 [5.3.0]: https://github.com/line/line-sdk-ios-swift/compare/5.2.4...5.3.0
 [5.3.1]: https://github.com/line/line-sdk-ios-swift/compare/5.3.0...5.3.1
+[5.4.0]: https://github.com/line/line-sdk-ios-swift/compare/5.3.1...5.4.0
