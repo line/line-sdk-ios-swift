@@ -131,3 +131,4 @@ beta_config
 script/to_beta.rb
 fastlane/.env
 /.bundle/
+.swiftpm
