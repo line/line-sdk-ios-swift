@@ -48,9 +48,7 @@ public struct GetShareFriendsRequest: Request {
     }
     
     public let method: HTTPMethod = .get
-    public var path: String {
-        return "/graph/v2/ots/friends"
-    }
+    public let path = "/graph/v2/ots/friends"
     public let authentication: AuthenticateMethod = .token
     
     public var parameters: [String : Any]? {

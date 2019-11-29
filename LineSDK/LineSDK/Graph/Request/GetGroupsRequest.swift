@@ -33,9 +33,7 @@ public struct GetGroupsRequest: Request {
     let pageToken: String?
 
     public let method: HTTPMethod = .get
-    public var path: String {
-        return "/graph/v2/groups"
-    }
+    public let path = "/graph/v2/groups"
     public let authentication: AuthenticateMethod = .token
 
     public var parameters: [String : Any]? {
