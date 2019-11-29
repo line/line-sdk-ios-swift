@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Sharing UI support. Now you can request `.oneTimeShare` permission and present a `ShareViewController` to let users select messages and share these messages to their friends or groups. LINE SDK provides a pre-defined UI for sharing messages. You can also build your own UI based on public methods in the SDK. [#79](https://github.com/line/line-sdk-ios-swift/pull/79)
+- Properties in `Friend` and `Group` to retrieve the "large" version and "small" version of a profile image. [#30](https://github.com/line/line-sdk-ios-swift/pull/30)
+- A new `relation` sort option to get graph list sorted by relationship between current user and friends. [#30](https://github.com/line/line-sdk-ios-swift/pull/30)
+- Support for macCatalyst as a build target. [#123](https://github.com/line/line-sdk-ios-swift/pull/123)
+- Support for building against Swift Package Manager. Currently SPM does not support adding resource, so all UI related parts (such as `LoginButton` and `ShareViewController`) are eliminated from SPM build. [#70](https://github.com/line/line-sdk-ios-swift/pull/70)
+- Replace `LoginManagerOptions` with `LoginManager.Parameters` for flexible parameter configuration while login. [#119](https://github.com/line/line-sdk-ios-swift/pull/119)
+- Provide a way to set customized `IDTokenNonce` as the `nonce` value in ID Token. [#119](https://github.com/line/line-sdk-ios-swift/pull/119)
+- Now message payload setting provides more public setter. You can create a customized message payload much easier. [#90](https://github.com/line/line-sdk-ios-swift/pull/90)
+- `APIErrorDetail` is now public, so you can get the detail error information when a `.invalidHTTPStatusAPIError` error happens. [#115](https://github.com/line/line-sdk-ios-swift/pull/115)
+- Dark mode is supported now for iOS 13 or later. Although all parts of LINE SDK is compatible with the dark mode, the login page and consent pages are not yet. They will be prepared eventually without a native SDK release. [#105](https://github.com/line/line-sdk-ios-swift/pull/105) 
+
+### Fixed
+
+- Now `resource_bundles` is used instead of `resources` when integrated by CocoaPods. [#77](https://github.com/line/line-sdk-ios-swift/pull/77)
+
+### Deprecated
+
+- `LoginManagerOptions` and the related login method is deprecated. Use `LoginManager.Parameters` instead. [#119](https://github.com/line/line-sdk-ios-swift/pull/119/files#diff-f055b8fa041c67b8c8f2bd173ba83669)
+- `preferredWebPageLanguage` is deprecated. Use the property with the same name in `LoginManager.Parameters` instead. [#119](https://github.com/line/line-sdk-ios-swift/pull/119/files#diff-f055b8fa041c67b8c8f2bd173ba83669)
+- The general error type (`Error`) version of error handling delegate method in `LoginButtonDelegate` is deprecated. Use the specific `LineSDKError` version instead. [#120](https://github.com/line/line-sdk-ios-swift/pull/120)
+- All token related APIs in `API` are now deprecated. They are moved to `API.Auth` to distinguish from the normal public APIs. Not like `API`, methods in `API.Auth` will not try to automatically refresh your access token. [#118](https://github.com/line/line-sdk-ios-swift/pull/118)
+
+
 ## [5.3.1] - 2019-10-25
 
 ### Fixed
