@@ -212,6 +212,11 @@ public enum LineSDKError: Error {
 
         /// The image download task finished but it is not the original task issued. Code 4003.
         case notOriginalTask(token: UInt)
+        
+        /// The process is discarded when a new login process is going to be created. This only
+        /// happens when the `allowRecreatingLoginProcess` is set in `LoginManager.Parameters` and
+        /// users are trying to create another login process. Code 4004.
+        case processDiscarded(LoginProcess)
     }
 
     case requestFailed(reason: RequestErrorReason)
@@ -594,6 +599,8 @@ extension LineSDKError.GeneralErrorReason {
             return "Method invoked with an invalid parameter \"\(parameterName)\". Reason: \(reason)"
         case .notOriginalTask(let token):
             return "Image downloading finished but it is not the original one. Token \"\(token)\"."
+        case .processDiscarded(let process):
+            return "Current process is discarded. \(process)"
         }
     }
 
@@ -602,6 +609,7 @@ extension LineSDKError.GeneralErrorReason {
         case .conversionError(_, _): return 4001
         case .parameterError(_, _):  return 4002
         case .notOriginalTask(_):    return 4003
+        case .processDiscarded:      return 4004
         }
     }
 
@@ -615,6 +623,8 @@ extension LineSDKError.GeneralErrorReason {
             userInfo[.parameterName] = parameterName
             userInfo[.reason] = reason
         case .notOriginalTask: break
+        case .processDiscarded(let process):
+            userInfo[.process] = process
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }
@@ -648,4 +658,5 @@ public enum LineSDKErrorUserInfoKey: String {
     case index
     case key
     case got
+    case process
 }

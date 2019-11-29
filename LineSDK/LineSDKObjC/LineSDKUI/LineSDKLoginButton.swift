@@ -55,7 +55,7 @@ public class LineSDKLoginButton: LoginButton {
     public weak var buttonPresentingViewController: UIViewController?
 
     public var loginPermissions: Set<LineSDKLoginPermission> = [.profile]
-    public var loginManagerParameters: LineSDKLoginManagerParameters?
+    public var loginManagerParameters = LineSDKLoginManagerParameters()
 
     public var buttonSizeValue: LineSDKLoginButtonSize {
         set {

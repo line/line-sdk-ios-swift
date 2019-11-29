@@ -135,7 +135,7 @@ open class LoginButton: UIButton {
 
     /// Represents the parameters used during login.
     /// The default value is `nil`.
-    public var parameters: LoginManager.Parameters? = nil
+    public var parameters: LoginManager.Parameters = .init()
 
     /// The size of the login button. The default value is `normal`.
     public var buttonSize: ButtonSize = .normal {
@@ -229,11 +229,6 @@ open class LoginButton: UIButton {
 
     // Executes the login action when the user taps the login button.
     @objc open func login() {
-        if LoginManager.shared.isAuthorizing {
-            // Authorizing process is ongoing so not to call login again
-            return
-        }
-        isUserInteractionEnabled = false
         LoginManager.shared.login(
             permissions: permissions,
             in: presentingViewController,
@@ -246,7 +241,6 @@ open class LoginButton: UIButton {
             case .failure(let error):
                 self.delegate?.loginButton(self, didFailLogin: error)
             }
-            self.isUserInteractionEnabled = true
         }
         delegate?.loginButtonDidStartLogin(self)
     }

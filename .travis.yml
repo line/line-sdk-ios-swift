@@ -6,7 +6,7 @@ addons:
     - carthage
 
 osx_image: 
-- xcode11
+- xcode11.2
 - xcode10.3
 
 env:
@@ -15,6 +15,13 @@ env:
 - LANE=lint_pod SWIFT_VERSION=4.2
 - LANE=lint_pod SWIFT_VERSION=5.0
 - LANE=lint_carthage
+
+matrix:
+  exclude:
+    - osx_image: xcode10.3
+      env: LANE=lint_pod SWIFT_VERSION=4.2
+    - osx_image: xcode10.3
+      env: LANE=lint_pod SWIFT_VERSION=5.0
 
 cache: bundler
 

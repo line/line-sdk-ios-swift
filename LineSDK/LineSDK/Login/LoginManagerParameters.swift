@@ -49,6 +49,12 @@ extension LoginManager {
         /// in received ID token locally.
         public var IDTokenNonce: String? = nil
         
+        #if targetEnvironment(macCatalyst)
+        public var allowRecreatingLoginProcess = true
+        #else
+        public var allowRecreatingLoginProcess = false
+        #endif
+        
         /// Creates a default `LoginManager.Parameters` value.
         public init() {}
         
