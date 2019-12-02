@@ -29,6 +29,18 @@ public struct PutOpenChatTermAgreementUpdateRequest: Request {
     public let path = "/square/v1/terms/agreement"
     public let authentication: AuthenticateMethod = .token
     
+    public var prefixPipelines: [ResponsePipeline]? {
+
+        // Convert empty data to an empty JSON `{}`
+        let isDataEmpty: ((Data) -> Bool) = { $0.isEmpty }
+        let dataTransformer = DataTransformRedirector(condition: isDataEmpty) { _ in
+            return "{}".data(using: .utf8)!
+        }
+        return [
+            .redirector(dataTransformer)
+        ]
+    }
+    
     public let agreed: Bool
     
     public init(agreed: Bool) {

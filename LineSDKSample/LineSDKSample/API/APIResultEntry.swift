@@ -37,14 +37,15 @@ enum APIResultEntry: Comparable {
             
         // These will unwrap if an optional value contained in `value`.
         // Feel free to add additional types you need to unwrap before displaying.
-        case let v as String:               self = .pair(key, v)
-        case let v as URL:                  self = .pair(key, "\(v)")
-        case let v as Int:                  self = .pair(key, "\(v)")
-        case let v as Double:               self = .pair(key, "\(v)")
-        case let v as Date:                 self = .pair(key, "\(v)")
-        case let v as Bool:                 self = .pair(key, "\(v)")
-        case let v as LoginPermission:      self = .pair(key, "\(v)")
-        case let v as MessageSendingStatus: self = .pair(key, "\(v)")
+        case let v as String:                              self = .pair(key, v)
+        case let v as URL:                                 self = .pair(key, "\(v)")
+        case let v as Int:                                 self = .pair(key, "\(v)")
+        case let v as Double:                              self = .pair(key, "\(v)")
+        case let v as Date:                                self = .pair(key, "\(v)")
+        case let v as Bool:                                self = .pair(key, "\(v)")
+        case let v as LoginPermission:                     self = .pair(key, "\(v)")
+        case let v as MessageSendingStatus:                self = .pair(key, "\(v)")
+        case let v as GetOpenChatRoomStatusRequest.Status: self = .pair(key, "\(v.rawValue)")
             
         case let v as [Any]:
             let entries = v.enumerated().map { offset, element in

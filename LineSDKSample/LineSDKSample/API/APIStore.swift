@@ -40,6 +40,7 @@ enum APICategory: Int, CaseIterable {
     case friendship
     case graph
     case messaging
+    case openChat
 }
 
 class APIStore {
@@ -49,6 +50,7 @@ class APIStore {
     private(set) var friendshipAPIs: [APIItem] = []
     private(set) var graphAPIs: [APIItem] = []
     private(set) var messagingAPIs: [APIItem] = []
+    private(set) var openChatAPIs: [APIItem] = []
 
     private var tokenDidUpdateObserver: NotificationToken?
     private var tokenDidRemoveObserver: NotificationToken?
@@ -72,6 +74,7 @@ class APIStore {
         case .friendship: return friendshipAPIs.count
         case .graph: return graphAPIs.count
         case .messaging: return messagingAPIs.count
+        case .openChat: return openChatAPIs.count
         }
     }
     
@@ -81,6 +84,7 @@ class APIStore {
         case .friendship: return friendshipAPIs[index]
         case .graph: return graphAPIs[index]
         case .messaging: return messagingAPIs[index]
+        case .openChat: return openChatAPIs[index]
         }
     }
 }
@@ -100,19 +104,24 @@ extension APIStore {
         ]
         
         friendshipAPIs = [
-            .init(title: "Get Bot Friendship Status",
-                  request: GetBotFriendshipStatusRequest())
+            .init(
+                title: "Get Bot Friendship Status",
+                request: GetBotFriendshipStatusRequest()
+            )
         ]
         
         graphAPIs = [
-            .init(title: "Get Friends" ,
-                  request: GetFriendsRequest()
+            .init(
+                title: "Get Friends" ,
+                request: GetFriendsRequest()
             ),
-            .init(title: "Get Approvers in Friends",
-                  request: GetApproversInFriendsRequest()
+            .init(
+                title: "Get Approvers in Friends",
+                request: GetApproversInFriendsRequest()
             ),
-            .init(title: "Get Groups",
-                  request: GetGroupsRequest()
+            .init(
+                title: "Get Groups",
+                request: GetGroupsRequest()
             ),
             .getApproversInGroup
         ]
@@ -121,6 +130,23 @@ extension APIStore {
             .sendTextMessage,
             .multiSendTextMessage,
             .sendFlexMessage
+        ]
+        
+        openChatAPIs = [
+            .init(
+                title: "Agreement Status",
+                request: GetOpenChatTermAgreementStatusRequest()
+            ),
+            .init(
+                title: "Agree Agreement",
+                request: PutOpenChatTermAgreementUpdateRequest(agreed: true)
+            ),
+            .init(
+                title: "Decline Agreement",
+                request: PutOpenChatTermAgreementUpdateRequest(agreed: false)
+            ),
+            .checkOpenChatRoomStatus,
+            .createOpenChatRoom
         ]
     }
 }
@@ -277,11 +303,42 @@ extension APIItem {
         }
         return APIItem(title: "Get Approvers in given Group", path: path, available: true, block: block)
     }
+    
+    static var checkOpenChatRoomStatus: APIItem {
+        let mock = GetOpenChatRoomStatusRequest(squareMid: "")
+        let block: AnyResultBlock = { arg in
+            let (controller, handler) = arg
+            collectOpenChatMid(in: controller) { result in
+                let text = try! result.get()
+                let request = GetOpenChatRoomStatusRequest(squareMid: text)
+                Session.shared.send(request) {
+                    response in
+                    switch response {
+                    case .success(let value): handler(.success(value))
+                    case .failure(let error): handler(.failure(.sdkError(error)))
+                    }
+                }
+            }
+        }
+        return APIItem(title: "Check Open Chat Room Status", path: mock.path, block: block)
+    }
+    
+    static var createOpenChatRoom: APIItem {
+        let p = PostOpenChatCreateRequest.Parameter(
+            name: "Sample Room",
+            description: "This is just a sample open chat room",
+            creatorDisplayName: "onevcat",
+            category: .uncategorized,
+            allowSearch: true
+        )
+        return .init(title: "Create Open Chat Room", request: PostOpenChatCreateRequest(parameter: p))
+    }
 }
 
 func selectUserFromFriendList(
     in viewController: UIViewController,
-    handler: @escaping (Result<String, ApplicationError>) -> Void)
+    handler: @escaping (Result<String, ApplicationError>) -> Void
+)
 {
     let getFriends = GetFriendsRequest()
     Session.shared.send(getFriends) { res in
@@ -316,7 +373,8 @@ func selectUserFromFriendList(
 
 func selectGroupFromGroupList(
     in viewController: UIViewController,
-    handler: @escaping (Result<String, ApplicationError>) -> Void)
+    handler: @escaping (Result<String, ApplicationError>) -> Void
+)
 {
     let request = GetGroupsRequest()
     Session.shared.send(request) { res in
@@ -351,7 +409,8 @@ func selectGroupFromGroupList(
 
 func selectFlexMessage(
     in viewController: UIViewController,
-    handler: @escaping (Result<Message, ApplicationError>) -> Void)
+    handler: @escaping (Result<Message, ApplicationError>) -> Void
+)
 {
     let alert = UIAlertController(title: "Message", message: nil, preferredStyle: .actionSheet)
 
@@ -384,6 +443,24 @@ func selectFlexMessage(
         handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
     })
     alert.setupPopover(in: viewController.view)
+    viewController.present(alert, animated: true)
+}
+
+func collectOpenChatMid(
+    in viewController: UIViewController,
+    handler: @escaping (Result<String, Never>) -> Void
+)
+{
+    let alert = UIAlertController(title: "Open Chat Status", message: nil, preferredStyle: .alert)
+    alert.addTextField { $0.placeholder = "Input squareMid to start a check..." }
+    alert.addAction(
+        .init(title: "OK", style: .default) {
+            _ in
+            guard let text = alert.textFields?.first?.text else { return }
+            handler(.success(text))
+        }
+    )
+    alert.addAction(.init(title: "Cancel", style: .cancel))
     viewController.present(alert, animated: true)
 }
 
