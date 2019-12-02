@@ -107,6 +107,7 @@ public class OpenChatController {
         currentNavigationViewController = navigation
         updateNavigationStyles()
         
+        navigation.modalPresentationStyle = .fullScreen
         viewController.present(navigation, animated: true)
     }
     
@@ -116,6 +117,7 @@ public class OpenChatController {
         currentNavigationViewController = navigation
         updateNavigationStyles()
 
+        navigation.modalPresentationStyle = .fullScreen
         viewController.present(navigation, animated: true)
     }
     
