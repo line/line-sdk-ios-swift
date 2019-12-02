@@ -21,56 +21,62 @@
 
 import Foundation
 
+public struct OpenChatRoomCreatingItem {
+    // length <= 50
+    public let name: String
+    // length <= 200
+    public let description: String
+    // length <= 50
+    public let creatorDisplayName: String
+    public let category: Int
+    public let allowSearch: Bool
+    
+    public init(
+        name: String,
+        description: String,
+        creatorDisplayName: String,
+        category: OpenChatCategory,
+        allowSearch: Bool
+    )
+    {
+        self.name = name
+        self.description = description
+        self.creatorDisplayName = creatorDisplayName
+        self.category = category.rawValue
+        self.allowSearch = allowSearch
+    }
+    
+    var toDictionary: [String: Any] {
+        return [
+            "name": name,
+            "description": description,
+            "creatorDisplayName": creatorDisplayName,
+            "category": category,
+            "allowSearch": allowSearch
+        ]
+    }
+}
+
+public struct OpenChatRoomInfo: Decodable {
+    public let squareMid: String
+    public let url: URL
+}
+
 public struct PostOpenChatCreateRequest: Request {
     
-    public struct Response: Decodable {
-        public let squareMid: String
-        public let url: URL
-    }
-    
-    public struct Parameter: Encodable {
-        // length <= 50
-        public var name: String
-        // length <= 200
-        public var description: String
-        // length <= 50
-        public var creatorDisplayName: String
-        public var category: Int
-        public var allowSearch: Bool = true
-        
-        public init(
-            name: String,
-            description: String,
-            creatorDisplayName: String,
-            category: OpenChatCategory,
-            allowSearch: Bool
-        )
-        {
-            self.name = name
-            self.description = description
-            self.creatorDisplayName = creatorDisplayName
-            self.category = category.rawValue
-            self.allowSearch = allowSearch
-        }
-    }
+    public typealias Response = OpenChatRoomInfo
     
     public let method: HTTPMethod = .post
     public let path = "/square/v1/square"
     public let authentication: AuthenticateMethod = .token
     
-    public let parameter: Parameter
+    public let room: OpenChatRoomCreatingItem
     
-    public init(parameter: Parameter) {
-        self.parameter = parameter
+    public init(room: OpenChatRoomCreatingItem) {
+        self.room = room
     }
     
     public var parameters: Parameters? {
-        return [
-            "name": parameter.name,
-            "description": parameter.description,
-            "creatorDisplayName": parameter.creatorDisplayName,
-            "category": parameter.category,
-            "allowSearch": parameter.allowSearch
-        ]
+        return room.toDictionary
     }
 }

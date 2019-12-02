@@ -225,6 +225,28 @@
                                             <segue destination="jMx-VA-bwO" kind="show" identifier="showMessageChooser" id="eal-lY-h6L"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" id="du8-HG-gGW">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="du8-HG-gGW" id="VIq-JR-9Ir">
+                                            <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Chat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mf1-RP-kWk">
+                                                    <rect key="frame" x="16" y="11" width="82.5" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mf1-RP-kWk" secondAttribute="trailing" constant="16" id="4iD-5M-P38"/>
+                                                <constraint firstItem="mf1-RP-kWk" firstAttribute="top" secondItem="VIq-JR-9Ir" secondAttribute="top" constant="11" id="REN-3F-5Ag"/>
+                                                <constraint firstAttribute="bottom" secondItem="mf1-RP-kWk" secondAttribute="bottom" constant="11" id="THh-7K-10t"/>
+                                                <constraint firstItem="mf1-RP-kWk" firstAttribute="leading" secondItem="VIq-JR-9Ir" secondAttribute="leading" constant="16" id="xXw-ji-NvI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>

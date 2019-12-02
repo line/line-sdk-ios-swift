@@ -324,14 +324,14 @@ extension APIItem {
     }
     
     static var createOpenChatRoom: APIItem {
-        let p = PostOpenChatCreateRequest.Parameter(
+        let room = OpenChatRoomCreatingItem(
             name: "Sample Room",
             description: "This is just a sample open chat room",
             creatorDisplayName: "onevcat",
             category: .uncategorized,
             allowSearch: true
         )
-        return .init(title: "Create Open Chat Room", request: PostOpenChatCreateRequest(parameter: p))
+        return .init(title: "Create Open Chat Room", request: PostOpenChatCreateRequest(room: room))
     }
 }
 
