@@ -53,6 +53,11 @@ public struct LoginPermission: Hashable {
     /// :nodoc:
     /// LINE internal use only. The permission to write a message as current user.
     public static let messageWrite                   = LoginPermission(rawValue: "message.write")
+    
+    public static let openChatTermStatus             = LoginPermission(rawValue: "square.term.status")
+    public static let openChatTermAgree              = LoginPermission(rawValue: "square.term.agree")
+    public static let openChatRoomCreate             = LoginPermission(rawValue: "square.create")
+    public static let openChatRoomInfo               = LoginPermission(rawValue: "square.info")
 }
 
 /// Sub-permissions of .openID. Permissions in this extension will not be included in the `permissions` property of
