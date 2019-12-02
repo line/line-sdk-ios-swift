@@ -29,7 +29,7 @@ extension API {
     /// This API returns a maximum of 200 users per request.
     ///
     /// - Parameters:
-    ///   - sort: Sorting method for the returned freind list.
+    ///   - sort: Sorting method for the returned friend list.
     ///           Only a value of `name` is supported. If not specified, the sort will be determined by server.
     ///   - pageToken: If a `pageToken` value is included in the previous API call's completion closure,
     ///                pass it here to get the following page of the user's friend list. Otherwise, pass `nil` to get
