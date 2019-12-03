@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
                           engaging and personalized user experience.
                           DESC
 
-  s.homepage            = "https://developers.line.me/"
+  s.homepage            = "https://developers.line.biz/"
   s.license             = "Apache License, Version 2.0"
 
   s.author              = "LINE"

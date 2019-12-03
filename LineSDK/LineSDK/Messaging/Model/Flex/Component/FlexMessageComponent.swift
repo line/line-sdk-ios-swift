@@ -46,7 +46,7 @@ enum FlexMessageComponentType: String, Codable {
 /// - spacer: Represents the type of spacer component. A `FlexSpacerComponent` value is associated.
 /// - unknown: A component type is not defined in the LINE SDK yet.
 ///
-/// For more information, see https://developers.line.me/en/reference/messaging-api/#component
+/// For more information, see https://developers.line.biz/en/reference/messaging-api/#component
 public enum FlexMessageComponent: Codable {
 
     /// Represents the type of box component. A `FlexBoxComponent` value is associated.

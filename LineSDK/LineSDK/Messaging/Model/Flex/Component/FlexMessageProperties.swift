@@ -27,7 +27,7 @@ extension FlexMessageComponent {
 
     /// The ratio (or flex value) of a flex component should take.
     /// For more information, see
-    /// https://developers.line.me/en/docs/messaging-api/flex-message-layout/#component-width-and-height .
+    /// https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-width-and-height .
     public typealias Ratio = UInt
     
     /// Represents the placement style of components in a box.
@@ -39,7 +39,7 @@ extension FlexMessageComponent {
     ///             components are aligned.
     ///
     /// For more information, see
-    /// https://developers.line.me/en/docs/messaging-api/flex-message-layout/#box-layout-types .
+    /// https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-layout-types .
     public enum Layout: String, DefaultEnumCodable {
 
         /// Components are placed horizontally.

@@ -26,7 +26,7 @@
 /// To create a `TemplateMessage`, firstly you need to create a certain payload, and then pass it with an `altText`
 /// to initializer.
 ///
-/// For more information, see https://developers.line.me/en/docs/messaging-api/message-types/#template-messages .
+/// For more information, see https://developers.line.biz/en/docs/messaging-api/message-types/#template-messages .
 public struct TemplateMessage: Codable, MessageTypeCompatible {
     let type = MessageType.template
     
