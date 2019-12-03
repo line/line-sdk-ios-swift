@@ -27,7 +27,7 @@
 /// To create a `FlexMessage`, firstly you need to create a certain container, and then pass it with an `altText`
 /// to initializer.
 ///
-/// For more information, see https://developers.line.me/en/docs/messaging-api/message-types/#flex-messages .
+/// For more information, see https://developers.line.biz/en/docs/messaging-api/message-types/#flex-messages .
 public struct FlexMessage: Codable, MessageTypeCompatible {
     let type = MessageType.flex
     

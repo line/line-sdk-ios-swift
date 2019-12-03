@@ -33,7 +33,7 @@ public struct LoginResult {
     /// Indicates that the friendship status between the user and the bot changed during the login. This value is
     /// non-`nil` only if the `.botPromptNormal` or `.botPromptAggressive` are specified as part of the
     /// `LoginManagerOption` object when the user logs in. For more information, see Linking a bot with your LINE 
-    /// Login channel at https://developers.line.me/en/docs/line-login/web/link-a-bot/.
+    /// Login channel at https://developers.line.biz/en/docs/line-login/web/link-a-bot/.
     public let friendshipStatusChanged: Bool?
     /// The `nonce` value when requesting ID Token during login process. Use this value as a parameter when you
     /// verify the ID Token against the LINE server. This value is `nil` if `.openID` permission is not requested.
