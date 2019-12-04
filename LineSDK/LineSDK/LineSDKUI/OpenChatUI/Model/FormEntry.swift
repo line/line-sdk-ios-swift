@@ -28,19 +28,25 @@ protocol FormEntry {
 protocol MultipleLineText: FormEntry {
     var maximumCount: Int { get }
     var placeholder: String? { get }
-    var onUpdate: Delegate<String, Void> { get }
+    var onTextUpdated: Delegate<String, Void> { get }
 }
 
 class RoomNameText: MultipleLineText {
         
     let maximumCount = 50
     let placeholder: String? = "Hello"
-    let onUpdate = Delegate<String, Void>()
+    let onTextUpdated = Delegate<String, Void>()
 
     lazy var cell = render()
     
     func render() -> UITableViewCell {
-        return OpenChatRoomNameTableViewCell(style: .default, reuseIdentifier: nil)
+        let cell = OpenChatRoomNameTableViewCell(style: .default, reuseIdentifier: nil)
+        cell.textView.maximumCount = maximumCount
+        cell.textView.placeholderText = "hello world"
+        cell.textView.onTextUpdated.delegate(on: self) { (self, result) in
+            self.onTextUpdated.call(result)
+        }
+        return cell
     }
 }
 
@@ -48,7 +54,7 @@ class RoomDescriptionText: MultipleLineText {
     
     let maximumCount = 200
     let placeholder: String? = "Hello"
-    let onUpdate = Delegate<String, Void>()
+    let onTextUpdated = Delegate<String, Void>()
     
     lazy var cell = render()
     

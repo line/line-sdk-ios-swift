@@ -201,6 +201,7 @@
 		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
 		4BD1B2222397425000437892 /* VerticallyCenteredTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */; };
 		4BD1B224239748F700437892 /* CountLimitedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B223239748F700437892 /* CountLimitedTextView.swift */; };
+		4BD1B2262397708300437892 /* TextCountValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B2252397708300437892 /* TextCountValidator.swift */; };
 		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
 		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
 		4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
@@ -537,6 +538,7 @@
 		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
 		4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextView.swift; sourceTree = "<group>"; };
 		4BD1B223239748F700437892 /* CountLimitedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountLimitedTextView.swift; sourceTree = "<group>"; };
+		4BD1B2252397708300437892 /* TextCountValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCountValidator.swift; sourceTree = "<group>"; };
 		4BD24CF4213E278700606411 /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
 		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
 		4BD33ED1238B627200C1E8A9 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
@@ -826,6 +828,7 @@
 				4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */,
 				4B603F022396342800B81E56 /* FormEntry.swift */,
 				4B603F04239638CF00B81E56 /* FormSection.swift */,
+				4BD1B2252397708300437892 /* TextCountValidator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1904,6 +1907,7 @@
 				4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */,
 				4B5B0EF32241DEA900BA59A0 /* ShareViewController.swift in Sources */,
 				DBE4E36D211D6C1A00184D66 /* User.swift in Sources */,
+				4BD1B2262397708300437892 /* TextCountValidator.swift in Sources */,
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
 				D102A69E2164658D00804C7C /* GetBotFriendshipStatus.swift in Sources */,
 				4B3CCB9A21523A2600F51D76 /* CryptoKey.swift in Sources */,

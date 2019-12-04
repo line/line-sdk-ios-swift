@@ -22,11 +22,9 @@
 import UIKit
 
 class OpenChatRoomNameTableViewCell: UITableViewCell {
-
+    
     var textView: CountLimitedTextView = {
-        let textView = CountLimitedTextView()
-        textView.placeholderText = "Hello!"
-        return textView
+        return CountLimitedTextView()
     }()
     
     required init?(coder: NSCoder) {
@@ -59,7 +57,7 @@ class OpenChatRoomNameTableViewCell: UITableViewCell {
             textView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             textView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -13),
             textView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+            textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
     }
     

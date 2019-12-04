@@ -31,12 +31,15 @@ class OpenChatRoomInfoViewController: UITableViewController {
     let onNext = Delegate<OpenChatCreatingFormItem, Void>()
     
     var formItem = OpenChatCreatingFormItem() {
-        didSet { updateViews() }
+        didSet {
+            print("Item Updated: \(formItem)")
+            updateViews()
+        }
     }
     
     lazy var roomName: RoomNameText = {
         let entry = RoomNameText()
-        entry.onUpdate.delegate(on: self) { (self, text) in
+        entry.onTextUpdated.delegate(on: self) { (self, text) in
             self.formItem.roomName = text
         }
         return entry
@@ -44,7 +47,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
     
     lazy var roomDescription: RoomDescriptionText = {
         let entry = RoomDescriptionText()
-        entry.onUpdate.delegate(on: self) { (self, text) in
+        entry.onTextUpdated.delegate(on: self) { (self, text) in
             self.formItem.roomDescription = text
         }
         return entry

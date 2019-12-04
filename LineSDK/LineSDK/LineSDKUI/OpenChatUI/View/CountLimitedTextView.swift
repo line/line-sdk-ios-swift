@@ -23,12 +23,19 @@ import UIKit
 
 class CountLimitedTextView: UIView {
     
-    let onTextDone = Delegate<String, Void>()
-    
-    var tokens: [NSKeyValueObservation]?
+    let onTextUpdated = Delegate<String, Void>()
     
     var placeholderText: String? {
         didSet { placeholderLabel.text = placeholderText }
+    }
+    
+    private var validator: TextCountValidator?
+    
+    var maximumCount: Int? = nil {
+        didSet {
+            validator = maximumCount.map { TextCountValidator(maxCount: $0) }
+            validateString(textView.text)
+        }
     }
     
     var text: String {
@@ -89,7 +96,6 @@ class CountLimitedTextView: UIView {
     private func setup() {
         setupSubviews()
         setupLayouts()
-        setupObservers()
     }
     
     private func setupSubviews() {
@@ -133,13 +139,19 @@ class CountLimitedTextView: UIView {
         ])
     }
     
-    private func setupObservers() {
-        tokens = [
-        ]
-    }
-    
     @objc private func clearText() {
         text = ""
+    }
+    
+    private func validateString(_ text: String) {
+        guard let validator = validator, let maximumCount = maximumCount else {
+            textCountLabel.isHidden = true
+            return
+        }
+        textCountLabel.isHidden = false
+        let validated = validator.validatedString(text)
+        textView.text = validated
+        textCountLabel.text = "\(validated.count)/\(maximumCount)"
     }
 }
 
@@ -149,11 +161,8 @@ extension CountLimitedTextView: UITextViewDelegate {
         placeholderLabel.isHidden = !textView.text.isEmpty
         clearButton.isHidden = textView.text.isEmpty
         
-        
-        print("textViewDidChange: \(textView.text)")
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        
+        guard textView.markedTextRange == nil else { return }
+        validateString(textView.text)
+        onTextUpdated.call(textView.text)
     }
 }
