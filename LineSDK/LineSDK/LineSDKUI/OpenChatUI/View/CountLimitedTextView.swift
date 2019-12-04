@@ -21,19 +21,41 @@
 
 import UIKit
 
+protocol CountLimitedTextViewStyle {
+    var font: UIFont { get }
+    var textColor: UIColor { get }
+    var placeholderFont: UIFont { get }
+    var placeholderColor: UIColor { get }
+    var textCountLabelFont: UIFont { get }
+    var textCountLabelColor: UIColor { get }
+}
+
 class CountLimitedTextView: UIView {
     
+    var style: CountLimitedTextViewStyle {
+        didSet {
+            textView.font = style.font
+            textView.textColor = style.textColor
+            
+            placeholderLabel.font = style.placeholderFont
+            placeholderLabel.textColor = style.placeholderColor
+            
+            textCountLabel.font = style.textCountLabelFont
+            textCountLabel.textColor = style.textCountLabelColor
+        }
+    }
+    
     let onTextUpdated = Delegate<String, Void>()
+    let onTextViewChangeContentSize = Delegate<CGSize, Void>()
+    
+    var maximumTextContentHeight: CGFloat?
     
     var placeholderText: String? {
         didSet { placeholderLabel.text = placeholderText }
     }
-    
-    private var validator: TextCountValidator?
-    
+
     var maximumCount: Int? = nil {
         didSet {
-            validator = maximumCount.map { TextCountValidator(maxCount: $0) }
             validateString(textView.text)
         }
     }
@@ -43,7 +65,6 @@ class CountLimitedTextView: UIView {
         set {
             textView.text = newValue
             textViewDidChange(textView)
-            layoutIfNeeded()
         }
     }
     
@@ -52,22 +73,22 @@ class CountLimitedTextView: UIView {
         textView.backgroundColor = .clear
         textView.alwaysBounceVertical = false
         textView.alwaysBounceHorizontal = false
-        textView.textColor = .LineSDKLabel
-        textView.font = .boldSystemFont(ofSize: 18)
+        textView.textColor = style.textColor
+        textView.font = style.font
         textView.layer.borderWidth = 0
         textView.delegate = self
         
         return textView
     }()
     
-    private(set) var placeholderLabel: UILabel = {
+    lazy private(set) var placeholderLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 18)
-        label.textColor = .LineSDKSecondaryLabel
+        label.font = style.placeholderFont
+        label.textColor = style.placeholderColor
         return label
     }()
     
-    private(set) var clearButton: UIButton = {
+    lazy private(set) var clearButton: UIButton = {
         let button = UIButton(type: .custom)
         button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         button.setImage(UIImage(bundleNamed: "setting_icon_delete_normal"), for: .normal)
@@ -76,21 +97,21 @@ class CountLimitedTextView: UIView {
         return button
     }()
     
-    private(set) var textCountLabel: UILabel = {
+    lazy private(set) var textCountLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .LineSDKSecondaryLabel
+        label.font = style.textCountLabelFont
+        label.textColor = style.textCountLabelColor
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(style: CountLimitedTextViewStyle) {
+        self.style = style
+        super.init(frame: .zero)
         setup()
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setup() {
@@ -141,17 +162,25 @@ class CountLimitedTextView: UIView {
     
     @objc private func clearText() {
         text = ""
+        textView.sizeToFit()
     }
     
     private func validateString(_ text: String) {
-        guard let validator = validator, let maximumCount = maximumCount else {
+        guard let maximumCount = maximumCount else {
             textCountLabel.isHidden = true
             return
         }
         textCountLabel.isHidden = false
-        let validated = validator.validatedString(text)
-        textView.text = validated
-        textCountLabel.text = "\(validated.count)/\(maximumCount)"
+        
+        let trimmed = text.prefixNormalized.trimming(upper: maximumCount)
+        let textCount = text.count
+        if trimmed.count == text.count {
+            // Nothing is trimmed
+            textCountLabel.text = "\(textCount)/\(maximumCount)"
+        } else {
+            textView.text = trimmed
+            textCountLabel.text = "\(trimmed.count)/\(maximumCount)"
+        }
     }
 }
 
@@ -163,6 +192,12 @@ extension CountLimitedTextView: UITextViewDelegate {
         
         guard textView.markedTextRange == nil else { return }
         validateString(textView.text)
+        
         onTextUpdated.call(textView.text)
+        
+        if maximumTextContentHeight == nil || textView.contentSize.height <= maximumTextContentHeight! {
+            textView.sizeToFit()
+            onTextViewChangeContentSize.call(textView.contentSize)
+        }
     }
 }

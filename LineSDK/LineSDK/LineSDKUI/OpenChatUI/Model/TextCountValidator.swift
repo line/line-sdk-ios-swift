@@ -21,14 +21,6 @@
 
 import Foundation
 
-struct TextCountValidator {
-    let maxCount: Int
-    
-    func validatedString(_ text: String) -> String {
-        return text.prefixNormalized.trimming(upper: maxCount)
-    }
-}
-
 extension String {
     var prefixNormalized: String {
         return String(drop { $0.isWhitespace })

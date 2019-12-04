@@ -202,6 +202,7 @@
 		4BD1B2222397425000437892 /* VerticallyCenteredTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */; };
 		4BD1B224239748F700437892 /* CountLimitedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B223239748F700437892 /* CountLimitedTextView.swift */; };
 		4BD1B2262397708300437892 /* TextCountValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B2252397708300437892 /* TextCountValidator.swift */; };
+		4BD1B228239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */; };
 		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
 		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
 		4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
@@ -539,6 +540,7 @@
 		4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextView.swift; sourceTree = "<group>"; };
 		4BD1B223239748F700437892 /* CountLimitedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountLimitedTextView.swift; sourceTree = "<group>"; };
 		4BD1B2252397708300437892 /* TextCountValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCountValidator.swift; sourceTree = "<group>"; };
+		4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		4BD24CF4213E278700606411 /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
 		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
 		4BD33ED1238B627200C1E8A9 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
@@ -837,6 +839,7 @@
 			isa = PBXGroup;
 			children = (
 				4B6972962396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift */,
+				4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */,
 				4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */,
 				4BD1B223239748F700437892 /* CountLimitedTextView.swift */,
 			);
@@ -1872,6 +1875,7 @@
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
 				4BF53539212A7C9100EA602A /* FlexMessage.swift in Sources */,
 				D1A591272139489E00AC080D /* JWK.swift in Sources */,
+				4BD1B228239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */,
 				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,
 				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
 				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,

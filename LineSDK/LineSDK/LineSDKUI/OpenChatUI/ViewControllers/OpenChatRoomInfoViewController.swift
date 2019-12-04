@@ -50,6 +50,10 @@ class OpenChatRoomInfoViewController: UITableViewController {
         entry.onTextUpdated.delegate(on: self) { (self, text) in
             self.formItem.roomDescription = text
         }
+        entry.onTextHeightUpdated.delegate(on: self) { (self, _) in
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
         return entry
     }()
     
@@ -62,7 +66,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
     }()
     
     lazy var enableSearch: Toggle = {
-        let entry = Toggle(title: "Can Search", initialValue: formItem.allowSearch)
+        let entry = Toggle(title: "Allow search", initialValue: formItem.allowSearch)
         entry.onValueChange.delegate(on: self) { (self, allowSearch) in
             self.formItem.allowSearch = allowSearch
         }
@@ -71,9 +75,9 @@ class OpenChatRoomInfoViewController: UITableViewController {
     
     lazy var sections: [FormSection] = [
         FormSection(entries: [roomName], footerText: "The profile photo will also be set as its wallpaper."),
-        FormSection(entries: [roomDescription], footerText: "This is footer 1."),
-        FormSection(entries: [category], footerText: "This is footer 2."),
-        FormSection(entries: [enableSearch], footerText: "This is footer 3."),
+        FormSection(entries: [roomDescription], footerText: "Enter keywords using #hashtags"),
+        FormSection(entries: [category], footerText: "Your OpenChat will be displayed in the selected category."),
+        FormSection(entries: [enableSearch], footerText: "Others can search for this OpenChat by its name or description."),
     ]
 
     override func viewDidLoad() {
@@ -92,14 +96,17 @@ class OpenChatRoomInfoViewController: UITableViewController {
         
         title = "Creating OpenChat"
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: "",
+            style: .plain,
+            target: nil,
+            action: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(bundleNamed: "navi_icon_close"),
             style: .plain,
             target: self,
             action: #selector(closeForm)
         )
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "Next",
             style: .plain,
@@ -130,7 +137,6 @@ extension OpenChatRoomInfoViewController {
         return sections[section].formEntries.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         return sections[indexPath.section].formEntries[indexPath.row].cell
     }
     

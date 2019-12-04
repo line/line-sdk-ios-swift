@@ -25,13 +25,7 @@ protocol FormEntry {
     var cell: UITableViewCell { get }
 }
 
-protocol MultipleLineText: FormEntry {
-    var maximumCount: Int { get }
-    var placeholder: String? { get }
-    var onTextUpdated: Delegate<String, Void> { get }
-}
-
-class RoomNameText: MultipleLineText {
+class RoomNameText: FormEntry {
         
     let maximumCount = 50
     let placeholder: String? = "Hello"
@@ -50,18 +44,28 @@ class RoomNameText: MultipleLineText {
     }
 }
 
-class RoomDescriptionText: MultipleLineText {
+class RoomDescriptionText: FormEntry {
     
     let maximumCount = 200
     let placeholder: String? = "Hello"
+    
     let onTextUpdated = Delegate<String, Void>()
+    let onTextHeightUpdated = Delegate<CGFloat, Void>()
     
     lazy var cell = render()
     
     func render() -> UITableViewCell {
-        let c = UITableViewCell(style: .default, reuseIdentifier: nil)
-        c.contentView.backgroundColor = .yellow
-        return c
+        let cell = OpenChatRoomDescriptionTableViewCell(style: .default, reuseIdentifier: nil)
+        cell.textView.maximumCount = maximumCount
+        cell.textView.placeholderText = "Enter description"
+        cell.textView.onTextUpdated.delegate(on: self) { (self, result) in
+            self.onTextUpdated.call(result)
+        }
+        cell.textView.onTextViewChangeContentSize.delegate(on: self) { [unowned cell] (self, size) in
+            cell.updateContentHeightConstraint(size.height)
+            self.onTextHeightUpdated.call(size.height)
+        }
+        return cell
     }
 }
 

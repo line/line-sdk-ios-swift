@@ -1,5 +1,5 @@
 //
-//  OpenChatRoomNameTableViewCell.swift
+//  OpenChatRoomDescriptionTableViewCell.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,18 +21,25 @@
 
 import UIKit
 
-class OpenChatRoomNameTableViewCell: UITableViewCell {
+class OpenChatRoomDescriptionTableViewCell: UITableViewCell {
     
     struct TextViewStyle: CountLimitedTextViewStyle {
-        let font: UIFont = .boldSystemFont(ofSize: 18)
+        let font: UIFont = .boldSystemFont(ofSize: 15)
         let textColor: UIColor = .LineSDKLabel
-        let placeholderFont: UIFont = .boldSystemFont(ofSize: 18)
+        let placeholderFont: UIFont = .boldSystemFont(ofSize: 15)
         let placeholderColor: UIColor = .LineSDKSecondaryLabel
         let textCountLabelFont: UIFont = .systemFont(ofSize: 12)
         let textCountLabelColor: UIColor = .LineSDKSecondaryLabel
     }
     
-    let textView = CountLimitedTextView(style: TextViewStyle())
+    lazy var textView: CountLimitedTextView = {
+        let textView = CountLimitedTextView(style: TextViewStyle())
+        textView.maximumTextContentHeight = 120
+        return textView
+    }()
+    
+    private var contentHeightConstraint: NSLayoutConstraint!
+    private let textViewVerticalSpacing: CGFloat = 20
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -55,17 +62,24 @@ class OpenChatRoomNameTableViewCell: UITableViewCell {
     }
     
     private func setupLayouts() {
-        let contentHeight = contentView.heightAnchor.constraint(equalToConstant: 123)
+        let contentHeight = contentView.heightAnchor.constraint(equalToConstant: textViewVerticalSpacing * 2 + 34)
         contentHeight.priority = .init(999)
         contentHeight.isActive = true
         
+        contentHeightConstraint = contentHeight
+        
         textView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            textView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            textView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             textView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -13),
             textView.topAnchor.constraint(equalTo: contentView.topAnchor),
             textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+    
+    func updateContentHeightConstraint(_ contentHeight: CGFloat) {
+        let height = textViewVerticalSpacing * 2 + contentHeight
+        contentHeightConstraint.constant = height
     }
     
     @objc private func tapped() {
@@ -74,5 +88,4 @@ class OpenChatRoomNameTableViewCell: UITableViewCell {
             textView.becomeFirstResponder()
         }
     }
-    
 }
