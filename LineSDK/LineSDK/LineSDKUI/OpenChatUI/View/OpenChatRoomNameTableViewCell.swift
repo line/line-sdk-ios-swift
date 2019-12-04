@@ -56,8 +56,8 @@ class OpenChatRoomNameTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             textView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             textView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -13),
-            textView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            textView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     

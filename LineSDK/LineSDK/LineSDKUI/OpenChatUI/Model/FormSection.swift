@@ -25,22 +25,60 @@ struct FormSection {
     let formEntries: [FormEntry]
     let footerText: String
     
+    var renderer: FormSectionRenderer!
+    
     init(entries: [FormEntry], footerText: String) {
         self.formEntries = entries
         self.footerText = footerText
+        
+        self.renderer = FormSectionRenderer(section: self)
     }
 }
 
-struct FormSectionRenderer {
+class FormSectionRenderer {
     
     let section: FormSection
     
-    private func renderFooterView() -> UIView {
+    var footerContentInsets = UIEdgeInsets(top: 7, left: 15, bottom: 24, right: 15)
+    
+    lazy var footerView = renderFooterView()
+    
+    lazy var footerLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
+        label.font = .systemFont(ofSize: 13)
+        label.textColor = .LineSDKSecondaryLabel
         label.numberOfLines = 0
+        label.text = self.section.footerText
         return label
+    }()
+    
+    init(section: FormSection) {
+        self.section = section
     }
     
+    private func renderFooterView() -> UIView {
+        let footerView = UIView()
+        footerLabel.translatesAutoresizingMaskIntoConstraints = false
+        footerView.addSubview(footerLabel)
+        NSLayoutConstraint.activate([
+            footerLabel.topAnchor
+                .constraint(equalTo: footerView.topAnchor, constant: footerContentInsets.top),
+            footerLabel.bottomAnchor
+                .constraint(equalTo: footerView.bottomAnchor, constant: -footerContentInsets.bottom),
+            footerLabel.leadingAnchor
+                .constraint(equalTo: footerView.safeLeadingAnchor, constant: footerContentInsets.left),
+            footerLabel.trailingAnchor
+                .constraint(equalTo: footerView.safeTrailingAnchor,constant: -footerContentInsets.right)
+        ])
+        
+        return footerView
+    }
+    
+    func heightOfFooterView(in width: CGFloat) -> CGFloat {
+        let heightMargin = footerContentInsets.top + footerContentInsets.bottom
+        let widthMargin = footerContentInsets.left + footerContentInsets.right
+
+        let size = footerLabel.sizeThatFits(.init(width: width - widthMargin, height: .greatestFiniteMagnitude))
+        return size.height + heightMargin
+    }
 }

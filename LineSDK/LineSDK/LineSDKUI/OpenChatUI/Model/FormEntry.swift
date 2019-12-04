@@ -42,7 +42,7 @@ class RoomNameText: MultipleLineText {
     func render() -> UITableViewCell {
         let cell = OpenChatRoomNameTableViewCell(style: .default, reuseIdentifier: nil)
         cell.textView.maximumCount = maximumCount
-        cell.textView.placeholderText = "hello world"
+        cell.textView.placeholderText = "OpenChat name"
         cell.textView.onTextUpdated.delegate(on: self) { (self, result) in
             self.onTextUpdated.call(result)
         }

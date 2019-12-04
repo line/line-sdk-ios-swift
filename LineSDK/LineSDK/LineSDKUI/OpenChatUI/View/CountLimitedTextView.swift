@@ -119,7 +119,7 @@ class CountLimitedTextView: UIView {
         textCountLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             textCountLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            textCountLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            textCountLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
         
         // Clear Button

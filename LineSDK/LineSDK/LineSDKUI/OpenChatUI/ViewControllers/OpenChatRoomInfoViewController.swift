@@ -70,7 +70,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
     }()
     
     lazy var sections: [FormSection] = [
-        FormSection(entries: [roomName], footerText: "This is footer 0."),
+        FormSection(entries: [roomName], footerText: "The profile photo will also be set as its wallpaper."),
         FormSection(entries: [roomDescription], footerText: "This is footer 1."),
         FormSection(entries: [category], footerText: "This is footer 2."),
         FormSection(entries: [enableSearch], footerText: "This is footer 3."),
@@ -81,17 +81,11 @@ class OpenChatRoomInfoViewController: UITableViewController {
         
         view.backgroundColor = Design.backgroundColor
         setupNavigationBar()
+        setupTableView()
     }
     
     private func setupTableView() {
-        if #available(iOS 11.0, *) {
-            tableView.contentInsetAdjustmentBehavior = .never
-        } else {
-            automaticallyAdjustsScrollViewInsets = false
-        }
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .singleLine
+        tableView.keyboardDismissMode = .interactive
     }
     
     private func setupNavigationBar() {
@@ -148,8 +142,12 @@ extension OpenChatRoomInfoViewController {
         return CGFloat.leastNormalMagnitude
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        view.endEditing(true)
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return sections[section].renderer.footerView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return sections[section].renderer.heightOfFooterView(in: tableView.frame.width)
     }
 }
 

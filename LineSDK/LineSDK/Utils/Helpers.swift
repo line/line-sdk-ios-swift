@@ -56,6 +56,24 @@ extension UIApplication {
     }
 }
 
+extension UIView {
+    var safeLeadingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return safeAreaLayoutGuide.leadingAnchor
+        } else {
+            return leadingAnchor
+        }
+    }
+    
+    var safeTrailingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return safeAreaLayoutGuide.trailingAnchor
+        } else {
+            return trailingAnchor
+        }
+    }
+}
+
 extension UIViewController {
     var safeTopAnchor: NSLayoutYAxisAnchor {
         if #available(iOS 11.0, *) {
