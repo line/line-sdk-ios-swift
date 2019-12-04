@@ -24,3 +24,9 @@ import Foundation
 public enum OpenChatCategory: Int {
     case uncategorized = 1
 }
+
+extension OpenChatCategory: CustomStringConvertible {
+    public var description: String {
+        return "\(rawValue)"
+    }
+}

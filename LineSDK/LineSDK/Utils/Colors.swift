@@ -93,6 +93,14 @@ extension UIColor {
             return .white
         }
     }
+    
+    static var LineSDKSystemGroupedBackground: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGroupedBackground
+        } else {
+            return UIColor(hex8: 0xf2f2f7ff)
+        }
+    }
 
     static var LineSDKPanelBorder: UIColor {
         return compatibleColor(light: .init(hex6: 0xE6E7EA), dark: .init(hex6: 0x1D1D1E))
@@ -101,6 +109,8 @@ extension UIColor {
     static var LineSDKPanelBackground: UIColor {
         return compatibleColor(light: .init(hex6: 0xF7F8FA), dark: .init(hex6: 0x2C2C2E))
     }
+    
+    
 
     static func compatibleColor(
         light: @autoclosure @escaping () -> UIColor,

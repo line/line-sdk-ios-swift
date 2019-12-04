@@ -40,35 +40,18 @@ public protocol OpenChatControllerDelegate: AnyObject {
     )
     
     func openChatControllerDidCancelCreating(_ controller: OpenChatController)
+    
+    func openChatController(
+        _ controller: OpenChatController,
+        willPresentCreatingNavigationController navigationController: OpenChatCreatingNavigationController
+    )
 }
 
 public class OpenChatController {
     
-    enum Design {
-        static var navigationBarTintColor: UIColor {
-            return .compatibleColor(light: 0x283145, dark: 0x161B26)
-        }
-        static var preferredStatusBarStyle: UIStatusBarStyle  { return .lightContent }
-        static var navigationBarTextColor:  UIColor { return .white }
-    }
-
-    /// The bar tint color of the navigation bar.
-    public var navigationBarTintColor = Design.navigationBarTintColor { didSet { updateNavigationStyles() } }
-
-    /// The color of text, including navigation bar title and bar button text, on the navigation bar.
-    public var navigationBarTextColor = Design.navigationBarTextColor { didSet { updateNavigationStyles() } }
-
-    /// The preferred status bar style of this navigation controller.
-    public var statusBarStyle = Design.preferredStatusBarStyle { didSet { updateNavigationStyles() } }
-
-    
     public weak var delegate: OpenChatControllerDelegate?
-    
-    private weak var currentNavigationViewController: UINavigationController?
-    
-    public init() {
         
-    }
+    public init() { }
     
     deinit {
         print("Deinit")
@@ -79,7 +62,7 @@ public class OpenChatController {
         Session.shared.send(checkTermRequest) { result in
             switch result {
             case .success(let response):
-                if !response.agreed {
+                if response.agreed {
                     self.presentCreatingViewController(in: viewController)
                 } else {
                     self.presentTermAgreementViewController(in: viewController)
@@ -103,35 +86,31 @@ public class OpenChatController {
                 self.delegate?.openChatControllerDidCancelCreating(self)
             }
         }
-        
-        currentNavigationViewController = navigation
-        updateNavigationStyles()
-        
-        navigation.modalPresentationStyle = .fullScreen
-        viewController.present(navigation, animated: true)
-    }
-    
-    func presentCreatingViewController(in viewController: UIViewController) {
-        let (navigation, creatingViewController) = OpenChatCreatingViewController.createViewController(self)
-        
-        currentNavigationViewController = navigation
-        updateNavigationStyles()
 
         navigation.modalPresentationStyle = .fullScreen
         viewController.present(navigation, animated: true)
     }
     
-    private func updateNavigationStyles() {
-        guard let currentNav = currentNavigationViewController else { return }
-        updateNavigationStyles(currentNav)
+    func presentCreatingViewController(in viewController: UIViewController) {
+        let (navigation, roomInfoFormViewController) = OpenChatRoomInfoViewController.createViewController(self)
+
+        roomInfoFormViewController.onClose.delegate(on: self) { (self, vc) in
+            vc.dismiss(animated: true) {
+                self.delegate?.openChatControllerDidCancelCreating(self)
+            }
+        }
+        roomInfoFormViewController.onNext.delegate(on: self) { (self, item) in
+            let userInfoFormViewController = OpenChatUserProfileViewController()
+            navigation.pushViewController(userInfoFormViewController, animated: true)
+        }
+        
+        
+        navigation.modalPresentationStyle = .fullScreen
+        
+        delegate?.openChatController(self, willPresentCreatingNavigationController: navigation)
+        viewController.present(navigation, animated: true)
     }
     
-    private func updateNavigationStyles(_ navigationController: UINavigationController) {
-        navigationController.navigationBar.shadowImage = UIImage()
-        navigationController.navigationBar.barTintColor = navigationBarTintColor
-        navigationController.navigationBar.tintColor = navigationBarTextColor
-        navigationController.navigationBar.titleTextAttributes = [.foregroundColor: navigationBarTextColor]
-    }
 }
 
 public enum OpenChatAuthorizationStatus {

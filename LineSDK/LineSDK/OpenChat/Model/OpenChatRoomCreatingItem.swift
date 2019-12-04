@@ -1,5 +1,5 @@
 //
-//  PostOpenChatCreateRequest.swift
+//  OpenChatRoomCreatingItem.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,26 +21,38 @@
 
 import Foundation
 
-public struct OpenChatRoomInfo: Decodable {
-    public let squareMid: String
-    public let url: URL
-}
-
-public struct PostOpenChatCreateRequest: Request {
+public struct OpenChatRoomCreatingItem {
+    // length <= 50
+    public let name: String
+    // length <= 200
+    public let description: String
+    // length <= 50
+    public let creatorDisplayName: String
+    public let category: Int
+    public let allowSearch: Bool
     
-    public typealias Response = OpenChatRoomInfo
-    
-    public let method: HTTPMethod = .post
-    public let path = "/square/v1/square"
-    public let authentication: AuthenticateMethod = .token
-    
-    public let room: OpenChatRoomCreatingItem
-    
-    public init(room: OpenChatRoomCreatingItem) {
-        self.room = room
+    public init(
+        name: String,
+        description: String,
+        creatorDisplayName: String,
+        category: OpenChatCategory,
+        allowSearch: Bool
+    )
+    {
+        self.name = name
+        self.description = description
+        self.creatorDisplayName = creatorDisplayName
+        self.category = category.rawValue
+        self.allowSearch = allowSearch
     }
     
-    public var parameters: Parameters? {
-        return room.toDictionary
+    var toDictionary: [String: Any] {
+        return [
+            "name": name,
+            "description": description,
+            "creatorDisplayName": creatorDisplayName,
+            "category": category,
+            "allowSearch": allowSearch
+        ]
     }
 }

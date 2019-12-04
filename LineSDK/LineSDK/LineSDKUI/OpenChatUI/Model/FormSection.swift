@@ -1,5 +1,5 @@
 //
-//  PostOpenChatCreateRequest.swift
+//  FormSection.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,26 +21,26 @@
 
 import Foundation
 
-public struct OpenChatRoomInfo: Decodable {
-    public let squareMid: String
-    public let url: URL
+struct FormSection {
+    let formEntries: [FormEntry]
+    let footerText: String
+    
+    init(entries: [FormEntry], footerText: String) {
+        self.formEntries = entries
+        self.footerText = footerText
+    }
 }
 
-public struct PostOpenChatCreateRequest: Request {
+struct FormSectionRenderer {
     
-    public typealias Response = OpenChatRoomInfo
+    let section: FormSection
     
-    public let method: HTTPMethod = .post
-    public let path = "/square/v1/square"
-    public let authentication: AuthenticateMethod = .token
-    
-    public let room: OpenChatRoomCreatingItem
-    
-    public init(room: OpenChatRoomCreatingItem) {
-        self.room = room
+    private func renderFooterView() -> UIView {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        label.numberOfLines = 0
+        return label
     }
     
-    public var parameters: Parameters? {
-        return room.toDictionary
-    }
 }

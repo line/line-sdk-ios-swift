@@ -1,5 +1,5 @@
 //
-//  PostOpenChatCreateRequest.swift
+//  VerticallyCenteredTextView.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,28 +19,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-public struct OpenChatRoomInfo: Decodable {
-    public let squareMid: String
-    public let url: URL
-}
-
-public struct PostOpenChatCreateRequest: Request {
-    
-    public typealias Response = OpenChatRoomInfo
-    
-    public let method: HTTPMethod = .post
-    public let path = "/square/v1/square"
-    public let authentication: AuthenticateMethod = .token
-    
-    public let room: OpenChatRoomCreatingItem
-    
-    public init(room: OpenChatRoomCreatingItem) {
-        self.room = room
-    }
-    
-    public var parameters: Parameters? {
-        return room.toDictionary
+class VerticallyCenteredTextView: UITextView {
+    override var contentSize: CGSize {
+        didSet {
+            let topCorrection = (bounds.size.height - contentSize.height * zoomScale) / 2.0
+            contentInset = UIEdgeInsets(top: max(0, topCorrection), left: 0, bottom: 0, right: 0)
+        }
     }
 }
+
