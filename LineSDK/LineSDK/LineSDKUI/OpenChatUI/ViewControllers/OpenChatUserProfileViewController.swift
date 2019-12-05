@@ -52,6 +52,7 @@ class OpenChatUserProfileViewController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true
+        scrollView.keyboardDismissMode = .interactive
         return scrollView
     }()
     
@@ -147,7 +148,7 @@ class OpenChatUserProfileViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+            stackView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor, constant: -12),
         ])
         
         nameTextView.translatesAutoresizingMaskIntoConstraints = false

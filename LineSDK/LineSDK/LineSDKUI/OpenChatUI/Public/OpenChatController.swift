@@ -25,12 +25,14 @@ public protocol OpenChatControllerDelegate: AnyObject {
     func openChatController(
         _ controller: OpenChatController,
         didCreateChatRoom room: OpenChatRoomInfo,
-        withCreatingItem: OpenChatRoomCreatingItem
+        withCreatingItem item: OpenChatRoomCreatingItem
     )
     
     func openChatController(
         _ controller: OpenChatController,
-        didFailWithError error: LineSDKError
+        didFailWithError error: LineSDKError,
+        withCreatingItem item: OpenChatRoomCreatingItem,
+        presentingViewController: UIViewController
     )
     
     func openChatController(
@@ -57,30 +59,54 @@ public class OpenChatController {
         print("Deinit")
     }
     
-    public func loadAndPresent(in viewController: UIViewController) {
+    public func loadAndPresent(
+        in viewController: UIViewController,
+        presentedHandler handler: ((Result<Void, LineSDKError>) -> Void)? = nil
+    )
+    {
         let checkTermRequest = GetOpenChatTermAgreementStatusRequest()
         Session.shared.send(checkTermRequest) { result in
             switch result {
             case .success(let response):
-                if response.agreed {
-                    self.presentCreatingViewController(in: viewController)
+                if !response.agreed {
+                    self.presentTermAgreementViewController(in: viewController, handler: handler)
                 } else {
-                    self.presentTermAgreementViewController(in: viewController)
+                    self.presentCreatingViewController(in: viewController, handler: handler)
                 }
+                
             case .failure(let error):
-                self.delegate?.openChatController(self, didFailWithError: error)
+                handler?(.failure(error))
             }
         }
     }
     
-    func presentTermAgreementViewController(in viewController: UIViewController) {
+    func presentTermAgreementViewController(
+        in viewController: UIViewController,
+        handler: ((Result<Void, LineSDKError>) -> Void)? = nil
+    )
+    {
         let (navigation, termAgreementViewController) = OpenChatTermAgreementViewController.createViewController(self)
         
-        termAgreementViewController.onAgreed.delegate(on: self) { (self, vc) in
-            vc.dismiss(animated: true) {
-                self.presentCreatingViewController(in: viewController)
+        termAgreementViewController.onAgreed.delegate(on: self) { [unowned navigation] (self, vc) in
+            let indicator = LoadingIndicator.add(to: navigation.view)
+            let request = PutOpenChatTermAgreementUpdateRequest(agreed: true)
+            Session.shared.send(request) { result in
+                indicator.remove()
+                switch result {
+                case .success:
+                    vc.dismiss(animated: true) {
+                        self.presentCreatingViewController(in: viewController, handler: nil)
+                    }
+                case .failure(let error):
+                    self.delegate?.openChatController(
+                        self,
+                        didEncounterUserAgreementError: error,
+                        presentingViewController: navigation
+                    )
+                }
             }
         }
+        
         termAgreementViewController.onClose.delegate(on: self) { (self, vc) in
             vc.dismiss(animated: true) {
                 self.delegate?.openChatControllerDidCancelCreating(self)
@@ -88,10 +114,14 @@ public class OpenChatController {
         }
 
         navigation.modalPresentationStyle = .fullScreen
-        viewController.present(navigation, animated: true)
+        viewController.present(navigation, animated: true) { handler?(.success(())) }
     }
     
-    func presentCreatingViewController(in viewController: UIViewController) {
+    func presentCreatingViewController(
+        in viewController: UIViewController,
+        handler: ((Result<Void, LineSDKError>) -> Void)?
+    )
+    {
         let (navigation, roomInfoFormViewController) = OpenChatRoomInfoViewController.createViewController(self)
 
         roomInfoFormViewController.onClose.delegate(on: self) { (self, vc) in
@@ -102,13 +132,37 @@ public class OpenChatController {
         roomInfoFormViewController.onNext.delegate(on: self) { [unowned navigation] (self, item) in
             let userInfoFormViewController = OpenChatUserProfileViewController()
             userInfoFormViewController.formItem = item
+            
+            userInfoFormViewController.onProfileDone.delegate(on: self) { [unowned navigation] (self, item) in
+                
+                let indicator = LoadingIndicator.add(to: navigation.view)
+                let room = OpenChatRoomCreatingItem(form: item)
+                let createRoomRequest = PostOpenChatCreateRequest(room: room)
+                Session.shared.send(createRoomRequest) { result in
+                    indicator.remove()
+                    switch result {
+                    case .success(let response):
+                        navigation.dismiss(animated: true) {
+                            self.delegate?.openChatController(self, didCreateChatRoom: response, withCreatingItem: room)
+                        }
+                    case .failure(let error):
+                        self.delegate?.openChatController(
+                            self,
+                            didFailWithError: error,
+                            withCreatingItem: room,
+                            presentingViewController: navigation
+                        )
+                    }
+                }
+            }
+            
             navigation.pushViewController(userInfoFormViewController, animated: true)
         }
         
         navigation.modalPresentationStyle = .fullScreen
         
         delegate?.openChatController(self, willPresentCreatingNavigationController: navigation)
-        viewController.present(navigation, animated: true)
+        viewController.present(navigation, animated: true) { handler?(.success(())) }
     }
     
 }

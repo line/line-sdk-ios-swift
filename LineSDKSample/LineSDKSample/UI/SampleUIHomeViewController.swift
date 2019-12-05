@@ -53,8 +53,63 @@ class SampleUIHomeViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 1 {
-            let c = OpenChatController()
-            c.loadAndPresent(in: self)
+            let openChatController = OpenChatController()
+            openChatController.delegate = self
+            openChatController.loadAndPresent(in: self) { result in
+                switch result {
+                case .success: print("Presented without problem.")
+                case .failure(let error):
+                    UIAlertController.present(in: self, error: error)
+                }
+            }
         }
     }
+}
+
+
+extension SampleUIHomeViewController: OpenChatControllerDelegate {
+    func openChatController(
+        _ controller: OpenChatController,
+        didCreateChatRoom room: OpenChatRoomInfo,
+        withCreatingItem item: OpenChatRoomCreatingItem
+    )
+    {
+        UIPasteboard.general.string = room.squareMid
+        let text = "Chat room created.\nURL: \(room.url)\nRoom ID: \(room.squareMid)"
+        UIAlertController.present(in: self, successResult: text)
+    }
+    
+    func openChatController(
+        _ controller: OpenChatController,
+        didFailWithError error: LineSDKError,
+        withCreatingItem item: OpenChatRoomCreatingItem,
+        presentingViewController: UIViewController
+    )
+    {
+        var errorText = error.errorDescription ?? ""
+        errorText.append("\nTried creating: \(item)")
+        UIAlertController.present(in: presentingViewController, error: errorText)
+    }
+    
+    func openChatController(
+        _ controller: OpenChatController,
+        didEncounterUserAgreementError error: LineSDKError,
+        presentingViewController: UIViewController)
+    {
+        UIAlertController.present(in: presentingViewController, error: error)
+    }
+    
+    func openChatControllerDidCancelCreating(_ controller: OpenChatController) {
+        UIAlertController.present(in: self, error: "User cancelled.")
+    }
+    
+    func openChatController(
+        _ controller: OpenChatController,
+        willPresentCreatingNavigationController navigationController: OpenChatCreatingNavigationController
+    )
+    {
+        print("willPresentCreatingNavigationController: \(navigationController)")
+    }
+    
+    
 }

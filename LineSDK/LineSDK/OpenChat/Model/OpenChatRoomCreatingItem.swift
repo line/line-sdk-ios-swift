@@ -31,6 +31,16 @@ public struct OpenChatRoomCreatingItem {
     public let category: Int
     public let allowSearch: Bool
     
+    init(form: OpenChatCreatingFormItem) {
+        self.init(
+            name: form.roomName,
+            description: form.roomDescription,
+            creatorDisplayName: form.userName,
+            category: form.category,
+            allowSearch: form.allowSearch
+        )
+    }
+    
     public init(
         name: String,
         description: String,
