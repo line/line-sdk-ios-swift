@@ -22,9 +22,178 @@
 import UIKit
 
 class OpenChatUserProfileViewController: UIViewController {
+    
+    enum Design {
+        static var backgroundColor: UIColor { return .LineSDKSystemGroupedBackground }
+    }
+    
+    struct TextViewStyle: CountLimitedTextViewStyle {
+        let font: UIFont = .systemFont(ofSize: 22, weight: .semibold)
+        let textColor: UIColor = .LineSDKLabel
+        let placeholderFont: UIFont = .systemFont(ofSize: 22, weight: .semibold)
+        let placeholderColor = UIColor.LineSDKSecondaryLabel.withAlphaComponent(0.7)
+        let textCountLabelFont: UIFont = .systemFont(ofSize: 12)
+        let textCountLabelColor: UIColor = .LineSDKSecondaryLabel
+        let showCountLimitLabel = false
+        let showUnderBorderLine = true
+    }
+    
+    var formItem: OpenChatCreatingFormItem! {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    let onProfileDone = Delegate<OpenChatCreatingFormItem, Void>()
+    
+    private var containerBottomConstraint: NSLayoutConstraint?
+    private var textViewHeightConstraint: NSLayoutConstraint?
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.alwaysBounceVertical = true
+        return scrollView
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [nameTextView, nickNameTipLabel])
+
+        stackView.alignment = .center
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 5
+        stackView.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
+        return stackView
+    }()
+    
+    private lazy var nameTextView: CountLimitedTextView = {
+        let textView = CountLimitedTextView(style: TextViewStyle())
+        textView.placeholderText = "Enter nickname"
+        textView.maximumCount = 20
+        
+        textView.onTextUpdated.delegate(on: self) { (self, name) in
+            self.formItem.userName = name
+        }
+        textView.onTextViewChangeContentSize.delegate(on: self) { (self, size) in
+            self.textViewHeightConstraint?.constant = 20 * 2 + size.height
+        }
+        textView.onShouldReplaceText.delegate(on: self) { (self, value) in
+            let (_, text) = value
+            if text == "\n" {
+                self.view.endEditing(false)
+                return false
+            }
+            return true
+        }
+        return textView
+    }()
+
+    private lazy var nickNameTipLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 13)
+        label.textColor = UIColor.LineSDKSecondaryLabel.withAlphaComponent(0.7)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.text = String(format: "Set your nickname to be used in \"%@\".", formItem.roomName.normalized)
+        return label
+    }()
+    
+    // Conforming to `KeyboardObservable`
+    var keyboardObservers: [NotificationToken] = []
+    
+    var contentViewBottomConstraint: NSLayoutConstraint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
         
+        view.backgroundColor = Design.backgroundColor
+        
+        setupSubviews()
+        setupLayouts()
+        setupNavigationBar()
+        
+        updateViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addKeyboardObserver()
+        
+        nameTextView.textView.becomeFirstResponder()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        removeKeyboardObserver()
+        super.viewDidDisappear(animated)
+    }
+    
+    private func setupSubviews() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(stackView)
+    }
+    
+    private func setupLayouts() {
+        
+        contentViewBottomConstraint = scrollView.bottomAnchor.constraint(equalTo: safeBottomAnchor)
+        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: safeTopAnchor),
+            contentViewBottomConstraint!
+        ])
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
+        ])
+        
+        nameTextView.translatesAutoresizingMaskIntoConstraints = false
+        textViewHeightConstraint = nameTextView.heightAnchor.constraint(equalToConstant: 20 * 2 + 43)
+        NSLayoutConstraint.activate([
+            nameTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
+            nameTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -32),
+            textViewHeightConstraint!
+        ])
+        
+        nickNameTipLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            nickNameTipLabel.widthAnchor.constraint(equalTo: nameTextView.widthAnchor, multiplier: 0.75)
+        ])
+    }
+    
+    private func setupNavigationBar() {
+        title = "Profile"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .done, target: self, action: #selector(profileDone)
+        )
+    }
+    
+    private func handleKeyboardChange(_ keyboardInfo: KeyboardInfo) {
+        if keyboardInfo.isVisible, let endFrame = keyboardInfo.endFrame {
+            contentViewBottomConstraint?.constant = -endFrame.height
+        } else {
+            contentViewBottomConstraint?.constant = 0
+        }
+        UIView.animate(withDuration: keyboardInfo.duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func updateViews() {
+        navigationItem.rightBarButtonItem?.isEnabled = !formItem.userName.isEmpty
+    }
+    
+    @objc private func profileDone() {
+        view.endEditing(false)
+        onProfileDone.call(formItem)
+    }
+}
+
+extension OpenChatUserProfileViewController: KeyboardObservable {
+    func keyboardInfoWillChange(keyboardInfo: KeyboardInfo) {
+        handleKeyboardChange(keyboardInfo)
     }
 }

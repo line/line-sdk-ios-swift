@@ -26,4 +26,6 @@ struct OpenChatCreatingFormItem {
     var roomDescription: String = ""
     var category: OpenChatCategory = .uncategorized
     var allowSearch = true
+    
+    var userName: String = ""
 }

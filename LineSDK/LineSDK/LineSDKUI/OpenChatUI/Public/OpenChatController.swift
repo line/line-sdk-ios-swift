@@ -99,8 +99,9 @@ public class OpenChatController {
                 self.delegate?.openChatControllerDidCancelCreating(self)
             }
         }
-        roomInfoFormViewController.onNext.delegate(on: self) { (self, item) in
+        roomInfoFormViewController.onNext.delegate(on: self) { [unowned navigation] (self, item) in
             let userInfoFormViewController = OpenChatUserProfileViewController()
+            userInfoFormViewController.formItem = item
             navigation.pushViewController(userInfoFormViewController, animated: true)
         }
         

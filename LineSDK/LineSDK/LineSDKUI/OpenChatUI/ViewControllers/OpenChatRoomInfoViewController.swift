@@ -32,7 +32,6 @@ class OpenChatRoomInfoViewController: UITableViewController {
     
     var formItem = OpenChatCreatingFormItem() {
         didSet {
-            print("Item Updated: \(formItem)")
             updateViews()
         }
     }
@@ -89,6 +88,8 @@ class OpenChatRoomInfoViewController: UITableViewController {
         view.backgroundColor = Design.backgroundColor
         setupNavigationBar()
         setupTableView()
+        
+        updateViews()
     }
     
     private func setupTableView() {
@@ -116,7 +117,6 @@ class OpenChatRoomInfoViewController: UITableViewController {
             target: self,
             action: #selector(nextPage)
         )
-        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     @objc private func closeForm() {
@@ -124,6 +124,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
     }
     
     @objc private func nextPage() {
+        view.endEditing(true)
         onNext.call(formItem)
     }
     

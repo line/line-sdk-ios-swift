@@ -28,6 +28,14 @@ protocol CountLimitedTextViewStyle {
     var placeholderColor: UIColor { get }
     var textCountLabelFont: UIFont { get }
     var textCountLabelColor: UIColor { get }
+    
+    var showCountLimitLabel: Bool { get }
+    var showUnderBorderLine: Bool { get }
+}
+
+extension CountLimitedTextViewStyle {
+    var showCountLimitLabel: Bool { return true }
+    var showUnderBorderLine: Bool { return false }
 }
 
 class CountLimitedTextView: UIView {
@@ -47,6 +55,8 @@ class CountLimitedTextView: UIView {
     
     let onTextUpdated = Delegate<String, Void>()
     let onTextViewChangeContentSize = Delegate<CGSize, Void>()
+    
+    let onShouldReplaceText = Delegate<(NSRange, String), Bool>()
     
     var maximumTextContentHeight: CGFloat?
     
@@ -104,6 +114,16 @@ class CountLimitedTextView: UIView {
         return label
     }()
     
+    lazy private(set) var underline: UIView? = {
+        if self.style.showUnderBorderLine {
+            let line = UIView()
+            line.backgroundColor = style.placeholderColor
+            return line
+        } else {
+            return nil
+        }
+    }()
+    
     init(style: CountLimitedTextViewStyle) {
         self.style = style
         super.init(frame: .zero)
@@ -124,6 +144,10 @@ class CountLimitedTextView: UIView {
         addSubview(placeholderLabel)
         addSubview(clearButton)
         addSubview(textCountLabel)
+        
+        if let underline = underline {
+            addSubview(underline)
+        }
     }
     
     private func setupLayouts() {
@@ -158,6 +182,16 @@ class CountLimitedTextView: UIView {
             placeholderLabel.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: 0),
             placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+        
+        if let underline = underline {
+            underline.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                underline.leadingAnchor.constraint(equalTo: placeholderLabel.leadingAnchor),
+                underline.trailingAnchor.constraint(equalTo: clearButton.trailingAnchor),
+                underline.topAnchor.constraint(equalTo: textView.bottomAnchor),
+                underline.heightAnchor.constraint(equalToConstant: 1)
+            ])
+        }
     }
     
     @objc private func clearText() {
@@ -170,7 +204,7 @@ class CountLimitedTextView: UIView {
             textCountLabel.isHidden = true
             return
         }
-        textCountLabel.isHidden = false
+        textCountLabel.isHidden = !style.showCountLimitLabel || false
         
         let trimmed = text.prefixNormalized.trimming(upper: maximumCount)
         let textCount = text.count
@@ -199,5 +233,9 @@ extension CountLimitedTextView: UITextViewDelegate {
             textView.sizeToFit()
             onTextViewChangeContentSize.call(textView.contentSize)
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        return onShouldReplaceText.call((range, text)) ?? true
     }
 }
