@@ -21,8 +21,9 @@
 
 import Foundation
 
-public enum OpenChatCategory: Int {
+public enum OpenChatCategory: Int, CaseIterable {
     case uncategorized = 1
+    case school = 2
 }
 
 extension OpenChatCategory: CustomStringConvertible {

@@ -104,7 +104,6 @@ public class OpenChatController {
             navigation.pushViewController(userInfoFormViewController, animated: true)
         }
         
-        
         navigation.modalPresentationStyle = .fullScreen
         
         delegate?.openChatController(self, willPresentCreatingNavigationController: navigation)

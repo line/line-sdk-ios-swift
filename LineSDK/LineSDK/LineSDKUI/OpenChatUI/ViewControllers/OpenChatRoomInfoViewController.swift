@@ -58,9 +58,12 @@ class OpenChatRoomInfoViewController: UITableViewController {
     }()
     
     lazy var category: Option<OpenChatCategory> = {
-        let entry = Option<OpenChatCategory>(title: "Category", options: [.uncategorized])
+        let entry = Option<OpenChatCategory>(title: "Category", options: OpenChatCategory.allCases)
         entry.onValueChange.delegate(on: self) { (self, selected) in
             self.formItem.category = selected
+        }
+        entry.onPresenting.delegate(on: self) { (self, _) in
+            return self
         }
         return entry
     }()

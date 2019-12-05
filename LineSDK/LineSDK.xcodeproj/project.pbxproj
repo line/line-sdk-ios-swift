@@ -19,6 +19,8 @@
 		4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */; };
 		4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFC211D628000866E6C /* MessageSample.swift */; };
 		4B1658052252EF3C0008E441 /* DownloadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1658042252EF3C0008E441 /* DownloadableImageView.swift */; };
+		4B19DC952398974900E51458 /* OptionSelectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC942398974900E51458 /* OptionSelectingViewController.swift */; };
+		4B19DC982398A08400E51458 /* StyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC972398A08400E51458 /* StyleNavigationController.swift */; };
 		4B1A4EF722EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1A4EF622EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift */; };
 		4B1C44652137E0CA0094C1D4 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44642137E0CA0094C1D4 /* JWT.swift */; };
 		4B1C44692137E1EE0094C1D4 /* JWTHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */; };
@@ -351,6 +353,8 @@
 		4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTests.swift; sourceTree = "<group>"; };
 		4B15EEFC211D628000866E6C /* MessageSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSample.swift; sourceTree = "<group>"; };
 		4B1658042252EF3C0008E441 /* DownloadableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableImageView.swift; sourceTree = "<group>"; };
+		4B19DC942398974900E51458 /* OptionSelectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSelectingViewController.swift; sourceTree = "<group>"; };
+		4B19DC972398A08400E51458 /* StyleNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleNavigationController.swift; sourceTree = "<group>"; };
 		4B1A4EF622EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageSendingTokenRequestTests.swift; sourceTree = "<group>"; };
 		4B1C44642137E0CA0094C1D4 /* JWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
 		4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTHelpers.swift; sourceTree = "<group>"; };
@@ -715,6 +719,14 @@
 				4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */,
 			);
 			path = Message;
+			sourceTree = "<group>";
+		};
+		4B19DC962398A06D00E51458 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4B19DC972398A08400E51458 /* StyleNavigationController.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		4B1C44632137E0AF0094C1D4 /* JWT */ = {
@@ -1335,6 +1347,7 @@
 		4BE7E81822C4A14A00362661 /* LineSDKUI */ = {
 			isa = PBXGroup;
 			children = (
+				4B19DC962398A06D00E51458 /* Base */,
 				4B5B0EF12241DE4600BA59A0 /* SharingUI */,
 				4BF487FE2394C64600A5DC77 /* OpenChatUI */,
 				3F75523021244502004AC047 /* LoginButton.swift */,
@@ -1431,6 +1444,7 @@
 				4BF488022394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift */,
 				4B61C65F2394CE87005D7C21 /* OpenChatCreatingViewController.swift */,
 				4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */,
+				4B19DC942398974900E51458 /* OptionSelectingViewController.swift */,
 				4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1900,6 +1914,7 @@
 				4B9A304B21213DBB00174C6F /* TemplateMessagePayload.swift in Sources */,
 				4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */,
 				4BFCD204224CAF6100CD9544 /* ShareTargetSearchResultTableViewController.swift in Sources */,
+				4B19DC982398A08400E51458 /* StyleNavigationController.swift in Sources */,
 				4B3D78BB22420BEA00DE27D1 /* PageTabView.swift in Sources */,
 				4B45257621019EFB00A39D4F /* Session.swift in Sources */,
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
@@ -1915,6 +1930,7 @@
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
 				D102A69E2164658D00804C7C /* GetBotFriendshipStatus.swift in Sources */,
 				4B3CCB9A21523A2600F51D76 /* CryptoKey.swift in Sources */,
+				4B19DC952398974900E51458 /* OptionSelectingViewController.swift in Sources */,
 				4B6972972396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift in Sources */,
 				4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */,
 				4BF487F32394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift in Sources */,

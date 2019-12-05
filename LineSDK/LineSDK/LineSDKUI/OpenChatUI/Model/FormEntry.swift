@@ -69,23 +69,28 @@ class RoomDescriptionText: FormEntry {
     }
 }
 
-class Option<T: CustomStringConvertible>: FormEntry {
-    let selectedOption: T
+class Option<T: CustomStringConvertible & Equatable>: FormEntry {
+    var selectedOption: T {
+        didSet {
+            cell.detailTextLabel?.text = selectedOption.description
+            onValueChange.call(selectedOption)
+        }
+    }
     let options: [T]
     let title: String?
 
     let onValueChange = Delegate<T, Void>()
-    let onSelected = Delegate<T, Void>()
+    let onPresenting = Delegate<(), UIViewController>()
     
     lazy var cell = render()
     
-    init(title: String?, options: [T]) {
+    init(title: String?, options: [T], selectedOption: T? = nil) {
         self.title = title
         self.options = options
         guard !options.isEmpty else {
             Log.fatalError("No selectable options provided. Check your data source.")
         }
-        self.selectedOption = options[0]
+        self.selectedOption = selectedOption ?? options[0]
     }
     
     func render() -> UITableViewCell {
@@ -97,7 +102,25 @@ class Option<T: CustomStringConvertible>: FormEntry {
         cell.detailTextLabel?.textColor = .LineSDKSecondaryLabel
         cell.detailTextLabel?.text = selectedOption.description
         cell.accessoryType = .disclosureIndicator
+        
+        cell.selectionStyle = .none
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapCell))
+        cell.addGestureRecognizer(tap)
+        
         return cell
+    }
+    
+    @objc private func tapCell() {
+        guard let presentingViewController = onPresenting.call() else {
+            return
+        }
+        let (navigation, optionsViewController) =
+            OptionSelectingViewController.createViewController(data: options, selected: selectedOption)
+        optionsViewController.onSelected.delegate(on: self) { (self, selected) in
+            self.selectedOption = selected
+        }
+        presentingViewController.present(navigation, animated: true)
     }
 }
 
