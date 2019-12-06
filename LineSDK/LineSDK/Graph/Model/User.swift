@@ -25,11 +25,15 @@ import Foundation
 /// Represents a `User` object which LineSDK used in `friend list` or `approvers in friend list`.
 public struct User: Decodable {
 
-    /// Identifier of the user
+    /// Identifier of the user.
     public let userID: String
 
-    /// User's display name
-    public let displayName: String
+    /// User's display name. It is the preferred username which should be shown on UI. When `displayNameOverridden`
+    /// is not `nil`, this value is identical with it. Otherwise, it is `displayNameOriginal`.
+    public var displayName: String { return displayNameOverridden ?? displayNameOriginal }
+    
+    /// User's original display name. It is the friend's user display name set by himself/herself.
+    public let displayNameOriginal: String
     
     /// User's overridden display name. It is the friend’s nickname which changed by the current user.
     /// It is `nil` if the current user didn't set a nickname for this user.
@@ -50,7 +54,7 @@ public struct User: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case userID = "userId"
-        case displayName
+        case displayNameOriginal = "displayName"
         case displayNameOverridden
         case pictureURL = "pictureUrl"
     }
