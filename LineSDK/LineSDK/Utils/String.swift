@@ -1,5 +1,5 @@
 //
-//  TextCountValidator.swift
+//  String.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,6 +22,10 @@
 import Foundation
 
 extension String {
+    func truncatedTail(upper maxCount: Int) -> String {
+        return count <= maxCount ? self : trimming(upper: maxCount).appending("\u{2026}")
+    }
+    
     var prefixNormalized: String {
         return String(drop { $0.isWhitespace })
     }

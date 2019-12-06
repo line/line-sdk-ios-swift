@@ -203,7 +203,6 @@
 		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
 		4BD1B2222397425000437892 /* VerticallyCenteredTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */; };
 		4BD1B224239748F700437892 /* CountLimitedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B223239748F700437892 /* CountLimitedTextView.swift */; };
-		4BD1B2262397708300437892 /* TextCountValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B2252397708300437892 /* TextCountValidator.swift */; };
 		4BD1B228239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */; };
 		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
 		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
@@ -211,6 +210,7 @@
 		4BD33ED7238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
 		4BD33EDE238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
 		4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
+		4BD91E17239A202600E229C2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E16239A202600E229C2 /* String.swift */; };
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
@@ -543,7 +543,6 @@
 		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
 		4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextView.swift; sourceTree = "<group>"; };
 		4BD1B223239748F700437892 /* CountLimitedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountLimitedTextView.swift; sourceTree = "<group>"; };
-		4BD1B2252397708300437892 /* TextCountValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCountValidator.swift; sourceTree = "<group>"; };
 		4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		4BD24CF4213E278700606411 /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
 		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
@@ -551,6 +550,7 @@
 		4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Deprecated.swift"; sourceTree = "<group>"; };
 		4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAuthAPI.swift; sourceTree = "<group>"; };
 		4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerParameters.swift; sourceTree = "<group>"; };
+		4BD91E16239A202600E229C2 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4BDD2C152133970800DD563D /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -842,7 +842,6 @@
 				4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */,
 				4B603F022396342800B81E56 /* FormEntry.swift */,
 				4B603F04239638CF00B81E56 /* FormSection.swift */,
-				4BD1B2252397708300437892 /* TextCountValidator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1017,6 +1016,7 @@
 				DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */,
 				4B688E3D226F029B002575CC /* LoadingIndicator.swift */,
 				4B0FD5812330D0270054A4E8 /* Colors.swift */,
+				4BD91E16239A202600E229C2 /* String.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1926,7 +1926,6 @@
 				4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */,
 				4B5B0EF32241DEA900BA59A0 /* ShareViewController.swift in Sources */,
 				DBE4E36D211D6C1A00184D66 /* User.swift in Sources */,
-				4BD1B2262397708300437892 /* TextCountValidator.swift in Sources */,
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
 				D102A69E2164658D00804C7C /* GetBotFriendshipStatus.swift in Sources */,
 				4B3CCB9A21523A2600F51D76 /* CryptoKey.swift in Sources */,
@@ -1983,6 +1982,7 @@
 				4BD1B2222397425000437892 /* VerticallyCenteredTextView.swift in Sources */,
 				4B1658052252EF3C0008E441 /* DownloadableImageView.swift in Sources */,
 				4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */,
+				4BD91E17239A202600E229C2 /* String.swift in Sources */,
 				DBFBD43F224E7D0500A74D44 /* SelectedTargetPanelCell.swift in Sources */,
 				4B85BB6B22C4A8E600DFE299 /* ResourceLoading.swift in Sources */,
 				DB5035BB22571D3B003CD0B9 /* KeyboardObservable.swift in Sources */,

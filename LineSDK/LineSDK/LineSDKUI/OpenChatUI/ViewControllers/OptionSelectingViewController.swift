@@ -53,6 +53,11 @@ class OptionSelectingViewController<T: CustomStringConvertible & Equatable>: UIT
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        // Visual effect that the target option was selected
+        selected = data[indexPath.row]
+        tableView.reloadData()
+        
         closeCategory()
         onSelected.call(data[indexPath.row])
     }
