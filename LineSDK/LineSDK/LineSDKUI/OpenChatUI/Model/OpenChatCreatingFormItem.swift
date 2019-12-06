@@ -24,7 +24,7 @@ import Foundation
 struct OpenChatCreatingFormItem {
     var roomName: String = ""
     var roomDescription: String = ""
-    var category: OpenChatCategory = .uncategorized
+    var category: OpenChatCategory = .notSelected
     var allowSearch = true
     
     var userName: String = ""

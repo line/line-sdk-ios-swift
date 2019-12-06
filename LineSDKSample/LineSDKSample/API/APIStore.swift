@@ -328,7 +328,7 @@ extension APIItem {
             name: "Sample Room",
             description: "This is just a sample open chat room",
             creatorDisplayName: "onevcat",
-            category: .uncategorized,
+            category: .notSelected,
             allowSearch: true
         )
         return .init(title: "Create Open Chat Room", request: PostOpenChatCreateRequest(room: room))
