@@ -30,6 +30,10 @@ public struct User: Decodable {
 
     /// User's display name
     public let displayName: String
+    
+    /// User's overridden display name. It is the friend’s nickname which changed by the current user.
+    /// It is `nil` if the current user didn't set a nickname for this user.
+    public let displayNameOverridden: String?
 
     /// Profile image URL. Not included in the response if the user doesn't have a profile image.
     public let pictureURL: URL?
@@ -47,6 +51,7 @@ public struct User: Decodable {
     enum CodingKeys: String, CodingKey {
         case userID = "userId"
         case displayName
+        case displayNameOverridden
         case pictureURL = "pictureUrl"
     }
 }
