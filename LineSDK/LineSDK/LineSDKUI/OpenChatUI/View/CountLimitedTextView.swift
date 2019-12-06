@@ -60,6 +60,8 @@ class CountLimitedTextView: UIView {
     
     var maximumTextContentHeight: CGFloat?
     
+    var currentContentHeight: CGFloat?
+    
     var placeholderText: String? {
         didSet { placeholderLabel.text = placeholderText }
     }
@@ -88,6 +90,13 @@ class CountLimitedTextView: UIView {
         textView.layer.borderWidth = 0
         textView.delegate = self
         
+        if #available(iOS 13.0, *) {
+        } else {
+            // Workaround for a text layout jumping issue before iOS 13.
+            textView.text = " "
+            currentContentHeight = textView.contentSize.height
+            textView.text = ""
+        }
         return textView
     }()
     
@@ -231,13 +240,17 @@ extension CountLimitedTextView: UITextViewDelegate {
         
         if maximumTextContentHeight == nil || textView.contentSize.height <= maximumTextContentHeight! {
             
-            // Fix a UIKit visual issue that text jumping while deleting.
-            var currentContentOffset = textView.contentOffset
-            if currentContentOffset.y < -2 {
-                currentContentOffset.y = 0
-                textView.setContentOffset(currentContentOffset, animated: false)
-            }
             onTextViewChangeContentSize.call(textView.contentSize)
+            
+            if #available(iOS 13.0, *) {
+                textView.sizeToFit()
+            } else {
+                // Workaround for a text layout jumping issue before iOS 13.
+                if currentContentHeight != textView.contentSize.height {
+                    currentContentHeight = textView.contentSize.height
+                    textView.sizeToFit()
+                }
+            }
         }
     }
     
