@@ -39,7 +39,7 @@ class APIHomeViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "APIHomeCell", for: indexPath)
         cell.textLabel?.text = api.title
         cell.detailTextLabel?.textColor = .gray
-        cell.detailTextLabel?.text = api.path
+        cell.detailTextLabel?.text = ":\(api.method.rawValue) \(api.path)"
         
         return cell
     }

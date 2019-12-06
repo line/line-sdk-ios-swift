@@ -212,6 +212,7 @@
 		4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
 		4BD91E17239A202600E229C2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E16239A202600E229C2 /* String.swift */; };
 		4BD91E1B239A3F1300E229C2 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E1A239A3F1300E229C2 /* ToastView.swift */; };
+		4BD91E30239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */; };
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
@@ -553,6 +554,7 @@
 		4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerParameters.swift; sourceTree = "<group>"; };
 		4BD91E16239A202600E229C2 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4BD91E1A239A3F1300E229C2 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOpenChatRoomMembershipStateRequest.swift; sourceTree = "<group>"; };
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4BDD2C152133970800DD563D /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -1418,6 +1420,7 @@
 				4BF487F42394A47A00A5DC77 /* PostOpenChatCreateRequest.swift */,
 				4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */,
 				4BF487FC2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift */,
+				4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1940,6 +1943,7 @@
 				4BD1B224239748F700437892 /* CountLimitedTextView.swift in Sources */,
 				4BB002C62244758000FB8BD8 /* ImageDownloader.swift in Sources */,
 				4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */,
+				4BD91E30239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift in Sources */,
 				4B62425222CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift in Sources */,
 				4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */,
 				DB115EFA2254660C00C16B0C /* ShareRootViewController.swift in Sources */,

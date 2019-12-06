@@ -58,6 +58,7 @@ public struct LoginPermission: Hashable {
     public static let openChatTermAgree              = LoginPermission(rawValue: "square.term.agree")
     public static let openChatRoomCreate             = LoginPermission(rawValue: "square.create")
     public static let openChatRoomInfo               = LoginPermission(rawValue: "square.info")
+    public static let openChatRoomMembership         = LoginPermission(rawValue: "square.membership")
 }
 
 /// Sub-permissions of .openID. Permissions in this extension will not be included in the `permissions` property of

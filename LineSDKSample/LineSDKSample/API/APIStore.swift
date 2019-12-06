@@ -146,6 +146,7 @@ extension APIStore {
                 request: PutOpenChatTermAgreementUpdateRequest(agreed: false)
             ),
             .checkOpenChatRoomStatus,
+            .checkOpenChatRoomMembershipState,
             .createOpenChatRoom
         ]
     }
@@ -158,12 +159,14 @@ struct APIItem {
     let block: AnyResultBlock
     
     let path: String
+    let method: HTTPMethod
     let title: String
     
     let available: Bool
     
     init<T: Request>(title: String, request: T, available: Bool = true) {
-        self.init(title: title, path: request.path, available: available) { (controller, handler) in
+        self.init(title: title, path: request.path, method: request.method, available: available) {
+            (controller, handler) in
             Session.shared.send(request) {
                 result in
                 switch result {
@@ -176,9 +179,14 @@ struct APIItem {
         }
     }
     
-    init(title: String, path: String, available: Bool = true, block: @escaping AnyResultBlock) {
+    init<T: Request>(title: String, mock: T, available: Bool = true, block: @escaping AnyResultBlock) {
+        self.init(title: title, path: mock.path, method: mock.method, available: available, block: block)
+    }
+    
+    init(title: String, path: String, method: HTTPMethod, available: Bool = true, block: @escaping AnyResultBlock) {
         self.title = title
         self.path = path
+        self.method = method
         
         self.block = block
         self.available = available
@@ -212,7 +220,13 @@ extension APIItem {
             }
         }
         
-        return APIItem(title: "Send text message to a friend", path: mock.path, available: true, block: block)
+        return APIItem(
+            title: "Send text message to a friend",
+            path: mock.path,
+            method: mock.method,
+            available: true,
+            block: block
+        )
     }
     
     static var multiSendTextMessage: APIItem {
@@ -247,7 +261,9 @@ extension APIItem {
             }
         }
         
-        return APIItem(title: "Multisend text message to first five friends", path: mock.path, available: true, block: block)
+        return APIItem(
+            title: "Multisend text message to first five friends", mock: mock, available: true, block: block
+        )
     }
     
     static var sendFlexMessage: APIItem {
@@ -278,11 +294,11 @@ extension APIItem {
                 }
             }
         }
-        return APIItem(title: "Send flex message to a friend", path: mock.path, available: true, block: block)
+        return APIItem(title: "Send flex message to a friend", mock: mock, available: true, block: block)
     }
 
     static var getApproversInGroup: APIItem {
-        let path = GetApproversInGroupRequest(groupID: "[groupID]").path
+        let mock = GetApproversInGroupRequest(groupID: "\\(groupID)")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             selectGroupFromGroupList(in: controller, handler: { result in
@@ -301,11 +317,11 @@ extension APIItem {
                 }
             })
         }
-        return APIItem(title: "Get Approvers in given Group", path: path, available: true, block: block)
+        return APIItem(title: "Get Approvers in given Group", mock: mock, available: true, block: block)
     }
     
     static var checkOpenChatRoomStatus: APIItem {
-        let mock = GetOpenChatRoomStatusRequest(squareMid: "")
+        let mock = GetOpenChatRoomStatusRequest(squareMid: "\\(squareMid)")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
@@ -320,7 +336,26 @@ extension APIItem {
                 }
             }
         }
-        return APIItem(title: "Check Open Chat Room Status", path: mock.path, block: block)
+        return APIItem(title: "Check Open Chat Room Status", mock: mock, block: block)
+    }
+    
+    static var checkOpenChatRoomMembershipState: APIItem {
+        let mock = GetOpenChatRoomMembershipStateRequest(squareMid: "\\(squareMid)")
+        let block: AnyResultBlock = { arg in
+            let (controller, handler) = arg
+            collectOpenChatMid(in: controller) { result in
+                let text = try! result.get()
+                let request = GetOpenChatRoomMembershipStateRequest(squareMid: text)
+                Session.shared.send(request) {
+                    response in
+                    switch response {
+                    case .success(let value): handler(.success(value))
+                    case .failure(let error): handler(.failure(.sdkError(error)))
+                    }
+                }
+            }
+        }
+        return APIItem(title: "Check Open Chat Room Membership State", mock: mock, block: block)
     }
     
     static var createOpenChatRoom: APIItem {
