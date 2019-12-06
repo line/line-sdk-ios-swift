@@ -55,6 +55,7 @@ class CountLimitedTextView: UIView {
     
     let onTextUpdated = Delegate<String, Void>()
     let onTextViewChangeContentSize = Delegate<CGSize, Void>()
+    let onTextCountLimitReached = Delegate<(), Void>()
     
     let onShouldReplaceText = Delegate<(NSRange, String), Bool>()
     
@@ -223,6 +224,8 @@ class CountLimitedTextView: UIView {
         } else {
             textView.text = trimmed
             textCountLabel.text = "\(trimmed.count)/\(maximumCount)"
+            
+            onTextCountLimitReached.call()
         }
     }
 }

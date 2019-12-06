@@ -78,6 +78,12 @@ class OpenChatUserProfileViewController: UIViewController {
         textView.onTextViewChangeContentSize.delegate(on: self) { (self, size) in
             self.textViewHeightConstraint?.constant = 20 * 2 + size.height
         }
+        textView.onTextCountLimitReached.delegate(on: self) { (self, _) in
+            let alreadyShown = self.textCountLimitationToast != nil
+            self.textCountLimitationToast?.dismiss(fadeOut: false)
+            self.textCountLimitationToast = ToastView.show(
+                text: "Maximum length reached.", in: self.view, fadeIn: !alreadyShown)
+        }
         textView.onShouldReplaceText.delegate(on: self) { (self, value) in
             let (_, text) = value
             if text == "\n" {
@@ -103,6 +109,8 @@ class OpenChatUserProfileViewController: UIViewController {
     var keyboardObservers: [NotificationToken] = []
     
     var contentViewBottomConstraint: NSLayoutConstraint?
+    
+    private weak var textCountLimitationToast: ToastView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
