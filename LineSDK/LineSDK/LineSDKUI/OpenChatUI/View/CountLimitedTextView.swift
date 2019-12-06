@@ -230,7 +230,13 @@ extension CountLimitedTextView: UITextViewDelegate {
         onTextUpdated.call(textView.text)
         
         if maximumTextContentHeight == nil || textView.contentSize.height <= maximumTextContentHeight! {
-            textView.sizeToFit()
+            
+            // Fix a UIKit visual issue that text jumping while deleting.
+            var currentContentOffset = textView.contentOffset
+            if currentContentOffset.y < -2 {
+                currentContentOffset.y = 0
+                textView.setContentOffset(currentContentOffset, animated: false)
+            }
             onTextViewChangeContentSize.call(textView.contentSize)
         }
     }
