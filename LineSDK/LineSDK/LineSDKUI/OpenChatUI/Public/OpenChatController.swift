@@ -52,6 +52,7 @@ public protocol OpenChatControllerDelegate: AnyObject {
 public class OpenChatController {
     
     public weak var delegate: OpenChatControllerDelegate?
+    public var suggestedCategory: OpenChatCategory = .notSelected
         
     public init() { }
     
@@ -123,6 +124,7 @@ public class OpenChatController {
     )
     {
         let (navigation, roomInfoFormViewController) = OpenChatRoomInfoViewController.createViewController(self)
+        roomInfoFormViewController.suggestedCategory = suggestedCategory
 
         roomInfoFormViewController.onClose.delegate(on: self) { (self, vc) in
             vc.dismiss(animated: true) {

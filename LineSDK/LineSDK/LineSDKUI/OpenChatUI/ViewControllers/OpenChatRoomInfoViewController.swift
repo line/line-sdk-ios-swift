@@ -30,6 +30,8 @@ class OpenChatRoomInfoViewController: UITableViewController {
     let onClose = Delegate<OpenChatRoomInfoViewController, Void>()
     let onNext = Delegate<OpenChatCreatingFormItem, Void>()
     
+    var suggestedCategory: OpenChatCategory = .notSelected
+    
     var formItem = OpenChatCreatingFormItem() {
         didSet {
             updateViews()
@@ -57,7 +59,11 @@ class OpenChatRoomInfoViewController: UITableViewController {
     }()
     
     lazy var category: Option<OpenChatCategory> = {
-        let entry = Option<OpenChatCategory>(title: "Category", options: OpenChatCategory.allCases)
+        let entry = Option<OpenChatCategory>(
+            title: "Category",
+            options: OpenChatCategory.allCases,
+            selectedOption: suggestedCategory
+        )
         entry.onValueChange.delegate(on: self) { (self, selected) in
             self.formItem.category = selected
         }
@@ -76,10 +82,18 @@ class OpenChatRoomInfoViewController: UITableViewController {
     }()
     
     lazy var sections: [FormSection] = [
-        FormSection(entries: [roomName], footerText: "The profile photo will also be set as its wallpaper."),
-        FormSection(entries: [roomDescription], footerText: "Enter keywords using #hashtags"),
-        FormSection(entries: [category], footerText: "Your OpenChat will be displayed in the selected category."),
-        FormSection(entries: [enableSearch], footerText: "Others can search for this OpenChat by its name or description."),
+        FormSection(
+            entries: [roomName],
+            footerText: "The profile photo will also be set as its wallpaper."),
+        FormSection(
+            entries: [roomDescription],
+            footerText: "Enter keywords using #hashtags"),
+        FormSection(
+            entries: [category],
+            footerText: "Your OpenChat will be displayed in the selected category."),
+        FormSection(
+            entries: [enableSearch],
+            footerText: "Others can search for this OpenChat by its name or description."),
     ]
 
     override func viewDidLoad() {
