@@ -22,11 +22,9 @@
 import Foundation
 
 public struct OpenChatRoomCreatingItem {
-    // length <= 50
+    
     public let name: String
-    // length <= 200
     public let description: String
-    // length <= 50
     public let creatorDisplayName: String
     public let category: Int
     public let allowSearch: Bool

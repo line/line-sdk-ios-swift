@@ -1417,9 +1417,9 @@
 			isa = PBXGroup;
 			children = (
 				4BF487F22394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift */,
+				4BF487FC2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift */,
 				4BF487F42394A47A00A5DC77 /* PostOpenChatCreateRequest.swift */,
 				4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */,
-				4BF487FC2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift */,
 				4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */,
 			);
 			path = Request;
