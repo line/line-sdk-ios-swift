@@ -133,17 +133,24 @@ public class OpenChatController {
         }
         roomInfoFormViewController.onNext.delegate(on: self) { [unowned navigation] (self, item) in
             let userInfoFormViewController = OpenChatUserProfileViewController()
-            userInfoFormViewController.formItem = item
+            
+            var itemCopy = item
+            if let cachedName = UserDefaultsValue.cachedOpenChatUserProfileName {
+                itemCopy.userName = cachedName
+            }
+            userInfoFormViewController.formItem = itemCopy
             
             userInfoFormViewController.onProfileDone.delegate(on: self) { [unowned navigation] (self, item) in
                 
-                let indicator = LoadingIndicator.add(to: navigation.view)
                 let room = OpenChatRoomCreatingItem(form: item)
                 let createRoomRequest = PostOpenChatCreateRequest(room: room)
+                
+                let indicator = LoadingIndicator.add(to: navigation.view)
                 Session.shared.send(createRoomRequest) { result in
                     indicator.remove()
                     switch result {
                     case .success(let response):
+                        UserDefaultsValue.cachedOpenChatUserProfileName = room.creatorDisplayName
                         navigation.dismiss(animated: true) {
                             self.delegate?.openChatController(self, didCreateChatRoom: response, withCreatingItem: room)
                         }

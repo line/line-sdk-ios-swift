@@ -71,6 +71,7 @@ class OpenChatUserProfileViewController: UIViewController {
         let textView = CountLimitedTextView(style: TextViewStyle())
         textView.placeholderText = "Enter nickname"
         textView.maximumCount = 20
+        textView.text = self.formItem.userName
         
         textView.onTextUpdated.delegate(on: self) { (self, name) in
             self.formItem.userName = name

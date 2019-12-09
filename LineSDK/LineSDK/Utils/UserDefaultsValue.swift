@@ -1,5 +1,5 @@
 //
-//  ViewControllerCompatibleTest.swift
+//  UserDefaultsValue.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -20,25 +20,26 @@
 //
 
 import Foundation
-import UIKit
 
-protocol ViewControllerCompatibleTest: AnyObject {
-    var window: UIWindow! { get set }
-}
-
-extension ViewControllerCompatibleTest {
+enum UserDefaultsValue {
     
-    func setupViewController() -> UIViewController {
-        let rootViewController =  UIViewController()
-        rootViewController.loadViewIfNeeded()
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = rootViewController
-        window.makeKeyAndVisible()
-        return rootViewController
+    private static var defaults = UserDefaults.standard
+    
+    private static let cachedUserProfileNameKey = "com.linecorp.sdk.cachedOpenChatUserProfileName"
+    static var cachedOpenChatUserProfileName: String? {
+        set {
+            if let name = newValue {
+                defaults.set(name, forKey: cachedUserProfileNameKey)
+            } else {
+                defaults.removeObject(forKey: cachedUserProfileNameKey)
+            }
+        }
+        get {
+            return defaults.string(forKey: cachedUserProfileNameKey)
+        }
     }
     
-    func resetViewController() {
-        window = nil
+    static func clear() {
+        cachedOpenChatUserProfileName = nil
     }
 }

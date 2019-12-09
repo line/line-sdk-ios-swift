@@ -24,7 +24,7 @@ import Foundation
 
 /// Represents the final pipeline of a series of response pipelines. Use the terminator to parse response
 /// data into a final `Response` object of a certain `Request` object.
-public protocol ResponsePipelineTerminator: class { // Use class protocol for easier Equatable conforming
+public protocol ResponsePipelineTerminator: AnyObject { // Use class protocol for easier Equatable conforming
     /// Parses `data` that holds input values to a `Response` object.
     ///
     /// - Parameters:
@@ -38,7 +38,7 @@ public protocol ResponsePipelineTerminator: class { // Use class protocol for ea
 /// Represents a redirection stage of a series of response pipelines. Use redirectors to additionally
 /// perform data processing by invoking `closure` with a proper
 /// `ResponsePipelineRedirectorAction` enumeration member.
-public protocol ResponsePipelineRedirector: class { // Use class protocol for easier Equatable conforming
+public protocol ResponsePipelineRedirector: AnyObject { // Use class protocol for easier Equatable conforming
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
     func redirect<T: Request>(
         request: T,

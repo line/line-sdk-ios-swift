@@ -93,6 +93,7 @@ extension API {
             completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
         {
             func handleSuccessResult() {
+                UserDefaultsValue.clear()
                 let result = Result { try AccessTokenStore.shared.removeCurrentAccessToken() }
                 completion(result)
             }
@@ -149,6 +150,7 @@ extension API {
             completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
         {
             func handleSuccessResult() {
+                UserDefaultsValue.clear()
                 let result = Result { try AccessTokenStore.shared.removeCurrentAccessToken() }
                 completion(result)
             }

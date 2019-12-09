@@ -206,6 +206,7 @@
 		4BD1B228239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */; };
 		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
 		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
+		4BD2E52F239DFA8A00AB3C2D /* UserDefaultsValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD2E52E239DFA8A00AB3C2D /* UserDefaultsValue.swift */; };
 		4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
 		4BD33ED7238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
 		4BD33EDE238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
@@ -548,6 +549,7 @@
 		4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		4BD24CF4213E278700606411 /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
 		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
+		4BD2E52E239DFA8A00AB3C2D /* UserDefaultsValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsValue.swift; sourceTree = "<group>"; };
 		4BD33ED1238B627200C1E8A9 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
 		4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Deprecated.swift"; sourceTree = "<group>"; };
 		4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAuthAPI.swift; sourceTree = "<group>"; };
@@ -1022,6 +1024,7 @@
 				4B688E3D226F029B002575CC /* LoadingIndicator.swift */,
 				4B0FD5812330D0270054A4E8 /* Colors.swift */,
 				4BD91E16239A202600E229C2 /* String.swift */,
+				4BD2E52E239DFA8A00AB3C2D /* UserDefaultsValue.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1982,6 +1985,7 @@
 				4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */,
 				4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */,
 				4BF3B0D6236143F70059CE93 /* GetShareFriendsRequest.swift in Sources */,
+				4BD2E52F239DFA8A00AB3C2D /* UserDefaultsValue.swift in Sources */,
 				4BE56FBF239504C800C9C415 /* OpenChatRoomCreatingItem.swift in Sources */,
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,
 				4BEB4922212BA05500BA946A /* FlexIconComponent.swift in Sources */,
