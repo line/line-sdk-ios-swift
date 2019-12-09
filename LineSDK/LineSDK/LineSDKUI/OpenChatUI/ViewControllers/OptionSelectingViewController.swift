@@ -28,7 +28,7 @@ class OptionSelectingViewController<T: CustomStringConvertible & Equatable>: UIT
     private var data: [T] = []
     private var selected: T?
     
-    private var cellResultIdentifier: String { return String(describing: Self.self) }
+    private var cellResultIdentifier: String { return String(describing: OptionSelectingViewController.self) }
     
     override func viewDidLoad() {
         super.viewDidLoad()

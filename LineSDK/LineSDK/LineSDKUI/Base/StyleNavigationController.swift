@@ -45,7 +45,7 @@ open class StyleNavigationController: UINavigationController {
         didSet { updateNavigationStyles() }
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         updateNavigationStyles()
     }
@@ -58,7 +58,7 @@ open class StyleNavigationController: UINavigationController {
     }
     
     /// :nodoc:
-    public override var preferredStatusBarStyle: UIStatusBarStyle {
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
         return statusBarStyle
     }
 }
