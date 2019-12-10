@@ -53,14 +53,4 @@ public struct OpenChatRoomCreatingItem {
         self.category = category.rawValue
         self.allowSearch = allowSearch
     }
-    
-    var toDictionary: [String: Any] {
-        return [
-            "name": name,
-            "description": description,
-            "creatorDisplayName": creatorDisplayName,
-            "category": category,
-            "allowSearch": allowSearch
-        ]
-    }
 }

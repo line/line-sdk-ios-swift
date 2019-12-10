@@ -178,7 +178,7 @@ public class OpenChatController {
 
 public enum OpenChatAuthorizationStatus {
     case lackOfToken
-    case lackOfPermissions([LoginPermission])
+    case lackOfPermissions(Set<LoginPermission>)
     case authorized
 }
 
@@ -194,7 +194,7 @@ extension OpenChatController {
     static func localAuthorizationStatusForOpenChat(permissions: [LoginPermission])
         -> OpenChatAuthorizationStatus
     {
-        let lackPermissions = [.openChatTermStatus, .openChatTermAgree, .openChatRoomCreate].filter {
+        let lackPermissions = Set([.openChatTermStatus, .openChatTermAgree, .openChatRoomCreate]).filter {
             !permissions.contains($0)
         }
 

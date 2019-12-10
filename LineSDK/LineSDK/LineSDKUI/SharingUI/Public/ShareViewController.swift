@@ -191,7 +191,7 @@ open class ShareViewController: StyleNavigationController {
 ///
 public enum MessageShareAuthorizationStatus {
     case lackOfToken
-    case lackOfPermissions([LoginPermission])
+    case lackOfPermissions(Set<LoginPermission>)
     case authorized
 }
 
@@ -226,7 +226,7 @@ extension ShareViewController {
     static func localAuthorizationStatusForSendingMessage(permissions: [LoginPermission])
         -> MessageShareAuthorizationStatus
     {
-        let lackPermissions = [.oneTimeShare].filter {
+        let lackPermissions = Set([.oneTimeShare]).filter {
             !permissions.contains($0)
         }
 

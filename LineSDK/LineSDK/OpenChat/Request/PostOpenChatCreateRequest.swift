@@ -44,3 +44,15 @@ public struct PostOpenChatCreateRequest: Request {
         return room.toDictionary
     }
 }
+
+extension OpenChatRoomCreatingItem {
+    fileprivate var toDictionary: [String: Any] {
+        return [
+            "name": name,
+            "description": description,
+            "creatorDisplayName": creatorDisplayName,
+            "category": category,
+            "allowSearch": allowSearch
+        ]
+    }
+}
