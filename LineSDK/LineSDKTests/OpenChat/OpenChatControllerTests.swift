@@ -22,14 +22,19 @@
 import XCTest
 @testable import LineSDK
 
-class OpenChatControllerTests: XCTestCase {
+class OpenChatControllerTests: XCTestCase, ViewControllerCompatibleTest {
 
+    var window: UIWindow!
+    
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        LoginManager.shared.reset()
+        resetViewController()
+        super.tearDown()
     }
 
     func testLocalAuthorizationStatus() {
@@ -56,5 +61,39 @@ class OpenChatControllerTests: XCTestCase {
             return
         }
         XCTAssertEqual(p2, [.openChatRoomCreate])
+    }
+    
+    func testCanPresentTermAgreementViewControllerWhenNotAgreed() {
+        
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        let delegateStub = SessionDelegateStub(stubs: [
+            // GetOpenChatTermAgreementStatusRequest -> false
+            .init(data: "{\"agreed\": false}".data(using: .utf8)!, responseCode: 200)
+        ])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+        setupTestToken()
+        
+        let viewController = setupViewController()
+        
+        let controller = OpenChatController()
+        controller.loadAndPresent(in: viewController) { result in
+            expect.fulfill()
+            switch result {
+            case .success:
+                XCTAssertNotNil(viewController.presentedViewController)
+                XCTAssertViewController(
+                    viewController.presentedViewController!,
+                    isKindOf: OpenChatTermAgreementViewController.self
+                )
+            case .failure(let error):
+                XCTFail("\(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 1, handler: nil)
     }
 }
