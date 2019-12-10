@@ -167,6 +167,7 @@
 		4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E44D210EE79B00355F03 /* PipelineTests.swift */; };
 		4BB002C62244758000FB8BD8 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C52244758000FB8BD8 /* ImageDownloader.swift */; };
 		4BB002C82244788A00FB8BD8 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C72244788A00FB8BD8 /* ImageManager.swift */; };
+		4BB0E256239F5C8A008C7F3F /* FormEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */; };
 		4BB2E6612135188900885687 /* LineSDKMessagingModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */; };
 		4BB95E46215B7C2F00D213AD /* API+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB95E45215B7C2F00D213AD /* API+Internal.swift */; };
 		4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
@@ -510,6 +511,7 @@
 		4BA8E44D210EE79B00355F03 /* PipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineTests.swift; sourceTree = "<group>"; };
 		4BB002C52244758000FB8BD8 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		4BB002C72244788A00FB8BD8 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormEntryTests.swift; sourceTree = "<group>"; };
 		4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKMessagingModelTests.m; sourceTree = "<group>"; };
 		4BB95E45215B7C2F00D213AD /* API+Internal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Internal.swift"; sourceTree = "<group>"; };
 		4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
@@ -882,6 +884,7 @@
 			isa = PBXGroup;
 			children = (
 				4B6CACC6239F44D100BD6C35 /* OpenChatControllerTests.swift */,
+				4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */,
 			);
 			path = OpenChat;
 			sourceTree = "<group>";
@@ -2064,6 +2067,7 @@
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
 				4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */,
 				4B6CACC9239F4A2B00BD6C35 /* AssertionHelpers.swift in Sources */,
+				4BB0E256239F5C8A008C7F3F /* FormEntryTests.swift in Sources */,
 				DB0AFF612247FB2E002729AD /* PageTabViewTests.swift in Sources */,
 				4B9A303D2121238D00174C6F /* AudioMessageTests.swift in Sources */,
 				4BF53380222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift in Sources */,

@@ -36,6 +36,21 @@ class OptionSelectingViewController<T: CustomStringConvertible & Equatable>: UIT
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellResultIdentifier)
     }
     
+    private func setupNavigationBar() {
+        title = "Category"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(bundleNamed: "navi_icon_close"),
+            style: .plain,
+            target: self,
+            action: #selector(closeCategory)
+        )
+    }
+    
+    @objc private func closeCategory() {
+        dismiss(animated: true)
+    }
+    
+    // MARK: - Table view related methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
     }
@@ -53,30 +68,16 @@ class OptionSelectingViewController<T: CustomStringConvertible & Equatable>: UIT
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        // Visual effect that the target option was selected
+        // For visual effect that the target option was selected
         selected = data[indexPath.row]
         tableView.reloadData()
         
         closeCategory()
         onSelected.call(data[indexPath.row])
     }
-    
-    private func setupNavigationBar() {
-        title = "Category"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(bundleNamed: "navi_icon_close"),
-            style: .plain,
-            target: self,
-            action: #selector(closeCategory)
-        )
-    }
-    
-    @objc private func closeCategory() {
-        dismiss(animated: true)
-    }
 }
 
+// MARK: - Factory
 extension OptionSelectingViewController {
     static func createViewController(
         data: [T],

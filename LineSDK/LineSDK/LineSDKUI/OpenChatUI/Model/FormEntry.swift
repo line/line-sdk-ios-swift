@@ -21,6 +21,7 @@
 
 import Foundation
 
+// Render a certain model to compatible static table view cell.
 protocol FormEntry {
     var cell: UITableViewCell { get }
 }
@@ -28,12 +29,11 @@ protocol FormEntry {
 class RoomNameText: FormEntry {
         
     let maximumCount = 50
-    let placeholder: String? = "Hello"
     let onTextUpdated = Delegate<String, Void>()
 
     lazy var cell = render()
     
-    func render() -> UITableViewCell {
+    private func render() -> UITableViewCell {
         let cell = OpenChatRoomNameTableViewCell(style: .default, reuseIdentifier: nil)
         cell.textView.maximumCount = maximumCount
         cell.textView.placeholderText = "OpenChat name"
@@ -47,17 +47,17 @@ class RoomNameText: FormEntry {
 class RoomDescriptionText: FormEntry {
     
     let maximumCount = 200
-    let placeholder: String? = "Hello"
     
     let onTextUpdated = Delegate<String, Void>()
     let onTextHeightUpdated = Delegate<CGFloat, Void>()
     
     lazy var cell = render()
     
-    func render() -> UITableViewCell {
+    private func render() -> UITableViewCell {
         let cell = OpenChatRoomDescriptionTableViewCell(style: .default, reuseIdentifier: nil)
         cell.textView.maximumCount = maximumCount
         cell.textView.placeholderText = "Enter description"
+        
         cell.textView.onTextUpdated.delegate(on: self) { (self, result) in
             self.onTextUpdated.call(result)
         }
@@ -93,7 +93,7 @@ class Option<T: CustomStringConvertible & Equatable>: FormEntry {
         self.selectedOption = selectedOption ?? options[0]
     }
     
-    func render() -> UITableViewCell {
+    private func render() -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         cell.textLabel?.font = .systemFont(ofSize: 15.0)
         cell.textLabel?.textColor = .LineSDKLabel
@@ -111,7 +111,7 @@ class Option<T: CustomStringConvertible & Equatable>: FormEntry {
         return cell
     }
     
-    @objc private func tapCell() {
+    @objc func tapCell() {
         guard let presentingViewController = onPresenting.call() else {
             return
         }
@@ -156,7 +156,7 @@ class Toggle: FormEntry {
     }()
     
     @objc
-    private func switchValueDidChange(_ sender: UISwitch) {
+    func switchValueDidChange(_ sender: UISwitch) {
         onValueChange.call(sender.isOn)
     }
 }

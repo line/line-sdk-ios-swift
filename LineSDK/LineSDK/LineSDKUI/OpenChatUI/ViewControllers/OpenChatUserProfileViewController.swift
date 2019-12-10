@@ -49,6 +49,7 @@ class OpenChatUserProfileViewController: UIViewController {
     private var containerBottomConstraint: NSLayoutConstraint?
     private var textViewHeightConstraint: NSLayoutConstraint?
     
+    // MARK: - Subviews
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true

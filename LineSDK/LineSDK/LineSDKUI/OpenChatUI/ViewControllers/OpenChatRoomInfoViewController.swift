@@ -30,6 +30,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
     let onClose = Delegate<OpenChatRoomInfoViewController, Void>()
     let onNext = Delegate<OpenChatCreatingFormItem, Void>()
     
+    /// The pre-selected category in the list.
     var suggestedCategory: OpenChatCategory = .notSelected
     
     var formItem = OpenChatCreatingFormItem() {
@@ -38,7 +39,8 @@ class OpenChatRoomInfoViewController: UITableViewController {
         }
     }
     
-    lazy var roomName: RoomNameText = {
+    // MARK: - Setting entries
+    private lazy var roomName: RoomNameText = {
         let entry = RoomNameText()
         entry.onTextUpdated.delegate(on: self) { (self, text) in
             self.formItem.roomName = text
@@ -46,19 +48,20 @@ class OpenChatRoomInfoViewController: UITableViewController {
         return entry
     }()
     
-    lazy var roomDescription: RoomDescriptionText = {
+    private lazy var roomDescription: RoomDescriptionText = {
         let entry = RoomDescriptionText()
         entry.onTextUpdated.delegate(on: self) { (self, text) in
             self.formItem.roomDescription = text
         }
         entry.onTextHeightUpdated.delegate(on: self) { (self, _) in
+            // This updates the cell height in the table view.
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }
         return entry
     }()
     
-    lazy var category: Option<OpenChatCategory> = {
+    private lazy var category: Option<OpenChatCategory> = {
         let entry = Option<OpenChatCategory>(
             title: "Category",
             options: OpenChatCategory.allCases,
@@ -73,7 +76,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
         return entry
     }()
     
-    lazy var enableSearch: Toggle = {
+    private lazy var enableSearch: Toggle = {
         let entry = Toggle(title: "Allow search", initialValue: formItem.allowSearch)
         entry.onValueChange.delegate(on: self) { (self, allowSearch) in
             self.formItem.allowSearch = allowSearch
@@ -81,7 +84,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
         return entry
     }()
     
-    lazy var sections: [FormSection] = [
+    private lazy var sections: [FormSection] = [
         FormSection(
             entries: [roomName],
             footerText: "The profile photo will also be set as its wallpaper."),
@@ -147,6 +150,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
     }
 }
 
+// MARK: - Table view related methods
 extension OpenChatRoomInfoViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -175,6 +179,7 @@ extension OpenChatRoomInfoViewController {
     }
 }
 
+// MARK: - Factory
 extension OpenChatRoomInfoViewController {
     static func createViewController(
         _ controller: OpenChatController
