@@ -30,12 +30,17 @@ extension ViewControllerCompatibleTest {
     
     func setupViewController() -> UIViewController {
         let rootViewController =  UIViewController()
-        rootViewController.loadViewIfNeeded()
+        return setupViewController(rootViewController)
+    }
+    
+    func setupViewController(_ input: UIViewController) -> UIViewController {
+
+        input.loadViewIfNeeded()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = rootViewController
+        window.rootViewController = input
         window.makeKeyAndVisible()
-        return rootViewController
+        return input
     }
     
     func resetViewController() {
