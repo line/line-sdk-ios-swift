@@ -130,7 +130,7 @@ class OpenChatControllerTests: XCTestCase, ViewControllerCompatibleTest {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
-    func testOptionSelectingCanSelectOption() throws {
+    func testOptionSelectingCanSelectOption() {
         let optionSelecting = OptionSelectingViewController.createViewController(
             data: [1,2,3], selected: 2
         )
@@ -144,7 +144,6 @@ class OpenChatControllerTests: XCTestCase, ViewControllerCompatibleTest {
             tableViewController.tableView, didSelectRowAt: .init(row: 0, section: 0)
         )
         
-        let final = try XCTUnwrap(result)
-        XCTAssertEqual(final, 1)
+        XCTAssertEqual(result, 1)
     }
 }

@@ -78,9 +78,9 @@ class FormEntryTests: XCTestCase, ViewControllerCompatibleTest {
         
         option.tapCell()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let presented = try! XCTUnwrap(viewController.presentedViewController)
+            XCTAssertNotNil(viewController.presentedViewController)
             XCTAssertViewController(
-                presented,
+                viewController.presentedViewController!,
                 isKindOf: OptionSelectingViewController<Int>.self
             )
             expect.fulfill()
@@ -100,7 +100,6 @@ class FormEntryTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertTrue(toggleView.isOn)
         toggleView.isOn = false
         toggle.switchValueDidChange(toggleView)
-        let final = try XCTUnwrap(result)
-        XCTAssertFalse(final)
+        XCTAssertFalse(result!)
     }
 }
