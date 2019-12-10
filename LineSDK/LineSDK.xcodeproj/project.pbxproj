@@ -84,7 +84,7 @@
 		4B5EE2E8212BE0D00009DF2E /* FlexCarouselContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */; };
 		4B603F032396342800B81E56 /* FormEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F022396342800B81E56 /* FormEntry.swift */; };
 		4B603F05239638CF00B81E56 /* FormSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F04239638CF00B81E56 /* FormSection.swift */; };
-		4B61C6602394CE87005D7C21 /* OpenChatCreatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B61C65F2394CE87005D7C21 /* OpenChatCreatingViewController.swift */; };
+		4B61C6602394CE87005D7C21 /* OpenChatCreatingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B61C65F2394CE87005D7C21 /* OpenChatCreatingNavigationController.swift */; };
 		4B62425222CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62425122CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift */; };
 		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
 		4B6508B8211812CE001796E0 /* LoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */; };
@@ -423,7 +423,7 @@
 		4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexCarouselContainerTests.swift; sourceTree = "<group>"; };
 		4B603F022396342800B81E56 /* FormEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormEntry.swift; sourceTree = "<group>"; };
 		4B603F04239638CF00B81E56 /* FormSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSection.swift; sourceTree = "<group>"; };
-		4B61C65F2394CE87005D7C21 /* OpenChatCreatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingViewController.swift; sourceTree = "<group>"; };
+		4B61C65F2394CE87005D7C21 /* OpenChatCreatingNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingNavigationController.swift; sourceTree = "<group>"; };
 		4B62425122CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageSendingTokenIssueRequest.swift; sourceTree = "<group>"; };
 		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
 		4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerOptions.swift; sourceTree = "<group>"; };
@@ -1465,7 +1465,7 @@
 			isa = PBXGroup;
 			children = (
 				4BF488022394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift */,
-				4B61C65F2394CE87005D7C21 /* OpenChatCreatingViewController.swift */,
+				4B61C65F2394CE87005D7C21 /* OpenChatCreatingNavigationController.swift */,
 				4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */,
 				4B19DC942398974900E51458 /* OptionSelectingViewController.swift */,
 				4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */,
@@ -1965,7 +1965,7 @@
 				4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */,
 				DB115EFA2254660C00C16B0C /* ShareRootViewController.swift in Sources */,
 				3F75523121244502004AC047 /* LoginButton.swift in Sources */,
-				4B61C6602394CE87005D7C21 /* OpenChatCreatingViewController.swift in Sources */,
+				4B61C6602394CE87005D7C21 /* OpenChatCreatingNavigationController.swift in Sources */,
 				4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
 				4BB95E46215B7C2F00D213AD /* API+Internal.swift in Sources */,

@@ -41,7 +41,7 @@ func XCTAssertViewController<T: UIViewController>(
     }
     
     XCTFail(
-        "The input view controller or its top view controller is not an instance " +
+        "The input view controller (\(inputViewController)) or its top view controller is not an instance " +
         "of `\(viewControllerType)` or any class that inherits from that class",
         file: file,
         line: line

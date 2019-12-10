@@ -94,6 +94,39 @@ class OpenChatControllerTests: XCTestCase, ViewControllerCompatibleTest {
             }
         }
         
-        waitForExpectations(timeout: 1, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testCanPresentCreatingViewControllerWhenAgreed() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        let delegateStub = SessionDelegateStub(stubs: [
+            // GetOpenChatTermAgreementStatusRequest -> true
+            .init(data: "{\"agreed\": true}".data(using: .utf8)!, responseCode: 200)
+        ])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+        setupTestToken()
+        
+        let viewController = setupViewController()
+        
+        let controller = OpenChatController()
+        controller.loadAndPresent(in: viewController) { result in
+            expect.fulfill()
+            switch result {
+            case .success:
+                XCTAssertNotNil(viewController.presentedViewController)
+                XCTAssertViewController(
+                    viewController.presentedViewController!,
+                    isKindOf: OpenChatRoomInfoViewController.self
+                )
+            case .failure(let error):
+                XCTFail("\(error)")
+            }
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
     }
 }
