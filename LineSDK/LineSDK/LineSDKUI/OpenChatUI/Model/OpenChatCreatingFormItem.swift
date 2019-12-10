@@ -28,4 +28,10 @@ struct OpenChatCreatingFormItem {
     var allowSearch = true
     
     var userName: String = ""
+    
+    mutating func normalize() {
+        roomName = roomName.normalized
+        roomDescription = roomDescription.normalized
+        userName = userName.normalized
+    }
 }

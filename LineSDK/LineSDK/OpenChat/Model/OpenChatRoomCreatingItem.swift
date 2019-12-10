@@ -30,12 +30,14 @@ public struct OpenChatRoomCreatingItem {
     public let allowSearch: Bool
     
     init(form: OpenChatCreatingFormItem) {
+        var normalizedForm = form
+        normalizedForm.normalize()
         self.init(
-            name: form.roomName,
-            description: form.roomDescription,
-            creatorDisplayName: form.userName,
-            category: form.category,
-            allowSearch: form.allowSearch
+            name:               normalizedForm.roomName,
+            description:        normalizedForm.roomDescription,
+            creatorDisplayName: normalizedForm.userName,
+            category:           normalizedForm.category,
+            allowSearch:        normalizedForm.allowSearch
         )
     }
     

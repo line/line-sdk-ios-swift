@@ -38,12 +38,10 @@ struct FormSection {
 class FormSectionRenderer {
     
     let section: FormSection
-    
     var footerContentInsets = UIEdgeInsets(top: 7, left: 15, bottom: 24, right: 15)
-    
     lazy var footerView = renderFooterView()
     
-    lazy var footerLabel: UILabel = {
+    private lazy var footerLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13)
         label.textColor = .LineSDKSecondaryLabel

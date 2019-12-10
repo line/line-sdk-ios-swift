@@ -50,6 +50,8 @@ class CountLimitedTextView: UIView {
             
             textCountLabel.font = style.textCountLabelFont
             textCountLabel.textColor = style.textCountLabelColor
+            
+            layoutIfNeeded()
         }
     }
     
@@ -61,16 +63,14 @@ class CountLimitedTextView: UIView {
     
     var maximumTextContentHeight: CGFloat?
     
-    var currentContentHeight: CGFloat?
+    private var currentContentHeight: CGFloat?
     
     var placeholderText: String? {
         didSet { placeholderLabel.text = placeholderText }
     }
 
     var maximumCount: Int? = nil {
-        didSet {
-            validateString(textView.text)
-        }
+        didSet { textViewDidChange(textView) }
     }
     
     var text: String {
@@ -81,7 +81,7 @@ class CountLimitedTextView: UIView {
         }
     }
     
-    lazy private(set) var textView: VerticallyCenteredTextView = {
+    private(set) lazy var textView: VerticallyCenteredTextView = {
         let textView = VerticallyCenteredTextView()
         textView.backgroundColor = .clear
         textView.alwaysBounceVertical = false
@@ -101,14 +101,14 @@ class CountLimitedTextView: UIView {
         return textView
     }()
     
-    lazy private(set) var placeholderLabel: UILabel = {
+    private(set) lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.font = style.placeholderFont
         label.textColor = style.placeholderColor
         return label
     }()
     
-    lazy private(set) var clearButton: UIButton = {
+    private(set) lazy var clearButton: UIButton = {
         let button = UIButton(type: .custom)
         button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         button.setImage(UIImage(bundleNamed: "setting_icon_delete_normal"), for: .normal)
@@ -117,14 +117,14 @@ class CountLimitedTextView: UIView {
         return button
     }()
     
-    lazy private(set) var textCountLabel: UILabel = {
+    private(set) lazy var textCountLabel: UILabel = {
         let label = UILabel()
         label.font = style.textCountLabelFont
         label.textColor = style.textCountLabelColor
         return label
     }()
     
-    lazy private(set) var underline: UIView? = {
+    private(set) lazy var underline: UIView? = {
         if self.style.showUnderBorderLine {
             let line = UIView()
             line.backgroundColor = style.placeholderColor

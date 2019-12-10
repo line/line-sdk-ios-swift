@@ -142,6 +142,8 @@ class OpenChatRoomInfoViewController: UITableViewController {
     
     @objc private func nextPage() {
         view.endEditing(true)
+        
+        formItem.normalize()
         onNext.call(formItem)
     }
     

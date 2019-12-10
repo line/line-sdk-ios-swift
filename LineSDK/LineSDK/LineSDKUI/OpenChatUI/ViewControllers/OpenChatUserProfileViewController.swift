@@ -103,7 +103,7 @@ class OpenChatUserProfileViewController: UIViewController {
         label.textColor = UIColor.LineSDKSecondaryLabel.withAlphaComponent(0.7)
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.text = String(format: "Set your nickname to be used in \"%@\".", formItem.roomName.normalized)
+        label.text = String(format: "Set your nickname to be used in \"%@\".", formItem.roomName)
         return label
     }()
     
@@ -199,6 +199,8 @@ class OpenChatUserProfileViewController: UIViewController {
     
     @objc private func profileDone() {
         view.endEditing(false)
+        
+        formItem.normalize()
         onProfileDone.call(formItem)
     }
 }

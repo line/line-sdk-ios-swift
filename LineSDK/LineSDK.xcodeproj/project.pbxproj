@@ -168,6 +168,7 @@
 		4BB002C62244758000FB8BD8 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C52244758000FB8BD8 /* ImageDownloader.swift */; };
 		4BB002C82244788A00FB8BD8 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C72244788A00FB8BD8 /* ImageManager.swift */; };
 		4BB0E256239F5C8A008C7F3F /* FormEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */; };
+		4BB0E258239F6728008C7F3F /* CountLimitedTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB0E257239F6728008C7F3F /* CountLimitedTextViewTests.swift */; };
 		4BB2E6612135188900885687 /* LineSDKMessagingModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */; };
 		4BB95E46215B7C2F00D213AD /* API+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB95E45215B7C2F00D213AD /* API+Internal.swift */; };
 		4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
@@ -512,6 +513,7 @@
 		4BB002C52244758000FB8BD8 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		4BB002C72244788A00FB8BD8 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormEntryTests.swift; sourceTree = "<group>"; };
+		4BB0E257239F6728008C7F3F /* CountLimitedTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountLimitedTextViewTests.swift; sourceTree = "<group>"; };
 		4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKMessagingModelTests.m; sourceTree = "<group>"; };
 		4BB95E45215B7C2F00D213AD /* API+Internal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Internal.swift"; sourceTree = "<group>"; };
 		4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
@@ -885,6 +887,7 @@
 			children = (
 				4B6CACC6239F44D100BD6C35 /* OpenChatControllerTests.swift */,
 				4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */,
+				4BB0E257239F6728008C7F3F /* CountLimitedTextViewTests.swift */,
 			);
 			path = OpenChat;
 			sourceTree = "<group>";
@@ -2118,6 +2121,7 @@
 				4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */,
 				4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */,
 				4BEB491C212B992B00BA946A /* FlexImageComponentTests.swift in Sources */,
+				4BB0E258239F6728008C7F3F /* CountLimitedTextViewTests.swift in Sources */,
 				4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */,
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4BE4E0FC2251CEE10071FC60 /* ColumnDataStoreTests.swift in Sources */,
