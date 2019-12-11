@@ -24,9 +24,9 @@ import LineSDK
 #endif
 
 @objc public protocol LineSDKLoginButtonDelegate: class {
-    func loginButtonDidStartLogin(_ button: LineSDKLoginButton)
-    func loginButton(_ button: LineSDKLoginButton, didSucceedLogin loginResult: LineSDKLoginResult?)
-    func loginButton(_ button: LineSDKLoginButton, didFailLogin error: Error?)
+    func loginButtonDidStartLogin(_ button: UIButton)
+    func loginButton(_ button: UIButton, didSucceedLogin loginResult: LineSDKLoginResult?)
+    func loginButton(_ button: UIButton, didFailLogin error: Error?)
 }
 
 @objcMembers
