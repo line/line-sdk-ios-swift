@@ -90,6 +90,8 @@ platform :ios do
 
     git_commit_all(message: "Bump version to #{target_version}")
     Actions.sh("git tag -u #{ENV["GPG_KEY_ID"]} #{target_version} -m ''")
+
+    binary_frameworks = xcframework(version: target_version)
     
     push_to_git_remote
     set_github_release(
@@ -97,6 +99,7 @@ platform :ios do
       api_token: ENV["GITHUB_TOKEN"],
       name: target_version,
       tag_name: target_version,
+      upload_assets: binary_frameworks,
       description: release_content
     )
 
@@ -153,8 +156,10 @@ platform :ios do
       create_xcframework(version: target_version, scheme: "LineSDKObjC", output: output_path),
     ]
 
+    zipped_files = []
     artifact_paths.each do |path|
-      zip(path: path)
+      zipped_files << zip(path: path)
     end
+    return zipped_files
   end
 end
