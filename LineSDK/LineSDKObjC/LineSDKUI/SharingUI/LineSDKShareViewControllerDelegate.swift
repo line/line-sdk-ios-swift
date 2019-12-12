@@ -25,25 +25,25 @@ import LineSDK
 
 @objc public protocol LineSDKShareViewControllerDelegate: AnyObject {
     @objc optional func shareViewController(
-        _ controller: UIViewController,
+        _ controller: LineSDKShareViewController,
         didFailLoadingListType shareType: LineSDKMessageShareTargetType,
         withError error: Error)
-    @objc optional func shareViewControllerDidCancelSharing(_ controller: UIViewController)
+    @objc optional func shareViewControllerDidCancelSharing(_ controller: LineSDKShareViewController)
     @objc optional func shareViewController(
-        _ controller: UIViewController,
+        _ controller: LineSDKShareViewController,
         didFailSendingMessages messages: [LineSDKMessage],
         toTargets targets: [LineSDKShareTarget],
         withError error: Error)
 
     @objc optional func shareViewController(
-        _ controller: UIViewController,
+        _ controller: LineSDKShareViewController,
         didSendMessages messages: [LineSDKMessage],
         toTargets targets: [LineSDKShareTarget])
 
     @objc optional func shareViewController(
-        _ controller: UIViewController,
+        _ controller: LineSDKShareViewController,
         messagesForSendingToTargets targets: [LineSDKShareTarget]) -> [LineSDKMessage]
 
     @objc optional func shareViewControllerShouldDismissAfterSending(
-        _ controller: UIViewController) -> Bool
+        _ controller: LineSDKShareViewController) -> Bool
 }
