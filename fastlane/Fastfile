@@ -144,11 +144,17 @@ platform :ios do
   desc "Create binary frameworks with the `xcframework` format under the `build/` folder."
   lane :xcframework do |options|
     target_version = options[:version]
-    xcversion(version: "~> 11.0")
+    output_path = "build"
 
-    FileUtils.rm_rf '../build'
+    FileUtils.rm_rf "../#{output_path}"
 
-    create_xcframework(version: target_version, scheme: "LineSDK")
-    create_xcframework(version: target_version, scheme: "LineSDKObjC")
+    artifact_paths = [
+      create_xcframework(version: target_version, scheme: "LineSDK", output: output_path),
+      create_xcframework(version: target_version, scheme: "LineSDKObjC", output: output_path),
+    ]
+
+    artifact_paths.each do |path|
+      zip(path: path)
+    end
   end
 end

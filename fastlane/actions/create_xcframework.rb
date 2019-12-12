@@ -7,13 +7,14 @@ module Fastlane
     class CreateXcframeworkAction < Action
       def self.run(params)
         scheme = params[:scheme]
+        output_path = params[:output]
         target_version = "#{scheme}-#{params[:version]}"
-        supporting_root = "build/#{target_version}/Supporting Files"
+        supporting_root = "#{output_path}/#{target_version}/Supporting Files"
         
         frameworks = []
 
         ["iphoneos", "iphonesimulator"].each do |sdk|
-          archive_path = "build/#{scheme}-#{sdk}.xcarchive"
+          archive_path = "#{output_path}/#{scheme}-#{sdk}.xcarchive"
 
           command = ["xcodebuild"]
           command << "archive"
@@ -42,10 +43,12 @@ module Fastlane
 
         command = ["xcodebuild"]
         command << "-create-xcframework #{framework_args.join(" ")}"
-        command << "-output 'build/#{target_version}/#{scheme}.xcframework'"
+        command << "-output '#{output_path}/#{target_version}/#{scheme}.xcframework'"
         command << "| xcpretty"
 
         Action.sh command.join(" ")
+
+        return "#{output_path}/#{target_version}/"
       end
 
       #####################################################
@@ -68,9 +71,12 @@ module Fastlane
         # Below a few examples
         [
           FastlaneCore::ConfigItem.new(key: :version,
-                                       description: "The target version to archive"),
+                                       description: "The target version to archive",
+                                       default_value: ""),
           FastlaneCore::ConfigItem.new(key: :scheme,
-                                       description: "The scheme name to archive")
+                                       description: "The scheme name to archive"),
+          FastlaneCore::ConfigItem.new(key: :output,
+                                       description: "The output path of built artifacts")
         ]
       end
 
