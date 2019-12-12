@@ -43,13 +43,34 @@ class GetFriendsRequestTests: APITests {
             {
               "displayName": "Sally",
               "userId": "cccc"
-            }
+            },
+            {
+              "displayName": "Original Name",
+              "displayNameOverridden": "New Name",
+              "userId": "cccc"
+            },
           ]
         }
         """
         runTestSuccess(for: r) { response in
-            XCTAssertEqual(response.friends.count, 2)
-            XCTAssertEqual(response.friends.first?.userID, "aaaa")
+            XCTAssertEqual(response.friends.count, 3)
+            
+            let friend0 = response.friends[0]
+            XCTAssertEqual(friend0.userID, "aaaa")
+            XCTAssertEqual(friend0.displayName, "Brown")
+            XCTAssertEqual(friend0.displayNameOriginal, "Brown")
+            XCTAssertEqual(friend0.displayNameOverridden, nil)
+            
+            let friend1 = response.friends[1]
+            XCTAssertEqual(friend1.displayName, "Sally")
+            XCTAssertEqual(friend1.displayName, "Sally")
+            XCTAssertEqual(friend1.displayNameOriginal, "Sally")
+            XCTAssertEqual(friend1.displayNameOverridden, nil)
+            
+            let friend2 = response.friends[2]
+            XCTAssertEqual(friend2.displayName, "New Name")
+            XCTAssertEqual(friend2.displayNameOriginal, "Original Name")
+            XCTAssertEqual(friend2.displayNameOverridden, "New Name")
         }
     }
 

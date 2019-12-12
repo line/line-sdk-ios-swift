@@ -30,6 +30,8 @@ public class LineSDKUser: NSObject {
     
     public var userID: String { return _value.userID }
     public var displayName: String { return _value.displayName }
+    public var displayNameOriginal: String { return _value.displayNameOriginal }
+    public var displayNameOverridden: String? { return _value.displayNameOverridden }
     public var pictureURL: URL? { return _value.pictureURL }
     public var pictureURLSmall: URL? { return _value.pictureURLSmall }
 }
