@@ -160,6 +160,6 @@ platform :ios do
     artifact_paths.each do |path|
       zipped_files << zip(path: path)
     end
-    return zipped_files
+    zipped_files
   end
 end
