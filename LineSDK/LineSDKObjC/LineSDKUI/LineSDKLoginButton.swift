@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods && !LineSDKXCFramework
+#if !LineSDKCocoaPods
 import LineSDK
 #endif
 
@@ -30,7 +30,11 @@ import LineSDK
 }
 
 @objcMembers
-public class LineSDKLoginButton: LoginButton {
+public class LineSDKLoginButton: NSObject {
+    
+    public var button: UIButton { return _binaryCompatibleButton }
+    // A wrapper for providing binary compatible version of SDK.
+    private var _binaryCompatibleButton: LoginButton
 
     @objc public enum LineSDKLoginButtonSize: Int {
         case small
@@ -59,28 +63,27 @@ public class LineSDKLoginButton: LoginButton {
 
     public var buttonSizeValue: LineSDKLoginButtonSize {
         set {
-            buttonSize = newValue.unwrapped
+            _binaryCompatibleButton.buttonSize = newValue.unwrapped
         }
         get {
-            return LineSDKLoginButtonSize(buttonSize)
+            return LineSDKLoginButtonSize(_binaryCompatibleButton.buttonSize)
         }
     }
 
     public var buttonTextValue: String? {
         set {
-            buttonText = newValue
+            _binaryCompatibleButton.buttonText = newValue
         }
         get {
-            return buttonText
+            return _binaryCompatibleButton.buttonText
         }
     }
+    
+    public override init() {
+        _binaryCompatibleButton = LoginButton()
+    }
 
-    override public func login() {
-        if LineSDKLoginManager.sharedManager.isAuthorizing {
-            // Don't allow login to be called again if authorization is already in progress.
-            return
-        }
-        isUserInteractionEnabled = false
+    public func login() {
         LineSDKLoginManager.sharedManager.login(
             permissions: loginPermissions,
             inViewController: buttonPresentingViewController,
@@ -92,7 +95,6 @@ public class LineSDKLoginButton: LoginButton {
             } else {
                 self.loginDelegate?.loginButton(self, didFailLogin: error)
             }
-            self.isUserInteractionEnabled = true
         }
         self.loginDelegate?.loginButtonDidStartLogin(self)
     }
