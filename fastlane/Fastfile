@@ -90,6 +90,8 @@ platform :ios do
 
     git_commit_all(message: "Bump version to #{target_version}")
     Actions.sh("git tag -u #{ENV["GPG_KEY_ID"]} #{target_version} -m ''")
+
+    binary_frameworks = xcframework(version: target_version)
     
     push_to_git_remote
     set_github_release(
@@ -97,6 +99,7 @@ platform :ios do
       api_token: ENV["GITHUB_TOKEN"],
       name: target_version,
       tag_name: target_version,
+      upload_assets: binary_frameworks,
       description: release_content
     )
 
@@ -143,74 +146,20 @@ platform :ios do
 
   desc "Create binary frameworks with the `xcframework` format under the `build/` folder."
   lane :xcframework do |options|
-    version = options[:version]
-    target_version = "LineSDK-#{version}"
-    xcversion(version: "~> 11.0")
-    FileUtils.rm_rf '../build'
+    target_version = options[:version]
+    output_path = "build"
 
-    # Enable the binary framework schemes (this helps not building it for Carthage)
-    FileUtils.mv(
-        "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKObjCBinary.xcscheme.bak",
-        "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKObjCBinary.xcscheme"
-    )
-    FileUtils.mv(
-        "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKBinary.xcscheme.bak",
-        "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKBinary.xcscheme"
-    )
+    FileUtils.rm_rf "../#{output_path}"
 
-    begin
-        ["LineSDK", "LineSDKObjC"].each do |scheme|
+    artifact_paths = [
+      create_xcframework(version: target_version, scheme: "LineSDK", output: output_path),
+      create_xcframework(version: target_version, scheme: "LineSDKObjC", output: output_path),
+    ]
 
-            artifact_root = "../build/#{target_version}/#{scheme}"
-            supporting_root = "#{artifact_root}/Supporting Files"
-
-            frameworks = []
-
-            ["iphoneos", "iphonesimulator"].each do |sdk|
-                archive_path = "build/#{scheme} #{sdk}.xcarchive"
-                xcodebuild(
-                    archive: true, 
-                    archive_path: archive_path,
-                    scheme: "#{scheme}Binary", 
-                    sdk: sdk
-                )
-                frameworks.push("#{archive_path}/Products/Library/Frameworks/LineSDK.framework")
-
-                dSYM_path = "../#{archive_path}/dSYMs/LineSDK.framework.dSYM"
-                FileUtils.mkdir_p("#{supporting_root}/dSYMs/")
-                FileUtils.cp_r(dSYM_path, "#{supporting_root}/dSYMs/#{scheme}-#{sdk}.framework.dSYM")
-
-                bitcode_symbol_map_path = "../#{archive_path}/BCSymbolMaps/"
-                if Dir.exist?(bitcode_symbol_map_path)
-                    FileUtils.mkdir_p("#{supporting_root}/BCSymbolMaps/")
-                    FileUtils.cp_r(bitcode_symbol_map_path, supporting_root)
-                end
-            end
-
-            # `xcodebuild` action in fastlane does not support `-create-xcframework` arg yet.
-            # Change it back to use fastlane action later when it is prepared.
-            framework_args = frameworks.map { |framework_path| "-framework '#{framework_path}'"}
-            args = "-create-xcframework #{framework_args.join(" ")} -output 'build/#{target_version}/#{scheme}/#{scheme}.xcframework'"
-            Dir.chdir("..") do
-                Action.sh "xcodebuild #{args}"
-            end
-
-            zip(
-                path: "build/#{target_version}/#{scheme}",
-                output_path: "build/#{scheme}-#{version}.zip"
-            )
-        end
-    rescue => ex
-        raise ex
-    ensure
-        FileUtils.mv(
-            "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKObjCBinary.xcscheme",
-            "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKObjCBinary.xcscheme.bak"
-        )
-        FileUtils.mv(
-            "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKBinary.xcscheme",
-            "../LineSDK/LineSDK.xcodeproj/xcshareddata/xcschemes/LineSDKBinary.xcscheme.bak"
-        )
+    zipped_files = []
+    artifact_paths.each do |path|
+      zipped_files << zip(path: path)
     end
+    zipped_files
   end
 end

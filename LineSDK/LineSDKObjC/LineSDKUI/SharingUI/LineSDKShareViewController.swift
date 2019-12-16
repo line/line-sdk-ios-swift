@@ -20,36 +20,41 @@
 //
 
 import UIKit
-#if !LineSDKCocoaPods && !LineSDKXCFramework
+#if !LineSDKCocoaPods
 import LineSDK
 #endif
 
 @objcMembers
-public class LineSDKShareViewController: ShareViewController {
+public class LineSDKShareViewController: NSObject {
 
+    private var _binaryCompatibleViewController: ShareViewController
+    public var viewController: UIViewController {
+        return _binaryCompatibleViewController
+    }
+    
     var delegateProxy: LineSDKShareViewControllerDelegateProxy?
 
     public var shareNavigationBarTintColor: UIColor {
-        get { return super.navigationBarTintColor }
-        set { super.navigationBarTintColor = newValue }
+        get { return _binaryCompatibleViewController.navigationBarTintColor }
+        set { _binaryCompatibleViewController.navigationBarTintColor = newValue }
     }
 
     public var shareNavigationBarTextColor: UIColor {
-        get { return super.navigationBarTextColor }
-        set { super.navigationBarTextColor = newValue }
+        get { return _binaryCompatibleViewController.navigationBarTextColor }
+        set { _binaryCompatibleViewController.navigationBarTextColor = newValue }
     }
 
     public var shareStatusBarStyle: UIStatusBarStyle {
-        get { return super.statusBarStyle }
-        set { super.statusBarStyle = newValue }
+        get { return _binaryCompatibleViewController.statusBarStyle }
+        set { _binaryCompatibleViewController.statusBarStyle = newValue }
     }
 
     public var shareMessages: [LineSDKMessage]? {
         get {
-            return super.messages?.compactMap { .message(with: $0) }
+            return _binaryCompatibleViewController.messages?.compactMap { .message(with: $0) }
         }
         set {
-            super.messages = newValue?.compactMap { $0.unwrapped }
+            _binaryCompatibleViewController.messages = newValue?.compactMap { $0.unwrapped }
         }
     }
 
@@ -57,15 +62,19 @@ public class LineSDKShareViewController: ShareViewController {
         get { return delegateProxy?.proxy }
         set {
             delegateProxy = newValue.map { .init(proxy: $0, owner: self) }
-            shareDelegate = delegateProxy
+            _binaryCompatibleViewController.shareDelegate = delegateProxy
         }
+    }
+    
+    public override init() {
+        _binaryCompatibleViewController = ShareViewController()
     }
 
     @objc public static func localAuthorizationStatusForSendingMessage()
         -> [LineSDKMessageShareAuthorizationStatus]
     {
         return LineSDKMessageShareAuthorizationStatus.status(
-            from: super.localAuthorizationStatusForSendingMessage()
+            from: ShareViewController.localAuthorizationStatusForSendingMessage()
         )
     }
 }
@@ -90,9 +99,9 @@ class LineSDKShareViewControllerDelegateProxy: ShareViewControllerDelegate {
 
     func shareViewControllerDidCancelSharing(_ controller: ShareViewController) {
         if let proxy = proxy {
-            proxy.shareViewControllerDidCancelSharing?(owner) ?? owner.dismiss(animated: true)
+            proxy.shareViewControllerDidCancelSharing?(owner) ?? owner.viewController.dismiss(animated: true)
         } else {
-            owner.dismiss(animated: true)
+            owner.viewController.dismiss(animated: true)
         }
     }
 

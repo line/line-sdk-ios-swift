@@ -192,6 +192,8 @@
     LineSDKUser *user = nil;
     XCTAssertNil(user.userID);
     XCTAssertNil(user.displayName);
+    XCTAssertNil(user.displayNameOriginal);
+    XCTAssertNil(user.displayNameOverridden);
     XCTAssertNil(user.pictureURL);
     XCTAssertNil(user.pictureURLSmall);
 }
