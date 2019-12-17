@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.5.0] - 2019-12-17
+
 ### Added
 
 - Add the `displayNameOverridden` and `displayNameOriginal` properties to `User` when getting friends list. Currently the `User.displayName` is a combination of `displayNameOverridden` and `displayNameOriginal`. It is a preferred version of user's name for displaying and searching.
@@ -169,3 +171,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.3.0]: https://github.com/line/line-sdk-ios-swift/compare/5.2.4...5.3.0
 [5.3.1]: https://github.com/line/line-sdk-ios-swift/compare/5.3.0...5.3.1
 [5.4.0]: https://github.com/line/line-sdk-ios-swift/compare/5.3.1...5.4.0
+[5.5.0]: https://github.com/line/line-sdk-ios-swift/compare/5.4.0...5.5.0
