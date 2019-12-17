@@ -89,6 +89,7 @@ class CountLimitedTextView: UIView {
         textView.textColor = style.textColor
         textView.font = style.font
         textView.layer.borderWidth = 0
+        textView.textContainerInset = .zero
         textView.delegate = self
         
         if #available(iOS 13.0, *) {
@@ -207,6 +208,13 @@ class CountLimitedTextView: UIView {
     @objc private func clearText() {
         text = ""
         textView.sizeToFit()
+        
+        if #available(iOS 13.0, *) {
+        } else {
+            // A workaround for `textView` not resizing correctly on iOS 12 and earlier.
+            // This layout issue does not happen on iOS 13.
+            DispatchQueue.main.async { self.setNeedsLayout() }
+        }
     }
     
     private func validateString(_ text: String) {
@@ -242,18 +250,8 @@ extension CountLimitedTextView: UITextViewDelegate {
         onTextUpdated.call(textView.text)
         
         if maximumTextContentHeight == nil || textView.contentSize.height <= maximumTextContentHeight! {
-            
-            onTextViewChangeContentSize.call(textView.contentSize)
-            
-            if #available(iOS 13.0, *) {
-                textView.sizeToFit()
-            } else {
-                // Workaround for a text layout jumping issue before iOS 13.
-                if currentContentHeight != textView.contentSize.height {
-                    currentContentHeight = textView.contentSize.height
-                    textView.sizeToFit()
-                }
-            }
+            textView.layoutIfNeeded()
+            self.onTextViewChangeContentSize.call(textView.contentSize)
         }
     }
     

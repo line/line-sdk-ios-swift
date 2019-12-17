@@ -40,6 +40,7 @@ class OpenChatRoomDescriptionTableViewCell: UITableViewCell {
     
     private var contentHeightConstraint: NSLayoutConstraint!
     private let textViewVerticalSpacing: CGFloat = 20
+    private let textViewInitialContentHeight: CGFloat = 34
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -62,7 +63,9 @@ class OpenChatRoomDescriptionTableViewCell: UITableViewCell {
     }
     
     private func setupLayouts() {
-        let contentHeight = contentView.heightAnchor.constraint(equalToConstant: textViewVerticalSpacing * 2 + 34)
+        let contentHeight = contentView.heightAnchor.constraint(
+            equalToConstant: textViewVerticalSpacing * 2 + textViewInitialContentHeight
+        )
         contentHeight.priority = .init(999)
         contentHeight.isActive = true
         
@@ -78,7 +81,7 @@ class OpenChatRoomDescriptionTableViewCell: UITableViewCell {
     }
     
     func updateContentHeightConstraint(_ contentHeight: CGFloat) {
-        let height = textViewVerticalSpacing * 2 + contentHeight
+        let height = textViewVerticalSpacing * 2 + max(textViewInitialContentHeight, contentHeight)
         contentHeightConstraint.constant = height
     }
     
