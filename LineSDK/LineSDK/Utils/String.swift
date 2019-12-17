@@ -41,4 +41,8 @@ extension String {
         }
         return self
     }
+    
+    var containsNewline: Bool {
+        return rangeOfCharacter(from: .newlines) != nil
+    }
 }

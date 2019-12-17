@@ -65,6 +65,10 @@ class RoomDescriptionText: FormEntry {
             cell.updateContentHeightConstraint(size.height)
             self.onTextHeightUpdated.call(size.height)
         }
+        cell.textView.onShouldReplaceText.delegate(on: self) { (self, value) in
+            let (_, text) = value
+            return !text.containsNewline
+        }
         return cell
     }
 }

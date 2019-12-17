@@ -88,7 +88,7 @@ class OpenChatUserProfileViewController: UIViewController {
         }
         textView.onShouldReplaceText.delegate(on: self) { (self, value) in
             let (_, text) = value
-            if text == "\n" {
+            if text.containsNewline {
                 self.view.endEditing(false)
                 return false
             }
