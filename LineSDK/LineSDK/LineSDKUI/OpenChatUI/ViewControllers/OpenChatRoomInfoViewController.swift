@@ -137,6 +137,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
     }
     
     @objc private func closeForm() {
+        view.endEditing(true)
         onClose.call(self)
     }
     

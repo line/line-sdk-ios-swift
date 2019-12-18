@@ -49,6 +49,9 @@ class OpenChatUserProfileViewController: UIViewController {
     private var containerBottomConstraint: NSLayoutConstraint?
     private var textViewHeightConstraint: NSLayoutConstraint?
     
+    private let textViewVerticalSpacing: CGFloat = 20
+    private let textViewInitialContentHeight: CGFloat = 43
+    
     // MARK: - Subviews
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -78,7 +81,8 @@ class OpenChatUserProfileViewController: UIViewController {
             self.formItem.userName = name
         }
         textView.onTextViewChangeContentSize.delegate(on: self) { (self, size) in
-            self.textViewHeightConstraint?.constant = 20 * 2 + size.height
+            self.textViewHeightConstraint?.constant =
+                self.textViewVerticalSpacing * 2 + max(size.height, self.textViewInitialContentHeight)
         }
         textView.onTextCountLimitReached.delegate(on: self) { (self, _) in
             let alreadyShown = self.textCountLimitationToast != nil
@@ -162,7 +166,9 @@ class OpenChatUserProfileViewController: UIViewController {
         ])
         
         nameTextView.translatesAutoresizingMaskIntoConstraints = false
-        textViewHeightConstraint = nameTextView.heightAnchor.constraint(equalToConstant: 20 * 2 + 43)
+        textViewHeightConstraint = nameTextView.heightAnchor.constraint(
+            equalToConstant: textViewVerticalSpacing * 2 + textViewInitialContentHeight
+        )
         NSLayoutConstraint.activate([
             nameTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
             nameTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -32),

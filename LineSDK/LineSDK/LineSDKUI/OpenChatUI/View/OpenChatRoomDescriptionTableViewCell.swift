@@ -34,7 +34,7 @@ class OpenChatRoomDescriptionTableViewCell: UITableViewCell {
     
     lazy var textView: CountLimitedTextView = {
         let textView = CountLimitedTextView(style: TextViewStyle())
-        textView.maximumTextContentHeight = 120
+        textView.maximumTextContentHeight = 100
         return textView
     }()
     

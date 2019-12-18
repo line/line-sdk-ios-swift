@@ -63,8 +63,6 @@ class CountLimitedTextView: UIView {
     
     var maximumTextContentHeight: CGFloat?
     
-    private var currentContentHeight: CGFloat?
-    
     var placeholderText: String? {
         didSet { placeholderLabel.text = placeholderText }
     }
@@ -91,14 +89,6 @@ class CountLimitedTextView: UIView {
         textView.layer.borderWidth = 0
         textView.textContainerInset = .zero
         textView.delegate = self
-        
-        if #available(iOS 13.0, *) {
-        } else {
-            // Workaround for a text layout jumping issue before iOS 13.
-            textView.text = " "
-            currentContentHeight = textView.contentSize.height
-            textView.text = ""
-        }
         return textView
     }()
     
@@ -148,6 +138,14 @@ class CountLimitedTextView: UIView {
     private func setup() {
         setupSubviews()
         setupLayouts()
+        
+        if #available(iOS 13.0, *) {
+        } else {
+            // A workaround for `textView` not resizing correctly on iOS 12 and earlier for small
+            // screens (like iPhone SE).
+            // This layout issue does not happen on iOS 13.
+            DispatchQueue.main.async { self.clearText() }
+        }
     }
     
     private func setupSubviews() {
