@@ -23,6 +23,7 @@ import Foundation
 
 /// Represents a request for getting the user's profile.
 public struct GetUserProfileRequest: Request {
+    /// :nodoc:
     public init() {}
     /// :nodoc:
     public let method: HTTPMethod = .get

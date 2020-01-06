@@ -135,9 +135,16 @@ public enum CryptoError: Error {
         case decodingFailed(string: String, type: Any.Type)
     }
     
+    /// An error occurred while performing an algorithm related operation like creating keys or verifying signed data.
     case algorithmsFailed(reason: AlgorithmsErrorReason)
+    
+    /// An error occurred while performing a JWT related operation.
     case JWTFailed(reason: JWTErrorReason)
+    
+    /// An error occurred while performing a JWK related operation.
     case JWKFailed(reason: JWKErrorReason)
+    
+    /// An error occurred while performing another crypto related operation.
     case generalError(reason: GeneralErrorReason)
 }
 

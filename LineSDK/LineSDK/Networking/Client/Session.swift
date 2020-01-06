@@ -48,6 +48,9 @@ public class Session {
     }
     
     static var _shared: Session?
+    
+    /// The shared instance of `Session`. Access this value after you setup the LINE SDK.
+    /// Otherwise, your app will be trapped.
     public static var shared: Session {
         return guardSharedProperty(_shared)
     }

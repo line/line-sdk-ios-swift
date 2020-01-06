@@ -24,8 +24,10 @@ import Foundation
 /// Represents a request for verifying an access token.
 public struct GetVerifyTokenRequest: Request {
     
+    /// The access token to be verified.
     public let accessToken: String
     
+    /// Creates a token verifying request.
     public init(accessToken: String) {
         self.accessToken = accessToken
     }
