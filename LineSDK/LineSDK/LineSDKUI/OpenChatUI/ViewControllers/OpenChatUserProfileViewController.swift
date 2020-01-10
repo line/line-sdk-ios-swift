@@ -73,7 +73,7 @@ class OpenChatUserProfileViewController: UIViewController {
     
     private lazy var nameTextView: CountLimitedTextView = {
         let textView = CountLimitedTextView(style: TextViewStyle())
-        textView.placeholderText = "Enter nickname"
+        textView.placeholderText = Localization.string("openchat.create.profile.input.placeholder")
         textView.maximumCount = 20
         textView.text = self.formItem.userName
         
@@ -88,7 +88,10 @@ class OpenChatUserProfileViewController: UIViewController {
             let alreadyShown = self.textCountLimitationToast != nil
             self.textCountLimitationToast?.dismiss(fadeOut: false)
             self.textCountLimitationToast = ToastView.show(
-                text: "Maximum length reached.", in: self.view, fadeIn: !alreadyShown)
+                text: Localization.string("openchat.create.profile.input.max.count"),
+                in: self.view,
+                fadeIn: !alreadyShown
+            )
         }
         textView.onShouldReplaceText.delegate(on: self) { (self, value) in
             let (_, text) = value
@@ -107,7 +110,7 @@ class OpenChatUserProfileViewController: UIViewController {
         label.textColor = UIColor.LineSDKSecondaryLabel.withAlphaComponent(0.7)
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.text = String(format: "Set your nickname to be used in \"%@\".", formItem.roomName)
+        label.text = String(format: Localization.string("openchat.create.profile.input.guide"), formItem.roomName)
         return label
     }()
     
@@ -182,7 +185,7 @@ class OpenChatUserProfileViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        title = "Profile"
+        title = Localization.string("openchat.create.profile.title")
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .done, target: self, action: #selector(profileDone)
         )

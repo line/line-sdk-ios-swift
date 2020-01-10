@@ -63,7 +63,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
     
     private lazy var category: Option<OpenChatCategory> = {
         let entry = Option<OpenChatCategory>(
-            title: "Category",
+            title: Localization.string("openchat.create.room.category"),
             options: OpenChatCategory.allCases,
             selectedOption: suggestedCategory
         )
@@ -77,7 +77,10 @@ class OpenChatRoomInfoViewController: UITableViewController {
     }()
     
     private lazy var enableSearch: Toggle = {
-        let entry = Toggle(title: "Allow search", initialValue: formItem.allowSearch)
+        let entry = Toggle(
+            title: Localization.string("openchat.create.room.search"),
+            initialValue: formItem.allowSearch
+        )
         entry.onValueChange.delegate(on: self) { (self, allowSearch) in
             self.formItem.allowSearch = allowSearch
         }
@@ -87,16 +90,16 @@ class OpenChatRoomInfoViewController: UITableViewController {
     private lazy var sections: [FormSection] = [
         FormSection(
             entries: [roomName],
-            footerText: "The profile photo will also be set as its wallpaper."),
+            footerText: nil),
         FormSection(
             entries: [roomDescription],
-            footerText: "Enter keywords using #hashtags"),
+            footerText: Localization.string("openchat.create.room.description.guide")),
         FormSection(
             entries: [category],
-            footerText: "Your OpenChat will be displayed in the selected category."),
+            footerText: Localization.string("openchat.create.room.category.guide")),
         FormSection(
             entries: [enableSearch],
-            footerText: "Others can search for this OpenChat by its name or description."),
+            footerText: Localization.string("openchat.create.room.search.guide")),
     ]
 
     override func viewDidLoad() {
@@ -115,7 +118,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
     
     private func setupNavigationBar() {
         
-        title = "Creating OpenChat"
+        title = Localization.string("openchat.create.room.title")
         
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: "",
@@ -129,7 +132,7 @@ class OpenChatRoomInfoViewController: UITableViewController {
             action: #selector(closeForm)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Next",
+            title: Localization.string("common.next"),
             style: .plain,
             target: self,
             action: #selector(nextPage)

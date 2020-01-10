@@ -36,7 +36,7 @@ class RoomNameText: FormEntry {
     private func render() -> UITableViewCell {
         let cell = OpenChatRoomNameTableViewCell(style: .default, reuseIdentifier: nil)
         cell.textView.maximumCount = maximumCount
-        cell.textView.placeholderText = "OpenChat name"
+        cell.textView.placeholderText = Localization.string("openchat.create.room.name.placeholder")
         cell.textView.onTextUpdated.delegate(on: self) { (self, result) in
             self.onTextUpdated.call(result)
         }
@@ -56,7 +56,7 @@ class RoomDescriptionText: FormEntry {
     private func render() -> UITableViewCell {
         let cell = OpenChatRoomDescriptionTableViewCell(style: .default, reuseIdentifier: nil)
         cell.textView.maximumCount = maximumCount
-        cell.textView.placeholderText = "Enter description"
+        cell.textView.placeholderText = Localization.string("openchat.create.room.description.placeholder")
         
         cell.textView.onTextUpdated.delegate(on: self) { (self, result) in
             self.onTextUpdated.call(result)
