@@ -37,7 +37,7 @@ class OptionSelectingViewController<T: CustomStringConvertible & Equatable>: UIT
     }
     
     private func setupNavigationBar() {
-        title = "Category"
+        title = Localization.string("openchat.create.room.category")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(bundleNamed: "navi_icon_close"),
             style: .plain,

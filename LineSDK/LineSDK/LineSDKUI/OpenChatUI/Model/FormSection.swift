@@ -23,11 +23,11 @@ import Foundation
 
 struct FormSection {
     let formEntries: [FormEntry]
-    let footerText: String
+    let footerText: String?
     
     var renderer: FormSectionRenderer!
     
-    init(entries: [FormEntry], footerText: String) {
+    init(entries: [FormEntry], footerText: String?) {
         self.formEntries = entries
         self.footerText = footerText
         
@@ -73,7 +73,12 @@ class FormSectionRenderer {
     }
     
     func heightOfFooterView(in width: CGFloat) -> CGFloat {
+        
         let heightMargin = footerContentInsets.top + footerContentInsets.bottom
+        if section.footerText == nil {
+            return heightMargin
+        }
+        
         let widthMargin = footerContentInsets.left + footerContentInsets.right
 
         let size = footerLabel.sizeThatFits(.init(width: width - widthMargin, height: .greatestFiniteMagnitude))
