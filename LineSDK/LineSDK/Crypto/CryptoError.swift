@@ -135,7 +135,7 @@ public enum CryptoError: Error {
         case decodingFailed(string: String, type: Any.Type)
     }
     
-    /// An error occurred while performing an -related operation like creating keys or verifying signed data.
+    /// An error occurred while performing an algorithm-related operation like creating keys or verifying signed data.
     case algorithmsFailed(reason: AlgorithmsErrorReason)
     
     /// An error occurred while performing a JWT-related operation.
