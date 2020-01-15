@@ -51,7 +51,7 @@ extension Encodable {
 /// A data structure that can be parsed to a `RawRepresentable` type, with a default case to be used if the received
 /// data cannot be represented by any value in the type.
 public protocol DefaultEnumCodable: RawRepresentable, Codable {
-    /// The default value to use when the parsing fails when the received data cannot be represented by any value
+    /// The default value to use when the parsing fails due to the received data not being representable by any value
     /// in the type.
     static var defaultCase: Self { get }
 }
@@ -67,5 +67,3 @@ public extension DefaultEnumCodable where Self.RawValue: Decodable {
         self = Self.init(rawValue: rawValue) ?? Self.defaultCase
     }
 }
-
-

@@ -43,7 +43,8 @@ public enum ResultUtil {
         }
     }
     
-    /// Evaluates the given transform closures, convert the success value with a folder to create a single output value.
+    /// Evaluates the given transform closures, converting the success value with the use of a 
+    /// folder to create a single output value.
     /// - Parameters:
     ///   - result: The input `Result` value.
     ///   - folder: A closure that takes an optional value of the result. If the `result` resolves to `.success`, it
@@ -60,7 +61,8 @@ public enum ResultUtil {
         )
     }
 
-    /// Evaluates the given transform closures, convert the failure value with a folder to create a single output value.
+    /// Evaluates the given transform closures, converting the failure value with the use of a 
+    /// folder to create a single output value.
     /// - Parameters:
     ///   - result: The input `Result` value.
     ///   - folder: A closure that takes an optional value of the result. If the `result` resolves to `.failure`, it
@@ -77,7 +79,8 @@ public enum ResultUtil {
         )
     }
 
-    /// Evaluates the given transform closures, convert the result pair with a folder to create a single output value.
+    /// Evaluates the given transform closures, converting the result pair with the use of a folder 
+    /// to create a single output value.
     /// - Parameters:
     ///   - result: The input `Result` value.
     ///   - folder: A closure that takes a tuple consisted by two optional values.

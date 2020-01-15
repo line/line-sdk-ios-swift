@@ -208,7 +208,7 @@ open class ShareViewController: UINavigationController {
 /// `ShareViewController.localAuthorizationStatusForSendingMessage()` returns a `MessageShareAuthorizationStatus` value
 /// to indicate the current authorization status for sharing messages.
 ///
-/// - lackOfToken:        There is no valid token in the token store locally. The user hasn't logged in and authorized
+/// - lackOfToken:        There is no valid token in the local token store. The user hasn't logged in and authorized
 ///                       your app yet.
 /// - lackOfPermissions:  There is a valid token, but it doesn't contain the necessary permissions for sharing a message. 
 ///                       The associated value is an array of `LoginPermission`, containing all lacking permissions.
@@ -216,7 +216,7 @@ open class ShareViewController: UINavigationController {
 ///
 public enum MessageShareAuthorizationStatus {
     
-    /// There is no valid token in the token store locally. The user hasn't logged in and authorized your app yet.
+    /// There is no valid token in the local token store. The user hasn't logged in and authorized your app yet.
     case lackOfToken
     
     /// There is a valid token, but it doesn't contain the necessary permissions for sharing a message.

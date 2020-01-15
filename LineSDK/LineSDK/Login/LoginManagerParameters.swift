@@ -52,11 +52,11 @@ extension LoginManager {
         #if targetEnvironment(macCatalyst)
         public var allowRecreatingLoginProcess = true
         #else
-        /// Whether allows recreating another login process while the original one is still valid.
-        /// If `true`, a `GeneralErrorReason.processDiscarded` error will be thrown when performing another login action
-        /// before an earlier is done. Otherwise, the new login action will be ignored.
+        /// Determines whether it's possible to create another login process while the original one is still valid.
+        /// If `true`, a `GeneralErrorReason.processDiscarded` error is thrown when performing another login action
+        /// before an earlier one is finished. Otherwise, the new login action is ignored.
         ///
-        /// When the deploy target is **macCatalyst**, the default value is `true`. In other cases, `false`.
+        /// When the deploy target is **macCatalyst**, the default value is `true`. In other cases, it's `false`.
         public var allowRecreatingLoginProcess = false
         #endif
         

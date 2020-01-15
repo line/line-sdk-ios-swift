@@ -33,7 +33,7 @@ import Foundation
 /// - responseFailed: An error occurred while handling a response.
 /// - authorizeFailed: An error occurred while authorizing a user.
 /// - generalError: An error occurred while performing another process in the LINE SDK.
-/// - untypedError: An error not defined in the LINE SDK.
+/// - untypedError: An error not defined in the LINE SDK occurred.
 public enum LineSDKError: Error {
 
     /// The possible underlying reasons a `.requestFailed` error occurs.
@@ -231,7 +231,7 @@ public enum LineSDKError: Error {
     /// An error occurred while performing another process in the LINE SDK.
     case generalError(reason: GeneralErrorReason)
     
-    /// An error not defined in the LINE SDK.
+    /// An error not defined in the LINE SDK occurred.
     case untypedError(error: Error)
 }
 
