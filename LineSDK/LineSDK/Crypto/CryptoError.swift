@@ -33,7 +33,7 @@ import Foundation
 /// "LineSDKError.CryptoError" error domain.
 ///
 /// - algorithmsFailed: An error occurred while performing an algorithm-related operation like 
-///   creating keys or verifying signed data.
+///                     creating keys or verifying signed data.
 /// - JWTFailed: An error occurred while performing a JWT-related operation.
 /// - JWKFailed: An error occurred while performing a JWK-related operation.
 /// - generalError: An error occurred while performing another cryptography-related operation.
