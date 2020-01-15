@@ -32,8 +32,8 @@ import Foundation
 /// to get a fixed error code to identify the error type quickly. All `CryptoError`s are under the
 /// "LineSDKError.CryptoError" error domain.
 ///
-/// - algorithmsFailed: An error occurred while performing an -related operation like creating
-///                     keys or verifying signed data.
+/// - algorithmsFailed: An error occurred while performing an algorithm-related operation like 
+///   creating keys or verifying signed data.
 /// - JWTFailed: An error occurred while performing a JWT-related operation.
 /// - JWKFailed: An error occurred while performing a JWK-related operation.
 /// - generalError: An error occurred while performing another cryptography-related operation.
