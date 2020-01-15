@@ -43,8 +43,8 @@ class OpenChatTermAgreementViewController: UIViewController {
     let onAgreed = Delegate<OpenChatTermAgreementViewController, Void>()
     let onClose = Delegate<OpenChatTermAgreementViewController, Void>()
     
-    // Hold `OpenChatController` to prevent unexpected release.
-    var controller: OpenChatController?
+    // Hold `OpenChatCreatingController` to prevent unexpected release.
+    var controller: OpenChatCreatingController?
     
     private lazy var webView: WKWebView = {
         let webView = WKWebView()
@@ -176,7 +176,7 @@ extension OpenChatTermAgreementViewController: WKNavigationDelegate {
 
 extension OpenChatTermAgreementViewController {
     static func createViewController(
-        _ controller: OpenChatController
+        _ controller: OpenChatCreatingController
     ) -> (UINavigationController, OpenChatTermAgreementViewController)
     {
         let viewController = OpenChatTermAgreementViewController()

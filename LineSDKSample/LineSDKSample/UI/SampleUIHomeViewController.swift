@@ -52,24 +52,41 @@ class SampleUIHomeViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 && indexPath.row == 1 {
-            let openChatController = OpenChatController()
-            openChatController.delegate = self
-            openChatController.loadAndPresent(in: self) { result in
-                switch result {
-                case .success: print("Presented without problem.")
-                case .failure(let error):
-                    UIAlertController.present(in: self, error: error)
+        if indexPath.section == 0 && indexPath.row == 1 { // Open Chat Creating
+            let status = OpenChatCreatingController.localAuthorizationStatusForCreatingOpenChat()
+            switch status {
+            case .authorized:
+                let openChatCreatingController = OpenChatCreatingController()
+                openChatCreatingController.delegate = self
+                openChatCreatingController.loadAndPresent(in: self) { result in
+                    switch result {
+                    case .success: print("Presented without problem.")
+                    case .failure(let error):
+                        UIAlertController.present(in: self, error: error)
+                    }
                 }
+            case .lackOfPermissions(let p):
+                UIAlertController.present(
+                    in: self,
+                    title: nil,
+                    message: "Lack of permissions: \(p)",
+                    actions: [.init(title: "OK", style: .cancel)]
+                )
+            case .lackOfToken:
+                UIAlertController.present(
+                    in: self,
+                    title: nil,
+                    message: "Please login first.",
+                    actions: [.init(title: "OK", style: .cancel)]
+                )
             }
         }
     }
 }
 
-
-extension SampleUIHomeViewController: OpenChatControllerDelegate {
-    func openChatController(
-        _ controller: OpenChatController,
+extension SampleUIHomeViewController: OpenChatCreatingControllerDelegate {
+    func openChatCreatingController(
+        _ controller: OpenChatCreatingController,
         didCreateChatRoom room: OpenChatRoomInfo,
         withCreatingItem item: OpenChatRoomCreatingItem
     )
@@ -79,8 +96,8 @@ extension SampleUIHomeViewController: OpenChatControllerDelegate {
         UIAlertController.present(in: self, successResult: text)
     }
     
-    func openChatController(
-        _ controller: OpenChatController,
+    func openChatCreatingController(
+        _ controller: OpenChatCreatingController,
         didFailWithError error: LineSDKError,
         withCreatingItem item: OpenChatRoomCreatingItem,
         presentingViewController: UIViewController
@@ -91,20 +108,20 @@ extension SampleUIHomeViewController: OpenChatControllerDelegate {
         UIAlertController.present(in: presentingViewController, error: errorText)
     }
     
-    func openChatController(
-        _ controller: OpenChatController,
+    func openChatCreatingController(
+        _ controller: OpenChatCreatingController,
         didEncounterUserAgreementError error: LineSDKError,
         presentingViewController: UIViewController)
     {
         UIAlertController.present(in: presentingViewController, error: error)
     }
     
-    func openChatControllerDidCancelCreating(_ controller: OpenChatController) {
+    func openChatCreatingControllerDidCancelCreating(_ controller: OpenChatCreatingController) {
         UIAlertController.present(in: self, error: "User cancelled.")
     }
     
-    func openChatController(
-        _ controller: OpenChatController,
+    func openChatCreatingController(
+        _ controller: OpenChatCreatingController,
         willPresentCreatingNavigationController navigationController: OpenChatCreatingNavigationController
     )
     {

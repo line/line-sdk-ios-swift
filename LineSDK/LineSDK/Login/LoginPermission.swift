@@ -55,7 +55,6 @@ public struct LoginPermission: Hashable {
     public static let messageWrite                   = LoginPermission(rawValue: "message.write")
     
     public static let openChatTermStatus             = LoginPermission(rawValue: "square.term.status")
-    public static let openChatTermAgree              = LoginPermission(rawValue: "square.term.agree")
     public static let openChatRoomCreate             = LoginPermission(rawValue: "square.create")
     public static let openChatRoomStatus             = LoginPermission(rawValue: "square.info")
     public static let openChatRoomMembership         = LoginPermission(rawValue: "square.membership")

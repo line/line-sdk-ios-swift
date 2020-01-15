@@ -188,7 +188,7 @@ extension OpenChatRoomInfoViewController {
 // MARK: - Factory
 extension OpenChatRoomInfoViewController {
     static func createViewController(
-        _ controller: OpenChatController
+        _ controller: OpenChatCreatingController
     ) -> (OpenChatCreatingNavigationController, OpenChatRoomInfoViewController)
     {
         let viewController = OpenChatRoomInfoViewController(style: .grouped)

@@ -132,6 +132,7 @@
 		4B9058D6210073E6004D717F /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D5210073E6004D717F /* LoginManager.swift */; };
 		4B9058D8210078FB004D717F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
 		4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
+		4B93F2D223CD5307003B955D /* OpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */; };
 		4B94D06721533D4D0049DE68 /* ECDSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D06621533D4D0049DE68 /* ECDSATests.swift */; };
 		4B94D0692153678D0049DE68 /* JWTRSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D0682153678D0049DE68 /* JWTRSATests.swift */; };
 		4B94D06B2153681E0049DE68 /* JWTECTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D06A2153681E0049DE68 /* JWTECTests.swift */; };
@@ -263,7 +264,7 @@
 		4BF487F92394A80100A5DC77 /* OpenChatCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F82394A80100A5DC77 /* OpenChatCategory.swift */; };
 		4BF487FB2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */; };
 		4BF487FD2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487FC2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift */; };
-		4BF488012394C99400A5DC77 /* OpenChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488002394C99400A5DC77 /* OpenChatController.swift */; };
+		4BF488012394C99400A5DC77 /* OpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */; };
 		4BF488032394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488022394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift */; };
 		4BF488062394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */; };
 		4BF488082394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */; };
@@ -478,6 +479,7 @@
 		4B9058D5210073E6004D717F /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		4B9058D7210078FB004D717F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		4B9058DB21007C8C004D717F /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
+		4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingControllerDelegate.swift; sourceTree = "<group>"; };
 		4B94D06621533D4D0049DE68 /* ECDSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSATests.swift; sourceTree = "<group>"; };
 		4B94D0682153678D0049DE68 /* JWTRSATests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTRSATests.swift; sourceTree = "<group>"; };
 		4B94D06A2153681E0049DE68 /* JWTECTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTECTests.swift; sourceTree = "<group>"; };
@@ -612,7 +614,7 @@
 		4BF487F82394A80100A5DC77 /* OpenChatCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCategory.swift; sourceTree = "<group>"; };
 		4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOpenChatRoomStatusRequest.swift; sourceTree = "<group>"; };
 		4BF487FC2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutOpenChatTermAgreementUpdateRequest.swift; sourceTree = "<group>"; };
-		4BF488002394C99400A5DC77 /* OpenChatController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatController.swift; sourceTree = "<group>"; };
+		4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingController.swift; sourceTree = "<group>"; };
 		4BF488022394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatTermAgreementViewController.swift; sourceTree = "<group>"; };
 		4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomInfoViewController.swift; sourceTree = "<group>"; };
 		4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatUserProfileViewController.swift; sourceTree = "<group>"; };
@@ -1465,7 +1467,8 @@
 		4BF487FF2394C98000A5DC77 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				4BF488002394C99400A5DC77 /* OpenChatController.swift */,
+				4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */,
+				4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -1964,6 +1967,7 @@
 				4B3CCB9A21523A2600F51D76 /* CryptoKey.swift in Sources */,
 				4B19DC952398974900E51458 /* OptionSelectingViewController.swift in Sources */,
 				4B6972972396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift in Sources */,
+				4B93F2D223CD5307003B955D /* OpenChatCreatingControllerDelegate.swift in Sources */,
 				4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */,
 				4BF487F32394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift in Sources */,
 				4BD1B224239748F700437892 /* CountLimitedTextView.swift in Sources */,
@@ -1995,7 +1999,7 @@
 				4BF488082394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift in Sources */,
 				4B6A0FF3212AA15D00B3ED1F /* FlexButtonComponent.swift in Sources */,
 				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
-				4BF488012394C99400A5DC77 /* OpenChatController.swift in Sources */,
+				4BF488012394C99400A5DC77 /* OpenChatCreatingController.swift in Sources */,
 				4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */,
 				4BF3B0D8236145530059CE93 /* GetShareGroupsRequest.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,

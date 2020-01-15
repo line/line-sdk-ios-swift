@@ -1,5 +1,5 @@
 //
-//  OpenChatControllerTests.swift
+//  OpenChatCreatingControllerTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -22,7 +22,7 @@
 import XCTest
 @testable import LineSDK
 
-class OpenChatControllerTests: XCTestCase, ViewControllerCompatibleTest {
+class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest {
 
     var window: UIWindow!
     
@@ -38,24 +38,24 @@ class OpenChatControllerTests: XCTestCase, ViewControllerCompatibleTest {
     }
 
     func testLocalAuthorizationStatus() {
-        let status1 = OpenChatController
+        let status1 = OpenChatCreatingController
             .localAuthorizationStatusForOpenChat(permissions: [])
         guard case .lackOfPermissions(let p1) = status1 else {
             XCTFail()
             return
         }
-        XCTAssertEqual(p1, [.openChatTermAgree, .openChatTermStatus, .openChatRoomCreate])
+        XCTAssertEqual(p1, [.openChatTermStatus, .openChatRoomCreate])
 
-        let status2 = OpenChatController
+        let status2 = OpenChatCreatingController
             .localAuthorizationStatusForOpenChat(
-                permissions: [.openChatTermAgree, .openChatTermStatus, .openChatRoomCreate])
+                permissions: [.openChatTermStatus, .openChatRoomCreate])
         guard case .authorized = status2 else {
             XCTFail()
             return
         }
         
-        let status3 = OpenChatController
-            .localAuthorizationStatusForOpenChat(permissions: [.openChatTermAgree, .openChatTermStatus])
+        let status3 = OpenChatCreatingController
+            .localAuthorizationStatusForOpenChat(permissions: [.openChatTermStatus])
         guard case .lackOfPermissions(let p2) = status3 else {
             XCTFail()
             return
@@ -79,7 +79,7 @@ class OpenChatControllerTests: XCTestCase, ViewControllerCompatibleTest {
         
         let viewController = setupViewController()
         
-        let controller = OpenChatController()
+        let controller = OpenChatCreatingController()
         controller.loadAndPresent(in: viewController) { result in
             expect.fulfill()
             switch result {
@@ -112,7 +112,7 @@ class OpenChatControllerTests: XCTestCase, ViewControllerCompatibleTest {
         
         let viewController = setupViewController()
         
-        let controller = OpenChatController()
+        let controller = OpenChatCreatingController()
         controller.loadAndPresent(in: viewController) { result in
             expect.fulfill()
             switch result {

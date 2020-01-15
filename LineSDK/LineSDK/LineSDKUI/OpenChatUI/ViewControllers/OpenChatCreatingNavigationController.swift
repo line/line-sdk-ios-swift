@@ -22,6 +22,6 @@
 import UIKit
 
 public class OpenChatCreatingNavigationController: StyleNavigationController {
-    // Hold `OpenChatController` to prevent unexpected release.
-    var controller: OpenChatController?
+    // Hold `OpenChatCreatingController` to prevent unexpected release.
+    var controller: OpenChatCreatingController?
 }
