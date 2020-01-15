@@ -213,8 +213,8 @@ public enum LineSDKError: Error {
         /// The image download task finished but it is not the original task issued. Code 4003.
         case notOriginalTask(token: UInt)
         
-        /// The process is discarded when a new login process is going to be created. This only
-        /// happens when the `allowRecreatingLoginProcess` is set in `LoginManager.Parameters` and
+        /// The process is discarded when a new login process is created. This only
+        /// happens when `allowRecreatingLoginProcess` is set in `LoginManager.Parameters` and
         /// users are trying to create another login process. Code 4004.
         case processDiscarded(LoginProcess)
     }

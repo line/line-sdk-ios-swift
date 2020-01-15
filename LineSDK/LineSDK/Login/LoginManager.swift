@@ -133,8 +133,8 @@ public class LoginManager {
         defer { lock.unlock() }
 
         if !parameters.allowRecreatingLoginProcess && isAuthorizing {
-            Log.print("Trying to start another login process while the previous one still valid. " +
-            "This login process is ignore. Set `allowRecreatingLoginProcess` in login parameter" +
+            Log.print("Trying to start another login process while previous process is still valid. " +
+            "New login process is ignored. Set `allowRecreatingLoginProcess` in login parameter" +
             "if you want to allow this action.")
             return nil
         }
@@ -145,8 +145,8 @@ public class LoginManager {
                     LineSDKError.generalError(reason: .processDiscarded(process))
                 )
             } else {
-                Log.assertionFailure("The current process should exist. If you trigger this failure," +
-                    " please report on the issue page: https://github.com/line/line-sdk-ios-swift/issues")
+                Log.assertionFailure("Current process couldn't be asserted. This shouldn't happen." +
+                    "Please report an issue here: https://github.com/line/line-sdk-ios-swift/issues")
             }
         }
 
@@ -436,4 +436,3 @@ extension LoginManager {
         try payload.verify(keyPath: \.nonce, expected: process.IDTokenNonce!)
     }
 }
-
