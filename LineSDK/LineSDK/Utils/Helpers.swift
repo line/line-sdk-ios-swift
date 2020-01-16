@@ -54,6 +54,11 @@ extension UIApplication {
         let url = URL(string: "https://itunes.apple.com/app/id443904275?mt=8")!
         open(url, options: [:], completionHandler: nil)
     }
+    
+    func openLINEApp() {
+        let url = URL(string: "\(Constant.lineAuthV2Scheme)://")!
+        open(url, options: [:], completionHandler: nil)
+    }
 }
 
 extension UIView {
@@ -176,4 +181,10 @@ func guardSharedProperty<T>(_ input: T?) -> T {
             "Please call `LoginManager.setup` before you do any other things in LineSDK.")
     }
     return shared
+}
+
+extension Constant {
+    static var isLINEInstalled: Bool {
+        return UIApplication.shared.canOpenURL(Constant.lineAppAuthURLv2)
+    }
 }

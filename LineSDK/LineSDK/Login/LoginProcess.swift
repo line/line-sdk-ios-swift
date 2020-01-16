@@ -284,7 +284,7 @@ public class LoginProcess {
     }
     
     private var canUseLineAuthV2: Bool {
-        return UIApplication.shared.canOpenURL(Constant.lineAppAuthURLv2)
+        return Constant.isLINEInstalled
     }
     
     private func resetFlows() {

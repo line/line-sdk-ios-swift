@@ -63,7 +63,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         XCTAssertEqual(p2, [.openChatRoomCreate])
     }
     
-    func testCanPresentTermAgreementViewControllerWhenNotAgreed() {
+    func testCanPresentTermAgreementAlertControllerWhenNotAgreed() {
         
         let expect = expectation(description: "\(#file)_\(#line)")
         
@@ -83,11 +83,12 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         controller.loadAndPresent(in: viewController) { result in
             expect.fulfill()
             switch result {
-            case .success:
+            case .success(let resultVC):
                 XCTAssertNotNil(viewController.presentedViewController)
+                XCTAssertEqual(resultVC, viewController.presentedViewController)
                 XCTAssertViewController(
-                    viewController.presentedViewController!,
-                    isKindOf: OpenChatTermAgreementViewController.self
+                    resultVC,
+                    isKindOf: UIAlertController.self
                 )
             case .failure(let error):
                 XCTFail("\(error)")

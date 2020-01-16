@@ -265,7 +265,6 @@
 		4BF487FB2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */; };
 		4BF487FD2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487FC2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift */; };
 		4BF488012394C99400A5DC77 /* OpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */; };
-		4BF488032394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488022394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift */; };
 		4BF488062394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */; };
 		4BF488082394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */; };
 		4BF5337E222E33E30080D138 /* ChainedPaginatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5337D222E33E30080D138 /* ChainedPaginatedRequest.swift */; };
@@ -615,7 +614,6 @@
 		4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOpenChatRoomStatusRequest.swift; sourceTree = "<group>"; };
 		4BF487FC2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PutOpenChatTermAgreementUpdateRequest.swift; sourceTree = "<group>"; };
 		4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingController.swift; sourceTree = "<group>"; };
-		4BF488022394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatTermAgreementViewController.swift; sourceTree = "<group>"; };
 		4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomInfoViewController.swift; sourceTree = "<group>"; };
 		4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatUserProfileViewController.swift; sourceTree = "<group>"; };
 		4BF5337D222E33E30080D138 /* ChainedPaginatedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainedPaginatedRequest.swift; sourceTree = "<group>"; };
@@ -1476,7 +1474,6 @@
 		4BF488042394CB8400A5DC77 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				4BF488022394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift */,
 				4B61C65F2394CE87005D7C21 /* OpenChatCreatingNavigationController.swift */,
 				4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */,
 				4B19DC942398974900E51458 /* OptionSelectingViewController.swift */,
@@ -2038,7 +2035,6 @@
 				DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */,
 				4B5EE2DD212BAF2C0009DF2E /* FlexSpacerComponent.swift in Sources */,
 				4BF487FD2394AE2D00A5DC77 /* PutOpenChatTermAgreementUpdateRequest.swift in Sources */,
-				4BF488032394C9AD00A5DC77 /* OpenChatTermAgreementViewController.swift in Sources */,
 				4B414D5C210EF12C00FD19BC /* APIError.swift in Sources */,
 				4B0FD5822330D0270054A4E8 /* Colors.swift in Sources */,
 				4B3CCB78215229DC00F51D76 /* CryptoAlgorithm.swift in Sources */,

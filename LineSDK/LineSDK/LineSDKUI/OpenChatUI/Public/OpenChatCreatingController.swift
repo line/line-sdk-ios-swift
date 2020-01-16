@@ -79,27 +79,34 @@ public class OpenChatCreatingController {
     ///
     /// - Note:
     ///
-    /// If the `handler` is called with a `.failure` case, it means the open chat creating view controller is not
-    /// shown. A few reasons can cause it, such as term agreement status cannot be retrieved due to network error,
-    /// or the user does not agree the term yet. On the other hand, a `.success` case means the open chat creating
-    /// view controller is presented without problem, but it does not mean that the open chat room is created.
+    /// If the `handler` is called with a `.failure` case, it means there is no view controller from LINE SDK
+    /// shown. A few reasons can cause it, such as term agreement status cannot be retrieved due to network error.
+    /// On the other hand, a `.success` case and its associated value means a view controller is presented without
+    /// problem, but it does not mean that the open chat room is created. To handle either the creating failure or
+    /// success case, you need to use the methods in `OpenChatCreatingControllerDelegate`.
     ///
-    /// For either result, it is a chance for you to remove the blocking UI you may add to your view controller.
-    /// To handle either the creating failure or success case, use the methods in `OpenChatCreatingControllerDelegate`.
+    /// For either result, it is a chance for you to remove any blocking UI you may add to your view controller, like
+    /// this in your view controller:
     ///
+    /// ```
+    /// self.showLoadingIndicator()
+    /// OpenChatCreatingController.loadAndPresent(in: self) { _ in
+    ///     self.hideLoadingIndicator()
+    /// }
+    /// ```
     public func loadAndPresent(
         in viewController: UIViewController,
-        presentedHandler handler: ((Result<Void, LineSDKError>) -> Void)? = nil
+        presentedHandler handler: ((Result<UIViewController, LineSDKError>) -> Void)? = nil
     )
     {
         let checkTermRequest = GetOpenChatTermAgreementStatusRequest()
         Session.shared.send(checkTermRequest) { result in
             switch result {
             case .success(let response):
-                if !response.agreed {
-                    self.presentTermAgreementViewController(in: viewController, handler: handler)
-                } else {
+                if response.agreed {
                     self.presentCreatingViewController(in: viewController, handler: handler)
+                } else {
+                    self.presentTermAgreementAlert(in: viewController, handler: handler)
                 }
                 
             case .failure(let error):
@@ -112,46 +119,37 @@ public class OpenChatCreatingController {
         }
     }
     
-    func presentTermAgreementViewController(
+    func presentTermAgreementAlert(
         in viewController: UIViewController,
-        handler: ((Result<Void, LineSDKError>) -> Void)? = nil
+        handler: ((Result<UIViewController, LineSDKError>) -> Void)? = nil
     )
     {
-        let (navigation, termAgreementViewController) = OpenChatTermAgreementViewController.createViewController(self)
-        
-        termAgreementViewController.onAgreed.delegate(on: self) { [unowned navigation] (self, vc) in
-            let indicator = LoadingIndicator.add(to: navigation.view)
-            let request = PutOpenChatTermAgreementUpdateRequest(agreed: true)
-            Session.shared.send(request) { result in
-                indicator.remove()
-                switch result {
-                case .success:
-                    vc.dismiss(animated: true) {
-                        self.presentCreatingViewController(in: viewController, handler: nil)
-                    }
-                case .failure(let error):
-                    self.delegate?.openChatCreatingController(
-                        self,
-                        didEncounterUserAgreementError: error,
-                        presentingViewController: navigation
-                    )
-                }
-            }
-        }
-        
-        termAgreementViewController.onClose.delegate(on: self) { (self, vc) in
-            vc.dismiss(animated: true) {
-                self.delegate?.openChatCreatingControllerDidCancelCreating(self)
-            }
-        }
+        let alert = UIAlertController(
+            title: nil,
+            message: Localization.string("login.openchat.not.agree.with.terms"),
+            preferredStyle: .alert
+        )
 
-        navigation.modalPresentationStyle = .fullScreen
-        viewController.present(navigation, animated: true) { handler?(.success(())) }
+        if Constant.isLINEInstalled {
+            alert.addAction(
+                .init(title: Localization.string("common.cancel"), style: .cancel)
+            )
+            alert.addAction(
+                .init(title: Localization.string("Open LINE"), style: .default) { _ in
+                    UIApplication.shared.openLINEApp()
+                }
+            )
+        } else {
+            alert.addAction(
+                .init(title: Localization.string("common.ok"), style: .cancel)
+            )
+        }
+        viewController.present(alert, animated: true) { handler?(.success(alert)) }
     }
     
     func presentCreatingViewController(
         in viewController: UIViewController,
-        handler: ((Result<Void, LineSDKError>) -> Void)?
+        handler: ((Result<UIViewController, LineSDKError>) -> Void)?
     )
     {
         let (navigation, roomInfoFormViewController) = OpenChatRoomInfoViewController.createViewController(self)
@@ -204,7 +202,7 @@ public class OpenChatCreatingController {
         navigation.modalPresentationStyle = .fullScreen
         
         delegate?.openChatCreatingController(self, willPresentCreatingNavigationController: navigation)
-        viewController.present(navigation, animated: true) { handler?(.success(())) }
+        viewController.present(navigation, animated: true) { handler?(.success(navigation)) }
     }
 }
 
