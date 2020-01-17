@@ -52,6 +52,11 @@ extension LoginManager {
         #if targetEnvironment(macCatalyst)
         public var allowRecreatingLoginProcess = true
         #else
+        /// Determines whether it's possible to create another login process while the original one is still valid.
+        /// If `true`, a `GeneralErrorReason.processDiscarded` error is thrown when performing another login action
+        /// before an earlier one is finished. Otherwise, the new login action is ignored.
+        ///
+        /// When the deploy target is **macCatalyst**, the default value is `true`. In other cases, it's `false`.
         public var allowRecreatingLoginProcess = false
         #endif
         
@@ -59,7 +64,7 @@ extension LoginManager {
         public init() {}
         
         // MARK: - Deprecated
-        
+        /// :nodoc:
         @available(*, deprecated,
         message: "Internally deprecated to suppress warning. Set properties in `Parameters` instead.")
         public init(options: LoginManagerOptions, language: WebPageLanguage?) {
@@ -83,6 +88,7 @@ extension LoginManager {
     
     /// Represents the language used in the web page.
     public struct WebPageLanguage {
+        /// :nodoc:
         public let rawValue: String
 
         /// Creates a web page language with a given raw string language code value.

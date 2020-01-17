@@ -24,9 +24,9 @@ import Foundation
 /// Constants used in the LINE SDK.
 public struct Constant {
     
-    /// The version of the current LINE SDK.
     // This version number is bumped by `bump_constant_version` lane when releasing a new version.
     // If you change the name or location of this variable, also update the lane in the Fastfile.
+    /// The version of the current LINE SDK.
     public static let SDKVersion = "5.5.0"
     
     static var SDKVersionString: String {

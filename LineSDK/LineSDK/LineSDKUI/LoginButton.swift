@@ -55,6 +55,7 @@ public protocol LoginButtonDelegate: AnyObject {
     func loginButton(_ button: LoginButton, didFailLogin error: Error)
 }
 
+/// :nodoc:
 public extension LoginButtonDelegate {
     func loginButtonDidStartLogin(_ button: LoginButton) { }
     func loginButton(_ button: LoginButton, didSucceedLogin loginResult: LoginResult) { }
@@ -161,6 +162,7 @@ open class LoginButton: UIButton {
         setup()
     }
 
+    /// Creates a predefined LINE Login button.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
@@ -227,7 +229,7 @@ open class LoginButton: UIButton {
         return buttonSize.sizeForTitleSize(titleSize)
     }
 
-    // Executes the login action when the user taps the login button.
+    /// Executes the login action when the user taps the login button.
     @objc open func login() {
         LoginManager.shared.login(
             permissions: permissions,

@@ -207,15 +207,22 @@ open class ShareViewController: UINavigationController {
 /// `ShareViewController.localAuthorizationStatusForSendingMessage()` returns a `MessageShareAuthorizationStatus` value
 /// to indicate the current authorization status for sharing messages.
 ///
-/// - lackOfToken:        There is no valid token in the token store locally. The user hasn't logged in and authorized
+/// - lackOfToken:        There is no valid token in the local token store. The user hasn't logged in and authorized
 ///                       your app yet.
 /// - lackOfPermissions:  There is a valid token, but it doesn't contain the necessary permissions for sharing a message. 
 ///                       The associated value is an array of `LoginPermission`, containing all lacking permissions.
 /// - authorized:         The token exists locally and contains the necessary permissions to share messages.
 ///
 public enum MessageShareAuthorizationStatus {
+    
+    /// There is no valid token in the local token store. The user hasn't logged in and authorized your app yet.
     case lackOfToken
+    
+    /// There is a valid token, but it doesn't contain the necessary permissions for sharing a message.
+    /// The associated value is an array of `LoginPermission`, containing all lacking permissions.
     case lackOfPermissions([LoginPermission])
+    
+    /// The token exists locally and contains the necessary permissions to share messages.
     case authorized
 }
 
@@ -261,6 +268,7 @@ extension ShareViewController {
     }
 }
 
+/// :nodoc:
 extension ShareViewController: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         shareDelegate?.shareViewControllerDidCancelSharing(self)
