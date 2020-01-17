@@ -28,8 +28,8 @@ public struct User: Decodable {
     /// Identifier of the user.
     public let userID: String
 
-    /// User's display name. It is the preferred username which should be displayed on UI. When `displayNameOverridden`
-    /// is not `nil`, this value is identical with it. Otherwise, it is `displayNameOriginal`.
+    /// User's display name. This is the preferred username to be displayed in UI. When 
+    /// `displayNameOverridden` is not `nil`, this value is identical to it. Otherwise, it is `displayNameOriginal`.
     public var displayName: String { return displayNameOverridden ?? displayNameOriginal }
     
     /// User's original display name. It is the friend's user display name set by himself/herself.

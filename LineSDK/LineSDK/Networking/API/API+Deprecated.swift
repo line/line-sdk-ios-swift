@@ -36,8 +36,8 @@ extension API {
     ///
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
+        Auth-related APIs don't refresh access token automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods from `API.Auth` instead.
         """,
     renamed: "Auth.refreshAccessToken"
     )
@@ -66,11 +66,11 @@ extension API {
     ///   need to have the user authorize your app again to issue a new access token before accessing the
     ///   LINE Platform.
     ///
-    ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token removed from the device.
+    ///  The `LineSDKAccessTokenDidRemove` notification is sent when the access token is removed from the device.
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods from `API.Auth` instead.
         """,
     renamed: "Auth.revokeAccessToken"
     )
@@ -132,8 +132,8 @@ extension API {
     ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token is removed from the device.
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods from `API.Auth` instead.
         """,
     renamed: "Auth.revokeRefreshToken"
     )
@@ -184,8 +184,8 @@ extension API {
     ///
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `API.Auth` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods from `API.Auth` instead.
         """,
     renamed: "Auth.verifyAccessToken"
     )
