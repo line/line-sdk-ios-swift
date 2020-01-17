@@ -47,8 +47,8 @@ public protocol ResponsePipelineRedirector: class { // Use class protocol for ea
     ///   - response: The received HTTP response to the request.
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool
     
-    /// Performs the redirection action for current redirector. Define how to process the received response and data.
-    /// When the work is done, call `closure` with the required action to make the response pipeline continue.
+    /// Performs the redirect action for current redirector. Define how to process the received response and data.
+    /// When the process is finished, call `closure` with the required action to make the response pipeline continue.
     /// - Parameters:
     ///   - request: The original `Request`.
     ///   - data: The received data contained in the HTTP response.
