@@ -206,22 +206,29 @@ public class OpenChatCreatingController {
     }
 }
 
-/// Represents the authorization status for creating open chat.
+/// Represents the authorization status for creating an open chat room.
 /// Before creating and presenting a message sharing UI, we strongly recommend checking whether your app
-/// has a valid token and the necessary permissions to share messages.
+/// has a valid token and the necessary permissions to create an open chat room.
 ///
 /// `OpenChatCreatingController.localAuthorizationStatusForCreatingOpenChat()` returns a
 /// `MessageShareAuthorizationStatus` value to indicate the current authorization status for open chat creating.
 ///
-/// - lackOfToken:        There is no valid token in the token store locally. The user hasn't logged in and authorized
+/// - lackOfToken:        There is no valid token in the local token store. The user hasn't logged in and authorized
 ///                       your app yet.
 /// - lackOfPermissions:  There is a valid token, but it doesn't contain the necessary permissions.
 ///                       The associated value is an array of `LoginPermission`, containing all lacking permissions.
 /// - authorized:         The token exists locally and contains the necessary permissions.
 ///
 public enum OpenChatCreatingAuthorizationStatus {
+    
+    /// There is no valid token in the local token store. The user hasn't logged in and authorized your app yet.
     case lackOfToken
+    
+    /// There is a valid token, but it doesn't contain the necessary permissions for sharing a message.
+    /// The associated value is an array of `LoginPermission`, containing all lacking permissions.
     case lackOfPermissions(Set<LoginPermission>)
+    
+    /// The token exists locally and contains the necessary permissions to share messages.
     case authorized
 }
 
