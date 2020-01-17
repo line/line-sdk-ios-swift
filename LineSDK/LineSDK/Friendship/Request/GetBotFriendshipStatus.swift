@@ -31,7 +31,7 @@ public struct GetBotFriendshipStatusRequest: Request {
     public let path: String = "/friendship/v1/status"
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
-    
+    /// :nodoc:
     public init() {}
     
     /// Represents a response to a request for getting the friendship status of the user and the bot linked to

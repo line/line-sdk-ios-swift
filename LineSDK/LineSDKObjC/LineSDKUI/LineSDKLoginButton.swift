@@ -33,7 +33,7 @@ import LineSDK
 public class LineSDKLoginButton: NSObject {
     
     public var button: UIButton { return _binaryCompatibleButton }
-    // A wrapper for providing binary compatible version of SDK.
+    // A wrapper for providing a binary-compatible version of the SDK.
     private var _binaryCompatibleButton: LoginButton
 
     @objc public enum LineSDKLoginButtonSize: Int {

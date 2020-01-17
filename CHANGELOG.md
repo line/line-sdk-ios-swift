@@ -4,9 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.5.0] - 2019-12-17
+
 ### Added
 
-- Add the `displayNameOverridden` and `displayNameOriginal` properties to `User` when getting friends list. Currently the `User.displayName` is a combination of `displayNameOverridden` and `displayNameOriginal`. It is a preferred version of user's name for displaying and searching.
+- Add the `displayNameOverridden` and `displayNameOriginal` properties to `User` when getting friends list. Currently the `User.displayName` is a combination of `displayNameOverridden` and `displayNameOriginal`. It is a preferred version of user's name for displaying and searching. [#125](https://github.com/line/line-sdk-ios-swift/pull/125)
+- Support for `xcframework`. Now you can download binary format of LINE SDK and LINE SDK Objective-C wrapper as `xcframework`, as well as the related dSYMs and symbol map files from the release page. To implement this feature, we modified a bit for the exposed Objective-C wrapper module, to make sure the binary compatibility not broken in future releases. [#126](https://github.com/line/line-sdk-ios-swift/pull/126)
+
+### Fixed
+
+- A missing localization for pt-BR when searching in sharing list panel. [#127](https://github.com/line/line-sdk-ios-swift/pull/127)
 
 ## [5.4.0] - 2019-11-29
 
@@ -164,3 +171,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.3.0]: https://github.com/line/line-sdk-ios-swift/compare/5.2.4...5.3.0
 [5.3.1]: https://github.com/line/line-sdk-ios-swift/compare/5.3.0...5.3.1
 [5.4.0]: https://github.com/line/line-sdk-ios-swift/compare/5.3.1...5.4.0
+[5.5.0]: https://github.com/line/line-sdk-ios-swift/compare/5.4.0...5.5.0

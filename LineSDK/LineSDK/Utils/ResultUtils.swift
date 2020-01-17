@@ -25,11 +25,11 @@ import Foundation
 public enum ResultUtil {
 
     /// Evaluates the given transform closures to create a single output value.
-    ///
     /// - Parameters:
+    ///   - result: The input `Result` value.
     ///   - onSuccess: A closure that transforms the success value.
     ///   - onFailure: A closure that transforms the error value.
-    /// - Returns: A single `Output` value.
+    /// - Returns: A single `Output` value returned by either the `onSuccess` block or `onFailure` block.
     public static func match<Success, Failure: Error, Output>(
         result: Result<Success, Failure>,
         onSuccess: (Success) -> Output,
@@ -42,7 +42,14 @@ public enum ResultUtil {
             return onFailure(error)
         }
     }
-
+    
+    /// Evaluates the given transform closures, converting the success value with the use of a 
+    /// folder to create a single output value.
+    /// - Parameters:
+    ///   - result: The input `Result` value.
+    ///   - folder: A closure that takes an optional value of the result. If the `result` resolves to `.success`, it
+    ///             takes the unwrapped value. Otherwise, it takes `nil`.
+    /// - Returns: A single `Output` value returned by the `folder`.
     public static func matchSuccess<Success, Failure: Error, Output>(
         result: Result<Success, Failure>,
         with folder: (Success?) -> Output) -> Output
@@ -54,6 +61,13 @@ public enum ResultUtil {
         )
     }
 
+    /// Evaluates the given transform closures, converting the failure value with the use of a 
+    /// folder to create a single output value.
+    /// - Parameters:
+    ///   - result: The input `Result` value.
+    ///   - folder: A closure that takes an optional value of the result. If the `result` resolves to `.failure`, it
+    ///             takes the unwrapped error. Otherwise, it takes `nil`.
+    /// - Returns: A single `Output` value returned by the `folder`.
     public static func matchFailure<Success, Failure: Error, Output>(
         result: Result<Success, Failure>,
         with folder: (Error?) -> Output) -> Output
@@ -65,6 +79,14 @@ public enum ResultUtil {
         )
     }
 
+    /// Evaluates the given transform closures, converting the result pair with the use of a folder 
+    /// to create a single output value.
+    /// - Parameters:
+    ///   - result: The input `Result` value.
+    ///   - folder: A closure that takes a tuple consisted by two optional values.
+    ///             The first value in the tuple is the unwrapped value if `result` resolves to `.success`.
+    ///             The second value is the unwrapped value if `result` resolves to `.failure`.
+    /// - Returns: A single `Output` value returned by the `folder`.
     public static func match<Success, Failure: Error, Output>(
         result: Result<Success, Failure>,
         with folder: (Success?, Error?) -> Output) -> Output

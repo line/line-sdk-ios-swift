@@ -227,8 +227,8 @@ extension LineSDKAPI {
     // MARK: - refreshAccessToken
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
         """,
     renamed: "LineSDKAuthAPI.refreshAccessToken"
     )
@@ -240,8 +240,8 @@ extension LineSDKAPI {
     
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
         """,
     renamed: "LineSDKAuthAPI.refreshAccessToken"
     )
@@ -255,8 +255,8 @@ extension LineSDKAPI {
     // MARK: - revokeAccessToken
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
         """,
     renamed: "LineSDKAuthAPI.revokeAccessToken"
     )
@@ -268,8 +268,8 @@ extension LineSDKAPI {
     
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
         """,
     renamed: "LineSDKAuthAPI.revokeAccessToken"
     )
@@ -282,8 +282,8 @@ extension LineSDKAPI {
     
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
         """,
     renamed: "LineSDKAuthAPI.revokeAccessToken"
     )
@@ -298,8 +298,8 @@ extension LineSDKAPI {
     // MARK: - verifyAccessToken
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
         """,
     renamed: "LineSDKAuthAPI.verifyAccessToken"
     )
@@ -311,8 +311,8 @@ extension LineSDKAPI {
     
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
         """,
     renamed: "LineSDKAuthAPI.verifyAccessToken"
     )
@@ -325,8 +325,8 @@ extension LineSDKAPI {
     
     @available(*, deprecated,
     message: """
-        Auth related APIs are not refreshing access token automatically.
-        Make sure you do not need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
+        Auth-related APIs don't refresh access tokens automatically.
+        Make sure you don't need token refreshing as a side effect, then use methods in `LineSDKAuthAPI` instead.
         """,
     renamed: "LineSDKAuthAPI.verifyAccessToken"
     )

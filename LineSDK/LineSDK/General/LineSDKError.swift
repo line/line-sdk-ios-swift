@@ -33,7 +33,7 @@ import Foundation
 /// - responseFailed: An error occurred while handling a response.
 /// - authorizeFailed: An error occurred while authorizing a user.
 /// - generalError: An error occurred while performing another process in the LINE SDK.
-/// - untypedError: An error not defined in the LINE SDK.
+/// - untypedError: An error not defined in the LINE SDK occurred.
 public enum LineSDKError: Error {
 
     /// The possible underlying reasons a `.requestFailed` error occurs.
@@ -213,16 +213,25 @@ public enum LineSDKError: Error {
         /// The image download task finished but it is not the original task issued. Code 4003.
         case notOriginalTask(token: UInt)
         
-        /// The process is discarded when a new login process is going to be created. This only
-        /// happens when the `allowRecreatingLoginProcess` is set in `LoginManager.Parameters` and
+        /// The process is discarded when a new login process is created. This only
+        /// happens when `allowRecreatingLoginProcess` is set in `LoginManager.Parameters` and
         /// users are trying to create another login process. Code 4004.
         case processDiscarded(LoginProcess)
     }
 
+    /// An error occurred while constructing a request.
     case requestFailed(reason: RequestErrorReason)
+    
+    /// An error occurred while handling a response.
     case responseFailed(reason: ResponseErrorReason)
+    
+    /// An error occurred while authorizing a user.
     case authorizeFailed(reason: AuthorizeErrorReason)
+    
+    /// An error occurred while performing another process in the LINE SDK.
     case generalError(reason: GeneralErrorReason)
+    
+    /// An error not defined in the LINE SDK occurred.
     case untypedError(error: Error)
 }
 
@@ -640,6 +649,7 @@ extension Result where Failure == LineSDKError {
     }
 }
 
+/// :nodoc:
 public enum LineSDKErrorUserInfoKey: String {
     case underlyingError
     case statusCode

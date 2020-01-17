@@ -38,8 +38,8 @@ import UIKit
  1. Verify that the user has granted your app the necessary permissions. `ShareViewController` will show both
  Friends and Groups tabs. To get the friend list and group list, and send a message, you need
  `LoginPermission.oneTimeShare`. Use `ShareViewController.localAuthorizationStatusForSendingMessage()` to check
- whether you have a valid token with the necessary permission. If you don't have them, you shouldn't create and
- show the `ShareViewController`, but prompt your user to authorize your app with these permissions.
+ whether you have a valid token with the necessary permissions. If you don't have them, don't create and
+ show the `ShareViewController`, but instead prompt your user to grant your app the needed permissions.
 
  2. Create a `ShareViewController` instance. `ShareViewController` can't be initialized from Storyboard or
  XIB. Use the provided initializer `init()`.
@@ -60,11 +60,10 @@ import UIKit
  See `ShareViewControllerDelegate` for more information.
 
  - Warning:
- Although `ShareViewController` is marked as `open`, it's not recommended to create a subclass for it. The class is
- intended to be used as-is and to provide a default sharing experience across all LINE and LINE SDK integrations. Users
- expect a consistent UI and interaction across different apps when sharing messages to friends and groups in LINE.
- But if it's so important for you to provide a fully customized sharing interaction, you can still use the related APIs
- to create your own UIs.
+ Although `ShareViewController` is marked as `open`, we recommend against creating a subclass for it. The class is
+ intended to be used as-is, to ensure a consistent sharing experience across all LINE and LINE SDK integrations. Users
+ expect sharing messages to friends and groups in LINE to work the same across different apps. Nevertheless, if you 
+ absolutely need a custom sharing interaction, you can create it using the related APIs.
  */
 open class ShareViewController: StyleNavigationController {
 
@@ -183,15 +182,22 @@ open class ShareViewController: StyleNavigationController {
 /// `ShareViewController.localAuthorizationStatusForSendingMessage()` returns a `MessageShareAuthorizationStatus` value
 /// to indicate the current authorization status for sharing messages.
 ///
-/// - lackOfToken:        There is no valid token in the token store locally. The user hasn't logged in and authorized
+/// - lackOfToken:        There is no valid token in the local token store. The user hasn't logged in and authorized
 ///                       your app yet.
 /// - lackOfPermissions:  There is a valid token, but it doesn't contain the necessary permissions for sharing a message. 
 ///                       The associated value is an array of `LoginPermission`, containing all lacking permissions.
 /// - authorized:         The token exists locally and contains the necessary permissions to share messages.
 ///
 public enum MessageShareAuthorizationStatus {
+    
+    /// There is no valid token in the local token store. The user hasn't logged in and authorized your app yet.
     case lackOfToken
+    
+    /// There is a valid token, but it doesn't contain the necessary permissions for sharing a message.
+    /// The associated value is an array of `LoginPermission`, containing all lacking permissions.
     case lackOfPermissions(Set<LoginPermission>)
+    
+    /// The token exists locally and contains the necessary permissions to share messages.
     case authorized
 }
 
@@ -237,6 +243,7 @@ extension ShareViewController {
     }
 }
 
+/// :nodoc:
 extension ShareViewController: UIAdaptivePresentationControllerDelegate {
     /// :nodoc:
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {

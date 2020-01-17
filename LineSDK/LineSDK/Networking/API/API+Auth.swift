@@ -24,8 +24,9 @@ import Foundation
 // MARK: - Auth API
 extension API {
     
-    /// Auth related APIs. Methods in this type will not refresh the access token automatically like other public APIs.
-    /// Make sure you are not using these methods as a means of refreshing current access token.
+    /// Authentication-related APIs. Unlike other public APIs, methods in this type don't refresh 
+    /// the access token automatically. Don't use these methods as a means of refreshing current 
+    /// access tokens.
     ///
     public enum Auth {
         /// Refreshes the access token with `refreshToken`.
@@ -37,7 +38,7 @@ extension API {
         /// - Note:
         ///   If the token refresh process finishes successfully, the refreshed access token will be
         ///   automatically stored in the keychain for later use and you will get a
-        ///   `.LineSDKAccessTokenDidUpdate` notification. Normally, you do not need to refresh the access token
+        ///   `.LineSDKAccessTokenDidUpdate` notification. Normally, you don't need to refresh the access token
         ///   manually because any API call will attempt to refresh the access token if necessary.
         ///
         public static func refreshAccessToken(
@@ -86,7 +87,7 @@ extension API {
         ///   need to have the user authorize your app again to issue a new access token before accessing the
         ///   LINE Platform.
         ///
-        ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token removed from the device.
+        ///  The `LineSDKAccessTokenDidRemove` notification is sent when the access token is removed from the device.
         public static func revokeAccessToken(
             _ token: String? = nil,
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -143,7 +144,7 @@ extension API {
         ///   revoked, you can neither call an API protected by an access token or refresh the access token with the refresh
         ///   token. To access the resource owner's content, you need to ask your users to authorize your app again.
         ///
-        ///  The `LineSDKAccessTokenDidRemove` notification will be sent when the access token is removed from the device.
+        ///  The `LineSDKAccessTokenDidRemove` notification is sent when the access token is removed from the device.
         public static func revokeRefreshToken(
             _ refreshToken: String? = nil,
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -192,7 +193,7 @@ extension API {
         ///
         /// - Note:
         /// This method does not try to refresh the current access token when it is invalid or expired.
-        /// Instead, when the verification fails, it just returns the server response as an error to you.
+        /// Instead, if verification fails, it just returns the server response as an error to you.
         public static func verifyAccessToken(
             _ token: String? = nil,
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,

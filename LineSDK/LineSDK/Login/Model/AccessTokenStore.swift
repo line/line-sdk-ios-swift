@@ -108,6 +108,9 @@ public class AccessTokenStore {
     }
     
     static var _shared: AccessTokenStore?
+    
+    /// The shared instance of `AccessTokenStore`. Use this instance to access values in the token store of LINE SDK.
+    /// Access this value after you setup the LINE SDK. Otherwise, your app will be trapped.
     public static var shared: AccessTokenStore {
         return guardSharedProperty(_shared)
     }
