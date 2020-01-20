@@ -31,7 +31,6 @@ public class LoginProcess {
         let channelID: String
         let universalLinkURL: URL?
         let scopes: Set<LoginPermission>
-        let otp: OneTimePassword
         let processID: String
         let nonce: String?
         let botPrompt: LoginManager.BotPrompt?
@@ -102,8 +101,6 @@ public class LoginProcess {
     /// A string used to prevent replay attacks. This value will be returned in an ID token.
     let IDTokenNonce: String?
     
-    var otp: OneTimePassword!
-    
     let onSucceed = Delegate<(token: AccessToken, response: LoginProcessURLResponse), Void>()
     let onFail = Delegate<Error, Void>()
     
@@ -127,34 +124,24 @@ public class LoginProcess {
     }
     
     func start() {
-        let otpRequest = PostOTPRequest(channelID: configuration.channelID)
-        Session.shared.send(otpRequest) { result in
-            switch result {
-            case .success(let otp):
-                self.otp = otp
-                let parameters = FlowParameters(
-                    channelID: self.configuration.channelID,
-                    universalLinkURL: self.configuration.universalLinkURL,
-                    scopes: self.scopes,
-                    otp: otp,
-                    processID: self.processID,
-                    nonce: self.IDTokenNonce,
-                    botPrompt: self.parameters.botPromptStyle,
-                    preferredWebPageLanguage: self.parameters.preferredWebPageLanguage)
-                #if targetEnvironment(macCatalyst)
-                // On macCatalyst, we only support web login
-                self.startWebLoginFlow(parameters)
-                #else
-                if self.parameters.onlyWebLogin {
-                    self.startWebLoginFlow(parameters)
-                } else {
-                    self.startAppUniversalLinkFlow(parameters)
-                }
-                #endif
-            case .failure(let error):
-                self.invokeFailure(error: error)
-            }
+        let parameters = FlowParameters(
+            channelID: self.configuration.channelID,
+            universalLinkURL: self.configuration.universalLinkURL,
+            scopes: self.scopes,
+            processID: self.processID,
+            nonce: self.IDTokenNonce,
+            botPrompt: self.parameters.botPromptStyle,
+            preferredWebPageLanguage: self.parameters.preferredWebPageLanguage)
+        #if targetEnvironment(macCatalyst)
+        // On macCatalyst, we only support web login
+        self.startWebLoginFlow(parameters)
+        #else
+        if self.parameters.onlyWebLogin {
+            self.startWebLoginFlow(parameters)
+        } else {
+            self.startAppUniversalLinkFlow(parameters)
         }
+        #endif
     }
     
     /// Stops the login process. The login process will fail with a `.forceStopped` error.
@@ -266,7 +253,6 @@ public class LoginProcess {
                 let tokenExchangeRequest = PostExchangeTokenRequest(
                     channelID: self.configuration.channelID,
                     code: response.requestToken,
-                    otpValue: self.otp.otp,
                     redirectURI: Constant.thirdPartyAppReturnURL,
                     optionalRedirectURI: self.configuration.universalLinkURL?.absoluteString)
                 Session.shared.send(tokenExchangeRequest) { tokenResult in
@@ -403,7 +389,6 @@ extension String {
             "sdk_ver": Constant.SDKVersion,
             "client_id": parameter.channelID,
             "scope": (parameter.scopes.map { $0.rawValue }).joined(separator: " "),
-            "otpId": parameter.otp.otpId,
             "state": parameter.processID,
             "redirect_uri": Constant.thirdPartyAppReturnURL,
         ]

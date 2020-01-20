@@ -64,8 +64,6 @@
 		4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256E210188C300A39D4F /* LoginPermission.swift */; };
 		4B4525712101938F00A39D4F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4525702101938F00A39D4F /* Request.swift */; };
 		4B45257621019EFB00A39D4F /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257521019EFB00A39D4F /* Session.swift */; };
-		4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257721019FCC00A39D4F /* PostOTPRequest.swift */; };
-		4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257A2101A4E900A39D4F /* OneTimePassword.swift */; };
 		4B4A9AF32159FCF700915054 /* LineSDKConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A9AF22159FCF700915054 /* LineSDKConstant.swift */; };
 		4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */; };
 		4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7F21080D69006D17F5 /* AccessToken.swift */; };
@@ -94,7 +92,6 @@
 		4B6A70312109793500D71C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A70302109793500D71C66 /* AppDelegate.swift */; };
 		4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */; };
 		4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */; };
-		4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */; };
 		4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB721103D4B00EDDD1E /* ResponseDataStub.swift */; };
 		4B7D8C252137B9FA00C6855A /* public_base_64_newline in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C1D2137B9FA00C6855A /* public_base_64_newline */; };
 		4B7D8C262137B9FA00C6855A /* public_base_64_header in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C1E2137B9FA00C6855A /* public_base_64_header */; };
@@ -377,8 +374,6 @@
 		4B45256E210188C300A39D4F /* LoginPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPermission.swift; sourceTree = "<group>"; };
 		4B4525702101938F00A39D4F /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		4B45257521019EFB00A39D4F /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
-		4B45257721019FCC00A39D4F /* PostOTPRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOTPRequest.swift; sourceTree = "<group>"; };
-		4B45257A2101A4E900A39D4F /* OneTimePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimePassword.swift; sourceTree = "<group>"; };
 		4B4A9AF22159FCF700915054 /* LineSDKConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKConstant.swift; sourceTree = "<group>"; };
 		4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostExchangeTokenRequest.swift; sourceTree = "<group>"; };
 		4B4F0B7F21080D69006D17F5 /* AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
@@ -409,7 +404,6 @@
 		4B6A703C2109793700D71C66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponseTests.swift; sourceTree = "<group>"; };
 		4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerTests.swift; sourceTree = "<group>"; };
-		4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOTPRequestTests.swift; sourceTree = "<group>"; };
 		4B792FB721103D4B00EDDD1E /* ResponseDataStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataStub.swift; sourceTree = "<group>"; };
 		4B7D8C1D2137B9FA00C6855A /* public_base_64_newline */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public_base_64_newline; sourceTree = "<group>"; };
 		4B7D8C1E2137B9FA00C6855A /* public_base_64_header */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public_base_64_header; sourceTree = "<group>"; };
@@ -799,7 +793,6 @@
 		4B792FB421103CFD00EDDD1E /* API */ = {
 			isa = PBXGroup;
 			children = (
-				4B792FB521103D2200EDDD1E /* PostOTPRequestTests.swift */,
 				4B39D1DF2110496C00A45510 /* GetUserProfileRequestTests.swift */,
 				DBE4E371211D7C9B00184D66 /* GetFriendsRequestTests.swift */,
 				DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */,
@@ -1358,7 +1351,6 @@
 		4BF53533212A79FA00EA602A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4B45257A2101A4E900A39D4F /* OneTimePassword.swift */,
 				4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */,
 				4B4F0B7F21080D69006D17F5 /* AccessToken.swift */,
 				4BCD278F2113EA1300B90D8F /* AccessTokenVerifyResult.swift */,
@@ -1370,7 +1362,6 @@
 		4BF53534212A7A0700EA602A /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				4B45257721019FCC00A39D4F /* PostOTPRequest.swift */,
 				4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */,
 				4B4F0B8C210870EF006D17F5 /* GetUserProfileRequest.swift */,
 				4BFBEA7A211057050044C2B6 /* PostRefreshTokenRequest.swift */,
@@ -1744,7 +1735,6 @@
 				DBF20276212C11A600780358 /* GetGroupsRequest.swift in Sources */,
 				4B5B0EF52241DF3E00BA59A0 /* PageViewController.swift in Sources */,
 				4BFC09F3213CF09A00F4594D /* GetDiscoveryDocumentRequest.swift in Sources */,
-				4B45257B2101A4E900A39D4F /* OneTimePassword.swift in Sources */,
 				4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */,
 				4B9A305C21216D2E00174C6F /* TemplateImageCarouselPayload.swift in Sources */,
 				4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */,
@@ -1756,7 +1746,6 @@
 				D1A591272139489E00AC080D /* JWK.swift in Sources */,
 				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,
 				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
-				4B45257821019FCC00A39D4F /* PostOTPRequest.swift in Sources */,
 				4B41593A225AE464003AE63A /* MessageShareTargetType.swift in Sources */,
 				4BD33ED7238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */,
 				4B1C446B2137E98D0094C1D4 /* JWTCoder.swift in Sources */,
@@ -1879,7 +1868,6 @@
 				4BD191B22111452E00E2C481 /* PostRefreshTokenRequestTests.swift in Sources */,
 				4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */,
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
-				4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */,
 				DB0AFF612247FB2E002729AD /* PageTabViewTests.swift in Sources */,
 				4B9A303D2121238D00174C6F /* AudioMessageTests.swift in Sources */,
 				4BF53380222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift in Sources */,
