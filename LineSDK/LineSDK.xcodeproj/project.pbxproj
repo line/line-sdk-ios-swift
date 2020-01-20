@@ -271,6 +271,7 @@
 		DB115EF822537F1000C16B0C /* ShareTargetSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */; };
 		DB115EFA2254660C00C16B0C /* ShareRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF92254660C00C16B0C /* ShareRootViewController.swift */; };
 		DB5035BB22571D3B003CD0B9 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */; };
+		DB86931023D5619E0011AEB9 /* PKCE.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB86930F23D5619E0011AEB9 /* PKCE.swift */; };
 		DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
 		DBDCFD342126CB6300E8327A /* GetApproversInFriendsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */; };
 		DBE4E36D211D6C1A00184D66 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE4E36C211D6C1A00184D66 /* User.swift */; };
@@ -588,6 +589,7 @@
 		DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultViewController.swift; sourceTree = "<group>"; };
 		DB115EF92254660C00C16B0C /* ShareRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRootViewController.swift; sourceTree = "<group>"; };
 		DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
+		DB86930F23D5619E0011AEB9 /* PKCE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCE.swift; sourceTree = "<group>"; };
 		DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsRequest.swift; sourceTree = "<group>"; };
 		DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsTests.swift; sourceTree = "<group>"; };
 		DBE4E36C211D6C1A00184D66 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -909,6 +911,7 @@
 			isa = PBXGroup;
 			children = (
 				4BF53534212A7A0700EA602A /* Request */,
+				DB86931123D561A40011AEB9 /* PKCE */,
 				4BF53533212A79FA00EA602A /* Model */,
 				4B9058D321007394004D717F /* LoginConfiguration.swift */,
 				4B9058D5210073E6004D717F /* LoginManager.swift */,
@@ -1476,6 +1479,14 @@
 			path = SharingUI;
 			sourceTree = "<group>";
 		};
+		DB86931123D561A40011AEB9 /* PKCE */ = {
+			isa = PBXGroup;
+			children = (
+				DB86930F23D5619E0011AEB9 /* PKCE.swift */,
+			);
+			path = PKCE;
+			sourceTree = "<group>";
+		};
 		DBE4E36E211D6C2600184D66 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
@@ -1739,6 +1750,7 @@
 				4B9A305C21216D2E00174C6F /* TemplateImageCarouselPayload.swift in Sources */,
 				4B8FF48D210598F500890AEF /* ResponsePipeline.swift in Sources */,
 				4B9A30582121613500174C6F /* TemplateCarouselPayload.swift in Sources */,
+				DB86931023D5619E0011AEB9 /* PKCE.swift in Sources */,
 				4B45256D2101829F00A39D4F /* Helpers.swift in Sources */,
 				4B9A304E2121405300174C6F /* MessageAction.swift in Sources */,
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,

@@ -24,6 +24,7 @@ import Foundation
 struct PostExchangeTokenRequest: Request {
     let channelID: String
     let code: String
+    let codeVerifier: String
     let redirectURI: String
     let optionalRedirectURI: String?
     
@@ -37,6 +38,7 @@ struct PostExchangeTokenRequest: Request {
             "client_id": channelID,
             "grant_type": "authorization_code",
             "code": code,
+            "code_verifier": codeVerifier,
             "redirect_uri": redirectURI,
             "client_version": Constant.SDKVersionString,
             "id_token_key_type": "JWK"
