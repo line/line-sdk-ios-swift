@@ -65,6 +65,7 @@ class PostExchangeTokenRequestTests: APITests {
         let request = PostExchangeTokenRequest(
             channelID: config.channelID,
             code: "abcabc",
+            codeVerifier: PKCE().codeVerifier,
             redirectURI: "urlurl",
             optionalRedirectURI: "universal")
         runTestSuccess(for: request) { token in
