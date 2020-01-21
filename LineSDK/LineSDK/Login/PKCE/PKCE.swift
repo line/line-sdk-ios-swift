@@ -34,8 +34,8 @@ struct PKCE {
         return "S256"
     }
 
-    init() {
-        codeVerifier = PKCE.generateCodeVerifier()
+    init() throws {
+        codeVerifier = try PKCE.generateCodeVerifier()
     }
 
     /// Code Verifier

@@ -102,7 +102,7 @@ public class LoginProcess {
     /// A string used to prevent replay attacks. This value will be returned in an ID token.
     let IDTokenNonce: String?
     
-    let pkce: PKCE
+    var pkce: PKCE!
 
     let onSucceed = Delegate<(token: AccessToken, response: LoginProcessURLResponse), Void>()
     let onFail = Delegate<Error, Void>()
@@ -115,7 +115,6 @@ public class LoginProcess {
     {
         self.configuration = configuration
         self.processID = UUID().uuidString
-        self.pkce = PKCE()
         self.scopes = scopes
         self.parameters = parameters
         self.presentingViewController = viewController
@@ -128,6 +127,13 @@ public class LoginProcess {
     }
     
     func start() {
+        do {
+            self.pkce = try PKCE()
+        } catch {
+            invokeFailure(error: error)
+            return
+        }
+
         let parameters = FlowParameters(
             channelID: self.configuration.channelID,
             universalLinkURL: self.configuration.universalLinkURL,

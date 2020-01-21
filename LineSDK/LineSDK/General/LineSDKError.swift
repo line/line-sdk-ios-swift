@@ -197,6 +197,9 @@ public enum LineSDKError: Error {
         /// `CryptoError`. Code 3016.
         /// - error: Underlying `CryptoError` value.
         case cryptoError(error: CryptoError)
+
+        /// An error occurred at the LINE SDK PKCE code verifier part.
+        case codeVerifierError
     }
 
     /// The possible underlying reasons `.generalError` occurs.
@@ -539,6 +542,8 @@ extension LineSDKError.AuthorizeErrorReason {
             return "Cannot find a JWT public key in JWKs for Key ID: \(keyID ?? "nil")"
         case .cryptoError(let error):
             return "CryptoError: \(error.errorDescription ?? "nil")"
+        case .codeVerifierError:
+            return "An error occurred at the LINE SDK PKCE code verifier part"
         }
     }
 
@@ -560,6 +565,7 @@ extension LineSDKError.AuthorizeErrorReason {
         case .lackOfIDToken:                 return 3014
         case .JWTPublicKeyNotFound:          return 3015
         case .cryptoError:                   return 3016
+        case .codeVerifierError:             return 3017
         }
     }
 
@@ -594,6 +600,7 @@ extension LineSDKError.AuthorizeErrorReason {
             if let keyID = keyID { userInfo[.raw] = keyID }
         case .cryptoError(let error):
             userInfo[.underlyingError] = error
+        case .codeVerifierError: break
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }

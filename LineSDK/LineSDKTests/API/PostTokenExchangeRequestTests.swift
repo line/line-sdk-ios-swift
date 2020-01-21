@@ -61,11 +61,11 @@ extension PostExchangeTokenRequest: ResponseDataStub {
 
 class PostExchangeTokenRequestTests: APITests {
 
-    func testSuccess() {
+    func testSuccess() throws {
         let request = PostExchangeTokenRequest(
             channelID: config.channelID,
             code: "abcabc",
-            codeVerifier: PKCE().codeVerifier,
+            codeVerifier: try PKCE().codeVerifier,
             redirectURI: "urlurl",
             optionalRedirectURI: "universal")
         runTestSuccess(for: request) { token in
