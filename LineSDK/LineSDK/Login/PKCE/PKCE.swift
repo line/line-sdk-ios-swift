@@ -38,28 +38,37 @@ struct PKCE {
         codeVerifier = PKCE.generateCodeVerifier()
     }
 
-    static func generateCodeVerifier() -> String {
-        var buffer = [UInt8](repeating: 0, count: 32)
-        _ = SecRandomCopyBytes(kSecRandomDefault, buffer.count, &buffer)
-        return Data(bytes: buffer).base64EncodedString()
-            .replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
-            .trimmingCharacters(in: .whitespaces)
+    /// Code Verifier
+    /// The code verifier SHOULD have enough entropy to make it
+    /// impractical to guess the value.  It is RECOMMENDED that the output of
+    /// a suitable random number generator be used to create a 32-octet
+    /// sequence.  The octet sequence is then base64url-encoded to produce a
+    /// 43-octet URL safe string to use as the code verifier.
+    ///
+    /// Ref: https://tools.ietf.org/html/rfc7636#section-4.1
+    ///
+    static func generateCodeVerifier() throws -> String {
+        var bytes = [UInt8](repeating: 0, count: 32)
+        let status = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+        guard status == errSecSuccess else {
+            throw LineSDKError.authorizeFailed(reason: .codeVerifierError)
+        }
+        return Data(bytes: bytes).base64URLEncoded
     }
 
+    /// Code Challenge
+    /// The client creates a code challenge derived from the code verifier by using S256 transformations
+    /// code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
+    ///
+    /// Ref: https://tools.ietf.org/html/rfc7636#section-4.2
+    ///
     static func generateCodeChallenge(codeVerifier: String) -> String {
         let data = codeVerifier.data(using: .utf8)!
         var buffer = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
         data.withUnsafeBytes {
             _ = CC_SHA256($0, CC_LONG(data.count), &buffer)
         }
-        let hash = Data(bytes: buffer)
-        let challenge = hash.base64EncodedString()
-            .replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
-            .trimmingCharacters(in: .whitespaces)
+        let challenge = Data(bytes: buffer).base64URLEncoded
         return challenge
     }
 }
