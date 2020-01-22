@@ -24,18 +24,22 @@ import Security
 import CommonCrypto
 
 struct PKCE {
-    let codeVerifier: String
+    var codeVerifier: String {
+        codeVerifierData.base64URLEncoded
+    }
 
     var codeChallenge: String {
-        return PKCE.generateCodeChallenge(codeVerifier: codeVerifier)
+        return PKCE.generateCodeChallenge(codeVerifier: codeVerifierData)
     }
 
     var codeChallengeMethod: String {
         return "S256"
     }
 
+    private let codeVerifierData: Data
+
     init() {
-        codeVerifier = PKCE.generateCodeVerifier()
+        codeVerifierData = PKCE.generateCodeVerifier()
     }
 
     /// Code Verifier
@@ -47,13 +51,13 @@ struct PKCE {
     ///
     /// Ref: https://tools.ietf.org/html/rfc7636#section-4.1
     ///
-    static func generateCodeVerifier() -> String {
+    static func generateCodeVerifier() -> Data {
         var bytes = [UInt8](repeating: 0, count: 32)
         let status = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
         if status != errSecSuccess {
             bytes = bytes.map { _ in UInt8.random(in: UInt8.min...UInt8.max) }
         }
-        return Data(bytes: bytes).base64URLEncoded
+        return Data(bytes: bytes)
     }
 
     /// Code Challenge
@@ -62,13 +66,17 @@ struct PKCE {
     ///
     /// Ref: https://tools.ietf.org/html/rfc7636#section-4.2
     ///
-    static func generateCodeChallenge(codeVerifier: String) -> String {
-        let data = codeVerifier.data(using: .utf8)!
-        var buffer = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
-        data.withUnsafeBytes {
-            _ = CC_SHA256($0, CC_LONG(data.count), &buffer)
+    static func generateCodeChallenge(codeVerifier: Data) -> String {
+        return codeVerifier.sha256().base64URLEncoded
+    }
+}
+
+extension Data {
+    func sha256() -> Data {
+        var bytes = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
+        withUnsafeBytes {
+            _ = CC_SHA256($0, CC_LONG(count), &bytes)
         }
-        let challenge = Data(bytes: buffer).base64URLEncoded
-        return challenge
+        return Data(bytes: bytes)
     }
 }
