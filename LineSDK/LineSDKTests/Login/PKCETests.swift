@@ -24,21 +24,6 @@ import XCTest
 
 class PKCETests: XCTestCase {
 
-    /// code_verifier
-    /// high-entropy cryptographic random STRING
-    /// with a minimum length of 43 characters and a maximum length of 128 characters
-    ///
-    /// Ref: https://tools.ietf.org/html/rfc7636#section-4.1
-    ///
-    func testCodeVerifierLength() throws {
-        for _ in 0...1000 {
-            try autoreleasepool {
-                let codeVerifier = try PKCE().codeVerifier
-                XCTAssertTrue(43...128 ~= codeVerifier.count)
-            }
-        }
-    }
-
     func testCodeChallenge() {
         let codeVerifier = "ksl2M8Qvw6Ith2hYslVx7XUmtDjt2RvVUzMk8UUgQHc"
         let codeChallenge = PKCE.generateCodeChallenge(codeVerifier: codeVerifier)
