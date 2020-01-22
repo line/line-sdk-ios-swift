@@ -25,7 +25,7 @@ import CommonCrypto
 
 struct PKCE {
     var codeVerifier: String {
-        codeVerifierData.base64URLEncoded
+        return codeVerifierData.base64URLEncoded
     }
 
     var codeChallenge: String {
