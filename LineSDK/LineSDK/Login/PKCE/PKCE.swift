@@ -76,10 +76,14 @@ struct PKCE {
 
 extension Data {
     func sha256() -> Data {
-        var bytes = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
-        withUnsafeBytes {
-            _ = CC_SHA256($0, CC_LONG(count), &bytes)
-        }
-        return Data(bytes: bytes)
+        var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
+        #if swift(>=5.0)
+        withUnsafeBytes {_ = CC_SHA256($0.baseAddress, CC_LONG(count), &hash)}
+        return Data(hash)
+        #else
+        withUnsafeBytes {_ = CC_SHA256($0, CC_LONG(count), &hash)}
+        return Data(bytes: hash)
+        #endif
     }
 }
+
