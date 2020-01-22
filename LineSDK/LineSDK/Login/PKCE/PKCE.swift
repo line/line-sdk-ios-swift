@@ -32,6 +32,9 @@ struct PKCE {
         return PKCE.generateCodeChallenge(codeVerifier: codeVerifierData)
     }
 
+    /// If the client is capable of using "S256", it MUST use "S256", as
+    /// "S256" is Mandatory To Implement (MTI) on the server.
+    /// Ref: https://tools.ietf.org/html/rfc7636#section-4.2
     var codeChallengeMethod: String {
         return "S256"
     }
