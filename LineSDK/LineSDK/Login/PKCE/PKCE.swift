@@ -60,7 +60,11 @@ struct PKCE {
         if status != errSecSuccess {
             bytes = bytes.map { _ in UInt8.random(in: UInt8.min...UInt8.max) }
         }
+        #if swift(>=5.0)
+        return Data(bytes)
+        #else
         return Data(bytes: bytes)
+        #endif
     }
 
     /// Code Challenge
