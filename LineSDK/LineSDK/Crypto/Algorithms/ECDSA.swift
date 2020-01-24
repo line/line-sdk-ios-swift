@@ -55,16 +55,6 @@ extension ECDSA {
 
         case sha1, sha224, sha256, sha384, sha512
         
-        var length: CC_LONG {
-            switch self {
-            case .sha1:   return CC_LONG(CC_SHA1_DIGEST_LENGTH)
-            case .sha224: return CC_LONG(CC_SHA224_DIGEST_LENGTH)
-            case .sha256: return CC_LONG(CC_SHA256_DIGEST_LENGTH)
-            case .sha384: return CC_LONG(CC_SHA384_DIGEST_LENGTH)
-            case .sha512: return CC_LONG(CC_SHA512_DIGEST_LENGTH)
-            }
-        }
-        
         var signatureAlgorithm: SecKeyAlgorithm {
             switch self {
             case .sha1:   return .ecdsaSignatureMessageX962SHA1
@@ -74,19 +64,19 @@ extension ECDSA {
             case .sha512: return .ecdsaSignatureMessageX962SHA512
             }
         }
+
+        var digestAlgorithm: DigestAlgorithm {
+            switch self {
+            case .sha1:   return .sha1
+            case .sha224: return .sha224
+            case .sha256: return .sha256
+            case .sha384: return .sha384
+            case .sha512: return .sha384
+            }
+        }
         
         var encryptionAlgorithm: SecKeyAlgorithm {
             Log.fatalError("ECDSA should be only used for signing purpose.")
-        }
-        
-        var digest: CryptoDigest {
-            switch self {
-            case .sha1:   return CC_SHA1
-            case .sha224: return CC_SHA224
-            case .sha256: return CC_SHA256
-            case .sha384: return CC_SHA384
-            case .sha512: return CC_SHA512
-            }
         }
 
         func convertSignatureData(_ data: Data) throws -> Data {

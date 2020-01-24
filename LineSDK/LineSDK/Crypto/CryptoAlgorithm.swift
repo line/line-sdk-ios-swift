@@ -29,6 +29,7 @@ typealias CryptoDigest = (
 
 /// Represents an algorithm used in cryptography.
 protocol CryptoAlgorithm {
+    var digestAlgorithm: DigestAlgorithm { get }
     var length: CC_LONG { get }
     var signatureAlgorithm: SecKeyAlgorithm { get }
     var encryptionAlgorithm: SecKeyAlgorithm { get }
@@ -38,6 +39,8 @@ protocol CryptoAlgorithm {
 }
 
 extension CryptoAlgorithm {
+    var length: CC_LONG { return digestAlgorithm.length }
+    var digest: CryptoDigest { return digestAlgorithm.digest }
     func convertSignatureData(_ data: Data) throws -> Data { return data }
 }
 
@@ -48,6 +51,10 @@ extension Data {
     /// - Parameter algorithm: The algorithm be used. It should provide a digest hash method at least.
     /// - Returns: The digest data.
     func digest(using algorithm: CryptoAlgorithm) -> Data {
+        return digest(using: algorithm.digestAlgorithm)
+    }
+
+    func digest(using algorithm: DigestAlgorithm) -> Data {
         var hash = [UInt8](repeating: 0, count: Int(algorithm.length))
         #if swift(>=5.0)
         withUnsafeBytes { _ = algorithm.digest($0.baseAddress, CC_LONG(count), &hash) }
@@ -56,5 +63,29 @@ extension Data {
         withUnsafeBytes { _ = algorithm.digest($0, CC_LONG(count), &hash) }
         return Data(bytes: hash)
         #endif
+    }
+}
+
+enum DigestAlgorithm {
+    case sha1, sha224, sha256, sha384, sha512
+
+    var length: CC_LONG {
+        switch self {
+        case .sha1: return CC_LONG(CC_SHA1_DIGEST_LENGTH)
+        case .sha224: return CC_LONG(CC_SHA224_DIGEST_LENGTH)
+        case .sha256: return CC_LONG(CC_SHA256_DIGEST_LENGTH)
+        case .sha384: return CC_LONG(CC_SHA384_DIGEST_LENGTH)
+        case .sha512: return CC_LONG(CC_SHA512_DIGEST_LENGTH)
+        }
+    }
+
+    var digest: CryptoDigest {
+        switch self {
+        case .sha1:   return CC_SHA1
+        case .sha224: return CC_SHA224
+        case .sha256: return CC_SHA256
+        case .sha384: return CC_SHA384
+        case .sha512: return CC_SHA512
+        }
     }
 }
