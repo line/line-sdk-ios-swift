@@ -214,8 +214,8 @@ public enum LineSDKError: Error {
         case notOriginalTask(token: UInt)
         
         /// The process is discarded when a new login process is created. This only
-        /// happens when `allowRecreatingLoginProcess` is set in `LoginManager.Parameters` and
-        /// users are trying to create another login process. Code 4004.
+        /// happens when `allowRecreatingLoginProcess` in `LoginManager.Parameters` is `true` 
+        /// and users are trying to create another login process. Code 4004.
         case processDiscarded(LoginProcess)
     }
 
