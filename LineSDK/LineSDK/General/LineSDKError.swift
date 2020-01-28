@@ -203,6 +203,10 @@ public enum LineSDKError: Error {
     ///
     /// - conversionError: Cannot convert `string` to valid data with `encoding`. Code 4001.
     /// - parameterError: The method is invoked with an invalid parameter. Code 4002.
+    /// - notOriginalTask: The image download task finished but it is not the original task issued. Code 4003.
+    /// - processDiscarded: The process is discarded when a new login process is created. This only
+    ///                     happens when `allowRecreatingLoginProcess` in `LoginManager.Parameters` is `true` 
+    ///                     and users are trying to create another login process. Code 4004.
     public enum GeneralErrorReason {
         /// Cannot convert `string` to valid data with `encoding`. Code 4001.
         case conversionError(string: String, encoding: String.Encoding)
