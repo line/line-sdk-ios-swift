@@ -137,14 +137,6 @@ extension APIStore {
                 title: "Agreement Status",
                 request: GetOpenChatTermAgreementStatusRequest()
             ),
-            .init(
-                title: "Agree Agreement",
-                request: PutOpenChatTermAgreementUpdateRequest(agreed: true)
-            ),
-            .init(
-                title: "Decline Agreement",
-                request: PutOpenChatTermAgreementUpdateRequest(agreed: false)
-            ),
             .checkOpenChatRoomStatus,
             .checkOpenChatRoomMembershipState,
             .createOpenChatRoom
