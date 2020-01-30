@@ -126,7 +126,7 @@ public class OpenChatCreatingController {
     {
         let alert = UIAlertController(
             title: nil,
-            message: Localization.string("login.openchat.not.agree.with.terms"),
+            message: Localization.string("openchat.not.agree.with.terms"),
             preferredStyle: .alert
         )
 
@@ -135,7 +135,7 @@ public class OpenChatCreatingController {
                 .init(title: Localization.string("common.cancel"), style: .cancel)
             )
             alert.addAction(
-                .init(title: Localization.string("Open LINE"), style: .default) { _ in
+                .init(title: Localization.string("open.line"), style: .default) { _ in
                     UIApplication.shared.openLINEApp()
                 }
             )
