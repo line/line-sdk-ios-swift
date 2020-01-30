@@ -74,6 +74,10 @@ public protocol OpenChatCreatingControllerDelegate: AnyObject {
     ///   - error: A value containing the details of the error.
     ///   - presentingViewController: The view controller which presents the current room creating view controller.
     ///                               Present your error handling UI with this view controller, if needed.
+    /// - Returns:
+    /// A flag indicates whether LINE SDK should prevent displaying a default alert when the user agreement is not
+    /// accepted yet.
+    ///
     /// - Note:
     /// To create an open chat room, the user must accept the user agreement term of Open Chat. An
     /// `OpenChatCreatingController` will check the agreement status and determine whether the user already agreed with
@@ -84,13 +88,12 @@ public protocol OpenChatCreatingControllerDelegate: AnyObject {
     ///
     /// If not implemented, a default alert will be shown to ask the user to check their agreement status, or open the
     /// LINE app if it is installed, to agree the term. You can override this behavior and UI by providing your own
-    /// implementation of this delegate method.
+    /// implementation of this delegate method, and return a `true` to tell LINE SDK you have handled the case.
     ///
     func openChatCreatingController(
         _ controller: OpenChatCreatingController,
-        didEncounterUserAgreementError error: LineSDKError,
-        presentingViewController: UIViewController
-    )
+        shouldPreventUserTermAlertFrom presentingViewController: UIViewController
+    ) -> Bool
     
     /// Tells the delegate that the user cancelled the open chat creating action.
     /// - Parameter controller: The controller object for this event.
@@ -125,10 +128,11 @@ public extension OpenChatCreatingControllerDelegate {
     
     func openChatCreatingController(
         _ controller: OpenChatCreatingController,
-        didEncounterUserAgreementError error: LineSDKError,
-        presentingViewController: UIViewController
-    )
-    {}
+        shouldPreventUserTermAlertFrom presentingViewController: UIViewController
+    ) -> Bool
+    {
+        return false
+    }
     
     func openChatCreatingControllerDidCancelCreating(_ controller: OpenChatCreatingController) {}
     

@@ -1,5 +1,5 @@
 //
-//  PostOpenChatCreateRequest.swift
+//  LineSDKOpenChatRoomInfo.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,40 +19,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+#if !LineSDKCocoaPods
+import LineSDK
+#endif
 
-public struct OpenChatRoomInfo: Decodable {
-    public let squareMid: String
-    public let url: URL
-}
-
-public struct PostOpenChatCreateRequest: Request {
+@objcMembers
+public class LineSDKOpenChatRoomInfo: NSObject {
+    let _value: OpenChatRoomInfo
+    init(_ value: OpenChatRoomInfo) { _value = value }
     
-    public typealias Response = OpenChatRoomInfo
-    
-    public let method: HTTPMethod = .post
-    public let path = "/square/v1/square"
-    public let authentication: AuthenticateMethod = .token
-    
-    public let room: OpenChatRoomCreatingItem
-    
-    public init(room: OpenChatRoomCreatingItem) {
-        self.room = room
-    }
-    
-    public var parameters: Parameters? {
-        return room.toDictionary
-    }
-}
-
-extension OpenChatRoomCreatingItem {
-    fileprivate var toDictionary: [String: Any] {
-        return [
-            "name": name,
-            "description": roomDescription,
-            "creatorDisplayName": creatorDisplayName,
-            "category": category,
-            "allowSearch": allowSearch
-        ]
-    }
+    public var squareMid: String { return _value.squareMid }
+    public var url: URL { return _value.url }
 }

@@ -60,9 +60,25 @@
     controller.shareMessages = @[m1, m2];
     XCTAssertEqual(controller.shareMessages.count, 2);
 
-    XCTAssertNil(controller.shareProxyDelegate);
-    controller.shareProxyDelegate = self;
-    XCTAssertNotNil(controller.shareProxyDelegate);
+    XCTAssertNil(controller.delegate);
+    controller.delegate = self;
+    XCTAssertNotNil(controller.delegate);
+}
+
+- (void)testOpenChatControllerCreating {
+    LineSDKOpenChatCreatingController *controller = [[LineSDKOpenChatCreatingController alloc] init];
+    XCTAssertNotNil(controller);
+}
+
+- (void)testOpenChatCreatingControllerInterface {
+    LineSDKOpenChatCreatingController *controller = nil;
+    UIViewController *vc = [UIViewController new];
+    [controller loadAndPresentIn:vc presentedHandler:^(UIViewController *presented, NSError *error) {
+        
+    }];
+    XCTAssertNil(controller.delegate);
+    XCTAssertEqual(controller.suggestedCategory, 0);
+    
 }
 
 @end

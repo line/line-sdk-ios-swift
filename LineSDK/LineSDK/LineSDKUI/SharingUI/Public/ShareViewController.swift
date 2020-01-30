@@ -188,22 +188,11 @@ open class ShareViewController: StyleNavigationController {
 ///                       The associated value is an array of `LoginPermission`, containing all lacking permissions.
 /// - authorized:         The token exists locally and contains the necessary permissions to share messages.
 ///
-public enum MessageShareAuthorizationStatus {
-    
-    /// There is no valid token in the local token store. The user hasn't logged in and authorized your app yet.
-    case lackOfToken
-    
-    /// There is a valid token, but it doesn't contain the necessary permissions for sharing a message.
-    /// The associated value is an array of `LoginPermission`, containing all lacking permissions.
-    case lackOfPermissions(Set<LoginPermission>)
-    
-    /// The token exists locally and contains the necessary permissions to share messages.
-    case authorized
-}
+public typealias MessageShareAuthorizationStatus = AuthorizationStatus
 
 // MARK: - Authorization Helpers
 extension ShareViewController {
-
+    
     /// Gets the local authorization status for sending messages to friends and groups.
     ///
     /// - Returns: The local authorization status from the currently stored token and its permissions.
@@ -220,7 +209,7 @@ extension ShareViewController {
     /// the methods in `ShareViewControllerDelegate`.
     ///
     public static func localAuthorizationStatusForSendingMessage()
-        -> MessageShareAuthorizationStatus
+        -> AuthorizationStatus
     {
         guard let token = AccessTokenStore.shared.current else {
             return .lackOfToken
@@ -230,7 +219,7 @@ extension ShareViewController {
     }
 
     static func localAuthorizationStatusForSendingMessage(permissions: [LoginPermission])
-        -> MessageShareAuthorizationStatus
+        -> AuthorizationStatus
     {
         let lackPermissions = Set([.oneTimeShare]).filter {
             !permissions.contains($0)

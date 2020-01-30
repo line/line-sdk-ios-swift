@@ -1,5 +1,5 @@
 //
-//  LineSDKMessageShareAuthorizationStatus.swift
+//  LineSDKAuthorizationStatus.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -24,30 +24,23 @@ import LineSDK
 #endif
 
 @objcMembers
-public final class LineSDKMessageShareAuthorizationStatus: NSObject {
+public final class LineSDKAuthorizationStatus: NSObject {
 
     public let rawValue: Int
 
-    public static let authorized    = LineSDKMessageShareAuthorizationStatus(rawValue: 1 << 0)
-    public static let lackOfToken   = LineSDKMessageShareAuthorizationStatus(rawValue: 1 << 1)
-    public static let lackOfFriendsPermission = LineSDKMessageShareAuthorizationStatus(rawValue: 1 << 2)
-    public static let lackOfGroupsPermission = LineSDKMessageShareAuthorizationStatus(rawValue: 1 << 3)
-    public static let lackOfMesasgeWritePermission = LineSDKMessageShareAuthorizationStatus(rawValue: 1 << 4)
+    public static let authorized        = LineSDKAuthorizationStatus(rawValue: 1 << 0)
+    public static let lackOfToken       = LineSDKAuthorizationStatus(rawValue: 1 << 1)
+    public static let lackOfPermissions = LineSDKAuthorizationStatus(rawValue: 1 << 2)
 
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
 
-    public static func status(from s: MessageShareAuthorizationStatus) -> [LineSDKMessageShareAuthorizationStatus] {
+    public static func status(from s: AuthorizationStatus) -> LineSDKAuthorizationStatus {
         switch s {
-        case .authorized: return [.authorized]
-        case .lackOfToken: return [.lackOfToken]
-        case .lackOfPermissions(let permissions):
-            var results: [LineSDKMessageShareAuthorizationStatus] = []
-            if permissions.contains(.friends) { results.append(.lackOfFriendsPermission) }
-            if permissions.contains(.groups) { results.append(.lackOfGroupsPermission) }
-            if permissions.contains(.messageWrite) { results.append(.lackOfMesasgeWritePermission) }
-            return results
+        case .authorized: return .authorized
+        case .lackOfToken: return .lackOfToken
+        case .lackOfPermissions(_): return .lackOfPermissions
         }
     }
 }

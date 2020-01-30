@@ -298,15 +298,35 @@
 }
 
 - (void)testShareViewControllerAuthorizationStatus {
-    NSArray<LineSDKMessageShareAuthorizationStatus *> *status =
+    LineSDKAuthorizationStatus *status =
         [LineSDKShareViewController localAuthorizationStatusForSendingMessage];
-    XCTAssertEqual([status count], 1);
-    XCTAssertTrue([status containsObject:[LineSDKMessageShareAuthorizationStatus lackOfToken]]);
+    XCTAssertEqual(status, [LineSDKAuthorizationStatus lackOfToken]);
 }
 
 - (void)testLineSDKMessageSendingToken {
     LineSDKMessageSendingToken *token = nil;
     XCTAssertNil(token.token);
+}
+
+- (void)testOpenChatCreatingControllerAuthorizationStatus {
+    LineSDKAuthorizationStatus *status =
+        [LineSDKOpenChatCreatingController localAuthorizationStatusForCreatingOpenChat];
+    XCTAssertEqual(status, [LineSDKAuthorizationStatus lackOfToken]);
+}
+
+- (void)testOpenChatRoomCreatingItem {
+    LineSDKOpenChatRoomCreatingItem *item = [[LineSDKOpenChatRoomCreatingItem alloc] initWithName: @"name"
+                                                                                  roomDescription: @"room"
+                                                                               creatorDisplayName: @"creator"
+                                                                                         category: 1
+                                                                                      allowSearch: YES
+                                             ];
+    XCTAssertNotNil(item);
+    XCTAssertEqual(item.name, @"name");
+    XCTAssertEqual(item.roomDescription, @"room");
+    XCTAssertEqual(item.creatorDisplayName, @"creator");
+    XCTAssertEqual(item.category, 1);
+    XCTAssertEqual(item.allowSearch, YES);
 }
 
 @end

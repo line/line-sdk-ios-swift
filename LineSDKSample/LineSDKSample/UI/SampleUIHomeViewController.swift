@@ -110,10 +110,10 @@ extension SampleUIHomeViewController: OpenChatCreatingControllerDelegate {
     
     func openChatCreatingController(
         _ controller: OpenChatCreatingController,
-        didEncounterUserAgreementError error: LineSDKError,
-        presentingViewController: UIViewController)
+        shouldPreventUserTermAlertFrom presentingViewController: UIViewController
+    ) -> Bool
     {
-        UIAlertController.present(in: presentingViewController, error: error)
+        return true
     }
     
     func openChatCreatingControllerDidCancelCreating(_ controller: OpenChatCreatingController) {
@@ -127,6 +127,4 @@ extension SampleUIHomeViewController: OpenChatCreatingControllerDelegate {
     {
         print("willPresentCreatingNavigationController: \(navigationController)")
     }
-    
-    
 }

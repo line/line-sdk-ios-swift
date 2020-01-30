@@ -353,9 +353,9 @@ extension APIItem {
     static var createOpenChatRoom: APIItem {
         let room = OpenChatRoomCreatingItem(
             name: "Sample Room",
-            description: "This is just a sample open chat room",
+            roomDescription: "This is just a sample open chat room",
             creatorDisplayName: "onevcat",
-            category: .notSelected,
+            category: OpenChatCategory.notSelected,
             allowSearch: true
         )
         return .init(title: "Create Open Chat Room", request: PostOpenChatCreateRequest(room: room))

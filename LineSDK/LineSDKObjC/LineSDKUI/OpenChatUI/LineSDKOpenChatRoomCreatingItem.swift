@@ -1,5 +1,5 @@
 //
-//  OpenChatRoomCreatingItem.swift
+//  LineSDKOpenChatRoomCreatingItem.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,44 +19,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+#if !LineSDKCocoaPods
+import LineSDK
+#endif
 
-public struct OpenChatRoomCreatingItem {
+@objcMembers
+public class LineSDKOpenChatRoomCreatingItem: NSObject {
+    let _value: OpenChatRoomCreatingItem
+    init(_ value: OpenChatRoomCreatingItem) { _value = value }
     
-    public let name: String
-    public let roomDescription: String
-    public let creatorDisplayName: String
-    public let category: Int
-    public let allowSearch: Bool
-    
-    init(form: OpenChatCreatingFormItem) {
-        var normalizedForm = form
-        normalizedForm.normalize()
-        self.init(
-            name:               normalizedForm.roomName,
-            roomDescription:    normalizedForm.roomDescription,
-            creatorDisplayName: normalizedForm.userName,
-            category:           normalizedForm.category.rawValue,
-            allowSearch:        normalizedForm.allowSearch
-        )
-    }
-    
-    public init(
-        name: String,
-        roomDescription: String,
-        creatorDisplayName: String,
-        category: OpenChatCategory,
-        allowSearch: Bool
-    )
-    {
-        self.init(
-            name: name,
-            roomDescription: roomDescription,
-            creatorDisplayName: creatorDisplayName,
-            category: category.rawValue,
-            allowSearch: allowSearch
-        )
-    }
+    public var name: String { return _value.name }
+    public var roomDescription: String { return _value.roomDescription }
+    public var creatorDisplayName: String { return _value.creatorDisplayName }
+    public var category: Int { return _value.category }
+    public var allowSearch: Bool { return _value.allowSearch }
     
     public init(
         name: String,
@@ -66,10 +42,12 @@ public struct OpenChatRoomCreatingItem {
         allowSearch: Bool
     )
     {
-        self.name = name
-        self.roomDescription = roomDescription
-        self.creatorDisplayName = creatorDisplayName
-        self.category = category
-        self.allowSearch = allowSearch
+        _value = OpenChatRoomCreatingItem(
+            name: name,
+            roomDescription: roomDescription,
+            creatorDisplayName: creatorDisplayName,
+            category: category,
+            allowSearch: allowSearch
+        )
     }
 }

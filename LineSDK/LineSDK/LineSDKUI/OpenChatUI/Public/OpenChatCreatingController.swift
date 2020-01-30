@@ -81,9 +81,9 @@ public class OpenChatCreatingController {
     ///
     /// If the `handler` is called with a `.failure` case, it means there is no view controller from LINE SDK
     /// shown. A few reasons can cause it, such as term agreement status cannot be retrieved due to network error.
-    /// On the other hand, a `.success` case and its associated value means a view controller is presented without
-    /// problem, but it does not mean that the open chat room is created. To handle either the creating failure or
-    /// success case, you need to use the methods in `OpenChatCreatingControllerDelegate`.
+    /// On the other hand, a `.success` case and its associated value means a view controller from LINE SDK is
+    /// presented. But it does not mean that the open chat room is created. To handle either the creating failure or
+    /// success case for the whole process, you need to use the methods in `OpenChatCreatingControllerDelegate`.
     ///
     /// For either result, it is a chance for you to remove any blocking UI you may add to your view controller, like
     /// this in your view controller:
@@ -106,14 +106,16 @@ public class OpenChatCreatingController {
                 if response.agreed {
                     self.presentCreatingViewController(in: viewController, handler: handler)
                 } else {
-                    self.presentTermAgreementAlert(in: viewController, handler: handler)
+
+                    let shouldPreventAlert = self.delegate?.openChatCreatingController(
+                        self, shouldPreventUserTermAlertFrom: viewController)
+                        ?? false
+                    if !shouldPreventAlert {
+                        self.presentTermAgreementAlert(in: viewController, handler: handler)
+                    }
                 }
                 
             case .failure(let error):
-                self.delegate?.openChatCreatingController(
-                    self, didEncounterUserAgreementError: error,
-                    presentingViewController: viewController
-                )
                 handler?(.failure(error))
             }
         }
@@ -206,32 +208,6 @@ public class OpenChatCreatingController {
     }
 }
 
-/// Represents the authorization status for creating an open chat room.
-/// Before creating and presenting a message sharing UI, we strongly recommend checking whether your app
-/// has a valid token and the necessary permissions to create an open chat room.
-///
-/// `OpenChatCreatingController.localAuthorizationStatusForCreatingOpenChat()` returns a
-/// `MessageShareAuthorizationStatus` value to indicate the current authorization status for open chat creating.
-///
-/// - lackOfToken:        There is no valid token in the local token store. The user hasn't logged in and authorized
-///                       your app yet.
-/// - lackOfPermissions:  There is a valid token, but it doesn't contain the necessary permissions.
-///                       The associated value is an array of `LoginPermission`, containing all lacking permissions.
-/// - authorized:         The token exists locally and contains the necessary permissions.
-///
-public enum OpenChatCreatingAuthorizationStatus {
-    
-    /// There is no valid token in the local token store. The user hasn't logged in and authorized your app yet.
-    case lackOfToken
-    
-    /// There is a valid token, but it doesn't contain the necessary permissions for sharing a message.
-    /// The associated value is an array of `LoginPermission`, containing all lacking permissions.
-    case lackOfPermissions(Set<LoginPermission>)
-    
-    /// The token exists locally and contains the necessary permissions to share messages.
-    case authorized
-}
-
 extension OpenChatCreatingController {
     
     /// Gets the local authorization status for creating an open chat room.
@@ -249,7 +225,7 @@ extension OpenChatCreatingController {
     /// To get the correct result about creating behavior, specify `OpenChatCreatingController.delegate` and implement
     /// the methods in `OpenChatCreatingControllerDelegate`.
     ///
-    public static func localAuthorizationStatusForCreatingOpenChat() -> OpenChatCreatingAuthorizationStatus {
+    public static func localAuthorizationStatusForCreatingOpenChat() -> AuthorizationStatus {
         guard let token = AccessTokenStore.shared.current else {
             return .lackOfToken
         }
@@ -258,7 +234,7 @@ extension OpenChatCreatingController {
     }
     
     static func localAuthorizationStatusForOpenChat(permissions: [LoginPermission])
-        -> OpenChatCreatingAuthorizationStatus
+        -> AuthorizationStatus
     {
         let lackPermissions = Set([.openChatTermStatus, .openChatRoomCreate]).filter {
             !permissions.contains($0)

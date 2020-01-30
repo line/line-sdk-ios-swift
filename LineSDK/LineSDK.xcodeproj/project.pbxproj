@@ -58,7 +58,7 @@
 		4B41593C225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */; };
 		4B41593E225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */; };
 		4B415940225AE65A003AE63A /* LineSDKShareTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */; };
-		4B415942225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */; };
+		4B415942225AF024003AE63A /* LineSDKAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKAuthorizationStatus.swift */; };
 		4B42816621ED9CE6004A0846 /* JSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B42816521ED9CE6004A0846 /* JSONConverter.swift */; };
 		4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */; };
 		4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256A2101810D00A39D4F /* LoginProcess.swift */; };
@@ -88,6 +88,11 @@
 		4B62425222CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62425122CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift */; };
 		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
 		4B6508B8211812CE001796E0 /* LoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */; };
+		4B67EA3823E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3723E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift */; };
+		4B67EA3A23E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3923E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift */; };
+		4B67EA3C23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3B23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift */; };
+		4B67EA3E23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3D23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift */; };
+		4B67EA4023E280D700A6ADCD /* AuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3F23E280D700A6ADCD /* AuthorizationStatus.swift */; };
 		4B688E3E226F029B002575CC /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B688E3D226F029B002575CC /* LoadingIndicator.swift */; };
 		4B6972972396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6972962396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift */; };
 		4B6A0FF1212A99AD00B3ED1F /* FlexTextComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */; };
@@ -399,7 +404,7 @@
 		4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareViewControllerDelegate.swift; sourceTree = "<group>"; };
 		4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageShareTargetType.swift; sourceTree = "<group>"; };
 		4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareTarget.swift; sourceTree = "<group>"; };
-		4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageShareAuthorizationStatus.swift; sourceTree = "<group>"; };
+		4B415941225AF024003AE63A /* LineSDKAuthorizationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAuthorizationStatus.swift; sourceTree = "<group>"; };
 		4B42816521ED9CE6004A0846 /* JSONConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverter.swift; sourceTree = "<group>"; };
 		4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageProperties.swift; sourceTree = "<group>"; };
 		4B45256A2101810D00A39D4F /* LoginProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcess.swift; sourceTree = "<group>"; };
@@ -429,6 +434,11 @@
 		4B62425122CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageSendingTokenIssueRequest.swift; sourceTree = "<group>"; };
 		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
 		4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerOptions.swift; sourceTree = "<group>"; };
+		4B67EA3723E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatCreatingController.swift; sourceTree = "<group>"; };
+		4B67EA3923E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatCreatingControllerDelegate.swift; sourceTree = "<group>"; };
+		4B67EA3B23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomInfo.swift; sourceTree = "<group>"; };
+		4B67EA3D23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomCreatingItem.swift; sourceTree = "<group>"; };
+		4B67EA3F23E280D700A6ADCD /* AuthorizationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationStatus.swift; sourceTree = "<group>"; };
 		4B688E3D226F029B002575CC /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		4B6972962396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomNameTableViewCell.swift; sourceTree = "<group>"; };
 		4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponentTests.swift; sourceTree = "<group>"; };
@@ -860,6 +870,17 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		4B67EA3623E2750200A6ADCD /* OpenChatUI */ = {
+			isa = PBXGroup;
+			children = (
+				4B67EA3723E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift */,
+				4B67EA3923E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift */,
+				4B67EA3B23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift */,
+				4B67EA3D23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift */,
+			);
+			path = OpenChatUI;
+			sourceTree = "<group>";
+		};
 		4B6972952396430D0079B7D2 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -918,7 +939,9 @@
 			isa = PBXGroup;
 			children = (
 				3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */,
+				4B415941225AF024003AE63A /* LineSDKAuthorizationStatus.swift */,
 				D1F4E714225743D3002639AC /* SharingUI */,
+				4B67EA3623E2750200A6ADCD /* OpenChatUI */,
 			);
 			path = LineSDKUI;
 			sourceTree = "<group>";
@@ -1381,6 +1404,7 @@
 				4BF487FE2394C64600A5DC77 /* OpenChatUI */,
 				3F75523021244502004AC047 /* LoginButton.swift */,
 				4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */,
+				4B67EA3F23E280D700A6ADCD /* AuthorizationStatus.swift */,
 			);
 			path = LineSDKUI;
 			sourceTree = "<group>";
@@ -1641,9 +1665,8 @@
 			isa = PBXGroup;
 			children = (
 				D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */,
-				4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */,
-				4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */,
 				4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */,
+				4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */,
 				4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */,
 			);
 			path = SharingUI;
@@ -1929,6 +1952,7 @@
 				4B6A0FF5212AA82500B3ED1F /* HexColor.swift in Sources */,
 				4B15EEF6211D46FF00866E6C /* Message.swift in Sources */,
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
+				4B67EA4023E280D700A6ADCD /* AuthorizationStatus.swift in Sources */,
 				4BD24CF5213E278700606411 /* JWA.swift in Sources */,
 				D16D5326224873C700BAA3B4 /* ShareTargetSelectingViewController.swift in Sources */,
 				4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */,
@@ -2164,11 +2188,12 @@
 				4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */,
 				4BC4B3D7212FD76C00750794 /* LineSDKMessage.swift in Sources */,
 				4BC9B2E2212FB8390071C736 /* LineSDKGraphResponse.swift in Sources */,
+				4B67EA3A23E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift in Sources */,
 				4BDD2C252133CA1800DD563D /* LineSDKFlexCarouselContainer.swift in Sources */,
 				4BDD2C2A2133DD9300DD563D /* LineSDKFlexTextComponent.swift in Sources */,
 				4B2D14E3212F8EDA000DD5BE /* LineSDKUserProfile.swift in Sources */,
 				4B2D14EF212F9468000DD5BE /* LineSDKLoginManagerOptions.swift in Sources */,
-				4B415942225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift in Sources */,
+				4B415942225AF024003AE63A /* LineSDKAuthorizationStatus.swift in Sources */,
 				4B415940225AE65A003AE63A /* LineSDKShareTarget.swift in Sources */,
 				4BC4B3D9212FEB9000750794 /* LineSDKTextMessage.swift in Sources */,
 				4BF79915238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */,
@@ -2196,12 +2221,15 @@
 				4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */,
 				4BDD2C162133970800DD563D /* Log.swift in Sources */,
 				4BDD2C302133F2FA00DD563D /* LineSDKFlexFillerComponent.swift in Sources */,
+				4B67EA3E23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift in Sources */,
 				4B42816621ED9CE6004A0846 /* JSONConverter.swift in Sources */,
 				4B2D1501212FA9EE000DD5BE /* LineSDKHexColor.swift in Sources */,
 				4B2D14F1212F95B3000DD5BE /* LineSDKLoginResult.swift in Sources */,
 				4B2D14F3212F96A7000DD5BE /* LineSDKLoginProcess.swift in Sources */,
+				4B67EA3C23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift in Sources */,
 				4B2422EF2134FBE8007200C2 /* LineSDKErrorConstant.swift in Sources */,
 				4BBEA9B0212EB03200858627 /* LineSDKLoginPermission.swift in Sources */,
+				4B67EA3823E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift in Sources */,
 				3FE8E370214A6E70009E91BD /* LineSDKLoginButton.swift in Sources */,
 				4B2D14F5212F97A6000DD5BE /* LineSDKLoginManager.swift in Sources */,
 			);
