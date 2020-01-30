@@ -1,10 +1,12 @@
 "chat.multi.fwd.confirm" = "Có thể chọn tối đa %d.";
 "common.action.close" = "Đóng";
 "common.action.send" = "Gửi";
+"common.cancel" = "Hủy";
 "common.next" = "Tiếp theo";
 "common.ok" = "OK";
 "friends.share.search" = "Tìm theo tên";
 "linesdk.login.button.login" = "Đăng nhập với LINE";
+"open.line" = "Mở LINE";
 "openchat.create.profile.input.guide" = "Đặt biệt danh bạn sẽ sử dụng trong \"%@\".";
 "openchat.create.profile.input.max.count" = "Đã đạt tới độ dài tối đa.";
 "openchat.create.profile.input.placeholder" = "Nhập biệt danh";
@@ -17,6 +19,7 @@
 "openchat.create.room.search" = "Cho phép tìm kiếm";
 "openchat.create.room.search.guide" = "Những người khác sẽ có thể tìm kiếm OpenChat của bạn.";
 "openchat.create.room.title" = "Tạo OpenChat";
+"openchat.not.agree.with.terms" = "Bạn chưa chấp nhận Điều khoản và điều kiện sử dụng của OpenChat.\nVào OpenChat trong ứng dụng LINE và chấp nhận Điều khoản và điều kiện sử dụng để tiếp tục.";
 "search.no.result" = "Không có kết quả";
 "shareRecipient.section.friends.title" = "Bạn bè";
 "shareRecipient.section.groups.title" = "Nhóm";

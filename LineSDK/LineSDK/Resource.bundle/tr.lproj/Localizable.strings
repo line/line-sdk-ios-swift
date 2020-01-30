@@ -1,10 +1,12 @@
 "chat.multi.fwd.confirm" = "En çok %d mesaj seçin.";
 "common.action.close" = "Kapat";
 "common.action.send" = "Gönder";
+"common.cancel" = "İptal";
 "common.next" = "İleri";
 "common.ok" = "Tamam";
 "friends.share.search" = "İsme Göre Ara";
 "linesdk.login.button.login" = "LINE ile oturum aﾃｧﾄｱn";
+"open.line" = "LINE\'ı Aç";
 "openchat.create.profile.input.guide" = "\"%@\" içinde kullanılacak takma adınızı belirleyin.";
 "openchat.create.profile.input.max.count" = "Uzunluk sınırına ulaşıldı.";
 "openchat.create.profile.input.placeholder" = "Takma adı girin";
@@ -17,6 +19,7 @@
 "openchat.create.room.search" = "Aramaya izin ver";
 "openchat.create.room.search.guide" = "Diğer kişiler OpenChat\'iniz için arama yapabilecek.";
 "openchat.create.room.title" = "OpenChat oluştur";
+"openchat.not.agree.with.terms" = "Henüz OpenChat Kullanım Koşulları ve Şartları\'nı kabul etmediniz.\nDevam etmek için LINE uygulamasında OpenChat\'e gidip Kullanım Koşulları ve Şartları\'nı kabul edin.";
 "search.no.result" = "Sonuç Yok";
 "shareRecipient.section.friends.title" = "Arkadaşlar";
 "shareRecipient.section.groups.title" = "Gruplar";

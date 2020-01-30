@@ -1,10 +1,12 @@
 "chat.multi.fwd.confirm" = "You can select up to %d.";
 "common.action.close" = "Close";
 "common.action.send" = "Send";
+"common.cancel" = "Cancel";
 "common.next" = "Next";
 "common.ok" = "OK";
 "friends.share.search" = "Search by name";
 "linesdk.login.button.login" = "Log in with LINE";
+"open.line" = "Open LINE";
 "openchat.create.profile.input.guide" = "Set your nickname to be used in \"%@\".";
 "openchat.create.profile.input.max.count" = "Maximum length reached.";
 "openchat.create.profile.input.placeholder" = "Enter nickname";
@@ -17,6 +19,7 @@
 "openchat.create.room.search" = "Allow search";
 "openchat.create.room.search.guide" = "Others will be able to search for your OpenChat.";
 "openchat.create.room.title" = "Create OpenChat";
+"openchat.not.agree.with.terms" = "You haven\'t agreed to the OpenChat Terms and Conditions of Use yet.\nGo to OpenChat in the LINE app and agree to the Terms and Conditions of Use to continue.";
 "search.no.result" = "No results.";
 "shareRecipient.section.friends.title" = "Friends";
 "shareRecipient.section.groups.title" = "Groups";

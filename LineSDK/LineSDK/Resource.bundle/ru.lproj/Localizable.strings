@@ -1,10 +1,12 @@
 "chat.multi.fwd.confirm" = "Можно выбрать не более %d.";
 "common.action.close" = "Закрыть";
 "common.action.send" = "Отправить";
+"common.cancel" = "Отмена";
 "common.next" = "Далее";
 "common.ok" = "ОК";
 "friends.share.search" = "Поиск по имени";
 "linesdk.login.button.login" = "Войти в LINE";
+"open.line" = "Открыть LINE";
 "openchat.create.profile.input.guide" = "Укажите свой псевдоним для клуба \"%@\".";
 "openchat.create.profile.input.max.count" = "Достигнута максимальная длина записи.";
 "openchat.create.profile.input.placeholder" = "Введите псевдоним";
@@ -17,6 +19,7 @@
 "openchat.create.room.search" = "Показывать в поиске";
 "openchat.create.room.search.guide" = "Ваш OpenChat будет доступен для поиска.";
 "openchat.create.room.title" = "Создать группу OpenChat";
+"openchat.not.agree.with.terms" = "Вы еще не согласились с Правилами и условиями использования OpenChat.\nЧтобы продолжить, перейдите в OpenChat в приложении LINE и примите Правила и условия использования.";
 "search.no.result" = "Ничего не найдено";
 "shareRecipient.section.friends.title" = "Друзья";
 "shareRecipient.section.groups.title" = "Группы";

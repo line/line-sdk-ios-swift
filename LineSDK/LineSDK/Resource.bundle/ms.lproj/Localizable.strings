@@ -1,10 +1,12 @@
 "chat.multi.fwd.confirm" = "Anda boleh pilih sehingga %d.";
 "common.action.close" = "Tutup";
 "common.action.send" = "Kirim";
+"common.cancel" = "Batal";
 "common.next" = "Seterusnya";
 "common.ok" = "OKE";
 "friends.share.search" = "Cari mengikut Nama";
 "linesdk.login.button.login" = "Log masuk dengan LINE";
+"open.line" = "Buka LINE";
 "openchat.create.profile.input.guide" = "Tetapkan nama panggilan anda untuk digunakan dalam \"%@\".";
 "openchat.create.profile.input.max.count" = "Panjang maksimum dicapai.";
 "openchat.create.profile.input.placeholder" = "Masukkan nama panggilan";
@@ -17,6 +19,7 @@
 "openchat.create.room.search" = "Izinkan carian";
 "openchat.create.room.search.guide" = "Orang lain akan dapat mencari OpenChat anda.";
 "openchat.create.room.title" = "Cipta OpenChat";
+"openchat.not.agree.with.terms" = "Anda belum bersetuju dengan Terma dan Syarat Penggunaan OpenChat.\nPergi ke OpenChat pada aplikasi LINE dan bersetuju dengan Terma dan Syarat Penggunaan untuk meneruskan.";
 "search.no.result" = "Tiada Hasil";
 "shareRecipient.section.friends.title" = "Teman";
 "shareRecipient.section.groups.title" = "Grup";

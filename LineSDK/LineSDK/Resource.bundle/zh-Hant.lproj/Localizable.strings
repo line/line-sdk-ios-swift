@@ -1,10 +1,12 @@
 "chat.multi.fwd.confirm" = "最多可選擇%d筆。";
 "common.action.close" = "關閉";
 "common.action.send" = "傳送";
+"common.cancel" = "取消";
 "common.next" = "下一步";
 "common.ok" = "確定";
 "friends.share.search" = "利用名稱搜尋";
 "linesdk.login.button.login" = "與LINE連動";
+"open.line" = "打開LINE";
 "openchat.create.profile.input.guide" = "請設定您要在「%@」中使用的暱稱。";
 "openchat.create.profile.input.max.count" = "已達字數上限。";
 "openchat.create.profile.input.placeholder" = "輸入暱稱";
@@ -17,6 +19,7 @@
 "openchat.create.room.search" = "開放搜尋";
 "openchat.create.room.search.guide" = "允許此OpenChat聊天室出現在搜尋結果中。";
 "openchat.create.room.title" = "建立OpenChat";
+"openchat.not.agree.with.terms" = "您尚未同意OpenChat服務條款。\n請先在LINE應用程式上打開OpenChat並同意服務條款，才可繼續操作。";
 "search.no.result" = "找不到任何結果";
 "shareRecipient.section.friends.title" = "好友";
 "shareRecipient.section.groups.title" = "群組";

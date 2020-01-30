@@ -1,10 +1,12 @@
 "chat.multi.fwd.confirm" = "最多可选择%d个。";
 "common.action.close" = "关闭";
 "common.action.send" = "发送";
+"common.cancel" = "取消";
 "common.next" = "下一步";
 "common.ok" = "确认";
 "friends.share.search" = "使用姓名搜索";
 "linesdk.login.button.login" = "用LINE帐号登录";
+"open.line" = "打开LINE";
 "openchat.create.profile.input.guide" = "设置要用于“%@”的昵称。";
 "openchat.create.profile.input.max.count" = "已达到字数上限。";
 "openchat.create.profile.input.placeholder" = "输入昵称";
@@ -17,6 +19,7 @@
 "openchat.create.room.search" = "允许搜索";
 "openchat.create.room.search.guide" = "其他人将可以搜索到您的OpenChat。";
 "openchat.create.room.title" = "创建OpenChat";
+"openchat.not.agree.with.terms" = "您尚未同意“OpenChat服务条款”。\n请在LINE应用中打开OpenChat，同意“OpenChat服务条款”以继续。";
 "search.no.result" = "无结果";
 "shareRecipient.section.friends.title" = "好友";
 "shareRecipient.section.groups.title" = "群";

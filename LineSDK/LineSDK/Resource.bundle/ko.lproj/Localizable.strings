@@ -1,10 +1,12 @@
 "chat.multi.fwd.confirm" = "최대 %d개까지 선택할 수 있습니다.";
 "common.action.close" = "닫기";
 "common.action.send" = "전송";
+"common.cancel" = "취소";
 "common.next" = "다음";
 "common.ok" = "확인";
 "friends.share.search" = "이름으로 검색";
 "linesdk.login.button.login" = "LINE으로 로그인";
+"open.line" = "LINE 열기";
 "openchat.create.profile.input.guide" = "%@에서 사용할 닉네임을 설정할 수 있습니다.";
 "openchat.create.profile.input.max.count" = "더 이상 입력할 수 없습니다.";
 "openchat.create.profile.input.placeholder" = "닉네임을 입력해 주세요.";
@@ -17,6 +19,7 @@
 "openchat.create.room.search" = "검색 허용";
 "openchat.create.room.search.guide" = "다른 사용자가 내 오픈챗을 검색할 수 있습니다.";
 "openchat.create.room.title" = "오픈챗 만들기";
+"openchat.not.agree.with.terms" = "아직 오픈챗 이용약관에 동의하지 않았습니다.\nLINE 앱에서 오픈챗을 열고 이용약관에 동의해 주세요.";
 "search.no.result" = "검색 결과 없음";
 "shareRecipient.section.friends.title" = "친구";
 "shareRecipient.section.groups.title" = "그룹";
