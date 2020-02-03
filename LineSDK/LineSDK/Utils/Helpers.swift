@@ -46,7 +46,7 @@ enum Log {
         line: UInt = #line
     )
     {
-        Swift.precondition(condition, "[LineSDK] \(message())", file: file, line: line)
+        Swift.precondition(condition(), "[LineSDK] \(message())", file: file, line: line)
     }
     
     static func print(_ items: Any...) {
