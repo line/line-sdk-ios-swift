@@ -20,10 +20,17 @@
 //
 
 import Foundation
-import Security
-import CommonCrypto
 
 struct PKCE {
+
+    /// Code Verifier
+    /// The code verifier SHOULD have enough entropy to make it
+    /// impractical to guess the value.  It is RECOMMENDED that the output of
+    /// a suitable random number generator be used to create a 32-octet
+    /// sequence. The octet sequence is then base64url-encoded to produce a
+    /// 43-octet URL safe string to use as the code verifier.
+    ///
+    /// Ref: https://tools.ietf.org/html/rfc7636#section-4.1
     var codeVerifier: String {
         return codeVerifierData.base64URLEncoded
     }
@@ -42,29 +49,7 @@ struct PKCE {
     private let codeVerifierData: Data
 
     init() {
-        codeVerifierData = PKCE.generateCodeVerifier()
-    }
-
-    /// Code Verifier
-    /// The code verifier SHOULD have enough entropy to make it
-    /// impractical to guess the value.  It is RECOMMENDED that the output of
-    /// a suitable random number generator be used to create a 32-octet
-    /// sequence. The octet sequence is then base64url-encoded to produce a
-    /// 43-octet URL safe string to use as the code verifier.
-    ///
-    /// Ref: https://tools.ietf.org/html/rfc7636#section-4.1
-    ///
-    static func generateCodeVerifier() -> Data {
-        var bytes = [UInt8](repeating: 0, count: 32)
-        let status = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
-        if status != errSecSuccess {
-            bytes = bytes.map { _ in UInt8.random(in: UInt8.min...UInt8.max) }
-        }
-        #if swift(>=5.0)
-        return Data(bytes)
-        #else
-        return Data(bytes: bytes)
-        #endif
+        codeVerifierData = Data.randomData(bytesCount: 32)
     }
 
     /// Code Challenge
