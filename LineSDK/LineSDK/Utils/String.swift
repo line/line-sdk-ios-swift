@@ -22,20 +22,18 @@
 import Foundation
 
 extension String {
-    func truncatedTail(upper maxCount: Int) -> String {
-        return count <= maxCount ? self : trimming(upper: maxCount).appending("\u{2026}")
-    }
     
+    // Remove all prefix white space.
     var prefixNormalized: String {
         return String(drop { $0.isWhitespace })
     }
     
+    // Remove all leading and trailing white space.
     var normalized: String {
         return trimmingCharacters(in: .whitespaces)
     }
-    
+     
     func trimming(upper count: Int) -> String {
-        let startIndex = self.startIndex
         if let endIndex = index(startIndex, offsetBy: count, limitedBy: endIndex) {
             return String(self[startIndex..<endIndex])
         }
@@ -44,5 +42,13 @@ extension String {
     
     var containsNewline: Bool {
         return rangeOfCharacter(from: .newlines) != nil
+    }
+}
+
+public typealias EntityID = String
+
+extension EntityID {
+    var isValid: Bool {
+        return !isEmpty && range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil
     }
 }

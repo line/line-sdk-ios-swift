@@ -37,8 +37,9 @@ public struct GetOpenChatRoomStatusRequest: Request {
     public var path: String { return "/square/v1/square/\(squareMid)/status" }
     public let authentication: AuthenticateMethod = .token
     
-    public let squareMid: String
-    public init(squareMid: String) {
+    public let squareMid: EntityID
+    public init(squareMid: EntityID) {
+        Log.precondition(squareMid.isValid, "Invalid `squareMid` parameter received: \(squareMid).")
         self.squareMid = squareMid
     }
 }

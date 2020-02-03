@@ -28,7 +28,7 @@ public struct GetBotFriendshipStatusRequest: Request {
     /// :nodoc:
     public let method: HTTPMethod = .get
     /// :nodoc:
-    public let path: String = "/friendship/v1/status"
+    public let path = "/friendship/v1/status"
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     /// :nodoc:

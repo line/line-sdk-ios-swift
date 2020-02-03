@@ -21,7 +21,7 @@
 
 import UIKit
 
-struct Log {
+enum Log {
     static func assertionFailure(
         _ message: @autoclosure () -> String,
         file: StaticString = #file,
@@ -33,9 +33,20 @@ struct Log {
     static func fatalError(
         _ message: @autoclosure () -> String,
         file: StaticString = #file,
-        line: UInt = #line) -> Never
+        line: UInt = #line
+    ) -> Never
     {
         Swift.fatalError("[LineSDK] \(message())", file: file, line: line)
+    }
+    
+    static func precondition(
+        _ condition: @autoclosure () -> Bool,
+        _ message: @autoclosure () -> String,
+        file: StaticString = #file,
+        line: UInt = #line
+    )
+    {
+        Swift.precondition(condition, "[LineSDK] \(message())", file: file, line: line)
     }
     
     static func print(_ items: Any...) {

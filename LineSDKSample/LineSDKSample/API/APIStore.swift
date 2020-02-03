@@ -290,7 +290,7 @@ extension APIItem {
     }
 
     static var getApproversInGroup: APIItem {
-        let mock = GetApproversInGroupRequest(groupID: "\\(groupID)")
+        let mock = GetApproversInGroupRequest(groupID: "groupID")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             selectGroupFromGroupList(in: controller, handler: { result in
@@ -313,7 +313,7 @@ extension APIItem {
     }
     
     static var checkOpenChatRoomStatus: APIItem {
-        let mock = GetOpenChatRoomStatusRequest(squareMid: "\\(squareMid)")
+        let mock = GetOpenChatRoomStatusRequest(squareMid: "squareMid")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
@@ -332,7 +332,7 @@ extension APIItem {
     }
     
     static var checkOpenChatRoomMembershipState: APIItem {
-        let mock = GetOpenChatRoomMembershipStateRequest(squareMid: "\\(squareMid)")
+        let mock = GetOpenChatRoomMembershipStateRequest(squareMid: "squareMid")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
