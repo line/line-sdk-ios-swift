@@ -22,6 +22,9 @@
 import Foundation
 
 extension API {
+    
+    /// - Warning: Deprecated. Use `API.Auth.refreshAccessToken(callbackQueue:completionHandler:)`.
+    ///
     /// Refreshes the access token with `refreshToken`.
     ///
     /// - Parameters:
@@ -48,6 +51,8 @@ extension API {
         Auth.refreshAccessToken(callbackQueue: queue, completionHandler: completion)
     }
     
+    /// - Warning: Deprecated. Use `API.Auth.revokeAccessToken(_:callbackQueue:completionHandler:)`.
+    ///
     /// Revokes the access token.
     ///
     /// - Parameters:
@@ -79,35 +84,11 @@ extension API {
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
     {
-        func handleSuccessResult() {
-            let result = Result { try AccessTokenStore.shared.removeCurrentAccessToken() }
-            completion(result)
-        }
-        
-        guard let token = token ?? AccessTokenStore.shared.current?.value else {
-            // No token input or found in store, just recognize it as success.
-            queue.execute { completion(.success(())) }
-            return
-        }
-        let request = PostRevokeTokenRequest(channelID: LoginConfiguration.shared.channelID, accessToken: token)
-        Session.shared.send(request, callbackQueue: queue) { result in
-            switch result {
-            case .success(_):
-                handleSuccessResult()
-            case .failure(let error):
-                guard case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = error else {
-                    completion(.failure(error))
-                    return
-                }
-                // We recognize response 400 as a success for revoking (since the token itself is invalid).
-                if detail.code == 400 {
-                    Log.print(error.localizedDescription)
-                    handleSuccessResult()
-                }
-            }
-        }
+        Auth.revokeAccessToken(token, callbackQueue: queue, completionHandler: completion)
     }
 
+    /// - Warning: Deprecated. Use `API.Auth.revokeRefreshToken(_:callbackQueue:completionHandler:)`.
+    ///
     /// Revokes the refresh token and all its corresponding access tokens.
     ///
     /// - Parameters:
@@ -142,37 +123,11 @@ extension API {
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
     {
-        func handleSuccessResult() {
-            let result = Result { try AccessTokenStore.shared.removeCurrentAccessToken() }
-            completion(result)
-        }
-
-        guard let refreshToken = refreshToken ?? AccessTokenStore.shared.current?._refreshToken else {
-            // No token input or found in store, just recognize it as success.
-            queue.execute { completion(.success(())) }
-            return
-        }
-        let request = PostRevokeRefreshTokenRequest(
-            channelID: LoginConfiguration.shared.channelID,
-            refreshToken: refreshToken)
-        Session.shared.send(request, callbackQueue: queue) { result in
-            switch result {
-            case .success(_):
-                handleSuccessResult()
-            case .failure(let error):
-                guard case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = error else {
-                    completion(.failure(error))
-                    return
-                }
-                // We recognize response 400 as a success for revoking (since the token itself is invalid).
-                if detail.code == 400 {
-                    Log.print(error.localizedDescription)
-                    handleSuccessResult()
-                }
-            }
-        }
+        Auth.revokeRefreshToken(refreshToken, callbackQueue: queue, completionHandler: completion)
     }
     
+    /// - Warning: Deprecated. Use `API.Auth.verifyAccessToken(_:callbackQueue:completionHandler:)`.
+    ///
     /// Verifies the access token.
     ///
     /// - Parameters:
@@ -194,11 +149,6 @@ extension API {
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<AccessTokenVerifyResult, LineSDKError>) -> Void)
     {
-        guard let token = token ?? AccessTokenStore.shared.current?.value else {
-            queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }
-            return
-        }
-        let request = GetVerifyTokenRequest(accessToken: token)
-        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+        Auth.verifyAccessToken(token, callbackQueue: queue, completionHandler: completion)
     }
 }
