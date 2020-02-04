@@ -23,6 +23,11 @@ import Foundation
 
 struct PKCE {
 
+    /// If the client is capable of using "S256", it MUST use "S256", as
+    /// "S256" is Mandatory To Implement (MTI) on the server.
+    /// Ref: https://tools.ietf.org/html/rfc7636#section-4.2
+    let codeChallengeMethod = "S256"
+
     /// Code Verifier
     /// The code verifier SHOULD have enough entropy to make it
     /// impractical to guess the value.  It is RECOMMENDED that the output of
@@ -31,34 +36,26 @@ struct PKCE {
     /// 43-octet URL safe string to use as the code verifier.
     ///
     /// Ref: https://tools.ietf.org/html/rfc7636#section-4.1
-    var codeVerifier: String {
-        return codeVerifierData.base64URLEncoded
-    }
-
-    var codeChallenge: String {
-        return PKCE.generateCodeChallenge(codeVerifier: codeVerifierData)
-    }
-
-    /// If the client is capable of using "S256", it MUST use "S256", as
-    /// "S256" is Mandatory To Implement (MTI) on the server.
-    /// Ref: https://tools.ietf.org/html/rfc7636#section-4.2
-    var codeChallengeMethod: String {
-        return "S256"
-    }
-
-    private let codeVerifierData: Data
-
-    init() {
-        codeVerifierData = Data.randomData(bytesCount: 32)
-    }
-
+    let codeVerifier: String
+    
     /// Code Challenge
     /// The client creates a code challenge derived from the code verifier by using S256 transformations
     /// code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
     ///
     /// Ref: https://tools.ietf.org/html/rfc7636#section-4.2
     ///
-    static func generateCodeChallenge(codeVerifier: Data) -> String {
-        return codeVerifier.digest(using: .sha256).base64URLEncoded
+    var codeChallenge: String {
+        return PKCE.generateCodeChallenge(codeVerifier: codeVerifier)
+    }
+
+    init() {
+        codeVerifier = Data.randomData(bytesCount: 32).base64URLEncoded
+    }
+
+    static func generateCodeChallenge(codeVerifier: String) -> String {
+        guard let codeVerifierData = codeVerifier.data(using: .ascii) else {
+            preconditionFailure("Invalid codeVerifier parameter")
+        }
+        return codeVerifierData.digest(using: .sha256).base64URLEncoded
     }
 }

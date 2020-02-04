@@ -41,7 +41,7 @@ class PKCETests: XCTestCase {
 
     func testCodeChallenge() {
         let codeVerifier = "ksl2M8Qvw6Ith2hYslVx7XUmtDjt2RvVUzMk8UUgQHc"
-        let codeChallenge = PKCE.generateCodeChallenge(codeVerifier: codeVerifier.data(using: .utf8)!)
+        let codeChallenge = PKCE.generateCodeChallenge(codeVerifier: codeVerifier)
         XCTAssertEqual(codeChallenge, "x0ecinHXuDev1f89OvD8rzH4FzKNiv2I07qIdZSuStA")
     }
 }
