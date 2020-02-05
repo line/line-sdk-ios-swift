@@ -113,7 +113,8 @@ extension SampleUIHomeViewController: OpenChatCreatingControllerDelegate {
         shouldPreventUserTermAlertFrom presentingViewController: UIViewController
     ) -> Bool
     {
-        return true
+        print("The term is not agreed yet. Asking user action...")
+        return false
     }
     
     func openChatCreatingControllerDidCancelCreating(_ controller: OpenChatCreatingController) {

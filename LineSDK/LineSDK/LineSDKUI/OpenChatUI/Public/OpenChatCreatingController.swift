@@ -106,7 +106,6 @@ public class OpenChatCreatingController {
                 if response.agreed {
                     self.presentCreatingViewController(in: viewController, handler: handler)
                 } else {
-
                     let shouldPreventAlert = self.delegate?.openChatCreatingController(
                         self, shouldPreventUserTermAlertFrom: viewController)
                         ?? false
