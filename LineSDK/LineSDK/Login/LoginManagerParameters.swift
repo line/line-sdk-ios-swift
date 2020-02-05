@@ -49,14 +49,14 @@ extension LoginManager {
         /// in received ID token locally.
         public var IDTokenNonce: String? = nil
         
-        #if targetEnvironment(macCatalyst)
-        public var allowRecreatingLoginProcess = true
-        #else
         /// Determines whether it's possible to create another login process while the original one is still valid.
-        /// If `true`, when a new login action is started, any existing one ends with a 
+        /// If `true`, when a new login action is started, any existing one ends with a
         /// `GeneralErrorReason.processDiscarded` error. If `false`, the new login action is ignored, and the
         /// existing one continues to wait for a result.
         /// When the deploy target is **macCatalyst**, the default value is `true`. In other cases, it's `false`.
+        #if targetEnvironment(macCatalyst)
+        public var allowRecreatingLoginProcess = true
+        #else
         public var allowRecreatingLoginProcess = false
         #endif
         
