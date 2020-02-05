@@ -100,6 +100,8 @@ public class LineSDKLoginButton: NSObject {
     }
     
     // MARK: - Deprecated
-    @available(*, deprecated, message: "Use `loginManagerParameters` instead.")
+    /// - Warning: Deprecated. Use `loginManagerParameters` instead.
+    ///
+    @available(*, deprecated, message: "Use `LineSDKLoginButton.loginManagerParameters` instead.")
     public var loginManagerOptions: [LineSDKLoginManagerOptions]?
 }

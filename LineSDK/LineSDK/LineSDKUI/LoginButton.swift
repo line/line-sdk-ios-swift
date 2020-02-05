@@ -43,15 +43,14 @@ public protocol LoginButtonDelegate: AnyObject {
     ///   - error: The strong typed `LineSDKError` of the failed login.
     func loginButton(_ button: LoginButton, didFailLogin error: LineSDKError)
 
+    /// - Warning: Deprecated. Use the same delegate method which receives `LineSDKError` instead.
+    ///            It provides a strongly typed and consistent error for the login failure.
+    ///
     /// Called if the login action fails.
     ///
     /// - Parameters:
     ///   - button: The button used to start the login action.
     ///   - error: The error of the failed login.
-    /// - Note:
-    /// **DEPRECATED** 
-    ///   Use the same delegate method which receives `LineSDKError` instead. It provides a strongly typed
-    ///   and consistent error for the login failure.
     func loginButton(_ button: LoginButton, didFailLogin error: Error)
 }
 
@@ -249,8 +248,9 @@ open class LoginButton: UIButton {
     
     // MARK: - Deprecated
     
-    /// Represents a set of options.
-    /// The default value is empty.
+    /// - Warning: Deprecated. Use `LoginManager.Parameters`.
+    ///
+    /// Represents a set of options. The default value is empty.
     @available(
     *, deprecated,
     message: "Convert this value into a `LoginManager.Parameters` and use `parameters` instead.")

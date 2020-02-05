@@ -15,3 +15,4 @@ exclude:
   - "LineSDK/LineSDK/Graph/*"
   - "LineSDK/LineSDK/Networking/API/API+Internal.swift"
   - "LineSDK/LineSDK/LineSDKUI/SharingUI/*"
+  - "LineSDK/LineSDK/Utils/Result.swift"
