@@ -21,6 +21,7 @@
 
 import Foundation
 import CommonCrypto
+import Security
 
 typealias CryptoDigest = (
     _ data: UnsafeRawPointer?,
@@ -62,6 +63,19 @@ extension Data {
         #else
         withUnsafeBytes { _ = algorithm.digest($0, CC_LONG(count), &hash) }
         return Data(bytes: hash)
+        #endif
+    }
+
+    static func randomData(bytesCount: Int) -> Data {
+        var bytes = [UInt8](repeating: 0, count: bytesCount)
+        let status = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+        if status != errSecSuccess {
+            bytes = bytes.map { _ in UInt8.random(in: UInt8.min...UInt8.max) }
+        }
+        #if swift(>=5.0)
+        return Data(bytes)
+        #else
+        return Data(bytes: bytes)
         #endif
     }
 }
