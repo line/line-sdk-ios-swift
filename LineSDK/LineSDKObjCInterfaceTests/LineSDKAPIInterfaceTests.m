@@ -162,4 +162,34 @@
                 completionHandler:^(NSError *error) {}];
 }
 
+- (void)_testGetOpenChatRoomStatusInterface {
+    [LineSDKAPI
+     getOpenChatRoomStatusWithSquareMid:@""
+     completionHandler:^(LineSDKOpenChatRoomStatus *result, NSError *error) {
+        NSLog(@"%@", result.status);
+    }];
+    
+    [LineSDKAPI
+     getOpenChatRoomStatusWithSquareMid:@""
+     callbackQueue:[LineSDKCallbackQueue asyncMain]
+     completionHandler:^(LineSDKOpenChatRoomStatus *result, NSError *error) {
+        NSLog(@"%@", result.status);
+    }];
+}
+
+- (void)_testGetOpenChatRoomMembershipState {
+    [LineSDKAPI
+     getOpenChatRoomMembershipStateWithSquareMid:@""
+     completionHandler:^(LineSDKOpenChatRoomMembershipState *result, NSError *error) {
+        NSLog(@"%@", result.state);
+    }];
+    
+    [LineSDKAPI
+     getOpenChatRoomMembershipStateWithSquareMid:@""
+     callbackQueue:[LineSDKCallbackQueue asyncMain]
+     completionHandler:^(LineSDKOpenChatRoomMembershipState *result, NSError *error) {
+         NSLog(@"%@", result.state);
+     }];
+}
+
 @end

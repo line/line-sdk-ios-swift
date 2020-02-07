@@ -29,7 +29,7 @@ public struct GetOpenChatRoomMembershipStateRequest: Request {
     }
     
     public struct Response: Decodable {
-        let state: State?
+        public let state: State
     }
     
     public let method: HTTPMethod = .get

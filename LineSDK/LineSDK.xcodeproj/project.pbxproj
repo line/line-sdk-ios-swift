@@ -124,6 +124,8 @@
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
 		4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */; };
+		4B8469A623EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */; };
+		4B8469A823EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */; };
 		4B85BB6B22C4A8E600DFE299 /* ResourceLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */; };
 		4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8A965621100A5800760219 /* LoginConfigurationTests.swift */; };
 		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
@@ -472,6 +474,8 @@
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
 		4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchController.swift; sourceTree = "<group>"; };
+		4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomStatus.swift; sourceTree = "<group>"; };
+		4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomMembershipState.swift; sourceTree = "<group>"; };
 		4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoading.swift; sourceTree = "<group>"; };
 		4B8A965621100A5800760219 /* LoginConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurationTests.swift; sourceTree = "<group>"; };
 		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
@@ -937,6 +941,15 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		4B8469A423EAA77100EE49FA /* OpenChat */ = {
+			isa = PBXGroup;
+			children = (
+				4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */,
+				4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */,
+			);
+			path = OpenChat;
+			sourceTree = "<group>";
+		};
 		4B87E44822E55755005AA4D2 /* LineSDKUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1220,6 +1233,7 @@
 				4BBEA9AD212EAFFB00858627 /* Login */,
 				4BC9B2DC212FB7100071C736 /* Social */,
 				4BC66AE322EA8A4500546FB6 /* Sharing */,
+				4B8469A423EAA77100EE49FA /* OpenChat */,
 				4BC9B2E5212FC9E30071C736 /* Messaging */,
 				4B2D14FB212F9FA5000DD5BE /* Networking */,
 				4BC9B2D7212FAD9E0071C736 /* Utils */,
@@ -2187,6 +2201,7 @@
 				4BC9B2E0212FB7B60071C736 /* LineSDKGroup.swift in Sources */,
 				4B4A9AF32159FCF700915054 /* LineSDKConstant.swift in Sources */,
 				4BDD2C382133F34300DD563D /* LineSDKFlexBoxComponent.swift in Sources */,
+				4B8469A623EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift in Sources */,
 				4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */,
 				4BDD2C1A2133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift in Sources */,
 				4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */,
@@ -2214,6 +2229,7 @@
 				4BDD2C2E2133F2EA00DD563D /* LineSDKFlexImageComponent.swift in Sources */,
 				4BDD2C322133F30A00DD563D /* LineSDKFlexIconComponent.swift in Sources */,
 				4BBEA9B6212EB41000858627 /* LineSDKAccessToken.swift in Sources */,
+				4B8469A823EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift in Sources */,
 				4BC4B3DD212FED4300750794 /* LineSDKVideoMessage.swift in Sources */,
 				4BC66AE522EA8A6900546FB6 /* LineSDKMessageSendingToken.swift in Sources */,
 				4BC4B3E4212FF86100750794 /* LineSDKAudioMessage.swift in Sources */,

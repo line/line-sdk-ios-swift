@@ -1,5 +1,5 @@
 //
-//  GetOpenChatRoomStatusRequest.swift
+//  LineSDKOpenChatRoomStatus.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,28 +19,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+#if !LineSDKCocoaPods
+import LineSDK
+#endif
 
-public struct GetOpenChatRoomStatusRequest: Request {
+@objcMembers
+public class LineSDKOpenChatRoomStatus: NSObject {
+    let _value: GetOpenChatRoomStatusRequest.Response
+    init(_ value: GetOpenChatRoomStatusRequest.Response) { _value = value }
+    public var status: String { return _value.status.rawValue }
 
-    public struct Response: Codable {
-        
-        public enum Status: String, Codable {
-            case alive = "ALIVE"
-            case deleted = "DELETED"
-            case suspended = "SUSPENDED"
-        }
-        
-        public let status: Status
-    }
-    
-    public let method: HTTPMethod = .get
-    public var path: String { return "/square/v1/square/\(squareMid)/status" }
-    public let authentication: AuthenticateMethod = .token
-    
-    public let squareMid: EntityID
-    public init(squareMid: EntityID) {
-        Log.precondition(squareMid.isValid, "Invalid `squareMid` parameter received: \(squareMid).")
-        self.squareMid = squareMid
-    }
+    public var json: String? { return toJSON(_value) }
 }

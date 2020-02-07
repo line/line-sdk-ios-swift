@@ -220,6 +220,49 @@ public class LineSDKAPI: NSObject {
             withMessageToken: token._value,
             callbackQueue: queue.unwrapped) { result in result.matchFailure(with: completion) }
     }
+    
+    // MARK: - Open Chat
+    public static func getOpenChatRoomStatus(
+        squareMid: String,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomStatus?, Error?) -> Void
+    )
+    {
+        getOpenChatRoomStatus(
+            squareMid: squareMid, callbackQueue: .currentMainOrAsync, completionHandler: completion
+        )
+    }
+    
+    public static func getOpenChatRoomStatus(
+        squareMid: String,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomStatus?, Error?) -> Void
+    )
+    {
+        API.getOpenChatRoomStatus(squareMid: squareMid, callbackQueue: queue.unwrapped) { result in
+            result.map(LineSDKOpenChatRoomStatus.init).match(with: completion)
+        }
+    }
+    
+    public static func getOpenChatRoomMembershipState(
+        squareMid: String,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomMembershipState?, Error?) -> Void
+    )
+    {
+        getOpenChatRoomMembershipState(
+            squareMid: squareMid, callbackQueue: .currentMainOrAsync, completionHandler: completion
+        )
+    }
+    
+    public static func getOpenChatRoomMembershipState(
+        squareMid: String,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomMembershipState?, Error?) -> Void
+    )
+    {
+        API.getOpenChatRoomMembershipState(squareMid: squareMid, callbackQueue: queue.unwrapped) { result in
+            result.map(LineSDKOpenChatRoomMembershipState.init).match(with: completion)
+        }
+    }
 }
 
 // MARK: - getGroups
