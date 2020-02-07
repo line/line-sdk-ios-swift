@@ -21,7 +21,7 @@
 
 import Foundation
 
-/// Represents a utility structure for calling the LINE Platform.
+/// A utility type for calling APIs on the LINE Platform.
 ///
 /// - Note:
 /// For most API calls, using the methods in the `API` is equivalent to using and sending an

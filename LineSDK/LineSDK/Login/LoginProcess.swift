@@ -96,7 +96,7 @@ public class LoginProcess {
     
     weak var presentingViewController: UIViewController?
     
-    /// A UUID string of current process. Used to verify with server `state` response.
+    /// A random piece of data for current process. Used to verify with server `state` response.
     let processID: String
     
     /// A string used to prevent replay attacks. This value will be returned in an ID token.
@@ -114,13 +114,13 @@ public class LoginProcess {
         viewController: UIViewController?)
     {
         self.configuration = configuration
-        self.processID = UUID().uuidString
+        self.processID = Data.randomData(bytesCount: 32).base64URLEncoded
         self.scopes = scopes
         self.parameters = parameters
         self.presentingViewController = viewController
         
         if scopes.contains(.openID) {
-            IDTokenNonce = self.parameters.IDTokenNonce ?? UUID().uuidString
+            IDTokenNonce = self.parameters.IDTokenNonce ?? Data.randomData(bytesCount: 32).base64URLEncoded
         } else {
             IDTokenNonce = nil
         }
