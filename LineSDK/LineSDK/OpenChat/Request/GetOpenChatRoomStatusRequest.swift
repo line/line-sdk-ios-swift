@@ -21,24 +21,36 @@
 
 import Foundation
 
+/// Represents a request for getting the status of a given Open Chat room.
 public struct GetOpenChatRoomStatusRequest: Request {
-
-    public struct Response: Codable {
-        
-        public enum Status: String, Codable {
-            case alive = "ALIVE"
-            case deleted = "DELETED"
-            case suspended = "SUSPENDED"
-        }
-        
-        public let status: Status
+    
+    /// The status of an Open Chat room.
+    public enum Status: String, Codable {
+        /// The room is alive. Other users can join it.
+        case alive = "ALIVE"
+        /// The room is already deleted.
+        case deleted = "DELETED"
+        /// The room is suspended for some reason.
+        case suspended = "SUSPENDED"
     }
     
+    /// The response of a `GetOpenChatRoomStatusRequest`.
+    public struct Response: Codable {
+        /// The status of the requested room.
+        public let status: Status
+    }
+    /// :nodoc:
     public let method: HTTPMethod = .get
+    /// :nodoc:
     public var path: String { return "/square/v1/square/\(squareMid)/status" }
+    /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     
+    /// The Open Chat room ID.
     public let squareMid: EntityID
+    
+    /// Creates a request.
+    /// - Parameter squareMid: The Open Chat room ID.
     public init(squareMid: EntityID) {
         Log.precondition(squareMid.isValid, "Invalid `squareMid` parameter received: \(squareMid).")
         self.squareMid = squareMid

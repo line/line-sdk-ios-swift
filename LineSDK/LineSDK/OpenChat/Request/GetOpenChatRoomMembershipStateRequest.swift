@@ -21,22 +21,35 @@
 
 import Foundation
 
+/// Represents a request for getting membership of current user to a given Open Chat room.
 public struct GetOpenChatRoomMembershipStateRequest: Request {
     
+    /// The membership state of current user to the room.
     public enum State: String, Decodable {
+        /// The user has already joined the room.
         case joined = "JOINED"
+        /// The user is not a member of the room yet.
         case notJoined = "NOT_JOINED"
     }
     
+    /// The response of a `GetOpenChatRoomMembershipStateRequest`.
     public struct Response: Decodable {
+        /// The membership state of current user.
         public let state: State
     }
     
+    /// :nodoc:
     public let method: HTTPMethod = .get
+    /// :nodoc:
     public var path: String { return "/square/v1/square/\(squareMid)/membership" }
+    /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     
+    /// The Open Chat room ID.
     public let squareMid: EntityID
+    
+    /// Creates a request.
+    /// - Parameter squareMid: The Open Chat room ID.
     public init(squareMid: EntityID) {
         Log.precondition(squareMid.isValid, "Invalid `squareMid` parameter received: \(squareMid).")
         self.squareMid = squareMid

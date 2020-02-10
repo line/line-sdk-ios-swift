@@ -21,12 +21,22 @@
 
 import Foundation
 
+/// Represents the information used when creating the Open Chat room.
 public struct OpenChatRoomCreatingItem {
     
+    /// The name the room.
     public let name: String
+    
+    /// The room description.
     public let roomDescription: String
+    
+    /// The creator name of the room.
     public let creatorDisplayName: String
+    
+    /// The category index that the room belongs to.
     public let category: Int
+    
+    /// Whether this room allows to be searched.
     public let allowSearch: Bool
     
     init(form: OpenChatCreatingFormItem) {
@@ -40,7 +50,14 @@ public struct OpenChatRoomCreatingItem {
             allowSearch:        normalizedForm.allowSearch
         )
     }
-    
+
+    /// Creates an item holds the information used when creating the Open Chat room.
+    /// - Parameters:
+    ///   - name: The name the room.
+    ///   - roomDescription: The room description.
+    ///   - creatorDisplayName: The creator name of the room.
+    ///   - category: The category that the room belongs to.
+    ///   - allowSearch: Whether this room allows to be searched.
     public init(
         name: String,
         roomDescription: String,
@@ -58,6 +75,13 @@ public struct OpenChatRoomCreatingItem {
         )
     }
     
+    /// Creates an item holds the information used when creating the Open Chat room.
+    /// - Parameters:
+    ///   - name: The name the room.
+    ///   - roomDescription: The room description.
+    ///   - creatorDisplayName: The creator name of the room.
+    ///   - category: The category index that the room belongs to.
+    ///   - allowSearch: Whether this room allows to be searched.
     public init(
         name: String,
         roomDescription: String,

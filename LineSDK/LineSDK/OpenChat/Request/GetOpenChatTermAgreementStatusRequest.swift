@@ -21,15 +21,22 @@
 
 import Foundation
 
+/// Represents a request for getting Open Chat user term agreement status of current user.
+/// Unless the user has agreed the use term, creating an Open Chat room is not permitted.
 public struct GetOpenChatTermAgreementStatusRequest: Request {
     
+    /// The response of a `GetOpenChatTermAgreementStatusRequest`.
     public struct Response: Decodable {
+        /// Whether the user has already agreed the use term.
         public let agreed: Bool
     }
     
+    /// :nodoc:
     public let method: HTTPMethod = .get
+    /// :nodoc:
     public let path = "/square/v1/terms/agreement"
+    /// :nodoc:
     public let authentication: AuthenticateMethod = .token
-    
+    /// :nodoc:
     public init() { }
 }
