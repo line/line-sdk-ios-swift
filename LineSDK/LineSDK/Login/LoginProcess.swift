@@ -39,6 +39,7 @@ public class LoginProcess {
     }
     
     /// Observes application switching to foreground.
+    /// 
     /// - Note:
     /// If the app switching happens during login process, we want to
     /// inspect the event of switched back from another app (Safari or LINE or any other)

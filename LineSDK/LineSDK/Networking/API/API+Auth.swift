@@ -77,8 +77,8 @@ extension API {
         ///   - queue: The callback queue that is used for `completion`. The default value is
         ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
         ///   - completion: The completion closure to be invoked when the access token is revoked.
-        /// - Note:
         ///
+        /// - Note:
         ///   The revoked token will be automatically removed from the keychain. If `token` has a `nil` value
         ///   and the current access token does not exist, `completion` will be called with `.success`. The
         ///   same applies when `token` has an invalid access token.

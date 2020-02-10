@@ -195,7 +195,8 @@ extension ShareViewController {
     
     /// Gets the local authorization status for sending messages to friends and groups.
     ///
-    /// - Returns: The local authorization status based on the currently stored token and the permissions specified in that token.
+    /// - Returns: The local authorization status based on the currently stored token and the permissions specified
+    ///            in that token.
     ///
     /// - Note:
     ///   If the return value is `.authorized`, you can present a `ShareViewController` instance for message sharing.

@@ -36,7 +36,6 @@ import UIKit
 /// `OpenChatCreatingControllerDelegate` and set `delegate` property of an `OpenChatCreatingController` instance.
 ///
 /// - Note:
-///
 /// The class is intended to be used as-is and to provide a default open chat creating experience across all LINE and
 /// LINE SDK integrations. Users expect a consistent UI and interaction across different apps when using the Open Chat
 /// features. But if it's so important for you to provide a fully customized sharing interaction, you can still use the
@@ -58,7 +57,6 @@ public class OpenChatCreatingController {
     /// The suggested category shows as the default category when user creates a new open chat room.
     ///
     /// - Note:
-    ///
     /// Users can select a category in UI from a predefined list of `OpenChatCategory`s. It determines which category
     /// the created room should belong to. The `suggestedCategory` value will be show as the selected state when the
     /// user opens open chat creating UI.
@@ -78,7 +76,6 @@ public class OpenChatCreatingController {
     ///   - handler: A block called when the open chat creating view controller presenting action is done with a result.
     ///
     /// - Note:
-    ///
     /// If the `handler` is called with a `.failure` case, it means there is no view controller from LINE SDK
     /// shown. A few reasons can cause it, such as term agreement status cannot be retrieved due to network error.
     /// On the other hand, a `.success` case and its associated value means a view controller from LINE SDK is
@@ -211,15 +208,15 @@ extension OpenChatCreatingController {
     
     /// Gets the local authorization status for creating an open chat room.
     ///
-    /// - Returns: The local authorization status from the currently stored token and its permissions.
+    /// - Returns: The local authorization status based on the currently stored token and the permissions specified
+    ///            in that token.
     ///
     /// - Note:
-    ///
-    /// If the return value is `.authorized`, you can present an open chat creating view controller.
-    /// But `.authorized` status doesn't necessarily mean the creating would succeed; there may be problems with the
-    /// token or permissions.
-    /// The token status is stored locally and may not have been synchronized with the server-side status.
-    /// The token may have expired or been revoked by the server or via another client.
+    ///   If the return value is `.authorized`, you can present a `ShareViewController` instance for message sharing.
+    ///   But `.authorized` status doesn't necessarily mean sharing would succeed; there may be problems with the
+    ///   token or permissions.
+    ///   The token status is stored locally and may not have been synchronized with the server-side status.
+    ///   The token may have expired or been revoked by the server or via another client.
     ///
     /// To get the correct result about creating behavior, specify `OpenChatCreatingController.delegate` and implement
     /// the methods in `OpenChatCreatingControllerDelegate`.
