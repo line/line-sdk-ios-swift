@@ -212,9 +212,10 @@ extension OpenChatCreatingController {
     ///            in that token.
     ///
     /// - Note:
-    ///   If the return value is `.authorized`, you can present a `ShareViewController` instance for message sharing.
-    ///   But `.authorized` status doesn't necessarily mean sharing would succeed; there may be problems with the
-    ///   token or permissions.
+    ///   If the return value is `.authorized`, you can present a `OpenChatCreatingController` instance for creating a
+    ///   room. But `.authorized` status doesn't necessarily mean the creating would succeed; there may be problems with
+    ///   the token or permissions.
+    ///   
     ///   The token status is stored locally and may not have been synchronized with the server-side status.
     ///   The token may have expired or been revoked by the server or via another client.
     ///

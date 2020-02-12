@@ -54,9 +54,16 @@ public struct LoginPermission: Hashable {
     /// LINE internal use only. The permission to write a message as current user.
     public static let messageWrite                   = LoginPermission(rawValue: "message.write")
     
+    /// The permission to check Open Chat use term agreement status.
     public static let openChatTermStatus             = LoginPermission(rawValue: "square.term.status")
+    
+    /// The permission to create an Open Chat room.
     public static let openChatRoomCreate             = LoginPermission(rawValue: "square.create")
+    
+    /// The permission to check the status of an Open Chat room.
     public static let openChatRoomStatus             = LoginPermission(rawValue: "square.info")
+    
+    /// The permission to check the membership state for current user of an Open Chat room.
     public static let openChatRoomMembership         = LoginPermission(rawValue: "square.membership")
 }
 
