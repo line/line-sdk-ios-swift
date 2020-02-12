@@ -31,7 +31,7 @@ public class LoginProcess {
         let channelID: String
         let universalLinkURL: URL?
         let scopes: Set<LoginPermission>
-        let otp: OneTimePassword
+        let pkce: PKCE
         let processID: String
         let nonce: String?
         let botPrompt: LoginManager.BotPrompt?
@@ -102,8 +102,8 @@ public class LoginProcess {
     /// A string used to prevent replay attacks. This value will be returned in an ID token.
     let IDTokenNonce: String?
     
-    var otp: OneTimePassword!
-    
+    let pkce: PKCE
+
     let onSucceed = Delegate<(token: AccessToken, response: LoginProcessURLResponse), Void>()
     let onFail = Delegate<Error, Void>()
     
@@ -115,6 +115,7 @@ public class LoginProcess {
     {
         self.configuration = configuration
         self.processID = Data.randomData(bytesCount: 32).base64URLEncoded
+        self.pkce = PKCE()
         self.scopes = scopes
         self.parameters = parameters
         self.presentingViewController = viewController
@@ -127,34 +128,25 @@ public class LoginProcess {
     }
     
     func start() {
-        let otpRequest = PostOTPRequest(channelID: configuration.channelID)
-        Session.shared.send(otpRequest) { result in
-            switch result {
-            case .success(let otp):
-                self.otp = otp
-                let parameters = FlowParameters(
-                    channelID: self.configuration.channelID,
-                    universalLinkURL: self.configuration.universalLinkURL,
-                    scopes: self.scopes,
-                    otp: otp,
-                    processID: self.processID,
-                    nonce: self.IDTokenNonce,
-                    botPrompt: self.parameters.botPromptStyle,
-                    preferredWebPageLanguage: self.parameters.preferredWebPageLanguage)
-                #if targetEnvironment(macCatalyst)
-                // On macCatalyst, we only support web login
-                self.startWebLoginFlow(parameters)
-                #else
-                if self.parameters.onlyWebLogin {
-                    self.startWebLoginFlow(parameters)
-                } else {
-                    self.startAppUniversalLinkFlow(parameters)
-                }
-                #endif
-            case .failure(let error):
-                self.invokeFailure(error: error)
-            }
+        let parameters = FlowParameters(
+            channelID: self.configuration.channelID,
+            universalLinkURL: self.configuration.universalLinkURL,
+            scopes: self.scopes,
+            pkce: self.pkce,
+            processID: self.processID,
+            nonce: self.IDTokenNonce,
+            botPrompt: self.parameters.botPromptStyle,
+            preferredWebPageLanguage: self.parameters.preferredWebPageLanguage)
+        #if targetEnvironment(macCatalyst)
+        // On macCatalyst, we only support web login
+        self.startWebLoginFlow(parameters)
+        #else
+        if self.parameters.onlyWebLogin {
+            self.startWebLoginFlow(parameters)
+        } else {
+            self.startAppUniversalLinkFlow(parameters)
         }
+        #endif
     }
     
     /// Stops the login process. The login process will fail with a `.forceStopped` error.
@@ -266,7 +258,7 @@ public class LoginProcess {
                 let tokenExchangeRequest = PostExchangeTokenRequest(
                     channelID: self.configuration.channelID,
                     code: response.requestToken,
-                    otpValue: self.otp.otp,
+                    codeVerifier: self.pkce.codeVerifier,
                     redirectURI: Constant.thirdPartyAppReturnURL,
                     optionalRedirectURI: self.configuration.universalLinkURL?.absoluteString)
                 Session.shared.send(tokenExchangeRequest) { tokenResult in
@@ -403,7 +395,8 @@ extension String {
             "sdk_ver": Constant.SDKVersion,
             "client_id": parameter.channelID,
             "scope": (parameter.scopes.map { $0.rawValue }).joined(separator: " "),
-            "otpId": parameter.otp.otpId,
+            "code_challenge": parameter.pkce.codeChallenge,
+            "code_challenge_method": parameter.pkce.codeChallengeMethod,
             "state": parameter.processID,
             "redirect_uri": Constant.thirdPartyAppReturnURL,
         ]
