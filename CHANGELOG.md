@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Open Chat support. You can create an Open Chat room with LINE SDK for Swift now. There are also some other public APIs to help checking room availability or user's memebership for a given Open Chat room. Check the [official documentation](https://developers.line.biz/en/docs/ios-sdk/swift/overview/) and [API reference](https://developers.line.biz/en/reference/ios-sdk-swift/) of `OpenChatCreatingController` for more information. [#132](https://github.com/line/line-sdk-ios-swift/pull/132)
+- Switch to PKCE instead of OTP-based authorization model. Now the LINE Login flow is fully compatible with standard OAuth 2.0. [#133](https://github.com/line/line-sdk-ios-swift/pull/133)
+
+### Fixed
+
+- Both `nonce` and `state` now use a better hash algorithm to generate random piece of data. [#137](https://github.com/line/line-sdk-ios-swift/pull/137)
+- Lots of improvement of reference and documentation comment.
+
+
 ## [5.5.0] - 2019-12-17
 
 ### Added
