@@ -53,7 +53,6 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertFalse(LoginManager.shared.isAuthorizing)
         
         let delegateStub = SessionDelegateStub(stubs: [
-            .init(data: PostOTPRequest.successData, responseCode: 200),
             .init(data: PostExchangeTokenRequest.successData, responseCode: 200),
             .init(data: GetUserProfileRequest.successData, responseCode: 200)
         ])
@@ -100,7 +99,6 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertFalse(LoginManager.shared.isAuthorizing)
 
         let delegateStub = SessionDelegateStub(stubs: [
-            .init(data: PostOTPRequest.successData, responseCode: 200),
             .init(data: PostExchangeTokenRequest.successData, responseCode: 200),
             .init(data: GetUserProfileRequest.successData, responseCode: 200)
         ])

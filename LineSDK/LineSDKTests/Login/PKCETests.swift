@@ -1,5 +1,5 @@
 //
-//  PostOTPRequest.swift
+//  PKCETests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,18 +19,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import XCTest
+@testable import LineSDK
 
-struct PostOTPRequest: Request {
-    let channelID: String
-    
-    let method: HTTPMethod = .post
-    let path = "/oauth2/v2.1/otp"
-    let contentType: ContentType = .formUrlEncoded
-    let authentication: AuthenticateMethod = .none
-    
-    var parameters: [String : Any]? { return ["client_id": channelID] }
+class PKCETests: XCTestCase {
 
-    typealias Response = OneTimePassword   
+    /// code_verifier
+    /// high-entropy cryptographic random STRING
+    /// with a minimum length of 43 characters and a maximum length of 128 characters
+    ///
+    /// Ref: https://tools.ietf.org/html/rfc7636#section-4.1
+    ///
+    func testCodeVerifierLength() {
+        for _ in 0...1000 {
+            autoreleasepool {
+                let codeVerifier = PKCE().codeVerifier
+                XCTAssertTrue(43...128 ~= codeVerifier.count)
+            }
+        }
+    }
+
+    func testCodeChallenge() {
+        let codeVerifier = "ksl2M8Qvw6Ith2hYslVx7XUmtDjt2RvVUzMk8UUgQHc"
+        let codeChallenge = PKCE.generateCodeChallenge(codeVerifier: codeVerifier)
+        XCTAssertEqual(codeChallenge, "x0ecinHXuDev1f89OvD8rzH4FzKNiv2I07qIdZSuStA")
+    }
 }
-
