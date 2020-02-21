@@ -153,7 +153,7 @@ platform :ios do
 
     artifact_paths = [
       create_xcframework(version: target_version, scheme: "LineSDK", output: output_path),
-      create_xcframework(version: target_version, scheme: "LineSDKObjC", output: output_path),
+      create_xcframework(version: target_version, scheme: "LineSDKObjCBinary", product_name: "LineSDKObjC", output: output_path),
     ]
 
     zipped_files = []

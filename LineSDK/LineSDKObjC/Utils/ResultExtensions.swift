@@ -19,7 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods
+#if !LineSDKCocoaPods && !LineSDKBinary
 
 import LineSDK
 // These helper methods are not public since we do not want them to be exposed or cause any conflicts.
