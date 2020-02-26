@@ -20,7 +20,7 @@
 //
 
 import UIKit
-#if !LineSDKCocoaPods
+#if !LineSDKCocoaPods && !LineSDKBinary
 import LineSDK
 #endif
 

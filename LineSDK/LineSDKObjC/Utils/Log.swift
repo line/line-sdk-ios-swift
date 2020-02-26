@@ -21,7 +21,7 @@
 
 import Foundation
 
-#if !LineSDKCocoaPods
+#if !LineSDKCocoaPods && !LineSDKBinary
 struct Log {
     static func assertionFailure(_ message: @autoclosure () -> String, file: StaticString = #file, line: UInt = #line) {
         Swift.assertionFailure("[LineSDK] \(message())", file: file, line: line)
