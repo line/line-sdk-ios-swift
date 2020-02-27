@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.5.1] - 2020-02-27
+
 ### Fixed
 
 - Use standard parameter names from [PKCE for OAuth 2.0](https://oauth.net/2/pkce/) to replace the original One-Time-Password mechanism. [#133](https://github.com/line/line-sdk-ios-swift/pull/133)
@@ -179,3 +181,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.3.1]: https://github.com/line/line-sdk-ios-swift/compare/5.3.0...5.3.1
 [5.4.0]: https://github.com/line/line-sdk-ios-swift/compare/5.3.1...5.4.0
 [5.5.0]: https://github.com/line/line-sdk-ios-swift/compare/5.4.0...5.5.0
+[5.5.1]: https://github.com/line/line-sdk-ios-swift/compare/5.5.0...5.5.1
