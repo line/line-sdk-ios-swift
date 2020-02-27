@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Use standard parameter names from [PKCE for OAuth 2.0](https://oauth.net/2/pkce/) to replace the original One-Time-Password mechanism. [#133](https://github.com/line/line-sdk-ios-swift/pull/133)
+- An issue that some symbols cannot be found in XCFramework binary for Objective-C wrapper. [#140](https://github.com/line/line-sdk-ios-swift/pull/140)
+- Fix several dangling pointer warning for Xcode 11.4. [#141](https://github.com/line/line-sdk-ios-swift/pull/141)
+- Improve security for `state` and `nonce` generating to use a better random generator from Security.framework. [#137](https://github.com/line/line-sdk-ios-swift/pull/137)
+
 ## [5.5.0] - 2019-12-17
 
 ### Added
