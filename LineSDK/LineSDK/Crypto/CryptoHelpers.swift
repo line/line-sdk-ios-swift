@@ -96,7 +96,7 @@ extension Data {
         index += 1
         
         let strippedKeyBytes = [UInt8](self[index...self.count - 1])
-        let data = Data(bytes: UnsafePointer<UInt8>(strippedKeyBytes), count: self.count - index)
+        let data = Data(bytes: strippedKeyBytes, count: self.count - index)
         
         return data
     }

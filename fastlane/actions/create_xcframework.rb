@@ -7,6 +7,7 @@ module Fastlane
     class CreateXcframeworkAction < Action
       def self.run(params)
         scheme = params[:scheme]
+        product_name = params[:product_name] || scheme
         output_path = params[:output]
         target_version = "#{scheme}-#{params[:version]}"
         supporting_root = "#{output_path}/#{target_version}/Supporting Files"
@@ -27,10 +28,10 @@ module Fastlane
 
           Action.sh command.join(" ")
 
-          frameworks.push("#{archive_path}/Products/Library/Frameworks/#{scheme}.framework")
-          dSYM_path = "#{archive_path}/dSYMs/#{scheme}.framework.dSYM"
+          frameworks.push("#{archive_path}/Products/Library/Frameworks/#{product_name}.framework")
+          dSYM_path = "#{archive_path}/dSYMs/#{product_name}.framework.dSYM"
           FileUtils.mkdir_p("#{supporting_root}/#{sdk}/dSYMs/")
-          FileUtils.cp_r(dSYM_path, "#{supporting_root}/#{sdk}/dSYMs/#{scheme}.framework.dSYM")
+          FileUtils.cp_r(dSYM_path, "#{supporting_root}/#{sdk}/dSYMs/#{product_name}.framework.dSYM")
 
           bitcode_symbol_map_path = "#{archive_path}/BCSymbolMaps/"
           if Dir.exist?(bitcode_symbol_map_path)
@@ -43,7 +44,7 @@ module Fastlane
 
         command = ["xcodebuild"]
         command << "-create-xcframework #{framework_args.join(" ")}"
-        command << "-output '#{output_path}/#{target_version}/#{scheme}.xcframework'"
+        command << "-output '#{output_path}/#{target_version}/#{product_name}.xcframework'"
         command << "| xcpretty"
 
         Action.sh command.join(" ")
@@ -75,6 +76,9 @@ module Fastlane
                                        default_value: ""),
           FastlaneCore::ConfigItem.new(key: :scheme,
                                        description: "The scheme name to archive"),
+          FastlaneCore::ConfigItem.new(key: :product_name,
+                                       description: "The product name. Default is the same as scheme",
+                                       optional: true),
           FastlaneCore::ConfigItem.new(key: :output,
                                        description: "The output path of built artifacts")
         ]
