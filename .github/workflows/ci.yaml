@@ -11,10 +11,16 @@ jobs:
         swift-version: [5.0, 4.2]
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
       - name: Test SDK
         env:
           SWIFT_VERSION: ${{ matrix.swift-version }}
-        run: fastlane sdk_tests
+        run: bundle fastlane sdk_tests
   lint_pod:
     name: Lint CocoaPods
     runs-on: macOS-latest
@@ -23,21 +29,39 @@ jobs:
         swift-version: [5.0, 4.2]
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
     - name: Lint CocoaPods
       env:
         SWIFT_VERSION: ${{ matrix.swift-version }}
-      run: fastlane lint_pod
+      run: bundle fastlane lint_pod
   lint_carthage:
     name: Lint Carthage
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
       - name: Lint Carthage
-        run: fastlane lint_carthage
+        run: bundle fastlane lint_carthage
   xcframework:
     name: Build XCFramework
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
       - name: Build XCFramework
-        run: fastlane xcframework version:ci
+        run: bundle fastlane xcframework version:ci
