@@ -17,6 +17,10 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
+      - name: Bundle Install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
       - name: Test SDK
         env:
           SWIFT_VERSION: ${{ matrix.swift-version }}
@@ -35,6 +39,10 @@ jobs:
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
+    - name: Bundle Install
+      run: |
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
     - name: Lint CocoaPods
       env:
         SWIFT_VERSION: ${{ matrix.swift-version }}
@@ -50,6 +58,10 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
+      - name: Bundle Install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
       - name: Lint Carthage
         run: bundle fastlane lint_carthage
   xcframework:
@@ -63,5 +75,9 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
+      - name: Bundle Install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
       - name: Build XCFramework
         run: bundle fastlane xcframework version:ci
