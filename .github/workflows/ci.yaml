@@ -1,0 +1,43 @@
+name: "LINE SDK CI"
+
+on: [push, pull_request]
+
+jobs:
+  test_sdk:
+    name: Test LINE SDK
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        swift-version: [5.0, 4.2]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Test SDK
+        env:
+          SWIFT_VERSION: ${{ matrix.swift-version }}
+        run: fastlane sdk_tests
+  lint_pod:
+    name: Lint CocoaPods
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        swift-version: [5.0, 4.2]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Lint CocoaPods
+      env:
+        SWIFT_VERSION: ${{ matrix.swift-version }}
+      run: fastlane lint_pod
+  lint_carthage:
+    name: Lint Carthage
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Lint Carthage
+        run: fastlane lint_carthage
+  xcframework:
+    name: Build XCFramework
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build XCFramework
+        run: fastlane xcframework version:ci
