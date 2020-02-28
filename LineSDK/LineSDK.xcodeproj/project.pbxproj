@@ -226,7 +226,7 @@
 		4BCD24DB23FFA74100D4B6BD /* LineSDKFlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C292133DD9300DD563D /* LineSDKFlexTextComponent.swift */; };
 		4BCD24DC23FFA74100D4B6BD /* LineSDKUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */; };
 		4BCD24DD23FFA74100D4B6BD /* LineSDKLoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14EE212F9468000DD5BE /* LineSDKLoginManagerOptions.swift */; };
-		4BCD24DE23FFA74100D4B6BD /* LineSDKMessageShareAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */; };
+		4BCD24DE23FFA74100D4B6BD /* LineSDKAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKAuthorizationStatus.swift */; };
 		4BCD24DF23FFA74100D4B6BD /* LineSDKShareTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */; };
 		4BCD24E023FFA74100D4B6BD /* LineSDKTextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3D8212FEB9000750794 /* LineSDKTextMessage.swift */; };
 		4BCD24E123FFA74100D4B6BD /* LineSDKLoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */; };
@@ -488,6 +488,36 @@
 		D17C6FB022237CB1007BA517 /* ResultUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17C6FAF22237CB1007BA517 /* ResultUtilsTests.swift */; };
 		D1A591272139489E00AC080D /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
 		D1A591292139495B00AC080D /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
+		D1D22C8E2408A8D70028A9E0 /* StyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC972398A08400E51458 /* StyleNavigationController.swift */; };
+		D1D22C8F2408A8E60028A9E0 /* OpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */; };
+		D1D22C902408A8E90028A9E0 /* OpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */; };
+		D1D22C912408A8EC0028A9E0 /* OpenChatCreatingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B61C65F2394CE87005D7C21 /* OpenChatCreatingNavigationController.swift */; };
+		D1D22C922408A8EF0028A9E0 /* OpenChatRoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */; };
+		D1D22C932408A8F10028A9E0 /* OptionSelectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC942398974900E51458 /* OptionSelectingViewController.swift */; };
+		D1D22C942408A8F30028A9E0 /* OpenChatUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */; };
+		D1D22C952408A8F60028A9E0 /* OpenChatCreatingFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */; };
+		D1D22C962408A8FA0028A9E0 /* FormEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F022396342800B81E56 /* FormEntry.swift */; };
+		D1D22C972408A8FD0028A9E0 /* FormSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F04239638CF00B81E56 /* FormSection.swift */; };
+		D1D22C982408A9000028A9E0 /* OpenChatRoomNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6972962396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift */; };
+		D1D22C992408A9030028A9E0 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */; };
+		D1D22C9A2408A9050028A9E0 /* VerticallyCenteredTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */; };
+		D1D22C9B2408A9080028A9E0 /* CountLimitedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B223239748F700437892 /* CountLimitedTextView.swift */; };
+		D1D22C9C2408A9120028A9E0 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E1A239A3F1300E229C2 /* ToastView.swift */; };
+		D1D22C9D2408A91B0028A9E0 /* AuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3F23E280D700A6ADCD /* AuthorizationStatus.swift */; };
+		D1D22C9E2408A94E0028A9E0 /* OpenChatCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F82394A80100A5DC77 /* OpenChatCategory.swift */; };
+		D1D22C9F2408A9510028A9E0 /* OpenChatRoomCreatingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE56FBE239504C800C9C415 /* OpenChatRoomCreatingItem.swift */; };
+		D1D22CA02408A9570028A9E0 /* GetOpenChatTermAgreementStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F22394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift */; };
+		D1D22CA12408A9570028A9E0 /* PostOpenChatCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F42394A47A00A5DC77 /* PostOpenChatCreateRequest.swift */; };
+		D1D22CA22408A9570028A9E0 /* GetOpenChatRoomStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */; };
+		D1D22CA32408A9570028A9E0 /* GetOpenChatRoomMembershipStateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */; };
+		D1D22CA42408A97A0028A9E0 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E16239A202600E229C2 /* String.swift */; };
+		D1D22CA52408A97E0028A9E0 /* UserDefaultsValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD2E52E239DFA8A00AB3C2D /* UserDefaultsValue.swift */; };
+		D1D22CA62408AA2F0028A9E0 /* LineSDKOpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3723E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift */; };
+		D1D22CA72408AA2F0028A9E0 /* LineSDKOpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3923E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift */; };
+		D1D22CA82408AA2F0028A9E0 /* LineSDKOpenChatRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3B23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift */; };
+		D1D22CA92408AA2F0028A9E0 /* LineSDKOpenChatRoomCreatingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3D23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift */; };
+		D1D22CAA2408AA440028A9E0 /* LineSDKOpenChatRoomStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */; };
+		D1D22CAB2408AA480028A9E0 /* LineSDKOpenChatRoomMembershipState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */; };
 		D1F4E716225743F3002639AC /* LineSDKShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */; };
 		D1F4E718225744CE002639AC /* LineSDKViewControllerInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */; };
 		DB09851523D5AF9D0001A3B8 /* PKCETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB09851423D5AF9D0001A3B8 /* PKCETests.swift */; };
@@ -2344,7 +2374,6 @@
 				4B6CACC7239F44D100BD6C35 /* OpenChatControllerTests.swift in Sources */,
 				4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */,
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
-				4B792FB621103D2200EDDD1E /* PostOTPRequestTests.swift in Sources */,
 				4B6CACC9239F4A2B00BD6C35 /* AssertionHelpers.swift in Sources */,
 				4BB0E256239F5C8A008C7F3F /* FormEntryTests.swift in Sources */,
 				DB0AFF612247FB2E002729AD /* PageTabViewTests.swift in Sources */,
@@ -2507,6 +2536,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1D22C9B2408A9080028A9E0 /* CountLimitedTextView.swift in Sources */,
 				4BCD251623FFAABA00D4B6BD /* ShareRootViewController.swift in Sources */,
 				4BCD252323FFAABA00D4B6BD /* PostExchangeTokenRequest.swift in Sources */,
 				4BCD24C823FFA74100D4B6BD /* LineSDKAccessTokenStore.swift in Sources */,
@@ -2519,11 +2549,13 @@
 				4BCD254323FFAABA00D4B6BD /* MessageSender.swift in Sources */,
 				4BCD24CA23FFA74100D4B6BD /* LineSDKTemplateImageCarouselPayload.swift in Sources */,
 				4BCD24CB23FFA74100D4B6BD /* LineSDKTemplateMessage.swift in Sources */,
+				D1D22CA32408A9570028A9E0 /* GetOpenChatRoomMembershipStateRequest.swift in Sources */,
 				4BCD24CC23FFA74100D4B6BD /* ResultExtensions.swift in Sources */,
 				4BCD24CD23FFA74100D4B6BD /* LineSDKAuthAPI.swift in Sources */,
 				4BCD254D23FFAABA00D4B6BD /* TemplateMessageProperties.swift in Sources */,
 				4BCD257323FFAABA00D4B6BD /* CryptoAlgorithm.swift in Sources */,
 				4BCD258723FFAABA00D4B6BD /* Constant.swift in Sources */,
+				D1D22CA82408AA2F0028A9E0 /* LineSDKOpenChatRoomInfo.swift in Sources */,
 				4BCD24CE23FFA74100D4B6BD /* LineSDKAPI.swift in Sources */,
 				4BCD256823FFAABA00D4B6BD /* ChainedPaginatedRequest.swift in Sources */,
 				4BCD24CF23FFA74100D4B6BD /* LineSDKTemplateButtonsPayload.swift in Sources */,
@@ -2534,6 +2566,8 @@
 				4BCD253B23FFAABA00D4B6BD /* GetShareFriendsRequest.swift in Sources */,
 				4BCD258223FFAABA00D4B6BD /* Result.swift in Sources */,
 				4BCD253823FFAABA00D4B6BD /* GetGroupsRequest.swift in Sources */,
+				D1D22C972408A8FD0028A9E0 /* FormSection.swift in Sources */,
+				D1D22CAB2408AA480028A9E0 /* LineSDKOpenChatRoomMembershipState.swift in Sources */,
 				4BCD251B23FFAABA00D4B6BD /* ShareTargetSearchResultViewController.swift in Sources */,
 				4BCD256C23FFAABA00D4B6BD /* ParametersAdapter.swift in Sources */,
 				4BCD256323FFAABA00D4B6BD /* API+Auth.swift in Sources */,
@@ -2552,6 +2586,7 @@
 				4BCD251923FFAABA00D4B6BD /* ShareTargetSearchController.swift in Sources */,
 				4BCD256123FFAABA00D4B6BD /* API.swift in Sources */,
 				4BCD258023FFAABA00D4B6BD /* ECDSA.swift in Sources */,
+				D1D22CA42408A97A0028A9E0 /* String.swift in Sources */,
 				4BCD255923FFAABA00D4B6BD /* FlexTextComponent.swift in Sources */,
 				4BCD252D23FFAABA00D4B6BD /* LoginConfiguration.swift in Sources */,
 				4BCD24D723FFA74100D4B6BD /* LineSDKUser.swift in Sources */,
@@ -2559,6 +2594,7 @@
 				4BCD254823FFAABA00D4B6BD /* LocationMessage.swift in Sources */,
 				4BCD24D923FFA74100D4B6BD /* LineSDKGraphResponse.swift in Sources */,
 				4BCD253023FFAABA00D4B6BD /* LoginManagerParameters.swift in Sources */,
+				D1D22C8F2408A8E60028A9E0 /* OpenChatCreatingController.swift in Sources */,
 				4BCD258123FFAABA00D4B6BD /* ResultUtils.swift in Sources */,
 				4BCD258423FFAABA00D4B6BD /* Delegate.swift in Sources */,
 				4BCD258B23FFAABA00D4B6BD /* LoadingIndicator.swift in Sources */,
@@ -2568,6 +2604,7 @@
 				4BCD254923FFAABA00D4B6BD /* TemplateMessage.swift in Sources */,
 				4BCD257F23FFAABA00D4B6BD /* RSA.swift in Sources */,
 				4BCD251523FFAABA00D4B6BD /* PageTabView.swift in Sources */,
+				D1D22CA22408A9570028A9E0 /* GetOpenChatRoomStatusRequest.swift in Sources */,
 				4BCD258923FFAABA00D4B6BD /* NotificationToken.swift in Sources */,
 				4BCD258623FFAABA00D4B6BD /* URLs.swift in Sources */,
 				4BCD254523FFAABA00D4B6BD /* ImageMessage.swift in Sources */,
@@ -2580,29 +2617,36 @@
 				4BCD256423FFAABA00D4B6BD /* API+Deprecated.swift in Sources */,
 				4BCD257A23FFAABA00D4B6BD /* JWTCoder.swift in Sources */,
 				4BCD254123FFAABA00D4B6BD /* Message.swift in Sources */,
+				D1D22C982408A9000028A9E0 /* OpenChatRoomNameTableViewCell.swift in Sources */,
+				D1D22C932408A8F10028A9E0 /* OptionSelectingViewController.swift in Sources */,
 				4BCD252423FFAABA00D4B6BD /* GetUserProfileRequest.swift in Sources */,
 				4BCD254023FFAABA00D4B6BD /* PostMessageSendingTokenIssueRequest.swift in Sources */,
-				4BCD24DE23FFA74100D4B6BD /* LineSDKMessageShareAuthorizationStatus.swift in Sources */,
+				4BCD24DE23FFA74100D4B6BD /* LineSDKAuthorizationStatus.swift in Sources */,
 				4BCD24DF23FFA74100D4B6BD /* LineSDKShareTarget.swift in Sources */,
 				4BCD24E023FFA74100D4B6BD /* LineSDKTextMessage.swift in Sources */,
 				4BCD253523FFAABA00D4B6BD /* User.swift in Sources */,
 				4BCD24E123FFA74100D4B6BD /* LineSDKLoginManagerParameters.swift in Sources */,
 				4BCD251023FFAABA00D4B6BD /* ShareViewControllerDelegate.swift in Sources */,
+				D1D22CA02408A9570028A9E0 /* GetOpenChatTermAgreementStatusRequest.swift in Sources */,
 				4BCD255D23FFAABA00D4B6BD /* FlexIconComponent.swift in Sources */,
 				4BCD257D23FFAABA00D4B6BD /* JWA.swift in Sources */,
 				4BCD252A23FFAABA00D4B6BD /* AccessToken.swift in Sources */,
 				4BCD256223FFAABA00D4B6BD /* API+Internal.swift in Sources */,
 				4BCD252123FFAABA00D4B6BD /* ResourceLoading.swift in Sources */,
+				D1D22C962408A8FA0028A9E0 /* FormEntry.swift in Sources */,
 				4BCD251A23FFAABA00D4B6BD /* ShareTargetTableViewStyling.swift in Sources */,
 				4BCD24E223FFA74100D4B6BD /* LineSDKShareViewControllerDelegate.swift in Sources */,
 				4BCD24E323FFA74100D4B6BD /* LineSDKFlexMessage.swift in Sources */,
+				D1D22C952408A8F60028A9E0 /* OpenChatCreatingFormItem.swift in Sources */,
 				4BCD24E423FFA74100D4B6BD /* LineSDKMessagingResponse.swift in Sources */,
 				4BCD255023FFAABA00D4B6BD /* TemplateCarouselPayload.swift in Sources */,
+				D1D22C912408A8EC0028A9E0 /* OpenChatCreatingNavigationController.swift in Sources */,
 				4BCD257023FFAABA00D4B6BD /* APIError.swift in Sources */,
 				4BCD253623FFAABA00D4B6BD /* Group.swift in Sources */,
 				4BCD24E523FFA74100D4B6BD /* LineSDKImageMessage.swift in Sources */,
 				4BCD255323FFAABA00D4B6BD /* FlexMessageContainer.swift in Sources */,
 				4BCD253223FFAABA00D4B6BD /* LoginProcess.swift in Sources */,
+				D1D22CA92408AA2F0028A9E0 /* LineSDKOpenChatRoomCreatingItem.swift in Sources */,
 				4BCD253423FFAABA00D4B6BD /* LoginPermission.swift in Sources */,
 				4BCD24E623FFA74100D4B6BD /* LineSDKFlexButtonComponent.swift in Sources */,
 				4BCD256B23FFAABA00D4B6BD /* RequestAdapter.swift in Sources */,
@@ -2612,6 +2656,7 @@
 				4BCD24E823FFA74100D4B6BD /* LineSDKSpacerComponent.swift in Sources */,
 				4BCD24E923FFA74100D4B6BD /* LineSDKAPIError.swift in Sources */,
 				4BCD24EA23FFA74100D4B6BD /* LineSDKLocationMessage.swift in Sources */,
+				D1D22C8E2408A8D70028A9E0 /* StyleNavigationController.swift in Sources */,
 				4BCD258C23FFAABA00D4B6BD /* Colors.swift in Sources */,
 				4BCD254A23FFAABA00D4B6BD /* FlexMessage.swift in Sources */,
 				4BCD258A23FFAABA00D4B6BD /* KeyboardObservable.swift in Sources */,
@@ -2636,6 +2681,7 @@
 				4BCD251723FFAABA00D4B6BD /* ShareTargetSelectingViewController.swift in Sources */,
 				4BCD24F023FFA74100D4B6BD /* LineSDKMessageSendingToken.swift in Sources */,
 				4BCD252C23FFAABA00D4B6BD /* UserProfile.swift in Sources */,
+				D1D22C922408A8EF0028A9E0 /* OpenChatRoomInfoViewController.swift in Sources */,
 				4BCD255B23FFAABA00D4B6BD /* FlexImageComponent.swift in Sources */,
 				4BCD257B23FFAABA00D4B6BD /* JWTHelpers.swift in Sources */,
 				4BCD256023FFAABA00D4B6BD /* GetBotFriendshipStatus.swift in Sources */,
@@ -2645,39 +2691,52 @@
 				4BCD256D23FFAABA00D4B6BD /* ResponsePipeline.swift in Sources */,
 				4BCD255A23FFAABA00D4B6BD /* FlexButtonComponent.swift in Sources */,
 				4BCD24F223FFA74100D4B6BD /* LineSDKFlexMessageContainer.swift in Sources */,
+				D1D22CA62408AA2F0028A9E0 /* LineSDKOpenChatCreatingController.swift in Sources */,
+				D1D22C992408A9030028A9E0 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */,
 				4BCD254C23FFAABA00D4B6BD /* TemplateMessagePayload.swift in Sources */,
 				4BCD256A23FFAABA00D4B6BD /* Session.swift in Sources */,
 				4BCD251423FFAABA00D4B6BD /* PageViewController.swift in Sources */,
 				4BCD252523FFAABA00D4B6BD /* PostRefreshTokenRequest.swift in Sources */,
+				D1D22C9D2408A91B0028A9E0 /* AuthorizationStatus.swift in Sources */,
 				4BCD254423FFAABA00D4B6BD /* TextMessage.swift in Sources */,
 				4BCD252223FFAABA00D4B6BD /* LineSDKError.swift in Sources */,
 				4BCD256523FFAABA00D4B6BD /* ImageDownloader.swift in Sources */,
 				4BCD24F323FFA74100D4B6BD /* LineSDKMessageShareTargetType.swift in Sources */,
+				D1D22CA12408A9570028A9E0 /* PostOpenChatCreateRequest.swift in Sources */,
+				D1D22C9E2408A94E0028A9E0 /* OpenChatCategory.swift in Sources */,
 				4BCD252023FFAABA00D4B6BD /* LoginButton.swift in Sources */,
 				4BCD255623FFAABA00D4B6BD /* FlexMessageComponent.swift in Sources */,
 				4BCD24F423FFA74100D4B6BD /* LineSDKFlexBubbleContainer.swift in Sources */,
+				D1D22CA72408AA2F0028A9E0 /* LineSDKOpenChatCreatingControllerDelegate.swift in Sources */,
 				4BCD255C23FFAABA00D4B6BD /* FlexFillerComponent.swift in Sources */,
 				4BCD24F523FFA74100D4B6BD /* LineSDKGetBotFriendshipStatusResponse.swift in Sources */,
+				D1D22C902408A8E90028A9E0 /* OpenChatCreatingControllerDelegate.swift in Sources */,
 				4BCD24F623FFA74100D4B6BD /* LineSDKShareViewController.swift in Sources */,
 				4BCD251D23FFAABA00D4B6BD /* ShareTargetSelectingSectionHeaderView.swift in Sources */,
 				4BCD24F723FFA74100D4B6BD /* LineSDKMessageAction.swift in Sources */,
 				4BCD24F823FFA74100D4B6BD /* Log.swift in Sources */,
 				4BCD253323FFAABA00D4B6BD /* LoginProcessURLResponse.swift in Sources */,
+				D1D22C9A2408A9050028A9E0 /* VerticallyCenteredTextView.swift in Sources */,
 				4BCD257723FFAABA00D4B6BD /* GetDiscoveryDocumentRequest.swift in Sources */,
 				4BCD24F923FFA74100D4B6BD /* LineSDKFlexFillerComponent.swift in Sources */,
 				4BCD24FA23FFA74100D4B6BD /* JSONConverter.swift in Sources */,
 				4BCD253123FFAABA00D4B6BD /* LoginResult.swift in Sources */,
 				4BCD24FB23FFA74100D4B6BD /* LineSDKHexColor.swift in Sources */,
 				4BCD255E23FFAABA00D4B6BD /* FlexSeparatorComponent.swift in Sources */,
+				D1D22CA52408A97E0028A9E0 /* UserDefaultsValue.swift in Sources */,
 				4BCD24FC23FFA74100D4B6BD /* LineSDKLoginResult.swift in Sources */,
 				4BCD255823FFAABA00D4B6BD /* FlexBoxComponent.swift in Sources */,
 				4BCD255423FFAABA00D4B6BD /* FlexBubbleContainer.swift in Sources */,
 				4BCD24FD23FFA74100D4B6BD /* LineSDKLoginProcess.swift in Sources */,
 				4BCD24FE23FFA74100D4B6BD /* LineSDKErrorConstant.swift in Sources */,
 				4BCD257223FFAABA00D4B6BD /* CryptoData.swift in Sources */,
+				D1D22CAA2408AA440028A9E0 /* LineSDKOpenChatRoomStatus.swift in Sources */,
+				D1D22C942408A8F30028A9E0 /* OpenChatUserProfileViewController.swift in Sources */,
 				4BCD257523FFAABA00D4B6BD /* CryptoHelpers.swift in Sources */,
 				4BCD252723FFAABA00D4B6BD /* GetVerifyTokenRequest.swift in Sources */,
 				4BCD24FF23FFA74100D4B6BD /* LineSDKLoginPermission.swift in Sources */,
+				D1D22C9C2408A9120028A9E0 /* ToastView.swift in Sources */,
+				D1D22C9F2408A9510028A9E0 /* OpenChatRoomCreatingItem.swift in Sources */,
 				4BCD257423FFAABA00D4B6BD /* CryptoKey.swift in Sources */,
 				4BCD251E23FFAABA00D4B6BD /* SelectedTargetPanelViewController.swift in Sources */,
 				4BCD253E23FFAABA00D4B6BD /* PostMultisendMessagesRequest.swift in Sources */,
