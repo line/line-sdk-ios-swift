@@ -30,11 +30,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/cache@v1
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
     - name: Lint CocoaPods
       env:
         SWIFT_VERSION: ${{ matrix.swift-version }}
