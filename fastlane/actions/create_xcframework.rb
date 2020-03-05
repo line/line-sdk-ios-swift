@@ -9,13 +9,13 @@ module Fastlane
         scheme = params[:scheme]
         product_name = params[:product_name] || scheme
         output_path = params[:output]
-        target_version = "#{scheme}-#{params[:version]}"
+        target_version = "#{product_name}-#{params[:version]}"
         supporting_root = "#{output_path}/#{target_version}/Supporting Files"
         
         frameworks = []
 
         ["iphoneos", "iphonesimulator"].each do |sdk|
-          archive_path = "#{output_path}/#{scheme}-#{sdk}.xcarchive"
+          archive_path = "#{output_path}/#{product_name}-#{sdk}.xcarchive"
 
           command = ["xcodebuild"]
           command << "archive"

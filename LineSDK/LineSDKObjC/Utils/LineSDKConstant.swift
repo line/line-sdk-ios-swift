@@ -19,9 +19,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@_exported import Foundation
+@_exported import UIKit
+
 #if !LineSDKCocoaPods && !LineSDKBinary
-import LineSDK
+@_exported import LineSDK
 #endif
 
 @objcMembers
