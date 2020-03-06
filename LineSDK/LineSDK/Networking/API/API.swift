@@ -69,37 +69,37 @@ public enum API {
     
     /// Gets the availability of a given Open Chat room.
     /// - Parameters:
-    ///   - squareMid: The Open Chat room Id.
+    ///   - openChatId: The Open Chat room Id.
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the room availability status is returned.
     /// - Note: The `.openChatRoomStatus` permission is required.
     ///
     public static func getOpenChatRoomStatus(
-        squareMid: EntityID,
+        openChatId: EntityID,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<GetOpenChatRoomStatusRequest.Response, LineSDKError>) -> Void
     )
     {
-        let request = GetOpenChatRoomStatusRequest(squareMid: squareMid)
+        let request = GetOpenChatRoomStatusRequest(openChatId: openChatId)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
     
     /// Gets the membership state of the current user for a given Open Chat room.
     /// - Parameters:
-    ///   - squareMid: The Open Chat room Id.
+    ///   - openChatId: The Open Chat room Id.
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the membership state is returned.
     /// - Note: The `.openChatRoomMembership` permission is required.
     ///
     public static func getOpenChatRoomMembershipState(
-        squareMid: EntityID,
+        openChatId: EntityID,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<GetOpenChatRoomMembershipStateRequest.Response, LineSDKError>) -> Void
     )
     {
-        let request = GetOpenChatRoomMembershipStateRequest(squareMid: squareMid)
+        let request = GetOpenChatRoomMembershipStateRequest(openChatId: openChatId)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
 }

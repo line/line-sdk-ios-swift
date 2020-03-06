@@ -91,8 +91,8 @@ extension SampleUIHomeViewController: OpenChatCreatingControllerDelegate {
         withCreatingItem item: OpenChatRoomCreatingItem
     )
     {
-        UIPasteboard.general.string = room.squareMid
-        let text = "Chat room created.\nURL: \(room.url)\nRoom ID: \(room.squareMid)"
+        UIPasteboard.general.string = room.openChatId
+        let text = "Chat room created.\nURL: \(room.url)\nRoom ID: \(room.openChatId)"
         UIAlertController.present(in: self, successResult: text)
     }
     

@@ -25,11 +25,16 @@ import Foundation
 public struct OpenChatRoomInfo: Decodable {
     
     /// The ID of this Open Chat room.
-    public let squareMid: String
+    public let openChatId: String
     
     /// The URL of this Open Chat room. Open this URL will navigate to LINE app (if installed) or a web page
     /// for the Open Chat room.
     public let url: URL
+
+    enum CodingKeys: String, CodingKey {
+        case openChatId = "openchatId"
+        case url
+    }
 }
 
 /// Represents a request for creating an Open Chat room.
@@ -39,7 +44,7 @@ public struct PostOpenChatCreateRequest: Request {
     /// :nodoc:
     public let method: HTTPMethod = .post
     /// :nodoc:
-    public let path = "/square/v1/square"
+    public let path = "/openchat/v1/openchat"
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     

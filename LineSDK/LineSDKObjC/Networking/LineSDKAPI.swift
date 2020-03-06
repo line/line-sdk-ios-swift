@@ -223,43 +223,43 @@ public class LineSDKAPI: NSObject {
     
     // MARK: - Open Chat
     public static func getOpenChatRoomStatus(
-        squareMid: String,
+        openChatId: String,
         completionHandler completion: @escaping (LineSDKOpenChatRoomStatus?, Error?) -> Void
     )
     {
         getOpenChatRoomStatus(
-            squareMid: squareMid, callbackQueue: .currentMainOrAsync, completionHandler: completion
+            openChatId: openChatId, callbackQueue: .currentMainOrAsync, completionHandler: completion
         )
     }
     
     public static func getOpenChatRoomStatus(
-        squareMid: String,
+        openChatId: String,
         callbackQueue queue: LineSDKCallbackQueue,
         completionHandler completion: @escaping (LineSDKOpenChatRoomStatus?, Error?) -> Void
     )
     {
-        API.getOpenChatRoomStatus(squareMid: squareMid, callbackQueue: queue.unwrapped) { result in
+        API.getOpenChatRoomStatus(openChatId: openChatId, callbackQueue: queue.unwrapped) { result in
             result.map(LineSDKOpenChatRoomStatus.init).match(with: completion)
         }
     }
     
     public static func getOpenChatRoomMembershipState(
-        squareMid: String,
+        openChatId: String,
         completionHandler completion: @escaping (LineSDKOpenChatRoomMembershipState?, Error?) -> Void
     )
     {
         getOpenChatRoomMembershipState(
-            squareMid: squareMid, callbackQueue: .currentMainOrAsync, completionHandler: completion
+            openChatId: openChatId, callbackQueue: .currentMainOrAsync, completionHandler: completion
         )
     }
     
     public static func getOpenChatRoomMembershipState(
-        squareMid: String,
+        openChatId: String,
         callbackQueue queue: LineSDKCallbackQueue,
         completionHandler completion: @escaping (LineSDKOpenChatRoomMembershipState?, Error?) -> Void
     )
     {
-        API.getOpenChatRoomMembershipState(squareMid: squareMid, callbackQueue: queue.unwrapped) { result in
+        API.getOpenChatRoomMembershipState(openChatId: openChatId, callbackQueue: queue.unwrapped) { result in
             result.map(LineSDKOpenChatRoomMembershipState.init).match(with: completion)
         }
     }

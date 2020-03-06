@@ -164,13 +164,13 @@
 
 - (void)_testGetOpenChatRoomStatusInterface {
     [LineSDKAPI
-     getOpenChatRoomStatusWithSquareMid:@""
+     getOpenChatRoomStatusWithOpenChatId:@""
      completionHandler:^(LineSDKOpenChatRoomStatus *result, NSError *error) {
         NSLog(@"%@", result.status);
     }];
     
     [LineSDKAPI
-     getOpenChatRoomStatusWithSquareMid:@""
+     getOpenChatRoomStatusWithOpenChatId:@""
      callbackQueue:[LineSDKCallbackQueue asyncMain]
      completionHandler:^(LineSDKOpenChatRoomStatus *result, NSError *error) {
         NSLog(@"%@", result.status);
@@ -179,13 +179,13 @@
 
 - (void)_testGetOpenChatRoomMembershipState {
     [LineSDKAPI
-     getOpenChatRoomMembershipStateWithSquareMid:@""
+     getOpenChatRoomMembershipStateWithOpenChatId:@""
      completionHandler:^(LineSDKOpenChatRoomMembershipState *result, NSError *error) {
         NSLog(@"%@", result.state);
     }];
     
     [LineSDKAPI
-     getOpenChatRoomMembershipStateWithSquareMid:@""
+     getOpenChatRoomMembershipStateWithOpenChatId:@""
      callbackQueue:[LineSDKCallbackQueue asyncMain]
      completionHandler:^(LineSDKOpenChatRoomMembershipState *result, NSError *error) {
          NSLog(@"%@", result.state);

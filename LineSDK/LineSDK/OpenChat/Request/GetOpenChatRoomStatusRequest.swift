@@ -42,17 +42,17 @@ public struct GetOpenChatRoomStatusRequest: Request {
     /// :nodoc:
     public let method: HTTPMethod = .get
     /// :nodoc:
-    public var path: String { return "/square/v1/square/\(squareMid)/status" }
+    public var path: String { return "/openchat/v1/openchats/\(openChatId)/status" }
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     
     /// The Open Chat room ID.
-    public let squareMid: EntityID
+    public let openChatId: EntityID
     
     /// Creates a request.
-    /// - Parameter squareMid: The Open Chat room ID.
-    public init(squareMid: EntityID) {
-        Log.precondition(squareMid.isValid, "Invalid `squareMid` parameter received: \(squareMid).")
-        self.squareMid = squareMid
+    /// - Parameter openChatId: The Open Chat room ID.
+    public init(openChatId: EntityID) {
+        Log.precondition(openChatId.isValid, "Invalid `openChatId` parameter received: \(openChatId).")
+        self.openChatId = openChatId
     }
 }
