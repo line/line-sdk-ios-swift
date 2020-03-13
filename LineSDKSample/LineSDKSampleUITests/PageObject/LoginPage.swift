@@ -21,30 +21,55 @@
 
 import XCTest
 
-class LoginPage {
-
-    let app = XCUIApplication()
-    let lineLoginButton: XCUIElement
-    let lineLogoutButton: XCUIElement
-
-    init() {
-        lineLoginButton = app.buttons["login.button"]
-        lineLogoutButton = app.navigationBars.buttons["Logout"]
-    }
-
-    func tapLoginButton() {
-        lineLoginButton.tap()
-    }
-
-    func tapLogoutButton() {
-        lineLogoutButton.tap()
+class LoginPage: Page {
+    
+    lazy var okButton = app.buttons["OK"]
+    lazy var lineLoginButton = app.buttons["login.button"]
+    lazy var lineLogoutButton = app.navigationBars.buttons["Logout"]
+        
+    @discardableResult
+    func tapLoginButton() -> Self {
+        tap(element: lineLoginButton)
+        return self
     }
     
+    func tapLogoutButton() {
+        tap(element: lineLogoutButton)
+    }
+    
+    @discardableResult
     func isLineLoginButtonExists() -> Bool {
         return lineLoginButton.exists
     }
     
+    @discardableResult
     func isLineLogoutButtonExists() -> Bool{
         return lineLogoutButton.exists
+    }
+
+    func checkLineLoginButtonExists() {
+        expect(element: lineLoginButton, status: .exist)
+    }
+    
+    func checkLineLogoutButtonExists() {
+        expect(element: lineLogoutButton, status: .exist)
+    }
+        
+    func logout() {
+        tapLogoutButton()
+        tap(element: app.alerts.buttons["Logout"])
+        tap(element: app.alerts.buttons["OK"])
+    }
+    
+    func login() {
+        tapLoginButton()
+        // Open LINE
+        let line = XCUIApplication(bundleIdentifier: "jp.naver.line")
+        tap(element: line.buttons["許可する"])
+        tap(element: line.staticTexts["確認"])
+        tap(element: line.buttons["開く"])
+        
+        // click ok button in App
+        tap(element: okButton)
     }
 }
