@@ -19,10 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods && !LineSDKBinary
-import LineSDK
-#endif
-
 @objc extension NSNotification {
     public static let LineSDKAccessTokenDidUpdate = Notification.Name.LineSDKAccessTokenDidUpdate
     public static let LineSDKAccessTokenDidRemove = Notification.Name.LineSDKAccessTokenDidRemove

@@ -1,5 +1,5 @@
 //
-//  MessageAPITest.swift
+//  AuthenticationTests.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,54 +19,28 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
 import XCTest
 
-class MessageAPITest: XCTestCase{
+class AuthenticationTests: XCTestCase {
     
     let app = XCUIApplication()
-    let apiHomePage = APIHomePage()
     
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         app.launch()
         
-        let loginPage = LoginPage()
+        let loginPage = LoginPage(app)
         if loginPage.isLineLogoutButtonExists() {
-            LineSDKScript.logout(app: app, loginPage: loginPage)
+            loginPage.logout()
         }
     }
     
-    func testSendTextMessage() {
-        apiHomePage.navigateToAPIHomePage()
-        apiHomePage.tapSendTextMessage()
-        tapOKButtonInErrorAlertView()
-    }
-    
-    func testMultiSendTextMessage() {
-        apiHomePage.navigateToAPIHomePage()
-        apiHomePage.tapMultisendTextMessage()
-        tapOKButtonInErrorAlertView()
-    }
-    
-    func testSendFlexMessage() {
-        apiHomePage.navigateToAPIHomePage()
-        apiHomePage.tapSendFlexMessage()
-        tapOKButtonInErrorAlertView()
-    }
-    
-    func tapOKButtonInErrorAlertView() {
-        addUIInterruptionMonitor(withDescription: "No access token error of using message API") { (alert) -> Bool in
-            
-            XCTAssert(alert.staticTexts["Error"].exists)
-            
-            if alert.buttons["OK"].exists {
-                alert.buttons["OK"].tap()
-                return true
-            }
-            return false
-        }
-        app.navigationBars.firstMatch.tap()
+    func testLineLogin() {
+        // A login script for LINE installed and did not set universal link
+        let loginPage = LoginPage(app)
+        loginPage.checkLineLoginButtonExists()
+        loginPage.login()
+        loginPage.checkLineLogoutButtonExists()
     }
 }

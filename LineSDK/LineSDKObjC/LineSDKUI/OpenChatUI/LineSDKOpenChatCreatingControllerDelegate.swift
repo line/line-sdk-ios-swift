@@ -19,10 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods && !LineSDKBinary
-import LineSDK
-#endif
-
 @objc public protocol LineSDKOpenChatCreatingControllerDelegate: AnyObject {
     @objc optional func openChatCreatingController(
         _ controller: LineSDKOpenChatCreatingController,

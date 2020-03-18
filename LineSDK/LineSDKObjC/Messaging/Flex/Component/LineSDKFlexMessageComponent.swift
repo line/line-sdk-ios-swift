@@ -19,10 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods && !LineSDKBinary
-import LineSDK
-#endif
-
 extension FlexMessageComponent {
     var wrapped: LineSDKFlexMessageComponent {
         switch self {
