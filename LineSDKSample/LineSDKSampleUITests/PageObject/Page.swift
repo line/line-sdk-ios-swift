@@ -1,5 +1,5 @@
 //
-//  APIHomePage.swift
+//  Page.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,44 +21,37 @@
 
 import XCTest
 
-class APIHomePage {
-
-    let app = XCUIApplication()
-    var table: XCUIElement
-
-    init() {
-        table = app.tables.firstMatch
-    }
-
-    func navigateToAPIHomePage() {
-        app.tabBars.buttons["API"].tap()
-    }
-
-    func tapGetFriends() {
-        table.cells.staticTexts["Get Friends"].tap()
-    }
-
-    func tapGetApproversInFriends() {
-        table.cells.staticTexts["Get Approvers in Friends"].tap()
-    }
-
-    func tapGetGroups() {
-        table.cells.staticTexts["Get Groups"].tap()
-    }
-
-    func tapGetApproversInGivenGroup() {
-        table.cells.staticTexts["Get Approvers in given Group"].tap()
+class Page {
+    var app: XCUIApplication
+    
+    required init(_ app: XCUIApplication) {
+        self.app = app
     }
     
-    func tapSendTextMessage() {
-        table.cells.staticTexts["Send text message to a friend"].tap()
+    func on<T: Page>(page: T.Type) -> T {
+        return page.init(app)
     }
-
-    func tapMultisendTextMessage() {
-        table.cells.staticTexts["Multisend text message to first five friends"].tap()
+    
+    enum UIStatus: String {
+        case exist = "exists == true"
+        case notExist = "exist == false"
+        case selected = "selected == true"
+        case notSelected = "selected == false"
+        case hittable = "isHittable == true"
+        case notHittable = "hittable == false"
     }
-
-    func tapSendFlexMessage() {
-        table.cells.staticTexts["Send flex message to a friend"].tap()
+    
+    func expect(element: XCUIElement, status: UIStatus, withIn timeout: TimeInterval = 20) {
+        let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: status.rawValue), object: element)
+        let result = XCTWaiter.wait(for: [expectation], timeout: timeout)
+        
+        if result == .timedOut {
+            XCTFail(expectation.description)
+        }
+    }
+    
+    func tap(element: XCUIElement) {
+        expect(element: element, status: .exist)
+        element.tap()
     }
 }
