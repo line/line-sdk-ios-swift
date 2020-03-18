@@ -8,6 +8,18 @@
     <meta charset="utf-8">
     <script src="{{path_to_root}}js/jquery.min.js" defer></script>
     <script src="{{path_to_root}}js/jazzy.js" defer></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-99780509-4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'UA-99780509-4');
+    </script>
     {{{custom_head}}}
     {{^disable_search}}
     <script src="{{path_to_root}}js/lunr.min.js" defer></script>
