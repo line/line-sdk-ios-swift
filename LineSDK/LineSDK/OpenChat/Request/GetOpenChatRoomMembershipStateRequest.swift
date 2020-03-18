@@ -41,7 +41,7 @@ public struct GetOpenChatRoomMembershipStateRequest: Request {
     /// :nodoc:
     public let method: HTTPMethod = .get
     /// :nodoc:
-    public var path: String { return "/openchat/v1/openchats/\(openChatId)/membership" }
+    public var path: String { return "/openchat/v1/openchats/\(openChatId)/members/me/membership" }
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     

@@ -44,7 +44,7 @@ public struct PostOpenChatCreateRequest: Request {
     /// :nodoc:
     public let method: HTTPMethod = .post
     /// :nodoc:
-    public let path = "/openchat/v1/openchat"
+    public let path = "/openchat/v1/openchats"
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     
