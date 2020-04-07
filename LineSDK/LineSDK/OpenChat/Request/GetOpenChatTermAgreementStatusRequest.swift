@@ -34,7 +34,7 @@ public struct GetOpenChatTermAgreementStatusRequest: Request {
     /// :nodoc:
     public let method: HTTPMethod = .get
     /// :nodoc:
-    public let path = "/square/v1/terms/agreement"
+    public let path = "/openchat/v1/terms/agreement"
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     /// :nodoc:

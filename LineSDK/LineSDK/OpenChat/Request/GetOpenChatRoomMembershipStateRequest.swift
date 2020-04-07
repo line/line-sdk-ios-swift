@@ -30,6 +30,15 @@ public struct GetOpenChatRoomMembershipStateRequest: Request {
         case joined = "JOINED"
         /// The user is not a member of the room yet.
         case notJoined = "NOT_JOINED"
+        /// The received state is not defined yet in current version.
+        /// Try to upgrade to the latest SDK version if you encountered this.
+        case undefined
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let value = try container.decode(String.self)
+            self = State(rawValue: value) ?? .undefined
+        }
     }
     
     /// The response of a `GetOpenChatRoomMembershipStateRequest`.
