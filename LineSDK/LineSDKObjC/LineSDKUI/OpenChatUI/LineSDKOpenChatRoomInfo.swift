@@ -24,6 +24,6 @@ public class LineSDKOpenChatRoomInfo: NSObject {
     let _value: OpenChatRoomInfo
     init(_ value: OpenChatRoomInfo) { _value = value }
     
-    public var squareMid: String { return _value.squareMid }
+    public var openChatId: String { return _value.openChatId }
     public var url: URL { return _value.url }
 }

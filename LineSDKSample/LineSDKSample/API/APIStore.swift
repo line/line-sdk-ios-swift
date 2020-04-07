@@ -313,12 +313,12 @@ extension APIItem {
     }
     
     static var checkOpenChatRoomStatus: APIItem {
-        let mock = GetOpenChatRoomStatusRequest(squareMid: "squareMid")
+        let mock = GetOpenChatRoomStatusRequest(openChatId: "openChatId")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
                 let text = try! result.get()
-                let request = GetOpenChatRoomStatusRequest(squareMid: text)
+                let request = GetOpenChatRoomStatusRequest(openChatId: text)
                 Session.shared.send(request) {
                     response in
                     switch response {
@@ -332,12 +332,12 @@ extension APIItem {
     }
     
     static var checkOpenChatRoomMembershipState: APIItem {
-        let mock = GetOpenChatRoomMembershipStateRequest(squareMid: "squareMid")
+        let mock = GetOpenChatRoomMembershipStateRequest(openChatId: "openChatId")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
                 let text = try! result.get()
-                let request = GetOpenChatRoomMembershipStateRequest(squareMid: text)
+                let request = GetOpenChatRoomMembershipStateRequest(openChatId: text)
                 Session.shared.send(request) {
                     response in
                     switch response {
@@ -479,7 +479,7 @@ func collectOpenChatMid(
 )
 {
     let alert = UIAlertController(title: "Open Chat Status", message: nil, preferredStyle: .alert)
-    alert.addTextField { $0.placeholder = "Input squareMid to start a check..." }
+    alert.addTextField { $0.placeholder = "Input openChatId to start a check..." }
     alert.addAction(
         .init(title: "OK", style: .default) {
             _ in

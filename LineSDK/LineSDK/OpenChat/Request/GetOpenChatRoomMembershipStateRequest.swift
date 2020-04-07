@@ -30,6 +30,15 @@ public struct GetOpenChatRoomMembershipStateRequest: Request {
         case joined = "JOINED"
         /// The user is not a member of the room yet.
         case notJoined = "NOT_JOINED"
+        /// The received state is not defined yet in current version.
+        /// Try to upgrade to the latest SDK version if you encountered this.
+        case undefined
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let value = try container.decode(String.self)
+            self = State(rawValue: value) ?? .undefined
+        }
     }
     
     /// The response of a `GetOpenChatRoomMembershipStateRequest`.
@@ -41,18 +50,18 @@ public struct GetOpenChatRoomMembershipStateRequest: Request {
     /// :nodoc:
     public let method: HTTPMethod = .get
     /// :nodoc:
-    public var path: String { return "/square/v1/square/\(squareMid)/membership" }
+    public var path: String { return "/openchat/v1/openchats/\(openChatId)/members/me/membership" }
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
     
     /// The Open Chat room ID.
-    public let squareMid: EntityID
+    public let openChatId: EntityID
     
     /// Creates a request.
-    /// - Parameter squareMid: The Open Chat room ID.
-    public init(squareMid: EntityID) {
-        Log.precondition(squareMid.isValid, "Invalid `squareMid` parameter received: \(squareMid).")
-        self.squareMid = squareMid
+    /// - Parameter openChatId: The Open Chat room ID.
+    public init(openChatId: EntityID) {
+        Log.precondition(openChatId.isValid, "Invalid `openChatId` parameter received: \(openChatId).")
+        self.openChatId = openChatId
     }
     
 }
