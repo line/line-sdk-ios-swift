@@ -1,5 +1,5 @@
 //
-//  PostOpenChatCreateRequest.swift
+//  PostOpenChatRoomJoinRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,54 +21,31 @@
 
 import Foundation
 
-/// The basic Open Chat room information.
-public struct OpenChatRoomInfo: Decodable {
-    
-    /// The identifier of this Open Chat room.
-    public let openChatId: String
-    
-    /// The URL of this Open Chat room. Open this URL will navigate to LINE app (if installed) or a web page
-    /// for the Open Chat room.
-    public let url: URL
-
-    enum CodingKeys: String, CodingKey {
-        case openChatId = "openchatId"
-        case url
-    }
-}
-
-/// Represents a request for creating an Open Chat room.
-public struct PostOpenChatCreateRequest: Request {
+/// Represents a request for joining an Open Chat room.
+public struct PostOpenChatRoomJoinRequest: Request {
     /// :nodoc:
-    public typealias Response = OpenChatRoomInfo
+    public typealias Response = Unit
     /// :nodoc:
     public let method: HTTPMethod = .post
     /// :nodoc:
-    public let path = "/openchat/v1/openchats"
+    public var path: String { return "/openchat/v1/openchats/\(openChatId)/join" }
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
-    
-    /// The room information will be used to create the room.
-    public let room: OpenChatRoomCreatingItem
-    
-    /// :nodoc:
-    public init(room: OpenChatRoomCreatingItem) {
-        self.room = room
-    }
-    /// :nodoc:
-    public var parameters: Parameters? {
-        return room.toDictionary
-    }
-}
 
-extension OpenChatRoomCreatingItem {
-    fileprivate var toDictionary: [String: Any] {
-        return [
-            "name": name,
-            "description": roomDescription,
-            "creatorDisplayName": creatorDisplayName,
-            "category": category,
-            "allowSearch": allowSearch
-        ]
+    /// The identifier of the joining Open Chat room.
+    public let openChatId: EntityID
+
+    /// The desired display name of current user in the Open Chat room.
+    public let displayName: String
+
+    /// :nodoc:
+    public init(openChatId: EntityID, displayName: String) {
+        Log.precondition(openChatId.isValid, "Invalid `openChatId` parameter received: \(openChatId).")
+        self.openChatId = openChatId
+        self.displayName = displayName
+    }
+
+    public var parameters: Parameters? {
+        return ["displayName": displayName]
     }
 }

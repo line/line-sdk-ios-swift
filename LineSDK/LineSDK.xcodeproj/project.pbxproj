@@ -520,6 +520,7 @@
 		D1D22CAB2408AA480028A9E0 /* LineSDKOpenChatRoomMembershipState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */; };
 		D1F4E716225743F3002639AC /* LineSDKShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */; };
 		D1F4E718225744CE002639AC /* LineSDKViewControllerInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */; };
+		D1F6B581243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */; };
 		DB09851523D5AF9D0001A3B8 /* PKCETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB09851423D5AF9D0001A3B8 /* PKCETests.swift */; };
 		DB0AFF612247FB2E002729AD /* PageTabViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */; };
 		DB115EF822537F1000C16B0C /* ShareTargetSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */; };
@@ -876,6 +877,7 @@
 		D1A591282139495B00AC080D /* JWKSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKSet.swift; sourceTree = "<group>"; };
 		D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareViewController.swift; sourceTree = "<group>"; };
 		D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKViewControllerInterfaceTests.m; sourceTree = "<group>"; };
+		D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOpenChatRoomJoinRequest.swift; sourceTree = "<group>"; };
 		DB09851423D5AF9D0001A3B8 /* PKCETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCETests.swift; sourceTree = "<group>"; };
 		DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTabViewTests.swift; sourceTree = "<group>"; };
 		DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultViewController.swift; sourceTree = "<group>"; };
@@ -1710,6 +1712,7 @@
 				4BF487F42394A47A00A5DC77 /* PostOpenChatCreateRequest.swift */,
 				4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */,
 				4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */,
+				D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -2329,6 +2332,7 @@
 				4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */,
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
 				4B3CCB762152295300F51D76 /* CryptoData.swift in Sources */,
+				D1F6B581243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift in Sources */,
 				4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */,
 				4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */,
 				4B1C44692137E1EE0094C1D4 /* JWTHelpers.swift in Sources */,
