@@ -47,6 +47,7 @@ enum APIResultEntry: Comparable {
         case let v as MessageSendingStatus:                        self = .pair(key, "\(v)")
         case let v as GetOpenChatRoomStatusRequest.Status:         self = .pair(key, "\(v.rawValue)")
         case let v as GetOpenChatRoomMembershipStateRequest.State: self = .pair(key, "\(v.rawValue)")
+        case let v as GetOpenChatRoomJoinTypeRequest.RoomType:     self = .pair(key, "\(v.rawValue)")
             
         case let v as [Any]:
             let entries = v.enumerated().map { offset, element in

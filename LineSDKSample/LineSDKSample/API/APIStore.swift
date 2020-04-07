@@ -139,7 +139,9 @@ extension APIStore {
             ),
             .checkOpenChatRoomStatus,
             .checkOpenChatRoomMembershipState,
-            .createOpenChatRoom
+            .checkOpenChatRoomJoinType,
+            .createOpenChatRoom,
+            .joinOpenChatRoom
         ]
     }
 }
@@ -290,16 +292,14 @@ extension APIItem {
     }
 
     static var getApproversInGroup: APIItem {
-        let mock = GetApproversInGroupRequest(groupID: "groupID")
+        let mock = try! GetApproversInGroupRequest(groupID: "groupID")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             selectGroupFromGroupList(in: controller, handler: { result in
                 switch result {
                 case .success(let groupID):
-                    let request = GetApproversInGroupRequest(groupID: groupID)
-                    Session.shared.send(request) {
-                        response in
-                        switch response {
+                    API.getApproversInGroup(groupID: groupID, pageToken: nil) { result in
+                        switch result {
                         case .success(let value): handler(.success(value))
                         case .failure(let error): handler(.failure(.sdkError(error)))
                         }
@@ -313,15 +313,13 @@ extension APIItem {
     }
     
     static var checkOpenChatRoomStatus: APIItem {
-        let mock = GetOpenChatRoomStatusRequest(openChatId: "openChatId")
+        let mock = try! GetOpenChatRoomStatusRequest(openChatId: "openChatId")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
                 let text = try! result.get()
-                let request = GetOpenChatRoomStatusRequest(openChatId: text)
-                Session.shared.send(request) {
-                    response in
-                    switch response {
+                API.getOpenChatRoomStatus(openChatId: text) { result in
+                    switch result {
                     case .success(let value): handler(.success(value))
                     case .failure(let error): handler(.failure(.sdkError(error)))
                     }
@@ -330,17 +328,32 @@ extension APIItem {
         }
         return APIItem(title: "Check Open Chat Room Status", mock: mock, block: block)
     }
-    
-    static var checkOpenChatRoomMembershipState: APIItem {
-        let mock = GetOpenChatRoomMembershipStateRequest(openChatId: "openChatId")
+
+    static var checkOpenChatRoomJoinType: APIItem {
+        let mock = try! GetOpenChatRoomJoinTypeRequest(openChatId: "openChatId")
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
                 let text = try! result.get()
-                let request = GetOpenChatRoomMembershipStateRequest(openChatId: text)
-                Session.shared.send(request) {
-                    response in
-                    switch response {
+                API.getOpenChatRoomJoinType(openChatId: text) { result in
+                    switch result {
+                    case .success(let value): handler(.success(value))
+                    case .failure(let error): handler(.failure(.sdkError(error)))
+                    }
+                }
+            }
+        }
+        return APIItem(title: "Check Open Chat Room Join Type", mock: mock, block: block)
+    }
+    
+    static var checkOpenChatRoomMembershipState: APIItem {
+        let mock = try! GetOpenChatRoomMembershipStateRequest(openChatId: "openChatId")
+        let block: AnyResultBlock = { arg in
+            let (controller, handler) = arg
+            collectOpenChatMid(in: controller) { result in
+                let text = try! result.get()
+                API.getOpenChatRoomMembershipState(openChatId: text) { result in
+                    switch result {
                     case .success(let value): handler(.success(value))
                     case .failure(let error): handler(.failure(.sdkError(error)))
                     }
@@ -360,6 +373,27 @@ extension APIItem {
         )
         return .init(title: "Create Open Chat Room", request: PostOpenChatCreateRequest(room: room))
     }
+
+    static var joinOpenChatRoom: APIItem {
+        let mock = try! PostOpenChatRoomJoinRequest(openChatId: "openChatId", displayName: "displayName")
+        let block: AnyResultBlock = { arg in
+            let (controller, handler) = arg
+            collectionOpenChatIdAndUsername(in: controller) { result in
+                let text = try! result.get()
+                API.postOpenChatRoomJoin(openChatId: text.0, displayName: text.1) { result in
+                    switch result {
+                    case .success: handler(.success(APIStatus(code: 204)))
+                    case .failure(let error): handler(.failure(.sdkError(error)))
+                    }
+                }
+            }
+        }
+        return APIItem(title: "Join an Open Chat Room", mock: mock, block: block)
+    }
+}
+
+struct APIStatus {
+    let code: Int
 }
 
 func selectUserFromFriendList(
@@ -478,13 +512,33 @@ func collectOpenChatMid(
     handler: @escaping (Result<String, Never>) -> Void
 )
 {
-    let alert = UIAlertController(title: "Open Chat Status", message: nil, preferredStyle: .alert)
-    alert.addTextField { $0.placeholder = "Input openChatId to start a check..." }
+    let alert = UIAlertController(title: "Open Chat Id", message: nil, preferredStyle: .alert)
+    alert.addTextField { $0.placeholder = "Input openChatId..." }
     alert.addAction(
         .init(title: "OK", style: .default) {
             _ in
             guard let text = alert.textFields?.first?.text else { return }
             handler(.success(text))
+        }
+    )
+    alert.addAction(.init(title: "Cancel", style: .cancel))
+    viewController.present(alert, animated: true)
+}
+
+func collectionOpenChatIdAndUsername(
+    in viewController: UIViewController,
+    handler: @escaping (Result<(String,String), Never>) -> Void
+)
+{
+    let alert = UIAlertController(title: "Open Chat Id", message: nil, preferredStyle: .alert)
+    alert.addTextField { $0.placeholder = "Open Chat Id..." }
+    alert.addTextField { $0.placeholder = "Display Name..." }
+    alert.addAction(
+        .init(title: "OK", style: .default) {
+            _ in
+            guard let openChatId = alert.textFields?[0].text else { return }
+            guard let displayName = alert.textFields?[1].text else { return }
+            handler(.success((openChatId, displayName)))
         }
     )
     alert.addAction(.init(title: "Cancel", style: .cancel))
