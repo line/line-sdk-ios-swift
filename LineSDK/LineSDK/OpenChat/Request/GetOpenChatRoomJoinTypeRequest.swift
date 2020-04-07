@@ -1,5 +1,5 @@
 //
-//  GetOpenChatRoomMembershipStateRequest.swift
+//  GetOpenChatRoomJoinTypeRequest.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -21,15 +21,17 @@
 
 import Foundation
 
-/// Represents a request for getting membership of current user to a given Open Chat room.
-public struct GetOpenChatRoomMembershipStateRequest: Request {
-    
-    /// The membership state of current user to the room.
-    public enum State: String, Decodable {
-        /// The user has already joined the room.
-        case joined = "JOINED"
-        /// The user is not a member of the room yet.
-        case notJoined = "NOT_JOINED"
+public struct GetOpenChatRoomJoinTypeRequest: Request {
+
+    /// The joining type of an Open Chat room. The value indicates what is required if a user want to join the room.
+    public enum RoomType: String, Decodable {
+        /// The room is public and open for anyone to join.
+        case `default` = "NONE"
+        /// A user needs to request to join the room, only approved user can join. The admins or authority users of the
+        /// room can approve the request.
+        case approval = "APPROVAL"
+        ///  A user needs to input the join code to join the room.
+        case code = "CODE"
         /// The received state is not defined yet in current version.
         /// Try to upgrade to the latest SDK version if you encountered this.
         case undefined
@@ -38,26 +40,26 @@ public struct GetOpenChatRoomMembershipStateRequest: Request {
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             let value = try container.decode(String.self)
-            self = State(rawValue: value) ?? .undefined
+            self = RoomType(rawValue: value) ?? .undefined
         }
     }
-    
-    /// The response of a `GetOpenChatRoomMembershipStateRequest`.
+
+    /// The response of a `GetOpenChatRoomJoinTypeRequest`.
     public struct Response: Decodable {
-        /// The membership state of current user.
-        public let state: State
+        /// The room joining type of the requested Open Chat room.
+        public let type: RoomType
     }
-    
+
     /// :nodoc:
     public let method: HTTPMethod = .get
     /// :nodoc:
-    public var path: String { return "/openchat/v1/openchats/\(openChatId)/members/me/membership" }
+    public var path: String { return "/openchat/v1/openchats/\(openChatId)/type" }
     /// :nodoc:
     public let authentication: AuthenticateMethod = .token
-    
+
     /// The Open Chat room ID.
     public let openChatId: EntityID
-    
+
     /// Creates a request.
     /// - Parameter openChatId: The Open Chat room ID.
     public init(openChatId: EntityID) throws {
@@ -68,5 +70,4 @@ public struct GetOpenChatRoomMembershipStateRequest: Request {
         }
         self.openChatId = openChatId
     }
-    
 }

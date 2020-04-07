@@ -39,8 +39,12 @@ public struct PostOpenChatRoomJoinRequest: Request {
     public let displayName: String
 
     /// :nodoc:
-    public init(openChatId: EntityID, displayName: String) {
-        Log.precondition(openChatId.isValid, "Invalid `openChatId` parameter received: \(openChatId).")
+    public init(openChatId: EntityID, displayName: String) throws {
+        guard openChatId.isValid else {
+            throw LineSDKError.requestFailed(reason:
+                .invalidParameter([.invalidEntityID("openChatId", value: openChatId)])
+            )
+        }
         self.openChatId = openChatId
         self.displayName = displayName
     }

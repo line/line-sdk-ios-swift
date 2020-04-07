@@ -51,6 +51,10 @@ public enum LineSDKError: Error {
 
         /// The request requires a JSON body but the provided data cannot be encoded to valid JSON. Code 1003.
         case jsonEncodingFailed(Error)
+
+        /// The request cannot be created due to the parameter does not match the precondition. Check the associated
+        /// values for detail information. Code 1004.
+        case invalidParameter([ParameterItem])
     }
 
     /// The possible underlying reasons a `.responseFailed` error occurs.
@@ -414,6 +418,28 @@ extension LineSDKError: CustomNSError {
     }
 }
 
+extension LineSDKError.RequestErrorReason {
+    public struct ParameterItem {
+        public let name: String
+        public let value: String
+        public let description: String
+    }
+}
+
+extension LineSDKError.RequestErrorReason.ParameterItem {
+    static func invalidEntityID(
+        _ parameterName: String,
+        value: EntityID
+    ) -> LineSDKError.RequestErrorReason.ParameterItem
+    {
+        return .init(
+            name: parameterName,
+            value: value,
+            description: "The value of `\(parameterName)` is not valid. It should be in the range of [^a-zA-Z0-9], but now \(value)."
+        )
+    }
+}
+
 // MARK: - Private Definition
 extension LineSDKError.RequestErrorReason {
 
@@ -425,6 +451,9 @@ extension LineSDKError.RequestErrorReason {
             return "The request requires an access token, but there is no one."
         case .jsonEncodingFailed(let error):
             return "The request requires a JSON body, but provided data cannot be encoded to valid JSON. \(error)"
+        case .invalidParameter(let parameters):
+            return "Cannot create the request. Invalid parameters:"
+                + (parameters.map { $0.description }).joined(separator: "\n")
         }
     }
 
@@ -433,6 +462,7 @@ extension LineSDKError.RequestErrorReason {
         case .missingURL:         return 1001
         case .lackOfAccessToken:  return 1002
         case .jsonEncodingFailed: return 1003
+        case .invalidParameter:   return 1004
         }
     }
 
@@ -443,6 +473,7 @@ extension LineSDKError.RequestErrorReason {
         case .lackOfAccessToken: break
         case .jsonEncodingFailed(let error):
             userInfo[.underlyingError] = error
+        case .invalidParameter: break
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }

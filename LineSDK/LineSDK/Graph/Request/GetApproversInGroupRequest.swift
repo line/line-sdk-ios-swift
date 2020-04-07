@@ -26,8 +26,12 @@ import Foundation
 /// Note that this API does not take friendship status into account.
 public struct GetApproversInGroupRequest: Request {
 
-    public init(groupID: EntityID, pageToken: String? = nil) {
-        Log.precondition(groupID.isValid, "Invalid `groupID` parameter received: \(groupID).")
+    public init(groupID: EntityID, pageToken: String? = nil) throws {
+        guard groupID.isValid else {
+            throw LineSDKError.requestFailed(reason:
+                .invalidParameter([.invalidEntityID("groupID", value: groupID)])
+            )
+        }
         self.groupID = groupID
         self.pageToken = pageToken
     }

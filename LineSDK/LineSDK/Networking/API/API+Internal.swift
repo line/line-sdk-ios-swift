@@ -116,8 +116,12 @@ extension API {
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping (Result<GetApproversInGroupRequest.Response, LineSDKError>) -> Void)
     {
-        let request = GetApproversInGroupRequest(groupID: groupID, pageToken: pageToken)
-        Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
+        do {
+            let request = try GetApproversInGroupRequest(groupID: groupID, pageToken: pageToken)
+            Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
+        } catch {
+            queue.execute { completion(.failure(error.sdkError)) }
+        }
     }
 }
 

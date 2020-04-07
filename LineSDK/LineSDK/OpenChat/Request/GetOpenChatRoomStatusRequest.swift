@@ -51,8 +51,12 @@ public struct GetOpenChatRoomStatusRequest: Request {
     
     /// Creates a request.
     /// - Parameter openChatId: The Open Chat room ID.
-    public init(openChatId: EntityID) {
-        Log.precondition(openChatId.isValid, "Invalid `openChatId` parameter received: \(openChatId).")
+    public init(openChatId: EntityID) throws {
+        guard openChatId.isValid else {
+            throw LineSDKError.requestFailed(reason:
+                .invalidParameter([.invalidEntityID("openChatId", value: openChatId)])
+            )
+        }
         self.openChatId = openChatId
     }
 }
