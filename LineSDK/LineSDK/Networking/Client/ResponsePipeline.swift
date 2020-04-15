@@ -257,6 +257,13 @@ class DataTransformRedirector: ResponsePipelineRedirector {
     {
         try closure(.continueWith(transform(data), response))
     }
-    
-    
 }
+
+// Convert empty data to an empty JSON `{}`
+let emptyDataTransformer: ResponsePipeline = {
+    let isDataEmpty: ((Data) -> Bool) = { $0.isEmpty }
+    let dataTransformer = DataTransformRedirector(condition: isDataEmpty) { _ in
+        return "{}".data(using: .utf8)!
+    }
+    return .redirector(dataTransformer)
+}()

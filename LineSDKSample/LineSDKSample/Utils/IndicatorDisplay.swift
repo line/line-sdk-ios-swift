@@ -32,9 +32,17 @@ extension IndicatorDisplay where Self: UIViewController {
     func showIndicator() {
         showIndicator(in: view)
     }
+
+    func showIndicatorOnWindow() {
+        showIndicator(in: UIApplication.shared.keyWindow ?? view)
+    }
     
     func hideIndicator() {
         hideIndicator(from: view)
+    }
+
+    func hideIndicatorFromWindow() {
+        hideIndicator(from: UIApplication.shared.keyWindow ?? view)
     }
     
     func showIndicator(in view: UIView) {

@@ -31,15 +31,7 @@ extension RevokeTokenRequest {
     var contentType: ContentType { return .formUrlEncoded }
     var authentication: AuthenticateMethod { return .none }
     var prefixPipelines: [ResponsePipeline]? {
-
-        // Convert empty data to an empty JSON `{}`
-        let isDataEmpty: ((Data) -> Bool) = { $0.isEmpty }
-        let dataTransformer = DataTransformRedirector(condition: isDataEmpty) { _ in
-            return "{}".data(using: .utf8)!
-        }
-        return [
-            .redirector(dataTransformer)
-        ]
+        return [emptyDataTransformer]
     }
 }
 

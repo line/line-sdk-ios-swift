@@ -1,5 +1,5 @@
 //
-//  SampleUIHomeViewController.swift
+//  OpenChatRoom.swift
 //
 //  Copyright (c) 2016-present, LINE Corporation. All rights reserved.
 //
@@ -19,35 +19,52 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
-import LineSDK
+import Foundation
 
-class SampleUIHomeViewController: UITableViewController {
+class OpenChatRoom: Codable {
+    let chatRoomId: String
+    let url: URL
 
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == "showMessageChooser" {
-            let status = ShareViewController.localAuthorizationStatusForSendingMessage()
-            switch status {
-            case .authorized:
-                return true
-            case .lackOfPermissions(let p):
-                UIAlertController.present(
-                    in: self,
-                    title: nil,
-                    message: "Lack of permissions: \(p)",
-                    actions: [.init(title: "OK", style: .cancel)]
-                )
-                return false
-            case .lackOfToken:
-                UIAlertController.present(
-                    in: self,
-                    title: nil,
-                    message: "Please login first.",
-                    actions: [.init(title: "OK", style: .cancel)]
-                )
-                return false
-            }
+    init(chatRoomId: String, url: URL) {
+        self.chatRoomId = chatRoomId
+        self.url = url
+    }
+}
+
+extension OpenChatRoom {
+
+    static var onUpdated: (() -> Void)?
+
+    static var all: [OpenChatRoom] {
+        return builtInRooms + createdRooms
+    }
+
+    static let builtInRooms: [OpenChatRoom] = [
+    ]
+
+    static let url: URL = {
+        let fileManager = FileManager.default
+        let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+            .first!
+            .appendingPathComponent("created_rooms.json")
+        return url
+    }()
+
+    static var createdRooms: [OpenChatRoom] = {
+        do {
+            let data = try Data(contentsOf: url)
+            return try JSONDecoder().decode([OpenChatRoom].self, from: data)
+        } catch {
+            return []
         }
-        return true
+    }()
+    {
+        didSet {
+            guard let data = try? JSONEncoder().encode(createdRooms) else {
+                return
+            }
+            try? data.write(to: url)
+            onUpdated?()
+        }
     }
 }

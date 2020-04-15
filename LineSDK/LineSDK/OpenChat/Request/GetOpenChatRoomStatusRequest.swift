@@ -32,6 +32,16 @@ public struct GetOpenChatRoomStatusRequest: Request {
         case deleted = "DELETED"
         /// The room is suspended for some reason.
         case suspended = "SUSPENDED"
+        /// The received state is not defined yet in current version.
+        /// Try to upgrade to the latest SDK version if you encountered this.
+        case undefined
+
+        /// :nodoc:
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            let value = try container.decode(String.self)
+            self = Status(rawValue: value) ?? .undefined
+        }
     }
     
     /// The response of a `GetOpenChatRoomStatusRequest`.

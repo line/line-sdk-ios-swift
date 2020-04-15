@@ -49,6 +49,10 @@ public struct PostOpenChatRoomJoinRequest: Request {
         self.displayName = displayName
     }
 
+    public var prefixPipelines: [ResponsePipeline]? {
+        return [emptyDataTransformer]
+    }
+
     public var parameters: Parameters? {
         return ["displayName": displayName]
     }
