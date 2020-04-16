@@ -56,13 +56,13 @@ public struct LoginPermission: Hashable {
     
     /// The permission to check Open Chat use term agreement status. This is necessary if you want to create or join an
     /// open chat room.
-    public static let openChatTermStatus             = LoginPermission(rawValue: "openchat.term.agree")
+    public static let openChatTermStatus             = LoginPermission(rawValue: "openchat.term.agreement.status")
     
     /// The permission to create or join to an Open Chat room.
     public static let openChatRoomCreateAndJoin      = LoginPermission(rawValue: "openchat.create.join")
     
     /// The permission to check subscription information of an Open Chat room.
-    public static let openChatSubscriptionInfo      = LoginPermission(rawValue: "openchat.subscription.info")
+    public static let openChatSubscriptionInfo       = LoginPermission(rawValue: "openchat.subscription.info")
 }
 
 /// Sub-permissions of .openID. Permissions in this extension will not be included in the `permissions` property of
