@@ -73,7 +73,7 @@ public enum API {
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the room availability status is returned.
-    /// - Note: The `.openChatRoomStatus` permission is required.
+    /// - Note: The `.openChatSubscriptionInfo` permission is required.
     ///
     public static func getOpenChatRoomStatus(
         openChatId: EntityID,
@@ -96,7 +96,7 @@ public enum API {
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the membership state is returned.
-    /// - Note: The `.openChatRoomMembership` permission is required.
+    /// - Note: The `.openChatSubscriptionInfo` permission is required.
     ///
     public static func getOpenChatRoomMembershipState(
         openChatId: EntityID,
@@ -112,6 +112,28 @@ public enum API {
         }
     }
 
+    /// Gets the joining type of an Open Chat room.
+    /// - Parameters:
+    ///   - openChatId: The identifier of the joining Open Chat room.
+    ///   - queue: The callback queue that is used for `completion`. The default value is
+    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
+    ///   - completion: The completion closure to be invoked when the membership state is returned.
+    /// - Note: The `.openChatSubscriptionInfo` permission is required.
+    ///
+    public static func getOpenChatRoomJoinType(
+        openChatId: EntityID,
+        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
+        completionHandler completion: @escaping (Result<GetOpenChatRoomJoinTypeRequest.Response, LineSDKError>) -> Void
+    )
+    {
+        do {
+            let request = try GetOpenChatRoomJoinTypeRequest(openChatId: openChatId)
+            Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+        } catch {
+            queue.execute { completion(.failure(error.sdkError)) }
+        }
+    }
+
     /// Joins a specified Open Chat room with the desired display name.
     /// - Parameters:
     ///   - openChatId: The identifier of the joining Open Chat room.
@@ -119,6 +141,7 @@ public enum API {
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the membership state is returned.
+    /// - Note: The `.openChatRoomCreateAndJoin` permission is required.
     ///
     public static func postOpenChatRoomJoin(
         openChatId: EntityID,
@@ -134,26 +157,5 @@ public enum API {
             queue.execute { completion(.failure(error.sdkError)) }
         }
 
-    }
-
-    /// Gets the joining type of an Open Chat room.
-    /// - Parameters:
-    ///   - openChatId: The identifier of the joining Open Chat room.
-    ///   - queue: The callback queue that is used for `completion`. The default value is
-    ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
-    ///   - completion: The completion closure to be invoked when the membership state is returned.
-    ///
-    public static func getOpenChatRoomJoinType(
-        openChatId: EntityID,
-        callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetOpenChatRoomJoinTypeRequest.Response, LineSDKError>) -> Void
-    )
-    {
-        do {
-            let request = try GetOpenChatRoomJoinTypeRequest(openChatId: openChatId)
-            Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
-        } catch {
-            queue.execute { completion(.failure(error.sdkError)) }
-        }
     }
 }

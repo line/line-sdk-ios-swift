@@ -47,6 +47,10 @@ public class LineSDKLoginPermission: NSObject {
     public static let birthdate                      = LineSDKLoginPermission(.birthdate)
     public static let address                        = LineSDKLoginPermission(.address)
     public static let realName                       = LineSDKLoginPermission(.realName)
+
+    public static let openChatTermStatus             = LineSDKLoginPermission(.openChatTermStatus)
+    public static let openChatRoomCreateAndJoin      = LineSDKLoginPermission(.openChatRoomCreateAndJoin)
+    public static let openChatSubscriptionInfo       = LineSDKLoginPermission(.openChatSubscriptionInfo)
     
     var unwrapped: LoginPermission { return _value }
 }

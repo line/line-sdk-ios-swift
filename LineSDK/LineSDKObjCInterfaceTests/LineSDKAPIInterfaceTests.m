@@ -192,4 +192,32 @@
      }];
 }
 
+- (void)_testGetOpenChatRoomJoinType {
+    [LineSDKAPI
+     getOpenChatRoomJoinTypeWithOpenChatId:@""
+     completionHandler:^(LineSDKOpenChatRoomJoinType *result, NSError *error) {
+        NSLog(@"%@", result.type);
+    }];
+    [LineSDKAPI
+     getOpenChatRoomJoinTypeWithOpenChatId:@""
+     callbackQueue:[LineSDKCallbackQueue asyncMain]
+     completionHandler:^(LineSDKOpenChatRoomJoinType *result, NSError *error) {
+        NSLog(@"%@", result.type);
+    }];
+}
+
+- (void)_testPostOpenChatRoomJoin {
+    [LineSDKAPI
+     postOpenChatRoomJoinWithOpenChatId:@""
+     displayName:@""
+     completionHandler:^(NSError *error) {}
+    ];
+    [LineSDKAPI
+     postOpenChatRoomJoinWithOpenChatId:@""
+     displayName:@""
+     callbackQueue:[LineSDKCallbackQueue asyncMain]
+     completionHandler:^(NSError *error) {}
+    ];
+}
+
 @end

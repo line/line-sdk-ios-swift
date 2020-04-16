@@ -488,6 +488,8 @@
 		D17C6FB022237CB1007BA517 /* ResultUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17C6FAF22237CB1007BA517 /* ResultUtilsTests.swift */; };
 		D1A591272139489E00AC080D /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
 		D1A591292139495B00AC080D /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
+		D1CB0D0F24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB0D0E24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift */; };
+		D1CB0D1024481A1A001F9238 /* LineSDKOpenChatRoomJoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB0D0E24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift */; };
 		D1D22C8E2408A8D70028A9E0 /* StyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC972398A08400E51458 /* StyleNavigationController.swift */; };
 		D1D22C8F2408A8E60028A9E0 /* OpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */; };
 		D1D22C902408A8E90028A9E0 /* OpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */; };
@@ -878,6 +880,7 @@
 		D17C6FAF22237CB1007BA517 /* ResultUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtilsTests.swift; sourceTree = "<group>"; };
 		D1A591262139489E00AC080D /* JWK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWK.swift; sourceTree = "<group>"; };
 		D1A591282139495B00AC080D /* JWKSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKSet.swift; sourceTree = "<group>"; };
+		D1CB0D0E24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomJoinType.swift; sourceTree = "<group>"; };
 		D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareViewController.swift; sourceTree = "<group>"; };
 		D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKViewControllerInterfaceTests.m; sourceTree = "<group>"; };
 		D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOpenChatRoomJoinRequest.swift; sourceTree = "<group>"; };
@@ -1174,6 +1177,7 @@
 			children = (
 				4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */,
 				4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */,
+				D1CB0D0E24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift */,
 			);
 			path = OpenChat;
 			sourceTree = "<group>";
@@ -2501,6 +2505,7 @@
 				4BDD2C362133F32F00DD563D /* LineSDKSpacerComponent.swift in Sources */,
 				4B2D1503212FAB5A000DD5BE /* LineSDKAPIError.swift in Sources */,
 				4BC4B3DF212FEF8600750794 /* LineSDKLocationMessage.swift in Sources */,
+				D1CB0D0F24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift in Sources */,
 				4BDD2C282133D2B300DD563D /* LineSDKFlexMessageComponent.swift in Sources */,
 				4BDD2C2E2133F2EA00DD563D /* LineSDKFlexImageComponent.swift in Sources */,
 				4BDD2C322133F30A00DD563D /* LineSDKFlexIconComponent.swift in Sources */,
@@ -2587,6 +2592,7 @@
 				4BCD24D223FFA74100D4B6BD /* LineSDKGroup.swift in Sources */,
 				4BCD254B23FFAABA00D4B6BD /* MessageAction.swift in Sources */,
 				4BCD251323FFAABA00D4B6BD /* ColumnDataStore.swift in Sources */,
+				D1CB0D1024481A1A001F9238 /* LineSDKOpenChatRoomJoinType.swift in Sources */,
 				4BCD24D323FFA74100D4B6BD /* LineSDKConstant.swift in Sources */,
 				4BCD24D423FFA74100D4B6BD /* LineSDKFlexBoxComponent.swift in Sources */,
 				4BCD24D523FFA74100D4B6BD /* LineSDKAccessTokenVerifyResult.swift in Sources */,

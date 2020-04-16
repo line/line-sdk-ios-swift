@@ -259,6 +259,55 @@ public class LineSDKAPI: NSObject {
             result.map(LineSDKOpenChatRoomMembershipState.init).match(with: completion)
         }
     }
+
+    public static func getOpenChatRoomJoinType(
+        openChatId: String,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomJoinType?, Error?) -> Void
+    )
+    {
+        getOpenChatRoomJoinType(openChatId: openChatId, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+
+    public static func getOpenChatRoomJoinType(
+        openChatId: String,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomJoinType?, Error?) -> Void
+    )
+    {
+        API.getOpenChatRoomJoinType(openChatId: openChatId, callbackQueue: queue.unwrapped) { result in
+            result.map(LineSDKOpenChatRoomJoinType.init).match(with: completion)
+        }
+    }
+
+    public static func postOpenChatRoomJoin(
+        openChatId: String,
+        displayName: String,
+        completionHandler completion: @escaping (Error?) -> Void
+    )
+    {
+        postOpenChatRoomJoin(
+            openChatId: openChatId,
+            displayName: displayName,
+            callbackQueue: .currentMainOrAsync,
+            completionHandler: completion
+        )
+    }
+
+    public static func postOpenChatRoomJoin(
+        openChatId: String,
+        displayName: String,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (Error?) -> Void
+    )
+    {
+        API.postOpenChatRoomJoin(openChatId: openChatId, displayName: displayName, callbackQueue: queue.unwrapped) {
+            result in
+            switch result {
+            case .success: completion(nil)
+            case .failure(let error): completion(error)
+            }
+        }
+    }
 }
 
 // MARK: - getGroups

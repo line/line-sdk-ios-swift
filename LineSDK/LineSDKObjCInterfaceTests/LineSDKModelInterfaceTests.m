@@ -47,6 +47,10 @@
     XCTAssertNotNil([LineSDKLoginPermission address]);
     XCTAssertNotNil([LineSDKLoginPermission realName]);
 
+    XCTAssertNotNil([LineSDKLoginPermission openChatTermStatus]);
+    XCTAssertNotNil([LineSDKLoginPermission openChatRoomCreateAndJoin]);
+    XCTAssertNotNil([LineSDKLoginPermission openChatSubscriptionInfo]);
+
     XCTAssertEqual([LineSDKLoginPermission permissionsFrom:@"profile email abcd"].count, 3);
 }
 

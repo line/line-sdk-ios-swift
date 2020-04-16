@@ -233,7 +233,7 @@ extension OpenChatCreatingController {
     static func localAuthorizationStatusForOpenChat(permissions: [LoginPermission])
         -> AuthorizationStatus
     {
-        let lackPermissions = Set([.openChatTermStatus, .openChatRoomCreate]).filter {
+        let lackPermissions = Set([.openChatTermStatus, .openChatRoomCreateAndJoin]).filter {
             !permissions.contains($0)
         }
 

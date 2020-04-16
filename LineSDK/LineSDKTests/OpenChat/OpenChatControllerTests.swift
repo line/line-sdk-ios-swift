@@ -44,11 +44,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
             XCTFail()
             return
         }
-        XCTAssertEqual(p1, [.openChatTermStatus, .openChatRoomCreate])
+        XCTAssertEqual(p1, [.openChatTermStatus, .openChatRoomCreateAndJoin])
 
         let status2 = OpenChatCreatingController
             .localAuthorizationStatusForOpenChat(
-                permissions: [.openChatTermStatus, .openChatRoomCreate])
+                permissions: [.openChatTermStatus, .openChatRoomCreateAndJoin])
         guard case .authorized = status2 else {
             XCTFail()
             return
@@ -60,7 +60,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
             XCTFail()
             return
         }
-        XCTAssertEqual(p2, [.openChatRoomCreate])
+        XCTAssertEqual(p2, [.openChatRoomCreateAndJoin])
     }
     
     func testCanPresentTermAgreementAlertControllerWhenNotAgreed() {
