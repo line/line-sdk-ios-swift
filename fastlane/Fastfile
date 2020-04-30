@@ -18,7 +18,6 @@ platform :ios do
   desc "Run tests."
   lane :tests do
     sdk_tests
-    sample_tests
   end
 
   lane :sdk_tests do
