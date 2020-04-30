@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Now explicitly log in with web view does not trigger the "LINE is not installed" warning on the login screen page.
+
 ## [5.5.1] - 2020-02-27
 
 ### Fixed
