@@ -12,6 +12,12 @@ All notable changes to this project will be documented in this file.
 
 - Lots of improvement of reference and documentation comment.
 
+## [5.5.2] - 2020-04-30
+
+### Fixed
+
+- Now explicitly log in with web view does not trigger the "LINE is not installed" warning on the login screen page.
+
 ## [5.5.1] - 2020-02-27
 
 ### Fixed
@@ -190,3 +196,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.4.0]: https://github.com/line/line-sdk-ios-swift/compare/5.3.1...5.4.0
 [5.5.0]: https://github.com/line/line-sdk-ios-swift/compare/5.4.0...5.5.0
 [5.5.1]: https://github.com/line/line-sdk-ios-swift/compare/5.5.0...5.5.1
+[5.5.2]: https://github.com/line/line-sdk-ios-swift/compare/5.5.1...5.5.2

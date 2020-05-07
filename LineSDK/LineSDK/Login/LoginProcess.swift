@@ -36,6 +36,7 @@ public class LoginProcess {
         let nonce: String?
         let botPrompt: LoginManager.BotPrompt?
         let preferredWebPageLanguage: LoginManager.WebPageLanguage?
+        let onlyWebLogin: Bool
     }
     
     /// Observes application switching to foreground.
@@ -137,7 +138,9 @@ public class LoginProcess {
             processID: self.processID,
             nonce: self.IDTokenNonce,
             botPrompt: self.parameters.botPromptStyle,
-            preferredWebPageLanguage: self.parameters.preferredWebPageLanguage)
+            preferredWebPageLanguage: self.parameters.preferredWebPageLanguage,
+            onlyWebLogin: self.parameters.onlyWebLogin
+        )
         #if targetEnvironment(macCatalyst)
         // On macCatalyst, we only support web login
         self.startWebLoginFlow(parameters)
@@ -426,6 +429,9 @@ extension URL {
         ]
         if let lang = flowParameters.preferredWebPageLanguage {
             parameters["ui_locales"] = lang.rawValue
+        }
+        if flowParameters.onlyWebLogin {
+            parameters["disable_ios_auto_login"] = true
         }
 
         let encoder = URLQueryEncoder(parameters: parameters)

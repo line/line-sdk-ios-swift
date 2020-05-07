@@ -34,7 +34,9 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         processID: "abc",
         nonce: "kkk",
         botPrompt: .normal,
-        preferredWebPageLanguage: nil)
+        preferredWebPageLanguage: nil,
+        onlyWebLogin: false
+    )
 
     let parameterWithLanguage = LoginProcess.FlowParameters(
         channelID: "123",
@@ -44,7 +46,21 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         processID: "abc",
         nonce: "kkk",
         botPrompt: .normal,
-        preferredWebPageLanguage: .chineseSimplified)
+        preferredWebPageLanguage: .chineseSimplified,
+        onlyWebLogin: false
+    )
+
+    let parameterWithOnlyWebLogin = LoginProcess.FlowParameters(
+        channelID: "123",
+        universalLinkURL: nil,
+        scopes: [.profile, .openID],
+        pkce: PKCE(),
+        processID: "abc",
+        nonce: "kkk",
+        botPrompt: .normal,
+        preferredWebPageLanguage: nil,
+        onlyWebLogin: true
+    )
     
     // Login URL has a double escaped query.
     func testLoginQueryURLEncode() {
@@ -98,6 +114,30 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
 
         item = items.first { $0.name == "ui_locales" }!
         XCTAssertEqual(item.value, "zh-Hans")
+    }
+
+    func testLoginQueryWithOnlyWebLoginURLEncode() {
+
+        let baseURL = URL(string: Constant.lineWebAuthUniversalURL)!
+        let result = baseURL.appendedLoginQuery(parameterWithOnlyWebLogin)
+
+        let urlString = result.absoluteString.removingPercentEncoding
+        XCTAssertNotNil(urlString)
+
+        let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
+        let items = components!.queryItems!
+        XCTAssertEqual(items.count, 3)
+
+        var item: URLQueryItem
+
+        item = items.first { $0.name == "loginChannelId" }!
+        XCTAssertEqual(item.value, "123")
+
+        item = items.first { $0.name == "returnUri" }!
+        XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
+
+        item = items.first { $0.name == "disable_ios_auto_login" }!
+        XCTAssertEqual(item.value, "true")
     }
     
     // URL Scheme has a triple escaped query.
