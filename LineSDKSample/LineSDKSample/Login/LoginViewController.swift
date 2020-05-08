@@ -37,7 +37,10 @@ class LoginViewController: UIViewController, IndicatorDisplay {
         loginButton.presentingViewController = self
 
         // You could set the permissions you need or use default permissions
-        loginButton.permissions = [.profile, .friends, .groups, .oneTimeShare, .openID]
+        loginButton.permissions = [
+            .profile, .friends, .groups, .oneTimeShare, .openID,
+            .openChatTermStatus, .openChatRoomCreateAndJoin, .openChatSubscriptionInfo
+        ]
 
         view.addSubview(loginButton)
         

@@ -19,10 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if !LineSDKCocoaPods && !LineSDKBinary
-import LineSDK
-#endif
-
 @objcMembers
 public class LineSDKAPI: NSObject {
     
@@ -219,6 +215,98 @@ public class LineSDKAPI: NSObject {
             messages.map { $0.unwrapped },
             withMessageToken: token._value,
             callbackQueue: queue.unwrapped) { result in result.matchFailure(with: completion) }
+    }
+    
+    // MARK: - Open Chat
+    public static func getOpenChatRoomStatus(
+        openChatId: String,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomStatus?, Error?) -> Void
+    )
+    {
+        getOpenChatRoomStatus(
+            openChatId: openChatId, callbackQueue: .currentMainOrAsync, completionHandler: completion
+        )
+    }
+    
+    public static func getOpenChatRoomStatus(
+        openChatId: String,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomStatus?, Error?) -> Void
+    )
+    {
+        API.getOpenChatRoomStatus(openChatId: openChatId, callbackQueue: queue.unwrapped) { result in
+            result.map(LineSDKOpenChatRoomStatus.init).match(with: completion)
+        }
+    }
+    
+    public static func getOpenChatRoomMembershipState(
+        openChatId: String,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomMembershipState?, Error?) -> Void
+    )
+    {
+        getOpenChatRoomMembershipState(
+            openChatId: openChatId, callbackQueue: .currentMainOrAsync, completionHandler: completion
+        )
+    }
+    
+    public static func getOpenChatRoomMembershipState(
+        openChatId: String,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomMembershipState?, Error?) -> Void
+    )
+    {
+        API.getOpenChatRoomMembershipState(openChatId: openChatId, callbackQueue: queue.unwrapped) { result in
+            result.map(LineSDKOpenChatRoomMembershipState.init).match(with: completion)
+        }
+    }
+
+    public static func getOpenChatRoomJoinType(
+        openChatId: String,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomJoinType?, Error?) -> Void
+    )
+    {
+        getOpenChatRoomJoinType(openChatId: openChatId, callbackQueue: .currentMainOrAsync, completionHandler: completion)
+    }
+
+    public static func getOpenChatRoomJoinType(
+        openChatId: String,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (LineSDKOpenChatRoomJoinType?, Error?) -> Void
+    )
+    {
+        API.getOpenChatRoomJoinType(openChatId: openChatId, callbackQueue: queue.unwrapped) { result in
+            result.map(LineSDKOpenChatRoomJoinType.init).match(with: completion)
+        }
+    }
+
+    public static func postOpenChatRoomJoin(
+        openChatId: String,
+        displayName: String,
+        completionHandler completion: @escaping (Error?) -> Void
+    )
+    {
+        postOpenChatRoomJoin(
+            openChatId: openChatId,
+            displayName: displayName,
+            callbackQueue: .currentMainOrAsync,
+            completionHandler: completion
+        )
+    }
+
+    public static func postOpenChatRoomJoin(
+        openChatId: String,
+        displayName: String,
+        callbackQueue queue: LineSDKCallbackQueue,
+        completionHandler completion: @escaping (Error?) -> Void
+    )
+    {
+        API.postOpenChatRoomJoin(openChatId: openChatId, displayName: displayName, callbackQueue: queue.unwrapped) {
+            result in
+            switch result {
+            case .success: completion(nil)
+            case .failure(let error): completion(error)
+            }
+        }
     }
 }
 

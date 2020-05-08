@@ -37,7 +37,7 @@ import UIKit
 
  1. Verify that the user has granted your app the necessary permissions. `ShareViewController` will show both
  Friends and Groups tabs. To get the friend list and group list, and send a message, you need
- `LoginPermission.oneTimeShare`. Use `ShareViewController.localAuthorizationStatusForSendingMessage(to:)` to check
+ `LoginPermission.oneTimeShare`. Use `ShareViewController.localAuthorizationStatusForSendingMessage()` to check
  whether you have a valid token with the necessary permissions. If you don't have them, don't create and
  show the `ShareViewController`, but instead prompt your user to grant your app the needed permissions.
 
@@ -65,24 +65,7 @@ import UIKit
  expect sharing messages to friends and groups in LINE to work the same across different apps. Nevertheless, if you 
  absolutely need a custom sharing interaction, you can create it using the related APIs.
  */
-open class ShareViewController: UINavigationController {
-
-    enum Design {
-        static var navigationBarTintColor: UIColor {
-            return .compatibleColor(light: 0x283145, dark: 0x161B26)
-        }
-        static var preferredStatusBarStyle: UIStatusBarStyle  { return .lightContent }
-        static var navigationBarTextColor:  UIColor { return .white }
-    }
-
-    /// The bar tint color of the navigation bar.
-    public var navigationBarTintColor = Design.navigationBarTintColor { didSet { updateNavigationStyles() } }
-
-    /// The color of text, including navigation bar title and bar button text, on the navigation bar.
-    public var navigationBarTextColor = Design.navigationBarTextColor { didSet { updateNavigationStyles() } }
-
-    /// The preferred status bar style of this navigation controller.
-    public var statusBarStyle = Design.preferredStatusBarStyle { didSet { updateNavigationStyles() } }
+open class ShareViewController: StyleNavigationController {
 
     /// The delegate object of this share view controller.
     ///
@@ -123,7 +106,6 @@ open class ShareViewController: UINavigationController {
         setupRootDelegates()
         setupPresentationDelegate()
         self.viewControllers = [rootViewController]
-        updateNavigationStyles()
     }
 
     /// `ShareViewController` can't be created from Storyboard or XIB file. This method merely throws a
@@ -191,13 +173,6 @@ open class ShareViewController: UINavigationController {
     private func setupPresentationDelegate() {
         presentationController?.delegate = self
     }
-
-    private func updateNavigationStyles() {
-        navigationBar.shadowImage = UIImage()
-        navigationBar.barTintColor = navigationBarTintColor
-        navigationBar.tintColor = navigationBarTextColor
-        navigationBar.titleTextAttributes = [.foregroundColor: navigationBarTextColor]
-    }
 }
 
 /// Represents the authorization status for sharing messages.
@@ -213,25 +188,15 @@ open class ShareViewController: UINavigationController {
 ///                       The associated value is an array of `LoginPermission`, containing all lacking permissions.
 /// - authorized:         The token exists locally and contains the necessary permissions to share messages.
 ///
-public enum MessageShareAuthorizationStatus {
-    
-    /// There is no valid token in the local token store. The user hasn't logged in and authorized your app yet.
-    case lackOfToken
-    
-    /// There is a valid token, but it doesn't contain the necessary permissions for sharing a message.
-    /// The associated value is an array of `LoginPermission`, containing all lacking permissions.
-    case lackOfPermissions([LoginPermission])
-    
-    /// The token exists locally and contains the necessary permissions to share messages.
-    case authorized
-}
+public typealias MessageShareAuthorizationStatus = AuthorizationStatus
 
 // MARK: - Authorization Helpers
 extension ShareViewController {
-
+    
     /// Gets the local authorization status for sending messages to friends and groups.
     ///
-    /// - Returns: The local authorization status based on the currently stored token and the permissions specified in that token.
+    /// - Returns: The local authorization status based on the currently stored token and the permissions specified
+    ///            in that token.
     ///
     /// - Note:
     ///   If the return value is `.authorized`, you can present a `ShareViewController` instance for message sharing.
@@ -244,7 +209,7 @@ extension ShareViewController {
     /// the methods in `ShareViewControllerDelegate`.
     ///
     public static func localAuthorizationStatusForSendingMessage()
-        -> MessageShareAuthorizationStatus
+        -> AuthorizationStatus
     {
         guard let token = AccessTokenStore.shared.current else {
             return .lackOfToken
@@ -254,9 +219,9 @@ extension ShareViewController {
     }
 
     static func localAuthorizationStatusForSendingMessage(permissions: [LoginPermission])
-        -> MessageShareAuthorizationStatus
+        -> AuthorizationStatus
     {
-        let lackPermissions = [.oneTimeShare].filter {
+        let lackPermissions = Set([.oneTimeShare]).filter {
             !permissions.contains($0)
         }
 
@@ -269,10 +234,12 @@ extension ShareViewController {
 
 /// :nodoc:
 extension ShareViewController: UIAdaptivePresentationControllerDelegate {
+    /// :nodoc:
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         shareDelegate?.shareViewControllerDidCancelSharing(self)
     }
 
+    /// :nodoc:
     public func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
         return rootViewController.selectedCount == 0
     }

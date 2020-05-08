@@ -24,7 +24,7 @@ import Foundation
 
 /// Represents the final pipeline of a series of response pipelines. Use the terminator to parse response
 /// data into a final `Response` object of a certain `Request` object.
-public protocol ResponsePipelineTerminator: class { // Use class protocol for easier Equatable conforming
+public protocol ResponsePipelineTerminator: AnyObject { // Use class protocol for easier Equatable conforming
     /// Parses `data` that holds input values to a `Response` object.
     ///
     /// - Parameters:
@@ -38,7 +38,7 @@ public protocol ResponsePipelineTerminator: class { // Use class protocol for ea
 /// Represents a redirection stage of a series of response pipelines. Use redirectors to additionally
 /// perform data processing by invoking `closure` with a proper
 /// `ResponsePipelineRedirectorAction` enumeration member.
-public protocol ResponsePipelineRedirector: class { // Use class protocol for easier Equatable conforming
+public protocol ResponsePipelineRedirector: AnyObject { // Use class protocol for easier Equatable conforming
     
     /// Whether this redirector should be applied to execute and handle a received HTTP response.
     /// - Parameters:
@@ -257,6 +257,13 @@ class DataTransformRedirector: ResponsePipelineRedirector {
     {
         try closure(.continueWith(transform(data), response))
     }
-    
-    
 }
+
+// Convert empty data to an empty JSON `{}`
+let emptyDataTransformer: ResponsePipeline = {
+    let isDataEmpty: ((Data) -> Bool) = { $0.isEmpty }
+    let dataTransformer = DataTransformRedirector(condition: isDataEmpty) { _ in
+        return "{}".data(using: .utf8)!
+    }
+    return .redirector(dataTransformer)
+}()

@@ -21,7 +21,7 @@
 
 import UIKit
 
-struct Log {
+enum Log {
     static func assertionFailure(
         _ message: @autoclosure () -> String,
         file: StaticString = #file,
@@ -33,9 +33,20 @@ struct Log {
     static func fatalError(
         _ message: @autoclosure () -> String,
         file: StaticString = #file,
-        line: UInt = #line) -> Never
+        line: UInt = #line
+    ) -> Never
     {
         Swift.fatalError("[LineSDK] \(message())", file: file, line: line)
+    }
+    
+    static func precondition(
+        _ condition: @autoclosure () -> Bool,
+        _ message: @autoclosure () -> String,
+        file: StaticString = #file,
+        line: UInt = #line
+    )
+    {
+        Swift.precondition(condition(), "[LineSDK] \(message())", file: file, line: line)
     }
     
     static func print(_ items: Any...) {
@@ -54,6 +65,29 @@ extension UIApplication {
         let url = URL(string: "https://itunes.apple.com/app/id443904275?mt=8")!
         open(url, options: [:], completionHandler: nil)
     }
+    
+    func openLINEApp() {
+        let url = URL(string: "\(Constant.lineAuthV2Scheme)://")!
+        open(url, options: [:], completionHandler: nil)
+    }
+}
+
+extension UIView {
+    var safeLeadingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return safeAreaLayoutGuide.leadingAnchor
+        } else {
+            return leadingAnchor
+        }
+    }
+    
+    var safeTrailingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return safeAreaLayoutGuide.trailingAnchor
+        } else {
+            return trailingAnchor
+        }
+    }
 }
 
 extension UIViewController {
@@ -70,6 +104,22 @@ extension UIViewController {
             return view.safeAreaLayoutGuide.bottomAnchor
         } else {
             return bottomLayoutGuide.topAnchor
+        }
+    }
+    
+    var safeLeadingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaLayoutGuide.leadingAnchor
+        } else {
+            return view.leadingAnchor
+        }
+    }
+    
+    var safeTrailingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaLayoutGuide.trailingAnchor
+        } else {
+            return view.trailingAnchor
         }
     }
 
@@ -142,4 +192,10 @@ func guardSharedProperty<T>(_ input: T?) -> T {
             "Please call `LoginManager.setup` before you do any other things in LineSDK.")
     }
     return shared
+}
+
+extension Constant {
+    static var isLINEInstalled: Bool {
+        return UIApplication.shared.canOpenURL(Constant.lineAppAuthURLv2)
+    }
 }

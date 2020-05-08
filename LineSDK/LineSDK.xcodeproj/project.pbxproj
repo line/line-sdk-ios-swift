@@ -19,6 +19,8 @@
 		4B15EEFB211D5BF800866E6C /* TextMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */; };
 		4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEFC211D628000866E6C /* MessageSample.swift */; };
 		4B1658052252EF3C0008E441 /* DownloadableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1658042252EF3C0008E441 /* DownloadableImageView.swift */; };
+		4B19DC952398974900E51458 /* OptionSelectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC942398974900E51458 /* OptionSelectingViewController.swift */; };
+		4B19DC982398A08400E51458 /* StyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC972398A08400E51458 /* StyleNavigationController.swift */; };
 		4B1A4EF722EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1A4EF622EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift */; };
 		4B1C44652137E0CA0094C1D4 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44642137E0CA0094C1D4 /* JWT.swift */; };
 		4B1C44692137E1EE0094C1D4 /* JWTHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */; };
@@ -58,7 +60,7 @@
 		4B41593C225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */; };
 		4B41593E225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */; };
 		4B415940225AE65A003AE63A /* LineSDKShareTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */; };
-		4B415942225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */; };
+		4B415942225AF024003AE63A /* LineSDKAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKAuthorizationStatus.swift */; };
 		4B42816621ED9CE6004A0846 /* JSONConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B42816521ED9CE6004A0846 /* JSONConverter.swift */; };
 		4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */; };
 		4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256A2101810D00A39D4F /* LoginProcess.swift */; };
@@ -67,6 +69,7 @@
 		4B4525712101938F00A39D4F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4525702101938F00A39D4F /* Request.swift */; };
 		4B45257621019EFB00A39D4F /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45257521019EFB00A39D4F /* Session.swift */; };
 		4B4A9AF32159FCF700915054 /* LineSDKConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4A9AF22159FCF700915054 /* LineSDKConstant.swift */; };
+		4B4B363723E7B3AA0016E2C0 /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4B363623E7B3AA0016E2C0 /* StringExtensionTests.swift */; };
 		4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */; };
 		4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B7F21080D69006D17F5 /* AccessToken.swift */; };
 		4B4F0B8221083CDB006D17F5 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4F0B8121083CDB006D17F5 /* Constant.swift */; };
@@ -80,10 +83,19 @@
 		4B5EE2E4212BCE1A0009DF2E /* FlexBlockStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E3212BCE1A0009DF2E /* FlexBlockStyle.swift */; };
 		4B5EE2E6212BD53E0009DF2E /* FlexBubbleContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E5212BD53E0009DF2E /* FlexBubbleContainerTests.swift */; };
 		4B5EE2E8212BE0D00009DF2E /* FlexCarouselContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */; };
+		4B603F032396342800B81E56 /* FormEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F022396342800B81E56 /* FormEntry.swift */; };
+		4B603F05239638CF00B81E56 /* FormSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F04239638CF00B81E56 /* FormSection.swift */; };
+		4B61C6602394CE87005D7C21 /* OpenChatCreatingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B61C65F2394CE87005D7C21 /* OpenChatCreatingNavigationController.swift */; };
 		4B62425222CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62425122CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift */; };
 		4B63F4732106FDCC003D1BF1 /* LoginProcessURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */; };
 		4B6508B8211812CE001796E0 /* LoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */; };
+		4B67EA3823E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3723E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift */; };
+		4B67EA3A23E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3923E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift */; };
+		4B67EA3C23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3B23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift */; };
+		4B67EA3E23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3D23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift */; };
+		4B67EA4023E280D700A6ADCD /* AuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3F23E280D700A6ADCD /* AuthorizationStatus.swift */; };
 		4B688E3E226F029B002575CC /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B688E3D226F029B002575CC /* LoadingIndicator.swift */; };
+		4B6972972396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6972962396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift */; };
 		4B6A0FF1212A99AD00B3ED1F /* FlexTextComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */; };
 		4B6A0FF3212AA15D00B3ED1F /* FlexButtonComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF2212AA15D00B3ED1F /* FlexButtonComponent.swift */; };
 		4B6A0FF5212AA82500B3ED1F /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A0FF4212AA82500B3ED1F /* HexColor.swift */; };
@@ -92,6 +104,8 @@
 		4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A7025210956B600D71C66 /* KeychainStore.swift */; };
 		4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A702821096E3700D71C66 /* KeychainStoreTests.swift */; };
 		4B6A70312109793500D71C66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6A70302109793500D71C66 /* AppDelegate.swift */; };
+		4B6CACC7239F44D100BD6C35 /* OpenChatControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CACC6239F44D100BD6C35 /* OpenChatControllerTests.swift */; };
+		4B6CACC9239F4A2B00BD6C35 /* AssertionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CACC8239F4A2B00BD6C35 /* AssertionHelpers.swift */; };
 		4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */; };
 		4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */; };
 		4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB721103D4B00EDDD1E /* ResponseDataStub.swift */; };
@@ -109,6 +123,8 @@
 		4B813C5A2101B1450091F78E /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C592101B1450091F78E /* RequestAdapter.swift */; };
 		4B813C5C2101B65D0091F78E /* ParametersAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */; };
 		4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */; };
+		4B8469A623EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */; };
+		4B8469A823EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */; };
 		4B85BB6B22C4A8E600DFE299 /* ResourceLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */; };
 		4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8A965621100A5800760219 /* LoginConfigurationTests.swift */; };
 		4B8FF4862105656500890AEF /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
@@ -123,6 +139,7 @@
 		4B9058D6210073E6004D717F /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D5210073E6004D717F /* LoginManager.swift */; };
 		4B9058D8210078FB004D717F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
 		4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
+		4B93F2D223CD5307003B955D /* OpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */; };
 		4B94D06721533D4D0049DE68 /* ECDSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D06621533D4D0049DE68 /* ECDSATests.swift */; };
 		4B94D0692153678D0049DE68 /* JWTRSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D0682153678D0049DE68 /* JWTRSATests.swift */; };
 		4B94D06B2153681E0049DE68 /* JWTECTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D06A2153681E0049DE68 /* JWTECTests.swift */; };
@@ -158,6 +175,9 @@
 		4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA8E44D210EE79B00355F03 /* PipelineTests.swift */; };
 		4BB002C62244758000FB8BD8 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C52244758000FB8BD8 /* ImageDownloader.swift */; };
 		4BB002C82244788A00FB8BD8 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB002C72244788A00FB8BD8 /* ImageManager.swift */; };
+		4BB0E256239F5C8A008C7F3F /* FormEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */; };
+		4BB0E258239F6728008C7F3F /* CountLimitedTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB0E257239F6728008C7F3F /* CountLimitedTextViewTests.swift */; };
+		4BB0E25A239F6BE9008C7F3F /* OpenChatCreatingFormItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB0E259239F6BE9008C7F3F /* OpenChatCreatingFormItemTests.swift */; };
 		4BB2E6612135188900885687 /* LineSDKMessagingModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */; };
 		4BB95E46215B7C2F00D213AD /* API+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB95E45215B7C2F00D213AD /* API+Internal.swift */; };
 		4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */; };
@@ -206,7 +226,7 @@
 		4BCD24DB23FFA74100D4B6BD /* LineSDKFlexTextComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C292133DD9300DD563D /* LineSDKFlexTextComponent.swift */; };
 		4BCD24DC23FFA74100D4B6BD /* LineSDKUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14E2212F8EDA000DD5BE /* LineSDKUserProfile.swift */; };
 		4BCD24DD23FFA74100D4B6BD /* LineSDKLoginManagerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14EE212F9468000DD5BE /* LineSDKLoginManagerOptions.swift */; };
-		4BCD24DE23FFA74100D4B6BD /* LineSDKMessageShareAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */; };
+		4BCD24DE23FFA74100D4B6BD /* LineSDKAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415941225AF024003AE63A /* LineSDKAuthorizationStatus.swift */; };
 		4BCD24DF23FFA74100D4B6BD /* LineSDKShareTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */; };
 		4BCD24E023FFA74100D4B6BD /* LineSDKTextMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B3D8212FEB9000750794 /* LineSDKTextMessage.swift */; };
 		4BCD24E123FFA74100D4B6BD /* LineSDKLoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF79914238BB71E0009C315 /* LineSDKLoginManagerParameters.swift */; };
@@ -379,12 +399,19 @@
 		4BD191B821116C4C00E2C481 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B721116C4C00E2C481 /* Unit.swift */; };
 		4BD191BA21116CF700E2C481 /* PostRevokeTokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */; };
 		4BD191BC211188D500E2C481 /* RefreshTokenPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */; };
+		4BD1B2222397425000437892 /* VerticallyCenteredTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */; };
+		4BD1B224239748F700437892 /* CountLimitedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B223239748F700437892 /* CountLimitedTextView.swift */; };
+		4BD1B228239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */; };
 		4BD24CF5213E278700606411 /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF4213E278700606411 /* JWA.swift */; };
 		4BD24CF7213E517800606411 /* LineSDKJWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD24CF6213E517800606411 /* LineSDKJWT.swift */; };
+		4BD2E52F239DFA8A00AB3C2D /* UserDefaultsValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD2E52E239DFA8A00AB3C2D /* UserDefaultsValue.swift */; };
 		4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED1238B627200C1E8A9 /* API+Auth.swift */; };
 		4BD33ED7238B6E8800C1E8A9 /* API+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */; };
 		4BD33EDE238B72E500C1E8A9 /* LineSDKAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */; };
 		4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */; };
+		4BD91E17239A202600E229C2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E16239A202600E229C2 /* String.swift */; };
+		4BD91E1B239A3F1300E229C2 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E1A239A3F1300E229C2 /* ToastView.swift */; };
+		4BD91E30239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */; };
 		4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */; };
 		4BDD2C142133954800DD563D /* LineSDKTemplateButtonsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */; };
 		4BDD2C162133970800DD563D /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C152133970800DD563D /* Log.swift */; };
@@ -405,6 +432,8 @@
 		4BDD2C362133F32F00DD563D /* LineSDKSpacerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C352133F32F00DD563D /* LineSDKSpacerComponent.swift */; };
 		4BDD2C382133F34300DD563D /* LineSDKFlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C372133F34300DD563D /* LineSDKFlexBoxComponent.swift */; };
 		4BE4E0FC2251CEE10071FC60 /* ColumnDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */; };
+		4BE56FBF239504C800C9C415 /* OpenChatRoomCreatingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE56FBE239504C800C9C415 /* OpenChatRoomCreatingItem.swift */; };
+		4BE56FC12395051600C9C415 /* OpenChatCreatingFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */; };
 		4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */; };
 		4BEB491C212B992B00BA946A /* FlexImageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */; };
 		4BEB491E212B9E5500BA946A /* FlexFillerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */; };
@@ -422,6 +451,13 @@
 		4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A85213783D000CCD28E /* CryptoHelpers.swift */; };
 		4BF45A892137B29300CCD28E /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A882137B29300CCD28E /* RSATests.swift */; };
 		4BF45A8B2137B2C500CCD28E /* RSAKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */; };
+		4BF487F32394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F22394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift */; };
+		4BF487F52394A47A00A5DC77 /* PostOpenChatCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F42394A47A00A5DC77 /* PostOpenChatCreateRequest.swift */; };
+		4BF487F92394A80100A5DC77 /* OpenChatCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F82394A80100A5DC77 /* OpenChatCategory.swift */; };
+		4BF487FB2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */; };
+		4BF488012394C99400A5DC77 /* OpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */; };
+		4BF488062394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */; };
+		4BF488082394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */; };
 		4BF5337E222E33E30080D138 /* ChainedPaginatedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5337D222E33E30080D138 /* ChainedPaginatedRequest.swift */; };
 		4BF53380222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF5337F222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift */; };
 		4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */; };
@@ -452,8 +488,44 @@
 		D17C6FB022237CB1007BA517 /* ResultUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17C6FAF22237CB1007BA517 /* ResultUtilsTests.swift */; };
 		D1A591272139489E00AC080D /* JWK.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591262139489E00AC080D /* JWK.swift */; };
 		D1A591292139495B00AC080D /* JWKSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A591282139495B00AC080D /* JWKSet.swift */; };
+		D1CB0D0F24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB0D0E24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift */; };
+		D1CB0D1024481A1A001F9238 /* LineSDKOpenChatRoomJoinType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CB0D0E24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift */; };
+		D1D22C8E2408A8D70028A9E0 /* StyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC972398A08400E51458 /* StyleNavigationController.swift */; };
+		D1D22C8F2408A8E60028A9E0 /* OpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */; };
+		D1D22C902408A8E90028A9E0 /* OpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */; };
+		D1D22C912408A8EC0028A9E0 /* OpenChatCreatingNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B61C65F2394CE87005D7C21 /* OpenChatCreatingNavigationController.swift */; };
+		D1D22C922408A8EF0028A9E0 /* OpenChatRoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */; };
+		D1D22C932408A8F10028A9E0 /* OptionSelectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC942398974900E51458 /* OptionSelectingViewController.swift */; };
+		D1D22C942408A8F30028A9E0 /* OpenChatUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */; };
+		D1D22C952408A8F60028A9E0 /* OpenChatCreatingFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */; };
+		D1D22C962408A8FA0028A9E0 /* FormEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F022396342800B81E56 /* FormEntry.swift */; };
+		D1D22C972408A8FD0028A9E0 /* FormSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F04239638CF00B81E56 /* FormSection.swift */; };
+		D1D22C982408A9000028A9E0 /* OpenChatRoomNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6972962396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift */; };
+		D1D22C992408A9030028A9E0 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */; };
+		D1D22C9A2408A9050028A9E0 /* VerticallyCenteredTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */; };
+		D1D22C9B2408A9080028A9E0 /* CountLimitedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD1B223239748F700437892 /* CountLimitedTextView.swift */; };
+		D1D22C9C2408A9120028A9E0 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E1A239A3F1300E229C2 /* ToastView.swift */; };
+		D1D22C9D2408A91B0028A9E0 /* AuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3F23E280D700A6ADCD /* AuthorizationStatus.swift */; };
+		D1D22C9E2408A94E0028A9E0 /* OpenChatCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F82394A80100A5DC77 /* OpenChatCategory.swift */; };
+		D1D22C9F2408A9510028A9E0 /* OpenChatRoomCreatingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE56FBE239504C800C9C415 /* OpenChatRoomCreatingItem.swift */; };
+		D1D22CA02408A9570028A9E0 /* GetOpenChatTermAgreementStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F22394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift */; };
+		D1D22CA12408A9570028A9E0 /* PostOpenChatCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487F42394A47A00A5DC77 /* PostOpenChatCreateRequest.swift */; };
+		D1D22CA22408A9570028A9E0 /* GetOpenChatRoomStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */; };
+		D1D22CA32408A9570028A9E0 /* GetOpenChatRoomMembershipStateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */; };
+		D1D22CA42408A97A0028A9E0 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD91E16239A202600E229C2 /* String.swift */; };
+		D1D22CA52408A97E0028A9E0 /* UserDefaultsValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD2E52E239DFA8A00AB3C2D /* UserDefaultsValue.swift */; };
+		D1D22CA62408AA2F0028A9E0 /* LineSDKOpenChatCreatingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3723E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift */; };
+		D1D22CA72408AA2F0028A9E0 /* LineSDKOpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3923E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift */; };
+		D1D22CA82408AA2F0028A9E0 /* LineSDKOpenChatRoomInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3B23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift */; };
+		D1D22CA92408AA2F0028A9E0 /* LineSDKOpenChatRoomCreatingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3D23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift */; };
+		D1D22CAA2408AA440028A9E0 /* LineSDKOpenChatRoomStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */; };
+		D1D22CAB2408AA480028A9E0 /* LineSDKOpenChatRoomMembershipState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */; };
 		D1F4E716225743F3002639AC /* LineSDKShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */; };
 		D1F4E718225744CE002639AC /* LineSDKViewControllerInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */; };
+		D1F6B581243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */; };
+		D1F6B589243C2BE000024910 /* GetOpenChatRoomJoinTypeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F6B588243C2BE000024910 /* GetOpenChatRoomJoinTypeRequest.swift */; };
+		D1F6B58A243C421100024910 /* PostOpenChatRoomJoinRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */; };
+		D1F6B58B243C421400024910 /* GetOpenChatRoomJoinTypeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F6B588243C2BE000024910 /* GetOpenChatRoomJoinTypeRequest.swift */; };
 		DB09851523D5AF9D0001A3B8 /* PKCETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB09851423D5AF9D0001A3B8 /* PKCETests.swift */; };
 		DB0AFF612247FB2E002729AD /* PageTabViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */; };
 		DB115EF822537F1000C16B0C /* ShareTargetSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */; };
@@ -518,6 +590,8 @@
 		4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageTests.swift; sourceTree = "<group>"; };
 		4B15EEFC211D628000866E6C /* MessageSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSample.swift; sourceTree = "<group>"; };
 		4B1658042252EF3C0008E441 /* DownloadableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadableImageView.swift; sourceTree = "<group>"; };
+		4B19DC942398974900E51458 /* OptionSelectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSelectingViewController.swift; sourceTree = "<group>"; };
+		4B19DC972398A08400E51458 /* StyleNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleNavigationController.swift; sourceTree = "<group>"; };
 		4B1A4EF622EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageSendingTokenRequestTests.swift; sourceTree = "<group>"; };
 		4B1C44642137E0CA0094C1D4 /* JWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
 		4B1C44682137E1EE0094C1D4 /* JWTHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTHelpers.swift; sourceTree = "<group>"; };
@@ -555,7 +629,7 @@
 		4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareViewControllerDelegate.swift; sourceTree = "<group>"; };
 		4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageShareTargetType.swift; sourceTree = "<group>"; };
 		4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareTarget.swift; sourceTree = "<group>"; };
-		4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageShareAuthorizationStatus.swift; sourceTree = "<group>"; };
+		4B415941225AF024003AE63A /* LineSDKAuthorizationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAuthorizationStatus.swift; sourceTree = "<group>"; };
 		4B42816521ED9CE6004A0846 /* JSONConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverter.swift; sourceTree = "<group>"; };
 		4B4464E7212D093D008D3624 /* TemplateMessageProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateMessageProperties.swift; sourceTree = "<group>"; };
 		4B45256A2101810D00A39D4F /* LoginProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcess.swift; sourceTree = "<group>"; };
@@ -564,6 +638,7 @@
 		4B4525702101938F00A39D4F /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		4B45257521019EFB00A39D4F /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		4B4A9AF22159FCF700915054 /* LineSDKConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKConstant.swift; sourceTree = "<group>"; };
+		4B4B363623E7B3AA0016E2C0 /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
 		4B4F0B7D21080C51006D17F5 /* PostExchangeTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostExchangeTokenRequest.swift; sourceTree = "<group>"; };
 		4B4F0B7F21080D69006D17F5 /* AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		4B4F0B8121083CDB006D17F5 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -577,10 +652,19 @@
 		4B5EE2E3212BCE1A0009DF2E /* FlexBlockStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBlockStyle.swift; sourceTree = "<group>"; };
 		4B5EE2E5212BD53E0009DF2E /* FlexBubbleContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexBubbleContainerTests.swift; sourceTree = "<group>"; };
 		4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexCarouselContainerTests.swift; sourceTree = "<group>"; };
+		4B603F022396342800B81E56 /* FormEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormEntry.swift; sourceTree = "<group>"; };
+		4B603F04239638CF00B81E56 /* FormSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSection.swift; sourceTree = "<group>"; };
+		4B61C65F2394CE87005D7C21 /* OpenChatCreatingNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingNavigationController.swift; sourceTree = "<group>"; };
 		4B62425122CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMessageSendingTokenIssueRequest.swift; sourceTree = "<group>"; };
 		4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponse.swift; sourceTree = "<group>"; };
 		4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerOptions.swift; sourceTree = "<group>"; };
+		4B67EA3723E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatCreatingController.swift; sourceTree = "<group>"; };
+		4B67EA3923E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatCreatingControllerDelegate.swift; sourceTree = "<group>"; };
+		4B67EA3B23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomInfo.swift; sourceTree = "<group>"; };
+		4B67EA3D23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomCreatingItem.swift; sourceTree = "<group>"; };
+		4B67EA3F23E280D700A6ADCD /* AuthorizationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationStatus.swift; sourceTree = "<group>"; };
 		4B688E3D226F029B002575CC /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		4B6972962396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomNameTableViewCell.swift; sourceTree = "<group>"; };
 		4B6A0FF0212A99AD00B3ED1F /* FlexTextComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexTextComponentTests.swift; sourceTree = "<group>"; };
 		4B6A0FF2212AA15D00B3ED1F /* FlexButtonComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexButtonComponent.swift; sourceTree = "<group>"; };
 		4B6A0FF4212AA82500B3ED1F /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
@@ -591,6 +675,8 @@
 		4B6A702E2109793500D71C66 /* TestHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B6A70302109793500D71C66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B6A703C2109793700D71C66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B6CACC6239F44D100BD6C35 /* OpenChatControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatControllerTests.swift; sourceTree = "<group>"; };
+		4B6CACC8239F4A2B00BD6C35 /* AssertionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssertionHelpers.swift; sourceTree = "<group>"; };
 		4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponseTests.swift; sourceTree = "<group>"; };
 		4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerTests.swift; sourceTree = "<group>"; };
 		4B792FB721103D4B00EDDD1E /* ResponseDataStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataStub.swift; sourceTree = "<group>"; };
@@ -607,6 +693,8 @@
 		4B813C592101B1450091F78E /* RequestAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
 		4B813C5B2101B65D0091F78E /* ParametersAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersAdapter.swift; sourceTree = "<group>"; };
 		4B825622224CC36000D9F63E /* ShareTargetSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchController.swift; sourceTree = "<group>"; };
+		4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomStatus.swift; sourceTree = "<group>"; };
+		4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomMembershipState.swift; sourceTree = "<group>"; };
 		4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceLoading.swift; sourceTree = "<group>"; };
 		4B8A965621100A5800760219 /* LoginConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurationTests.swift; sourceTree = "<group>"; };
 		4B8FF4852105656500890AEF /* Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegate.swift; sourceTree = "<group>"; };
@@ -624,6 +712,7 @@
 		4B9058D5210073E6004D717F /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		4B9058D7210078FB004D717F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		4B9058DB21007C8C004D717F /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
+		4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingControllerDelegate.swift; sourceTree = "<group>"; };
 		4B94D06621533D4D0049DE68 /* ECDSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSATests.swift; sourceTree = "<group>"; };
 		4B94D0682153678D0049DE68 /* JWTRSATests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWTRSATests.swift; sourceTree = "<group>"; };
 		4B94D06A2153681E0049DE68 /* JWTECTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTECTests.swift; sourceTree = "<group>"; };
@@ -659,6 +748,9 @@
 		4BA8E44D210EE79B00355F03 /* PipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineTests.swift; sourceTree = "<group>"; };
 		4BB002C52244758000FB8BD8 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		4BB002C72244788A00FB8BD8 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormEntryTests.swift; sourceTree = "<group>"; };
+		4BB0E257239F6728008C7F3F /* CountLimitedTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountLimitedTextViewTests.swift; sourceTree = "<group>"; };
+		4BB0E259239F6BE9008C7F3F /* OpenChatCreatingFormItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingFormItemTests.swift; sourceTree = "<group>"; };
 		4BB2E6602135188900885687 /* LineSDKMessagingModelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKMessagingModelTests.m; sourceTree = "<group>"; };
 		4BB95E45215B7C2F00D213AD /* API+Internal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Internal.swift"; sourceTree = "<group>"; };
 		4BBAFC442101BB9E00E7BFF6 /* LineSDKError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKError.swift; sourceTree = "<group>"; };
@@ -698,12 +790,19 @@
 		4BD191B721116C4C00E2C481 /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
 		4BD191B921116CF700E2C481 /* PostRevokeTokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRevokeTokenRequestTests.swift; sourceTree = "<group>"; };
 		4BD191BB211188D500E2C481 /* RefreshTokenPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPipelineTests.swift; sourceTree = "<group>"; };
+		4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticallyCenteredTextView.swift; sourceTree = "<group>"; };
+		4BD1B223239748F700437892 /* CountLimitedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountLimitedTextView.swift; sourceTree = "<group>"; };
+		4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		4BD24CF4213E278700606411 /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
 		4BD24CF6213E517800606411 /* LineSDKJWT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKJWT.swift; sourceTree = "<group>"; };
+		4BD2E52E239DFA8A00AB3C2D /* UserDefaultsValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsValue.swift; sourceTree = "<group>"; };
 		4BD33ED1238B627200C1E8A9 /* API+Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Auth.swift"; sourceTree = "<group>"; };
 		4BD33ED6238B6E8800C1E8A9 /* API+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Deprecated.swift"; sourceTree = "<group>"; };
 		4BD33EDD238B72E500C1E8A9 /* LineSDKAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKAuthAPI.swift; sourceTree = "<group>"; };
 		4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerParameters.swift; sourceTree = "<group>"; };
+		4BD91E16239A202600E229C2 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		4BD91E1A239A3F1300E229C2 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOpenChatRoomMembershipStateRequest.swift; sourceTree = "<group>"; };
 		4BDD2C1121338B9800DD563D /* LineSDKMessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKMessageAction.swift; sourceTree = "<group>"; };
 		4BDD2C132133954800DD563D /* LineSDKTemplateButtonsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTemplateButtonsPayload.swift; sourceTree = "<group>"; };
 		4BDD2C152133970800DD563D /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -724,6 +823,8 @@
 		4BDD2C352133F32F00DD563D /* LineSDKSpacerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSpacerComponent.swift; sourceTree = "<group>"; };
 		4BDD2C372133F34300DD563D /* LineSDKFlexBoxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKFlexBoxComponent.swift; sourceTree = "<group>"; };
 		4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnDataStoreTests.swift; sourceTree = "<group>"; };
+		4BE56FBE239504C800C9C415 /* OpenChatRoomCreatingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomCreatingItem.swift; sourceTree = "<group>"; };
+		4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingFormItem.swift; sourceTree = "<group>"; };
 		4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponent.swift; sourceTree = "<group>"; };
 		4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponentTests.swift; sourceTree = "<group>"; };
 		4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexFillerComponent.swift; sourceTree = "<group>"; };
@@ -742,6 +843,13 @@
 		4BF45A85213783D000CCD28E /* CryptoHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoHelpers.swift; sourceTree = "<group>"; };
 		4BF45A882137B29300CCD28E /* RSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
 		4BF45A8A2137B2C500CCD28E /* RSAKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAKeyTests.swift; sourceTree = "<group>"; };
+		4BF487F22394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOpenChatTermAgreementStatusRequest.swift; sourceTree = "<group>"; };
+		4BF487F42394A47A00A5DC77 /* PostOpenChatCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOpenChatCreateRequest.swift; sourceTree = "<group>"; };
+		4BF487F82394A80100A5DC77 /* OpenChatCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCategory.swift; sourceTree = "<group>"; };
+		4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOpenChatRoomStatusRequest.swift; sourceTree = "<group>"; };
+		4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingController.swift; sourceTree = "<group>"; };
+		4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomInfoViewController.swift; sourceTree = "<group>"; };
+		4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatUserProfileViewController.swift; sourceTree = "<group>"; };
 		4BF5337D222E33E30080D138 /* ChainedPaginatedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChainedPaginatedRequest.swift; sourceTree = "<group>"; };
 		4BF5337F222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainedPaginatedRequestsTests.swift; sourceTree = "<group>"; };
 		4BF53536212A7C8500EA602A /* FlexMessageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexMessageContainer.swift; sourceTree = "<group>"; };
@@ -772,8 +880,11 @@
 		D17C6FAF22237CB1007BA517 /* ResultUtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtilsTests.swift; sourceTree = "<group>"; };
 		D1A591262139489E00AC080D /* JWK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWK.swift; sourceTree = "<group>"; };
 		D1A591282139495B00AC080D /* JWKSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKSet.swift; sourceTree = "<group>"; };
+		D1CB0D0E24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomJoinType.swift; sourceTree = "<group>"; };
 		D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareViewController.swift; sourceTree = "<group>"; };
 		D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKViewControllerInterfaceTests.m; sourceTree = "<group>"; };
+		D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOpenChatRoomJoinRequest.swift; sourceTree = "<group>"; };
+		D1F6B588243C2BE000024910 /* GetOpenChatRoomJoinTypeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOpenChatRoomJoinTypeRequest.swift; sourceTree = "<group>"; };
 		DB09851423D5AF9D0001A3B8 /* PKCETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCETests.swift; sourceTree = "<group>"; };
 		DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageTabViewTests.swift; sourceTree = "<group>"; };
 		DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultViewController.swift; sourceTree = "<group>"; };
@@ -870,6 +981,14 @@
 				4B5EE2E7212BE0D00009DF2E /* FlexCarouselContainerTests.swift */,
 			);
 			path = Message;
+			sourceTree = "<group>";
+		};
+		4B19DC962398A06D00E51458 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4B19DC972398A08400E51458 /* StyleNavigationController.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		4B1C44632137E0AF0094C1D4 /* JWT */ = {
@@ -979,6 +1098,39 @@
 			path = Style;
 			sourceTree = "<group>";
 		};
+		4B61C6612394CF2A005D7C21 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */,
+				4B603F022396342800B81E56 /* FormEntry.swift */,
+				4B603F04239638CF00B81E56 /* FormSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4B67EA3623E2750200A6ADCD /* OpenChatUI */ = {
+			isa = PBXGroup;
+			children = (
+				4B67EA3723E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift */,
+				4B67EA3923E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift */,
+				4B67EA3B23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift */,
+				4B67EA3D23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift */,
+			);
+			path = OpenChatUI;
+			sourceTree = "<group>";
+		};
+		4B6972952396430D0079B7D2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4B6972962396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift */,
+				4BD1B227239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift */,
+				4BD1B2212397425000437892 /* VerticallyCenteredTextView.swift */,
+				4BD1B223239748F700437892 /* CountLimitedTextView.swift */,
+				4BD91E1A239A3F1300E229C2 /* ToastView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		4B6A702F2109793500D71C66 /* TestHost */ = {
 			isa = PBXGroup;
 			children = (
@@ -987,6 +1139,17 @@
 				4B6A703C2109793700D71C66 /* Info.plist */,
 			);
 			path = TestHost;
+			sourceTree = "<group>";
+		};
+		4B6CACC5239F424500BD6C35 /* OpenChat */ = {
+			isa = PBXGroup;
+			children = (
+				4B6CACC6239F44D100BD6C35 /* OpenChatControllerTests.swift */,
+				4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */,
+				4BB0E257239F6728008C7F3F /* CountLimitedTextViewTests.swift */,
+				4BB0E259239F6BE9008C7F3F /* OpenChatCreatingFormItemTests.swift */,
+			);
+			path = OpenChat;
 			sourceTree = "<group>";
 		};
 		4B792FB421103CFD00EDDD1E /* API */ = {
@@ -1009,11 +1172,23 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		4B8469A423EAA77100EE49FA /* OpenChat */ = {
+			isa = PBXGroup;
+			children = (
+				4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */,
+				4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */,
+				D1CB0D0E24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift */,
+			);
+			path = OpenChat;
+			sourceTree = "<group>";
+		};
 		4B87E44822E55755005AA4D2 /* LineSDKUI */ = {
 			isa = PBXGroup;
 			children = (
 				3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */,
+				4B415941225AF024003AE63A /* LineSDKAuthorizationStatus.swift */,
 				D1F4E714225743D3002639AC /* SharingUI */,
+				4B67EA3623E2750200A6ADCD /* OpenChatUI */,
 			);
 			path = LineSDKUI;
 			sourceTree = "<group>";
@@ -1059,13 +1234,14 @@
 		4B90587A21006E5C004D717F /* LineSDK */ = {
 			isa = PBXGroup;
 			children = (
-				4BE7E81822C4A14A00362661 /* LineSDKUI */,
 				4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */,
+				4BE7E81822C4A14A00362661 /* LineSDKUI */,
 				4BBAFC432101BB8200E7BFF6 /* General */,
 				4B9058CE210072B9004D717F /* Login */,
 				DBE4E36E211D6C2600184D66 /* Graph */,
 				4BF53530212A79C800EA602A /* Messaging */,
 				D102A6992164650A00804C7C /* Friendship */,
+				4BF487EF2394A24D00A5DC77 /* OpenChat */,
 				4B9058CD210072B0004D717F /* Networking */,
 				4B25A811213684F000C74B87 /* Crypto */,
 				4B9058CF210072C3004D717F /* Utils */,
@@ -1079,6 +1255,7 @@
 		4B90588521006E5D004D717F /* LineSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				4B6CACC5239F424500BD6C35 /* OpenChat */,
 				4BE4E0FA2251C9090071FC60 /* Sharing */,
 				4B15EEF9211D5BE800866E6C /* Message */,
 				4B792FB421103CFD00EDDD1E /* API */,
@@ -1139,6 +1316,8 @@
 				DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */,
 				4B688E3D226F029B002575CC /* LoadingIndicator.swift */,
 				4B0FD5812330D0270054A4E8 /* Colors.swift */,
+				4BD91E16239A202600E229C2 /* String.swift */,
+				4BD2E52E239DFA8A00AB3C2D /* UserDefaultsValue.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1184,6 +1363,8 @@
 				4B15EEFC211D628000866E6C /* MessageSample.swift */,
 				4B26F6AE221D266D00F33BF4 /* ResultUtils.swift */,
 				D17C6FAF22237CB1007BA517 /* ResultUtilsTests.swift */,
+				4B6CACC8239F4A2B00BD6C35 /* AssertionHelpers.swift */,
+				4B4B363623E7B3AA0016E2C0 /* StringExtensionTests.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1287,6 +1468,7 @@
 				4BBEA9AD212EAFFB00858627 /* Login */,
 				4BC9B2DC212FB7100071C736 /* Social */,
 				4BC66AE322EA8A4500546FB6 /* Sharing */,
+				4B8469A423EAA77100EE49FA /* OpenChat */,
 				4BC9B2E5212FC9E30071C736 /* Messaging */,
 				4B2D14FB212F9FA5000DD5BE /* Networking */,
 				4BC9B2D7212FAD9E0071C736 /* Utils */,
@@ -1469,9 +1651,12 @@
 		4BE7E81822C4A14A00362661 /* LineSDKUI */ = {
 			isa = PBXGroup;
 			children = (
+				4B19DC962398A06D00E51458 /* Base */,
 				4B5B0EF12241DE4600BA59A0 /* SharingUI */,
+				4BF487FE2394C64600A5DC77 /* OpenChatUI */,
 				3F75523021244502004AC047 /* LoginButton.swift */,
 				4B85BB6A22C4A8E600DFE299 /* ResourceLoading.swift */,
+				4B67EA3F23E280D700A6ADCD /* AuthorizationStatus.swift */,
 			);
 			path = LineSDKUI;
 			sourceTree = "<group>";
@@ -1508,6 +1693,68 @@
 				4B7D8C242137B9FA00C6855A /* test_public.cer */,
 			);
 			path = SampleRSAKeys;
+			sourceTree = "<group>";
+		};
+		4BF487EF2394A24D00A5DC77 /* OpenChat */ = {
+			isa = PBXGroup;
+			children = (
+				4BF487F02394A26100A5DC77 /* Model */,
+				4BF487F12394A26600A5DC77 /* Request */,
+			);
+			path = OpenChat;
+			sourceTree = "<group>";
+		};
+		4BF487F02394A26100A5DC77 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4BF487F82394A80100A5DC77 /* OpenChatCategory.swift */,
+				4BE56FBE239504C800C9C415 /* OpenChatRoomCreatingItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4BF487F12394A26600A5DC77 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				4BF487F22394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift */,
+				4BF487F42394A47A00A5DC77 /* PostOpenChatCreateRequest.swift */,
+				4BF487FA2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift */,
+				4BD91E2F239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift */,
+				D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */,
+				D1F6B588243C2BE000024910 /* GetOpenChatRoomJoinTypeRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		4BF487FE2394C64600A5DC77 /* OpenChatUI */ = {
+			isa = PBXGroup;
+			children = (
+				4BF487FF2394C98000A5DC77 /* Public */,
+				4BF488042394CB8400A5DC77 /* ViewControllers */,
+				4B61C6612394CF2A005D7C21 /* Model */,
+				4B6972952396430D0079B7D2 /* View */,
+			);
+			path = OpenChatUI;
+			sourceTree = "<group>";
+		};
+		4BF487FF2394C98000A5DC77 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				4BF488002394C99400A5DC77 /* OpenChatCreatingController.swift */,
+				4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		4BF488042394CB8400A5DC77 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4B61C65F2394CE87005D7C21 /* OpenChatCreatingNavigationController.swift */,
+				4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */,
+				4B19DC942398974900E51458 /* OptionSelectingViewController.swift */,
+				4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		4BF53530212A79C800EA602A /* Messaging */ = {
@@ -1670,9 +1917,8 @@
 			isa = PBXGroup;
 			children = (
 				D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */,
-				4B415941225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift */,
-				4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */,
 				4B41593B225AE497003AE63A /* LineSDKShareViewControllerDelegate.swift */,
+				4B41593F225AE65A003AE63A /* LineSDKShareTarget.swift */,
 				4B41593D225AE4E0003AE63A /* LineSDKMessageShareTargetType.swift */,
 			);
 			path = SharingUI;
@@ -1991,6 +2237,7 @@
 				4B45256F210188C300A39D4F /* LoginPermission.swift in Sources */,
 				4BF53539212A7C9100EA602A /* FlexMessage.swift in Sources */,
 				D1A591272139489E00AC080D /* JWK.swift in Sources */,
+				4BD1B228239796BC00437892 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */,
 				4BD191B821116C4C00E2C481 /* Unit.swift in Sources */,
 				4BCD27902113EA1300B90D8F /* AccessTokenVerifyResult.swift in Sources */,
 				4B41593A225AE464003AE63A /* MessageShareTargetType.swift in Sources */,
@@ -2000,6 +2247,7 @@
 				4B6A0FF5212AA82500B3ED1F /* HexColor.swift in Sources */,
 				4B15EEF6211D46FF00866E6C /* Message.swift in Sources */,
 				4BBAFC452101BB9E00E7BFF6 /* LineSDKError.swift in Sources */,
+				4B67EA4023E280D700A6ADCD /* AuthorizationStatus.swift in Sources */,
 				4BD24CF5213E278700606411 /* JWA.swift in Sources */,
 				D16D5326224873C700BAA3B4 /* ShareTargetSelectingViewController.swift in Sources */,
 				4BCD278E2113E9A900B90D8F /* GetVerifyTokenRequest.swift in Sources */,
@@ -2010,9 +2258,11 @@
 				4B4F0B8D210870EF006D17F5 /* GetUserProfileRequest.swift in Sources */,
 				4B6A7026210956B600D71C66 /* KeychainStore.swift in Sources */,
 				4B9A303F2121277400174C6F /* LocationMessage.swift in Sources */,
+				4BF488062394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift in Sources */,
 				4B9A304B21213DBB00174C6F /* TemplateMessagePayload.swift in Sources */,
 				4BF45A86213783D000CCD28E /* CryptoHelpers.swift in Sources */,
 				4BFCD204224CAF6100CD9544 /* ShareTargetSearchResultTableViewController.swift in Sources */,
+				4B19DC982398A08400E51458 /* StyleNavigationController.swift in Sources */,
 				4B3D78BB22420BEA00DE27D1 /* PageTabView.swift in Sources */,
 				4B45257621019EFB00A39D4F /* Session.swift in Sources */,
 				4B8FF4862105656500890AEF /* Delegate.swift in Sources */,
@@ -2020,19 +2270,29 @@
 				4BF5337E222E33E30080D138 /* ChainedPaginatedRequest.swift in Sources */,
 				4B415938225AE40E003AE63A /* ShareViewControllerDelegate.swift in Sources */,
 				4BD191B4211154DF00E2C481 /* API.swift in Sources */,
+				4B603F032396342800B81E56 /* FormEntry.swift in Sources */,
 				4BFD6060212A8F00009E9838 /* FlexMessageProperties.swift in Sources */,
 				4B5B0EF32241DEA900BA59A0 /* ShareViewController.swift in Sources */,
+				4BD91E1B239A3F1300E229C2 /* ToastView.swift in Sources */,
 				DBE4E36D211D6C1A00184D66 /* User.swift in Sources */,
 				4B8FF48B21056B3800890AEF /* CallbackQueue.swift in Sources */,
 				D102A69E2164658D00804C7C /* GetBotFriendshipStatus.swift in Sources */,
 				4B3CCB9A21523A2600F51D76 /* CryptoKey.swift in Sources */,
+				4B19DC952398974900E51458 /* OptionSelectingViewController.swift in Sources */,
+				4B6972972396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift in Sources */,
+				4B93F2D223CD5307003B955D /* OpenChatCreatingControllerDelegate.swift in Sources */,
+				D1F6B589243C2BE000024910 /* GetOpenChatRoomJoinTypeRequest.swift in Sources */,
 				4BF53537212A7C8500EA602A /* FlexMessageContainer.swift in Sources */,
+				4BF487F32394A29A00A5DC77 /* GetOpenChatTermAgreementStatusRequest.swift in Sources */,
+				4BD1B224239748F700437892 /* CountLimitedTextView.swift in Sources */,
 				4BB002C62244758000FB8BD8 /* ImageDownloader.swift in Sources */,
 				4BEB4926212BA2FD00BA946A /* FlexSeparatorComponent.swift in Sources */,
+				4BD91E30239A50FF00E229C2 /* GetOpenChatRoomMembershipStateRequest.swift in Sources */,
 				4B62425222CAF2000092B92F /* PostMessageSendingTokenIssueRequest.swift in Sources */,
 				4BF5353D212A7E8E00EA602A /* FlexCarouselContainer.swift in Sources */,
 				DB115EFA2254660C00C16B0C /* ShareRootViewController.swift in Sources */,
 				3F75523121244502004AC047 /* LoginButton.swift in Sources */,
+				4B61C6602394CE87005D7C21 /* OpenChatCreatingNavigationController.swift in Sources */,
 				4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */,
 				4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */,
 				4BB95E46215B7C2F00D213AD /* API+Internal.swift in Sources */,
@@ -2048,12 +2308,16 @@
 				4BEB491E212B9E5500BA946A /* FlexFillerComponent.swift in Sources */,
 				D16D532A2248B01600BAA3B4 /* ShareTargetSelectingTableCell.swift in Sources */,
 				D16D5324224872A300BAA3B4 /* ShareTarget.swift in Sources */,
+				4BF487F52394A47A00A5DC77 /* PostOpenChatCreateRequest.swift in Sources */,
 				4BD191B621115ED800E2C481 /* PostRevokeTokenRequest.swift in Sources */,
+				4BF488082394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift in Sources */,
 				4B6A0FF3212AA15D00B3ED1F /* FlexButtonComponent.swift in Sources */,
 				4B9A303921211EC400174C6F /* AudioMessage.swift in Sources */,
+				4BF488012394C99400A5DC77 /* OpenChatCreatingController.swift in Sources */,
 				4B825623224CC36000D9F63E /* ShareTargetSearchController.swift in Sources */,
 				4BF3B0D8236145530059CE93 /* GetShareGroupsRequest.swift in Sources */,
 				4B8FF48F2105B27600890AEF /* URLs.swift in Sources */,
+				4BF487F92394A80100A5DC77 /* OpenChatCategory.swift in Sources */,
 				4BEC048422CDA65300C95B3B /* PostMultisendMessagesWithTokenRequest.swift in Sources */,
 				D16D5328224876B900BAA3B4 /* ColumnDataStore.swift in Sources */,
 				4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */,
@@ -2062,18 +2326,23 @@
 				4BD33ED2238B627200C1E8A9 /* API+Auth.swift in Sources */,
 				4B4F0B7E21080C51006D17F5 /* PostExchangeTokenRequest.swift in Sources */,
 				4BF3B0D6236143F70059CE93 /* GetShareFriendsRequest.swift in Sources */,
+				4BD2E52F239DFA8A00AB3C2D /* UserDefaultsValue.swift in Sources */,
+				4BE56FBF239504C800C9C415 /* OpenChatRoomCreatingItem.swift in Sources */,
 				4B4F0B8021080D69006D17F5 /* AccessToken.swift in Sources */,
 				4BEB4922212BA05500BA946A /* FlexIconComponent.swift in Sources */,
 				4BEE5B35210AC2D000846C6D /* NotificationToken.swift in Sources */,
 				4B9A303B212121FC00174C6F /* MessageProtocols.swift in Sources */,
+				4BD1B2222397425000437892 /* VerticallyCenteredTextView.swift in Sources */,
 				4B1658052252EF3C0008E441 /* DownloadableImageView.swift in Sources */,
 				4BF5353B212A7DB200EA602A /* FlexBubbleContainer.swift in Sources */,
+				4BD91E17239A202600E229C2 /* String.swift in Sources */,
 				DBFBD43F224E7D0500A74D44 /* SelectedTargetPanelCell.swift in Sources */,
 				4B85BB6B22C4A8E600DFE299 /* ResourceLoading.swift in Sources */,
 				DB5035BB22571D3B003CD0B9 /* KeyboardObservable.swift in Sources */,
 				4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */,
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
 				4B3CCB762152295300F51D76 /* CryptoData.swift in Sources */,
+				D1F6B581243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift in Sources */,
 				4BCD27932113EC6C00B90D8F /* CodingExtension.swift in Sources */,
 				4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */,
 				4B1C44692137E1EE0094C1D4 /* JWTHelpers.swift in Sources */,
@@ -2094,16 +2363,19 @@
 				DB115EF822537F1000C16B0C /* ShareTargetSearchResultViewController.swift in Sources */,
 				4B4525712101938F00A39D4F /* Request.swift in Sources */,
 				4BFD605C212A8775009E9838 /* FlexTextComponent.swift in Sources */,
+				4B603F05239638CF00B81E56 /* FormSection.swift in Sources */,
 				4B9A305421215A1A00174C6F /* TemplateConfirmPayload.swift in Sources */,
 				4BF45A8221377DCF00CCD28E /* CryptoError.swift in Sources */,
 				DBFBD439224B85F500A74D44 /* SelectedTargetPanelViewController.swift in Sources */,
 				4BD33EE3238B825600C1E8A9 /* LoginManagerParameters.swift in Sources */,
 				4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */,
 				4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */,
+				4BF487FB2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
 				4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */,
 				DBF20278212C137D00780358 /* GetApproversInGroupRequest.swift in Sources */,
 				4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */,
+				4BE56FC12395051600C9C415 /* OpenChatCreatingFormItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2113,8 +2385,11 @@
 			files = (
 				D102A6A0216467FE00804C7C /* GetBotFriendshipStatusTests.swift in Sources */,
 				4BD191B22111452E00E2C481 /* PostRefreshTokenRequestTests.swift in Sources */,
+				4B6CACC7239F44D100BD6C35 /* OpenChatControllerTests.swift in Sources */,
 				4BA8E44E210EE79B00355F03 /* PipelineTests.swift in Sources */,
 				4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */,
+				4B6CACC9239F4A2B00BD6C35 /* AssertionHelpers.swift in Sources */,
+				4BB0E256239F5C8A008C7F3F /* FormEntryTests.swift in Sources */,
 				DB0AFF612247FB2E002729AD /* PageTabViewTests.swift in Sources */,
 				4B9A303D2121238D00174C6F /* AudioMessageTests.swift in Sources */,
 				4BF53380222E3DB80080D138 /* ChainedPaginatedRequestsTests.swift in Sources */,
@@ -2133,6 +2408,7 @@
 				4BA8E44C210EDB5100355F03 /* ParameterEncoderTests.swift in Sources */,
 				DBDCFD342126CB6300E8327A /* GetApproversInFriendsTests.swift in Sources */,
 				4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */,
+				4BB0E25A239F6BE9008C7F3F /* OpenChatCreatingFormItemTests.swift in Sources */,
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
 				4B6A0FF7212AACCF00B3ED1F /* FlexButtonComponentTests.swift in Sources */,
 				DB09851523D5AF9D0001A3B8 /* PKCETests.swift in Sources */,
@@ -2151,6 +2427,7 @@
 				4B1A4EF722EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift in Sources */,
 				4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */,
 				4B95F4042125364500AD3A81 /* PostMultisendMessagesRequestTests.swift in Sources */,
+				4B4B363723E7B3AA0016E2C0 /* StringExtensionTests.swift in Sources */,
 				4B6A702921096E3700D71C66 /* KeychainStoreTests.swift in Sources */,
 				4B9A3052212142CA00174C6F /* TemplateMessageActionTests.swift in Sources */,
 				4BFC09F9213CFB6000F4594D /* GetJWKSetRequestTests.swift in Sources */,
@@ -2166,6 +2443,7 @@
 				4BA8E442210EBCFF00355F03 /* SessionTests.swift in Sources */,
 				4B39D1E221104C7A00A45510 /* LoginManagerExtension.swift in Sources */,
 				4BEB491C212B992B00BA946A /* FlexImageComponentTests.swift in Sources */,
+				4BB0E258239F6728008C7F3F /* CountLimitedTextViewTests.swift in Sources */,
 				4B08F9C22119863500B140DF /* LineSDKErrorTests.swift in Sources */,
 				4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */,
 				4BE4E0FC2251CEE10071FC60 /* ColumnDataStoreTests.swift in Sources */,
@@ -2203,16 +2481,18 @@
 				4BC9B2E0212FB7B60071C736 /* LineSDKGroup.swift in Sources */,
 				4B4A9AF32159FCF700915054 /* LineSDKConstant.swift in Sources */,
 				4BDD2C382133F34300DD563D /* LineSDKFlexBoxComponent.swift in Sources */,
+				4B8469A623EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift in Sources */,
 				4B2D14E9212F9270000DD5BE /* LineSDKAccessTokenVerifyResult.swift in Sources */,
 				4BDD2C1A2133A5E300DD563D /* LineSDKTemplateCarouselPayload.swift in Sources */,
 				4BC9B2DE212FB7230071C736 /* LineSDKUser.swift in Sources */,
 				4BC4B3D7212FD76C00750794 /* LineSDKMessage.swift in Sources */,
 				4BC9B2E2212FB8390071C736 /* LineSDKGraphResponse.swift in Sources */,
+				4B67EA3A23E2758800A6ADCD /* LineSDKOpenChatCreatingControllerDelegate.swift in Sources */,
 				4BDD2C252133CA1800DD563D /* LineSDKFlexCarouselContainer.swift in Sources */,
 				4BDD2C2A2133DD9300DD563D /* LineSDKFlexTextComponent.swift in Sources */,
 				4B2D14E3212F8EDA000DD5BE /* LineSDKUserProfile.swift in Sources */,
 				4B2D14EF212F9468000DD5BE /* LineSDKLoginManagerOptions.swift in Sources */,
-				4B415942225AF024003AE63A /* LineSDKMessageShareAuthorizationStatus.swift in Sources */,
+				4B415942225AF024003AE63A /* LineSDKAuthorizationStatus.swift in Sources */,
 				4B415940225AE65A003AE63A /* LineSDKShareTarget.swift in Sources */,
 				4BC4B3D9212FEB9000750794 /* LineSDKTextMessage.swift in Sources */,
 				4BF79915238BB71E0009C315 /* LineSDKLoginManagerParameters.swift in Sources */,
@@ -2225,10 +2505,12 @@
 				4BDD2C362133F32F00DD563D /* LineSDKSpacerComponent.swift in Sources */,
 				4B2D1503212FAB5A000DD5BE /* LineSDKAPIError.swift in Sources */,
 				4BC4B3DF212FEF8600750794 /* LineSDKLocationMessage.swift in Sources */,
+				D1CB0D0F24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift in Sources */,
 				4BDD2C282133D2B300DD563D /* LineSDKFlexMessageComponent.swift in Sources */,
 				4BDD2C2E2133F2EA00DD563D /* LineSDKFlexImageComponent.swift in Sources */,
 				4BDD2C322133F30A00DD563D /* LineSDKFlexIconComponent.swift in Sources */,
 				4BBEA9B6212EB41000858627 /* LineSDKAccessToken.swift in Sources */,
+				4B8469A823EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift in Sources */,
 				4BC4B3DD212FED4300750794 /* LineSDKVideoMessage.swift in Sources */,
 				4BC66AE522EA8A6900546FB6 /* LineSDKMessageSendingToken.swift in Sources */,
 				4BC4B3E4212FF86100750794 /* LineSDKAudioMessage.swift in Sources */,
@@ -2240,12 +2522,15 @@
 				4BDD2C1221338B9800DD563D /* LineSDKMessageAction.swift in Sources */,
 				4BDD2C162133970800DD563D /* Log.swift in Sources */,
 				4BDD2C302133F2FA00DD563D /* LineSDKFlexFillerComponent.swift in Sources */,
+				4B67EA3E23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift in Sources */,
 				4B42816621ED9CE6004A0846 /* JSONConverter.swift in Sources */,
 				4B2D1501212FA9EE000DD5BE /* LineSDKHexColor.swift in Sources */,
 				4B2D14F1212F95B3000DD5BE /* LineSDKLoginResult.swift in Sources */,
 				4B2D14F3212F96A7000DD5BE /* LineSDKLoginProcess.swift in Sources */,
+				4B67EA3C23E2765400A6ADCD /* LineSDKOpenChatRoomInfo.swift in Sources */,
 				4B2422EF2134FBE8007200C2 /* LineSDKErrorConstant.swift in Sources */,
 				4BBEA9B0212EB03200858627 /* LineSDKLoginPermission.swift in Sources */,
+				4B67EA3823E2754000A6ADCD /* LineSDKOpenChatCreatingController.swift in Sources */,
 				3FE8E370214A6E70009E91BD /* LineSDKLoginButton.swift in Sources */,
 				4B2D14F5212F97A6000DD5BE /* LineSDKLoginManager.swift in Sources */,
 			);
@@ -2266,6 +2551,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1D22C9B2408A9080028A9E0 /* CountLimitedTextView.swift in Sources */,
 				4BCD251623FFAABA00D4B6BD /* ShareRootViewController.swift in Sources */,
 				4BCD252323FFAABA00D4B6BD /* PostExchangeTokenRequest.swift in Sources */,
 				4BCD24C823FFA74100D4B6BD /* LineSDKAccessTokenStore.swift in Sources */,
@@ -2278,11 +2564,13 @@
 				4BCD254323FFAABA00D4B6BD /* MessageSender.swift in Sources */,
 				4BCD24CA23FFA74100D4B6BD /* LineSDKTemplateImageCarouselPayload.swift in Sources */,
 				4BCD24CB23FFA74100D4B6BD /* LineSDKTemplateMessage.swift in Sources */,
+				D1D22CA32408A9570028A9E0 /* GetOpenChatRoomMembershipStateRequest.swift in Sources */,
 				4BCD24CC23FFA74100D4B6BD /* ResultExtensions.swift in Sources */,
 				4BCD24CD23FFA74100D4B6BD /* LineSDKAuthAPI.swift in Sources */,
 				4BCD254D23FFAABA00D4B6BD /* TemplateMessageProperties.swift in Sources */,
 				4BCD257323FFAABA00D4B6BD /* CryptoAlgorithm.swift in Sources */,
 				4BCD258723FFAABA00D4B6BD /* Constant.swift in Sources */,
+				D1D22CA82408AA2F0028A9E0 /* LineSDKOpenChatRoomInfo.swift in Sources */,
 				4BCD24CE23FFA74100D4B6BD /* LineSDKAPI.swift in Sources */,
 				4BCD256823FFAABA00D4B6BD /* ChainedPaginatedRequest.swift in Sources */,
 				4BCD24CF23FFA74100D4B6BD /* LineSDKTemplateButtonsPayload.swift in Sources */,
@@ -2293,6 +2581,8 @@
 				4BCD253B23FFAABA00D4B6BD /* GetShareFriendsRequest.swift in Sources */,
 				4BCD258223FFAABA00D4B6BD /* Result.swift in Sources */,
 				4BCD253823FFAABA00D4B6BD /* GetGroupsRequest.swift in Sources */,
+				D1D22C972408A8FD0028A9E0 /* FormSection.swift in Sources */,
+				D1D22CAB2408AA480028A9E0 /* LineSDKOpenChatRoomMembershipState.swift in Sources */,
 				4BCD251B23FFAABA00D4B6BD /* ShareTargetSearchResultViewController.swift in Sources */,
 				4BCD256C23FFAABA00D4B6BD /* ParametersAdapter.swift in Sources */,
 				4BCD256323FFAABA00D4B6BD /* API+Auth.swift in Sources */,
@@ -2302,6 +2592,7 @@
 				4BCD24D223FFA74100D4B6BD /* LineSDKGroup.swift in Sources */,
 				4BCD254B23FFAABA00D4B6BD /* MessageAction.swift in Sources */,
 				4BCD251323FFAABA00D4B6BD /* ColumnDataStore.swift in Sources */,
+				D1CB0D1024481A1A001F9238 /* LineSDKOpenChatRoomJoinType.swift in Sources */,
 				4BCD24D323FFA74100D4B6BD /* LineSDKConstant.swift in Sources */,
 				4BCD24D423FFA74100D4B6BD /* LineSDKFlexBoxComponent.swift in Sources */,
 				4BCD24D523FFA74100D4B6BD /* LineSDKAccessTokenVerifyResult.swift in Sources */,
@@ -2311,6 +2602,7 @@
 				4BCD251923FFAABA00D4B6BD /* ShareTargetSearchController.swift in Sources */,
 				4BCD256123FFAABA00D4B6BD /* API.swift in Sources */,
 				4BCD258023FFAABA00D4B6BD /* ECDSA.swift in Sources */,
+				D1D22CA42408A97A0028A9E0 /* String.swift in Sources */,
 				4BCD255923FFAABA00D4B6BD /* FlexTextComponent.swift in Sources */,
 				4BCD252D23FFAABA00D4B6BD /* LoginConfiguration.swift in Sources */,
 				4BCD24D723FFA74100D4B6BD /* LineSDKUser.swift in Sources */,
@@ -2318,15 +2610,18 @@
 				4BCD254823FFAABA00D4B6BD /* LocationMessage.swift in Sources */,
 				4BCD24D923FFA74100D4B6BD /* LineSDKGraphResponse.swift in Sources */,
 				4BCD253023FFAABA00D4B6BD /* LoginManagerParameters.swift in Sources */,
+				D1D22C8F2408A8E60028A9E0 /* OpenChatCreatingController.swift in Sources */,
 				4BCD258123FFAABA00D4B6BD /* ResultUtils.swift in Sources */,
 				4BCD258423FFAABA00D4B6BD /* Delegate.swift in Sources */,
 				4BCD258B23FFAABA00D4B6BD /* LoadingIndicator.swift in Sources */,
 				4BCD24DA23FFA74100D4B6BD /* LineSDKFlexCarouselContainer.swift in Sources */,
 				4BCD250F23FFAABA00D4B6BD /* ShareViewController.swift in Sources */,
 				4BCD251223FFAABA00D4B6BD /* ShareTarget.swift in Sources */,
+				D1F6B58B243C421400024910 /* GetOpenChatRoomJoinTypeRequest.swift in Sources */,
 				4BCD254923FFAABA00D4B6BD /* TemplateMessage.swift in Sources */,
 				4BCD257F23FFAABA00D4B6BD /* RSA.swift in Sources */,
 				4BCD251523FFAABA00D4B6BD /* PageTabView.swift in Sources */,
+				D1D22CA22408A9570028A9E0 /* GetOpenChatRoomStatusRequest.swift in Sources */,
 				4BCD258923FFAABA00D4B6BD /* NotificationToken.swift in Sources */,
 				4BCD258623FFAABA00D4B6BD /* URLs.swift in Sources */,
 				4BCD254523FFAABA00D4B6BD /* ImageMessage.swift in Sources */,
@@ -2339,29 +2634,36 @@
 				4BCD256423FFAABA00D4B6BD /* API+Deprecated.swift in Sources */,
 				4BCD257A23FFAABA00D4B6BD /* JWTCoder.swift in Sources */,
 				4BCD254123FFAABA00D4B6BD /* Message.swift in Sources */,
+				D1D22C982408A9000028A9E0 /* OpenChatRoomNameTableViewCell.swift in Sources */,
+				D1D22C932408A8F10028A9E0 /* OptionSelectingViewController.swift in Sources */,
 				4BCD252423FFAABA00D4B6BD /* GetUserProfileRequest.swift in Sources */,
 				4BCD254023FFAABA00D4B6BD /* PostMessageSendingTokenIssueRequest.swift in Sources */,
-				4BCD24DE23FFA74100D4B6BD /* LineSDKMessageShareAuthorizationStatus.swift in Sources */,
+				4BCD24DE23FFA74100D4B6BD /* LineSDKAuthorizationStatus.swift in Sources */,
 				4BCD24DF23FFA74100D4B6BD /* LineSDKShareTarget.swift in Sources */,
 				4BCD24E023FFA74100D4B6BD /* LineSDKTextMessage.swift in Sources */,
 				4BCD253523FFAABA00D4B6BD /* User.swift in Sources */,
 				4BCD24E123FFA74100D4B6BD /* LineSDKLoginManagerParameters.swift in Sources */,
 				4BCD251023FFAABA00D4B6BD /* ShareViewControllerDelegate.swift in Sources */,
+				D1D22CA02408A9570028A9E0 /* GetOpenChatTermAgreementStatusRequest.swift in Sources */,
 				4BCD255D23FFAABA00D4B6BD /* FlexIconComponent.swift in Sources */,
 				4BCD257D23FFAABA00D4B6BD /* JWA.swift in Sources */,
 				4BCD252A23FFAABA00D4B6BD /* AccessToken.swift in Sources */,
 				4BCD256223FFAABA00D4B6BD /* API+Internal.swift in Sources */,
 				4BCD252123FFAABA00D4B6BD /* ResourceLoading.swift in Sources */,
+				D1D22C962408A8FA0028A9E0 /* FormEntry.swift in Sources */,
 				4BCD251A23FFAABA00D4B6BD /* ShareTargetTableViewStyling.swift in Sources */,
 				4BCD24E223FFA74100D4B6BD /* LineSDKShareViewControllerDelegate.swift in Sources */,
 				4BCD24E323FFA74100D4B6BD /* LineSDKFlexMessage.swift in Sources */,
+				D1D22C952408A8F60028A9E0 /* OpenChatCreatingFormItem.swift in Sources */,
 				4BCD24E423FFA74100D4B6BD /* LineSDKMessagingResponse.swift in Sources */,
 				4BCD255023FFAABA00D4B6BD /* TemplateCarouselPayload.swift in Sources */,
+				D1D22C912408A8EC0028A9E0 /* OpenChatCreatingNavigationController.swift in Sources */,
 				4BCD257023FFAABA00D4B6BD /* APIError.swift in Sources */,
 				4BCD253623FFAABA00D4B6BD /* Group.swift in Sources */,
 				4BCD24E523FFA74100D4B6BD /* LineSDKImageMessage.swift in Sources */,
 				4BCD255323FFAABA00D4B6BD /* FlexMessageContainer.swift in Sources */,
 				4BCD253223FFAABA00D4B6BD /* LoginProcess.swift in Sources */,
+				D1D22CA92408AA2F0028A9E0 /* LineSDKOpenChatRoomCreatingItem.swift in Sources */,
 				4BCD253423FFAABA00D4B6BD /* LoginPermission.swift in Sources */,
 				4BCD24E623FFA74100D4B6BD /* LineSDKFlexButtonComponent.swift in Sources */,
 				4BCD256B23FFAABA00D4B6BD /* RequestAdapter.swift in Sources */,
@@ -2371,6 +2673,7 @@
 				4BCD24E823FFA74100D4B6BD /* LineSDKSpacerComponent.swift in Sources */,
 				4BCD24E923FFA74100D4B6BD /* LineSDKAPIError.swift in Sources */,
 				4BCD24EA23FFA74100D4B6BD /* LineSDKLocationMessage.swift in Sources */,
+				D1D22C8E2408A8D70028A9E0 /* StyleNavigationController.swift in Sources */,
 				4BCD258C23FFAABA00D4B6BD /* Colors.swift in Sources */,
 				4BCD254A23FFAABA00D4B6BD /* FlexMessage.swift in Sources */,
 				4BCD258A23FFAABA00D4B6BD /* KeyboardObservable.swift in Sources */,
@@ -2391,10 +2694,12 @@
 				4BCD258323FFAABA00D4B6BD /* Helpers.swift in Sources */,
 				4BCD24EE23FFA74100D4B6BD /* LineSDKAccessToken.swift in Sources */,
 				4BCD252923FFAABA00D4B6BD /* AccessTokenStore.swift in Sources */,
+				D1F6B58A243C421100024910 /* PostOpenChatRoomJoinRequest.swift in Sources */,
 				4BCD24EF23FFA74100D4B6BD /* LineSDKVideoMessage.swift in Sources */,
 				4BCD251723FFAABA00D4B6BD /* ShareTargetSelectingViewController.swift in Sources */,
 				4BCD24F023FFA74100D4B6BD /* LineSDKMessageSendingToken.swift in Sources */,
 				4BCD252C23FFAABA00D4B6BD /* UserProfile.swift in Sources */,
+				D1D22C922408A8EF0028A9E0 /* OpenChatRoomInfoViewController.swift in Sources */,
 				4BCD255B23FFAABA00D4B6BD /* FlexImageComponent.swift in Sources */,
 				4BCD257B23FFAABA00D4B6BD /* JWTHelpers.swift in Sources */,
 				4BCD256023FFAABA00D4B6BD /* GetBotFriendshipStatus.swift in Sources */,
@@ -2404,39 +2709,52 @@
 				4BCD256D23FFAABA00D4B6BD /* ResponsePipeline.swift in Sources */,
 				4BCD255A23FFAABA00D4B6BD /* FlexButtonComponent.swift in Sources */,
 				4BCD24F223FFA74100D4B6BD /* LineSDKFlexMessageContainer.swift in Sources */,
+				D1D22CA62408AA2F0028A9E0 /* LineSDKOpenChatCreatingController.swift in Sources */,
+				D1D22C992408A9030028A9E0 /* OpenChatRoomDescriptionTableViewCell.swift in Sources */,
 				4BCD254C23FFAABA00D4B6BD /* TemplateMessagePayload.swift in Sources */,
 				4BCD256A23FFAABA00D4B6BD /* Session.swift in Sources */,
 				4BCD251423FFAABA00D4B6BD /* PageViewController.swift in Sources */,
 				4BCD252523FFAABA00D4B6BD /* PostRefreshTokenRequest.swift in Sources */,
+				D1D22C9D2408A91B0028A9E0 /* AuthorizationStatus.swift in Sources */,
 				4BCD254423FFAABA00D4B6BD /* TextMessage.swift in Sources */,
 				4BCD252223FFAABA00D4B6BD /* LineSDKError.swift in Sources */,
 				4BCD256523FFAABA00D4B6BD /* ImageDownloader.swift in Sources */,
 				4BCD24F323FFA74100D4B6BD /* LineSDKMessageShareTargetType.swift in Sources */,
+				D1D22CA12408A9570028A9E0 /* PostOpenChatCreateRequest.swift in Sources */,
+				D1D22C9E2408A94E0028A9E0 /* OpenChatCategory.swift in Sources */,
 				4BCD252023FFAABA00D4B6BD /* LoginButton.swift in Sources */,
 				4BCD255623FFAABA00D4B6BD /* FlexMessageComponent.swift in Sources */,
 				4BCD24F423FFA74100D4B6BD /* LineSDKFlexBubbleContainer.swift in Sources */,
+				D1D22CA72408AA2F0028A9E0 /* LineSDKOpenChatCreatingControllerDelegate.swift in Sources */,
 				4BCD255C23FFAABA00D4B6BD /* FlexFillerComponent.swift in Sources */,
 				4BCD24F523FFA74100D4B6BD /* LineSDKGetBotFriendshipStatusResponse.swift in Sources */,
+				D1D22C902408A8E90028A9E0 /* OpenChatCreatingControllerDelegate.swift in Sources */,
 				4BCD24F623FFA74100D4B6BD /* LineSDKShareViewController.swift in Sources */,
 				4BCD251D23FFAABA00D4B6BD /* ShareTargetSelectingSectionHeaderView.swift in Sources */,
 				4BCD24F723FFA74100D4B6BD /* LineSDKMessageAction.swift in Sources */,
 				4BCD24F823FFA74100D4B6BD /* Log.swift in Sources */,
 				4BCD253323FFAABA00D4B6BD /* LoginProcessURLResponse.swift in Sources */,
+				D1D22C9A2408A9050028A9E0 /* VerticallyCenteredTextView.swift in Sources */,
 				4BCD257723FFAABA00D4B6BD /* GetDiscoveryDocumentRequest.swift in Sources */,
 				4BCD24F923FFA74100D4B6BD /* LineSDKFlexFillerComponent.swift in Sources */,
 				4BCD24FA23FFA74100D4B6BD /* JSONConverter.swift in Sources */,
 				4BCD253123FFAABA00D4B6BD /* LoginResult.swift in Sources */,
 				4BCD24FB23FFA74100D4B6BD /* LineSDKHexColor.swift in Sources */,
 				4BCD255E23FFAABA00D4B6BD /* FlexSeparatorComponent.swift in Sources */,
+				D1D22CA52408A97E0028A9E0 /* UserDefaultsValue.swift in Sources */,
 				4BCD24FC23FFA74100D4B6BD /* LineSDKLoginResult.swift in Sources */,
 				4BCD255823FFAABA00D4B6BD /* FlexBoxComponent.swift in Sources */,
 				4BCD255423FFAABA00D4B6BD /* FlexBubbleContainer.swift in Sources */,
 				4BCD24FD23FFA74100D4B6BD /* LineSDKLoginProcess.swift in Sources */,
 				4BCD24FE23FFA74100D4B6BD /* LineSDKErrorConstant.swift in Sources */,
 				4BCD257223FFAABA00D4B6BD /* CryptoData.swift in Sources */,
+				D1D22CAA2408AA440028A9E0 /* LineSDKOpenChatRoomStatus.swift in Sources */,
+				D1D22C942408A8F30028A9E0 /* OpenChatUserProfileViewController.swift in Sources */,
 				4BCD257523FFAABA00D4B6BD /* CryptoHelpers.swift in Sources */,
 				4BCD252723FFAABA00D4B6BD /* GetVerifyTokenRequest.swift in Sources */,
 				4BCD24FF23FFA74100D4B6BD /* LineSDKLoginPermission.swift in Sources */,
+				D1D22C9C2408A9120028A9E0 /* ToastView.swift in Sources */,
+				D1D22C9F2408A9510028A9E0 /* OpenChatRoomCreatingItem.swift in Sources */,
 				4BCD257423FFAABA00D4B6BD /* CryptoKey.swift in Sources */,
 				4BCD251E23FFAABA00D4B6BD /* SelectedTargetPanelViewController.swift in Sources */,
 				4BCD253E23FFAABA00D4B6BD /* PostMultisendMessagesRequest.swift in Sources */,

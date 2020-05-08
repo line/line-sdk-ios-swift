@@ -162,4 +162,62 @@
                 completionHandler:^(NSError *error) {}];
 }
 
+- (void)_testGetOpenChatRoomStatusInterface {
+    [LineSDKAPI
+     getOpenChatRoomStatusWithOpenChatId:@""
+     completionHandler:^(LineSDKOpenChatRoomStatus *result, NSError *error) {
+        NSLog(@"%@", result.status);
+    }];
+    
+    [LineSDKAPI
+     getOpenChatRoomStatusWithOpenChatId:@""
+     callbackQueue:[LineSDKCallbackQueue asyncMain]
+     completionHandler:^(LineSDKOpenChatRoomStatus *result, NSError *error) {
+        NSLog(@"%@", result.status);
+    }];
+}
+
+- (void)_testGetOpenChatRoomMembershipState {
+    [LineSDKAPI
+     getOpenChatRoomMembershipStateWithOpenChatId:@""
+     completionHandler:^(LineSDKOpenChatRoomMembershipState *result, NSError *error) {
+        NSLog(@"%@", result.state);
+    }];
+    
+    [LineSDKAPI
+     getOpenChatRoomMembershipStateWithOpenChatId:@""
+     callbackQueue:[LineSDKCallbackQueue asyncMain]
+     completionHandler:^(LineSDKOpenChatRoomMembershipState *result, NSError *error) {
+         NSLog(@"%@", result.state);
+     }];
+}
+
+- (void)_testGetOpenChatRoomJoinType {
+    [LineSDKAPI
+     getOpenChatRoomJoinTypeWithOpenChatId:@""
+     completionHandler:^(LineSDKOpenChatRoomJoinType *result, NSError *error) {
+        NSLog(@"%@", result.type);
+    }];
+    [LineSDKAPI
+     getOpenChatRoomJoinTypeWithOpenChatId:@""
+     callbackQueue:[LineSDKCallbackQueue asyncMain]
+     completionHandler:^(LineSDKOpenChatRoomJoinType *result, NSError *error) {
+        NSLog(@"%@", result.type);
+    }];
+}
+
+- (void)_testPostOpenChatRoomJoin {
+    [LineSDKAPI
+     postOpenChatRoomJoinWithOpenChatId:@""
+     displayName:@""
+     completionHandler:^(NSError *error) {}
+    ];
+    [LineSDKAPI
+     postOpenChatRoomJoinWithOpenChatId:@""
+     displayName:@""
+     callbackQueue:[LineSDKCallbackQueue asyncMain]
+     completionHandler:^(NSError *error) {}
+    ];
+}
+
 @end

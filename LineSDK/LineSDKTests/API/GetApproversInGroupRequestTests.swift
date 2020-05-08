@@ -30,7 +30,7 @@ class GetApproversInGroupRequestTests: APITests {
 
     func testSuccess() {
 
-        let r = GetApproversInGroupRequest(groupID: "")
+        let r = try! GetApproversInGroupRequest(groupID: "abc")
         GetApproversInGroupRequest.success =
         """
         {

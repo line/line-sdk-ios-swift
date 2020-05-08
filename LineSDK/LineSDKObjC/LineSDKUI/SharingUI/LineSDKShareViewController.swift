@@ -19,11 +19,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import UIKit
-#if !LineSDKCocoaPods && !LineSDKBinary
-import LineSDK
-#endif
-
 @objcMembers
 public class LineSDKShareViewController: NSObject {
 
@@ -58,7 +53,7 @@ public class LineSDKShareViewController: NSObject {
         }
     }
 
-    public var shareProxyDelegate: LineSDKShareViewControllerDelegate? {
+    public var delegate: LineSDKShareViewControllerDelegate? {
         get { return delegateProxy?.proxy }
         set {
             delegateProxy = newValue.map { .init(proxy: $0, owner: self) }
@@ -71,9 +66,9 @@ public class LineSDKShareViewController: NSObject {
     }
 
     @objc public static func localAuthorizationStatusForSendingMessage()
-        -> [LineSDKMessageShareAuthorizationStatus]
+        -> LineSDKAuthorizationStatus
     {
-        return LineSDKMessageShareAuthorizationStatus.status(
+        return LineSDKAuthorizationStatus.status(
             from: ShareViewController.localAuthorizationStatusForSendingMessage()
         )
     }

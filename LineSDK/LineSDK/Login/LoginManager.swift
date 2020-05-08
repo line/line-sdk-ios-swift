@@ -149,7 +149,11 @@ public class LoginManager {
                     "Please report an issue here: https://github.com/line/line-sdk-ios-swift/issues")
             }
         }
-
+        
+        // Reset cached values for current user
+        UserDefaultsValue.clear()
+        
+        // Start login with a process
         let process = LoginProcess(
             configuration: LoginConfiguration.shared,
             scopes: permissions,
