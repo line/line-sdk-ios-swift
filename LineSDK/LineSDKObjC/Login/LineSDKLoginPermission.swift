@@ -50,7 +50,7 @@ public class LineSDKLoginPermission: NSObject {
 
     public static let openChatTermStatus             = LineSDKLoginPermission(.openChatTermStatus)
     public static let openChatRoomCreateAndJoin      = LineSDKLoginPermission(.openChatRoomCreateAndJoin)
-    public static let openChatSubscriptionInfo       = LineSDKLoginPermission(.openChatSubscriptionInfo)
+    public static let openChatInfo                   = LineSDKLoginPermission(.openChatInfo)
     
     var unwrapped: LoginPermission { return _value }
 }
