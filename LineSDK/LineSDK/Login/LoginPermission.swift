@@ -62,7 +62,7 @@ public struct LoginPermission: Hashable {
     public static let openChatRoomCreateAndJoin      = LoginPermission(rawValue: "openchat.create.join")
     
     /// The permission to check subscription information of an Open Chat room.
-    public static let openChatSubscriptionInfo       = LoginPermission(rawValue: "openchat.info")
+    public static let openChatInfo                   = LoginPermission(rawValue: "openchat.info")
 }
 
 /// Sub-permissions of .openID. Permissions in this extension will not be included in the `permissions` property of
