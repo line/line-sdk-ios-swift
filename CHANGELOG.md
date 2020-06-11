@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.6.0] - 2020-06-11
+
 ### Added
 
 - Open Chat support. You can create an Open Chat room with LINE SDK for Swift now. There are also some other public APIs to help checking room availability or user's memebership for a given Open Chat room. Check the [official documentation](https://developers.line.biz/en/docs/ios-sdk/swift/overview/) and [API reference](https://developers.line.biz/en/reference/ios-sdk-swift/) of `OpenChatCreatingController` for more information. [#132](https://github.com/line/line-sdk-ios-swift/pull/132)
@@ -197,3 +199,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.5.0]: https://github.com/line/line-sdk-ios-swift/compare/5.4.0...5.5.0
 [5.5.1]: https://github.com/line/line-sdk-ios-swift/compare/5.5.0...5.5.1
 [5.5.2]: https://github.com/line/line-sdk-ios-swift/compare/5.5.1...5.5.2
+[5.6.0]: https://github.com/line/line-sdk-ios-swift/compare/5.5.2...5.6.0
