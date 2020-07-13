@@ -132,7 +132,7 @@ extension JWT {
         
         func verify<T>(
             keyPath: KeyPath<JWT.Payload, T?>,
-            failingReason: String,
+            failingReason: @autoclosure () -> String,
             condition: (T) -> Bool) throws
         {
             guard let value = self[keyPath: keyPath] else {
@@ -141,7 +141,7 @@ extension JWT {
             }
             guard condition(value) else {
                 throw CryptoError.JWTFailed(
-                    reason: .claimVerifyingFailed(key: "\(keyPath)", got: "\(value)", description: failingReason))
+                    reason: .claimVerifyingFailed(key: "\(keyPath)", got: "\(value)", description: failingReason()))
             }
         }
     }
