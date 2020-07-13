@@ -1,8 +1,9 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
     name: "LineSDK",
+    defaultLocalization: "en",
     platforms: [.iOS(.v10)],
     products: [
         .library(name: "LineSDK", targets: ["LineSDK"]),
@@ -12,13 +13,20 @@ let package = Package(
         .target(
             name: "LineSDK",
             path: "LineSDK/LineSDK",
-            exclude: ["LineSDKUI"]
+            exclude: [
+                "Info.plist"
+            ],
+            resources: [
+                .process("Resource.bundle")
+            ]
         ),
         .target(
             name: "LineSDKObjC",
             dependencies: ["LineSDK"],
             path: "LineSDK/LineSDKObjC",
-            exclude: ["LineSDKUI"]
+            exclude: [
+                "Info.plist"
+            ]
         )
     ]
 )
