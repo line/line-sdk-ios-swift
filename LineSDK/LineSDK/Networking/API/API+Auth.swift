@@ -173,10 +173,12 @@ extension API {
                         completion(.failure(error))
                         return
                     }
+                    Log.print(error.localizedDescription)
                     // We recognize response 400 as a success for revoking (since the token itself is invalid).
                     if detail.code == 400 {
-                        Log.print(error.localizedDescription)
                         handleSuccessResult()
+                    } else {
+                        completion(.failure(error))
                     }
                 }
             }
