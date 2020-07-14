@@ -27,26 +27,47 @@ extension Notification.Name {
 }
 
 class LoginViewController: UIViewController, IndicatorDisplay {
-    
+
+    let loginSettings = LoginSettings()
+    var loginButton: LoginButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let loginButton = LoginButton()
+        loginButton = LoginButton()
         
         loginButton.delegate = self
         loginButton.presentingViewController = self
-
-        // You could set the permissions you need or use default permissions
-        loginButton.permissions = [
-            .profile, .friends, .groups, .oneTimeShare, .openID, .messageWrite,
-            .openChatTermStatus, .openChatRoomCreateAndJoin, .openChatInfo
-        ]
 
         view.addSubview(loginButton)
         
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowSettings" {
+            let viewController = (segue.destination as! UINavigationController).topViewController as! LoginSettingsViewController
+            viewController.loginSettings = loginSettings
+            viewController.delegate = self
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateButton()
+    }
+
+    func updateButton() {
+        loginButton.permissions = loginSettings.permissions
+        loginButton.parameters = loginSettings.parameters
+    }
+}
+
+extension LoginViewController: LoginSettingsViewControllerDelegate {
+    func loginSettingsViewControllerWillDisappear(_ viewController: LoginSettingsViewController) {
+        updateButton()
     }
 }
 

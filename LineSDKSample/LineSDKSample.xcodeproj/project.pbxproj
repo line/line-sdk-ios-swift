@@ -36,6 +36,8 @@
 		65E6BDB92154D80A0024D7C1 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6BDB82154D80A0024D7C1 /* LoginPage.swift */; };
 		9735344E241BB60900D47AAA /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9735344D241BB60900D47AAA /* Page.swift */; };
 		97353450241BB67500D47AAA /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9735344F241BB67500D47AAA /* AuthenticationTests.swift */; };
+		D17A9F3724BD312A00D0FD0D /* LoginSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17A9F3624BD312A00D0FD0D /* LoginSettingsViewController.swift */; };
+		D17A9F3924BD34EE00D0FD0D /* LoginSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17A9F3824BD34EE00D0FD0D /* LoginSettings.swift */; };
 		D1F6B58D243C5ACF00024910 /* OpenChatRoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F6B58C243C5ACF00024910 /* OpenChatRoomTableViewController.swift */; };
 		D1F6B58F243C5E0F00024910 /* OpenChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F6B58E243C5E0F00024910 /* OpenChatRoom.swift */; };
 /* End PBXBuildFile section */
@@ -127,6 +129,8 @@
 		9735344D241BB60900D47AAA /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		9735344F241BB67500D47AAA /* AuthenticationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
 		D1467333238F6D5B004BF2B6 /* LineSDKSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LineSDKSample.entitlements; sourceTree = "<group>"; };
+		D17A9F3624BD312A00D0FD0D /* LoginSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSettingsViewController.swift; sourceTree = "<group>"; };
+		D17A9F3824BD34EE00D0FD0D /* LoginSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSettings.swift; sourceTree = "<group>"; };
 		D1F6B58C243C5ACF00024910 /* OpenChatRoomTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomTableViewController.swift; sourceTree = "<group>"; };
 		D1F6B58E243C5E0F00024910 /* OpenChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoom.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -265,6 +269,8 @@
 			isa = PBXGroup;
 			children = (
 				4B9058A021006E9C004D717F /* LoginViewController.swift */,
+				D17A9F3624BD312A00D0FD0D /* LoginSettingsViewController.swift */,
+				D17A9F3824BD34EE00D0FD0D /* LoginSettings.swift */,
 				4BAEEB8322C4B462007B53D8 /* LoginViewController+SPM.swift */,
 				4BCD27972113F95700B90D8F /* UserProfileViewController.swift */,
 				4BCD27A22114033000B90D8F /* LoginNavigationController.swift */,
@@ -461,10 +467,12 @@
 				D1F6B58F243C5E0F00024910 /* OpenChatRoom.swift in Sources */,
 				4BCD27A521142A3400B90D8F /* UserDetailViewController.swift in Sources */,
 				4B104808216ED51A00300C61 /* LineSDKSampleError.swift in Sources */,
+				D17A9F3724BD312A00D0FD0D /* LoginSettingsViewController.swift in Sources */,
 				4BCD279E2113FE9D00B90D8F /* IndicatorDisplay.swift in Sources */,
 				4BFE511822F7BA8200500B72 /* ShareMessagesTableViewController.swift in Sources */,
 				4BB8445F211BD4DF005B60D7 /* APIStore.swift in Sources */,
 				4BB84461211BE5E7005B60D7 /* APIResultViewController.swift in Sources */,
+				D17A9F3924BD34EE00D0FD0D /* LoginSettings.swift in Sources */,
 				4BCD27A32114033000B90D8F /* LoginNavigationController.swift in Sources */,
 				4BCD27A02114007500B90D8F /* UIAlertControllerHelpers.swift in Sources */,
 				4B9058A121006E9C004D717F /* LoginViewController.swift in Sources */,
@@ -681,6 +689,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = A4YJ9MRZ66;
 				INFOPLIST_FILE = LineSDKSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -706,6 +715,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = A4YJ9MRZ66;
 				INFOPLIST_FILE = LineSDKSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
