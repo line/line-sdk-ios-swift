@@ -99,6 +99,10 @@ class LoginSettingsViewController: UITableViewController {
         delegate?.loginSettingsViewControllerWillDisappear(self)
     }
 
+    @IBAction func donePressed(_ sender: Any) {
+        dismiss(animated: true)
+    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Section.allCases.count
     }

@@ -745,7 +745,7 @@
             </objects>
             <point key="canvasLocation" x="3780" y="1243.6281859070466"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Settings-->
         <scene sceneID="V23-z1-2Et">
             <objects>
                 <tableViewController id="rDq-I1-1gr" customClass="LoginSettingsViewController" customModule="LineSDKSample" customModuleProvider="target" sceneMemberID="viewController">
@@ -784,7 +784,13 @@
                             <outlet property="delegate" destination="rDq-I1-1gr" id="Lj9-zn-K2k"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="SCs-wC-0M4"/>
+                    <navigationItem key="navigationItem" title="Settings" id="SCs-wC-0M4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="uKy-ur-QwN">
+                            <connections>
+                                <action selector="donePressed:" destination="rDq-I1-1gr" id="DFp-e4-gWO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4h8-M9-6of" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
