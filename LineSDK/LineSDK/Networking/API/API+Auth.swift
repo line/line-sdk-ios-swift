@@ -110,12 +110,12 @@ extension API {
                 case .success(_):
                     handleSuccessResult()
                 case .failure(let error):
-                    guard case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = error else {
+                    if case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = error,
+                       detail.code == 400
+                    {
+                        // We recognize response 400 as a success for revoking (since the token itself is invalid).
                         completion(.failure(error))
-                        return
-                    }
-                    // We recognize response 400 as a success for revoking (since the token itself is invalid).
-                    if detail.code == 400 {
+                    } else {
                         Log.print(error.localizedDescription)
                         handleSuccessResult()
                     }
@@ -169,12 +169,12 @@ extension API {
                 case .success(_):
                     handleSuccessResult()
                 case .failure(let error):
-                    guard case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = error else {
+                    if case .responseFailed(reason: .invalidHTTPStatusAPIError(let detail)) = error,
+                       detail.code == 400
+                    {
+                        // We recognize response 400 as a success for revoking (since the token itself is invalid).
                         completion(.failure(error))
-                        return
-                    }
-                    // We recognize response 400 as a success for revoking (since the token itself is invalid).
-                    if detail.code == 400 {
+                    } else {
                         Log.print(error.localizedDescription)
                         handleSuccessResult()
                     }
