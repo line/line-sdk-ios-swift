@@ -100,7 +100,8 @@ extension APIStore {
                 title: "Verify Token",
                 request: GetVerifyTokenRequest(accessToken: AccessTokenStore.shared.current?.value ?? ""),
                 available: AccessTokenStore.shared.current != nil
-            )
+            ),
+            .refreshToken,
         ]
         
         friendshipAPIs = [
@@ -192,6 +193,24 @@ struct APIItem {
 }
 
 extension APIItem {
+
+    static var refreshToken: APIItem {
+        return APIItem(
+            title: "Refresh token",
+            path: "/oauth2/v2.1/token",
+            method: .post,
+            available: LoginManager.shared.isAuthorized) { viewController, handler in
+                API.Auth.refreshAccessToken { result in
+                    switch result {
+                    case .success(let token):
+                        handler(.success(token))
+                    case .failure(let error):
+                        handler(.failure(.sdkError(error)))
+                    }
+                }
+            }
+    }
+
     static var sendTextMessage: APIItem {
         let mock = PostSendMessagesRequest(chatID: "", messages: [])
         let block: AnyResultBlock = { arg in
