@@ -24,14 +24,14 @@ platform :ios do
     swift_version = ENV["SWIFT_VERSION"] || "4.2"
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 6s"],
+        devices: ["iPhone 11"],
         scheme: "LineSDK",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
     
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 6s"],
+        devices: ["iPhone 11"],
         scheme: "LineSDKObjC",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
@@ -40,7 +40,7 @@ platform :ios do
   lane :sample_tests do
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 6s"],
+        devices: ["iPhone 11"],
         scheme: "LineSDKSample"
     )
   end
