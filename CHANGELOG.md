@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.6.1] - 2020-08-05
+
 ### Fix
 
 - The completion handler for logging out was not called for HTTP status code 400. It now should be always called and not causing a hanging. [#158](https://github.com/line/line-sdk-ios-swift/pull/158)
@@ -204,3 +206,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.5.1]: https://github.com/line/line-sdk-ios-swift/compare/5.5.0...5.5.1
 [5.5.2]: https://github.com/line/line-sdk-ios-swift/compare/5.5.1...5.5.2
 [5.6.0]: https://github.com/line/line-sdk-ios-swift/compare/5.5.2...5.6.0
+[5.6.1]: https://github.com/line/line-sdk-ios-swift/compare/5.6.0...5.6.1
