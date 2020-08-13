@@ -256,27 +256,43 @@ public class LoginProcess {
         // It seems that plan A in the comment above also works great (even when the background execution time
         // expired). But I cannot explain why the `URLSession` can retry the request even when background task ends.
         // Maybe it is some internal implementation. Delay the request now works fine so we choose it as a workaround.
+        //
+        // In some edge cases, the network would be still lost after 0.3 sec of delay. But it should be very rare.
+        // So an auto retry for NSURLErrorNetworkConnectionLost (-1005) is applied to make sure the error not happen.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             do {
                 let response = try LoginProcessURLResponse(from: url, validatingWith: self.processID)
-                let tokenExchangeRequest = PostExchangeTokenRequest(
-                    channelID: self.configuration.channelID,
-                    code: response.requestToken,
-                    codeVerifier: self.pkce.codeVerifier,
-                    redirectURI: Constant.thirdPartyAppReturnURL,
-                    optionalRedirectURI: self.configuration.universalLinkURL?.absoluteString)
-                Session.shared.send(tokenExchangeRequest) { tokenResult in
-                    switch tokenResult {
-                    case .success(let token): self.invokeSuccess(result: token, response: response)
-                    case .failure(let error): self.invokeFailure(error: error)
-                    }
-                }
+                self.exchangeToken(response: response, canRetryOnNetworkLost: true)
             } catch {
                 self.invokeFailure(error: error)
             }
         }
 
         return true
+    }
+
+    private func exchangeToken(response: LoginProcessURLResponse, canRetryOnNetworkLost: Bool) {
+
+        let tokenExchangeRequest = PostExchangeTokenRequest(
+            channelID: self.configuration.channelID,
+            code: response.requestToken,
+            codeVerifier: self.pkce.codeVerifier,
+            redirectURI: Constant.thirdPartyAppReturnURL,
+            optionalRedirectURI: self.configuration.universalLinkURL?.absoluteString)
+        Session.shared.send(tokenExchangeRequest) { tokenResult in
+            switch tokenResult {
+            case .success(let token): self.invokeSuccess(result: token, response: response)
+            case .failure(let error):
+                if error.isURLSessionErrorCode(sessionErrorCode: NSURLErrorNetworkConnectionLost) && canRetryOnNetworkLost {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        self.exchangeToken(response: response, canRetryOnNetworkLost: false)
+                    }
+                } else {
+                    self.invokeFailure(error: error)
+                }
+            }
+        }
+
     }
     
     private var canUseLineAuthV2: Bool {

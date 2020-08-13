@@ -57,6 +57,12 @@ class LineSDKErrorTests: XCTestCase {
         XCTAssertTrue(error.isResponseError(statusCode: 123))
         XCTAssertFalse(error.isResponseError(statusCode: 321))
     }
+
+    func testURLSessionError() {
+        let networkLostError = NSError(domain: NSURLErrorDomain, code: -1005, userInfo: nil)
+        let error = LineSDKError.responseFailed(reason: .URLSessionError(networkLostError))
+        XCTAssertTrue(error.isURLSessionErrorCode(sessionErrorCode: NSURLErrorNetworkConnectionLost))
+    }
     
     func testIsBadRequest() {
         let err = APIError(InternalAPIError(message: "Bad request"))
