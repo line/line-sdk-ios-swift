@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.6.2] - 2020-08-14
+
 ### Fix
 
 - Auto retry `NSURLErrorNetworkConnectionLost` error once when exchanging token. This is a workaround for a long-last iOS bug [discussed here](https://github.com/line/line-sdk-ios-swift/blob/18b713af91f8b46c5aa4674e0af9c424339b96ae/LineSDK/LineSDK/Login/LoginProcess.swift#L246-L261). [#159](https://github.com/line/line-sdk-ios-swift/pull/159)
@@ -211,3 +213,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.5.2]: https://github.com/line/line-sdk-ios-swift/compare/5.5.1...5.5.2
 [5.6.0]: https://github.com/line/line-sdk-ios-swift/compare/5.5.2...5.6.0
 [5.6.1]: https://github.com/line/line-sdk-ios-swift/compare/5.6.0...5.6.1
+[5.6.2]: https://github.com/line/line-sdk-ios-swift/compare/5.6.1...5.6.2
