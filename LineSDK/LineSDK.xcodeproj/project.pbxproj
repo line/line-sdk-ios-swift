@@ -433,7 +433,6 @@
 		4BDD2C382133F34300DD563D /* LineSDKFlexBoxComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDD2C372133F34300DD563D /* LineSDKFlexBoxComponent.swift */; };
 		4BE4E0FC2251CEE10071FC60 /* ColumnDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */; };
 		4BE56FBF239504C800C9C415 /* OpenChatRoomCreatingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE56FBE239504C800C9C415 /* OpenChatRoomCreatingItem.swift */; };
-		4BE56FC12395051600C9C415 /* OpenChatCreatingFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */; };
 		4BEB491A212B94BC00BA946A /* FlexImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */; };
 		4BEB491C212B992B00BA946A /* FlexImageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */; };
 		4BEB491E212B9E5500BA946A /* FlexFillerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */; };
@@ -497,7 +496,6 @@
 		D1D22C922408A8EF0028A9E0 /* OpenChatRoomInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488052394CB9C00A5DC77 /* OpenChatRoomInfoViewController.swift */; };
 		D1D22C932408A8F10028A9E0 /* OptionSelectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B19DC942398974900E51458 /* OptionSelectingViewController.swift */; };
 		D1D22C942408A8F30028A9E0 /* OpenChatUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF488072394CBFF00A5DC77 /* OpenChatUserProfileViewController.swift */; };
-		D1D22C952408A8F60028A9E0 /* OpenChatCreatingFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */; };
 		D1D22C962408A8FA0028A9E0 /* FormEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F022396342800B81E56 /* FormEntry.swift */; };
 		D1D22C972408A8FD0028A9E0 /* FormSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B603F04239638CF00B81E56 /* FormSection.swift */; };
 		D1D22C982408A9000028A9E0 /* OpenChatRoomNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6972962396433C0079B7D2 /* OpenChatRoomNameTableViewCell.swift */; };
@@ -520,6 +518,10 @@
 		D1D22CA92408AA2F0028A9E0 /* LineSDKOpenChatRoomCreatingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B67EA3D23E2770900A6ADCD /* LineSDKOpenChatRoomCreatingItem.swift */; };
 		D1D22CAA2408AA440028A9E0 /* LineSDKOpenChatRoomStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A523EAA7AA00EE49FA /* LineSDKOpenChatRoomStatus.swift */; };
 		D1D22CAB2408AA480028A9E0 /* LineSDKOpenChatRoomMembershipState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8469A723EAA7BD00EE49FA /* LineSDKOpenChatRoomMembershipState.swift */; };
+		D1F20A762500BBF4005E359E /* OpenChatCreatingFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F20A752500BBF4005E359E /* OpenChatCreatingFormItem.swift */; };
+		D1F20A782500BBFD005E359E /* OpenChatCreatingFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F20A752500BBF4005E359E /* OpenChatCreatingFormItem.swift */; };
+		D1F20A7A2500BC12005E359E /* OpenChatCategoryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F20A792500BC11005E359E /* OpenChatCategoryExtensions.swift */; };
+		D1F20A7B2500BC12005E359E /* OpenChatCategoryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F20A792500BC11005E359E /* OpenChatCategoryExtensions.swift */; };
 		D1F4E716225743F3002639AC /* LineSDKShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */; };
 		D1F4E718225744CE002639AC /* LineSDKViewControllerInterfaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */; };
 		D1F6B581243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */; };
@@ -824,7 +826,6 @@
 		4BDD2C372133F34300DD563D /* LineSDKFlexBoxComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKFlexBoxComponent.swift; sourceTree = "<group>"; };
 		4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnDataStoreTests.swift; sourceTree = "<group>"; };
 		4BE56FBE239504C800C9C415 /* OpenChatRoomCreatingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatRoomCreatingItem.swift; sourceTree = "<group>"; };
-		4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingFormItem.swift; sourceTree = "<group>"; };
 		4BEB4919212B94BC00BA946A /* FlexImageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponent.swift; sourceTree = "<group>"; };
 		4BEB491B212B992B00BA946A /* FlexImageComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexImageComponentTests.swift; sourceTree = "<group>"; };
 		4BEB491D212B9E5500BA946A /* FlexFillerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexFillerComponent.swift; sourceTree = "<group>"; };
@@ -881,6 +882,8 @@
 		D1A591262139489E00AC080D /* JWK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWK.swift; sourceTree = "<group>"; };
 		D1A591282139495B00AC080D /* JWKSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWKSet.swift; sourceTree = "<group>"; };
 		D1CB0D0E24481987001F9238 /* LineSDKOpenChatRoomJoinType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKOpenChatRoomJoinType.swift; sourceTree = "<group>"; };
+		D1F20A752500BBF4005E359E /* OpenChatCreatingFormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingFormItem.swift; sourceTree = "<group>"; };
+		D1F20A792500BC11005E359E /* OpenChatCategoryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenChatCategoryExtensions.swift; sourceTree = "<group>"; };
 		D1F4E715225743F3002639AC /* LineSDKShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKShareViewController.swift; sourceTree = "<group>"; };
 		D1F4E717225744CE002639AC /* LineSDKViewControllerInterfaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LineSDKViewControllerInterfaceTests.m; sourceTree = "<group>"; };
 		D1F6B580243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOpenChatRoomJoinRequest.swift; sourceTree = "<group>"; };
@@ -1101,7 +1104,7 @@
 		4B61C6612394CF2A005D7C21 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4BE56FC02395051600C9C415 /* OpenChatCreatingFormItem.swift */,
+				D1F20A792500BC11005E359E /* OpenChatCategoryExtensions.swift */,
 				4B603F022396342800B81E56 /* FormEntry.swift */,
 				4B603F04239638CF00B81E56 /* FormSection.swift */,
 			);
@@ -1708,6 +1711,7 @@
 			isa = PBXGroup;
 			children = (
 				4BF487F82394A80100A5DC77 /* OpenChatCategory.swift */,
+				D1F20A752500BBF4005E359E /* OpenChatCreatingFormItem.swift */,
 				4BE56FBE239504C800C9C415 /* OpenChatRoomCreatingItem.swift */,
 			);
 			path = Model;
@@ -2340,6 +2344,7 @@
 				4B85BB6B22C4A8E600DFE299 /* ResourceLoading.swift in Sources */,
 				DB5035BB22571D3B003CD0B9 /* KeyboardObservable.swift in Sources */,
 				4B95F40221252D2F00AD3A81 /* PostMultisendMessagesRequest.swift in Sources */,
+				D1F20A7A2500BC12005E359E /* OpenChatCategoryExtensions.swift in Sources */,
 				4B9B9AA72123C6E400325B9B /* PostSendMessagesRequest.swift in Sources */,
 				4B3CCB762152295300F51D76 /* CryptoData.swift in Sources */,
 				D1F6B581243C16DF00024910 /* PostOpenChatRoomJoinRequest.swift in Sources */,
@@ -2371,11 +2376,11 @@
 				4BFD6062212A8F55009E9838 /* FlexMessageComponent.swift in Sources */,
 				4B4464E8212D093D008D3624 /* TemplateMessageProperties.swift in Sources */,
 				4BF487FB2394AC3800A5DC77 /* GetOpenChatRoomStatusRequest.swift in Sources */,
+				D1F20A762500BBF4005E359E /* OpenChatCreatingFormItem.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
 				4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */,
 				DBF20278212C137D00780358 /* GetApproversInGroupRequest.swift in Sources */,
 				4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */,
-				4BE56FC12395051600C9C415 /* OpenChatCreatingFormItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2654,7 +2659,6 @@
 				4BCD251A23FFAABA00D4B6BD /* ShareTargetTableViewStyling.swift in Sources */,
 				4BCD24E223FFA74100D4B6BD /* LineSDKShareViewControllerDelegate.swift in Sources */,
 				4BCD24E323FFA74100D4B6BD /* LineSDKFlexMessage.swift in Sources */,
-				D1D22C952408A8F60028A9E0 /* OpenChatCreatingFormItem.swift in Sources */,
 				4BCD24E423FFA74100D4B6BD /* LineSDKMessagingResponse.swift in Sources */,
 				4BCD255023FFAABA00D4B6BD /* TemplateCarouselPayload.swift in Sources */,
 				D1D22C912408A8EC0028A9E0 /* OpenChatCreatingNavigationController.swift in Sources */,
@@ -2686,6 +2690,7 @@
 				4BCD257823FFAABA00D4B6BD /* GetJWKSetRequest.swift in Sources */,
 				4BCD254E23FFAABA00D4B6BD /* TemplateButtonsPayload.swift in Sources */,
 				4BCD255F23FFAABA00D4B6BD /* FlexSpacerComponent.swift in Sources */,
+				D1F20A7B2500BC12005E359E /* OpenChatCategoryExtensions.swift in Sources */,
 				4BCD24ED23FFA74100D4B6BD /* LineSDKFlexIconComponent.swift in Sources */,
 				4BCD257623FFAABA00D4B6BD /* CryptoError.swift in Sources */,
 				4BCD257C23FFAABA00D4B6BD /* JWK.swift in Sources */,
@@ -2743,6 +2748,7 @@
 				4BCD255E23FFAABA00D4B6BD /* FlexSeparatorComponent.swift in Sources */,
 				D1D22CA52408A97E0028A9E0 /* UserDefaultsValue.swift in Sources */,
 				4BCD24FC23FFA74100D4B6BD /* LineSDKLoginResult.swift in Sources */,
+				D1F20A782500BBFD005E359E /* OpenChatCreatingFormItem.swift in Sources */,
 				4BCD255823FFAABA00D4B6BD /* FlexBoxComponent.swift in Sources */,
 				4BCD255423FFAABA00D4B6BD /* FlexBubbleContainer.swift in Sources */,
 				4BCD24FD23FFA74100D4B6BD /* LineSDKLoginProcess.swift in Sources */,
