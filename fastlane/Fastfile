@@ -47,7 +47,7 @@ platform :ios do
 
   desc "Lint to check Carthage and CocoaPods compatibility."
   lane :lint do
-    lint_carthage
+    # lint_carthage
     lint_pod
   end
 
