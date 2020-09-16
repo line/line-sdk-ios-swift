@@ -6,19 +6,19 @@ All notable changes to this project will be documented in this file.
 
 ## [5.7.0] - 2020-09-16
 
-### Add
+### Added
 
 - Xcode 12 support. The new Swift Package Manager support. Now the built-in UI of LINE SDK is also available when integrated with SPM. [#161](https://github.com/line/line-sdk-ios-swift/pull/161)
 
 ## [5.6.2] - 2020-08-14
 
-### Fix
+### Fixed
 
 - Auto retry `NSURLErrorNetworkConnectionLost` error once when exchanging token. This is a workaround for a long-last iOS bug [discussed here](https://github.com/line/line-sdk-ios-swift/blob/18b713af91f8b46c5aa4674e0af9c424339b96ae/LineSDK/LineSDK/Login/LoginProcess.swift#L246-L261). [#159](https://github.com/line/line-sdk-ios-swift/pull/159)
 
 ## [5.6.1] - 2020-08-05
 
-### Fix
+### Fixed
 
 - The completion handler for logging out was not called for HTTP status code 400. It now should be always called and not causing a hanging. [#158](https://github.com/line/line-sdk-ios-swift/pull/158)
 
