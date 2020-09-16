@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.7.0] - 2020-09-16
+
 ### Add
 
 - Xcode 12 support. The new Swift Package Manager support. Now the built-in UI of LINE SDK is also available when integrated with SPM. [#161](https://github.com/line/line-sdk-ios-swift/pull/161)
@@ -218,3 +220,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.6.0]: https://github.com/line/line-sdk-ios-swift/compare/5.5.2...5.6.0
 [5.6.1]: https://github.com/line/line-sdk-ios-swift/compare/5.6.0...5.6.1
 [5.6.2]: https://github.com/line/line-sdk-ios-swift/compare/5.6.1...5.6.2
+[5.7.0]: https://github.com/line/line-sdk-ios-swift/compare/5.6.2...5.7.0
