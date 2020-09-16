@@ -51,6 +51,11 @@ fastlane ios lint_pod
 fastlane ios lint_carthage
 ```
 
+### ios lint_spm
+```
+fastlane ios lint_spm
+```
+
 ### ios release
 ```
 fastlane ios release

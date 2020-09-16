@@ -23,7 +23,7 @@
 /// Represents a template payload with a text and two action button.
 /// Use this template if you want users to answer between "Yes" or "No".
 public struct TemplateConfirmPayload: Codable, TemplateMessagePayloadTypeCompatible {
-    let type = TemplateMessagePayloadType.confirm
+    private(set) var type = TemplateMessagePayloadType.confirm
     
     /// Message text in the chat bubble.
     public var text: String

@@ -71,7 +71,7 @@ public enum MessageAction: Codable, MessageActionConvertible {
 }
 
 public struct MessageURIAction: Codable, TemplateMessageActionTypeCompatible, MessageActionConvertible {
-    let type = MessageActionType.URI
+    private(set) var type = MessageActionType.URI
     public let label: String?
     public let uri: URL
 

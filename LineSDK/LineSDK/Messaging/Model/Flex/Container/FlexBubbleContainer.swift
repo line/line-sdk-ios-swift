@@ -61,7 +61,7 @@ public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
         public static let defaultCase: Direction = .leftToRight
     }
     
-    let type = FlexMessageContainerType.bubble
+    private(set) var type = FlexMessageContainerType.bubble
     
     /// The header block. Header section of the bubble. This block is a `FlexBoxComponent` and could contains
     /// arbitrary nested components.

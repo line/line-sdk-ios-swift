@@ -24,7 +24,7 @@ import Foundation
 /// LINE internal use only.
 /// Represents an icon component. It is used to embed into a baseline layout and its flex is fixed to 0.
 public struct FlexIconComponent: Codable, FlexMessageComponentTypeCompatible {
-    let type: FlexMessageComponentType = .icon
+    private(set) var type: FlexMessageComponentType = .icon
     
     /// Icon URL. It should start with "https".
     public let url: URL

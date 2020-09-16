@@ -23,7 +23,7 @@
 /// Represents some spacing in a box component.
 /// This is an invisible component that places a fixed-size space at the beginning or end of the box.
 public struct FlexSpacerComponent: Codable, FlexMessageComponentTypeCompatible {
-    let type: FlexMessageComponentType = .spacer
+    private(set) var type: FlexMessageComponentType = .spacer
     
     /// Size of the space.
     /// You can specify one from: `[.xs, .sm, .md, .lg, .xl, .xxl]`.

@@ -24,7 +24,7 @@
 /// A box component behave as a container of other components. It defines the layout of its child components.
 /// You can also include a nested box in a box.
 public struct FlexBoxComponent: Codable, FlexMessageComponentTypeCompatible, MessageActionContainer {
-    let type: FlexMessageComponentType = .box
+    private(set) var type: FlexMessageComponentType = .box
     
     /// The placement style of components in this box.
     public let layout: FlexMessageComponent.Layout

@@ -47,23 +47,40 @@ jobs:
       env:
         SWIFT_VERSION: ${{ matrix.swift-version }}
       run: bundle exec fastlane lint_pod
-  lint_carthage:
-    name: Lint Carthage
+#   lint_carthage:
+#     name: Lint Carthage
+#     runs-on: macOS-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/cache@v1
+#         with:
+#           path: vendor/bundle
+#           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+#           restore-keys: |
+#             ${{ runner.os }}-gems-
+#       - name: Bundle Install
+#         run: |
+#           bundle config path vendor/bundle
+#           bundle install --jobs 4 --retry 3
+#       - name: Lint Carthage
+#         run: bundle exec fastlane lint_carthage
+  lint_spm:
+    name: Lint Swift Package Manager
     runs-on: macOS-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Bundle Install
-        run: |
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - name: Lint Carthage
-        run: bundle exec fastlane lint_carthage
+        - uses: actions/checkout@v2
+        - uses: actions/cache@v1
+          with:
+            path: vendor/bundle
+            key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+            restore-keys: |
+              ${{ runner.os }}-gems-
+        - name: Bundle Install
+          run: |
+            bundle config path vendor/bundle
+            bundle install --jobs 4 --retry 3
+        - name: Lint Swift Package Manager
+          run: bundle exec fastlane lint_spm
   xcframework:
     name: Build XCFramework
     runs-on: macOS-latest
