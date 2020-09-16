@@ -24,7 +24,7 @@
 /// Different from the `separator` property of `FlexBlockStyle`, the `FlexSeparatorComponent` allows you to add a
 /// separator between components instead of container block, as well as full control on separator `margin`.
 public struct FlexSeparatorComponent: Codable, FlexMessageComponentTypeCompatible {
-    let type: FlexMessageComponentType = .separator
+    private(set) var type: FlexMessageComponentType = .separator
     
     /// Minimum space between this component and the previous component in the parent box.
     /// If not specified, the `spacing` of parent box will be used.

@@ -29,7 +29,7 @@
 ///
 /// For more information, see https://developers.line.biz/en/docs/messaging-api/message-types/#flex-messages .
 public struct FlexMessage: Codable, MessageTypeCompatible {
-    let type = MessageType.flex
+    private(set) var type = MessageType.flex
     
     /// An alternate text to show in LINE push notification or chat preview.
     public var altText: String

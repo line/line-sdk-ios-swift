@@ -55,7 +55,7 @@ public struct TemplateImageCarouselPayload: Codable, TemplateMessagePayloadTypeC
         }
     }
     
-    let type = TemplateMessagePayloadType.imageCarousel
+    private(set) var type = TemplateMessagePayloadType.imageCarousel
     
     /// Array of columns. You could set at most 10 columns in the payload. Line SDK does not check the elements count
     /// in a payload. However, it would cause an API response error if more columns contained in the payload.

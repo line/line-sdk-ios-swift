@@ -23,7 +23,7 @@
 /// Represents an invisible component to fill extra space between components.
 /// The filler's `flex` is fixed to 1. The `spacing` property of the parent box will be ignored for fillers.
 public struct FlexFillerComponent: Codable, FlexMessageComponentTypeCompatible {
-    let type: FlexMessageComponentType = .filler
+    private(set) var type: FlexMessageComponentType = .filler
     
     /// Creates a filler component.
     public init() {}

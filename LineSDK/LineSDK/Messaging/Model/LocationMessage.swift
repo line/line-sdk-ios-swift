@@ -26,7 +26,7 @@ public struct LocationMessage: Codable, MessageTypeCompatible {
     /// Represents a location latitude or longitude degrees.
     public typealias LocationDegrees = Double
     
-    let type = MessageType.location
+    private(set) var type = MessageType.location
     
     /// Title name of the location.
     public var title: String

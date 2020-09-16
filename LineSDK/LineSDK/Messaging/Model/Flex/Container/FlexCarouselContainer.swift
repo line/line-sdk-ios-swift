@@ -24,7 +24,7 @@
 /// scrolling horizontally.
 ///
 public struct FlexCarouselContainer: Codable, FlexMessageContainerTypeCompatible {
-    let type = FlexMessageContainerType.carousel
+    private(set) var type = FlexMessageContainerType.carousel
     
     /// Array of `FlexBubbleContainer`s. You could set at most 10 bubble container in this carousel container.
     /// Line SDK does not check the elements count in a container. However, it would cause an API response error

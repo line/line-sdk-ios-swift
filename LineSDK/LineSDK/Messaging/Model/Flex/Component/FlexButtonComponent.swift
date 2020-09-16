@@ -45,7 +45,7 @@ public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
         public static let defaultCase: FlexButtonComponent.Style = .link
     }
     
-    let type = FlexMessageComponentType.button
+    private(set) var type = FlexMessageComponentType.button
     
     /// An action to perform when the button tapped.
     /// Use `setAction` method if you want to set a `MessageActionConvertible` as the action of current component.
