@@ -61,8 +61,10 @@ extension Bundle {
         }
         return bundle
     }()
-    #else
+    #elseif LineSDKXCProj
     static let sdkBundle: Bundle = .frameworkBundle
+    #else // Swift Package Manager
+    static let sdkBundle: Bundle = .module
     #endif
 
     static let frameworkBundle: Bundle = {
