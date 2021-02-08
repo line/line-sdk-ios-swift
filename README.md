@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/line/line-sdk-ios-swift.svg?branch=master)](https://travis-ci.org/line/line-sdk-ios-swift)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/LineSDKSwift.svg)](https://cocoapods.org/pods/LineSDKSwift)
+[![Swift Package Manager Compatible](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager/)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 # LINE SDK for iOS Swift
@@ -37,7 +38,7 @@ To use the LINE SDK with your iOS app, follow the steps below.
 * Integrate LINE Login into your iOS app using the SDK. 
 * Make API calls from your app using the SDK or from server-side through the Social API. 
 
-For more information, refer to the [LINE SDK for iOS Swift guide](https://developers.line.biz/en/docs/ios-sdk/) on the [LINE Developers site](https://developers.line.biz).
+For more information, refer to the [LINE SDK for iOS Swift guide](https://developers.line.biz/en/docs/ios-sdk/swift/overview/) on the [LINE Developers site](https://developers.line.biz).
 
 ### Trying the starter app
 
