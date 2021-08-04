@@ -61,11 +61,13 @@ enum Log {
 public struct LineSDKNotificationKey {}
 
 extension UIApplication {
+    @available(iOSApplicationExtension, unavailable)
     func openLINEInAppStore() {
         let url = URL(string: "https://itunes.apple.com/app/id443904275?mt=8")!
         open(url, options: [:], completionHandler: nil)
     }
     
+    @available(iOSApplicationExtension, unavailable)
     func openLINEApp() {
         let url = URL(string: "\(Constant.lineAuthV2Scheme)://")!
         open(url, options: [:], completionHandler: nil)
@@ -153,6 +155,7 @@ extension UIViewController {
 }
 
 extension UIViewController {
+    @available(iOSApplicationExtension, unavailable)
     var expectedSearchBarHeight: CGFloat {
         if #available(iOS 13.0, *) {
             return 54
@@ -195,6 +198,7 @@ func guardSharedProperty<T>(_ input: T?) -> T {
 }
 
 extension Constant {
+    @available(iOSApplicationExtension, unavailable)
     static var isLINEInstalled: Bool {
         return UIApplication.shared.canOpenURL(Constant.lineAppAuthURLv2)
     }

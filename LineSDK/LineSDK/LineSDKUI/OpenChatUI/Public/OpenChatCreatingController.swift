@@ -91,6 +91,7 @@ public class OpenChatCreatingController {
     ///     self.hideLoadingIndicator()
     /// }
     /// ```
+    @available(iOSApplicationExtension, unavailable)
     public func loadAndPresent(
         in viewController: UIViewController,
         presentedHandler handler: ((Result<UIViewController, LineSDKError>) -> Void)? = nil
@@ -117,6 +118,7 @@ public class OpenChatCreatingController {
         }
     }
     
+    @available(iOSApplicationExtension, unavailable)
     func presentTermAgreementAlert(
         in viewController: UIViewController,
         handler: ((Result<UIViewController, LineSDKError>) -> Void)? = nil

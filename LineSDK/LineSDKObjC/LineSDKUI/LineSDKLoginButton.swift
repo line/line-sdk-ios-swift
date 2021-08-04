@@ -75,10 +75,12 @@ public class LineSDKLoginButton: NSObject {
         }
     }
     
+    @available(iOSApplicationExtension, unavailable)
     public override init() {
         _binaryCompatibleButton = LoginButton()
     }
 
+    @available(iOSApplicationExtension, unavailable)
     public func login() {
         LineSDKLoginManager.sharedManager.login(
             permissions: loginPermissions,

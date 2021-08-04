@@ -42,6 +42,7 @@ public class LineSDKLoginManager: NSObject {
     }
 
     @discardableResult
+    @available(iOSApplicationExtension, unavailable)
     public func login(
         permissions: Set<LineSDKLoginPermission>?,
         inViewController viewController: UIViewController?,
@@ -58,6 +59,7 @@ public class LineSDKLoginManager: NSObject {
     }
 
     @discardableResult
+    @available(iOSApplicationExtension, unavailable)
     public func login(
         permissions: Set<LineSDKLoginPermission>?,
         inViewController viewController: UIViewController?,
@@ -97,6 +99,7 @@ public class LineSDKLoginManager: NSObject {
     use `login(permissions:inViewController:parameters:completionHandler:)` instead.")
     """)
     @discardableResult
+    @available(iOSApplicationExtension, unavailable)
     public func login(
         permissions: Set<LineSDKLoginPermission>?,
         inViewController viewController: UIViewController?,

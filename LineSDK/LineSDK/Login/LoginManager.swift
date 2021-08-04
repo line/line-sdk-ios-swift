@@ -121,6 +121,7 @@ public class LoginManager {
     ///   necessary. However, if you need to refresh the access token manually, use the
     ///   `API.Auth.refreshAccessToken(with:)` method.
     ///
+    @available(iOSApplicationExtension, unavailable)
     @discardableResult
     public func login(
         permissions: Set<LoginPermission> = [.profile],
@@ -336,6 +337,7 @@ public class LoginManager {
     use `login(permissions:in:parameters:completionHandler:)` instead.")
     """)
     @discardableResult
+    @available(iOSApplicationExtension, unavailable)
     public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,

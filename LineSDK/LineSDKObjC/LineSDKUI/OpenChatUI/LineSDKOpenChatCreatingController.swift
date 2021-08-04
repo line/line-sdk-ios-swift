@@ -48,6 +48,7 @@ public class LineSDKOpenChatCreatingController: NSObject {
         }
     }
     
+    @available(iOSApplicationExtension, unavailable)
     public func loadAndPresent(
         in viewController: UIViewController,
         presentedHandler handler: @escaping (UIViewController?, Error?) -> Void

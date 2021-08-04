@@ -129,6 +129,7 @@ public class LoginProcess {
         }
     }
     
+    @available(iOSApplicationExtension, unavailable)
     func start() {
         let parameters = FlowParameters(
             channelID: self.configuration.channelID,
@@ -175,6 +176,7 @@ public class LoginProcess {
         observer.startObserving()
     }
     
+    @available(iOSApplicationExtension, unavailable)
     private func startAppUniversalLinkFlow(_ parameters: FlowParameters) {
         let appUniversalLinkFlow = AppUniversalLinkFlow(parameter: parameters)
         appUniversalLinkFlow.onNext.delegate(on: self) { [unowned appUniversalLinkFlow] (self, started) in
@@ -195,6 +197,7 @@ public class LoginProcess {
         appUniversalLinkFlow.start()
     }
     
+    @available(iOSApplicationExtension, unavailable)
     private func startAppAuthSchemeFlow(_ parameters: FlowParameters) {
         let appAuthSchemeFlow = AppAuthSchemeFlow(parameter: parameters)
         appAuthSchemeFlow.onNext.delegate(on: self) { [unowned appAuthSchemeFlow] (self, started) in
@@ -209,6 +212,7 @@ public class LoginProcess {
         appAuthSchemeFlow.start()
     }
     
+    @available(iOSApplicationExtension, unavailable)
     private func startWebLoginFlow(_ parameters: FlowParameters) {
         let webLoginFlow = WebLoginFlow(parameter: parameters)
         webLoginFlow.onNext.delegate(on: self) { [unowned webLoginFlow] (self, result) in
@@ -295,6 +299,7 @@ public class LoginProcess {
 
     }
     
+    @available(iOSApplicationExtension, unavailable)
     private var canUseLineAuthV2: Bool {
         return Constant.isLINEInstalled
     }
@@ -326,6 +331,7 @@ class AppUniversalLinkFlow {
         url = universalURLBase.appendedLoginQuery(parameter)
     }
     
+    @available(iOSApplicationExtension, unavailable)
     func start() {
         UIApplication.shared.open(url, options: [.universalLinksOnly: true]) {
             opened in
@@ -343,6 +349,7 @@ class AppAuthSchemeFlow {
         url = Constant.lineAppAuthURLv2.appendedURLSchemeQuery(parameter)
     }
     
+    @available(iOSApplicationExtension, unavailable)
     func start() {
         UIApplication.shared.open(url, options: [:]) {
             opened in
@@ -369,6 +376,7 @@ class WebLoginFlow: NSObject {
          url = webLoginURLBase.appendedLoginQuery(parameter)
     }
     
+    @available(iOSApplicationExtension, unavailable)
     func start(in viewController: UIViewController?) {
         let safariViewController = SFSafariViewController(url: url)
         safariViewController.modalPresentationStyle = .overFullScreen
@@ -466,6 +474,7 @@ extension URL {
 }
 
 extension UIWindow {
+    @available(iOSApplicationExtension, unavailable)
     static func findKeyWindow() -> UIWindow? {
         if let window = UIApplication.shared.keyWindow, window.windowLevel == .normal {
             // A key window of main app exists, go ahead and use it
@@ -483,6 +492,7 @@ extension UIWindow {
 }
 
 extension UIViewController {
+    @available(iOSApplicationExtension, unavailable)
     static var topMost: UIViewController? {
         let keyWindow = UIWindow.findKeyWindow()
         if let window = keyWindow, !window.isKeyWindow {

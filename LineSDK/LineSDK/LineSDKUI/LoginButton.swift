@@ -156,18 +156,21 @@ open class LoginButton: UIButton {
     }
 
     /// Creates a predefined LINE Login button.
+    @available(iOSApplicationExtension, unavailable)
     public init() {
         super.init(frame: .zero)
         setup()
     }
 
     /// Creates a predefined LINE Login button.
+    @available(iOSApplicationExtension, unavailable)
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
 
     // Setup the default style of `LoginButton`.
+    @available(iOSApplicationExtension, unavailable)
     func setup() {
         // set accessibility label for sample UI test
         accessibilityLabel = "login.button"
@@ -229,6 +232,7 @@ open class LoginButton: UIButton {
     }
 
     /// Executes the login action when the user taps the login button.
+    @available(iOSApplicationExtension, unavailable)
     @objc open func login() {
         LoginManager.shared.login(
             permissions: permissions,

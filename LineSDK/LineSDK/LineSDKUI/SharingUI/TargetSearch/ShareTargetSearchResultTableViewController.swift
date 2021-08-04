@@ -53,6 +53,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         fatalError("init(coder:) has not been implemented")
     }
 
+    @available(iOSApplicationExtension, unavailable)
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -115,6 +116,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         }
     }
 
+    @available(iOSApplicationExtension, unavailable)
     private func setupTableView() {
         setupTableViewStyle()
         automaticallyAdjustsScrollViewInsets = false
