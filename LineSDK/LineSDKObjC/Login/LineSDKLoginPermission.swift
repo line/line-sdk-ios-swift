@@ -34,23 +34,29 @@ public class LineSDKLoginPermission: NSObject {
         return Set(permissions)
     }
 
-    public static let openID                         = LineSDKLoginPermission(.openID)
-    public static let profile                        = LineSDKLoginPermission(.profile)
-    public static let friends                        = LineSDKLoginPermission(.friends)
-    public static let groups                         = LineSDKLoginPermission(.groups)
-    public static let oneTimeShare                   = LineSDKLoginPermission(.oneTimeShare)
-    public static let messageWrite                   = LineSDKLoginPermission(.messageWrite)
+    public static let openID                          = LineSDKLoginPermission(.openID)
+    public static let profile                         = LineSDKLoginPermission(.profile)
+    public static let friends                         = LineSDKLoginPermission(.friends)
+    public static let groups                          = LineSDKLoginPermission(.groups)
+    public static let oneTimeShare                    = LineSDKLoginPermission(.oneTimeShare)
+    public static let messageWrite                    = LineSDKLoginPermission(.messageWrite)
     
-    public static let email                          = LineSDKLoginPermission(.email)
-    public static let phone                          = LineSDKLoginPermission(.phone)
-    public static let gender                         = LineSDKLoginPermission(.gender)
-    public static let birthdate                      = LineSDKLoginPermission(.birthdate)
-    public static let address                        = LineSDKLoginPermission(.address)
-    public static let realName                       = LineSDKLoginPermission(.realName)
+    public static let email                           = LineSDKLoginPermission(.email)
+    public static let phone                           = LineSDKLoginPermission(.phone)
+    public static let gender                          = LineSDKLoginPermission(.gender)
+    public static let birthdate                       = LineSDKLoginPermission(.birthdate)
+    public static let address                         = LineSDKLoginPermission(.address)
+    public static let realName                        = LineSDKLoginPermission(.realName)
 
-    public static let openChatTermStatus             = LineSDKLoginPermission(.openChatTermStatus)
-    public static let openChatRoomCreateAndJoin      = LineSDKLoginPermission(.openChatRoomCreateAndJoin)
-    public static let openChatInfo                   = LineSDKLoginPermission(.openChatInfo)
+    public static let openChatTermStatus              = LineSDKLoginPermission(.openChatTermStatus)
+    public static let openChatRoomCreateAndJoin       = LineSDKLoginPermission(.openChatRoomCreateAndJoin)
+    public static let openChatInfo                    = LineSDKLoginPermission(.openChatInfo)
+    
+    public static let openChatPlugManagement          = LineSDKLoginPermission(.openChatPlugManagement)
+    public static let openChatPlugInfo                = LineSDKLoginPermission(.openChatPlugInfo)
+    public static let openChatPlugProfile             = LineSDKLoginPermission(.openChatPlugProfile)
+    public static let openChatPlugSendMessage         = LineSDKLoginPermission(.openChatPlugSendMessage)
+    public static let openChatPlugReceiveMessageEvent = LineSDKLoginPermission(.openChatPlugReceiveMessageEvent)
     
     var unwrapped: LoginPermission { return _value }
 }

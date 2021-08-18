@@ -100,6 +100,16 @@ extension LoginPermission {
 }
 
 /// :nodoc:
+/// LINE internal use only. Sub-permissions of Open Chat Plug.
+extension LoginPermission {
+    public static let openChatPlugManagement          = LoginPermission(rawValue: "openchatplug.managament")
+    public static let openChatPlugInfo                = LoginPermission(rawValue: "openchatplug.info")
+    public static let openChatPlugProfile             = LoginPermission(rawValue: "openchatplug.profile")
+    public static let openChatPlugSendMessage         = LoginPermission(rawValue: "openchatplug.send.message")
+    public static let openChatPlugReceiveMessageEvent = LoginPermission(rawValue: "openchatplug.receive.message.and.event")
+}
+
+/// :nodoc:
 extension LoginPermission: CustomStringConvertible {
     public var description: String { return rawValue }
 }
