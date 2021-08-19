@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- New permissions in `LoginPermission` for Open Chat Plug features. [#168](https://github.com/line/line-sdk-ios-swift/pull/168)
+
 ## [5.7.0] - 2020-09-16
 
 ### Added
