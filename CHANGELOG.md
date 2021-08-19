@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.8.0] - 2021-08-19Z
+
 ### Added
 
 - New permissions in `LoginPermission` for Open Chat Plug features. [#168](https://github.com/line/line-sdk-ios-swift/pull/168)
@@ -225,3 +227,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.6.1]: https://github.com/line/line-sdk-ios-swift/compare/5.6.0...5.6.1
 [5.6.2]: https://github.com/line/line-sdk-ios-swift/compare/5.6.1...5.6.2
 [5.7.0]: https://github.com/line/line-sdk-ios-swift/compare/5.6.2...5.7.0
+[5.8.0]: https://github.com/line/line-sdk-ios-swift/compare/5.7.0...5.8.0
