@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.8.1] - 2021-11-17Z
+
 ### Fixed
 
 - Upgrade project settings for Xcode 13 and other tool dependencies. [#170](https://github.com/line/line-sdk-ios-swift/pull/170)
@@ -232,3 +234,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.6.2]: https://github.com/line/line-sdk-ios-swift/compare/5.6.1...5.6.2
 [5.7.0]: https://github.com/line/line-sdk-ios-swift/compare/5.6.2...5.7.0
 [5.8.0]: https://github.com/line/line-sdk-ios-swift/compare/5.7.0...5.8.0
+[5.8.1]: https://github.com/line/line-sdk-ios-swift/compare/5.8.0...5.8.1
