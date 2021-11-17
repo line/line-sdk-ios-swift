@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Upgrade project settings for Xcode 13 and other tool dependencies. [#170](https://github.com/line/line-sdk-ios-swift/pull/170)
+
 ## [5.8.0] - 2021-08-19Z
 
 ### Added
