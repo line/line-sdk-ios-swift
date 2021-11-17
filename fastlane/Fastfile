@@ -4,7 +4,7 @@ platform :ios do
 
   before_all do
     begin
-        xcversion(version: "~> 12.0")
+        xcversion(version: "~> 13.0")
     rescue => ex
         UI.error("Failed when switching to Xcode version: #{ex}")
     end
