@@ -51,7 +51,7 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
     let avatarImageView = DownloadableImageView(frame: .zero)
     let displayNameLabel = UILabel(frame: .zero)
 
-    static let reuseIdentifier = String(describing: self)
+    static let reuseIdentifier = String(describing: ShareTargetSelectingTableCell.self)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
