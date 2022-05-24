@@ -153,15 +153,32 @@ platform :ios do
     output_path = "build"
 
     FileUtils.rm_rf "../#{output_path}"
+    
+    artifact_paths = []
 
-    artifact_paths = [
-      create_xcframework(version: target_version, scheme: "LineSDK", output: output_path),
-      create_xcframework(version: target_version, scheme: "LineSDKObjCBinary", product_name: "LineSDKObjC", output: output_path),
-    ]
+    create_xcframework(
+      workspace: "LineSDK.xcworkspace", 
+      scheme: "LineSDK", 
+      destinations: ['iOS'],
+      include_debug_symbols: true,
+      xcframework_output_directory: output_path
+    )
+    artifact_paths.push(ENV["XCFRAMEWORK_OUTPUT_PATH"])
+    
+    create_xcframework(
+      workspace: "LineSDK.xcworkspace", 
+      scheme: "LineSDKObjCBinary", 
+      product_name: "LineSDKObjC", 
+      destinations: ['iOS'], 
+      include_debug_symbols: true,
+      xcframework_output_directory: output_path
+    )
+    artifact_paths.push(ENV["XCFRAMEWORK_OUTPUT_PATH"])
 
     zipped_files = []
     artifact_paths.each do |path|
-      zipped_files << zip(path: path)
+      basename = File.basename(path, ".xcframework")
+      zipped_files << zip(path: path, output_path: "#{output_path}/#{basename}-#{target_version}.zip")
     end
     zipped_files
   end
