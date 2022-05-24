@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.8.2] - 2022-05-24Z
+
 ### Fixed
 
 - Xcode 13.4 support. Fixed an issue that when built with Xcode 13.4, there is a chance that linking fails due to reference cycle. [#174](https://github.com/line/line-sdk-ios-swift/pull/174)
@@ -241,3 +243,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.7.0]: https://github.com/line/line-sdk-ios-swift/compare/5.6.2...5.7.0
 [5.8.0]: https://github.com/line/line-sdk-ios-swift/compare/5.7.0...5.8.0
 [5.8.1]: https://github.com/line/line-sdk-ios-swift/compare/5.8.0...5.8.1
+[5.8.2]: https://github.com/line/line-sdk-ios-swift/compare/5.8.1...5.8.2
