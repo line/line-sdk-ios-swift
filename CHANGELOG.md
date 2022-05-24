@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Xcode 13.4 support. Fixed an issue that when built with Xcode 13.4, there is a chance that linking fails due to reference cycle. [#174](https://github.com/line/line-sdk-ios-swift/pull/174)
+- Modernize the project to the latest Xcode and Swift version. 
+- Now the xcframework contains debug symbols (dSYMs and bitcode map) in the framework. Integrating LINE SDK by xcframework now provides easier setup steps. [#175](https://github.com/line/line-sdk-ios-swift/pull/175)
+
 ## [5.8.1] - 2021-11-17Z
 
 ### Fixed
