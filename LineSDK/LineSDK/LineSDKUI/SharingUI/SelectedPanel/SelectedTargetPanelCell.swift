@@ -33,7 +33,7 @@ class SelectedTargetPanelCell: UICollectionViewCell {
         static var font: UIFont { return .systemFont(ofSize: 12) }
     }
 
-    static let reuseIdentifier = String(describing: self)
+    static let reuseIdentifier = String(describing: SelectedTargetPanelCell.self)
 
     private let avatarImageView: DownloadableImageView = {
         let imageView = DownloadableImageView(frame: Design.avatarFrame)

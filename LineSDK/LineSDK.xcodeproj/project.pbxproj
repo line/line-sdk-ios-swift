@@ -134,7 +134,6 @@
 		4B8FF4932105C49200890AEF /* LoginFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4922105C49200890AEF /* LoginFlowTests.swift */; };
 		4B90588221006E5D004D717F /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B90587821006E5C004D717F /* LineSDK.framework */; };
 		4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90588621006E5D004D717F /* LineSDKTests.swift */; };
-		4B90588921006E5D004D717F /* LineSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B90587B21006E5C004D717F /* LineSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D321007394004D717F /* LoginConfiguration.swift */; };
 		4B9058D6210073E6004D717F /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D5210073E6004D717F /* LoginManager.swift */; };
 		4B9058D8210078FB004D717F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
@@ -184,7 +183,6 @@
 		4BBAFC472101C8A100E7BFF6 /* AccessTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC462101C8A100E7BFF6 /* AccessTokenStore.swift */; };
 		4BBAFC4B2101CE8100E7BFF6 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */; };
 		4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */; };
-		4BBEA996212EAF9F00858627 /* LineSDKObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4BBEA994212EAF9F00858627 /* LineSDKObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4BBEA9A3212EAFBB00858627 /* LineSDKObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BBEA992212EAF9F00858627 /* LineSDKObjC.framework */; };
 		4BBEA9AC212EAFE400858627 /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B90587821006E5C004D717F /* LineSDK.framework */; };
 		4BBEA9B0212EB03200858627 /* LineSDKLoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */; };
@@ -262,7 +260,6 @@
 		4BCD24FF23FFA74100D4B6BD /* LineSDKLoginPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEA9AF212EB03200858627 /* LineSDKLoginPermission.swift */; };
 		4BCD250023FFA74100D4B6BD /* LineSDKLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE8E36F214A6E70009E91BD /* LineSDKLoginButton.swift */; };
 		4BCD250123FFA74100D4B6BD /* LineSDKLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2D14F4212F97A6000DD5BE /* LineSDKLoginManager.swift */; };
-		4BCD250523FFA74100D4B6BD /* LineSDKObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4BBEA994212EAF9F00858627 /* LineSDKObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4BCD250F23FFAABA00D4B6BD /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5B0EF22241DEA900BA59A0 /* ShareViewController.swift */; };
 		4BCD251023FFAABA00D4B6BD /* ShareViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415937225AE40E003AE63A /* ShareViewControllerDelegate.swift */; };
 		4BCD251123FFAABA00D4B6BD /* MessageShareTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B415939225AE464003AE63A /* MessageShareTargetType.swift */; };
@@ -1952,7 +1949,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B90588921006E5D004D717F /* LineSDK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1960,7 +1956,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BBEA996212EAF9F00858627 /* LineSDKObjC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1968,7 +1963,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4BCD250523FFA74100D4B6BD /* LineSDKObjC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2091,7 +2085,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = "LINE Corp";
 				TargetAttributes = {
 					4B6A702D2109793500D71C66 = {
@@ -2100,7 +2094,7 @@
 					};
 					4B90587721006E5C004D717F = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1340;
 					};
 					4B90588021006E5D004D717F = {
 						CreatedOnToolsVersion = 9.4.1;
@@ -2109,10 +2103,13 @@
 					};
 					4BBEA991212EAF9F00858627 = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1340;
 					};
 					4BBEA99D212EAFBB00858627 = {
 						CreatedOnToolsVersion = 9.4.1;
+					};
+					4BCD24C423FFA74100D4B6BD = {
+						LastSwiftMigration = 1340;
 					};
 				};
 			};
@@ -2984,6 +2981,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3009,6 +3007,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -3070,6 +3069,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3094,6 +3094,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjC;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -3154,6 +3155,7 @@
 				PRODUCT_NAME = LineSDKObjC;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3179,6 +3181,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjC;
 				PRODUCT_NAME = LineSDKObjC;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
