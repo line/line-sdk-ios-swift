@@ -22,8 +22,6 @@
 import LineSDK
 import SwiftUI
 
-
-
 struct LoginView: View {
     @EnvironmentObject var authorizationStore: AuthorizationStore
 
@@ -48,7 +46,7 @@ struct LoginView: View {
         .alert(
             "Success", isPresented: $presentedLoginResult, presenting: presentedLoginResult
         ) { _ in
-            Button("Ok") { authorizationStore.isAuthorized = true }
+            Button("OK") { authorizationStore.isAuthorized = true }
         } message: {
             Text(verbatim: "\($0)")
         }

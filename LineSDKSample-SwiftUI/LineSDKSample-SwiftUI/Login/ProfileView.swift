@@ -31,8 +31,6 @@ struct ProfileView: View {
 
     @State var alertMessage: String?
 
-//    @State var image
-
     var body: some View {
         VStack {
             if let profile = profile {
@@ -58,11 +56,12 @@ struct ProfileView: View {
 
     @ViewBuilder
     private func profileContent(_ profile: UserProfile) -> some View {
-        if let url = profile.pictureURL, let data = try? Data(contentsOf: url) {
-            Image(uiImage: UIImage(data: data)!)
-                .resizable()
-                .frame(width: 150, height: 150)
+        AsyncImage(url: profile.pictureURL) { image in
+            image.resizable()
+        } placeholder: {
+            Color.gray.opacity(0.1)
         }
+        .frame(width: 150, height: 150)
 
         Text(profile.displayName)
             .font(.title2)
