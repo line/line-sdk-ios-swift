@@ -13,8 +13,6 @@
 		4B3687E2212AB62D00B6048A /* Placeholder.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B3687E0212AB62D00B6048A /* Placeholder.strings */; };
 		4B38A3EF22FA70DB00A21F05 /* ShareMessageTemplateAddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B38A3EE22FA70DB00A21F05 /* ShareMessageTemplateAddingViewController.swift */; };
 		4B38A3F122FA77A700A21F05 /* NotificationToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B38A3F022FA77A700A21F05 /* NotificationToken.swift */; };
-		4B63F46F2106D43D003D1BF1 /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; };
-		4B63F4702106D43D003D1BF1 /* LineSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B63F46E2106D43C003D1BF1 /* LineSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4B90589F21006E9C004D717F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90589E21006E9C004D717F /* AppDelegate.swift */; };
 		4B9058A121006E9C004D717F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058A021006E9C004D717F /* LoginViewController.swift */; };
 		4B9058A421006E9C004D717F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B9058A221006E9C004D717F /* Main.storyboard */; };
@@ -66,7 +64,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4B63F4702106D43D003D1BF1 /* LineSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -97,7 +94,6 @@
 		4B3687F3212ABACB00B6048A /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Placeholder.strings; sourceTree = "<group>"; };
 		4B38A3EE22FA70DB00A21F05 /* ShareMessageTemplateAddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMessageTemplateAddingViewController.swift; sourceTree = "<group>"; };
 		4B38A3F022FA77A700A21F05 /* NotificationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationToken.swift; sourceTree = "<group>"; };
-		4B63F46E2106D43C003D1BF1 /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90589B21006E9B004D717F /* LineSDKSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LineSDKSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90589E21006E9C004D717F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4B9058A021006E9C004D717F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -140,7 +136,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B63F46F2106D43D003D1BF1 /* LineSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,7 +179,6 @@
 		4B90589221006E9B004D717F = {
 			isa = PBXGroup;
 			children = (
-				4B63F46E2106D43C003D1BF1 /* LineSDK.framework */,
 				4B90589D21006E9C004D717F /* LineSDKSample */,
 				4B9058B221006E9C004D717F /* LineSDKSampleTests */,
 				4B9058BD21006E9C004D717F /* LineSDKSampleUITests */,
@@ -617,7 +611,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -673,7 +667,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

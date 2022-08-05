@@ -75,8 +75,6 @@ class ShareTargetSearchResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        automaticallyAdjustsScrollViewInsets = false
-
         setupSubviews()
         setupLayouts()
     }

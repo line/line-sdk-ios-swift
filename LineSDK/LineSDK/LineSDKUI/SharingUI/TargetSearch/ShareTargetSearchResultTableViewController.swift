@@ -117,7 +117,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
 
     private func setupTableView() {
         setupTableViewStyle()
-        automaticallyAdjustsScrollViewInsets = false
+        tableView.contentInsetAdjustmentBehavior = .never
         tableView.contentInset = UIEdgeInsets(top: expectedSearchBarHeight, left: 0, bottom: 0, right: 0)
     }
 

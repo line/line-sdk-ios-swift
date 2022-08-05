@@ -702,7 +702,6 @@
 		4B8FF48E2105B27600890AEF /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		4B8FF4922105C49200890AEF /* LoginFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowTests.swift; sourceTree = "<group>"; };
 		4B90587821006E5C004D717F /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B90587B21006E5C004D717F /* LineSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineSDK.h; sourceTree = "<group>"; };
 		4B90587C21006E5C004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B90588121006E5D004D717F /* LineSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B90588621006E5D004D717F /* LineSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKTests.swift; sourceTree = "<group>"; };
@@ -1246,7 +1245,6 @@
 				4B25A811213684F000C74B87 /* Crypto */,
 				4B9058CF210072C3004D717F /* Utils */,
 				3F75522E2123D214004AC047 /* Assets.xcassets */,
-				4B90587B21006E5C004D717F /* LineSDK.h */,
 				4B90587C21006E5C004D717F /* Info.plist */,
 			);
 			path = LineSDK;
@@ -2085,7 +2083,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1400;
 				ORGANIZATIONNAME = "LINE Corp";
 				TargetAttributes = {
 					4B6A702D2109793500D71C66 = {
@@ -2886,7 +2884,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2946,7 +2944,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = LineSDKXCProj;
