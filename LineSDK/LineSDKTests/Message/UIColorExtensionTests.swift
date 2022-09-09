@@ -25,24 +25,24 @@ import XCTest
 class UIColorExtensionTests: XCTestCase {
 
     func testHex6() {
-        let white = UIColor(hex6: 0xFFFFFF, alpha: 1)
+        let white = UIColor(rgb: "#FFFFFF")
         XCTAssertEqual(white.rgbComponents, UIColor.white.rgbComponents)
 
-        let black = UIColor(hex6: 0x000000, alpha: 1)
+        let black = UIColor(rgb: "#000000")
         XCTAssertEqual(black.rgbComponents, UIColor.black.rgbComponents)
 
-        let red = UIColor(hex6: 0xFF0000, alpha: 1)
+        let red = UIColor(rgb: "#FF0000")
         XCTAssertEqual(red.rgbComponents, UIColor.red.rgbComponents)
     }
 
     func testHex8() {
-        let white = UIColor(hex8: 0xFFFFFFFF)
+        let white = UIColor(rgb: "#FFFFFFFF")
         XCTAssertEqual(white.rgbComponents, UIColor.white.rgbComponents)
 
-        let black = UIColor(hex8: 0x000000FF)
+        let black = UIColor(rgb: "#000000FF")
         XCTAssertEqual(black.rgbComponents, UIColor.black.rgbComponents)
 
-        let red = UIColor(hex8: 0xFF0000FF)
+        let red = UIColor(rgb: "#FF0000FF")
         XCTAssertEqual(red.rgbComponents, UIColor.red.rgbComponents)
     }
 }
