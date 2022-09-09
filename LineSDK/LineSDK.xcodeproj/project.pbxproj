@@ -530,6 +530,7 @@
 		DB115EF822537F1000C16B0C /* ShareTargetSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */; };
 		DB115EFA2254660C00C16B0C /* ShareRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB115EF92254660C00C16B0C /* ShareRootViewController.swift */; };
 		DB5035BB22571D3B003CD0B9 /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */; };
+		DB75650928CB254A001A25A5 /* UIColorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB75650828CB254A001A25A5 /* UIColorExtensionTests.swift */; };
 		DB86931023D5619E0011AEB9 /* PKCE.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB86930F23D5619E0011AEB9 /* PKCE.swift */; };
 		DBDCFD322126BD7200E8327A /* GetApproversInFriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */; };
 		DBDCFD342126CB6300E8327A /* GetApproversInFriendsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */; };
@@ -889,6 +890,7 @@
 		DB115EF722537F1000C16B0C /* ShareTargetSearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultViewController.swift; sourceTree = "<group>"; };
 		DB115EF92254660C00C16B0C /* ShareRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRootViewController.swift; sourceTree = "<group>"; };
 		DB5035BA22571D3B003CD0B9 /* KeyboardObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
+		DB75650828CB254A001A25A5 /* UIColorExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensionTests.swift; sourceTree = "<group>"; };
 		DB86930F23D5619E0011AEB9 /* PKCE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCE.swift; sourceTree = "<group>"; };
 		DBDCFD312126BD7200E8327A /* GetApproversInFriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsRequest.swift; sourceTree = "<group>"; };
 		DBDCFD332126CB6300E8327A /* GetApproversInFriendsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApproversInFriendsTests.swift; sourceTree = "<group>"; };
@@ -957,6 +959,7 @@
 			isa = PBXGroup;
 			children = (
 				4B6A0FF8212AACEC00B3ED1F /* HexColorTests.swift */,
+				DB75650828CB254A001A25A5 /* UIColorExtensionTests.swift */,
 				4B15EEFA211D5BF800866E6C /* TextMessageTests.swift */,
 				4B9A3032212111BE00174C6F /* ImageMessageTests.swift */,
 				4B9A303621211CC100174C6F /* VideoMessageTests.swift */,
@@ -2410,6 +2413,7 @@
 				4B39D1E621104F3B00A45510 /* ViewControllerCompatibleTest.swift in Sources */,
 				4BB0E25A239F6BE9008C7F3F /* OpenChatCreatingFormItemTests.swift in Sources */,
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
+				DB75650928CB254A001A25A5 /* UIColorExtensionTests.swift in Sources */,
 				4B6A0FF7212AACCF00B3ED1F /* FlexButtonComponentTests.swift in Sources */,
 				DB09851523D5AF9D0001A3B8 /* PKCETests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
