@@ -29,7 +29,7 @@ The LINE SDK supports the OpenID Connect 1.0 specification. You can get ID token
 
 ### Prerequisites
 
-* iOS 10.0 or later as the deployment target.
+* iOS 11.0 or later as the deployment target.
 * Xcode 10 or later.
 
 To use the LINE SDK with your iOS app, follow the steps below.
