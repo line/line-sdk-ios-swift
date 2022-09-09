@@ -129,14 +129,14 @@ extension UIColor {
         #endif
     }
 
-    static func compatibleColor(light: UInt32, dark: UInt32) -> UIColor {
+    static func compatibleColor(light: UInt64, dark: UInt64) -> UIColor {
         return compatibleColor(light: .init(hex6: light), dark: .init(hex6: dark))
     }
 }
 
 extension UIColor {
 
-    convenience init(hex6: UInt32, alpha: CGFloat = 1) {
+    convenience init(hex6: UInt64, alpha: CGFloat = 1) {
         let divisor = CGFloat(255)
         let red     = CGFloat((hex6 & 0xFF0000) >> 16) / divisor
         let green   = CGFloat((hex6 & 0x00FF00) >>  8) / divisor
@@ -144,7 +144,7 @@ extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
 
-    convenience init(hex8: UInt32) {
+    convenience init(hex8: UInt64) {
         let divisor = CGFloat(255)
         let red     = CGFloat((hex8 & 0xFF000000) >> 24) / divisor
         let green   = CGFloat((hex8 & 0x00FF0000) >> 16) / divisor
@@ -160,9 +160,9 @@ extension UIColor {
         }
 
         let hexString = String(rgb.dropFirst())
-        var hexValue:  UInt32 = 0
+        var hexValue: UInt64 = 0
 
-        guard Scanner(string: hexString).scanHexInt32(&hexValue) else {
+        guard Scanner(string: hexString).scanHexInt64(&hexValue) else {
             self.init(cgColor: color.cgColor)
             return
         }
