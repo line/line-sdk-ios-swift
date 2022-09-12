@@ -52,14 +52,7 @@ class ShareTargetSearchResultViewController: UIViewController {
     private var panelBottomConstraint: NSLayoutConstraint?
     private var panelHeightConstraint: NSLayoutConstraint?
 
-    private var temporaryKeyboardInfo: KeyboardInfo?
-
-    deinit {
-        // https://bugs.swift.org/browse/SR-5752
-        if #available(iOS 11.0, *) {} else {
-            hasSearchResultObserver = nil
-        }
-    }
+    private var temporaryKeyboardInfo: KeyboardInfo?    
 
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
