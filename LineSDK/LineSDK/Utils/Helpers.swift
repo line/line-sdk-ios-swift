@@ -74,61 +74,33 @@ extension UIApplication {
 
 extension UIView {
     var safeLeadingAnchor: NSLayoutXAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return safeAreaLayoutGuide.leadingAnchor
-        } else {
-            return leadingAnchor
-        }
+        return safeAreaLayoutGuide.leadingAnchor
     }
     
     var safeTrailingAnchor: NSLayoutXAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return safeAreaLayoutGuide.trailingAnchor
-        } else {
-            return trailingAnchor
-        }
+        return safeAreaLayoutGuide.trailingAnchor
     }
 }
 
 extension UIViewController {
     var safeTopAnchor: NSLayoutYAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return view.safeAreaLayoutGuide.topAnchor
-        } else {
-            return topLayoutGuide.bottomAnchor
-        }
+        return view.safeAreaLayoutGuide.topAnchor
     }
 
     var safeBottomAnchor: NSLayoutYAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return view.safeAreaLayoutGuide.bottomAnchor
-        } else {
-            return bottomLayoutGuide.topAnchor
-        }
+        return view.safeAreaLayoutGuide.bottomAnchor
     }
     
     var safeLeadingAnchor: NSLayoutXAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return view.safeAreaLayoutGuide.leadingAnchor
-        } else {
-            return view.leadingAnchor
-        }
+        return view.safeAreaLayoutGuide.leadingAnchor
     }
     
     var safeTrailingAnchor: NSLayoutXAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return view.safeAreaLayoutGuide.trailingAnchor
-        } else {
-            return view.trailingAnchor
-        }
+        return view.safeAreaLayoutGuide.trailingAnchor
     }
 
     var safeAreaInsets: UIEdgeInsets {
-        if #available(iOS 11.0, *) {
-            return view.safeAreaInsets
-        } else {
-            return .zero
-        }
+        return view.safeAreaInsets
     }
 
     func addChild(_ viewController: UIViewController, to containerView: UIView) {
@@ -156,7 +128,7 @@ extension UIViewController {
     var expectedSearchBarHeight: CGFloat {
         if #available(iOS 13.0, *) {
             return 54
-        } else if #available(iOS 11.0, *) {
+        } else {
             // On iOS 11, the window safeAreaInsets.top returns wrong value (0).
             let topInset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
             if topInset == 20 || // Normal screen on iOS 12+.
@@ -166,8 +138,6 @@ extension UIViewController {
             } else {             // Notch screen.
                 return 54
             }
-        } else { // iOS 10
-            return 44 + 20
         }
     }
 }
