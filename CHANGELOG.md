@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.9.0] - 2022-09-20
+
+This version drops supports for iOS 10 since Xcode 14 is not supporting 32-bit devices anymore. For more information, please refer to [32-bit app support has been discontinued in Xcode 14](https://developer.apple.com/news/upcoming-requirements/?id=06062022a).
+
+### Added
+
+- SwiftUI sample app. If you are using SwiftUI and want to integrate LINE SDK Swift into your SwiftUI project, please refer to the SwiftUI sample app to get started. [#177](https://github.com/line/line-sdk-ios-swift/pull/177)
+- Support for Xcode 14 and iOS 16. [#178](https://github.com/line/line-sdk-ios-swift/pull/178)
+
+### Fixed
+
+- Drops iOS 10 support. Now LINE SDK Swift requires iOS 11 or later. If you have to continue to support iOS 10, use LINE SDK Swift 5.8.2.
+
 ## [5.8.2] - 2022-05-24
 
 ### Fixed
@@ -244,3 +257,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.8.0]: https://github.com/line/line-sdk-ios-swift/compare/5.7.0...5.8.0
 [5.8.1]: https://github.com/line/line-sdk-ios-swift/compare/5.8.0...5.8.1
 [5.8.2]: https://github.com/line/line-sdk-ios-swift/compare/5.8.1...5.8.2
+[5.9.0]: https://github.com/line/line-sdk-ios-swift/compare/5.8.2...5.9.0
