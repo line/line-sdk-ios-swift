@@ -27,6 +27,8 @@ public class LineSDKAccessToken: NSObject {
     public var value: String { return _value.value }
     public var createdAt: Date { return _value.createdAt }
     public var IDToken: LineSDKJWT? { return _value.IDToken.map { .init($0) } }
+    public var IDTokenRaw: String? { return _value.IDTokenRaw }
+
     public var permissions: [LineSDKLoginPermission] { return _value.permissions.map { .init($0) } }
     public var expiresAt: Date { return _value.expiresAt }
 
