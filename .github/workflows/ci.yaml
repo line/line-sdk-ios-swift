@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   test_sdk:
     name: Test LINE SDK
-    runs-on: macOS-12
+    runs-on: macOS-13
     strategy:
       matrix:
         swift-version: ["5.0", "4.2"]
@@ -27,7 +27,7 @@ jobs:
         run: bundle exec fastlane sdk_tests
   lint_pod:
     name: Lint CocoaPods
-    runs-on: macOS-12
+    runs-on: macOS-13
     strategy:
       matrix:
         swift-version: ["5.0", "4.2"]
