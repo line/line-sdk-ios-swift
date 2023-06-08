@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Append `IDTokenRaw` property to ObjC's `LineSDKAccessToken` class. This allows retrieve the raw value of the received ID token when using the Objective-C wrapper. [#185](https://github.com/line/line-sdk-ios-swift/issues/185)
+
 ## [5.9.0] - 2022-09-20
 
 This version drops supports for iOS 10 since Xcode 14 is not supporting 32-bit devices anymore. For more information, please refer to [32-bit app support has been discontinued in Xcode 14](https://developer.apple.com/news/upcoming-requirements/?id=06062022a).
