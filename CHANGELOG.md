@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.9.1] - 2023-06-08
+
 ### Fixed
 
 - Append `IDTokenRaw` property to ObjC's `LineSDKAccessToken` class. This allows retrieve the raw value of the received ID token when using the Objective-C wrapper. [#185](https://github.com/line/line-sdk-ios-swift/issues/185)
@@ -262,3 +264,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.8.1]: https://github.com/line/line-sdk-ios-swift/compare/5.8.0...5.8.1
 [5.8.2]: https://github.com/line/line-sdk-ios-swift/compare/5.8.1...5.8.2
 [5.9.0]: https://github.com/line/line-sdk-ios-swift/compare/5.8.2...5.9.0
+[5.9.1]: https://github.com/line/line-sdk-ios-swift/compare/5.9.0...5.9.1
