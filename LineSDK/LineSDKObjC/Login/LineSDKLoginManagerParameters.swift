@@ -39,6 +39,11 @@ public class LineSDKLoginManagerParameters: NSObject {
         get { return _value.botPromptStyle.map(LineSDKLoginManagerBotPrompt.init) }
         set { _value.botPromptStyle = newValue?._value }
     }
+
+    public var promptBotID: String? {
+        get { return _value.promptBotID }
+        set { _value.promptBotID = newValue }
+    }
     
     public var preferredWebPageLanguage: String? {
         get { return _value.preferredWebPageLanguage?.rawValue }
