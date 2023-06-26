@@ -35,7 +35,8 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         nonce: "kkk",
         botPrompt: .normal,
         preferredWebPageLanguage: nil,
-        onlyWebLogin: false
+        onlyWebLogin: false,
+        promptBotID: nil
     )
 
     let parameterWithLanguage = LoginProcess.FlowParameters(
@@ -47,7 +48,8 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         nonce: "kkk",
         botPrompt: .normal,
         preferredWebPageLanguage: .chineseSimplified,
-        onlyWebLogin: false
+        onlyWebLogin: false,
+        promptBotID: nil
     )
 
     let parameterWithOnlyWebLogin = LoginProcess.FlowParameters(
@@ -59,7 +61,21 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         nonce: "kkk",
         botPrompt: .normal,
         preferredWebPageLanguage: nil,
-        onlyWebLogin: true
+        onlyWebLogin: true,
+        promptBotID: nil
+    )
+
+    let parameterWithPromptBotID = LoginProcess.FlowParameters(
+        channelID: "123",
+        universalLinkURL: nil,
+        scopes: [.profile, .openID],
+        pkce: PKCE(),
+        processID: "abc",
+        nonce: "kkk",
+        botPrompt: .normal,
+        preferredWebPageLanguage: nil,
+        onlyWebLogin: false,
+        promptBotID: "@abc123"
     )
     
     // Login URL has a double escaped query.
@@ -138,6 +154,22 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
 
         item = items.first { $0.name == "disable_ios_auto_login" }!
         XCTAssertEqual(item.value, "true")
+    }
+
+    func testLoginQueryWithPromptBotID() {
+        let baseURL = URL(string: Constant.lineWebAuthUniversalURL)!
+        let result = baseURL.appendedLoginQuery(parameterWithPromptBotID)
+
+        let urlString = result.absoluteString.removingPercentEncoding
+        XCTAssertNotNil(urlString)
+
+        let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
+        let items = components!.queryItems!
+        XCTAssertEqual(items.count, 2)
+
+        let item = items.first { $0.name == "returnUri" }!
+        XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
+        XCTAssertTrue(item.value!.removingPercentEncoding!.contains("prompt_bot_id=@abc123"))
     }
     
     // URL Scheme has a triple escaped query.

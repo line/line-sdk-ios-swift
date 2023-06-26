@@ -37,6 +37,7 @@ public class LoginProcess {
         let botPrompt: LoginManager.BotPrompt?
         let preferredWebPageLanguage: LoginManager.WebPageLanguage?
         let onlyWebLogin: Bool
+        let promptBotID: String?
     }
     
     /// Observes application switching to foreground.
@@ -131,24 +132,25 @@ public class LoginProcess {
     
     func start() {
         let parameters = FlowParameters(
-            channelID: self.configuration.channelID,
-            universalLinkURL: self.configuration.universalLinkURL,
-            scopes: self.scopes,
-            pkce: self.pkce,
-            processID: self.processID,
-            nonce: self.IDTokenNonce,
-            botPrompt: self.parameters.botPromptStyle,
-            preferredWebPageLanguage: self.parameters.preferredWebPageLanguage,
-            onlyWebLogin: self.parameters.onlyWebLogin
+            channelID: configuration.channelID,
+            universalLinkURL: configuration.universalLinkURL,
+            scopes: scopes,
+            pkce: pkce,
+            processID: processID,
+            nonce: IDTokenNonce,
+            botPrompt: parameters.botPromptStyle,
+            preferredWebPageLanguage: parameters.preferredWebPageLanguage,
+            onlyWebLogin: parameters.onlyWebLogin,
+            promptBotID: parameters.promptBotID
         )
         #if targetEnvironment(macCatalyst)
         // On macCatalyst, we only support web login
-        self.startWebLoginFlow(parameters)
+        startWebLoginFlow(parameters)
         #else
-        if self.parameters.onlyWebLogin {
-            self.startWebLoginFlow(parameters)
+        if parameters.onlyWebLogin {
+            startWebLoginFlow(parameters)
         } else {
-            self.startAppUniversalLinkFlow(parameters)
+            startAppUniversalLinkFlow(parameters)
         }
         #endif
     }
@@ -427,6 +429,9 @@ extension String {
         }
         if let botPrompt = parameter.botPrompt {
             parameters["bot_prompt"] = botPrompt.rawValue
+        }
+        if let promptBotID = parameter.promptBotID {
+            parameters["prompt_bot_id"] = promptBotID
         }
         let base = URL(string: "/oauth2/v2.1/authorize/consent")!
         let encoder = URLQueryEncoder(parameters: parameters)
