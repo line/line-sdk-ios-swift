@@ -42,6 +42,10 @@ extension LoginManager {
         ///   LINE and the login screen are always displayed in the user's device language.
         ///
         public var preferredWebPageLanguage: WebPageLanguage? = nil
+
+        /// :nodoc:
+        // Not yet public available.
+        public var promptBotID: String? = nil
         
         /// Sets the nonce value for ID token verification. This value is used when requesting user authorization
         /// with `.openID` permission to prevent replay attacks to your backend server. If not set, LINE SDK will

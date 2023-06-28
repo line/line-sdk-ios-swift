@@ -757,7 +757,6 @@
 		4BBAFC4A2101CE8100E7BFF6 /* Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resource.bundle; sourceTree = "<group>"; };
 		4BBAFC4F2101D31300E7BFF6 /* ConstantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantTests.swift; sourceTree = "<group>"; };
 		4BBEA992212EAF9F00858627 /* LineSDKObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LineSDKObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4BBEA994212EAF9F00858627 /* LineSDKObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineSDKObjC.h; sourceTree = "<group>"; };
 		4BBEA995212EAF9F00858627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BBEA99E212EAFBB00858627 /* LineSDKObjCInterfaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineSDKObjCInterfaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BBEA9A2212EAFBB00858627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1473,7 +1472,6 @@
 				4BC9B2E5212FC9E30071C736 /* Messaging */,
 				4B2D14FB212F9FA5000DD5BE /* Networking */,
 				4BC9B2D7212FAD9E0071C736 /* Utils */,
-				4BBEA994212EAF9F00858627 /* LineSDKObjC.h */,
 				4BBEA995212EAF9F00858627 /* Info.plist */,
 			);
 			path = LineSDKObjC;

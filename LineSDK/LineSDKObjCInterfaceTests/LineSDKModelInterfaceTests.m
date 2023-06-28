@@ -103,6 +103,7 @@
     param.botPromptStyle = [LineSDKLoginManagerBotPrompt normal];
     param.preferredWebPageLanguage = @"ja";
     param.IDTokenNonce = @"test";
+    param.promptBotID = @"@abc123";
     
     XCTAssertTrue([param onlyWebLogin]);
     XCTAssertTrue([[param.botPromptStyle rawValue] isEqualToString: @"normal"]);
