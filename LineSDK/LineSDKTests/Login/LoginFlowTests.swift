@@ -89,7 +89,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         
         let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
         let items = components!.queryItems!
-        XCTAssertEqual(items.count, 2)
+        XCTAssertEqual(items.count, ["loginChannelId", "returnUri"].count)
         
         var item: URLQueryItem
 
@@ -114,7 +114,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
 
         let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
         let items = components!.queryItems!
-        XCTAssertEqual(items.count, 3)
+        XCTAssertEqual(items.count, ["loginChannelId", "returnUri", "ui_locales"].count)
 
         var item: URLQueryItem
 
@@ -142,7 +142,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
 
         let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
         let items = components!.queryItems!
-        XCTAssertEqual(items.count, 3)
+        XCTAssertEqual(items.count, ["loginChannelId", "returnUri", "disable_ios_auto_login"].count)
 
         var item: URLQueryItem
 
@@ -165,7 +165,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
 
         let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
         let items = components!.queryItems!
-        XCTAssertEqual(items.count, 2)
+        XCTAssertEqual(items.count, ["loginChannelId", "returnUri"].count)
 
         let item = items.first { $0.name == "returnUri" }!
         XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
@@ -182,7 +182,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         
         let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
         let items = components!.queryItems!
-        XCTAssertEqual(items.count, 1)
+        XCTAssertEqual(items.count, ["loginChannelId"].count)
 
         let item = items.first { $0.name == "loginUrl" }!
         XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
