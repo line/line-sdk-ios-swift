@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.10.0] - 2023-07-19
+
+### Added
+
+- An option `promptBotID` to append related query for internal partner use. [#188](https://github.com/line/line-sdk-ios-swift/pull/188).
+
 ## [5.9.1] - 2023-06-08
 
 ### Fixed
@@ -265,3 +271,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.8.2]: https://github.com/line/line-sdk-ios-swift/compare/5.8.1...5.8.2
 [5.9.0]: https://github.com/line/line-sdk-ios-swift/compare/5.8.2...5.9.0
 [5.9.1]: https://github.com/line/line-sdk-ios-swift/compare/5.9.0...5.9.1
+[5.9.1]: https://github.com/line/line-sdk-ios-swift/compare/5.9.1...5.10.0
