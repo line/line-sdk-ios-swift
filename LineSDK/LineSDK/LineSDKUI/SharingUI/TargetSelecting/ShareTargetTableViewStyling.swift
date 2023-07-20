@@ -24,7 +24,7 @@ import UIKit
 enum ShareTargetTableViewDesign {
     static var separatorColor: UIColor {
         return .compatibleColor(light: .init(hex6: 0xE6E7EA), dark: .init(hex8: 0x54545899)) }
-    static var backgroundViewColor: UIColor { return .LineSDKSystemBackground }
+    static var backgroundViewColor: UIColor { return .systemBackground }
 }
 
 protocol ShareTargetTableViewStyling {

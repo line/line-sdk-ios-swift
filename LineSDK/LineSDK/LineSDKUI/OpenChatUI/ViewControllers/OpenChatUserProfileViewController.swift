@@ -24,16 +24,16 @@ import UIKit
 class OpenChatUserProfileViewController: UIViewController {
     
     enum Design {
-        static var backgroundColor: UIColor { return .LineSDKSystemGroupedBackground }
+        static var backgroundColor: UIColor { return .systemGroupedBackground }
     }
     
     struct TextViewStyle: CountLimitedTextViewStyle {
         let font: UIFont = .systemFont(ofSize: 22, weight: .semibold)
-        let textColor: UIColor = .LineSDKLabel
+        let textColor: UIColor = .label
         let placeholderFont: UIFont = .systemFont(ofSize: 22, weight: .semibold)
-        let placeholderColor = UIColor.LineSDKSecondaryLabel.withAlphaComponent(0.7)
+        let placeholderColor = UIColor.secondaryLabel.withAlphaComponent(0.7)
         let textCountLabelFont: UIFont = .systemFont(ofSize: 12)
-        let textCountLabelColor: UIColor = .LineSDKSecondaryLabel
+        let textCountLabelColor: UIColor = .secondaryLabel
         let showCountLimitLabel = false
         let showUnderBorderLine = true
     }
@@ -107,7 +107,7 @@ class OpenChatUserProfileViewController: UIViewController {
     private lazy var nickNameTipLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13)
-        label.textColor = UIColor.LineSDKSecondaryLabel.withAlphaComponent(0.7)
+        label.textColor = UIColor.secondaryLabel.withAlphaComponent(0.7)
         label.textAlignment = .center
         label.numberOfLines = 0
         label.text = String(format: Localization.string("openchat.create.profile.input.guide"), formItem.roomName)

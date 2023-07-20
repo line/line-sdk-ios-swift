@@ -30,7 +30,7 @@ class PageTabView: UIView {
     class TabView: UIControl {
         enum Design {
             static var titleColor: UIColor { return .systemGray }
-            static var selectedTitleColor: UIColor { return .LineSDKLabel }
+            static var selectedTitleColor: UIColor { return .label }
 
             static var titleFont: UIFont { return .systemFont(ofSize: 15) }
             static var selectedTitleFont: UIFont { return .systemFont(ofSize: 15, weight: .semibold) }
@@ -82,7 +82,7 @@ class PageTabView: UIView {
         enum Design {
             static var height: CGFloat { return 3 }
             static var widthMargin: CGFloat { return 4 }
-            static var color: UIColor { return .LineSDKLabel }
+            static var color: UIColor { return .label }
         }
 
         private let underline: UIView = {

@@ -24,7 +24,7 @@ import UIKit
 class OpenChatRoomInfoViewController: UITableViewController {
     
     enum Design {
-        static var backgroundColor: UIColor { return .LineSDKSystemGroupedBackground }
+        static var backgroundColor: UIColor { return .systemGroupedBackground }
     }
     
     let onClose = Delegate<OpenChatRoomInfoViewController, Void>()

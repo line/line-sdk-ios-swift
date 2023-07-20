@@ -28,7 +28,7 @@ class ShareTargetSearchController: UISearchController {
             return .compatibleColor(light: 0x283145, dark: 0xffffff)
         }
         static var searchBarBackgroundColor: UIColor {
-            return .compatibleColor(light: .init(hex6: 0xEAEAEE), dark: .LineSDKSystemBackground)
+            return .compatibleColor(light: .init(hex6: 0xEAEAEE), dark: .systemBackground)
         }
     }
 

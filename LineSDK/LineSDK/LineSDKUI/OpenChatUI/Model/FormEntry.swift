@@ -100,10 +100,10 @@ class Option<T: CustomStringConvertible & Equatable>: FormEntry {
     private func render() -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         cell.textLabel?.font = .systemFont(ofSize: 15.0)
-        cell.textLabel?.textColor = .LineSDKLabel
+        cell.textLabel?.textColor = .label
         cell.textLabel?.text = title
         cell.detailTextLabel?.font = .systemFont(ofSize: 15.0)
-        cell.detailTextLabel?.textColor = .LineSDKSecondaryLabel
+        cell.detailTextLabel?.textColor = .secondaryLabel
         cell.detailTextLabel?.text = selectedOption.description
         cell.accessoryType = .disclosureIndicator
         
@@ -146,7 +146,7 @@ class Toggle: FormEntry {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
         cell.selectionStyle = .none
         cell.textLabel?.font = .systemFont(ofSize: 15.0)
-        cell.textLabel?.textColor = .LineSDKLabel
+        cell.textLabel?.textColor = .label
         cell.textLabel?.text = title
         cell.accessoryView = searchOptionSwitch
         return cell

@@ -138,14 +138,7 @@ class CountLimitedTextView: UIView {
     private func setup() {
         setupSubviews()
         setupLayouts()
-        
-        if #available(iOS 13.0, *) {
-        } else {
-            // A workaround for `textView` not resizing correctly on iOS 12 and earlier for small
-            // screens (like iPhone SE).
-            // This layout issue does not happen on iOS 13.
-            DispatchQueue.main.async { self.clearText() }
-        }
+
     }
     
     private func setupSubviews() {
@@ -206,13 +199,6 @@ class CountLimitedTextView: UIView {
     @objc private func clearText() {
         text = ""
         textView.sizeToFit()
-        
-        if #available(iOS 13.0, *) {
-        } else {
-            // A workaround for `textView` not resizing correctly on iOS 12 and earlier.
-            // This layout issue does not happen on iOS 13.
-            DispatchQueue.main.async { self.setNeedsLayout() }
-        }
     }
     
     private func validateString(_ text: String) {

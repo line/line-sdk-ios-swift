@@ -34,16 +34,16 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
         static var displayNameLeading:  CGFloat { return 10.0 }
         static var displayNameTrailing: CGFloat { return 10.0 }
 
-        static var displayNameTextColor: UIColor { return .LineSDKLabel }
+        static var displayNameTextColor: UIColor { return .label }
         static var displayNameFont:      UIFont  { return .systemFont(ofSize: 16) }
         static var displayNameHighlightedNameColor: UIColor {
             return .compatibleColor(light: 0x13C84D, dark: 0x14DE54)
         }
 
         static var separatorInset: UIEdgeInsets { return .init(top: 0, left: 96, bottom: 0, right: 0) }
-        static var backgroundColor: UIColor { return .LineSDKSystemBackground }
+        static var backgroundColor: UIColor { return .systemBackground }
         static var selectionTickColor: UIColor {
-            return .compatibleColor(light: .init(hex6: 0xEFF1F6), dark: .LineSDKTertiarySystemBackground)
+            return .compatibleColor(light: .init(hex6: 0xEFF1F6), dark: .tertiarySystemBackground)
         }
     }
 

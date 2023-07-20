@@ -25,11 +25,11 @@ class OpenChatRoomDescriptionTableViewCell: UITableViewCell {
     
     struct TextViewStyle: CountLimitedTextViewStyle {
         let font: UIFont = .boldSystemFont(ofSize: 15)
-        let textColor: UIColor = .LineSDKLabel
+        let textColor: UIColor = .label
         let placeholderFont: UIFont = .boldSystemFont(ofSize: 15)
-        let placeholderColor: UIColor = .LineSDKSecondaryLabel
+        let placeholderColor: UIColor = .secondaryLabel
         let textCountLabelFont: UIFont = .systemFont(ofSize: 12)
-        let textCountLabelColor: UIColor = .LineSDKSecondaryLabel
+        let textCountLabelColor: UIColor = .secondaryLabel
     }
     
     lazy var textView: CountLimitedTextView = {
