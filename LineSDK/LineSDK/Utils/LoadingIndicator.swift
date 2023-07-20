@@ -46,7 +46,7 @@ class LoadingIndicator {
     init() {
         count = 1
         container = UIView()
-        indicator = UIActivityIndicatorView(style: .whiteLarge)
+        indicator = UIActivityIndicatorView(style: .large)
         indicator.color = .gray
     }
 
