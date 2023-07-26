@@ -44,7 +44,7 @@ class FormSectionRenderer {
     private lazy var footerLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 13)
-        label.textColor = .LineSDKSecondaryLabel
+        label.textColor = .secondaryLabel
         label.numberOfLines = 0
         label.text = self.section.footerText
         return label

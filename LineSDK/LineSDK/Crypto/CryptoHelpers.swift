@@ -169,21 +169,7 @@ extension SecKey {
         
         // Get public key from certData
         let copyKey: (SecCertificate) -> SecKey?
-
-        #if targetEnvironment(macCatalyst)
         copyKey = SecCertificateCopyKey
-        #else
-        if #available(iOS 12.0, *) {
-            copyKey = SecCertificateCopyKey
-        } else if #available(iOS 10.3, *) {
-            copyKey = SecCertificateCopyPublicKey
-        } else {
-            throw CryptoError.generalError(
-                reason: .operationNotSupported(
-                    reason: "Loading public key from certificate not supported below iOS 10.3.")
-            )
-        }
-        #endif
 
         guard let key = copyKey(certData) else {
             throw CryptoError.algorithmsFailed(

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -136,7 +136,6 @@
 		4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B90588621006E5D004D717F /* LineSDKTests.swift */; };
 		4B9058D421007394004D717F /* LoginConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D321007394004D717F /* LoginConfiguration.swift */; };
 		4B9058D6210073E6004D717F /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D5210073E6004D717F /* LoginManager.swift */; };
-		4B9058D8210078FB004D717F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
 		4B9058DC21007C8C004D717F /* LoginResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058DB21007C8C004D717F /* LoginResult.swift */; };
 		4B93F2D223CD5307003B955D /* OpenChatCreatingControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */; };
 		4B94D06721533D4D0049DE68 /* ECDSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94D06621533D4D0049DE68 /* ECDSATests.swift */; };
@@ -375,7 +374,6 @@
 		4BCD257F23FFAABA00D4B6BD /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B25A814213687A400C74B87 /* RSA.swift */; };
 		4BCD258023FFAABA00D4B6BD /* ECDSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B3CCB9B21523B1300F51D76 /* ECDSA.swift */; };
 		4BCD258123FFAABA00D4B6BD /* ResultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3044E221D3620005ADADD /* ResultUtils.swift */; };
-		4BCD258223FFAABA00D4B6BD /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9058D7210078FB004D717F /* Result.swift */; };
 		4BCD258323FFAABA00D4B6BD /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B45256C2101829F00A39D4F /* Helpers.swift */; };
 		4BCD258423FFAABA00D4B6BD /* Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF4852105656500890AEF /* Delegate.swift */; };
 		4BCD258523FFAABA00D4B6BD /* CallbackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8FF48A21056B3800890AEF /* CallbackQueue.swift */; };
@@ -709,7 +707,6 @@
 		4B90588821006E5D004D717F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B9058D321007394004D717F /* LoginConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfiguration.swift; sourceTree = "<group>"; };
 		4B9058D5210073E6004D717F /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
-		4B9058D7210078FB004D717F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		4B9058DB21007C8C004D717F /* LoginResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResult.swift; sourceTree = "<group>"; };
 		4B93F2D123CD5307003B955D /* OpenChatCreatingControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatCreatingControllerDelegate.swift; sourceTree = "<group>"; };
 		4B94D06621533D4D0049DE68 /* ECDSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECDSATests.swift; sourceTree = "<group>"; };
@@ -1305,7 +1302,6 @@
 			isa = PBXGroup;
 			children = (
 				4BF3044E221D3620005ADADD /* ResultUtils.swift */,
-				4B9058D7210078FB004D717F /* Result.swift */,
 				4B45256C2101829F00A39D4F /* Helpers.swift */,
 				4B8FF4852105656500890AEF /* Delegate.swift */,
 				4B8FF48A21056B3800890AEF /* CallbackQueue.swift */,
@@ -2083,8 +2079,9 @@
 		4B90586F21006E5C004D717F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "LINE Corp";
 				TargetAttributes = {
 					4B6A702D2109793500D71C66 = {
@@ -2300,7 +2297,6 @@
 				4B9A3047212139C000174C6F /* TemplateMessage.swift in Sources */,
 				4B1C44652137E0CA0094C1D4 /* JWT.swift in Sources */,
 				4BB002C82244788A00FB8BD8 /* ImageManager.swift in Sources */,
-				4B9058D8210078FB004D717F /* Result.swift in Sources */,
 				4B9A30352121182400174C6F /* VideoMessage.swift in Sources */,
 				4B9A304921213CE100174C6F /* TemplateButtonsPayload.swift in Sources */,
 				4B688E3E226F029B002575CC /* LoadingIndicator.swift in Sources */,
@@ -2581,7 +2577,6 @@
 				4BCD256623FFAABA00D4B6BD /* ImageManager.swift in Sources */,
 				4BCD24D023FFA74100D4B6BD /* LineSDKJWT.swift in Sources */,
 				4BCD253B23FFAABA00D4B6BD /* GetShareFriendsRequest.swift in Sources */,
-				4BCD258223FFAABA00D4B6BD /* Result.swift in Sources */,
 				4BCD253823FFAABA00D4B6BD /* GetGroupsRequest.swift in Sources */,
 				D1D22C972408A8FD0028A9E0 /* FormSection.swift in Sources */,
 				D1D22CAB2408AA480028A9E0 /* LineSDKOpenChatRoomMembershipState.swift in Sources */,
@@ -2886,7 +2881,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2946,7 +2941,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = LineSDKXCProj;
@@ -2969,6 +2964,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1174;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = LineSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2976,6 +2972,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -2996,6 +2994,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1174;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = LineSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3003,6 +3002,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -3058,6 +3059,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1174;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = LineSDKObjC/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3065,6 +3067,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjC;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -3084,6 +3088,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1174;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = LineSDKObjC/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3091,6 +3096,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjC;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -3143,6 +3150,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1174;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = LineSDKObjC/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3150,6 +3158,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				OTHER_SWIFT_FLAGS = "-DLineSDKBinary";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjC;
 				PRODUCT_NAME = LineSDKObjC;
@@ -3170,6 +3180,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1174;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = LineSDKObjC/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3177,6 +3188,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				OTHER_SWIFT_FLAGS = "-DLineSDKBinary";
 				PRODUCT_BUNDLE_IDENTIFIER = com.linecorp.LineSDKObjC;
 				PRODUCT_NAME = LineSDKObjC;

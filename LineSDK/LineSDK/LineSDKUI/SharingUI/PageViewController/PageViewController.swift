@@ -24,7 +24,7 @@ import UIKit
 class PageViewController: UIViewController {
 
     enum Design {
-        static var backgroundColor: UIColor { return .LineSDKSystemBackground }
+        static var backgroundColor: UIColor { return .systemBackground }
     }
 
     struct Page {

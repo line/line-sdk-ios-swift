@@ -470,7 +470,7 @@ extension URL {
 
 extension UIWindow {
     static func findKeyWindow() -> UIWindow? {
-        if let window = UIApplication.shared.keyWindow, window.windowLevel == .normal {
+        if let window = (UIApplication.shared.windows.filter {$0.isKeyWindow}.first), window.windowLevel == .normal {
             // A key window of main app exists, go ahead and use it
             return window
         }

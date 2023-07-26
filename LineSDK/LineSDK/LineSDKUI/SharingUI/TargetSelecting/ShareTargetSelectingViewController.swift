@@ -154,13 +154,9 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        #if compiler(>=5.1)
-        if #available(iOS 13.0, *) {
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                self.searchController.updateColorAppearance()
-            }
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            self.searchController.updateColorAppearance()
         }
-        #endif
     }
 }
 

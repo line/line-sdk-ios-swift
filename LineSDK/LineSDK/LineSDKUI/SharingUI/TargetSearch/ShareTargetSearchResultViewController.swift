@@ -24,7 +24,7 @@ import UIKit
 class ShareTargetSearchResultViewController: UIViewController {
 
     enum Design {
-        static var emptyResultLabelColor: UIColor { return .LineSDKSecondaryLabel }
+        static var emptyResultLabelColor: UIColor { return .secondaryLabel }
     }
 
     var searchText: String {
