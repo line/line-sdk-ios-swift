@@ -38,7 +38,7 @@ To use the LINE SDK with your iOS app, follow the steps below.
 * Integrate LINE Login into your iOS app using the SDK. 
 * Make API calls from your app using the SDK or from the server side through the Social API. 
 
-For more information, refer to the [LINE SDK for iOS Swift guide](https://developers.line.biz/en/docs/ios-sdk/swift/overview/) on the [LINE Developers site](https://developers.line.biz).
+For more information, refer to the [LINE SDK for iOS Swift guide](https://developers.line.biz/en/docs/line-login-sdks/ios-sdk/swift/overview/) on the [LINE Developers site](https://developers.line.biz).
 
 ### Trying the starter app
 
