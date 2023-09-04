@@ -74,7 +74,7 @@ class LoginSettingsViewController: UITableViewController {
             }
         ),
         ParameterItem(
-            title: "Bot Prompt",
+            title: "Bot (OA) Prompt",
             text: { p in
                 switch p.botPromptStyle {
                 case .aggressive: return "Aggressive"

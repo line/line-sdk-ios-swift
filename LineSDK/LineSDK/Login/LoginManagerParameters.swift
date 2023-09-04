@@ -29,7 +29,7 @@ extension LoginManager {
         /// Forces the use of web authentication flow instead of LINE app-to-app authentication flow.
         public var onlyWebLogin: Bool = false
         
-        /// The style for showing the "Add bot as friend" prompt on the consent screen.
+        /// The style for showing the "Add LINE Official Account as friend" prompt on the consent screen.
         public var botPromptStyle: BotPrompt? = nil
         
         /// Sets the preferred language used when logging in with the web authorization flow.
@@ -81,12 +81,12 @@ extension LoginManager {
 
 extension LoginManager {
     
-    /// The style for showing the "Add bot as friend" prompt on the consent screen.
+    /// The style for showing the "Add LINE Official Account as friend" prompt on the consent screen.
     public enum BotPrompt: String {
-        /// Includes an option to add a bot as friend on the consent screen.
+        /// Includes an option to add a LINE Official Account as friend on the consent screen.
         case normal
-        /// Opens a new screen to add a bot as a friend after the user agrees to the permissions on the consent
-        /// screen.
+        /// Opens a new screen to add a LINE Official Account as a friend after the user agrees to the permissions on the
+        /// consent screen.
         case aggressive
     }
     
