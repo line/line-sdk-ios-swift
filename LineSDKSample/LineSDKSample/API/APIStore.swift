@@ -106,7 +106,7 @@ extension APIStore {
         
         friendshipAPIs = [
             .init(
-                title: "Get Bot Friendship Status",
+                title: "Get Official Account Friendship Status",
                 request: GetBotFriendshipStatusRequest()
             )
         ]

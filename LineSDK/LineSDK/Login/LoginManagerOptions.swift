@@ -45,15 +45,15 @@ public struct LoginManagerOptions: OptionSet {
     
     /// - Warning: Deprecated. Use `LoginManager.Parameters.botPromptStyle` instead.
     ///
-    /// Includes an option to add a bot as friend on the consent screen. If `.botPromptNormal` and
+    /// Includes an option to add a LINE Official Account as friend on the consent screen. If `.botPromptNormal` and
     /// `.botPromptAggressive` are set at the same time, `.botPromptAggressive` will be used.
     @available(*, deprecated, message: "Use `LoginManager.Parameters.botPromptStyle` instead.")
     public static let botPromptNormal = LoginManagerOptions(rawValue: 1 << 1)
     
     /// - Warning: Deprecated. Use `LoginManager.Parameters.botPromptStyle` instead.
     ///
-    /// Opens a new screen to add a bot as a friend after the user agrees to the permissions on the consent
-    /// screen. If `.botPromptNormal` and `.botPromptAggressive` is set at the same time,
+    /// Opens a new screen to add a LINE Official Account as a friend after the user agrees to the permissions on the
+    /// consent screen. If `.botPromptNormal` and `.botPromptAggressive` is set at the same time,
     /// `.botPromptAggressive` will be used.
     @available(*, deprecated, message: "Use `LoginManager.Parameters.botPromptStyle` instead.")
     public static let botPromptAggressive = LoginManagerOptions(rawValue: 1 << 2)

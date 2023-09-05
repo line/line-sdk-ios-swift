@@ -50,7 +50,7 @@ public enum API {
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
     
-    /// Gets the friendship status of the user and the bot linked to your LINE Login channel.
+    /// Gets the friendship status of the user and the LINE Official Account linked to your LINE Login channel.
     ///
     /// - Parameters:
     ///   - queue: The callback queue that is used for `completion`. The default value is
