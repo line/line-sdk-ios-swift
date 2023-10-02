@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.10.1] - 2023-10-02
+
 ### Fixed
 
 - Update license holder name in all source code files. Now LY Corporation is the license holder of LINE SDK Swift. The license content and terms itself is not changed so you can still use the SDK under the same condition as before. [#193](https://github.com/line/line-sdk-ios-swift/pull/193)
@@ -277,3 +279,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.9.0]: https://github.com/line/line-sdk-ios-swift/compare/5.8.2...5.9.0
 [5.9.1]: https://github.com/line/line-sdk-ios-swift/compare/5.9.0...5.9.1
 [5.9.1]: https://github.com/line/line-sdk-ios-swift/compare/5.9.1...5.10.0
+[5.10.1]: https://github.com/line/line-sdk-ios-swift/compare/5.10.0...5.10.1
