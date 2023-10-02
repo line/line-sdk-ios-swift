@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Update license holder name in all source code files. Now LY Corporation is the license holder of LINE SDK Swift. The license content and terms itself is not changed so you can still use the SDK under the same condition as before. [#193](https://github.com/line/line-sdk-ios-swift/pull/193)
+- As the removal of general support of iOS 12 and earlier in Xcode, now LINE SDK Swift also drops support for iOS 12 and earlier. [#190](https://github.com/line/line-sdk-ios-swift/pull/190)
+
 ## [5.10.0] - 2023-07-19
 
 ### Added
