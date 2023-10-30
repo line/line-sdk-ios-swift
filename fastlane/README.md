@@ -53,20 +53,12 @@ Run tests.
 [bundle exec] fastlane ios lint
 ```
 
-Lint to check Carthage and CocoaPods compatibility.
+Lint to check dependency manager compatibility.
 
 ### ios lint_pod
 
 ```sh
 [bundle exec] fastlane ios lint_pod
-```
-
-
-
-### ios lint_carthage
-
-```sh
-[bundle exec] fastlane ios lint_carthage
 ```
 
 
