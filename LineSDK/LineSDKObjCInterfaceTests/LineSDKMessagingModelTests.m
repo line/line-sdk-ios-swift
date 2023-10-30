@@ -132,8 +132,8 @@
                                        initWithLabel:@"action"
                                        uri:[NSURL URLWithString:@"https://example.com"]];
     XCTAssertEqual(action.label, @"action");
-    XCTAssertEqual(action.uri.absoluteString, @"https://example.com");
-    
+    XCTAssertEqualObjects(action.uri.absoluteString, @"https://example.com");
+
     XCTAssertNotEqual([action URIAction], action);
     XCTAssertEqual([action URIAction].label, action.label);
     
@@ -252,7 +252,7 @@
     LineSDKTemplateImageCarouselPayloadColumn *column = [[LineSDKTemplateImageCarouselPayloadColumn alloc]
                                                          initWithImageURL:[NSURL URLWithString:@"https://image.com"]
                                                          action:action];
-    XCTAssertEqual([column imageURL].absoluteString, @"https://image.com");
+    XCTAssertEqualObjects([column imageURL].absoluteString, @"https://image.com");
     XCTAssertNotNil(column.action);
 }
 
@@ -429,8 +429,8 @@
     component.aspectRatio = LineSDKFlexMessageComponentAspectRatioRatio_1x3;
     component.aspectMode = LineSDKFlexMessageComponentAspectModeFill;
     component.backgroundColor = nil;
-    XCTAssertEqual(component.url.absoluteString, @"https://example.com");
-    XCTAssertEqual([component imageComponent].url.absoluteString, @"https://example.com");
+    XCTAssertEqualObjects(component.url.absoluteString, @"https://example.com");
+    XCTAssertEqualObjects([component imageComponent].url.absoluteString, @"https://example.com");
 }
 
 - (void)testFlexFillerComponentInterface {
