@@ -162,6 +162,7 @@ platform :ios do
       include_debug_symbols: true,
       xcframework_output_directory: output_path
     )
+    Actions.sh("codesign --timestamp -v --sign 'Apple Distribution: LINE Corporation (VUTU7AKEUR)' ../#{output_path}/LineSDK.xcframework")
     artifact_paths.push(ENV["XCFRAMEWORK_OUTPUT_PATH"])
     
     create_xcframework(
@@ -172,6 +173,7 @@ platform :ios do
       include_debug_symbols: true,
       xcframework_output_directory: output_path
     )
+    Actions.sh("codesign --timestamp -v --sign 'Apple Distribution: LINE Corporation (VUTU7AKEUR)' ../#{output_path}/LineSDKObjC.xcframework")
     artifact_paths.push(ENV["XCFRAMEWORK_OUTPUT_PATH"])
 
     zipped_files = []
