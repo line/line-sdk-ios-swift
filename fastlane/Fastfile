@@ -4,7 +4,7 @@ platform :ios do
 
   before_all do
     begin
-        xcversion(version: "~> 14.0")
+        xcversion(version: "~> 15.0")
     rescue => ex
         UI.error("Failed when switching to Xcode version: #{ex}")
     end
@@ -24,14 +24,14 @@ platform :ios do
     swift_version = ENV["SWIFT_VERSION"] || "4.2"
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 11"],
+        devices: ["iPhone 14"],
         scheme: "LineSDK",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
     
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 11"],
+        devices: ["iPhone 14"],
         scheme: "LineSDKObjC",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
@@ -40,14 +40,14 @@ platform :ios do
   lane :sample_tests do
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 11"],
+        devices: ["iPhone 14"],
         scheme: "LineSDKSample"
     )
   end
 
-  desc "Lint to check Carthage and CocoaPods compatibility."
+  desc "Lint to check dependency manager compatibility."
   lane :lint do
-    # lint_carthage
+    lint_spm
     lint_pod
   end
 
@@ -56,12 +56,11 @@ platform :ios do
     Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version=#{swift_version}")
   end
 
-  lane :lint_carthage do
-    carthage(command: "build", no_skip_current: true)
-  end
-
   lane :lint_spm do
-    sh('swift build -v -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios13.0-simulator"')
+    # swift build seems not properly working under Xcode 15.0 since the `-isysroot` is always set to macOS SDK.
+    # Use Xcode 14 to lint spm for a while.
+    xcversion(version: "~> 14.0")
+    sh('swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.4-simulator"')
   end
 
   desc "Release a new version."

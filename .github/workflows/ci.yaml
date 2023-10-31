@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   test_sdk:
     name: Test LINE SDK
-    runs-on: macOS-13
+    runs-on: macos-13
     strategy:
       matrix:
         swift-version: ["5.0", "4.2"]
@@ -27,7 +27,7 @@ jobs:
         run: bundle exec fastlane sdk_tests
   lint_pod:
     name: Lint CocoaPods
-    runs-on: macOS-13
+    runs-on: macos-13
     strategy:
       matrix:
         swift-version: ["5.0", "4.2"]
@@ -49,7 +49,7 @@ jobs:
       run: bundle exec fastlane lint_pod
   lint_spm:
     name: Lint Swift Package Manager
-    runs-on: macOS-12
+    runs-on: macos-13
     steps:
         - uses: actions/checkout@v2
         - uses: actions/cache@v1
@@ -66,7 +66,7 @@ jobs:
           run: bundle exec fastlane lint_spm
   xcframework:
     name: Build XCFramework
-    runs-on: macOS-12
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v1
