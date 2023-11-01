@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.11.0] - 2023-11-01
+
 ### Added
 
 - Add digital signature to the xcframework artifacts. Now the xcframework binaries are signed with certificate of LINE Developer team. [#199](https://github.com/line/line-sdk-ios-swift/pull/199)
@@ -285,3 +287,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.9.1]: https://github.com/line/line-sdk-ios-swift/compare/5.9.0...5.9.1
 [5.9.1]: https://github.com/line/line-sdk-ios-swift/compare/5.9.1...5.10.0
 [5.10.1]: https://github.com/line/line-sdk-ios-swift/compare/5.10.0...5.10.1
+[5.11.0]: https://github.com/line/line-sdk-ios-swift/compare/5.10.1...5.11.0
