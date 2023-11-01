@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Add digital signature to the xcframework artifacts. Now the xcframework binaries are signed with certificate of LINE Developer team. [#199](https://github.com/line/line-sdk-ios-swift/pull/199)
+- Add the privacy manifest file to the resource bundle. [#200](https://github.com/line/line-sdk-ios-swift/pull/200)
+
 ## [5.10.1] - 2023-10-02
 
 ### Fixed
