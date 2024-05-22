@@ -159,6 +159,7 @@ platform :ios do
       workspace: "LineSDK.xcworkspace", 
       scheme: "LineSDK", 
       destinations: ['iOS'],
+      enable_bitcode: false,
       include_debug_symbols: true,
       xcframework_output_directory: output_path
     )
@@ -172,6 +173,7 @@ platform :ios do
       scheme: "LineSDKObjCBinary", 
       product_name: "LineSDKObjC", 
       destinations: ['iOS'], 
+      enable_bitcode: false,
       include_debug_symbols: true,
       xcframework_output_directory: output_path
     )
