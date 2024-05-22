@@ -47,7 +47,8 @@ platform :ios do
 
   desc "Lint to check dependency manager compatibility."
   lane :lint do
-    lint_spm
+    # Disable spm lint since it's not working properly under Xcode 15.0 for UIKit.
+    # lint_spm
     lint_pod
   end
 
