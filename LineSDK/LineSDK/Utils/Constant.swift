@@ -27,7 +27,7 @@ public struct Constant {
     // This version number is bumped by `bump_constant_version` lane when releasing a new version.
     // If you change the name or location of this variable, also update the lane in the Fastfile.
     /// The version of the current LINE SDK.
-    public static let SDKVersion = "5.11.0"
+    public static let SDKVersion = "5.11.1"
     
     static var SDKVersionString: String {
         return "LINE SDK iOS v\(SDKVersion)"
