@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Now the `xcframework` binaries do not contain bit code anymore. [#210](https://github.com/line/line-sdk-ios-swift/pull/210)
+
 ## [5.11.0] - 2023-11-01
 
 ### Added
