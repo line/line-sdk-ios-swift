@@ -22,7 +22,7 @@
 import Foundation
 
 // A customize JSON decoder to decode from base64URL strings.
-class Base64JSONDecoder: JSONDecoder {
+class Base64JSONDecoder: JSONDecoder, @unchecked Sendable {
     override func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable {
         guard let string = String(data: data, encoding: .ascii) else {
             throw CryptoError.generalError(reason: .dataConversionFailed(data: data, encoding: .ascii))
