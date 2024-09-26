@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.11.2] - 2024-09-26
+
 ### Fixed
 
 - Some compiler warning when building with Xcode 16.0. [#214](https://github.com/line/line-sdk-ios-swift/pull/214)
@@ -299,3 +301,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.10.1]: https://github.com/line/line-sdk-ios-swift/compare/5.10.0...5.10.1
 [5.11.0]: https://github.com/line/line-sdk-ios-swift/compare/5.10.1...5.11.0
 [5.11.1]: https://github.com/line/line-sdk-ios-swift/compare/5.11.0...5.11.1
+[5.11.2]: https://github.com/line/line-sdk-ios-swift/compare/5.11.1...5.11.2
