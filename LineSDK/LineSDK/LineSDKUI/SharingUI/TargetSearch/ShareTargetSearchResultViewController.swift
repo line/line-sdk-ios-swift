@@ -43,7 +43,7 @@ class ShareTargetSearchResultViewController: UIViewController {
     private let store: ColumnDataStore<ShareTarget>
     private let tableViewController: ShareTargetSearchResultTableViewController
 
-    private (set) lazy var panelViewController = SelectedTargetPanelViewController(store: store)
+    private(set) lazy var panelViewController = SelectedTargetPanelViewController(store: store)
     private let panelContainer = UILayoutGuide()
 
     private let emptyResultLabel: UILabel

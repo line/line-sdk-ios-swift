@@ -138,7 +138,7 @@ class PageTabView: UIView {
 
     weak var delegate: PageTabViewDelegate?
 
-    private (set) var selectedIndex: Int = 0
+    private(set) var selectedIndex: Int = 0
 
     private let countOfTabs: Int
 
