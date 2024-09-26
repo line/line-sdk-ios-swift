@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Some compiler warning when building with Xcode 16.0. [#214](https://github.com/line/line-sdk-ios-swift/pull/214)
+
 ## [5.11.1] - 2024-05-22
 
 ### Fixed
