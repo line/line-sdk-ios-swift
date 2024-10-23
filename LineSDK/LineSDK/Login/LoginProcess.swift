@@ -121,12 +121,15 @@ public class LoginProcess {
         }
     }
 
-    /// Describes how the authentication flow was initiated for this login result.
+    /// Describes how the authentication flow is initiated for this login result.
     ///
     /// If the LINE app was launched to obtain this result, the value will be either `.appUniversalLink` or
     /// `.appAuthScheme`, depending on how the LINE app was opened. If authentication occurred via a web page within
-    /// the LINE SDK, the value will be `.webLogin`. If the authentication flow was never initiated, the value will
-    /// be `nil`.
+    /// the LINE SDK, the value will be `.webLogin`. If the authentication flow is never or not yet initiated, the value
+    /// will be `nil`.
+    ///
+    /// This value is `nil` until the process starts the auth flow actually. You can access this value safely when an
+    /// auth result is retrieved.
     public private(set) var loginRoute: LoginRoute?
 
     // When we leave current app, we need to set the switching observer
