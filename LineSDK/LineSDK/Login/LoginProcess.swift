@@ -27,6 +27,17 @@ import SafariServices
 /// login flows will run serially. If a flow logs in the user successfully, subsequent flows will not be
 /// executed.
 public class LoginProcess {
+
+    /// Represents a login route for how the auth flow is initiated.
+    public enum LoginRoute: String {
+        /// The auth flow starts with a LINE app universal link.
+        case appUniversalLink
+        /// The auth flow starts with a LINE customize URL scheme.
+        case appAuthScheme
+        /// The auth flow starts in a web page inside LINE SDK.
+        case webLogin
+    }
+
     struct FlowParameters {
         let channelID: String
         let universalLinkURL: URL?
@@ -109,7 +120,14 @@ public class LoginProcess {
             }
         }
     }
-    var loginRoute: LoginResult.LoginRoute?
+
+    /// Describes how the authentication flow was initiated for this login result.
+    ///
+    /// If the LINE app was launched to obtain this result, the value will be either `.appUniversalLink` or
+    /// `.appAuthScheme`, depending on how the LINE app was opened. If authentication occurred via a web page within
+    /// the LINE SDK, the value will be `.webLogin`. If the authentication flow was never initiated, the value will
+    /// be `nil`.
+    public private(set) var loginRoute: LoginRoute?
 
     // When we leave current app, we need to set the switching observer
     // to intercept cancel event (switching back but without a token url response)

@@ -23,16 +23,6 @@ import Foundation
 
 /// Represents a successful login.
 public struct LoginResult {
-    
-    /// Represents a login route for how the auth flow is initiated.
-    public enum LoginRoute: String {
-        /// The auth flow starts with a LINE app universal link.
-        case appUniversalLink
-        /// The auth flow starts with a LINE customize URL scheme.
-        case appAuthScheme
-        /// The auth flow starts in a web page inside LINE SDK.
-        case webLogin
-    }
 
     /// The access token obtained by the login process.
     public let accessToken: AccessToken
@@ -49,13 +39,6 @@ public struct LoginResult {
     /// The `nonce` value when requesting ID Token during login process. Use this value as a parameter when you
     /// verify the ID Token against the LINE server. This value is `nil` if `.openID` permission is not requested.
     public let IDTokenNonce: String?
-    /// Describes how the authentication flow was initiated for this login result.
-    ///
-    /// If the LINE app was launched to obtain this result, the value will be either `.appUniversalLink` or
-    /// `.appAuthScheme`, depending on how the LINE app was opened. If authentication occurred via a web page within
-    /// the LINE SDK, the value will be `.webLogin`. If the authentication flow was never initiated, the value will
-    /// be `nil`.
-    public let loginRoute: LoginRoute?
 }
 
 extension LoginResult: Encodable {
@@ -77,6 +60,5 @@ extension LoginResult: Encodable {
         try container.encodeIfPresent(userProfile, forKey: .userProfile)
         try container.encodeIfPresent(friendshipStatusChanged, forKey: .friendshipStatusChanged)
         try container.encodeIfPresent(IDTokenNonce, forKey: .IDTokenNonce)
-        try container.encodeIfPresent(loginRoute?.rawValue, forKey: .loginRoute)
     }
 }

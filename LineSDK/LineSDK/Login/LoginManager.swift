@@ -250,8 +250,7 @@ public class LoginManager {
                     permissions: Set(token.permissions),
                     userProfile: profile,
                     friendshipStatusChanged: response.friendshipStatusChanged,
-                    IDTokenNonce: process.IDTokenNonce,
-                    loginRoute: process.loginRoute
+                    IDTokenNonce: process.IDTokenNonce
                 )
             }
             completion(result)

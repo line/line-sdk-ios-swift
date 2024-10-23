@@ -117,11 +117,11 @@
     XCTAssertNil(result.permissions);
     XCTAssertNil(result.userProfile);
     XCTAssertNil(result.IDTokenNonce);
-    XCTAssertNil(result.loginRoute);
 }
 
 - (void)testLoginProcessInterface {
     LineSDKLoginProcess *process = nil;
+    XCTAssertNil(process.loginRoute);
     [process stop];
 }
 

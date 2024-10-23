@@ -23,6 +23,8 @@
 public class LineSDKLoginProcess: NSObject {
     let _value: LoginProcess
     init(_ value: LoginProcess) { _value = value }
-    
+
+    public var loginRoute: String? { return _value.loginRoute?.rawValue }
+
     public func stop() { _value.stop() }
 }

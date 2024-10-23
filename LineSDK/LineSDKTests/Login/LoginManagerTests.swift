@@ -73,8 +73,9 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             configuration: LoginConfiguration.shared,
             delegate: delegateStub
         )
-        
-        let process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
+
+        var process: LoginProcess!
+        process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
             loginResult in
             XCTAssertNotNil(loginResult.value)
             
@@ -88,7 +89,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             // IDTokenNonce should be `nil` when `.openID` not required.
             XCTAssertNil(result.IDTokenNonce)
 
-            XCTAssertEqual(result.loginRoute, .appUniversalLink)
+            XCTAssertEqual(process.loginRoute, .appUniversalLink)
 
             try! AccessTokenStore.shared.removeCurrentAccessToken()
             expect.fulfill()
