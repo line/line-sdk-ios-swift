@@ -23,6 +23,13 @@ import Foundation
 
 /// Represents a successful login.
 public struct LoginResult {
+
+    public enum LoginRoute: String {
+        case appUniversalLink
+        case appAuthScheme
+        case webLogin
+    }
+
     /// The access token obtained by the login process.
     public let accessToken: AccessToken
     /// The permissions bound to the `accessToken` object by the authorization process.
@@ -38,6 +45,8 @@ public struct LoginResult {
     /// The `nonce` value when requesting ID Token during login process. Use this value as a parameter when you
     /// verify the ID Token against the LINE server. This value is `nil` if `.openID` permission is not requested.
     public let IDTokenNonce: String?
+
+    public let loginRoute: LoginRoute?
 }
 
 extension LoginResult: Encodable {
@@ -48,6 +57,7 @@ extension LoginResult: Encodable {
         case userProfile
         case friendshipStatusChanged
         case IDTokenNonce
+        case loginRoute
     }
 
     /// :nodoc:
@@ -58,5 +68,6 @@ extension LoginResult: Encodable {
         try container.encodeIfPresent(userProfile, forKey: .userProfile)
         try container.encodeIfPresent(friendshipStatusChanged, forKey: .friendshipStatusChanged)
         try container.encodeIfPresent(IDTokenNonce, forKey: .IDTokenNonce)
+        try container.encodeIfPresent(loginRoute?.rawValue, forKey: .loginRoute)
     }
 }

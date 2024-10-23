@@ -75,14 +75,27 @@ public class LoginProcess {
     let configuration: LoginConfiguration
     let scopes: Set<LoginPermission>
     let parameters: LoginManager.Parameters
-    
+
     // Flows of login process. A flow will be `nil` until it is running, so we could tell which one should take
     // responsibility to handle a url callback response.
     
     // LINE Client app auth flow captured by LINE universal link.
-    var appUniversalLinkFlow: AppUniversalLinkFlow?
+    var appUniversalLinkFlow: AppUniversalLinkFlow? {
+        didSet {
+            if appUniversalLinkFlow != nil && loginRoute == nil {
+                loginRoute = .appUniversalLink
+            }
+        }
+    }
     // LINE Client app auth flow by LINE customize URL scheme.
-    var appAuthSchemeFlow: AppAuthSchemeFlow?
+    var appAuthSchemeFlow: AppAuthSchemeFlow? {
+        didSet {
+            if appAuthSchemeFlow != nil && loginRoute == nil {
+                loginRoute = .appAuthScheme
+            }
+        }
+    }
+
     // Web login flow with Safari View Controller or Mobile Safari
     var webLoginFlow: WebLoginFlow? {
         didSet {
@@ -90,9 +103,14 @@ public class LoginProcess {
             if webLoginFlow == nil {
                 oldValue?.dismiss()
             }
+
+            if webLoginFlow != nil && loginRoute == nil {
+                loginRoute = .webLogin
+            }
         }
     }
-    
+    var loginRoute: LoginResult.LoginRoute?
+
     // When we leave current app, we need to set the switching observer
     // to intercept cancel event (switching back but without a token url response)
     var appSwitchingObserver: AppSwitchingObserver?

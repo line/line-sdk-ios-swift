@@ -45,7 +45,7 @@ class ResultUtilsTests: XCTestCase {
             _ = try failure.get()
             XCTFail("Cannot failure value.")
         } catch {
-            XCTAssertEqual(error as! E, E.foo)
+            XCTAssertEqual(error, E.foo)
         }
     }
 

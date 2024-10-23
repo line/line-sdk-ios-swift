@@ -117,6 +117,7 @@
     XCTAssertNil(result.permissions);
     XCTAssertNil(result.userProfile);
     XCTAssertNil(result.IDTokenNonce);
+    XCTAssertNil(result.loginRoute);
 }
 
 - (void)testLoginProcessInterface {

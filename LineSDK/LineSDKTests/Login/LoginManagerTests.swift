@@ -22,6 +22,19 @@
 import XCTest
 @testable import LineSDK
 
+let sampleFlowParameters = LoginProcess.FlowParameters(
+        channelID: "",
+        universalLinkURL: nil,
+        scopes: [],
+        pkce: .init(),
+        processID: "",
+        nonce: nil,
+        botPrompt: nil,
+        preferredWebPageLanguage: nil,
+        onlyWebLogin: false,
+        promptBotID: nil
+)
+
 class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     
     var window: UIWindow!
@@ -74,16 +87,22 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
 
             // IDTokenNonce should be `nil` when `.openID` not required.
             XCTAssertNil(result.IDTokenNonce)
-            
+
+            XCTAssertEqual(result.loginRoute, .appUniversalLink)
+
             try! AccessTokenStore.shared.removeCurrentAccessToken()
             expect.fulfill()
         }!
-        
+
+        // Set a sample value for checking `loginRoute` in the result.
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             
             XCTAssertFalse(LoginManager.shared.isAuthorized)
             XCTAssertTrue(LoginManager.shared.isAuthorizing)
-            
+
+            // Simulate auth result
             let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
             let handled = process.resumeOpenURL(url: URL(string: urlString)!)
             XCTAssertTrue(handled)
@@ -171,6 +190,35 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         }
 
         waitForExpectations(timeout: 1, handler: nil)
+    }
+
+    func testLoginProcessRouteSetting() {
+        XCTContext.runActivity(named: "app universal link") { _ in
+            let process = LoginProcess(
+                configuration: .shared, scopes: [], parameters: .init(), viewController: setupViewController()
+            )
+            XCTAssertNil(process.loginRoute)
+            process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+            XCTAssertEqual(process.loginRoute, .appUniversalLink)
+        }
+
+        XCTContext.runActivity(named: "app auth") { _ in
+            let process = LoginProcess(
+                configuration: .shared, scopes: [], parameters: .init(), viewController: setupViewController()
+            )
+            XCTAssertNil(process.loginRoute)
+            process.appAuthSchemeFlow = AppAuthSchemeFlow(parameter: sampleFlowParameters)
+            XCTAssertEqual(process.loginRoute, .appAuthScheme)
+        }
+
+        XCTContext.runActivity(named: "web login") { _ in
+            let process = LoginProcess(
+                configuration: .shared, scopes: [], parameters: .init(), viewController: setupViewController()
+            )
+            XCTAssertNil(process.loginRoute)
+            process.webLoginFlow = WebLoginFlow(parameter: sampleFlowParameters)
+            XCTAssertEqual(process.loginRoute, .webLogin)
+        }
     }
 
 }
