@@ -23,6 +23,7 @@ import Foundation
 
 /// Represents a successful login.
 public struct LoginResult {
+
     /// The access token obtained by the login process.
     public let accessToken: AccessToken
     /// The permissions bound to the `accessToken` object by the authorization process.
@@ -48,6 +49,7 @@ extension LoginResult: Encodable {
         case userProfile
         case friendshipStatusChanged
         case IDTokenNonce
+        case loginRoute
     }
 
     /// :nodoc:

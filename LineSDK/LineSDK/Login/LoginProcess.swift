@@ -27,6 +27,17 @@ import SafariServices
 /// login flows will run serially. If a flow logs in the user successfully, subsequent flows will not be
 /// executed.
 public class LoginProcess {
+
+    /// Represents a login route for how the auth flow is initiated.
+    public enum LoginRoute: String {
+        /// The auth flow starts with a LINE app universal link.
+        case appUniversalLink
+        /// The auth flow starts with a LINE customize URL scheme.
+        case appAuthScheme
+        /// The auth flow starts in a web page inside LINE SDK.
+        case webLogin
+    }
+
     struct FlowParameters {
         let channelID: String
         let universalLinkURL: URL?
@@ -75,14 +86,27 @@ public class LoginProcess {
     let configuration: LoginConfiguration
     let scopes: Set<LoginPermission>
     let parameters: LoginManager.Parameters
-    
+
     // Flows of login process. A flow will be `nil` until it is running, so we could tell which one should take
     // responsibility to handle a url callback response.
     
     // LINE Client app auth flow captured by LINE universal link.
-    var appUniversalLinkFlow: AppUniversalLinkFlow?
+    var appUniversalLinkFlow: AppUniversalLinkFlow? {
+        didSet {
+            if appUniversalLinkFlow != nil && loginRoute == nil {
+                loginRoute = .appUniversalLink
+            }
+        }
+    }
     // LINE Client app auth flow by LINE customize URL scheme.
-    var appAuthSchemeFlow: AppAuthSchemeFlow?
+    var appAuthSchemeFlow: AppAuthSchemeFlow? {
+        didSet {
+            if appAuthSchemeFlow != nil && loginRoute == nil {
+                loginRoute = .appAuthScheme
+            }
+        }
+    }
+
     // Web login flow with Safari View Controller or Mobile Safari
     var webLoginFlow: WebLoginFlow? {
         didSet {
@@ -90,9 +114,24 @@ public class LoginProcess {
             if webLoginFlow == nil {
                 oldValue?.dismiss()
             }
+
+            if webLoginFlow != nil && loginRoute == nil {
+                loginRoute = .webLogin
+            }
         }
     }
-    
+
+    /// Describes how the authentication flow is initiated for this login result.
+    ///
+    /// If the LINE app was launched to obtain this result, the value will be either `.appUniversalLink` or
+    /// `.appAuthScheme`, depending on how the LINE app was opened. If authentication occurred via a web page within
+    /// the LINE SDK, the value will be `.webLogin`. If the authentication flow is never or not yet initiated, the value
+    /// will be `nil`.
+    ///
+    /// This value is `nil` until the process starts the auth flow actually. You can access this value safely when an
+    /// auth result is retrieved.
+    public private(set) var loginRoute: LoginRoute?
+
     // When we leave current app, we need to set the switching observer
     // to intercept cancel event (switching back but without a token url response)
     var appSwitchingObserver: AppSwitchingObserver?

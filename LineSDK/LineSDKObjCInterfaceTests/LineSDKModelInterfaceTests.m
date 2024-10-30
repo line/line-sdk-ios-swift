@@ -121,6 +121,7 @@
 
 - (void)testLoginProcessInterface {
     LineSDKLoginProcess *process = nil;
+    XCTAssertNil(process.loginRoute);
     [process stop];
 }
 
