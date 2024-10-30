@@ -5,13 +5,13 @@ on: [push, pull_request]
 jobs:
   test_sdk:
     name: Test LINE SDK
-    runs-on: macos-13
+    runs-on: macos-14
     strategy:
       matrix:
         swift-version: ["5.0", "4.2"]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
@@ -27,13 +27,13 @@ jobs:
         run: bundle exec fastlane sdk_tests
   lint_pod:
     name: Lint CocoaPods
-    runs-on: macos-13
+    runs-on: macos-14
     strategy:
       matrix:
         swift-version: ["5.0", "4.2"]
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/cache@v1
+    - uses: actions/checkout@v4
+    - uses: actions/cache@v4
       with:
         path: vendor/bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
@@ -49,10 +49,10 @@ jobs:
       run: bundle exec fastlane lint_pod
   lint_spm:
     name: Lint Swift Package Manager
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
-        - uses: actions/checkout@v2
-        - uses: actions/cache@v1
+        - uses: actions/checkout@v4
+        - uses: actions/cache@v4
           with:
             path: vendor/bundle
             key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
@@ -66,10 +66,10 @@ jobs:
           run: bundle exec fastlane lint_spm
   xcframework:
     name: Build XCFramework
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
