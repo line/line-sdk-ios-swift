@@ -131,11 +131,6 @@ platform :ios do
     stamp_changelog(section_identifier: target_version, git_tag: target_version, stamp_datetime_format: "%F")
   end
 
-  lane :ensure_latest_carthage do
-    Actions.sh("brew update")
-    Actions.sh("brew outdated carthage || brew upgrade carthage")
-  end
-
   lane :bump_constant_version do |options|
     target_version = options[:version]
     replacing = "public static let SDKVersion = \"#{target_version}\""
