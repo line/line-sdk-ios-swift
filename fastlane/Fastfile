@@ -47,8 +47,7 @@ platform :ios do
 
   desc "Lint to check dependency manager compatibility."
   lane :lint do
-    # Disable spm lint since it's not working properly under Xcode 15.0 for UIKit.
-    # lint_spm
+    lint_spm
     lint_pod
   end
 
@@ -58,10 +57,17 @@ platform :ios do
   end
 
   lane :lint_spm do
-    # swift build seems not properly working under Xcode 15.0 since the `-isysroot` is always set to macOS SDK.
-    # Use Xcode 14 to lint spm for a while.
-    xcversion(version: "~> 14.0")
-    sh('swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.4-simulator"')
+    xcodes(version: "16.0")
+    sdk_path = `xcrun --sdk iphonesimulator --show-sdk-path`.strip
+    swiftc_flags = [
+        "-sdk", sdk_path,
+        "-target", "arm64-apple-ios16.4-simulator"
+    ].map { |flag| "-Xswiftc #{flag}" }
+    cc_flags = [
+        "-isysroot", sdk_path
+    ].map { |flag| "-Xcc #{flag}" }
+
+    sh("swift build #{swiftc_flags.join(' ')} #{cc_flags.join(' ')}")
   end
 
   desc "Release a new version."
