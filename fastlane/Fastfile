@@ -4,7 +4,7 @@ platform :ios do
 
   before_all do
     begin
-        xcversion(version: "~> 15.0")
+        xcodes(version: "16.0")
     rescue => ex
         UI.error("Failed when switching to Xcode version: #{ex}")
     end
@@ -57,7 +57,6 @@ platform :ios do
   end
 
   lane :lint_spm do
-    xcodes(version: "16.0")
     sdk_path = `xcrun --sdk iphonesimulator --show-sdk-path`.strip
     swiftc_flags = [
         "-sdk", sdk_path,
