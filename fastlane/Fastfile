@@ -24,14 +24,14 @@ platform :ios do
     swift_version = ENV["SWIFT_VERSION"] || "4.2"
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 14"],
+        devices: ["iPhone 16"],
         scheme: "LineSDK",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
     
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 14"],
+        devices: ["iPhone 16"],
         scheme: "LineSDKObjC",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
@@ -40,7 +40,7 @@ platform :ios do
   lane :sample_tests do
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 14"],
+        devices: ["iPhone 16"],
         scheme: "LineSDKSample"
     )
   end
@@ -60,7 +60,7 @@ platform :ios do
     sdk_path = `xcrun --sdk iphonesimulator --show-sdk-path`.strip
     swiftc_flags = [
         "-sdk", sdk_path,
-        "-target", "arm64-apple-ios16.4-simulator"
+        "-target", "arm64-apple-ios18.0-simulator"
     ].map { |flag| "-Xswiftc #{flag}" }
     cc_flags = [
         "-isysroot", sdk_path
