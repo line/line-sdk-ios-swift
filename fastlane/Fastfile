@@ -4,7 +4,7 @@ platform :ios do
 
   before_all do
     begin
-        xcversion(version: "~> 15.0")
+        xcodes(version: "16.0", select_for_current_build_only: true)
     rescue => ex
         UI.error("Failed when switching to Xcode version: #{ex}")
     end
@@ -24,14 +24,14 @@ platform :ios do
     swift_version = ENV["SWIFT_VERSION"] || "4.2"
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 14"],
+        devices: ["iPhone 16"],
         scheme: "LineSDK",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
     
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 14"],
+        devices: ["iPhone 16"],
         scheme: "LineSDKObjC",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
@@ -40,15 +40,14 @@ platform :ios do
   lane :sample_tests do
     run_tests(
         workspace: "LineSDK.xcworkspace",
-        devices: ["iPhone 14"],
+        devices: ["iPhone 16"],
         scheme: "LineSDKSample"
     )
   end
 
   desc "Lint to check dependency manager compatibility."
   lane :lint do
-    # Disable spm lint since it's not working properly under Xcode 15.0 for UIKit.
-    # lint_spm
+    lint_spm
     lint_pod
   end
 
@@ -58,10 +57,16 @@ platform :ios do
   end
 
   lane :lint_spm do
-    # swift build seems not properly working under Xcode 15.0 since the `-isysroot` is always set to macOS SDK.
-    # Use Xcode 14 to lint spm for a while.
-    xcversion(version: "~> 14.0")
-    sh('swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "arm64-apple-ios16.4-simulator"')
+    sdk_path = `xcrun --sdk iphonesimulator --show-sdk-path`.strip
+    swiftc_flags = [
+        "-sdk", sdk_path,
+        "-target", "arm64-apple-ios18.0-simulator"
+    ].map { |flag| "-Xswiftc #{flag}" }
+    cc_flags = [
+        "-isysroot", sdk_path
+    ].map { |flag| "-Xcc #{flag}" }
+
+    sh("swift build #{swiftc_flags.join(' ')} #{cc_flags.join(' ')}")
   end
 
   desc "Release a new version."
@@ -124,11 +129,6 @@ platform :ios do
     target_version = options[:version]
     raise "The version is missed. You need to specify a version parameter." if target_version.nil?
     stamp_changelog(section_identifier: target_version, git_tag: target_version, stamp_datetime_format: "%F")
-  end
-
-  lane :ensure_latest_carthage do
-    Actions.sh("brew update")
-    Actions.sh("brew outdated carthage || brew upgrade carthage")
   end
 
   lane :bump_constant_version do |options|
