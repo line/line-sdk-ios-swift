@@ -402,7 +402,7 @@ class WebLoginFlow: NSObject {
     
     init(parameter: LoginProcess.FlowParameters) {
         let webLoginURLBase = URL(string: Constant.lineWebAuthURL)!
-         url = webLoginURLBase.appendedLoginQuery(parameter)
+        url = webLoginURLBase.appendedLoginQuery(parameter)
     }
     
     func start(in viewController: UIViewController?) {
