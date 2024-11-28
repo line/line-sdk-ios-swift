@@ -33,10 +33,11 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         pkce: PKCE(),
         processID: "abc",
         nonce: "kkk",
-        botPrompt: .normal,
-        preferredWebPageLanguage: nil,
-        onlyWebLogin: false,
-        promptBotID: nil
+        loginParameter: {
+            var p = LoginManager.Parameters()
+            p.botPromptStyle = .normal
+            return p
+        }()
     )
 
     let parameterWithLanguage = LoginProcess.FlowParameters(
@@ -46,10 +47,12 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         pkce: PKCE(),
         processID: "abc",
         nonce: "kkk",
-        botPrompt: .normal,
-        preferredWebPageLanguage: .chineseSimplified,
-        onlyWebLogin: false,
-        promptBotID: nil
+        loginParameter: {
+            var p = LoginManager.Parameters()
+            p.botPromptStyle = .normal
+            p.preferredWebPageLanguage = .chineseSimplified
+            return p
+        }()
     )
 
     let parameterWithOnlyWebLogin = LoginProcess.FlowParameters(
@@ -59,10 +62,12 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         pkce: PKCE(),
         processID: "abc",
         nonce: "kkk",
-        botPrompt: .normal,
-        preferredWebPageLanguage: nil,
-        onlyWebLogin: true,
-        promptBotID: nil
+        loginParameter: {
+            var p = LoginManager.Parameters()
+            p.botPromptStyle = .normal
+            p.onlyWebLogin = true
+            return p
+        }()
     )
 
     let parameterWithPromptBotID = LoginProcess.FlowParameters(
@@ -72,10 +77,12 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         pkce: PKCE(),
         processID: "abc",
         nonce: "kkk",
-        botPrompt: .normal,
-        preferredWebPageLanguage: nil,
-        onlyWebLogin: false,
-        promptBotID: "@abc123"
+        loginParameter: {
+            var p = LoginManager.Parameters()
+            p.botPromptStyle = .normal
+            p.promptBotID = "@abc123"
+            return p
+        }()
     )
     
     // Login URL has a double escaped query.

@@ -45,10 +45,21 @@ public class LoginProcess {
         let pkce: PKCE
         let processID: String
         let nonce: String?
-        let botPrompt: LoginManager.BotPrompt?
-        let preferredWebPageLanguage: LoginManager.WebPageLanguage?
-        let onlyWebLogin: Bool
-        let promptBotID: String?
+
+        let loginParameter: LoginManager.Parameters
+
+        var botPrompt: LoginManager.BotPrompt? {
+            loginParameter.botPromptStyle
+        }
+        var preferredWebPageLanguage: LoginManager.WebPageLanguage? {
+            loginParameter.preferredWebPageLanguage
+        }
+        var onlyWebLogin: Bool {
+            loginParameter.onlyWebLogin
+        }
+        var promptBotID: String? {
+            loginParameter.promptBotID
+        }
     }
     
     /// Observes application switching to foreground.
@@ -177,10 +188,7 @@ public class LoginProcess {
             pkce: pkce,
             processID: processID,
             nonce: IDTokenNonce,
-            botPrompt: parameters.botPromptStyle,
-            preferredWebPageLanguage: parameters.preferredWebPageLanguage,
-            onlyWebLogin: parameters.onlyWebLogin,
-            promptBotID: parameters.promptBotID
+            loginParameter: parameters
         )
         #if targetEnvironment(macCatalyst)
         // On macCatalyst, we only support web login
