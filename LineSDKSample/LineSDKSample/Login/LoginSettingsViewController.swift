@@ -88,6 +88,18 @@ class LoginSettingsViewController: UITableViewController {
                 case .none: p.botPromptStyle = .aggressive
                 }
             }
+        ),
+        ParameterItem(
+            title: "Initial AMR",
+            text: { p in
+                return p.initialAMRDisplay ?? "None"
+            }, action: { p in
+                if p.initialAMRDisplay == nil {
+                    p.initialAMRDisplay = "lineqr"
+                } else {
+                    p.initialAMRDisplay = nil
+                }
+            }
         )
     ]
 
@@ -137,6 +149,7 @@ class LoginSettingsViewController: UITableViewController {
             let p = parameters[indexPath.row]
             cell.textLabel?.text = p.title
             cell.detailTextLabel?.text = p.text(loginSettings.parameters)
+            cell.accessoryType = .none
         }
 
         return cell
