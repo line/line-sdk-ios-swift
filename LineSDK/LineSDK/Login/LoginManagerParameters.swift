@@ -52,7 +52,12 @@ extension LoginManager {
         /// generate a random value as the token nonce. Whether set or not, LINE SDK verifies against the nonce value
         /// in received ID token locally.
         public var IDTokenNonce: String? = nil
-        
+
+        /// Sets the `initial_amr_display` used when logging in with the web authorization flow.
+        ///
+        /// If set to `lineqr`, "Log in with QR code“ will be displayed by default instead of Log in with email address.
+        public var initialAMRDisplay: String? = nil
+
         /// Determines whether it's possible to create another login process while the original one is still valid.
         /// If `true`, when a new login action is started, any existing one ends with a
         /// `GeneralErrorReason.processDiscarded` error. If `false`, the new login action is ignored, and the
