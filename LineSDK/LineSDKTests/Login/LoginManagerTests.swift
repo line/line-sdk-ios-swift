@@ -29,10 +29,7 @@ let sampleFlowParameters = LoginProcess.FlowParameters(
         pkce: .init(),
         processID: "",
         nonce: nil,
-        botPrompt: nil,
-        preferredWebPageLanguage: nil,
-        onlyWebLogin: false,
-        promptBotID: nil
+        loginParameter: .init()
 )
 
 class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
