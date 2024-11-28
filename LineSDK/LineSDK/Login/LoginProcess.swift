@@ -47,19 +47,6 @@ public class LoginProcess {
         let nonce: String?
 
         let loginParameter: LoginManager.Parameters
-
-        var botPrompt: LoginManager.BotPrompt? {
-            loginParameter.botPromptStyle
-        }
-        var preferredWebPageLanguage: LoginManager.WebPageLanguage? {
-            loginParameter.preferredWebPageLanguage
-        }
-        var onlyWebLogin: Bool {
-            loginParameter.onlyWebLogin
-        }
-        var promptBotID: String? {
-            loginParameter.promptBotID
-        }
     }
     
     /// Observes application switching to foreground.
@@ -194,7 +181,7 @@ public class LoginProcess {
         // On macCatalyst, we only support web login
         startWebLoginFlow(parameters)
         #else
-        if parameters.onlyWebLogin {
+        if parameters.loginParameter.onlyWebLogin {
             startWebLoginFlow(parameters)
         } else {
             startAppUniversalLinkFlow(parameters)
@@ -474,10 +461,10 @@ extension String {
         if let nonce = parameter.nonce {
             parameters["nonce"] = nonce
         }
-        if let botPrompt = parameter.botPrompt {
+        if let botPrompt = parameter.loginParameter.botPromptStyle {
             parameters["bot_prompt"] = botPrompt.rawValue
         }
-        if let promptBotID = parameter.promptBotID {
+        if let promptBotID = parameter.loginParameter.promptBotID {
             parameters["prompt_bot_id"] = promptBotID
         }
         if let initialAMRDisplay = parameter.loginParameter.initialAMRDisplay {
@@ -496,10 +483,10 @@ extension URL {
             "returnUri": returnUri,
             "loginChannelId": flowParameters.channelID
         ]
-        if let lang = flowParameters.preferredWebPageLanguage {
+        if let lang = flowParameters.loginParameter.preferredWebPageLanguage {
             parameters["ui_locales"] = lang.rawValue
         }
-        if flowParameters.onlyWebLogin {
+        if flowParameters.loginParameter.onlyWebLogin {
             parameters["disable_ios_auto_login"] = true
         }
 
