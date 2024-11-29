@@ -54,6 +54,11 @@ public class LineSDKLoginManagerParameters: NSObject {
         get { return _value.IDTokenNonce }
         set { _value.IDTokenNonce = newValue }
     }
+
+    public var initialAMRDisplay: String? {
+        get { return _value.initialAMRDisplay }
+        set { _value.initialAMRDisplay = newValue }
+    }
 }
 
 @objcMembers
