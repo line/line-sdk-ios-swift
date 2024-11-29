@@ -84,7 +84,22 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
             return p
         }()
     )
-    
+
+    let parameterWithInitialAMRDisplay = LoginProcess.FlowParameters(
+        channelID: "123",
+        universalLinkURL: nil,
+        scopes: [.profile, .openID],
+        pkce: PKCE(),
+        processID: "abc",
+        nonce: "kkk",
+        loginParameter: {
+            var p = LoginManager.Parameters()
+            p.botPromptStyle = .normal
+            p.initialAMRDisplay = "lineqr"
+            return p
+        }()
+    )
+
     // Login URL has a double escaped query.
     func testLoginQueryURLEncode() {
         
@@ -178,7 +193,21 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
         XCTAssertTrue(item.value!.removingPercentEncoding!.contains("prompt_bot_id=@abc123"))
     }
-    
+
+    func testLoginQueryWithInitialAMRDisplay() {
+        let baseURL = URL(string: Constant.lineWebAuthUniversalURL)!
+        let result = baseURL.appendedLoginQuery(parameterWithInitialAMRDisplay)
+
+        let urlString = result.absoluteString.removingPercentEncoding
+        XCTAssertNotNil(urlString)
+
+        let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
+        let items = components!.queryItems!
+        XCTAssertEqual(items.count, ["loginChannelId", "returnUri", "initial_amr_display"].count)
+        let item = items.first { $0.name == "initial_amr_display" }!
+        XCTAssertEqual(item.value, "lineqr")
+    }
+
     // URL Scheme has a triple escaped query.
     func testURLSchemeQueryEncode() {
         let baseURL = Constant.lineAppAuthURLv2

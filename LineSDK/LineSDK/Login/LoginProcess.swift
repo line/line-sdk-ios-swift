@@ -467,9 +467,6 @@ extension String {
         if let promptBotID = parameter.loginParameter.promptBotID {
             parameters["prompt_bot_id"] = promptBotID
         }
-        if let initialAMRDisplay = parameter.loginParameter.initialAMRDisplay {
-            parameters["initial_amr_display"] = initialAMRDisplay
-        }
         let base = URL(string: "/oauth2/v2.1/authorize/consent")!
         let encoder = URLQueryEncoder(parameters: parameters)
         return encoder.encoded(for: base).absoluteString
@@ -488,6 +485,9 @@ extension URL {
         }
         if flowParameters.loginParameter.onlyWebLogin {
             parameters["disable_ios_auto_login"] = true
+        }
+        if let initialAMRDisplay = flowParameters.loginParameter.initialAMRDisplay {
+            parameters["initial_amr_display"] = initialAMRDisplay
         }
 
         let encoder = URLQueryEncoder(parameters: parameters)
