@@ -44,12 +44,17 @@ public class LineSDKLoginManagerParameters: NSObject {
         get { return _value.promptBotID }
         set { _value.promptBotID = newValue }
     }
-    
+
+    public var initialWebAuthenticationMethod: LineSDKLoginManagerWebAuthenticationMethod {
+        get { return LineSDKLoginManagerWebAuthenticationMethod(_value.initialWebAuthenticationMethod) }
+        set { _value.initialWebAuthenticationMethod = newValue._value }
+    }
+
     public var preferredWebPageLanguage: String? {
         get { return _value.preferredWebPageLanguage?.rawValue }
         set { _value.preferredWebPageLanguage = newValue.map { .init(rawValue: $0) } }
     }
-    
+
     public var IDTokenNonce: String? {
         get { return _value.IDTokenNonce }
         set { _value.IDTokenNonce = newValue }
@@ -65,5 +70,17 @@ public class LineSDKLoginManagerBotPrompt: NSObject {
     public static let normal = LineSDKLoginManagerBotPrompt(.normal)
     public static let aggressive = LineSDKLoginManagerBotPrompt(.aggressive)
     
+    public var rawValue: String { return _value.rawValue }
+}
+
+@objcMembers
+public class LineSDKLoginManagerWebAuthenticationMethod: NSObject {
+
+    let _value: LoginManager.WebAuthenticationMethod
+    init(_ value: LoginManager.WebAuthenticationMethod) { _value = value }
+
+    public static let email = LineSDKLoginManagerWebAuthenticationMethod(.email)
+    public static let qrCode = LineSDKLoginManagerWebAuthenticationMethod(.qrCode)
+
     public var rawValue: String { return _value.rawValue }
 }
