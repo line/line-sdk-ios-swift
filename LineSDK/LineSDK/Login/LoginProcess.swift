@@ -414,8 +414,15 @@ class WebLoginFlow: NSObject {
     weak var safariViewController: UIViewController?
     
     init(parameter: LoginProcess.FlowParameters) {
-        let webLoginURLBase = URL(string: Constant.lineWebAuthURL)!
-         url = webLoginURLBase.appendedLoginQuery(parameter)
+        var component = URLComponents(string: Constant.lineWebAuthURL)!
+        if parameter.loginParameter.initialWebAuthenticationMethod == .qrCode {
+            if let _ = component.fragment {
+                assertionFailure("Multiple fragment is not yet supported. Require review or report to developer.")
+            }
+            component.fragment = "/qr"
+        }
+        let baseURL = component.url!
+        url = baseURL.appendedLoginQuery(parameter)
     }
     
     func start(in viewController: UIViewController?) {

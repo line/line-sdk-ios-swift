@@ -84,7 +84,22 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
             return p
         }()
     )
-    
+
+    let parameterWithInitialQRMethod = LoginProcess.FlowParameters(
+        channelID: "123",
+        universalLinkURL: nil,
+        scopes: [.profile, .openID],
+        pkce: PKCE(),
+        processID: "abc",
+        nonce: "kkk",
+        loginParameter: {
+            var p = LoginManager.Parameters()
+            p.botPromptStyle = .normal
+            p.initialWebAuthenticationMethod = .qrCode
+            return p
+        }()
+    )
+
     // Login URL has a double escaped query.
     func testLoginQueryURLEncode() {
         
@@ -178,7 +193,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
         XCTAssertTrue(item.value!.removingPercentEncoding!.contains("prompt_bot_id=@abc123"))
     }
-    
+
     // URL Scheme has a triple escaped query.
     func testURLSchemeQueryEncode() {
         let baseURL = Constant.lineAppAuthURLv2
@@ -259,7 +274,36 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         flow.start(in: rootViewController)
         waitForExpectations(timeout: 1.0, handler: nil)
     }
-    
+
+    func testWebLoginFlowWithQRCodeFirst() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        let flow = WebLoginFlow(parameter: parameterWithInitialQRMethod)
+        let webURL = URL(string: Constant.lineWebAuthURL)!
+        let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
+        XCTAssertEqual(components?.scheme, "https")
+        XCTAssertEqual(components?.host, webURL.host)
+        XCTAssertEqual(components?.path, webURL.path)
+
+        XCTAssertEqual(components?.fragment, "/qr")
+        XCTAssertTrue(flow.url.absoluteString.contains("#/qr"))
+
+        let rootViewController = setupViewController()
+
+        flow.onNext.delegate(on: self) { [unowned flow] (self, next) in
+            expect.fulfill()
+            self.resetViewController()
+            switch next {
+            case .safariViewController:
+                XCTAssertEqual(rootViewController.presentedViewController, flow.safariViewController)
+            default:
+                XCTFail("Should present a safari web view controller.")
+            }
+        }
+
+        flow.start(in: rootViewController)
+        waitForExpectations(timeout: 1.0, handler: nil)
+    }
+
     func testAppSwitchingObserver() {
         let expect = expectation(description: "\(#file)_\(#line)")
         let observer = LoginProcess.AppSwitchingObserver()
