@@ -104,11 +104,13 @@
     param.preferredWebPageLanguage = @"ja";
     param.IDTokenNonce = @"test";
     param.promptBotID = @"@abc123";
-    
+    param.initialWebAuthenticationMethod = [LineSDKLoginManagerWebAuthenticationMethod qrCode];
+
     XCTAssertTrue([param onlyWebLogin]);
     XCTAssertTrue([[param.botPromptStyle rawValue] isEqualToString: @"normal"]);
     XCTAssertTrue([param.preferredWebPageLanguage isEqualToString: @"ja"]);
     XCTAssertTrue([param.IDTokenNonce isEqualToString: @"test"]);
+    XCTAssertTrue([[param.initialWebAuthenticationMethod rawValue] isEqualToString:@"qrCode"]);
 }
 
 - (void)testLoginResultInterface {

@@ -63,6 +63,11 @@ extension LoginManager {
         #else
         public var allowRecreatingLoginProcess = false
         #endif
+
+        /// Specifies the initial web authentication method to be used when starting the login process.
+        /// 
+        /// By default, `.email` is used to provide input boxes for email and password.
+        public var initialWebAuthenticationMethod: WebAuthenticationMethod = .email
         
         /// Creates a default `LoginManager.Parameters` value.
         public init() {}
@@ -89,7 +94,13 @@ extension LoginManager {
         /// consent screen.
         case aggressive
     }
-    
+
+    /// The method used for the authentication when using the web authentication flow.
+    public enum WebAuthenticationMethod: String {
+        case email
+        case qrCode
+    }
+
     /// Represents the language used in the web page.
     public struct WebPageLanguage {
         /// :nodoc:

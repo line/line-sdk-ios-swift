@@ -45,10 +45,21 @@ public class LoginProcess {
         let pkce: PKCE
         let processID: String
         let nonce: String?
-        let botPrompt: LoginManager.BotPrompt?
-        let preferredWebPageLanguage: LoginManager.WebPageLanguage?
-        let onlyWebLogin: Bool
-        let promptBotID: String?
+
+        let loginParameter: LoginManager.Parameters
+
+        var botPrompt: LoginManager.BotPrompt? {
+            loginParameter.botPromptStyle
+        }
+        var preferredWebPageLanguage: LoginManager.WebPageLanguage? {
+            loginParameter.preferredWebPageLanguage
+        }
+        var onlyWebLogin: Bool {
+            loginParameter.onlyWebLogin
+        }
+        var promptBotID: String? {
+            loginParameter.promptBotID
+        }
     }
     
     /// Observes application switching to foreground.
@@ -177,10 +188,7 @@ public class LoginProcess {
             pkce: pkce,
             processID: processID,
             nonce: IDTokenNonce,
-            botPrompt: parameters.botPromptStyle,
-            preferredWebPageLanguage: parameters.preferredWebPageLanguage,
-            onlyWebLogin: parameters.onlyWebLogin,
-            promptBotID: parameters.promptBotID
+            loginParameter: parameters
         )
         #if targetEnvironment(macCatalyst)
         // On macCatalyst, we only support web login
@@ -406,8 +414,15 @@ class WebLoginFlow: NSObject {
     weak var safariViewController: UIViewController?
     
     init(parameter: LoginProcess.FlowParameters) {
-        let webLoginURLBase = URL(string: Constant.lineWebAuthURL)!
-         url = webLoginURLBase.appendedLoginQuery(parameter)
+        var component = URLComponents(string: Constant.lineWebAuthURL)!
+        if parameter.loginParameter.initialWebAuthenticationMethod == .qrCode {
+            if let _ = component.fragment {
+                assertionFailure("Multiple fragment is not yet supported. Require review or report to developer.")
+            }
+            component.fragment = "/qr"
+        }
+        let baseURL = component.url!
+        url = baseURL.appendedLoginQuery(parameter)
     }
     
     func start(in viewController: UIViewController?) {
