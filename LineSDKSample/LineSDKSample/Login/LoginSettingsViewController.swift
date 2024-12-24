@@ -88,6 +88,20 @@ class LoginSettingsViewController: UITableViewController {
                 case .none: p.botPromptStyle = .aggressive
                 }
             }
+        ),
+        ParameterItem(
+            title: "Initial Auth Method",
+            text: { p in
+                switch p.initialWebAuthenticationMethod {
+                case .email: return "Email"
+                case .qrCode: return "QR Code"
+                }
+            }, action: { p in
+                switch p.initialWebAuthenticationMethod {
+                case .email: p.initialWebAuthenticationMethod = .qrCode
+                case .qrCode: p.initialWebAuthenticationMethod = .email
+                }
+            }
         )
     ]
 
@@ -137,6 +151,7 @@ class LoginSettingsViewController: UITableViewController {
             let p = parameters[indexPath.row]
             cell.textLabel?.text = p.title
             cell.detailTextLabel?.text = p.text(loginSettings.parameters)
+            cell.accessoryType = .none
         }
 
         return cell
