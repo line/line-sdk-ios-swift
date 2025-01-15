@@ -24,18 +24,34 @@ import CommonCrypto
 
 extension Data {
 
+    /// Strips the X.509 certificate header information from a DER-encoded key data.
+    ///
+    /// This method processes X.509 formatted key data by:
+    /// 1. Validating the input data and ASN.1 structure
+    /// 2. Processing and removing X.509 header information
+    /// 3. Extracting the actual key data
+    ///
+    /// The method handles the following ASN.1 structure:
+    /// - Sequence tag (0x30)
+    /// - Length encoding
+    /// - PKCS #1 rsaEncryption identifier sequence
+    ///
+    /// - Parameter earlyTerminator: A byte marker used for early termination. For RSA keys, this is typically an INTEGER type marker
+    /// - Returns: The processed key data with X.509 header removed
+    /// - Throws: CryptoError if the input data format is invalid or processing fails
     func x509HeaderStripped(earlyTerminator: UInt8) throws -> Data {
         let count = self.count / MemoryLayout<CUnsignedChar>.size
         guard count > 0 else {
             throw CryptoError.algorithmsFailed(reason: .invalidDERKey(data: self, reason: "The input key is empty."))
         }
         
-        // Check the first byte
+        // Initialize index for ASN.1 structure parsing
         var index = 0
         
-        // If the first byte is already the terminator, just return.
+        // Early return if the data is already in the correct format
         if self[index] == earlyTerminator { return self }
         
+        // Validate ASN.1 sequence marker (0x30)
         guard self[index] == ASN1Type.sequence.byte else {
             throw CryptoError.algorithmsFailed(
                 reason: .invalidDERKey(
@@ -45,7 +61,9 @@ extension Data {
             )
         }
         
-        // octets length
+        // Process length field according to ASN.1 BER encoding rules:
+        // - If length byte <= 0x80: direct length value
+        // - If length byte > 0x80: subsequent bytes contain the length
         index += 1
         if self[index] > 0x80 { // 0x80 == 128
             index += Int(self[index]) - 0x80 + 1
@@ -53,11 +71,12 @@ extension Data {
             index += 1
         }
         
-        // Check again for the terminator (for RSA, it should be an INTEGER).
-        // There is no X509 header contained anymore. We could just return the input DER data as is.
+        // Check for early terminator (INTEGER type for RSA keys)
+        // If found, the data doesn't contain X.509 header
         if self[index] == earlyTerminator { return self }
         
-        // Handle X.509 key now. PKCS #1 rsaEncryption szOID_RSA_RSA, it should look like this:
+        // Process X.509 key header
+        // Expected PKCS #1 rsaEncryption identifier sequence:
         // 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00
         guard self[index] == ASN1Type.sequence.byte else {
             throw CryptoError.algorithmsFailed(
@@ -103,6 +122,9 @@ extension Data {
     
     /// Data with x509 stripped from a provided ASN.1 DER EC public key.
     /// The DER data will be returned as is, if no header contained.
+    ///
+    /// - Returns: The processed key data with X.509 header removed
+    /// - Throws: CryptoError if the input data format is invalid or processing fails
     func x509HeaderStrippedForEC() throws -> Data {
         return try x509HeaderStripped(earlyTerminator: ASN1Type.uncompressedIndicator.byte)
     }
@@ -110,7 +132,10 @@ extension Data {
     /// Data with x509 stripped from a provided ASN.1 DER RSA public key.
     /// The DER data will be returned as is, if no header contained.
     /// We need to do this on Apple's platform for accepting a key.
-    // http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/
+    /// http://blog.flirble.org/2011/01/05/rsa-public-key-openssl-ios/
+    ///
+    /// - Returns: The processed key data with X.509 header removed
+    /// - Throws: CryptoError if the input data format is invalid or processing fails
     func x509HeaderStrippedForRSA() throws -> Data {
         return try x509HeaderStripped(earlyTerminator: ASN1Type.integer.byte)
     }
@@ -118,10 +143,12 @@ extension Data {
 
 extension SecKey {
     
+    /// Enum representing the class of a key.
     enum KeyClass {
         case publicKey
         case privateKey
         
+        /// Returns the corresponding CFString for the key class.
         var name: CFString {
             switch self {
             case .publicKey: return kSecAttrKeyClassPublic
@@ -130,10 +157,12 @@ extension SecKey {
         }
     }
     
+    /// Enum representing the type of a key.
     enum KeyType {
         case rsa
         case ec
         
+        /// Returns the corresponding CFString for the key type.
         var name: CFString {
             switch self {
             case .rsa: return kSecAttrKeyTypeRSA
@@ -142,7 +171,15 @@ extension SecKey {
         }
     }
     
-    // Create a general key from DER raw data.
+    /// Creates a general key from DER raw data.
+    ///
+    /// - Parameters:
+    ///   - data: The DER-encoded key data.
+    ///   - keyClass: The class of the key.
+    ///   - keyType: The type of the key.
+    ///
+    /// - Returns: The created key.
+    /// - Throws: CryptoError if the input data format is invalid or key creation fails
     static func createKey(derData data: Data, keyClass: KeyClass, keyType: KeyType) throws -> SecKey {
         let sizeInBits = data.count * MemoryLayout<UInt8>.size
         let attributes: [CFString: Any] = [
@@ -160,7 +197,13 @@ extension SecKey {
         return key
     }
     
-    // Create a public key from some given certificate data.
+    /// Creates a public key from some given certificate data.
+    ///
+    /// - Parameters:
+    ///   - data: The certificate data.
+    ///
+    /// - Returns: The created public key.
+    /// - Throws: CryptoError if the input data format is invalid or key creation fails
     static func createPublicKey(certificateData data: Data) throws -> SecKey {
         guard let certData = SecCertificateCreateWithData(nil, data as CFData) else {
             throw CryptoError.algorithmsFailed(
@@ -181,6 +224,9 @@ extension SecKey {
 
 extension String {
     /// Returns a base64 encoded string with markers stripped.
+    ///
+    /// - Returns: The base64 encoded string with markers stripped.
+    /// - Throws: CryptoError if the input string format is invalid
     func markerStrippedBase64() throws -> String {
         var lines = components(separatedBy: "\n").filter { line in
             return !line.hasPrefix(RSA.Constant.beginMarker) && !line.hasPrefix(RSA.Constant.endMarker)
@@ -214,6 +260,7 @@ enum ASN1Type {
     case bitString
     case uncompressedIndicator
     
+    /// Returns the corresponding byte value for the ASN.1 type.
     var byte: UInt8 {
         switch self {
         case .sequence: return 0x30

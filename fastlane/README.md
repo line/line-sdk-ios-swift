@@ -103,14 +103,6 @@ Generate documentation for internal usage
 
 
 
-### ios ensure_latest_carthage
-
-```sh
-[bundle exec] fastlane ios ensure_latest_carthage
-```
-
-
-
 ### ios bump_constant_version
 
 ```sh
