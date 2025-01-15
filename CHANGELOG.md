@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.12.0] - 2025-01-15
+
 ### Added
 
 - A new `initialWebAuthenticationMethod` option in the login parameters allows specifying the initial web authentication method. Setting this to `.qrCode` displays the QR code login as the default authentication method on the login page. [#219](https://github.com/line/line-sdk-ios-swift/pull/219)
@@ -311,3 +313,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.11.0]: https://github.com/line/line-sdk-ios-swift/compare/5.10.1...5.11.0
 [5.11.1]: https://github.com/line/line-sdk-ios-swift/compare/5.11.0...5.11.1
 [5.11.2]: https://github.com/line/line-sdk-ios-swift/compare/5.11.1...5.11.2
+[5.12.0]: https://github.com/line/line-sdk-ios-swift/compare/5.11.2...5.12.0
