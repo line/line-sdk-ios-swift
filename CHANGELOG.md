@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- A new `initialWebAuthenticationMethod` option in the login parameters allows specifying the initial web authentication method. Setting this to `.qrCode` displays the QR code login as the default authentication method on the login page. [#219](https://github.com/line/line-sdk-ios-swift/pull/219)
+- The `LoginProcess` object now includes a `loginRoute` value, indicating the path taken during login. This helps track whether the user logged in via the LINE app or through a web page. [#215](https://github.com/line/line-sdk-ios-swift/pull/215)
+
+### Fixed
+
+- An issue where SPM build for iOS was not working. We have also updated the project settings to the latest Xcode and Swift versions. [#216](https://github.com/line/line-sdk-ios-swift/pull/216)
+
 ## [5.11.2] - 2024-09-26
 
 ### Fixed
