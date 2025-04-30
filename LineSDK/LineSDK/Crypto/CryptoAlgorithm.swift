@@ -57,13 +57,8 @@ extension Data {
 
     func digest(using algorithm: DigestAlgorithm) -> Data {
         var hash = [UInt8](repeating: 0, count: Int(algorithm.length))
-        #if swift(>=5.0)
         withUnsafeBytes { _ = algorithm.digest($0.baseAddress, CC_LONG(count), &hash) }
         return Data(hash)
-        #else
-        withUnsafeBytes { _ = algorithm.digest($0, CC_LONG(count), &hash) }
-        return Data(bytes: hash)
-        #endif
     }
 
     static func randomData(bytesCount: Int) -> Data {
@@ -72,11 +67,7 @@ extension Data {
         if status != errSecSuccess {
             bytes = bytes.map { _ in UInt8.random(in: UInt8.min...UInt8.max) }
         }
-        #if swift(>=5.0)
         return Data(bytes)
-        #else
-        return Data(bytes: bytes)
-        #endif
     }
 }
 

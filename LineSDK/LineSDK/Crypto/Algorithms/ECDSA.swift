@@ -126,13 +126,7 @@ extension ECDSA {
             }
 
             let bytes = (rBytes.encode(as: .integer) + sBytes.encode(as: .integer)).encode(as: .sequence)
-            
-            #if swift(>=5.0)
             return Data(bytes)
-            #else
-            return Data(bytes: bytes)
-            #endif
-
         }
     }
 }

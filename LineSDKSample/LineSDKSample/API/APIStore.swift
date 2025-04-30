@@ -336,7 +336,7 @@ extension APIItem {
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
-                let text = try! result.get()
+                let text = result.get()
                 API.getOpenChatRoomStatus(openChatId: text) { result in
                     switch result {
                     case .success(let value): handler(.success(value))
@@ -353,7 +353,7 @@ extension APIItem {
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
-                let text = try! result.get()
+                let text = result.get()
                 API.getOpenChatRoomJoinType(openChatId: text) { result in
                     switch result {
                     case .success(let value): handler(.success(value))
@@ -370,7 +370,7 @@ extension APIItem {
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectOpenChatMid(in: controller) { result in
-                let text = try! result.get()
+                let text = result.get()
                 API.getOpenChatRoomMembershipState(openChatId: text) { result in
                     switch result {
                     case .success(let value): handler(.success(value))
@@ -398,7 +398,7 @@ extension APIItem {
         let block: AnyResultBlock = { arg in
             let (controller, handler) = arg
             collectionOpenChatIdAndUsername(in: controller) { result in
-                let text = try! result.get()
+                let text = result.get()
                 API.postOpenChatRoomJoin(openChatId: text.0, displayName: text.1) { result in
                     switch result {
                     case .success: handler(.success(APIStatus(code: 204)))
