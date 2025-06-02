@@ -33,6 +33,7 @@ extension LoginManager {
     ///   - parameters: The parameters used during the login process. For more information,
     ///                 see `LoginManager.Parameters`.
     /// - Returns: The login `Result`.
+    @MainActor
     func login(
         permissions: Set<LoginPermission> = [.profile],
         parameters: LoginManager.Parameters = .init()
