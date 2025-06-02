@@ -24,20 +24,20 @@ import Foundation
 /// Represents a session for sending a `Request` object through a `URLSession` object for the LINE Platform. This
 /// class respects the `adapters` and `pipelines` properties of the `Request` protocol, to create proper requests
 /// and handle the response in the designed way.
-public class Session {
-    
+final public class Session: Sendable {
+
     /// The result of response `handle` method could give.
     ///
     /// - value: A final result of `Response`. It means the response pipelines finished without problem.
     /// - action: An action should applied to current handling process. See `HandleAction` for more.
-    enum HandleResult<T> {
-        
+    enum HandleResult<T: Sendable>: Sendable {
+
         /// Handle action should by applied.
         ///
         /// - restart: Restart the whole request without modifying original pipelines.
         /// - restartWith: Restart the whole request with the given pipelines.
         /// - stop: Stop handling process and an error is reported.
-        enum HandleAction {
+        enum HandleAction: Sendable {
             case restart
             case restartWith(pipelines: [ResponsePipeline])
             case stop(Error)
@@ -100,7 +100,7 @@ public class Session {
         _ request: T,
         callbackQueue: CallbackQueue = .currentMainOrAsync,
         pipelines: [ResponsePipeline]?,
-        completionHandler completion: ((Result<T.Response, LineSDKError>) -> Void)? = nil) -> SessionTask?
+        completionHandler completion: (@Sendable (Result<T.Response, LineSDKError>) -> Void)? = nil) -> SessionTask?
     {
         let urlRequest: URLRequest
         do {
@@ -204,17 +204,18 @@ public class Session {
         response: HTTPURLResponse,
         pipelines: [ResponsePipeline],
         fullPipelines: [ResponsePipeline],
-        done: @escaping ((HandleResult<T.Response>) throws -> Void)) throws
+        done: @escaping (@Sendable (HandleResult<T.Response>) throws -> Void)) throws
     {
         guard !pipelines.isEmpty else {
             Log.fatalError("The pipeline is already empty but request does not be parsed." +
                 "Please at least set a terminator pipeline to the request `pipelines` property.")
         }
-        var leftPipelines = pipelines
-        
+        var receivedPipelines = pipelines
+
         // Handle the first pipeline.
-        let pipeline = leftPipelines.removeFirst()
-        
+        let pipeline = receivedPipelines.removeFirst()
+        let nextProcessing = receivedPipelines
+
         // Recursive calling on `handle` in this `switch` statement might be an issue when there are tons of
         // redirectors in the pipeline. However, it should not happen at all in a foreseeable future. If there
         // is any problem on it, we might need a pipeline queue to break the recursion.
@@ -227,7 +228,7 @@ public class Session {
                     request: request,
                     data: data,
                     response: response,
-                    pipelines: leftPipelines,
+                    pipelines: nextProcessing,
                     fullPipelines: fullPipelines,
                     done: done)
                 return
@@ -241,7 +242,7 @@ public class Session {
                         request: request,
                         data: data,
                         response: response,
-                        pipelines: leftPipelines,
+                        pipelines: nextProcessing,
                         fullPipelines: fullPipelines,
                         done: done)
                 case .continueWith(let newData, let newResponse):
@@ -250,7 +251,7 @@ public class Session {
                         request: request,
                         data: newData,
                         response: newResponse,
-                        pipelines: leftPipelines,
+                        pipelines: nextProcessing,
                         fullPipelines: fullPipelines,
                         done: done)
                 case .restart:
