@@ -21,6 +21,7 @@
 
 import UIKit
 
+@MainActor
 protocol ShareTargetSelectingViewControllerDelegate: AnyObject {
     func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool
 

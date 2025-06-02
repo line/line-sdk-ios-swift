@@ -21,6 +21,7 @@
 
 import UIKit
 
+@MainActor
 protocol PageTabViewDelegate: AnyObject {
     func pageTabView(_ pageTabView: PageTabView, didSelectIndex index: Int)
 }

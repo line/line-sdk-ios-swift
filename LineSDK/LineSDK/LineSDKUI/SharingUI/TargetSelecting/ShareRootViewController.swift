@@ -253,10 +253,12 @@ extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
         let indicator = LoadingIndicator.add(to: view)
         loadedObserver = observe(\.allLoaded, options: .new) { [weak self] controller, change in
             guard let self = self else { return }
-            if let loaded = change.newValue, loaded {
-                indicator.remove()
-                self.loadedObserver = nil
-                viewController.continueSearch()
+            Task { @MainActor in
+                if let loaded = change.newValue, loaded {
+                    indicator.remove()
+                    self.loadedObserver = nil
+                    viewController.continueSearch()
+                }
             }
         }
 

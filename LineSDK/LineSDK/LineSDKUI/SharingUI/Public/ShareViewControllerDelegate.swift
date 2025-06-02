@@ -30,6 +30,7 @@
  that you do so. Without implementing the delegate methods, you can't retrieve information about events like 
  loading failure, user cancellation, or message sending success.
 */
+@MainActor
 public protocol ShareViewControllerDelegate: AnyObject {
 
     /// Tells the delegate that the loading process fails for a specified type with an error.
