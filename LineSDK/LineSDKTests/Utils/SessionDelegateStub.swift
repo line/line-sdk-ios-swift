@@ -32,7 +32,7 @@ extension HTTPURLResponse {
     }
 }
 
-final class SessionDelegateStub: NSObject, SessionDelegateType {
+final class SessionDelegateStub: NSObject, SessionDelegateType, @unchecked Sendable {
 
     struct StubItem {
         let action: Either
@@ -72,8 +72,22 @@ final class SessionDelegateStub: NSObject, SessionDelegateType {
         }
     }
     
-    var stubItems: [StubItem]
-    
+    private var _stubItems: [StubItem]
+    private let lock = NSLock()
+    var stubItems: [StubItem] {
+        get {
+            lock.lock()
+            defer { lock.unlock() }
+            return _stubItems
+        }
+        set {
+            lock.lock()
+            defer { lock.unlock() }
+            _stubItems = newValue
+        }
+    }
+
+
     convenience init(stub: Either) {
         self.init(stubs: [stub])
     }
@@ -83,7 +97,7 @@ final class SessionDelegateStub: NSObject, SessionDelegateType {
     }
 
     init(stubItems: [StubItem]) {
-        self.stubItems = stubItems
+        _stubItems = stubItems
     }
     
     func shouldTaskStart(_ task: SessionTask) -> Bool {
