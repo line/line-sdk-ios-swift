@@ -158,14 +158,26 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
             configuration: LoginConfiguration.shared,
             scopes: permissions,
             parameters: parameters,
-            viewController: viewController)
+            viewController: viewController
+        )
         process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
             self.currentProcess = nil
-            self.postLogin(
-                token: result.token,
-                response: result.response,
-                process: process,
-                completionHandler: completion)
+            Task {
+                do {
+                    let result = try await self.postLogin(
+                        token: result.token,
+                        response: result.response,
+                        process: process
+                    )
+                    completion(.success(result))
+                } catch {
+                    if let cryptoError = error as? CryptoError {
+                        completion(.failure(.authorizeFailed(reason: .cryptoError(error: cryptoError))))
+                    } else {
+                        completion(.failure(error.sdkError))
+                    }
+                }
+            }
         }
         process.onFail.delegate(on: self) { (self, error) in
             self.currentProcess = nil
@@ -189,72 +201,60 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
     func postLogin(
         token: AccessToken,
         response: LoginProcessURLResponse,
-        process: LoginProcess,
-        completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void) {
-        
-        let group = DispatchGroup()
-        
-        var profile: UserProfile?
-
-        var providerMetadata: DiscoveryDocument.ResolvedProviderMetadata?
-
-        // Any possible errors will be held here.
-        var errors: [Error] = []
-
-        if token.permissions.contains(.profile) {
-            // We need to pass token since it is not stored in keychain yet.
-            getUserProfile(with: token, in: group) { result in
-                do { profile = try result.get() }
-                catch { errors.append(error) }
-            }
+        process: LoginProcess
+    ) async throws -> LoginResult
+    {
+        enum Response {
+            case profile(UserProfile)
+            case providerMetadata(DiscoveryDocument.ResolvedProviderMetadata)
         }
 
-        if token.permissions.contains(.openID) {
-            getProviderMetadata(for: token, in: group) { result in
-                do { providerMetadata = try result.get() }
-                catch { errors.append(error) }
+        let (profile, providerMetadata) = try await withThrowingTaskGroup(of: Response.self) { group in
+            if token.permissions.contains(.profile) {
+                group.addTask {
+                    let profile = try await self.getUserProfile(with: token)
+                    return .profile(profile)
+                }
             }
-        }
-
-        group.notify(queue: .main) {
-            guard errors.isEmpty else {
-                let error = errors[0]
-                completion(.failure(error.sdkError))
-                return
-            }
-            
-            if let providerMetadata = providerMetadata {
-                do {
-                    try self.verifyIDToken(
-                        token.IDToken!,
-                        providerMetadata: providerMetadata,
-                        process: process,
-                        userID: profile?.userID
-                    )
-                } catch {
-                    if let cryptoError = error as? CryptoError {
-                        completion(.failure(.authorizeFailed(reason: .cryptoError(error: cryptoError))))
-                    } else {
-                        completion(.failure(error.sdkError))
-                    }
-                    return
+            if token.permissions.contains(.openID) {
+                group.addTask {
+                    let metadata = try await self.getProviderMetadata(for: token)
+                    return .providerMetadata(metadata)
                 }
             }
 
-            // Everything goes fine now. Store token.
-            let result = Result {
-                try AccessTokenStore.shared.setCurrentToken(token)
-            }.map {
-                LoginResult.init(
-                    accessToken: token,
-                    permissions: Set(token.permissions),
-                    userProfile: profile,
-                    friendshipStatusChanged: response.friendshipStatusChanged,
-                    IDTokenNonce: process.IDTokenNonce
-                )
+            var profile: UserProfile? = nil
+            var providerMetadata: DiscoveryDocument.ResolvedProviderMetadata? = nil
+
+            for try await value in group {
+                switch value {
+                case .profile(let p):
+                    profile = p
+                case .providerMetadata(let m):
+                    providerMetadata = m
+                }
             }
-            completion(result)
+            return (profile, providerMetadata)
         }
+
+        if let providerMetadata = providerMetadata {
+            try self.verifyIDToken(
+                token.IDToken!,
+                providerMetadata: providerMetadata,
+                process: process,
+                userID: profile?.userID
+            )
+        }
+
+        // Everything goes fine now. Store token.
+        try AccessTokenStore.shared.setCurrentToken(token)
+        return LoginResult.init(
+            accessToken: token,
+            permissions: Set(token.permissions),
+            userProfile: profile,
+            friendshipStatusChanged: response.friendshipStatusChanged,
+            IDTokenNonce: process.IDTokenNonce
+        )
     }
     
     /// Logs out the current user by revoking the refresh token and all its corresponding access tokens.
@@ -354,61 +354,32 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
 }
 
 extension LoginManager {
-    func getUserProfile(
-        with token: AccessToken,
-        in group: DispatchGroup,
-        handler: @escaping @Sendable (Result<UserProfile, LineSDKError>) -> Void)
-    {
-        group.enter()
 
-        Session.shared.send(GetUserProfileRequestInjectedToken(token: token.value)) { profileResult in
-            handler(profileResult)
-            group.leave()
-        }
+    func getUserProfile(with token: AccessToken) async throws -> UserProfile {
+        return try await Session.shared.send(GetUserProfileRequestInjectedToken(token: token.value))
     }
-    
-    func getProviderMetadata(
-        for token: AccessToken,
-        in group: DispatchGroup,
-        handler: @escaping (Result<DiscoveryDocument.ResolvedProviderMetadata, LineSDKError>) -> Void)
-    {
-        group.enter()
+
+    func getProviderMetadata(for token: AccessToken) async throws -> DiscoveryDocument.ResolvedProviderMetadata {
         // We need a valid ID Token existing to continue.
         guard let IDToken = token.IDToken else {
-            handler(.failure(LineSDKError.authorizeFailed(reason: .lackOfIDToken(raw: token.IDTokenRaw))))
-            group.leave()
-            return
+            throw LineSDKError.authorizeFailed(reason: .lackOfIDToken(raw: token.IDTokenRaw))
         }
+
         // We need a supported verify algorithm to continue
         let algorithm = IDToken.header.algorithm
         guard let _ = JWA.Algorithm(rawValue: algorithm) else {
             let unsupportedError = CryptoError.JWTFailed(reason: .unsupportedHeaderAlgorithm(name: algorithm))
-            handler(.failure(LineSDKError.authorizeFailed(reason: .cryptoError(error: unsupportedError))))
-            group.leave()
-            return
+            throw LineSDKError.authorizeFailed(reason: .cryptoError(error: unsupportedError))
         }
 
         // Use Discovery Document to find JWKs URI. How about introducing some promise mechanism
-        Task {
-            do {
-                let document = try await Session.shared.send(GetDiscoveryDocumentRequest())
-                let jwkSetURL = document.jwksURI
-                let jwkSet = try await Session.shared.send(GetJWKSetRequest(url: jwkSetURL))
-                guard let keyID = IDToken.header.keyID, let key = jwkSet.getKeyByID(keyID) else {
-                    handler(.failure(LineSDKError.authorizeFailed(
-                        reason: .JWTPublicKeyNotFound(keyID: IDToken.header.keyID))))
-                    group.leave()
-                    return
-                }
-                handler(
-                    .success(DiscoveryDocument.ResolvedProviderMetadata(issuer: document.issuer, jwk: key))
-                )
-                group.leave()
-            } catch {
-                handler(.failure(error as? LineSDKError ?? .untypedError(error: error)))
-                group.leave()
-            }
-        }        
+        let document = try await Session.shared.send(GetDiscoveryDocumentRequest())
+        let jwkSetURL = document.jwksURI
+        let jwkSet = try await Session.shared.send(GetJWKSetRequest(url: jwkSetURL))
+        guard let keyID = IDToken.header.keyID, let key = jwkSet.getKeyByID(keyID) else {
+            throw LineSDKError.authorizeFailed(reason: .JWTPublicKeyNotFound(keyID: IDToken.header.keyID))
+        }
+        return DiscoveryDocument.ResolvedProviderMetadata(issuer: document.issuer, jwk: key)
     }
 
     func verifyIDToken(

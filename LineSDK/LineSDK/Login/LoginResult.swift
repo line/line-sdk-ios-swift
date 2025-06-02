@@ -22,7 +22,7 @@
 import Foundation
 
 /// Represents a successful login.
-public struct LoginResult {
+public struct LoginResult: Sendable {
 
     /// The access token obtained by the login process.
     public let accessToken: AccessToken
