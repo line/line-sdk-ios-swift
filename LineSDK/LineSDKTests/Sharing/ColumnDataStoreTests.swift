@@ -22,20 +22,19 @@
 import XCTest
 @testable import LineSDK
 
+@MainActor
 class ColumnDataStoreTests: XCTestCase {
 
     var store: ColumnDataStore<Int>!
     var token: NotificationToken!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
         store = ColumnDataStore(columnCount: 3)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         store = nil
         token = nil
-        super.tearDown()
     }
 
     func testAppendData() {
@@ -79,7 +78,8 @@ class ColumnDataStoreTests: XCTestCase {
     }
 
     func testMaximumSelection() {
-        let store = ColumnDataStore<Int>(columnCount: 3, maximumSelectedCount: 2)
+        let store = ColumnDataStore<Int>(columnCount: 3)
+        store.maximumSelectedCount = 2
         store.append(data: [1,2,3], to: 0)
 
         // Select two elements.

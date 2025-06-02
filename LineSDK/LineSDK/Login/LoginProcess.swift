@@ -39,7 +39,7 @@ public class LoginProcess {
         case webLogin
     }
 
-    struct FlowParameters {
+    struct FlowParameters: Sendable {
         let channelID: String
         let universalLinkURL: URL?
         let scopes: Set<LoginPermission>

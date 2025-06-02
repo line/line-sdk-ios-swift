@@ -37,7 +37,8 @@ class AdapterTests: XCTestCase {
         
         XCTAssertEqual(result.value(forHTTPHeaderField: "Authorization"), "Bearer 123")
     }
-    
+
+    @MainActor
     func testHeaderAdapter() {
         let adapter = HeaderAdapter()
         guard let bundleID = Bundle.main.bundleIdentifier else {

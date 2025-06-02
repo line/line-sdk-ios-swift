@@ -24,8 +24,8 @@ import Foundation
 extension LoginManager {
     
     /// Parameters used during login.
-    public struct Parameters {
-        
+    public struct Parameters: Sendable {
+
         /// Forces the use of web authentication flow instead of LINE app-to-app authentication flow.
         public var onlyWebLogin: Bool = false
         
@@ -87,7 +87,7 @@ extension LoginManager {
 extension LoginManager {
     
     /// The style for showing the "Add LINE Official Account as friend" prompt on the consent screen.
-    public enum BotPrompt: String {
+    public enum BotPrompt: String, Sendable {
         /// Includes an option to add a LINE Official Account as friend on the consent screen.
         case normal
         /// Opens a new screen to add a LINE Official Account as a friend after the user agrees to the permissions on the
@@ -96,7 +96,7 @@ extension LoginManager {
     }
 
     /// The method used for the authentication when using the web authentication flow.
-    public enum WebAuthenticationMethod: String {
+    public enum WebAuthenticationMethod: String, Sendable {
         case email
         case qrCode
     }
