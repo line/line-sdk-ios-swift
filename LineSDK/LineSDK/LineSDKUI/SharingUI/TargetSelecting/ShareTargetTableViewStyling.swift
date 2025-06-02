@@ -27,6 +27,7 @@ enum ShareTargetTableViewDesign {
     static var backgroundViewColor: UIColor { return .systemBackground }
 }
 
+@MainActor
 protocol ShareTargetTableViewStyling {
     var tableView: UITableView! { get }
     func setupTableViewStyle()

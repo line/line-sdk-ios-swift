@@ -42,7 +42,7 @@ public enum LineSDKError: Error {
     /// - lackOfAccessToken: The request requires an access token but it is unavailable. Code 1002.
     /// - jsonEncodingFailed: The request requires a JSON body but the provided data cannot be encoded to
     ///                       valid JSON. Code 1003.
-    public enum RequestErrorReason {
+    public enum RequestErrorReason: Sendable {
         /// The `URL` object is missing while encoding a request. Code 1001.
         case missingURL
 
@@ -64,12 +64,12 @@ public enum LineSDKError: Error {
     /// - dataParsingFailed: The received data cannot be parsed to an instance of the target type. Code
     ///                      2003.
     /// - invalidHTTPStatusAPIError: The received response contains an invalid HTTP status code. Code 2004.
-    public enum ResponseErrorReason {
-        
+    public enum ResponseErrorReason: Sendable {
+
         /// Error details for `invalidHTTPStatusAPIError`. When `ResponseErrorReason` is `invalidHTTPStatusAPIError`, 
         /// `APIErrorDetail` is the associated value. It contains the HTTP status code and the error 
         /// messages returned by the LINE server.
-        public struct APIErrorDetail {
+        public struct APIErrorDetail: Sendable {
             
             /// Error code received from server. This is usually the HTTP status code.
             public let code: Int
@@ -131,7 +131,7 @@ public enum LineSDKError: Error {
     /// - cryptoError: An error occurred at the LINE SDK crypto part. Usually this indicates a malformed
     ///                certificate or a key, or an unsupported algorithm is used. For more information, see
     ///                `CryptoError`. Code 3016.
-    public enum AuthorizeErrorReason {
+    public enum AuthorizeErrorReason: Sendable {
 
         /// There is no other login method left. The login process cannot be completed. Code 3001.
         case exhaustedLoginFlow
@@ -211,7 +211,7 @@ public enum LineSDKError: Error {
     /// - processDiscarded: The process is discarded when a new login process is created. This only
     ///                     happens when `allowRecreatingLoginProcess` in `LoginManager.Parameters` is `true` 
     ///                     and users are trying to create another login process. Code 4004.
-    public enum GeneralErrorReason {
+    public enum GeneralErrorReason: Sendable {
         /// Cannot convert `string` to valid data with `encoding`. Code 4001.
         case conversionError(string: String, encoding: String.Encoding)
 
@@ -419,7 +419,7 @@ extension LineSDKError: CustomNSError {
 }
 
 extension LineSDKError.RequestErrorReason {
-    public struct ParameterItem {
+    public struct ParameterItem: Sendable {
         public let name: String
         public let value: String
         public let description: String

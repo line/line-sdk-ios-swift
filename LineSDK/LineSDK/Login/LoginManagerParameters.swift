@@ -102,7 +102,7 @@ extension LoginManager {
     }
 
     /// Represents the language used in the web page.
-    public struct WebPageLanguage {
+    public struct WebPageLanguage: Sendable {
         /// :nodoc:
         public let rawValue: String
 

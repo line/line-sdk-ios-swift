@@ -85,8 +85,10 @@ class ShareTargetSearchResultViewController: UIViewController {
             .observe(\.hasSearchResult, options: [.initial, .new]) {
                 [weak self] _, change in
                 guard let self = self else { return }
-                if let hasSearchResult = change.newValue {
-                    self.emptyResultLabel.isHidden = hasSearchResult
+                Task { @MainActor in
+                    if let hasSearchResult = change.newValue {
+                        self.emptyResultLabel.isHidden = hasSearchResult
+                    }
                 }
             }
     }

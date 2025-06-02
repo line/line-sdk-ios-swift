@@ -41,6 +41,7 @@ import UIKit
 /// features. But if it's so important for you to provide a fully customized sharing interaction, you can still use the
 ///  related APIs to create your own UIs.
 ///
+@MainActor
 public class OpenChatCreatingController {
     
     /// The delegate object of this open chat creating controller.

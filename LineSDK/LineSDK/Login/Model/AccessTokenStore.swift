@@ -106,8 +106,9 @@ public class AccessTokenStore {
         static let encoderAuth2_1 = JSONEncoder()
         static let decoderAuth2_1 = JSONDecoder()
     }
-    
-    static var _shared: AccessTokenStore?
+
+    // This internal state is ensured safe by the lock in login manager.
+    nonisolated(unsafe) static var _shared: AccessTokenStore?
     
     /// The shared instance of `AccessTokenStore`. Use this instance to access values in the token store of LINE SDK.
     /// Access this value after you setup the LINE SDK. Otherwise, your app will be trapped.

@@ -22,6 +22,7 @@
 import UIKit
 
 // Render a certain model to compatible static table view cell.
+@MainActor
 protocol FormEntry {
     var cell: UITableViewCell { get }
 }

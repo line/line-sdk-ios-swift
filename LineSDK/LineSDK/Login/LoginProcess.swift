@@ -26,6 +26,7 @@ import SafariServices
 /// Represents a login process initialized by a `LoginManager` object. Normally, a process that contains multiple
 /// login flows will run serially. If a flow logs in the user successfully, subsequent flows will not be
 /// executed.
+@MainActor
 public class LoginProcess {
 
     /// Represents a login route for how the auth flow is initiated.
@@ -365,6 +366,7 @@ public class LoginProcess {
     }
 }
 
+@MainActor
 class AppUniversalLinkFlow {
     
     let url: URL
@@ -383,6 +385,7 @@ class AppUniversalLinkFlow {
     }
 }
 
+@MainActor
 class AppAuthSchemeFlow {
     
     let url: URL
@@ -400,6 +403,7 @@ class AppAuthSchemeFlow {
     }
 }
 
+@MainActor
 class WebLoginFlow: NSObject {
     
     enum Next {
@@ -448,7 +452,7 @@ class WebLoginFlow: NSObject {
     }
 }
 
-extension WebLoginFlow: SFSafariViewControllerDelegate {
+extension WebLoginFlow: @preconcurrency SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         // macCatalyst calls `didFinish` immediately when open page in Safari.
         // It should not be a cancellation.

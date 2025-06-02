@@ -21,6 +21,7 @@
 
 import UIKit
 
+@MainActor
 protocol KeyboardObservable: AnyObject {
 
     var keyboardObservers: [NotificationToken] { get set }
@@ -54,6 +55,7 @@ extension KeyboardObservable {
     }
 }
 
+@MainActor
 struct KeyboardInfo {
     let isVisible: Bool
     let endFrame: CGRect?

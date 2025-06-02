@@ -23,7 +23,7 @@ import UIKit
 
 /// Represents a login manager. You can set up the LINE SDK configuration, log in and log out the user with the
 /// LINE authorization flow, and check the authorization status.
-public class LoginManager {
+public final class LoginManager: @unchecked Sendable /* Sendable is ensured by the internal lock */ {
 
     let lock = NSLock()
 
@@ -122,7 +122,7 @@ public class LoginManager {
     ///   `API.Auth.refreshAccessToken(with:)` method.
     ///
     @discardableResult
-    public func login(
+    @MainActor public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
         parameters: LoginManager.Parameters = .init(),
@@ -275,7 +275,7 @@ public class LoginManager {
     /// - Returns: `true` if `url` has been successfully handled; `false` otherwise.
     /// - Note: This method has the same method signature as in the methods of the `UIApplicationDelegate`
     ///         protocol. Pass all arguments to this method without any modification.
-    public func application(
+    @MainActor public func application(
         _ app: UIApplication,
         open url: URL?,
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
@@ -337,7 +337,7 @@ public class LoginManager {
     use `login(permissions:in:parameters:completionHandler:)` instead.")
     """)
     @discardableResult
-    public func login(
+    @MainActor public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
         options: LoginManagerOptions,

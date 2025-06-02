@@ -32,6 +32,7 @@ import UIKit
  Without implementing the delegate methods, you can't receive information about events like network failure, user
  cancellation or open chat creating done.
  */
+@MainActor
 public protocol OpenChatCreatingControllerDelegate: AnyObject {
     
     /// Tells the delegate that the new open chat room is created successfully.
