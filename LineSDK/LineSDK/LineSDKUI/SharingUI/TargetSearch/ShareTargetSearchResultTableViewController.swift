@@ -78,14 +78,28 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
             [unowned self] notification in
-            self.handleSelectingChange(notification)
+            guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
+                assertionFailure("The `columnDataStoreSelected` notification should contain " +
+                    "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
+                return
+            }
+            Task { @MainActor in
+                self.handleSelectingChange(index: index)
+            }
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
             [unowned self] notification in
-            self.handleSelectingChange(notification)
+            guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
+                assertionFailure("The `columnDataStoreSelected` notification should contain " +
+                    "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
+                return
+            }
+            Task { @MainActor in
+                self.handleSelectingChange(index: index)
+            }
         }
     }
 
@@ -94,13 +108,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         deselectingObserver = nil
     }
 
-    private func handleSelectingChange(_ notification: Notification) {
-        guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
-            assertionFailure("The `columnDataStoreSelected` notification should contain " +
-                "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
-            return
-        }
-
+    private func handleSelectingChange(index: ColumnIndex) {
         guard let row = filteredIndexes[index.column].firstIndex(of: index) else {
             return
         }

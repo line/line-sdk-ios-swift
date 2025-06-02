@@ -131,24 +131,29 @@ class SelectedTargetPanelViewController: UIViewController {
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
             [unowned self] noti in
-            self.handleSelectingChange(noti, isSelecting: true)
+            guard let positionInSelected = noti.userInfo?[LineSDKNotificationKey.positionInSelected] as? Int else {
+                return
+            }
+            Task { @MainActor in
+                self.handleSelectingChange(positionInSelected: positionInSelected, isSelecting: true)
+            }
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
             [unowned self] noti in
-            self.handleSelectingChange(noti, isSelecting: false)
+            guard let positionInSelected = noti.userInfo?[LineSDKNotificationKey.positionInSelected] as? Int else {
+                return
+            }
+            Task { @MainActor in
+                self.handleSelectingChange(positionInSelected: positionInSelected, isSelecting: false)
+            }
         }
     }
 
-    private func handleSelectingChange(_ notification: Notification, isSelecting: Bool) {
+    private func handleSelectingChange(positionInSelected: Int, isSelecting: Bool) {
         setMode(modeFromSelection, animated: true)
-
-        guard let positionInSelected = notification.userInfo?[LineSDKNotificationKey.positionInSelected] as? Int else {
-            return
-        }
-
         let indexPath = IndexPath(row: positionInSelected, section: 0)
         collectionView.performBatchUpdates({
             if isSelecting {

@@ -129,14 +129,18 @@ class ShareRootViewController: UIViewController {
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
             [unowned self] noti in
-            self.handleSelectingChange(noti)
+            Task { @MainActor in
+                self.handleSelectingChange()
+            }
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
             [unowned self] noti in
-            self.handleSelectingChange(noti)
+            Task { @MainActor in
+                self.handleSelectingChange()
+            }
         }
     }
 }
@@ -195,7 +199,7 @@ extension ShareRootViewController {
         }
     }
 
-    private func handleSelectingChange(_ notification: Notification) {
+    private func handleSelectingChange() {
         if selectedCount == 0 {
             navigationItem.rightBarButtonItem = nil
         } else {

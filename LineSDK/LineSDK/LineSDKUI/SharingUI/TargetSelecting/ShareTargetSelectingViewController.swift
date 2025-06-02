@@ -104,30 +104,48 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
             forName: .columnDataStoreDidAppendData, object: store, queue: nil)
         {
             [unowned self] notification in
-            self.handleDataAppended(notification)
+            guard let range =
+                notification.userInfo?[LineSDKNotificationKey.appendDataIndexRange] as? AppendingIndexRange else
+            {
+                assertionFailure("The `columnDataStoreDidAppendData` notification should contain " +
+                    "`appendDataIndexRange` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
+                return
+            }
+            Task { @MainActor in
+                self.handleDataAppended(range: range)
+            }
         }
 
         selectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
             [unowned self] notification in
-            self.handleSelectingChange(notification)
+            guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
+                assertionFailure("The `columnDataStoreSelected` notification should contain " +
+                    "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
+                return
+            }
+            Task { @MainActor in
+                self.handleSelectingChange(index: index)
+            }
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
             [unowned self] notification in
-            self.handleSelectingChange(notification)
+            guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
+                assertionFailure("The `columnDataStoreSelected` notification should contain " +
+                    "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
+                return
+            }
+            Task { @MainActor in
+                self.handleSelectingChange(index: index)
+            }
         }
     }
 
-    private func handleSelectingChange(_ notification: Notification) {
-        guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
-            assertionFailure("The `columnDataStoreSelected` notification should contain " +
-                "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
-            return
-        }
+    private func handleSelectingChange(index: ColumnIndex) {
         guard index.column == columnIndex else {
             return
         }
@@ -140,14 +158,7 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
         }
     }
 
-    private func handleDataAppended(_ notification: Notification) {
-        guard let range =
-            notification.userInfo?[LineSDKNotificationKey.appendDataIndexRange] as? AppendingIndexRange else
-        {
-            assertionFailure("The `columnDataStoreDidAppendData` notification should contain " +
-                "`appendDataIndexRange` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
-            return
-        }
+    private func handleDataAppended(range: AppendingIndexRange) {
         guard range.column == columnIndex else {
             return
         }
