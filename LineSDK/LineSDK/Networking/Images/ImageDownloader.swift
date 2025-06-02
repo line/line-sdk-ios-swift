@@ -31,7 +31,7 @@ class ImageDownloader {
     func download(
         url: URL,
         callbackQueue: CallbackQueue = .asyncMain,
-        completion: @escaping (ImageSettingResult) -> Void)
+        completion: @escaping @Sendable (ImageSettingResult) -> Void)
     {
         session.dataTask(with: url) { (data, response, error) in
 

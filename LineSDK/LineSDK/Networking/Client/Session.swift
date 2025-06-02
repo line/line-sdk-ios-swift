@@ -47,7 +47,7 @@ public class Session {
         case action(HandleAction)
     }
     
-    static var _shared: Session?
+    nonisolated(unsafe) static var _shared: Session?
     
     /// The shared instance of `Session`. Access this value after you setup the LINE SDK.
     /// Otherwise, your app will be trapped.

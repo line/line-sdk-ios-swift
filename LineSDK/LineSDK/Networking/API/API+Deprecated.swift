@@ -47,7 +47,7 @@ extension API {
     )
     public static func refreshAccessToken(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<AccessToken, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<AccessToken, LineSDKError>) -> Void)
     {
         Auth.refreshAccessToken(callbackQueue: queue, completionHandler: completion)
     }
@@ -83,7 +83,7 @@ extension API {
     public static func revokeAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<(), LineSDKError>) -> Void)
     {
         Auth.revokeAccessToken(token, callbackQueue: queue, completionHandler: completion)
     }
@@ -122,7 +122,7 @@ extension API {
     public static func revokeRefreshToken(
         _ refreshToken: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<(), LineSDKError>) -> Void)
     {
         Auth.revokeRefreshToken(refreshToken, callbackQueue: queue, completionHandler: completion)
     }
@@ -148,7 +148,7 @@ extension API {
     public static func verifyAccessToken(
         _ token: String? = nil,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<AccessTokenVerifyResult, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<AccessTokenVerifyResult, LineSDKError>) -> Void)
     {
         Auth.verifyAccessToken(token, callbackQueue: queue, completionHandler: completion)
     }

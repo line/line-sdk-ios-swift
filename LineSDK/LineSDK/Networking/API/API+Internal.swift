@@ -114,7 +114,9 @@ extension API {
         groupID: String,
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetApproversInGroupRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (
+            Result<GetApproversInGroupRequest.Response, LineSDKError>
+        ) -> Void)
     {
         do {
             let request = try GetApproversInGroupRequest(groupID: groupID, pageToken: pageToken)
@@ -231,7 +233,9 @@ extension API {
     public static func getOpenChatRoomStatus(
         openChatId: EntityID,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetOpenChatRoomStatusRequest.Response, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (
+            Result<GetOpenChatRoomStatusRequest.Response, LineSDKError>
+        ) -> Void
     )
     {
         do {
@@ -254,7 +258,9 @@ extension API {
     public static func getOpenChatRoomMembershipState(
         openChatId: EntityID,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetOpenChatRoomMembershipStateRequest.Response, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (
+            Result<GetOpenChatRoomMembershipStateRequest.Response, LineSDKError>
+        ) -> Void
     )
     {
         do {
@@ -276,7 +282,9 @@ extension API {
     public static func getOpenChatRoomJoinType(
         openChatId: EntityID,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetOpenChatRoomJoinTypeRequest.Response, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (
+            Result<GetOpenChatRoomJoinTypeRequest.Response, LineSDKError>
+        ) -> Void
     )
     {
         do {
@@ -300,7 +308,9 @@ extension API {
         openChatId: EntityID,
         displayName: String,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<PostOpenChatRoomJoinRequest.Response, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (
+            Result<PostOpenChatRoomJoinRequest.Response, LineSDKError>
+        ) -> Void
     )
     {
         do {

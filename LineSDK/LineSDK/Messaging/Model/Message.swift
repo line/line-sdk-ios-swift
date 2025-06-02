@@ -23,7 +23,7 @@ import Foundation
 
 /// LINE internal use only.
 
-enum MessageType: String, Codable {
+enum MessageType: String, Codable, Sendable {
     case text
     case image
     case video
@@ -49,7 +49,7 @@ enum MessageType: String, Codable {
 ///         a flex message by constructing with blocks and components. It gives you freedom to control the message
 ///         content and style. `FlexMessage` is also a representing wrapper for underlying `FlexMessageContainer`.
 /// - unknown: A message type is not defined in the LINE SDK yet.
-public enum Message: Codable {
+public enum Message: Codable, Sendable {
     /// Represents the type of text message. A `TextMessage` value is associated.
     case text(TextMessage)
 

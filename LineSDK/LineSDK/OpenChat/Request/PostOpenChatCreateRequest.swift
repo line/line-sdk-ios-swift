@@ -22,7 +22,7 @@
 import Foundation
 
 /// The basic Open Chat room information.
-public struct OpenChatRoomInfo: Decodable {
+public struct OpenChatRoomInfo: Decodable, Sendable {
     
     /// The identifier of this Open Chat room.
     public let openChatId: String

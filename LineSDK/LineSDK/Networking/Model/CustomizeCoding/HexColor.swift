@@ -23,7 +23,7 @@ import UIKit
 
 /// Represents a color in hexadecimal notation. This type provides compatibility with the `Codable` protocol
 /// for color objects.
-public struct HexColor: Codable {
+public struct HexColor: Codable, Sendable {
     
     /// The raw string value of the hex color code.
     public let rawValue: String

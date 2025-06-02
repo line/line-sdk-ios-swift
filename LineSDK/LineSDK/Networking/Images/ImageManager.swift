@@ -23,11 +23,16 @@ import UIKit
 
 typealias ImageSettingResult = Result<UIImage, LineSDKError>
 
-class ImageManager {
+class ImageManager: @unchecked Sendable /* The Sendable is ensured by internal lock */ {
 
     typealias TaskToken = UInt
     private var currentToken: TaskToken = 0
+    private let lock = NSLock()
     func nextToken() -> TaskToken {
+
+        lock.lock()
+        defer { lock.unlock() }
+
         if currentToken < TaskToken.max - 1 {
             currentToken += 1
         } else {
@@ -50,7 +55,7 @@ class ImageManager {
         _ url: URL,
         taskToken: TaskToken,
         callbackQueue: CallbackQueue = .currentMainOrAsync,
-        completion: @escaping (ImageSettingResult, TaskToken) -> Void)
+        completion: @escaping @Sendable (ImageSettingResult, TaskToken) -> Void)
     {
         getImage(url, callbackQueue: callbackQueue) { completion($0, taskToken) }
     }
@@ -58,7 +63,7 @@ class ImageManager {
     func getImage(
         _ url: URL,
         callbackQueue: CallbackQueue = .currentMainOrAsync,
-        completion: ((ImageSettingResult) -> Void)? = nil)
+        completion: (@Sendable (ImageSettingResult) -> Void)? = nil)
     {
         let nsURL = url as NSURL
         if let image = cache.object(forKey: nsURL) {

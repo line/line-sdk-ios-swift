@@ -25,7 +25,7 @@ import Foundation
 public struct GetOpenChatRoomMembershipStateRequest: Request {
     
     /// The membership state of current user to the room.
-    public enum State: String, Decodable {
+    public enum State: String, Decodable, Sendable {
         /// The user has already joined the room.
         case joined = "JOINED"
         /// The user is not a member of the room yet.
@@ -43,7 +43,7 @@ public struct GetOpenChatRoomMembershipStateRequest: Request {
     }
     
     /// The response of a `GetOpenChatRoomMembershipStateRequest`.
-    public struct Response: Decodable {
+    public struct Response: Decodable, Sendable {
         /// The membership state of current user.
         public let state: State
     }

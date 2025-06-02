@@ -29,7 +29,7 @@ public struct FlexButtonComponent: Codable, FlexMessageComponentTypeCompatible {
     /// - link: HTML link style
     /// - primary: Style for dark color buttons.
     /// - secondary: Style for light color buttons
-    public enum Style: String, DefaultEnumCodable {
+    public enum Style: String, DefaultEnumCodable, Sendable {
 
         /// HTML link style
         case link

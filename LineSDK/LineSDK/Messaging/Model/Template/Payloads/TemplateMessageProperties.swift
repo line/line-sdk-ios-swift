@@ -30,7 +30,7 @@ extension TemplateMessagePayload {
     /// - rectangle: A ratio of 1.51:1 (width:height), under which the image will be rendered in a wide rectangle
     ///              container.
     /// - square: A ratio of 1:1, under which the image will be rendered in a square container.
-    public enum ImageAspectRatio: String, DefaultEnumCodable {
+    public enum ImageAspectRatio: String, DefaultEnumCodable, Sendable {
         /// A ratio of 1.51:1 (width:height), under which the image will be rendered in a wide rectangle container.
         case rectangle
 
@@ -46,7 +46,7 @@ extension TemplateMessagePayload {
     ///
     /// - aspectFill: With "cover" as its raw value. Aspect scales the image to completely fill the image container.
     /// - aspectFit: With "contain" as its raw value. Aspect scales the image to fit inside the image container.
-    public enum ImageContentMode: String, DefaultEnumCodable {
+    public enum ImageContentMode: String, DefaultEnumCodable, Sendable {
         case aspectFill = "cover"
         case aspectFit = "contain"
         

@@ -22,7 +22,7 @@
 import Foundation
 
 /// Represents a response to the `GetVerifyTokenRequest` method.
-public struct AccessTokenVerifyResult: Codable {
+public struct AccessTokenVerifyResult: Codable, Sendable {
     
     /// The channel ID bound to the access token.
     public let channelID: String

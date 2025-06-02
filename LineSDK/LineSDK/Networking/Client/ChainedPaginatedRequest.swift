@@ -25,17 +25,19 @@ protocol SortParameterRequest {
     var sortParameter: String? { get }
 }
 
-protocol PaginatedResponse: Decodable {
-    associatedtype Item: Decodable
+protocol PaginatedResponse: Decodable, Sendable {
+    associatedtype Item: Decodable, Sendable
     var paginatedValues: [Item] { get }
     var pageToken: String? { get }
 }
 
-class ChainedPaginatedRequest<T: Request> : Request where T.Response: PaginatedResponse {
+final class ChainedPaginatedRequest<T: Request> : Request, @unchecked Sendable where T.Response: PaginatedResponse {
 
     var method: HTTPMethod { return originalRequest.method }
     var path: String { return originalRequest.path }
     var authentication: AuthenticateMethod { return originalRequest.authentication }
+
+    let lock = NSLock()
 
     typealias Response = [T.Response.Item]
 
@@ -48,7 +50,20 @@ class ChainedPaginatedRequest<T: Request> : Request where T.Response: PaginatedR
 
     let originalRequest: T
 
-    var items: Response = []
+    private var items: Response = []
+
+    func appendItems(_ newItems: [T.Response.Item]) {
+        lock.lock()
+        defer { lock.unlock() }
+        items.append(contentsOf: newItems)
+    }
+
+    func getItems() -> Response {
+        lock.lock()
+        defer { lock.unlock() }
+        return items
+    }
+
     var currentPageToken: String?
 
     var parameters: Parameters? {
@@ -108,7 +123,7 @@ class PaginatedParseRedirector<Wrapped: Request>: ResponsePipelineRedirector whe
         let paginatedValue = try parser.decode(Wrapped.Response.self, from: data)
         onParsed.call(paginatedValue)
 
-        chainedPaginatedRequest.items.append(contentsOf: paginatedValue.paginatedValues)
+        chainedPaginatedRequest.appendItems(paginatedValue.paginatedValues)
 
         if let nextPageToken = paginatedValue.pageToken {
             chainedPaginatedRequest.currentPageToken = nextPageToken
@@ -127,6 +142,6 @@ class PaginatedResultTerminator<Wrapped: Request>: ResponsePipelineTerminator wh
     }
 
     func parse<T: Request>(request: T, data: Data) throws -> T.Response {
-        return chainedPaginatedRequest.items as! T.Response
+        return chainedPaginatedRequest.getItems() as! T.Response
     }
 }

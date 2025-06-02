@@ -23,7 +23,7 @@ import Foundation
 
 /// LINE internal use only.
 /// Represents a `User` object which LineSDK used in `friend list` or `approvers in friend list`.
-public struct User: Decodable {
+public struct User: Decodable, Sendable {
 
     /// Identifier of the user.
     public let userID: String

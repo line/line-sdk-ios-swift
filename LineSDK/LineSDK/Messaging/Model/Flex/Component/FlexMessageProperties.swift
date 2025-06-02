@@ -40,7 +40,7 @@ extension FlexMessageComponent {
     ///
     /// For more information, see
     /// https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-layout-types .
-    public enum Layout: String, DefaultEnumCodable {
+    public enum Layout: String, DefaultEnumCodable, Sendable {
 
         /// Components are placed horizontally.
         /// The direction will be determined by `Direction` in the parent level.
@@ -70,7 +70,7 @@ extension FlexMessageComponent {
     /// - lg: Large spacing.
     /// - xl: Extra large spacing.
     /// - xxl: Double extra large spacing.
-    public enum Margin: String, DefaultEnumCodable {
+    public enum Margin: String, DefaultEnumCodable, Sendable {
         case none, xs, sm, md, lg, xl, xxl
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.none` will be used.
@@ -90,7 +90,7 @@ extension FlexMessageComponent {
     /// - xl4: 4xl size.
     /// - xl5: 5xl size.
     /// - full: The full size. 
-    public enum Size: String, DefaultEnumCodable {
+    public enum Size: String, DefaultEnumCodable, Sendable {
         case xxs, xs, sm, md, lg, xl, xxl, xl3 = "3xl", xl4 = "4xl", xl5 = "5xl", full
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.md` will be used.
@@ -102,7 +102,7 @@ extension FlexMessageComponent {
     /// - start: Leading aligned.
     /// - end: Trailing aligned.
     /// - center: Center aligned
-    public enum Alignment: String, DefaultEnumCodable {
+    public enum Alignment: String, DefaultEnumCodable, Sendable {
         case start, end, center
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.start` will be used.
@@ -114,7 +114,7 @@ extension FlexMessageComponent {
     /// - top: Top aligned.
     /// - bottom: Bottom aligned.
     /// - center: Center aligned.
-    public enum Gravity: String, DefaultEnumCodable {
+    public enum Gravity: String, DefaultEnumCodable, Sendable {
         case top, bottom, center
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.top` will be used.
@@ -125,7 +125,7 @@ extension FlexMessageComponent {
     ///
     /// - regular: Normal font weight.
     /// - bold: Bold font weight.
-    public enum Weight: String, DefaultEnumCodable {
+    public enum Weight: String, DefaultEnumCodable, Sendable {
         case regular, bold
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.regular` will be used.
@@ -136,7 +136,7 @@ extension FlexMessageComponent {
     ///
     /// - sm: Small height.
     /// - md: Middle height.
-    public enum Height: String, DefaultEnumCodable {
+    public enum Height: String, DefaultEnumCodable, Sendable {
         case sm, md
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.md` will be used.
@@ -157,7 +157,7 @@ extension FlexMessageComponent {
     /// - ratio_9x16: Ratio 9:16.
     /// - ratio_1x2: Ratio 1:2.
     /// - ratio_1x3: Ratio 1:3.
-    public enum AspectRatio: String, DefaultEnumCodable {
+    public enum AspectRatio: String, DefaultEnumCodable, Sendable {
         case ratio_1x1 = "1:1"
         case ratio_1_51x1 = "1.51:1"
         case ratio_1_91x1 = "1.91:1"
@@ -172,19 +172,19 @@ extension FlexMessageComponent {
         case ratio_1x3 = "1:3"
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.ratio_1x1` will be used.
-        public static var defaultCase: AspectRatio = .ratio_1x1
+        public static let defaultCase: AspectRatio = .ratio_1x1
     }
     
     /// Represents aspect scale mode for an image in a component.
     ///
     /// - fill: With "cover" as its raw value. Aspect scales the image to completely fill the image container.
     /// - fit: With "fit" as its raw value. Aspect scales the image to fit inside the image container.
-    public enum AspectMode: String, DefaultEnumCodable {
+    public enum AspectMode: String, DefaultEnumCodable, Sendable {
         case fill = "cover"
         case fit = "fit"
         /// Default case for this enum. If the raw value cannot be converted to any case when decoding,
         /// `.fit` will be used.
-        public static var defaultCase: AspectMode = .fit
+        public static let defaultCase: AspectMode = .fit
     }
 }
 

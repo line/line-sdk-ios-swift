@@ -47,7 +47,7 @@ public struct PostMessageSendingTokenIssueRequest: Request {
     }
 }
 
-public struct MessageSendingToken: Codable {
+public struct MessageSendingToken: Codable, Sendable {
 
     public let token: String
 

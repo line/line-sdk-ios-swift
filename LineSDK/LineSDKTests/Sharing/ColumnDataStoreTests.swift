@@ -79,7 +79,7 @@ class ColumnDataStoreTests: XCTestCase {
     }
 
     func testMaximumSelection() {
-        store.maximumSelectedCount = 2
+        let store = ColumnDataStore<Int>(columnCount: 3, maximumSelectedCount: 2)
         store.append(data: [1,2,3], to: 0)
 
         // Select two elements.

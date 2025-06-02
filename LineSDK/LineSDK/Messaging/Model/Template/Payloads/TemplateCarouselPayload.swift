@@ -27,7 +27,7 @@ import Foundation
 public struct TemplateCarouselPayload: Codable, TemplateMessagePayloadTypeCompatible {
     
     /// A column of `TemplateCarouselPayload`. It contains a certain title, text, thumbnail image and some actions.
-    public struct Column: Codable {
+    public struct Column: Codable, Sendable {
         
         /// Message text of the column.
         public var text: String

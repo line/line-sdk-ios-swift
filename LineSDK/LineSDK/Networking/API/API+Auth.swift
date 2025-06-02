@@ -43,7 +43,7 @@ extension API {
         ///
         public static func refreshAccessToken(
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-            completionHandler completion: @escaping (Result<AccessToken, LineSDKError>) -> Void)
+            completionHandler completion: @escaping @Sendable (Result<AccessToken, LineSDKError>) -> Void)
         {
             guard let token = AccessTokenStore.shared.current else
             {
@@ -91,7 +91,7 @@ extension API {
         public static func revokeAccessToken(
             _ token: String? = nil,
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-            completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
+            completionHandler completion: @escaping @Sendable (Result<(), LineSDKError>) -> Void)
         {
             func handleSuccessResult() {
                 UserDefaultsValue.clear()
@@ -149,7 +149,7 @@ extension API {
         public static func revokeRefreshToken(
             _ refreshToken: String? = nil,
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-            completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void)
+            completionHandler completion: @escaping @Sendable (Result<(), LineSDKError>) -> Void)
         {
             func handleSuccessResult() {
                 UserDefaultsValue.clear()
@@ -199,7 +199,7 @@ extension API {
         public static func verifyAccessToken(
             _ token: String? = nil,
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-            completionHandler completion: @escaping (Result<AccessTokenVerifyResult, LineSDKError>) -> Void)
+            completionHandler completion: @escaping @Sendable (Result<AccessTokenVerifyResult, LineSDKError>) -> Void)
         {
             guard let token = token ?? AccessTokenStore.shared.current?.value else {
                 queue.execute { completion(.failure(LineSDKError.requestFailed(reason: .lackOfAccessToken))) }

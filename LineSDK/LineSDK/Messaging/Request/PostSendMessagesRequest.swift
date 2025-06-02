@@ -55,7 +55,7 @@ public struct PostSendMessagesRequest: Request {
     }
     
     /// Server response of `PostSendMessagesRequest`.
-    public struct Response: Decodable {
+    public struct Response: Decodable, Sendable {
         /// Represents the sending status.
         public let status: MessageSendingStatus
     }
@@ -69,7 +69,7 @@ public struct PostSendMessagesRequest: Request {
 ///              status does not apply for messages sent to room, group or square chat.
 /// - unknown: Server returns an unknown status code, which is bound to the associated value in this case.
 ///
-public enum MessageSendingStatus: Decodable, Equatable {
+public enum MessageSendingStatus: Decodable, Equatable, Sendable {
     
     /// Messages are delivered successfully.
     case ok

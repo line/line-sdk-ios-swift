@@ -260,7 +260,7 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
     /// Logs out the current user by revoking the refresh token and all its corresponding access tokens.
     ///
     /// - Parameter completion: The completion closure to be invoked when the logout action is finished.
-    public func logout(completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void) {
+    public func logout(completionHandler completion: @escaping @Sendable (Result<(), LineSDKError>) -> Void) {
         API.Auth.revokeRefreshToken(completionHandler: completion)
     }
 
