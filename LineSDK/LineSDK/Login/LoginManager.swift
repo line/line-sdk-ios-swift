@@ -161,7 +161,6 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
             viewController: viewController
         )
         process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
-            self.currentProcess = nil
             Task {
                 do {
                     let result = try await self.postLogin(
@@ -177,6 +176,7 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
                         completion(.failure(error.sdkError))
                     }
                 }
+                self.currentProcess = nil
             }
         }
         process.onFail.delegate(on: self) { (self, error) in
