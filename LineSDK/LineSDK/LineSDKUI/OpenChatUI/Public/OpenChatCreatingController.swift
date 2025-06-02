@@ -97,10 +97,10 @@ public class OpenChatCreatingController {
         presentedHandler handler: ((Result<UIViewController, LineSDKError>) -> Void)? = nil
     )
     {
-        let checkTermRequest = GetOpenChatTermAgreementStatusRequest()
-        Session.shared.send(checkTermRequest) { result in
-            switch result {
-            case .success(let response):
+        Task {
+            let checkTermRequest = GetOpenChatTermAgreementStatusRequest()
+            do {
+                let response = try await Session.shared.send(checkTermRequest)
                 if response.agreed {
                     self.presentCreatingViewController(in: viewController, handler: handler)
                 } else {
@@ -111,9 +111,8 @@ public class OpenChatCreatingController {
                         self.presentTermAgreementAlert(in: viewController, handler: handler)
                     }
                 }
-                
-            case .failure(let error):
-                handler?(.failure(error))
+            } catch {
+                handler?(.failure(error as? LineSDKError ?? .untypedError(error: error)))
             }
         }
     }
@@ -174,20 +173,21 @@ public class OpenChatCreatingController {
                 let createRoomRequest = PostOpenChatCreateRequest(room: room)
                 
                 let indicator = LoadingIndicator.add(to: navigation.view)
-                Session.shared.send(createRoomRequest) { result in
-                    indicator.remove()
-                    switch result {
-                    case .success(let response):
+                Task {
+                    do {
+                        let response = try await Session.shared.send(createRoomRequest)
+                        indicator.remove()
                         UserDefaultsValue.cachedOpenChatUserProfileName = room.creatorDisplayName
                         navigation.dismiss(animated: true) {
                             self.delegate?.openChatCreatingController(
                                 self, didCreateChatRoom: response, withCreatingItem: room
                             )
                         }
-                    case .failure(let error):
+                    } catch {
+                        indicator.remove()
                         self.delegate?.openChatCreatingController(
                             self,
-                            didFailWithError: error,
+                            didFailWithError: error as? LineSDKError ?? .untypedError(error: error),
                             withCreatingItem: room,
                             presentingViewController: navigation
                         )

@@ -357,7 +357,7 @@ extension LoginManager {
     func getUserProfile(
         with token: AccessToken,
         in group: DispatchGroup,
-        handler: @escaping (Result<UserProfile, LineSDKError>) -> Void)
+        handler: @escaping @Sendable (Result<UserProfile, LineSDKError>) -> Void)
     {
         group.enter()
 
@@ -389,33 +389,26 @@ extension LoginManager {
         }
 
         // Use Discovery Document to find JWKs URI. How about introducing some promise mechanism
-        Session.shared.send(GetDiscoveryDocumentRequest()) { documentResult in
-            switch documentResult {
-            case .success(let document):
+        Task {
+            do {
+                let document = try await Session.shared.send(GetDiscoveryDocumentRequest())
                 let jwkSetURL = document.jwksURI
-                Session.shared.send(GetJWKSetRequest(url: jwkSetURL)) { jwkSetResult in
-                    switch jwkSetResult {
-                    case .success(let jwkSet):
-                        guard let keyID = IDToken.header.keyID, let key = jwkSet.getKeyByID(keyID) else {
-                            handler(.failure(LineSDKError.authorizeFailed(
-                                reason: .JWTPublicKeyNotFound(keyID: IDToken.header.keyID))))
-                            group.leave()
-                            return
-                        }
-                        handler(
-                            .success(DiscoveryDocument.ResolvedProviderMetadata(issuer: document.issuer, jwk: key))
-                        )
-                        group.leave()
-                    case .failure(let err):
-                        handler(.failure(err))
-                        group.leave()
-                    }
+                let jwkSet = try await Session.shared.send(GetJWKSetRequest(url: jwkSetURL))
+                guard let keyID = IDToken.header.keyID, let key = jwkSet.getKeyByID(keyID) else {
+                    handler(.failure(LineSDKError.authorizeFailed(
+                        reason: .JWTPublicKeyNotFound(keyID: IDToken.header.keyID))))
+                    group.leave()
+                    return
                 }
-            case .failure(let err):
-                handler(.failure(err))
+                handler(
+                    .success(DiscoveryDocument.ResolvedProviderMetadata(issuer: document.issuer, jwk: key))
+                )
+                group.leave()
+            } catch {
+                handler(.failure(error as? LineSDKError ?? .untypedError(error: error)))
                 group.leave()
             }
-        }
+        }        
     }
 
     func verifyIDToken(

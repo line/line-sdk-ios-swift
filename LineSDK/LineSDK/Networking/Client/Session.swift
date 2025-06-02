@@ -80,11 +80,20 @@ final public class Session: Sendable {
     public func send<T: Request>(
         _ request: T,
         callbackQueue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: ((Result<T.Response, LineSDKError>) -> Void)? = nil) -> SessionTask?
+        completionHandler completion: (@Sendable (Result<T.Response, LineSDKError>) -> Void)? = nil) -> SessionTask?
     {
         return send(request, callbackQueue: callbackQueue, pipelines: nil, completionHandler: completion)
     }
-    
+
+    public func send<T: Request>(_ request: T) async throws -> T.Response {
+        return try await withCheckedThrowingContinuation { continuation in
+            send(request) {
+                continuation.resume(with: $0)
+            }
+        }
+    }
+
+
     /// Send a `Request` object with underlying session.
     ///
     /// - Parameters:

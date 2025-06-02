@@ -332,10 +332,13 @@ public class LoginProcess {
             codeVerifier: self.pkce.codeVerifier,
             redirectURI: Constant.thirdPartyAppReturnURL,
             optionalRedirectURI: self.configuration.universalLinkURL?.absoluteString)
-        Session.shared.send(tokenExchangeRequest) { tokenResult in
-            switch tokenResult {
-            case .success(let token): self.invokeSuccess(result: token, response: response)
-            case .failure(let error):
+
+        Task {
+            do {
+                let token = try await Session.shared.send(tokenExchangeRequest)
+                self.invokeSuccess(result: token, response: response)
+            } catch {
+                let error = error as? LineSDKError ?? .untypedError(error: error)
                 if error.isURLSessionErrorCode(sessionErrorCode: NSURLErrorNetworkConnectionLost) && canRetryOnNetworkLost {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         self.exchangeToken(response: response, canRetryOnNetworkLost: false)
@@ -345,7 +348,6 @@ public class LoginProcess {
                 }
             }
         }
-
     }
     
     private var canUseLineAuthV2: Bool {
