@@ -70,6 +70,7 @@ public class LoginProcess {
     /// inspect the event of switched back from another app (Safari or LINE or any other)
     /// If the framework container app has not been started up by an `open(url:)`, we think current
     /// login process fails and we need to call the completion closure with a `.userCancelled` error.
+    @MainActor
     class AppSwitchingObserver {
         // A token holds current observing. It will be released and trigger remove observer
         // when this `AppSwitchingObserver` gets released.
@@ -88,9 +89,11 @@ public class LoginProcess {
                 .addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil)
             {
                 [weak self] _ in
-                guard let `self` = self else { return }
-                guard self.valid else { return }
-                self.onTrigger.call()
+                Task { @MainActor in
+                    guard let `self` = self else { return }
+                    guard self.valid else { return }
+                    self.onTrigger.call()
+                }
             }
         }
     }

@@ -284,7 +284,8 @@ protocol SessionDelegateType: URLSessionDataDelegate {
 }
 
 // A thread-safe holder for session tasks.
-class SessionDelegate: NSObject {
+// Sendable is ensured by the internal lock.
+final class SessionDelegate: NSObject, @unchecked Sendable {
     private var tasks: [Int: SessionTask] = [:]
     private let lock = NSLock()
     

@@ -24,7 +24,7 @@ import Foundation
 
 /// Represents the final pipeline of a series of response pipelines. Use the terminator to parse response
 /// data into a final `Response` object of a certain `Request` object.
-public protocol ResponsePipelineTerminator: AnyObject { // Use class protocol for easier Equatable conforming
+public protocol ResponsePipelineTerminator: AnyObject, Sendable { // Use class protocol for easier Equatable conforming
     /// Parses `data` that holds input values to a `Response` object.
     ///
     /// - Parameters:
@@ -38,8 +38,8 @@ public protocol ResponsePipelineTerminator: AnyObject { // Use class protocol fo
 /// Represents a redirection stage of a series of response pipelines. Use redirectors to additionally
 /// perform data processing by invoking `closure` with a proper
 /// `ResponsePipelineRedirectorAction` enumeration member.
-public protocol ResponsePipelineRedirector: AnyObject { // Use class protocol for easier Equatable conforming
-    
+public protocol ResponsePipelineRedirector: AnyObject, Sendable { // Use class protocol for easier Equatable conforming
+
     /// Whether this redirector should be applied to execute and handle a received HTTP response.
     /// - Parameters:
     ///   - request: The original `Request`.
@@ -60,7 +60,7 @@ public protocol ResponsePipelineRedirector: AnyObject { // Use class protocol fo
         request: T,
         data: Data,
         response: HTTPURLResponse,
-        done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
+        done closure: @escaping @Sendable (ResponsePipelineRedirectorAction) throws -> Void) throws
 }
 
 /// Actions against the processing result from a `ResponsePipelineRedirector` object. A redirector needs to
@@ -98,7 +98,7 @@ public enum ResponsePipelineRedirectorAction {
 ///               current handling process.
 /// - redirector: Associates a pipeline with a `ResponsePipelineRedirector` object to redirect the current
 ///               handling process.
-public enum ResponsePipeline {
+public enum ResponsePipeline: Sendable {
 
     /// Associates a pipeline with a `ResponsePipelineTerminator` object to terminate the current handling
     /// process.
@@ -121,8 +121,8 @@ extension ResponsePipeline: Equatable {
 }
 
 /// Represents a terminator pipeline with a JSON decoder to parse data.
-public class JSONParsePipeline: ResponsePipelineTerminator {
-    
+final public class JSONParsePipeline: ResponsePipelineTerminator {
+
     /// An underlying JSON parser of the pipeline.
     public let parser: JSONDecoder
     
@@ -145,7 +145,7 @@ public class JSONParsePipeline: ResponsePipelineTerminator {
     }
 }
 
-class RefreshTokenRedirector: ResponsePipelineRedirector {
+final class RefreshTokenRedirector: ResponsePipelineRedirector {
     
     func shouldApply<T: Request>(request: T, data: Data, response: HTTPURLResponse) -> Bool {
         return response.statusCode == 401
@@ -155,7 +155,7 @@ class RefreshTokenRedirector: ResponsePipelineRedirector {
         request: T,
         data: Data,
         response: HTTPURLResponse,
-        done closure: @escaping (ResponsePipelineRedirectorAction) throws -> Void) throws
+        done closure: @escaping @Sendable (ResponsePipelineRedirectorAction) throws -> Void) throws
     {
         API.Auth.refreshAccessToken { result in
             switch result {
@@ -168,7 +168,7 @@ class RefreshTokenRedirector: ResponsePipelineRedirector {
     }
 }
 
-class BadHTTPStatusRedirector: ResponsePipelineRedirector {
+final class BadHTTPStatusRedirector: ResponsePipelineRedirector {
     let valid: Range<Int>
     
     init(valid: Range<Int>) {
@@ -235,12 +235,12 @@ class BadHTTPStatusRedirector: ResponsePipelineRedirector {
     }
 }
 
-class DataTransformRedirector: ResponsePipelineRedirector {
-    
-    let condition: ((Data) -> Bool)?
-    let transform: (Data) -> Data
-    
-    init(condition: ((Data) -> Bool)? = nil, transform: @escaping (Data) -> Data) {
+final class DataTransformRedirector: ResponsePipelineRedirector {
+
+    let condition: (@Sendable (Data) -> Bool)?
+    let transform: @Sendable (Data) -> Data
+
+    init(condition: (@Sendable (Data) -> Bool)? = nil, transform: @escaping @Sendable (Data) -> Data) {
         self.transform = transform
         self.condition = condition
     }
@@ -261,7 +261,7 @@ class DataTransformRedirector: ResponsePipelineRedirector {
 
 // Convert empty data to an empty JSON `{}`
 let emptyDataTransformer: ResponsePipeline = {
-    let isDataEmpty: ((Data) -> Bool) = { $0.isEmpty }
+    let isDataEmpty: (@Sendable (Data) -> Bool) = { $0.isEmpty }
     let dataTransformer = DataTransformRedirector(condition: isDataEmpty) { _ in
         return "{}".data(using: .utf8)!
     }

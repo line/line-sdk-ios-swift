@@ -22,7 +22,7 @@
 import UIKit
 
 @MainActor
-protocol KeyboardObservable: AnyObject {
+protocol KeyboardObservable: AnyObject, Sendable {
 
     var keyboardObservers: [NotificationToken] { get set }
 
@@ -42,8 +42,10 @@ extension KeyboardObservable {
                 queue: .main,
                 using: { [unowned self] in
                     guard let userInfo = $0.userInfo else { return }
-                    if let keyboardInfo = KeyboardInfo(from: userInfo) {
-                        self.keyboardInfoWillChange(keyboardInfo: keyboardInfo)
+                    Task { @MainActor [s = self] in
+                        if let keyboardInfo = KeyboardInfo(from: userInfo) {
+                            s.keyboardInfoWillChange(keyboardInfo: keyboardInfo)
+                        }
                     }
                 }
             )
