@@ -32,15 +32,15 @@ extension HTTPURLResponse {
     }
 }
 
-class SessionDelegateStub: NSObject, SessionDelegateType {
+final class SessionDelegateStub: NSObject, SessionDelegateType {
 
     struct StubItem {
         let action: Either
         let verifier: RequestTaskVerifier
     }
 
-    struct RequestTaskVerifier {
-        let block: (SessionTask) throws -> Void
+    struct RequestTaskVerifier: Sendable {
+        let block: @Sendable (SessionTask) throws -> Void
         func verify(sessionTask: SessionTask) throws {
             try block(sessionTask)
         }

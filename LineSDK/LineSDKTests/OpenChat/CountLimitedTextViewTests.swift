@@ -22,19 +22,18 @@
 import XCTest
 @testable import LineSDK
 
+@MainActor
 class CountLimitedTextViewTests: XCTestCase {
 
     var textView: CountLimitedTextView!
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
         let style = OpenChatRoomNameTableViewCell.TextViewStyle()
         textView = CountLimitedTextView(style: style)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         textView = nil
-        super.tearDown()
     }
 
     func testTextViewCanUpdate() {
