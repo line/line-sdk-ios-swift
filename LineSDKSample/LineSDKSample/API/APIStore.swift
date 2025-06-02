@@ -433,18 +433,20 @@ func selectUserFromFriendList(
                 handler(.failure(.sdkError(error)))
                 return
             }
-            
-            let alert = UIAlertController(title: "Friends", message: nil, preferredStyle: .actionSheet)
-            value.friends.prefix(5).forEach { friend in
-                alert.addAction(.init(title: friend.displayName, style: .default) { _ in
-                    handler(.success(friend.userID))
+
+            Task { @MainActor in
+                let alert = UIAlertController(title: "Friends", message: nil, preferredStyle: .actionSheet)
+                value.friends.prefix(5).forEach { friend in
+                    alert.addAction(.init(title: friend.displayName, style: .default) { _ in
+                        handler(.success(friend.userID))
+                    })
+                }
+                alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
+                    handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
                 })
+                alert.setupPopover(in: viewController.view)
+                viewController.present(alert, animated: true)
             }
-            alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
-                handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
-            })
-            alert.setupPopover(in: viewController.view)
-            viewController.present(alert, animated: true)
         case .failure(let error):
             handler(.failure(.sdkError(error)))
         }
@@ -470,17 +472,19 @@ func selectGroupFromGroupList(
                 return
             }
 
-            let alert = UIAlertController(title: "Groups", message: nil, preferredStyle: .actionSheet)
-            value.groups.prefix(5).forEach { group in
-                alert.addAction(.init(title: group.groupName, style: .default) { _ in
-                    handler(.success(group.groupID))
+            Task { @MainActor in
+                let alert = UIAlertController(title: "Groups", message: nil, preferredStyle: .actionSheet)
+                value.groups.prefix(5).forEach { group in
+                    alert.addAction(.init(title: group.groupName, style: .default) { _ in
+                        handler(.success(group.groupID))
                     })
+                }
+                alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
+                    handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
+                })
+                alert.setupPopover(in: viewController.view)
+                viewController.present(alert, animated: true)
             }
-            alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
-                handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
-            })
-            alert.setupPopover(in: viewController.view)
-            viewController.present(alert, animated: true)
         case .failure(let error):
             handler(.failure(.sdkError(error)))
         }

@@ -78,37 +78,43 @@ class OpenChatRoomTableViewController: UITableViewController, IndicatorDisplay {
 
         group.enter()
         API.getOpenChatRoomStatus(openChatId: room.chatRoomId) { result in
-            switch result {
-            case .success(let response):
-                roomStatus = response.status
-            case .failure(let error):
-                errors.append(error)
+            Task { @MainActor in
+                switch result {
+                case .success(let response):
+                    roomStatus = response.status
+                case .failure(let error):
+                    errors.append(error)
+                }
+                group.leave()
             }
-            group.leave()
         }
 
         group.enter()
         API.getOpenChatRoomMembershipState(openChatId: room.chatRoomId) { result in
-            switch result {
-            case .success(let response):
-                membership = response.state
-            case .failure(let error):
-                errors.append(error)
-            }
+            Task { @MainActor in
+                switch result {
+                case .success(let response):
+                    membership = response.state
+                case .failure(let error):
+                    errors.append(error)
+                }
 
-            group.leave()
+                group.leave()
+            }
         }
 
 
         group.enter()
         API.getOpenChatRoomJoinType(openChatId: room.chatRoomId) { result in
-            switch result {
-            case .success(let response):
-                joinType = response.type
-            case .failure(let error):
-                errors.append(error)
+            Task { @MainActor in
+                switch result {
+                case .success(let response):
+                    joinType = response.type
+                case .failure(let error):
+                    errors.append(error)
+                }
+                group.leave()
             }
-            group.leave()
         }
 
         group.notify(queue: .main) {
@@ -189,17 +195,21 @@ class OpenChatRoomTableViewController: UITableViewController, IndicatorDisplay {
             switch result {
             case .success(let profile):
                 API.postOpenChatRoomJoin(openChatId: room.chatRoomId, displayName: profile.displayName) { result in
-                    self.hideIndicatorFromWindow()
-                    switch result {
-                    case .success:
-                        UIAlertController.present(in: self, successResult: "Joined.")
-                    case .failure(let error):
-                        UIAlertController.present(in: self, error: error)
+                    Task { @MainActor in
+                        self.hideIndicatorFromWindow()
+                        switch result {
+                        case .success:
+                            UIAlertController.present(in: self, successResult: "Joined.")
+                        case .failure(let error):
+                            UIAlertController.present(in: self, error: error)
+                        }
                     }
                 }
             case .failure(let error):
-                self.hideIndicatorFromWindow()
-                UIAlertController.present(in: self, error: error)
+                Task { @MainActor in
+                    self.hideIndicatorFromWindow()
+                    UIAlertController.present(in: self, error: error)
+                }
             }
         }
     }
