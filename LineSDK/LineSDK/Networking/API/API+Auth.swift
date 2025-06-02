@@ -93,7 +93,7 @@ extension API {
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
             completionHandler completion: @escaping @Sendable (Result<(), LineSDKError>) -> Void)
         {
-            func handleSuccessResult() {
+            @Sendable func handleSuccessResult() {
                 UserDefaultsValue.clear()
                 let result = Result { try AccessTokenStore.shared.removeCurrentAccessToken() }
                 completion(result)
@@ -151,7 +151,7 @@ extension API {
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
             completionHandler completion: @escaping @Sendable (Result<(), LineSDKError>) -> Void)
         {
-            func handleSuccessResult() {
+            @Sendable func handleSuccessResult() {
                 UserDefaultsValue.clear()
                 let result = Result { try AccessTokenStore.shared.removeCurrentAccessToken() }
                 completion(result)

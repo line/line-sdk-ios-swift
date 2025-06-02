@@ -44,7 +44,7 @@ extension API {
         sort: GetFriendsRequest.Sort? = nil,
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetFriendsRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<GetFriendsRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetFriendsRequest(sort: sort, pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -67,7 +67,7 @@ extension API {
     public static func getApproversInFriends(
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetApproversInFriendsRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<GetApproversInFriendsRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetApproversInFriendsRequest(pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -89,7 +89,7 @@ extension API {
     public static func getGroups(
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetGroupsRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<GetGroupsRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetGroupsRequest(pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -157,7 +157,7 @@ extension API {
         _ messages: [MessageConvertible],
         to chatID: String,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<PostSendMessagesRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<PostSendMessagesRequest.Response, LineSDKError>) -> Void)
     {
         let request = PostSendMessagesRequest(chatID: chatID, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
@@ -191,7 +191,7 @@ extension API {
         _ messages: [MessageConvertible],
         to userIDs: [String],
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<PostMultisendMessagesRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<PostMultisendMessagesRequest.Response, LineSDKError>) -> Void)
     {
         let request = PostMultisendMessagesRequest(userIDs: userIDs, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
@@ -203,20 +203,35 @@ extension API {
     public static func getMessageSendingOneTimeToken(
         userIDs: [String],
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHander completion: @escaping (Result<MessageSendingToken, LineSDKError>) -> Void)
+        completionHander completion: @escaping @Sendable (Result<MessageSendingToken, LineSDKError>) -> Void)
     {
         let request = PostMessageSendingTokenIssueRequest(userIDs: userIDs)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+    }
+
+    public static func getMessageSendingOneTimeToken(userIDs: [String]) async throws -> MessageSendingToken
+    {
+        let request = PostMessageSendingTokenIssueRequest(userIDs: userIDs)
+        return try await Session.shared.send(request)
     }
 
     public static func multiSendMessages(
         _ messages: [MessageConvertible],
         withMessageToken token: MessageSendingToken,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<Unit, LineSDKError>) -> Void)
+        completionHandler completion: @Sendable @escaping (Result<Unit, LineSDKError>) -> Void)
     {
         let request = PostMultisendMessagesWithTokenRequest(token: token, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+    }
+
+    public static func multiSendMessages(
+        _ messages: [MessageConvertible],
+        withMessageToken token: MessageSendingToken
+    ) async throws -> Unit
+    {
+        let request = PostMultisendMessagesWithTokenRequest(token: token, messages: messages)
+        return try await Session.shared.send(request)
     }
 }
 

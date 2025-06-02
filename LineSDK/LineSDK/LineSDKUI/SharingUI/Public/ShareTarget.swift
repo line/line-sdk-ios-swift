@@ -23,7 +23,7 @@ import UIKit
 
 /// Represents the share target in a share action.
 /// A target can be either a friend of current user, or a group of which the current user is a member.
-public protocol ShareTarget {
+public protocol ShareTarget: Sendable {
 
     /// The ID of this share target.
     var targetID: String { get }

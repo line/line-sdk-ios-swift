@@ -211,35 +211,31 @@ extension ShareRootViewController {
         // `onSendingMessage` is expected to be always delegated.
         let messages = onSendingMessage.call(selected)!
 
-        func callbackFailure(_ error: LineSDKError) {
+        @Sendable func callbackFailure(_ error: LineSDKError) {
             let failureData = OnSendingFailureData(messages: messages, targets: selected, error: error)
             self.onSendingFailure.call(failureData)
         }
 
-        func callbackSuccess(_ response: Unit) {
+        @Sendable func callbackSuccess(_ response: Unit) {
             let successData = OnSendingSuccessData(messages: messages, targets: selected)
             self.onSendingSuccess.call(successData)
         }
 
         let indicator = LoadingIndicator.add(to: view)
-        API.getMessageSendingOneTimeToken(userIDs: selected.map { $0.targetID }) { result in
-            switch result {
-            case .success(let token):
-                API.multiSendMessages(messages, withMessageToken: token) { result in
-                    indicator.remove()
-                    switch result {
-                    case .success(let response): callbackSuccess(response)
-                    case .failure(let error):    callbackFailure(error)
-                    }
-
-                    let shouldDismiss = self.onShouldDismiss.call() ?? true
-                    if shouldDismiss {
-                        self.dismiss(animated: true)
-                    }
-                }
-            case .failure(let error):
+        Task {
+            do {
+                let token = try await API.getMessageSendingOneTimeToken(userIDs: selected.map { $0.targetID })
+                let response = try await API.multiSendMessages(messages, withMessageToken: token)
                 indicator.remove()
-                callbackFailure(error)
+                callbackSuccess(response)
+
+                let shouldDismiss = self.onShouldDismiss.call() ?? true
+                if shouldDismiss {
+                    self.dismiss(animated: true)
+                }
+            } catch {
+                indicator.remove()
+                callbackFailure(error as? LineSDKError ?? .untypedError(error: error))
             }
         }
     }
