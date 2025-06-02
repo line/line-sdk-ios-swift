@@ -29,7 +29,8 @@ extension PostMultisendMessagesRequest: ResponseDataStub {
 class PostMultisendMessagesRequestTests: APITests {
     
     let message = TextMessage(text: "hello")
-    
+
+    @MainActor
     func testAllSuccess() {
         PostMultisendMessagesRequest.success =
         """
@@ -58,7 +59,8 @@ class PostMultisendMessagesRequestTests: APITests {
             XCTAssertTrue(result.results[1].status.isOK)
         }
     }
-    
+
+    @MainActor
     func testAllDiscarded() {
         PostMultisendMessagesRequest.success =
         """
@@ -87,7 +89,8 @@ class PostMultisendMessagesRequestTests: APITests {
             XCTAssertFalse(result.results[1].status.isOK)
         }
     }
-    
+
+    @MainActor
     func testPartitialSuccess() {
         PostMultisendMessagesRequest.success =
         """

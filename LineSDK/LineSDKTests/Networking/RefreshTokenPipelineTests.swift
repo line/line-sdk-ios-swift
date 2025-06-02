@@ -22,7 +22,6 @@
 import XCTest
 @testable import LineSDK
 
-
 class RefreshTokenPipelineTests: XCTestCase {
     
     var pipeline: RefreshTokenRedirector!

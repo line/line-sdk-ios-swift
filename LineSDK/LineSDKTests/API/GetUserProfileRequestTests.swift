@@ -35,6 +35,7 @@ extension GetUserProfileRequest: ResponseDataStub {
 
 class GetUserProfileRequestTests: APITests {
 
+    @MainActor
     func testSuccess() {
         let r = GetUserProfileRequest()
         runTestSuccess(for: r) { profile in

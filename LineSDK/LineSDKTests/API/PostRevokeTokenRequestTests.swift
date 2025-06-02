@@ -27,6 +27,7 @@ extension PostRevokeTokenRequest: ResponseDataStub {
 }
 
 class PostRevokeTokenRequestTests: APITests {
+    @MainActor
     func testSuccess() {
         let request = PostRevokeTokenRequest(channelID: "123", accessToken: "123")
         runTestSuccess(for: request) { _ in }

@@ -116,7 +116,11 @@ extension SessionTask {
     }
 }
 
-private func paginatedResponseStub(values: String, code: Int = 200, verifier: ((SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem {
+private func paginatedResponseStub(
+    values: String,
+    code: Int = 200,
+    verifier: (@Sendable (SessionTask) throws -> Void)? = nil
+) -> SessionDelegateStub.StubItem {
     let payload = """
     {
         "values": \(values)
@@ -129,7 +133,7 @@ private func paginatedResponseStub(
     values: String,
     token: String,
     code: Int = 200,
-    verifier: ((SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem
+    verifier: (@Sendable (SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem
 {
     let payload = """
     {
@@ -143,7 +147,7 @@ private func paginatedResponseStub(
 private func paginatedResponseStub(
     payload: String,
     code: Int = 200,
-    verifier: ((SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem
+    verifier: (@Sendable (SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem
 {
     let requestVerifier: SessionDelegateStub.RequestTaskVerifier
     if let v = verifier {

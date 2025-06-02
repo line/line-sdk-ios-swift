@@ -28,6 +28,7 @@ extension GetApproversInGroupRequest: ResponseDataStub {
 
 class GetApproversInGroupRequestTests: APITests {
 
+    @MainActor
     func testSuccess() {
 
         let r = try! GetApproversInGroupRequest(groupID: "abc")

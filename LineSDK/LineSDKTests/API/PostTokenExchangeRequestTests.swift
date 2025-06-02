@@ -60,7 +60,7 @@ extension PostExchangeTokenRequest: ResponseDataStub {
 }
 
 class PostExchangeTokenRequestTests: APITests {
-
+    @MainActor
     func testSuccess() {
         let request = PostExchangeTokenRequest(
             channelID: config.channelID,

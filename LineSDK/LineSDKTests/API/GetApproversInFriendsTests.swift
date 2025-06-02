@@ -27,7 +27,7 @@ extension GetApproversInFriendsRequest: ResponseDataStub {
 }
 
 class GetApproversInFriendsRequestTests: APITests {
-
+    @MainActor
     func testSuccess() {
         let r = GetApproversInFriendsRequest()
         GetApproversInFriendsRequest.success =

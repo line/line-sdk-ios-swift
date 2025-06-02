@@ -40,7 +40,12 @@ class APITests: XCTestCase {
     }
     
     let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
-    func runTestSuccess<T: Request & ResponseDataStub>(for request: T, verifier: @escaping (T.Response) -> Void) {
+
+    @MainActor
+    func runTestSuccess<T: Request & ResponseDataStub>(
+        for request: T,
+        verifier: @escaping @Sendable (T.Response) -> Void
+    ) {
         let expect = expectation(description: "\(#file)_\(#line)")
 
         if request.authentication == .token {
