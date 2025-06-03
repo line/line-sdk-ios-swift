@@ -37,7 +37,7 @@ func assertEqual<T: Equatable>(
     in dic: [String: Any],
     forKey key: String,
     value: T,
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line)
 {
     guard let dicValue = dic[key] else {
