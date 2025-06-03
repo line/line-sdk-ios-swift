@@ -20,6 +20,7 @@
 //
 
 @objcMembers
+@MainActor
 public class LineSDKShareViewController: NSObject {
 
     private var _binaryCompatibleViewController: ShareViewController

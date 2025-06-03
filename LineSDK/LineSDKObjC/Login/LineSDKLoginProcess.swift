@@ -20,6 +20,7 @@
 //
 
 @objcMembers
+@MainActor
 public class LineSDKLoginProcess: NSObject {
     let _value: LoginProcess
     init(_ value: LoginProcess) { _value = value }
