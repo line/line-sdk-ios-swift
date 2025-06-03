@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   
   s.module_name         = "LineSDK"
   s.swift_version       = "5.0"
-  s.swift_versions      = ["4.2", "5.0"]
+  s.swift_versions      = ["6.0", "5.0", "4.2"]
   s.source              = { :git => "https://github.com/line/line-sdk-ios-swift.git", :tag => "#{s.version}" }
 
   s.default_subspecs    = "Core"
