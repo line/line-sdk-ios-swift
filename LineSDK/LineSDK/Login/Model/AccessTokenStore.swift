@@ -47,8 +47,8 @@ extension LineSDKNotificationKey {
 }
 
 /// Represents the storage of an `AccessToken` object.
-public class AccessTokenStore {
-    
+final public class AccessTokenStore: @unchecked Sendable {
+
     // In case we might do migration later on the token,
     // we need a way to identifier the token store version.
     
@@ -133,10 +133,24 @@ public class AccessTokenStore {
             Log.print("LineSDK recovered from it but your user might need another authorization to Line SDK.")
         }
     }
-    
+
+    private let lock = NSLock()
+
     /// The `AccessToken` object currently in use.
-    public private(set) var current: AccessToken?
-    
+    private(set) var _current: AccessToken?
+    public var current: AccessToken? {
+        get {
+            lock.lock()
+            defer { lock.unlock() }
+            return _current
+        }
+        set {
+            lock.lock()
+            defer { lock.unlock() }
+            _current = newValue
+        }
+    }
+
     func setCurrentToken(_ token: AccessToken) throws {
         guard current != token else { return }
         

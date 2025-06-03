@@ -20,7 +20,7 @@
 //
 
 @objcMembers
-public class LineSDKMessageSendingStatus: NSObject {
+final public class LineSDKMessageSendingStatus: NSObject, Sendable {
     let _value: MessageSendingStatus
     init(_ value: MessageSendingStatus) { _value = value }
     

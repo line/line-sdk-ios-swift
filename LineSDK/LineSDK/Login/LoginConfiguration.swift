@@ -21,11 +21,11 @@
 
 import Foundation
 
-struct LoginConfiguration {
+struct LoginConfiguration: Sendable {
 
     // This internal state is ensured safe by the lock in login manager.
     nonisolated(unsafe) static var _shared: LoginConfiguration?
-    
+
     static var shared: LoginConfiguration {
         return guardSharedProperty(_shared)
     }

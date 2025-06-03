@@ -21,7 +21,7 @@
 
 @available(*, deprecated, message: "Use `LineSDKLoginManagerParameters` instead.")
 @objcMembers
-public class LineSDKLoginManagerOptions: NSObject {
+final public class LineSDKLoginManagerOptions: NSObject, Sendable {
     let _value: LoginManagerOptions
     convenience init(_ value: LoginManagerOptions) {
         self.init(rawValue: value.rawValue)

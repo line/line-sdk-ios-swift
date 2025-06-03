@@ -20,7 +20,7 @@
 //
 
 @objcMembers
-public class LineSDKCallbackQueue: NSObject {
+final public class LineSDKCallbackQueue: NSObject, Sendable {
     let _value: CallbackQueue
     init(_ value: CallbackQueue) {
         _value = value

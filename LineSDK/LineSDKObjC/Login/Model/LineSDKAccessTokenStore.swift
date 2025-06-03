@@ -30,7 +30,7 @@
 }
 
 @objcMembers
-public class LineSDKAccessTokenStore: NSObject {
+final public class LineSDKAccessTokenStore: NSObject, Sendable {
     
     let _value: AccessTokenStore
     init(_ value: AccessTokenStore) { _value = value }

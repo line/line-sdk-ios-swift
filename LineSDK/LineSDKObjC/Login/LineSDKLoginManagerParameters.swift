@@ -62,8 +62,8 @@ public class LineSDKLoginManagerParameters: NSObject {
 }
 
 @objcMembers
-public class LineSDKLoginManagerBotPrompt: NSObject {
-    
+final public class LineSDKLoginManagerBotPrompt: NSObject, Sendable {
+
     let _value: LoginManager.BotPrompt
     init(_ value: LoginManager.BotPrompt) { _value = value }
     
@@ -74,7 +74,7 @@ public class LineSDKLoginManagerBotPrompt: NSObject {
 }
 
 @objcMembers
-public class LineSDKLoginManagerWebAuthenticationMethod: NSObject {
+final public class LineSDKLoginManagerWebAuthenticationMethod: NSObject, Sendable {
 
     let _value: LoginManager.WebAuthenticationMethod
     init(_ value: LoginManager.WebAuthenticationMethod) { _value = value }

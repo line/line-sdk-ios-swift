@@ -20,7 +20,7 @@
 //
 
 @objcMembers
-public final class LineSDKAuthorizationStatus: NSObject {
+public final class LineSDKAuthorizationStatus: NSObject, Sendable {
 
     public let rawValue: Int
 
