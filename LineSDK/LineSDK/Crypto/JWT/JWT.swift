@@ -110,11 +110,11 @@ extension JWT {
     
     /// Represents the payload section of a JWT object. Use the exposed properties to get claims from the
     /// payload. Use the `subscript` method to get any unexposed values.
-    public struct Payload: @unchecked Sendable {
+    public struct Payload: Sendable {
 
         // The values only contain simple JSON compatible values so it is perfectly sendbable
-        let values: [String: Any]
-        
+        let values: [String: any Sendable]
+
         func verify<T: Equatable>(keyPath: KeyPath<JWT.Payload, T?>, expected: T) throws {
             try verify(keyPath: keyPath, failingReason: "expected: \(expected)") { value in
                 return value == expected }

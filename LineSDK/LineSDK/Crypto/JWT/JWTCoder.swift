@@ -38,11 +38,11 @@ class Base64JSONDecoder: JSONDecoder, @unchecked Sendable {
         return try super.decode(type, from: decodedData)
     }
     
-    func decodeDictionary(_ string: String) throws -> [String: Any] {
+    func decodeDictionary(_ string: String) throws -> [String: any Sendable] {
         guard let decodedData = string.base64URLDecoded else {
             throw CryptoError.generalError(reason: .base64ConversionFailed(string: string))
         }
-        guard let result = try JSONSerialization.jsonObject(with: decodedData) as? [String: Any] else {
+        guard let result = try JSONSerialization.jsonObject(with: decodedData) as? [String: any Sendable] else {
             throw CryptoError.generalError(
                 reason: .decodingFailed(string: String(data: decodedData, encoding: .utf8)!, type: [String: Any].self))
         }
