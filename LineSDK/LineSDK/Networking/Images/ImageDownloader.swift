@@ -21,7 +21,7 @@
 
 import UIKit
 
-class ImageDownloader {
+final class ImageDownloader: Sendable {
     let session: URLSession
 
     init() {

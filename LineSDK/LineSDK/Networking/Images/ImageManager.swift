@@ -23,16 +23,29 @@ import UIKit
 
 typealias ImageSettingResult = Result<UIImage, LineSDKError>
 
-class ImageManager: @unchecked Sendable /* The Sendable is ensured by internal lock */ {
+struct SendableCache<Key: AnyObject, Value: AnyObject> {
+    let cache: NSCache<Key, Value>
+    func object(forKey key: Key) -> Value? {
+        return cache.object(forKey: key)
+    }
+
+    func setObject(_ obj: Value, forKey key: Key) {
+        cache.setObject(obj, forKey: key)
+    }
+
+    func removeAllObjects() {
+        cache.removeAllObjects()
+    }
+}
+
+extension SendableCache: @unchecked Sendable where Key: Sendable, Value: Sendable {}
+
+final class ImageManager: Sendable {
 
     typealias TaskToken = UInt
-    private var currentToken: TaskToken = 0
-    private let lock = NSLock()
-    func nextToken() -> TaskToken {
 
-        lock.lock()
-        defer { lock.unlock() }
-
+    @MainActor private var currentToken: TaskToken = 0
+    @MainActor func nextToken() -> TaskToken {
         if currentToken < TaskToken.max - 1 {
             currentToken += 1
         } else {
@@ -44,11 +57,12 @@ class ImageManager: @unchecked Sendable /* The Sendable is ensured by internal l
     static let shared = ImageManager()
 
     let downloader = ImageDownloader()
-    let cache: NSCache<NSURL, UIImage>
+    let cache: SendableCache<NSURL, UIImage>
 
     private init() {
-        cache = NSCache()
+        let cache = NSCache<NSURL, UIImage>()
         cache.countLimit = 500
+        self.cache = SendableCache(cache: cache)
     }
 
     func getImage(
