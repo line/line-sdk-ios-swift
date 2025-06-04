@@ -265,6 +265,11 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         API.Auth.revokeRefreshToken(completionHandler: completion)
     }
 
+    /// Logs out the current user by revoking the refresh token and all its corresponding access tokens.
+    public func logout() async throws {
+        try await API.Auth.revokeRefreshToken()
+    }
+
     /// Asks this `LoginManager` object to handle a URL callback from either LINE or the web login flow.
     ///
     /// - Parameters:
