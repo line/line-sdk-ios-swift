@@ -140,18 +140,17 @@ extension API {
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be invoked when the API finishes.
     ///
-    /// - Note:
-    ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
+    /// - Note: `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
     ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
     ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
     ///   Please confirm your channel permissions before you use this API.
     ///
-    ///   You could send at most 5 messages to a user in a single call. Line SDK does not check the elements count in
-    ///   `messages` when sending. However, you could expect a 400 error if you contain more that 5 messages in the
-    ///   request.
+    /// You could send at most 5 messages to a user in a single call. Line SDK does not check the elements count in
+    /// `messages` when sending. However, you could expect a 400 error if you contain more that 5 messages in the
+    /// request.
     ///
-    ///   There would be a few cases that API call is successful but message is not delivered. In these cases,
-    ///   the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
+    /// There would be a few cases that API call is successful but message is not delivered. In these cases,
+    /// the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
     ///
     public static func sendMessages(
         _ messages: [MessageConvertible],
@@ -172,20 +171,19 @@ extension API {
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be invoked when the API finishes.
     ///
-    /// - Note:
-    ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
+    /// - Note: `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
     ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
     ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
     ///   Please confirm your channel permissions before you use this API.
     ///
-    ///   You could send at most 5 messages, and to at most 10 users in a single call. Line SDK does not check the
-    ///   elements count in `messages` or `userIDs` when sending. However, you could expect a 400 error if you contain
-    ///   more elements than allowed.
+    /// You could send at most 5 messages, and to at most 10 users in a single call. Line SDK does not check the
+    /// elements count in `messages` or `userIDs` when sending. However, you could expect a 400 error if you contain
+    /// more elements than allowed.
     ///
-    ///   There would be a few cases that API call is successful but message is not delivered. In these cases,
-    ///   the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
-    ///   To know the message delivery result for each receiver, please check the response `results`, which is an array
-    ///   of [SendingResult]`. See `SendingResult` for more.
+    /// There would be a few cases that API call is successful but message is not delivered. In these cases,
+    /// the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
+    /// To know the message delivery result for each receiver, please check the response `results`, which is an array
+    /// of [SendingResult]`. See `SendingResult` for more.
     ///
     public static func multiSendMessages(
         _ messages: [MessageConvertible],

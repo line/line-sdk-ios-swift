@@ -37,9 +37,8 @@ extension LoginManager {
         /// If not set, the web authentication flow shows the login page in the user's device language, or falls
         /// back to English. Once set, the web page is displayed in the preferred language.
         ///
-        /// - Note:
-        ///   This property does not affect the preferred language when LINE is used for authorization.
-        ///   LINE and the login screen are always displayed in the user's device language.
+        /// - Note: This property does not affect the preferred language when LINE is used for authorization.
+        /// LINE and the login screen are always displayed in the user's device language.
         ///
         public var preferredWebPageLanguage: WebPageLanguage? = nil
 

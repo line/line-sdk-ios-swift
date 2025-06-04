@@ -66,16 +66,15 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
     /// - Parameters:
     ///   - channelID: The channel ID for your app.
     ///   - universalLinkURL: The universal link used to navigate back to your app from LINE.
-    /// - Note:
-    ///   Call this method before you access any other methods or properties in the LINE SDK. Call this method
+    /// - Note: Call this method before you access any other methods or properties in the LINE SDK. Call this method
     ///   only once because the login manager cannot be set up multiple times.
     ///
-    ///   We strongly suggest that you specify a valid universal link URL. Set up your own universal link
-    ///   callback for your channel by following the guide on the LINE Developers site. When the callback is set
-    ///   properly, LINE will try to bring up your app with the universal link first, which improves the
-    ///   security of the authorization flow and protects your data. If the `universalLinkURL` parameter is
-    ///   `nil`, only a custom URL scheme will be used to open your app after the authorization in LINE
-    ///   is complete.
+    /// We strongly suggest that you specify a valid universal link URL. Set up your own universal link
+    /// callback for your channel by following the guide on the LINE Developers site. When the callback is set
+    /// properly, LINE will try to bring up your app with the universal link first, which improves the
+    /// security of the authorization flow and protects your data. If the `universalLinkURL` parameter is
+    /// `nil`, only a custom URL scheme will be used to open your app after the authorization in LINE
+    /// is complete.
     ///
     public func setup(channelID: String, universalLinkURL: URL?) {
 
@@ -106,20 +105,19 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
     ///   - completion: The completion closure to be invoked when the login action is finished.
     /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.
     ///
-    /// - Note:
-    ///   Only one process can be started at a time. Do not call this method again to start a new login process
+    /// - Note: Only one process can be started at a time. Do not call this method again to start a new login process
     ///   before `completion` is invoked.
     ///
-    ///   If the value of `permissions` contains `.profile`, the user profile will be retrieved during the login
-    ///   process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
-    ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
-    ///   more information, see `UserProfile`.
+    /// If the value of `permissions` contains `.profile`, the user profile will be retrieved during the login
+    /// process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
+    /// Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
+    /// more information, see `UserProfile`.
     ///
-    ///   An access token will be issued if the user authorizes your app. This token and a refresh token
-    ///   will be automatically stored in the keychain of your app for later use. You do not need to
-    ///   refresh the access token manually because any API call will attempt to refresh the access token if
-    ///   necessary. However, if you need to refresh the access token manually, use the
-    ///   `API.Auth.refreshAccessToken(with:)` method.
+    /// An access token will be issued if the user authorizes your app. This token and a refresh token
+    /// will be automatically stored in the keychain of your app for later use. You do not need to
+    /// refresh the access token manually because any API call will attempt to refresh the access token if
+    /// necessary. However, if you need to refresh the access token manually, use the
+    /// `API.Auth.refreshAccessToken(with:)` method.
     ///
     @discardableResult
     @MainActor public func login(
@@ -296,9 +294,8 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
     /// If not set, the web authentication flow shows the login page in the user's device language, or falls
     /// back to English. Once set, the web page will be displayed in the preferred language.
     ///
-    /// - Note:
-    ///   This property does not affect the preferred language when LINE is used for authorization.
-    ///   LINE and the login screen are always displayed in the user's device language.
+    /// - Note: This property does not affect the preferred language when LINE is used for authorization.
+    /// LINE and the login screen are always displayed in the user's device language.
     @available(
     *, deprecated,
     message: """
@@ -318,20 +315,19 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
     ///   - completion: The completion closure to be invoked when the login action is finished.
     /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.
     ///
-    /// - Note:
-    ///   Only one process can be started at a time. Do not call this method again to start a new login process
-    ///   before `completion` is invoked.
+    /// - Note: Only one process can be started at a time. Do not call this method again to start a new login process
+    /// before `completion` is invoked.
     ///
-    ///   If the value of `permissions` is `.profile`, the user profile will be retrieved during the login
-    ///   process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
-    ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
-    ///   more information, see `UserProfile`.
+    /// If the value of `permissions` is `.profile`, the user profile will be retrieved during the login
+    /// process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
+    /// Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
+    /// more information, see `UserProfile`.
     ///
-    ///   An access token will be issued if the user authorizes your app. This token and a refresh token
-    ///   will be automatically stored in the keychain of your app for later use. You do not need to
-    ///   refresh the access token manually because any API call will attempt to refresh the access token if
-    ///   necessary. However, if you need to refresh the access token manually, use the
-    ///   `API.Auth.refreshAccessToken(with:)` method.
+    /// An access token will be issued if the user authorizes your app. This token and a refresh token
+    /// will be automatically stored in the keychain of your app for later use. You do not need to
+    /// refresh the access token manually because any API call will attempt to refresh the access token if
+    /// necessary. However, if you need to refresh the access token manually, use the
+    /// `API.Auth.refreshAccessToken(with:)` method.
     ///
     @available(
     *, deprecated,

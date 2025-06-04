@@ -54,7 +54,6 @@ public protocol OpenChatCreatingControllerDelegate: AnyObject {
     ///   - presentingViewController: The view controller which presents the current room creating view controller.
     ///                               Present your error handling UI with this view controller, if needed.
     ///
-    /// - Note:
     /// This delegate method will only be called during the creation operation, after the `OpenChatCreatingController`
     /// collected all necessary open chat room information from user input. The collected information is in the
     /// `item` parameter.
@@ -79,7 +78,6 @@ public protocol OpenChatCreatingControllerDelegate: AnyObject {
     /// A flag indicates whether LINE SDK should prevent displaying a default alert when the user agreement is not
     /// accepted yet.
     ///
-    /// - Note:
     /// To create an open chat room, the user must accept the user agreement term of Open Chat. An
     /// `OpenChatCreatingController` will check the agreement status and determine whether the user already agreed with
     /// it.
