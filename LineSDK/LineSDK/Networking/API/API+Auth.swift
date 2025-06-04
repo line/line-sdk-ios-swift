@@ -35,11 +35,10 @@ extension API {
         ///   - queue: The callback queue that is used for `completion`. The default value is
         ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
         ///   - completion: The completion closure to be invoked when the access token is refreshed.
-        /// - Note:
-        ///   If the token refresh process finishes successfully, the refreshed access token will be
-        ///   automatically stored in the keychain for later use and you will get a
-        ///   `.LineSDKAccessTokenDidUpdate` notification. Normally, you don't need to refresh the access token
-        ///   manually because any API call will attempt to refresh the access token if necessary.
+        /// If the token refresh process finishes successfully, the refreshed access token will be
+        /// automatically stored in the keychain for later use and you will get a
+        /// `.LineSDKAccessTokenDidUpdate` notification. Normally, you don't need to refresh the access token
+        /// manually because any API call will attempt to refresh the access token if necessary.
         ///
         public static func refreshAccessToken(
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -68,7 +67,22 @@ extension API {
                 }
             }
         }
-        
+
+        /// Refreshes the access token with `refreshToken`.
+        ///
+        /// - Returns: The refreshed access token if the refress operation finishes sucessfully.
+        /// - Throws: An `LineSDKError` if something wrong happens.
+        ///
+        /// If the token refresh process finishes successfully, the refreshed access token will be
+        /// automatically stored in the keychain for later use and you will get a
+        /// `.LineSDKAccessTokenDidUpdate` notification. Normally, you don't need to refresh the access token
+        /// manually because any API call will attempt to refresh the access token if necessary.
+        public static func refreshAccessToken() async throws -> AccessToken {
+            try await withCheckedThrowingContinuation { continuation in
+                refreshAccessToken { continuation.resume(with: $0) }
+            }
+        }
+
         /// Revokes the access token.
         ///
         /// - Parameters:
@@ -78,16 +92,15 @@ extension API {
         ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
         ///   - completion: The completion closure to be invoked when the access token is revoked.
         ///
-        /// - Note:
-        ///   The revoked token will be automatically removed from the keychain. If `token` has a `nil` value
-        ///   and the current access token does not exist, `completion` will be called with `.success`. The
-        ///   same applies when `token` has an invalid access token.
+        /// The revoked token will be automatically removed from the keychain. If `token` has a `nil` value
+        /// and the current access token does not exist, `completion` will be called with `.success`. The
+        /// same applies when `token` has an invalid access token.
         ///
-        ///   After the access token is revoked, you cannot use it again to access the LINE Platform. You
-        ///   need to have the user authorize your app again to issue a new access token before accessing the
-        ///   LINE Platform.
+        /// After the access token is revoked, you cannot use it again to access the LINE Platform. You
+        /// need to have the user authorize your app again to issue a new access token before accessing the
+        /// LINE Platform.
         ///
-        ///  The `LineSDKAccessTokenDidRemove` notification is sent when the access token is removed from the device.
+        /// The `LineSDKAccessTokenDidRemove` notification is sent when the access token is removed from the device.
         public static func revokeAccessToken(
             _ token: String? = nil,
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -98,7 +111,7 @@ extension API {
                 let result = Result { try AccessTokenStore.shared.removeCurrentAccessToken() }
                 completion(result)
             }
-            
+
             guard let token = token ?? AccessTokenStore.shared.current?.value else {
                 // No token input or found in store, just recognize it as success.
                 queue.execute { completion(.success(())) }
@@ -123,7 +136,29 @@ extension API {
                 }
             }
         }
-        
+
+        /// Revokes the access token.
+        ///
+        /// - Parameters:
+        ///   - token: The access token to be revoked. Optional. If not specified, the current access token will
+        ///            be revoked.
+        /// - Throws: An `LineSDKError` if something wrong happens.
+        ///
+        /// The revoked token will be automatically removed from the keychain. If `token` has a `nil` value
+        /// and the current access token does not exist, `completion` will be called with `.success`. The
+        /// same applies when `token` has an invalid access token.
+        ///
+        /// After the access token is revoked, you cannot use it again to access the LINE Platform. You
+        /// need to have the user authorize your app again to issue a new access token before accessing the
+        /// LINE Platform.
+        ///
+        /// The `LineSDKAccessTokenDidRemove` notification is sent when the access token is removed from the device.
+        public static func revokeAccessToken(_ token: String? = nil) async throws {
+            try await withCheckedThrowingContinuation { continuation in
+                revokeAccessToken(token) { continuation.resume(with: $0) }
+            }
+        }
+
         /// Revokes the refresh token and all its corresponding access tokens.
         ///
         /// - Parameters:
@@ -133,19 +168,18 @@ extension API {
         ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
         ///   - completion: The completion closure to be invoked when the access token is revoked.
         ///
-        /// - Note:
-        ///   Do not pass an access token to the `refreshToken` parameter. To revoke an access token, use
+        /// Do not pass an access token to the `refreshToken` parameter. To revoke an access token, use
         ///   `revokeAccessToken(_:callbackQueue:completionHandler:)` instead.
         ///
-        ///   The revoked token will be automatically removed from the keychain. If `refreshToken` has a `nil` value
-        ///   and the current refresh token does not exist, `completion` will be called with `.success`. The
-        ///   same applies when `refreshToken` has an invalid refresh token.
+        /// The revoked token will be automatically removed from the keychain. If `refreshToken` has a `nil` value
+        /// and the current refresh token does not exist, `completion` will be called with `.success`. The
+        /// same applies when `refreshToken` has an invalid refresh token.
         ///
-        ///   This API will revoke the given refresh token and all its corresponding access tokens. Once these tokens are
-        ///   revoked, you can neither call an API protected by an access token or refresh the access token with the refresh
-        ///   token. To access the resource owner's content, you need to ask your users to authorize your app again.
+        /// This API will revoke the given refresh token and all its corresponding access tokens. Once these tokens are
+        /// revoked, you can neither call an API protected by an access token or refresh the access token with the refresh
+        /// token. To access the resource owner's content, you need to ask your users to authorize your app again.
         ///
-        ///  The `LineSDKAccessTokenDidRemove` notification is sent when the access token is removed from the device.
+        /// The `LineSDKAccessTokenDidRemove` notification is sent when the access token is removed from the device.
         public static func revokeRefreshToken(
             _ refreshToken: String? = nil,
             callbackQueue queue: CallbackQueue = .currentMainOrAsync,
@@ -183,7 +217,32 @@ extension API {
                 }
             }
         }
-        
+
+        /// Revokes the refresh token and all its corresponding access tokens.
+        ///
+        /// - Parameters:
+        ///   - refreshToken: The refresh token to be revoked. Optional. If not specified, the current refresh token will
+        ///            be revoked.
+        /// - Throws: An `LineSDKError` if something wrong happens.
+        ///
+        /// Do not pass an access token to the `refreshToken` parameter. To revoke an access token, use
+        ///   `revokeAccessToken(_:callbackQueue:completionHandler:)` instead.
+        ///
+        /// The revoked token will be automatically removed from the keychain. If `refreshToken` has a `nil` value
+        /// and the current refresh token does not exist, `completion` will be called with `.success`. The
+        /// same applies when `refreshToken` has an invalid refresh token.
+        ///
+        /// This API will revoke the given refresh token and all its corresponding access tokens. Once these tokens are
+        /// revoked, you can neither call an API protected by an access token or refresh the access token with the refresh
+        /// token. To access the resource owner's content, you need to ask your users to authorize your app again.
+        ///
+        /// The `LineSDKAccessTokenDidRemove` notification is sent when the access token is removed from the device.
+        public static func revokeRefreshToken(_ refreshToken: String? = nil) async throws {
+            try await withCheckedThrowingContinuation { continuation in
+                revokeRefreshToken(refreshToken) { continuation.resume(with: $0) }
+            }
+        }
+
         /// Verifies the access token.
         ///
         /// - Parameters:
@@ -193,7 +252,6 @@ extension API {
         ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
         ///   - completion: The completion closure to be invoked when the access token is verified.
         ///
-        /// - Note:
         /// This method does not try to refresh the current access token when it is invalid or expired.
         /// Instead, if verification fails, it just returns the server response as an error to you.
         public static func verifyAccessToken(
@@ -207,6 +265,22 @@ extension API {
             }
             let request = GetVerifyTokenRequest(accessToken: token)
             Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+        }
+
+        /// Verifies the access token.
+        ///
+        /// - Parameters:
+        ///   - token: The access token to be verified. Optional. If not specified, the current access token
+        ///            will be verified.
+        /// - Returns: The verification result if the verification finishes successfully.
+        /// - Throws: An `LineSDKError` if something wrong happens.
+        ///
+        /// This method does not try to refresh the current access token when it is invalid or expired.
+        /// Instead, if verification fails, it just returns the server response as an error to you.
+        public static func verifyAccessToken(_ token: String? = nil) async throws -> AccessTokenVerifyResult {
+            try await withCheckedThrowingContinuation { continuation in
+                verifyAccessToken(token) { continuation.resume(with: $0) }
+            }
         }
     }
 }
