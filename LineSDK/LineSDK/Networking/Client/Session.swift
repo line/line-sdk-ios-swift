@@ -85,6 +85,11 @@ final public class Session: Sendable {
         return send(request, callbackQueue: callbackQueue, pipelines: nil, completionHandler: completion)
     }
 
+    /// Sends a `Request` object with the underlying session.
+    ///
+    /// - Parameters:
+    ///   - request: A `Request` object which defines necessary information for the request.
+    /// - Returns: The parsed `Response` object which is received from remote.
     public func send<T: Request>(_ request: T) async throws -> T.Response {
         return try await withCheckedThrowingContinuation { continuation in
             send(request) {
