@@ -53,6 +53,7 @@ open class StyleNavigationController: UINavigationController {
     private func updateNavigationStyles() {
         navigationBar.shadowImage = UIImage()
         navigationBar.barTintColor = navigationBarTintColor
+        navigationBar.backgroundColor = navigationBarTintColor
         navigationBar.tintColor = navigationBarTextColor
         navigationBar.titleTextAttributes = [.foregroundColor: navigationBarTextColor]
     }

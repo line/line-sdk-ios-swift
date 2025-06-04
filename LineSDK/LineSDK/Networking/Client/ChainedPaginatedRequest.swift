@@ -87,7 +87,9 @@ final class ChainedPaginatedRequest<T: Request> : Request, @unchecked Sendable w
 
         let intermediateParser = PaginatedParseRedirector(request: self, parser: defaultJSONParser)
         intermediateParser.onParsed.delegate(on: self) { (self, response) in
-            self.onPageLoaded.call(response)
+            Task { @MainActor in
+                self.onPageLoaded.call(response)
+            }
         }
 
         pipelines.append(.redirector(intermediateParser))
