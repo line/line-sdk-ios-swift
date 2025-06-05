@@ -291,7 +291,22 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
 
         return currentProcess.resumeOpenURL(url: url)
     }
-    
+
+
+    /// A non-isolated version of the `application(_:open:options:)` method.
+    /// This is temporarily for Flutter SDK use only, as the Flutter SDK is not marking `@MainActor` in the `FlutterApplicationLifeCycleDelegate`.
+    /// - Warning: Prefer using the isolated `application(_:open:options:)` version whenever possible.
+    public func nonisolatedApplication(
+        _ app: UIApplication,
+        open url: URL?,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
+    {
+        guard let url = url else { return false }
+        guard let currentProcess = currentProcess else { return false }
+
+        return currentProcess.nonisolatedResumeOpenURL(url: url)
+    }
+
     // MARK: - Deprecated
     
     /// Sets the preferred language used when logging in with the web authorization flow.
