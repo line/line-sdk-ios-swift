@@ -21,7 +21,7 @@ platform :ios do
   end
 
   lane :sdk_tests do
-    swift_version = ENV["SWIFT_VERSION"] || "4.2"
+    swift_version = ENV["SWIFT_VERSION"] || "6.0"
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 16"],
@@ -52,7 +52,7 @@ platform :ios do
   end
 
   lane :lint_pod do
-    swift_version = ENV["SWIFT_VERSION"] || "4.2"
+    swift_version = ENV["SWIFT_VERSION"] || "6.0"
     Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version=#{swift_version}")
   end
 

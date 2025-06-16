@@ -21,7 +21,8 @@
 
 import UIKit
 
-protocol KeyboardObservable: AnyObject {
+@MainActor
+protocol KeyboardObservable: AnyObject, Sendable {
 
     var keyboardObservers: [NotificationToken] { get set }
 
@@ -41,7 +42,33 @@ extension KeyboardObservable {
                 queue: .main,
                 using: { [unowned self] in
                     guard let userInfo = $0.userInfo else { return }
-                    if let keyboardInfo = KeyboardInfo(from: userInfo) {
+
+                    guard let endFrame = (
+                        userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+                    )?.cgRectValue else {
+                        return
+                    }
+
+                    let duration = (
+                        userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber
+                    )?.doubleValue ?? 0
+
+                    let isLocal = (userInfo[UIResponder.keyboardIsLocalUserInfoKey] as? NSNumber)?.boolValue
+
+                    let animationCurve: UIView.AnimationCurve
+                    if let rawValue = (userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber)?.intValue {
+                        animationCurve = UIView.AnimationCurve(rawValue: rawValue) ?? .linear
+                    } else {
+                        animationCurve = .linear
+                    }
+
+                    MainActor.assumeIsolated {
+                        let keyboardInfo = KeyboardInfo(
+                            endFrame: endFrame,
+                            duration: duration,
+                            isLocal: isLocal,
+                            animationCurve: animationCurve
+                        )
                         self.keyboardInfoWillChange(keyboardInfo: keyboardInfo)
                     }
                 }
@@ -54,26 +81,19 @@ extension KeyboardObservable {
     }
 }
 
-struct KeyboardInfo {
+@MainActor
+struct KeyboardInfo: Sendable {
     let isVisible: Bool
     let endFrame: CGRect?
     let duration: TimeInterval
     let animationCurve: UIView.AnimationCurve
     let isLocal: Bool?
-
-    init?(from userInfo: [AnyHashable : Any]) {
-        guard let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return nil
-        }
+    
+    init(endFrame: CGRect, duration: TimeInterval, isLocal: Bool?, animationCurve: UIView.AnimationCurve) {
         self.endFrame = endFrame
-        isVisible = endFrame.minY < UIScreen.main.bounds.maxY
-        duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-        isLocal = (userInfo[UIResponder.keyboardIsLocalUserInfoKey] as? NSNumber)?.boolValue
-
-        if let rawValue = (userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber)?.intValue {
-            animationCurve = UIView.AnimationCurve(rawValue: rawValue) ?? .linear
-        } else {
-            animationCurve = .linear
-        }
+        self.isVisible = endFrame.minY < UIScreen.main.bounds.maxY
+        self.duration = duration
+        self.isLocal = isLocal
+        self.animationCurve = animationCurve
     }
 }

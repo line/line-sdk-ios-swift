@@ -23,8 +23,8 @@ import Foundation
 
 enum UserDefaultsValue {
     
-    private static var defaults = UserDefaults.standard
-    
+    nonisolated(unsafe) private static let defaults = UserDefaults.standard
+
     private static let cachedUserProfileNameKey = "com.linecorp.sdk.cachedOpenChatUserProfileName"
     static var cachedOpenChatUserProfileName: String? {
         set {

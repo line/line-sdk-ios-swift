@@ -51,8 +51,8 @@ public enum CryptoError: Error {
     /// - verifyingError:  An error occurred while verifying data. Code 3016_1008.
     /// - invalidSignature: The algorithm does not accept the input data as a signature.
     ///                     The data is corrupted. Code 3016_1009.
-    public enum AlgorithmsErrorReason {
-        
+    public enum AlgorithmsErrorReason: Sendable {
+
         /// The DER data does not contain a valid RSA key. Code 3016_1001.
         case invalidDERKey(data: Data, reason: String)
         
@@ -87,8 +87,8 @@ public enum CryptoError: Error {
     /// - unsupportedHeaderAlgorithm: The algorithm defined in the JWT header is not supported in the
     ///                               LINE SDK. Code 3016_2002.
     /// - claimVerifyingFailed: Verification for a certain key in the JWT payload does not pass. Code 3016_2003.
-    public enum JWTErrorReason {
-        
+    public enum JWTErrorReason: Sendable {
+
         /// The input text is not a valid JWT encoded string. Code 3016_2001.
         case malformedJWTFormat(string: String)
         
@@ -102,8 +102,8 @@ public enum CryptoError: Error {
     /// The possible underlying reasons an `.JWKFailed` error occurs.
     ///
     /// - unsupportedKeyType: The key type is not supported in the LINE SDK. Code 3016_3001.
-    public enum JWKErrorReason {
-        
+    public enum JWKErrorReason: Sendable {
+
         /// The key type is not supported in the LINE SDK. Code 3016_3001.
         case unsupportedKeyType(String)
     }
@@ -117,7 +117,7 @@ public enum CryptoError: Error {
     ///                           3016_4003.
     /// - operationNotSupported: The operation is not supported by the current OS. Code 3016_4004.
     /// - decodingFailed: The data cannot be decoded to the target type. Code 3016_4005.
-    public enum GeneralErrorReason {
+    public enum GeneralErrorReason: Sendable {
         
         /// The string cannot be converted to the base64 data format. Code 3016_4001.
         case base64ConversionFailed(string: String)

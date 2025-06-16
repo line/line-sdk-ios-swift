@@ -86,7 +86,7 @@ class ChainedPaginatedRequestsTests: XCTestCase {
         }
     }
 
-    func testChainedRequestCallsPageLoadedOnEachParsing() {
+    func testChainedRequestCallsPageLoadedOnEachParsing() async throws {
         let delegate = SessionDelegateStub(stubItems: [
             paginatedResponseStub(values: "[1,2,3]", token: "hello") {
                 XCTAssertFalse($0.containsPageToken("hello"))
@@ -102,11 +102,10 @@ class ChainedPaginatedRequestsTests: XCTestCase {
             count += 1
             values.append(response.values)
         }
-        session.send(request) { result in
-            XCTAssertEqual(result.value, [1,2,3,4,5,6])
-            XCTAssertEqual(count, 2)
-            XCTAssertEqual(values, [[1,2,3], [4,5,6]])
-        }
+        let result = try await session.send(request)
+        XCTAssertEqual(result, [1,2,3,4,5,6])
+        XCTAssertEqual(count, 2)
+        XCTAssertEqual(values, [[1,2,3], [4,5,6]])        
     }
 }
 
@@ -116,7 +115,11 @@ extension SessionTask {
     }
 }
 
-private func paginatedResponseStub(values: String, code: Int = 200, verifier: ((SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem {
+private func paginatedResponseStub(
+    values: String,
+    code: Int = 200,
+    verifier: (@Sendable (SessionTask) throws -> Void)? = nil
+) -> SessionDelegateStub.StubItem {
     let payload = """
     {
         "values": \(values)
@@ -129,7 +132,7 @@ private func paginatedResponseStub(
     values: String,
     token: String,
     code: Int = 200,
-    verifier: ((SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem
+    verifier: (@Sendable (SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem
 {
     let payload = """
     {
@@ -143,7 +146,7 @@ private func paginatedResponseStub(
 private func paginatedResponseStub(
     payload: String,
     code: Int = 200,
-    verifier: ((SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem
+    verifier: (@Sendable (SessionTask) throws -> Void)? = nil) -> SessionDelegateStub.StubItem
 {
     let requestVerifier: SessionDelegateStub.RequestTaskVerifier
     if let v = verifier {

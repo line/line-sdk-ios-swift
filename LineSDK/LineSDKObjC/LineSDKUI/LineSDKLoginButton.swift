@@ -26,6 +26,7 @@
 }
 
 @objcMembers
+@MainActor
 public class LineSDKLoginButton: NSObject {
     
     public var button: UIButton { return _binaryCompatibleButton }

@@ -79,7 +79,9 @@ class PageViewController: UIViewController {
             [weak self] scrollView, change in
 
             guard let self = self else { return }
-            self.pageTabView.updateScrollingProgress(self.tabProgress)
+            Task { @MainActor in
+                self.pageTabView.updateScrollingProgress(self.tabProgress)
+            }
         }
     }
 

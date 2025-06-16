@@ -65,7 +65,6 @@ public struct FlexBoxComponent: Codable, FlexMessageComponentTypeCompatible, Mes
     /// An action to perform when the box tapped.
     /// Use `setAction` method if you want to set a `MessageActionConvertible` as the action of current component.
     ///
-    /// - Note:
     /// This property is supported on the following versions of LINE:
     ///    - LINE for iOS and Android: 8.11.0 and later
     ///    - LINE for Windows and macOS: 5.9.0 and later
@@ -77,7 +76,6 @@ public struct FlexBoxComponent: Codable, FlexMessageComponentTypeCompatible, Mes
     ///   - layout: The placement style of components in this box.
     ///   - contents: Components in this box.
     ///
-    /// - Note:
     /// When the `layout` is `.horizontal` or `.vertical`, the following components are supported as nested:
     ///   - `FlexBoxComponent`
     ///   - `FlexTextComponent`

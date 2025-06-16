@@ -28,6 +28,7 @@ extension GetGroupsRequest: ResponseDataStub {
 
 class GetGroupsRequestTests: APITests {
 
+    @MainActor
     func testSuccess() {
 
         let r = GetGroupsRequest()

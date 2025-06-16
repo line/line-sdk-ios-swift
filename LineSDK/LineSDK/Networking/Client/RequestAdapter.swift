@@ -49,10 +49,21 @@ struct TokenAdapter: RequestAdapter {
 }
 
 struct HeaderAdapter: RequestAdapter {
-    static let `default` = HeaderAdapter()
-    
+    static let `default` = {
+        if Thread.isMainThread {
+            return MainActor.assumeIsolated {
+                HeaderAdapter()
+            }
+        } else {
+            return DispatchQueue.main.sync {
+                HeaderAdapter()
+            }
+        }
+    }()
+
     let userAgent: String
-    
+
+    @MainActor
     init(in info: [String: Any]? = nil) {
         
         let info = info ?? Bundle.main.infoDictionary ?? [:]

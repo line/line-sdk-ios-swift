@@ -28,6 +28,7 @@ extension GetFriendsRequest: ResponseDataStub {
 
 class GetFriendsRequestTests: APITests {
 
+    @MainActor
     func testSuccess() {
 
         let r = GetFriendsRequest()
@@ -74,6 +75,7 @@ class GetFriendsRequestTests: APITests {
         }
     }
 
+    @MainActor
     func testPageTokenExistence() {
         let r = GetFriendsRequest()
 

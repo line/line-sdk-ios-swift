@@ -34,6 +34,7 @@ extension LineSDKNotificationKey {
 }
 
 // A column-based data structure. It makes it easier to store and interact with data in a 2D array.
+@MainActor
 class ColumnDataStore<T> {
 
     struct ColumnIndex: Equatable {

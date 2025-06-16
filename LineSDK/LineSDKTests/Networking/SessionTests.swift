@@ -22,6 +22,7 @@
 import XCTest
 @testable import LineSDK
 
+@MainActor
 class SessionTests: XCTestCase {
     
     let configuration = LoginConfiguration(channelID: "1", universalLinkURL: nil)

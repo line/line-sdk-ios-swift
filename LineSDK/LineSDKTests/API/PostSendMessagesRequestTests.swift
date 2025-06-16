@@ -29,7 +29,8 @@ extension PostSendMessagesRequest: ResponseDataStub {
 class PostSendMessagesRequestTests: APITests {
     
     let message = TextMessage(text: "hello")
-    
+
+    @MainActor
     func testSuccessOK() {
         PostSendMessagesRequest.success =
         """
@@ -46,7 +47,8 @@ class PostSendMessagesRequestTests: APITests {
             }
         }
     }
-    
+
+    @MainActor
     func testSuccessDiscarded() {
         PostSendMessagesRequest.success =
         """
@@ -63,7 +65,8 @@ class PostSendMessagesRequestTests: APITests {
             }
         }
     }
-    
+
+    @MainActor
     func testUnknownStatus() {
         PostSendMessagesRequest.success =
         """

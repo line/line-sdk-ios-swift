@@ -27,7 +27,7 @@ import Foundation
 /// - post: The POST method.
 /// - put: The PUT method.
 /// - delete: The DELETE method.
-public enum HTTPMethod: String {
+public enum HTTPMethod: String, Sendable {
     /// The GET method.
     case get = "GET"
     /// The POST method.
@@ -50,7 +50,7 @@ public enum HTTPMethod: String {
 ///
 /// - none: Does not use any authentication method.
 /// - token: Uses an OAuth 2.0 Bearer token.
-public enum AuthenticateMethod {
+public enum AuthenticateMethod: Sendable {
     /// Does not use any authentication method.
     case none
     /// Uses an OAuth 2.0 Bearer token.
@@ -81,7 +81,7 @@ public enum AuthenticateMethod {
 /// - none: The request does not contain any body content.
 /// - formUrlEncoded: The request contains form URL encoded data.
 /// - json: The request contains JSON data.
-public enum ContentType {
+public enum ContentType: Sendable {
     /// The request does not contain any body content.
     case none
     /// The request contains form URL encoded data.
@@ -117,11 +117,11 @@ public typealias Parameters = [String: Any]
 /// `path`, `parameters` and so on. By conforming to the `Request` protocol, you can implement your own
 /// request type for any API requests for the LINE Platform. To get a response, build a `Request` object and
 /// then send it with a `Session` object.
-public protocol Request {
+public protocol Request: Sendable {
     
     /// Represents a response type of the request. `Response` objects are decodable from raw data from an
     /// HTTP response.
-    associatedtype Response: Decodable
+    associatedtype Response: Decodable, Sendable
     
     /// The `HTTPMethod` enumeration member used for the request.
     var method: HTTPMethod { get }

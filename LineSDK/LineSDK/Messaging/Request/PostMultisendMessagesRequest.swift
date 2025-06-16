@@ -55,10 +55,10 @@ public struct PostMultisendMessagesRequest: Request {
     }
 
     /// Server response of `PostMultisendMessagesRequest`.
-    public struct Response: Decodable {
-        
+    public struct Response: Decodable, Sendable {
+
         /// Represents a result pair of message sending behavior.
-        public struct SendingResult: Decodable {
+        public struct SendingResult: Decodable, Sendable {
             /// The destination user or group ID of this result.
             public let to: String
             /// Represents the sending status.

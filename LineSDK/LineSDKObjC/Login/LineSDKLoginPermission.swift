@@ -20,7 +20,7 @@
 //
 
 @objcMembers
-public class LineSDKLoginPermission: NSObject {
+final public class LineSDKLoginPermission: NSObject, Sendable {
     let _value: LoginPermission
     convenience init(_ value: LoginPermission) {
         self.init(rawValue: value.rawValue)

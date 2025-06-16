@@ -35,7 +35,7 @@ extension GetVerifyTokenRequest: ResponseDataStub {
 }
 
 class GetVerifyTokenRequestTests: APITests {
-    
+    @MainActor
     func testSuccess() {
         let r = GetVerifyTokenRequest(accessToken: "123")
         runTestSuccess(for: r) { token in

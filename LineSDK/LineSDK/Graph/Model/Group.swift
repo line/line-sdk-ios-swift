@@ -23,7 +23,7 @@ import Foundation
 
 /// LINE internal use only.
 /// Represents a `Group` object which LineSDK used in `group list` or `approvers in given group`.
-public struct Group: Decodable {
+public struct Group: Decodable, Sendable {
 
     /// Identifier of the group
     public let groupID: String

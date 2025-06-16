@@ -22,20 +22,18 @@
 import XCTest
 @testable import LineSDK
 
-
-class RefreshTokenPipelineTests: XCTestCase {
+@MainActor
+class RefreshTokenPipelineTests: XCTestCase, Sendable {
     
     var pipeline: RefreshTokenRedirector!
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
         LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
         pipeline = RefreshTokenRedirector()
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         LoginManager.shared.reset()
-        super.tearDown()
     }
     
     func testRefreshTokenPipelineSuccess() {
@@ -55,9 +53,11 @@ class RefreshTokenPipelineTests: XCTestCase {
             action in
             switch action {
             case .restartWithout(let p):
-                XCTAssertNotNil(AccessTokenStore.shared.current)
-                XCTAssertEqual(p, .redirector(self.pipeline))
-                XCTAssertTrue(delegate.stubItems.isEmpty)
+                MainActor.assumeIsolated {
+                    XCTAssertNotNil(AccessTokenStore.shared.current)
+                    XCTAssertEqual(p, .redirector(self.pipeline))
+                    XCTAssertTrue(delegate.stubItems.isEmpty)
+                }
             default:
                 XCTFail("Refresh token pipeline should success.")
             }

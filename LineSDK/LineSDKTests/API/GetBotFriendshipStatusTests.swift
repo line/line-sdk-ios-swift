@@ -31,6 +31,7 @@ extension GetBotFriendshipStatusRequest: ResponseDataStub {
 }
 
 class GetBotFriendshipStatusRequestTests: APITests {
+    @MainActor
     func testSuccess() {
         let request = GetBotFriendshipStatusRequest()
         runTestSuccess(for: request) { result in

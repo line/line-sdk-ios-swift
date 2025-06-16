@@ -32,15 +32,15 @@ extension HTTPURLResponse {
     }
 }
 
-class SessionDelegateStub: NSObject, SessionDelegateType {
+final class SessionDelegateStub: NSObject, SessionDelegateType, @unchecked Sendable {
 
     struct StubItem {
         let action: Either
         let verifier: RequestTaskVerifier
     }
 
-    struct RequestTaskVerifier {
-        let block: (SessionTask) throws -> Void
+    struct RequestTaskVerifier: Sendable {
+        let block: @Sendable (SessionTask) throws -> Void
         func verify(sessionTask: SessionTask) throws {
             try block(sessionTask)
         }
@@ -72,8 +72,22 @@ class SessionDelegateStub: NSObject, SessionDelegateType {
         }
     }
     
-    var stubItems: [StubItem]
-    
+    private var _stubItems: [StubItem]
+    private let lock = NSLock()
+    var stubItems: [StubItem] {
+        get {
+            lock.lock()
+            defer { lock.unlock() }
+            return _stubItems
+        }
+        set {
+            lock.lock()
+            defer { lock.unlock() }
+            _stubItems = newValue
+        }
+    }
+
+
     convenience init(stub: Either) {
         self.init(stubs: [stub])
     }
@@ -83,7 +97,7 @@ class SessionDelegateStub: NSObject, SessionDelegateType {
     }
 
     init(stubItems: [StubItem]) {
-        self.stubItems = stubItems
+        _stubItems = stubItems
     }
     
     func shouldTaskStart(_ task: SessionTask) -> Bool {

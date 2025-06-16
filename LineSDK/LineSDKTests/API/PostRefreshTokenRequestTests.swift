@@ -41,7 +41,7 @@ extension PostRefreshTokenRequest: ResponseDataStub {
 }
 
 class PostRefreshTokenRequestTests: APITests {
-    
+    @MainActor
     func testSuccess() {
         let request = PostRefreshTokenRequest(channelID: "abc", refreshToken: "123123")
         runTestSuccess(for: request) { token in

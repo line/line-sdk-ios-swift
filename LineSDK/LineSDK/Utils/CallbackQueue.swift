@@ -30,7 +30,7 @@ import Foundation
 /// - untouch: Does not change a call queue for a closure.
 /// - dispatch: Dispatches a call to a specified `DispatchQueue` object.
 /// - operation: Uses a specified `OperationQueue` object and adds a closure to the operation queue.
-public enum CallbackQueue {
+public enum CallbackQueue: Sendable {
 
     /// Dispatches a call to `DispatchQueue.main` with the `async` behavior.
     case asyncMain
@@ -48,7 +48,7 @@ public enum CallbackQueue {
     /// Uses a specified `OperationQueue` object and adds a closure to the operation queue.
     case operation(OperationQueue)
     
-    func execute(_ block: @escaping () -> Void) {
+    func execute(_ block: @escaping @Sendable () -> Void) {
         switch self {
         case .asyncMain:
             DispatchQueue.main.async { block() }
@@ -68,7 +68,7 @@ extension DispatchQueue {
     // This method will dispatch the `block` to self.
     // If `self` is the main queue, and current thread is main thread, the block
     // will be invoked immediately instead of being dispatched.
-    func safeAsync(_ block: @escaping ()->()) {
+    func safeAsync(_ block: @escaping @Sendable ()->()) {
         if self === DispatchQueue.main && Thread.isMainThread {
             block()
         } else {

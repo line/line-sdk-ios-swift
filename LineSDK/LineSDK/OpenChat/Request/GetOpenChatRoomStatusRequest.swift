@@ -25,7 +25,7 @@ import Foundation
 public struct GetOpenChatRoomStatusRequest: Request {
     
     /// The status of an Open Chat room.
-    public enum Status: String, Codable {
+    public enum Status: String, Codable, Sendable {
         /// The room is alive. Other users can join it.
         case alive = "ALIVE"
         /// The room is already deleted.
@@ -45,7 +45,7 @@ public struct GetOpenChatRoomStatusRequest: Request {
     }
     
     /// The response of a `GetOpenChatRoomStatusRequest`.
-    public struct Response: Codable {
+    public struct Response: Codable, Sendable {
         /// The status of the requested room.
         public let status: Status
     }

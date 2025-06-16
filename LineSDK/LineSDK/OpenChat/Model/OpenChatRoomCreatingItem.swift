@@ -22,7 +22,7 @@
 import Foundation
 
 /// Represents the information used when creating the Open Chat room.
-public struct OpenChatRoomCreatingItem {
+public struct OpenChatRoomCreatingItem: Sendable {
     
     /// The name the room.
     public let name: String

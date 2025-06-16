@@ -33,7 +33,7 @@ public struct GetShareFriendsRequest: Request {
     let sort: Sort?
     let pageToken: String?
     
-    public enum Sort: String {
+    public enum Sort: String, Sendable {
         /// Sort by `displayName`
         case name
 

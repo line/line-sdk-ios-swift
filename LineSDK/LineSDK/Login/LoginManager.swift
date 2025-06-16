@@ -23,7 +23,7 @@ import UIKit
 
 /// Represents a login manager. You can set up the LINE SDK configuration, log in and log out the user with the
 /// LINE authorization flow, and check the authorization status.
-public class LoginManager {
+public final class LoginManager: @unchecked Sendable /* Sendable is ensured by the internal lock */ {
 
     let lock = NSLock()
 
@@ -66,16 +66,15 @@ public class LoginManager {
     /// - Parameters:
     ///   - channelID: The channel ID for your app.
     ///   - universalLinkURL: The universal link used to navigate back to your app from LINE.
-    /// - Note:
-    ///   Call this method before you access any other methods or properties in the LINE SDK. Call this method
+    /// - Note: Call this method before you access any other methods or properties in the LINE SDK. Call this method
     ///   only once because the login manager cannot be set up multiple times.
     ///
-    ///   We strongly suggest that you specify a valid universal link URL. Set up your own universal link
-    ///   callback for your channel by following the guide on the LINE Developers site. When the callback is set
-    ///   properly, LINE will try to bring up your app with the universal link first, which improves the
-    ///   security of the authorization flow and protects your data. If the `universalLinkURL` parameter is
-    ///   `nil`, only a custom URL scheme will be used to open your app after the authorization in LINE
-    ///   is complete.
+    /// We strongly suggest that you specify a valid universal link URL. Set up your own universal link
+    /// callback for your channel by following the guide on the LINE Developers site. When the callback is set
+    /// properly, LINE will try to bring up your app with the universal link first, which improves the
+    /// security of the authorization flow and protects your data. If the `universalLinkURL` parameter is
+    /// `nil`, only a custom URL scheme will be used to open your app after the authorization in LINE
+    /// is complete.
     ///
     public func setup(channelID: String, universalLinkURL: URL?) {
 
@@ -106,23 +105,22 @@ public class LoginManager {
     ///   - completion: The completion closure to be invoked when the login action is finished.
     /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.
     ///
-    /// - Note:
-    ///   Only one process can be started at a time. Do not call this method again to start a new login process
+    /// - Note: Only one process can be started at a time. Do not call this method again to start a new login process
     ///   before `completion` is invoked.
     ///
-    ///   If the value of `permissions` contains `.profile`, the user profile will be retrieved during the login
-    ///   process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
-    ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
-    ///   more information, see `UserProfile`.
+    /// If the value of `permissions` contains `.profile`, the user profile will be retrieved during the login
+    /// process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
+    /// Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
+    /// more information, see `UserProfile`.
     ///
-    ///   An access token will be issued if the user authorizes your app. This token and a refresh token
-    ///   will be automatically stored in the keychain of your app for later use. You do not need to
-    ///   refresh the access token manually because any API call will attempt to refresh the access token if
-    ///   necessary. However, if you need to refresh the access token manually, use the
-    ///   `API.Auth.refreshAccessToken(with:)` method.
+    /// An access token will be issued if the user authorizes your app. This token and a refresh token
+    /// will be automatically stored in the keychain of your app for later use. You do not need to
+    /// refresh the access token manually because any API call will attempt to refresh the access token if
+    /// necessary. However, if you need to refresh the access token manually, use the
+    /// `API.Auth.refreshAccessToken(with:)` method.
     ///
     @discardableResult
-    public func login(
+    @MainActor public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
         parameters: LoginManager.Parameters = .init(),
@@ -158,14 +156,29 @@ public class LoginManager {
             configuration: LoginConfiguration.shared,
             scopes: permissions,
             parameters: parameters,
-            viewController: viewController)
-        process.onSucceed.delegate(on: self) { [unowned process] (self, result) in
-            self.currentProcess = nil
-            self.postLogin(
-                token: result.token,
-                response: result.response,
-                process: process,
-                completionHandler: completion)
+            viewController: viewController
+        )
+        process.onSucceed.delegate(on: self) { (self, result) in
+            Task {
+                guard let process = self.currentProcess else {
+                    return
+                }
+                self.currentProcess = nil
+                do {
+                    let result = try await self.postLogin(
+                        token: result.token,
+                        response: result.response,
+                        process: process
+                    )
+                    completion(.success(result))
+                } catch {
+                    if let cryptoError = error as? CryptoError {
+                        completion(.failure(.authorizeFailed(reason: .cryptoError(error: cryptoError))))
+                    } else {
+                        completion(.failure(error.sdkError))
+                    }
+                }
+            }
         }
         process.onFail.delegate(on: self) { (self, error) in
             self.currentProcess = nil
@@ -189,79 +202,72 @@ public class LoginManager {
     func postLogin(
         token: AccessToken,
         response: LoginProcessURLResponse,
-        process: LoginProcess,
-        completionHandler completion: @escaping (Result<LoginResult, LineSDKError>) -> Void) {
-        
-        let group = DispatchGroup()
-        
-        var profile: UserProfile?
-
-        var providerMetadata: DiscoveryDocument.ResolvedProviderMetadata?
-
-        // Any possible errors will be held here.
-        var errors: [Error] = []
-
-        if token.permissions.contains(.profile) {
-            // We need to pass token since it is not stored in keychain yet.
-            getUserProfile(with: token, in: group) { result in
-                do { profile = try result.get() }
-                catch { errors.append(error) }
-            }
+        process: LoginProcess
+    ) async throws -> LoginResult
+    {
+        enum Response {
+            case profile(UserProfile)
+            case providerMetadata(DiscoveryDocument.ResolvedProviderMetadata)
         }
 
-        if token.permissions.contains(.openID) {
-            getProviderMetadata(for: token, in: group) { result in
-                do { providerMetadata = try result.get() }
-                catch { errors.append(error) }
+        let (profile, providerMetadata) = try await withThrowingTaskGroup(of: Response.self) { group in
+            if token.permissions.contains(.profile) {
+                group.addTask {
+                    let profile = try await self.getUserProfile(with: token)
+                    return .profile(profile)
+                }
             }
-        }
-
-        group.notify(queue: .main) {
-            guard errors.isEmpty else {
-                let error = errors[0]
-                completion(.failure(error.sdkError))
-                return
-            }
-            
-            if let providerMetadata = providerMetadata {
-                do {
-                    try self.verifyIDToken(
-                        token.IDToken!,
-                        providerMetadata: providerMetadata,
-                        process: process,
-                        userID: profile?.userID
-                    )
-                } catch {
-                    if let cryptoError = error as? CryptoError {
-                        completion(.failure(.authorizeFailed(reason: .cryptoError(error: cryptoError))))
-                    } else {
-                        completion(.failure(error.sdkError))
-                    }
-                    return
+            if token.permissions.contains(.openID) {
+                group.addTask {
+                    let metadata = try await self.getProviderMetadata(for: token)
+                    return .providerMetadata(metadata)
                 }
             }
 
-            // Everything goes fine now. Store token.
-            let result = Result {
-                try AccessTokenStore.shared.setCurrentToken(token)
-            }.map {
-                LoginResult.init(
-                    accessToken: token,
-                    permissions: Set(token.permissions),
-                    userProfile: profile,
-                    friendshipStatusChanged: response.friendshipStatusChanged,
-                    IDTokenNonce: process.IDTokenNonce
-                )
+            var profile: UserProfile? = nil
+            var providerMetadata: DiscoveryDocument.ResolvedProviderMetadata? = nil
+
+            for try await value in group {
+                switch value {
+                case .profile(let p):
+                    profile = p
+                case .providerMetadata(let m):
+                    providerMetadata = m
+                }
             }
-            completion(result)
+            return (profile, providerMetadata)
         }
+
+        if let providerMetadata = providerMetadata {
+            try self.verifyIDToken(
+                token.IDToken!,
+                providerMetadata: providerMetadata,
+                process: process,
+                userID: profile?.userID
+            )
+        }
+
+        // Everything goes fine now. Store token.
+        try AccessTokenStore.shared.setCurrentToken(token)
+        return LoginResult.init(
+            accessToken: token,
+            permissions: Set(token.permissions),
+            userProfile: profile,
+            friendshipStatusChanged: response.friendshipStatusChanged,
+            IDTokenNonce: process.IDTokenNonce
+        )
     }
     
     /// Logs out the current user by revoking the refresh token and all its corresponding access tokens.
     ///
     /// - Parameter completion: The completion closure to be invoked when the logout action is finished.
-    public func logout(completionHandler completion: @escaping (Result<(), LineSDKError>) -> Void) {
+    public func logout(completionHandler completion: @escaping @Sendable (Result<(), LineSDKError>) -> Void) {
         API.Auth.revokeRefreshToken(completionHandler: completion)
+    }
+
+    /// Logs out the current user by revoking the refresh token and all its corresponding access tokens.
+    public func logout() async throws {
+        try await API.Auth.revokeRefreshToken()
     }
 
     /// Asks this `LoginManager` object to handle a URL callback from either LINE or the web login flow.
@@ -275,7 +281,7 @@ public class LoginManager {
     /// - Returns: `true` if `url` has been successfully handled; `false` otherwise.
     /// - Note: This method has the same method signature as in the methods of the `UIApplicationDelegate`
     ///         protocol. Pass all arguments to this method without any modification.
-    public func application(
+    @MainActor public func application(
         _ app: UIApplication,
         open url: URL?,
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
@@ -285,7 +291,22 @@ public class LoginManager {
 
         return currentProcess.resumeOpenURL(url: url)
     }
-    
+
+
+    /// A non-isolated version of the `application(_:open:options:)` method.
+    /// This is temporarily for Flutter SDK use only, as the Flutter SDK is not marking `@MainActor` in the `FlutterApplicationLifeCycleDelegate`.
+    /// - Warning: Prefer using the isolated `application(_:open:options:)` version whenever possible.
+    public func nonisolatedApplication(
+        _ app: UIApplication,
+        open url: URL?,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
+    {
+        guard let url = url else { return false }
+        guard let currentProcess = currentProcess else { return false }
+
+        return currentProcess.nonisolatedResumeOpenURL(url: url)
+    }
+
     // MARK: - Deprecated
     
     /// Sets the preferred language used when logging in with the web authorization flow.
@@ -293,9 +314,8 @@ public class LoginManager {
     /// If not set, the web authentication flow shows the login page in the user's device language, or falls
     /// back to English. Once set, the web page will be displayed in the preferred language.
     ///
-    /// - Note:
-    ///   This property does not affect the preferred language when LINE is used for authorization.
-    ///   LINE and the login screen are always displayed in the user's device language.
+    /// - Note: This property does not affect the preferred language when LINE is used for authorization.
+    /// LINE and the login screen are always displayed in the user's device language.
     @available(
     *, deprecated,
     message: """
@@ -315,20 +335,19 @@ public class LoginManager {
     ///   - completion: The completion closure to be invoked when the login action is finished.
     /// - Returns: The `LoginProcess` object which indicates that this method has started the login process.
     ///
-    /// - Note:
-    ///   Only one process can be started at a time. Do not call this method again to start a new login process
-    ///   before `completion` is invoked.
+    /// - Note: Only one process can be started at a time. Do not call this method again to start a new login process
+    /// before `completion` is invoked.
     ///
-    ///   If the value of `permissions` is `.profile`, the user profile will be retrieved during the login
-    ///   process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
-    ///   Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
-    ///   more information, see `UserProfile`.
+    /// If the value of `permissions` is `.profile`, the user profile will be retrieved during the login
+    /// process and contained in the `userProfile` property of the `LoginResult` object in `completion`.
+    /// Otherwise, the `userProfile` property will be `nil`. Use this profile to identify your user. For
+    /// more information, see `UserProfile`.
     ///
-    ///   An access token will be issued if the user authorizes your app. This token and a refresh token
-    ///   will be automatically stored in the keychain of your app for later use. You do not need to
-    ///   refresh the access token manually because any API call will attempt to refresh the access token if
-    ///   necessary. However, if you need to refresh the access token manually, use the
-    ///   `API.Auth.refreshAccessToken(with:)` method.
+    /// An access token will be issued if the user authorizes your app. This token and a refresh token
+    /// will be automatically stored in the keychain of your app for later use. You do not need to
+    /// refresh the access token manually because any API call will attempt to refresh the access token if
+    /// necessary. However, if you need to refresh the access token manually, use the
+    /// `API.Auth.refreshAccessToken(with:)` method.
     ///
     @available(
     *, deprecated,
@@ -337,7 +356,7 @@ public class LoginManager {
     use `login(permissions:in:parameters:completionHandler:)` instead.")
     """)
     @discardableResult
-    public func login(
+    @MainActor public func login(
         permissions: Set<LoginPermission> = [.profile],
         in viewController: UIViewController? = nil,
         options: LoginManagerOptions,
@@ -354,68 +373,32 @@ public class LoginManager {
 }
 
 extension LoginManager {
-    func getUserProfile(
-        with token: AccessToken,
-        in group: DispatchGroup,
-        handler: @escaping (Result<UserProfile, LineSDKError>) -> Void)
-    {
-        group.enter()
 
-        Session.shared.send(GetUserProfileRequestInjectedToken(token: token.value)) { profileResult in
-            handler(profileResult)
-            group.leave()
-        }
+    func getUserProfile(with token: AccessToken) async throws -> UserProfile {
+        return try await Session.shared.send(GetUserProfileRequestInjectedToken(token: token.value))
     }
-    
-    func getProviderMetadata(
-        for token: AccessToken,
-        in group: DispatchGroup,
-        handler: @escaping (Result<DiscoveryDocument.ResolvedProviderMetadata, LineSDKError>) -> Void)
-    {
-        group.enter()
+
+    func getProviderMetadata(for token: AccessToken) async throws -> DiscoveryDocument.ResolvedProviderMetadata {
         // We need a valid ID Token existing to continue.
         guard let IDToken = token.IDToken else {
-            handler(.failure(LineSDKError.authorizeFailed(reason: .lackOfIDToken(raw: token.IDTokenRaw))))
-            group.leave()
-            return
+            throw LineSDKError.authorizeFailed(reason: .lackOfIDToken(raw: token.IDTokenRaw))
         }
+
         // We need a supported verify algorithm to continue
         let algorithm = IDToken.header.algorithm
         guard let _ = JWA.Algorithm(rawValue: algorithm) else {
             let unsupportedError = CryptoError.JWTFailed(reason: .unsupportedHeaderAlgorithm(name: algorithm))
-            handler(.failure(LineSDKError.authorizeFailed(reason: .cryptoError(error: unsupportedError))))
-            group.leave()
-            return
+            throw LineSDKError.authorizeFailed(reason: .cryptoError(error: unsupportedError))
         }
 
         // Use Discovery Document to find JWKs URI. How about introducing some promise mechanism
-        Session.shared.send(GetDiscoveryDocumentRequest()) { documentResult in
-            switch documentResult {
-            case .success(let document):
-                let jwkSetURL = document.jwksURI
-                Session.shared.send(GetJWKSetRequest(url: jwkSetURL)) { jwkSetResult in
-                    switch jwkSetResult {
-                    case .success(let jwkSet):
-                        guard let keyID = IDToken.header.keyID, let key = jwkSet.getKeyByID(keyID) else {
-                            handler(.failure(LineSDKError.authorizeFailed(
-                                reason: .JWTPublicKeyNotFound(keyID: IDToken.header.keyID))))
-                            group.leave()
-                            return
-                        }
-                        handler(
-                            .success(DiscoveryDocument.ResolvedProviderMetadata(issuer: document.issuer, jwk: key))
-                        )
-                        group.leave()
-                    case .failure(let err):
-                        handler(.failure(err))
-                        group.leave()
-                    }
-                }
-            case .failure(let err):
-                handler(.failure(err))
-                group.leave()
-            }
+        let document = try await Session.shared.send(GetDiscoveryDocumentRequest())
+        let jwkSetURL = document.jwksURI
+        let jwkSet = try await Session.shared.send(GetJWKSetRequest(url: jwkSetURL))
+        guard let keyID = IDToken.header.keyID, let key = jwkSet.getKeyByID(keyID) else {
+            throw LineSDKError.authorizeFailed(reason: .JWTPublicKeyNotFound(keyID: IDToken.header.keyID))
         }
+        return DiscoveryDocument.ResolvedProviderMetadata(issuer: document.issuer, jwk: key)
     }
 
     func verifyIDToken(

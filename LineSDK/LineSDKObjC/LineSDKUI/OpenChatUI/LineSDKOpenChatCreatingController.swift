@@ -20,6 +20,7 @@
 //
 
 @objcMembers
+@MainActor
 public class LineSDKOpenChatCreatingController: NSObject {
     
     let _value: OpenChatCreatingController

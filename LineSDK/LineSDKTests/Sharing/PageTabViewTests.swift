@@ -22,6 +22,7 @@
 import XCTest
 @testable import LineSDK
 
+@MainActor
 class PageTabViewTests: XCTestCase {
 
     func testUnderlineWidth() {

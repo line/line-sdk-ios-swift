@@ -32,20 +32,19 @@ let sampleFlowParameters = LoginProcess.FlowParameters(
         loginParameter: .init()
 )
 
+@MainActor
 class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     
     var window: UIWindow!
     
     override func setUp() {
-        super.setUp()
         let url = URL(string: "https://example.com/auth")
         LoginManager.shared.setup(channelID: "123", universalLinkURL: url)
     }
     
-    override func tearDown() {
+    override func tearDown() async throws {
         LoginManager.shared.reset()
         resetViewController()
-        super.tearDown()
     }
     
     func testSetupLoginManager() {

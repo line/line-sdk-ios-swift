@@ -55,7 +55,6 @@ public struct FlexTextComponent: Codable, FlexMessageComponentTypeCompatible, Me
     /// ellipsis (…) is displayed at the end of the last line. If set to `0` or not specified, all the text is
     /// displayed.
     ///
-    /// - Note:
     /// This property is supported on the following versions of LINE.
     /// - LINE for iOS and Android: 8.11.0 and later
     /// - LINE for Windows and macOS: 5.9.0 and late

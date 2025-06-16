@@ -35,7 +35,7 @@ enum TemplateMessagePayloadType: String, Codable {
 /// - carousel: Represents the type of carousel payload. A `TemplateCarouselPayload` value is associated.
 /// - imageCarousel: Represents the type of imageCarousel payload. A `TemplateImageCarouselPayload` value is associated.
 /// - unknown: A payload type is not defined in the LINE SDK yet.
-public enum TemplateMessagePayload: Codable {
+public enum TemplateMessagePayload: Codable, Sendable {
 
     /// Represents the type of buttons payload. A `TemplateButtonsPayload` value is associated.
     case buttons(TemplateButtonsPayload)

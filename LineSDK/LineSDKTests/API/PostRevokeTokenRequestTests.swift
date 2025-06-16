@@ -27,12 +27,13 @@ extension PostRevokeTokenRequest: ResponseDataStub {
 }
 
 class PostRevokeTokenRequestTests: APITests {
+    @MainActor
     func testSuccess() {
         let request = PostRevokeTokenRequest(channelID: "123", accessToken: "123")
         runTestSuccess(for: request) { _ in }
     }
     
-    func testRequestFailWith400Response() {
+    @MainActor func testRequestFailWith400Response() {
         let expect = expectation(description: "\(#file)_\(#line)")
         let request = PostRevokeTokenRequest(channelID: "123", accessToken: "123")
         
@@ -45,7 +46,7 @@ class PostRevokeTokenRequestTests: APITests {
         waitForExpectations(timeout: 1.0, handler: nil)
     }
     
-    func testAPISuccessWith400Response() {
+    @MainActor func testAPISuccessWith400Response() {
         let expect = expectation(description: "\(#file)_\(#line)")
         
         let stub = SessionDelegateStub(stub: .init(string: "{\"error\": \"invalid_request\"}", responseCode: 400))

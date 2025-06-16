@@ -79,10 +79,23 @@ struct StubRequestWithSingleTerminatorPipeline: Request, ResponseDataStub {
 
 struct StubRequestWithContinuesPipeline: Request, ResponseDataStub {
     
-    class ContinuesRedirector: ResponsePipelineRedirector {
-        
-        var invoked = false
-        
+    final class ContinuesRedirector: ResponsePipelineRedirector, @unchecked Sendable {
+
+        private var _invoked = false
+        private let lock = NSLock()
+        var invoked: Bool {
+            get {
+                lock.lock()
+                defer { lock.unlock() }
+                return _invoked
+            }
+            set {
+                lock.lock()
+                defer { lock.unlock() }
+                _invoked = newValue
+            }
+        }
+
         func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
             return true
         }
@@ -118,10 +131,23 @@ struct StubRequestWithContinuesPipeline: Request, ResponseDataStub {
 
 struct StubRequestWithContinusDataResponsePipeline: Request, ResponseDataStub {
     
-    class TransformRedirector: ResponsePipelineRedirector {
-        
-        var invoked = false
-        
+    final class TransformRedirector: ResponsePipelineRedirector, @unchecked Sendable {
+
+        private var _invoked = false
+        private let lock = NSLock()
+        var invoked: Bool {
+            get {
+                lock.lock()
+                defer { lock.unlock() }
+                return _invoked
+            }
+            set {
+                lock.lock()
+                defer { lock.unlock() }
+                _invoked = newValue
+            }
+        }
+
         func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
             return true
         }
@@ -163,10 +189,23 @@ struct StubRequestWithContinusDataResponsePipeline: Request, ResponseDataStub {
 }
 
 struct StubRequestWithStopPipeline: Request, ResponseDataStub {
-    class StopRedirector: ResponsePipelineRedirector {
-        
-        var invoked = false
-        
+    final class StopRedirector: ResponsePipelineRedirector, @unchecked Sendable {
+
+        private var _invoked = false
+        private let lock = NSLock()
+        var invoked: Bool {
+            get {
+                lock.lock()
+                defer { lock.unlock() }
+                return _invoked
+            }
+            set {
+                lock.lock()
+                defer { lock.unlock() }
+                _invoked = newValue
+            }
+        }
+
         func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
             return true
         }
@@ -201,16 +240,29 @@ struct StubRequestWithStopPipeline: Request, ResponseDataStub {
 }
 
 struct StubRequestWithRestartPipeline: Request, ResponseDataStub {
-    class RestartRedirector: ResponsePipelineRedirector {
-        
+    final class RestartRedirector: ResponsePipelineRedirector, @unchecked Sendable {
+
         let valid: Int
         
         init(valid: Int) {
             self.valid = valid
         }
         
-        var invoked = false
-        
+        private var _invoked = false
+        private let lock = NSLock()
+        var invoked: Bool {
+            get {
+                lock.lock()
+                defer { lock.unlock() }
+                return _invoked
+            }
+            set {
+                lock.lock()
+                defer { lock.unlock() }
+                _invoked = newValue
+            }
+        }
+
         func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
             return response.statusCode != valid
         }
@@ -245,10 +297,23 @@ struct StubRequestWithRestartPipeline: Request, ResponseDataStub {
 }
 
 struct StubRequestWithRestartAnotherPipeline: Request, ResponseDataStub {
-    class RestartAnotherPipeline: ResponsePipelineRedirector {
-        
-        var invoked = false
-        
+    final class RestartAnotherPipeline: ResponsePipelineRedirector, @unchecked Sendable {
+
+        private var _invoked = false
+        private let lock = NSLock()
+        var invoked: Bool {
+            get {
+                lock.lock()
+                defer { lock.unlock() }
+                return _invoked
+            }
+            set {
+                lock.lock()
+                defer { lock.unlock() }
+                _invoked = newValue
+            }
+        }
+
         func shouldApply<T>(request: T, data: Data, response: HTTPURLResponse) -> Bool where T : Request {
             return true
         }

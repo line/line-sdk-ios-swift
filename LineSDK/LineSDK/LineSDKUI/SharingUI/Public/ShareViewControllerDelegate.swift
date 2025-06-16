@@ -30,6 +30,7 @@
  that you do so. Without implementing the delegate methods, you can't retrieve information about events like 
  loading failure, user cancellation, or message sending success.
 */
+@MainActor
 public protocol ShareViewControllerDelegate: AnyObject {
 
     /// Tells the delegate that the loading process fails for a specified type with an error.
@@ -84,7 +85,6 @@ public protocol ShareViewControllerDelegate: AnyObject {
     /// Check the `error` parameter for error details. You may also want to dismiss the current share view controller 
     /// and show an error message to the user. See `LineSDKError` for more about error handling.
     ///
-    /// - Note:
     /// By default, after the message is sent and the response received, the share view controller is dismissed
     /// automatically. You can prevent this by implementing the `shareViewControllerShouldDismissAfterSending(_:)` 
     /// method in the delegate object and returning `false` there. You can then dismiss the share view controller 
@@ -108,7 +108,6 @@ public protocol ShareViewControllerDelegate: AnyObject {
     /// have blocked your channel or the current user from sending them messages. They can also choose to block
     /// messages from unauthorized channels.
     ///
-    /// - Note:
     /// By default, after the message is sent and the response received, the share view controller is dismissed
     /// automatically. You can prevent this by implementing the `shareViewControllerShouldDismissAfterSending(_:)` 
     /// method in the delegate object and returning `false` there. You can then dismiss the share view controller 
@@ -129,7 +128,6 @@ public protocol ShareViewControllerDelegate: AnyObject {
     /// method in the delegate object and returning `false` there. You can then dismiss the share view controller 
     /// yourself if necessary.
     ///
-    /// - Note:
     /// Use this method to control dismissal of the share view controller. In the completion handler of your own dismiss 
     /// call, you can choose to display an alert in UI to notify users the result of sharing, for example.
     ///

@@ -26,6 +26,7 @@ import SafariServices
 /// Represents a login process initialized by a `LoginManager` object. Normally, a process that contains multiple
 /// login flows will run serially. If a flow logs in the user successfully, subsequent flows will not be
 /// executed.
+@MainActor
 public class LoginProcess {
 
     /// Represents a login route for how the auth flow is initiated.
@@ -38,7 +39,7 @@ public class LoginProcess {
         case webLogin
     }
 
-    struct FlowParameters {
+    struct FlowParameters: Sendable {
         let channelID: String
         let universalLinkURL: URL?
         let scopes: Set<LoginPermission>
@@ -64,11 +65,11 @@ public class LoginProcess {
     
     /// Observes application switching to foreground.
     /// 
-    /// - Note:
     /// If the app switching happens during login process, we want to
     /// inspect the event of switched back from another app (Safari or LINE or any other)
     /// If the framework container app has not been started up by an `open(url:)`, we think current
     /// login process fails and we need to call the completion closure with a `.userCancelled` error.
+    @MainActor
     class AppSwitchingObserver {
         // A token holds current observing. It will be released and trigger remove observer
         // when this `AppSwitchingObserver` gets released.
@@ -87,9 +88,11 @@ public class LoginProcess {
                 .addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil)
             {
                 [weak self] _ in
-                guard let `self` = self else { return }
-                guard self.valid else { return }
-                self.onTrigger.call()
+                Task { @MainActor in
+                    guard let `self` = self else { return }
+                    guard self.valid else { return }
+                    self.onTrigger.call()
+                }
             }
         }
     }
@@ -277,14 +280,15 @@ public class LoginProcess {
         
         webLoginFlow.start(in: presentingViewController)
     }
-    
-    func resumeOpenURL(url: URL) -> Bool {
 
+    nonisolated func canHandleURL(url: URL) -> Bool {
         let isValidUniversalLinkURL = configuration.isValidUniversalLinkURL(url: url)
         let isValidCustomizeURL = configuration.isValidCustomizeURL(url: url)
-        
-        guard isValidUniversalLinkURL || isValidCustomizeURL else
-        {
+        return isValidUniversalLinkURL || isValidCustomizeURL
+    }
+
+    func resumeOpenURL(url: URL) -> Bool {
+        guard canHandleURL(url: url) else {
             invokeFailure(error: LineSDKError.authorizeFailed(reason: .callbackURLSchemeNotMatching))
             return false
         }
@@ -320,6 +324,47 @@ public class LoginProcess {
         return true
     }
 
+    nonisolated func nonisolatedResumeOpenURL(url: URL) -> Bool {
+        guard canHandleURL(url: url) else {
+            Task { @MainActor in
+                invokeFailure(error: LineSDKError.authorizeFailed(reason: .callbackURLSchemeNotMatching))
+            }
+            return false
+        }
+
+        Task { @MainActor in
+            // It is the callback url we could handle, so the app switching observer should be invalidated.
+            appSwitchingObserver?.valid = false
+
+            // Wait for a while before request access token.
+            //
+            // When switching back to SDK container app from another app, with url scheme or universal link,
+            // the URL Session is not available yet (sending a request causes "53: Software caused connection abort" or
+            // "-1005 The network connection was lost.", seems only happening on some iOS 12 devices).
+            // So as a workaround, we need wait for a while before continuing.
+            //
+            // ref: https://github.com/AFNetworking/AFNetworking/issues/4279
+            //
+            // https://github.com/AFNetworking/AFNetworking/issues/4279#issuecomment-447108981
+            // It seems that plan A in the comment above also works great (even when the background execution time
+            // expired). But I cannot explain why the `URLSession` can retry the request even when background task ends.
+            // Maybe it is some internal implementation. Delay the request now works fine so we choose it as a workaround.
+            //
+            // In some edge cases, the network would be still lost after 0.3 sec of delay. But it should be very rare.
+            // So an auto retry for NSURLErrorNetworkConnectionLost (-1005) is applied to make sure the error not happen.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                do {
+                    let response = try LoginProcessURLResponse(from: url, validatingWith: self.processID)
+                    self.exchangeToken(response: response, canRetryOnNetworkLost: true)
+                } catch {
+                    self.invokeFailure(error: error)
+                }
+            }
+        }
+
+        return true
+    }
+
     private func exchangeToken(response: LoginProcessURLResponse, canRetryOnNetworkLost: Bool) {
 
         let tokenExchangeRequest = PostExchangeTokenRequest(
@@ -328,10 +373,13 @@ public class LoginProcess {
             codeVerifier: self.pkce.codeVerifier,
             redirectURI: Constant.thirdPartyAppReturnURL,
             optionalRedirectURI: self.configuration.universalLinkURL?.absoluteString)
-        Session.shared.send(tokenExchangeRequest) { tokenResult in
-            switch tokenResult {
-            case .success(let token): self.invokeSuccess(result: token, response: response)
-            case .failure(let error):
+
+        Task {
+            do {
+                let token = try await Session.shared.send(tokenExchangeRequest)
+                self.invokeSuccess(result: token, response: response)
+            } catch {
+                let error = error as? LineSDKError ?? .untypedError(error: error)
                 if error.isURLSessionErrorCode(sessionErrorCode: NSURLErrorNetworkConnectionLost) && canRetryOnNetworkLost {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         self.exchangeToken(response: response, canRetryOnNetworkLost: false)
@@ -341,7 +389,6 @@ public class LoginProcess {
                 }
             }
         }
-
     }
     
     private var canUseLineAuthV2: Bool {
@@ -365,6 +412,7 @@ public class LoginProcess {
     }
 }
 
+@MainActor
 class AppUniversalLinkFlow {
     
     let url: URL
@@ -383,6 +431,7 @@ class AppUniversalLinkFlow {
     }
 }
 
+@MainActor
 class AppAuthSchemeFlow {
     
     let url: URL
@@ -400,6 +449,7 @@ class AppAuthSchemeFlow {
     }
 }
 
+@MainActor
 class WebLoginFlow: NSObject {
     
     enum Next {
@@ -448,7 +498,7 @@ class WebLoginFlow: NSObject {
     }
 }
 
-extension WebLoginFlow: SFSafariViewControllerDelegate {
+extension WebLoginFlow: @preconcurrency SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         // macCatalyst calls `didFinish` immediately when open page in Safari.
         // It should not be a cancellation.

@@ -24,7 +24,7 @@ import Foundation
 public struct GetOpenChatRoomJoinTypeRequest: Request {
 
     /// The joining type of an Open Chat room. The value indicates what is required if a user want to join the room.
-    public enum RoomType: String, Decodable {
+    public enum RoomType: String, Decodable, Sendable {
         /// The room is public and open for anyone to join.
         case `default` = "NONE"
         /// A user needs to request to join the room, only approved user can join. The admins or authority users of the
@@ -45,7 +45,7 @@ public struct GetOpenChatRoomJoinTypeRequest: Request {
     }
 
     /// The response of a `GetOpenChatRoomJoinTypeRequest`.
-    public struct Response: Decodable {
+    public struct Response: Decodable, Sendable {
         /// The room joining type of the requested Open Chat room.
         public let type: RoomType
     }

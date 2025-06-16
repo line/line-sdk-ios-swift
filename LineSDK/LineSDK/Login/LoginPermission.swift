@@ -22,7 +22,7 @@
 import Foundation
 
 /// Represents the possible login permissions to be set in the authorization request.
-public struct LoginPermission: Hashable {
+public struct LoginPermission: Hashable, Sendable {
     /// The raw value of the permission. A `LoginPermission` object is composed of a plain raw string.
     public let rawValue: String
 

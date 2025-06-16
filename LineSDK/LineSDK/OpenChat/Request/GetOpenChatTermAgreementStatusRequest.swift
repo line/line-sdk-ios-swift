@@ -26,7 +26,7 @@ import Foundation
 public struct GetOpenChatTermAgreementStatusRequest: Request {
     
     /// The response of a `GetOpenChatTermAgreementStatusRequest`.
-    public struct Response: Decodable {
+    public struct Response: Decodable, Sendable {
         /// Whether the user has already agreed the use term.
         public let agreed: Bool
     }

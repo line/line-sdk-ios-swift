@@ -40,7 +40,8 @@ class PipelineTests: XCTestCase {
         
         XCTAssertFalse(ResponsePipeline.redirector(token1) == ResponsePipeline.terminator(parser1))
     }
-    
+
+    @MainActor
     func testJSONParsePipeline() {
         let pipeline = JSONParsePipeline(JSONDecoder())
         let result = try! pipeline.parse(request: StubRequestSimple(), data: StubRequestSimple.successData)

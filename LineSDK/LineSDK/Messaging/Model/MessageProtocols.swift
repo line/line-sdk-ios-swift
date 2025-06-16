@@ -23,14 +23,14 @@ import Foundation
 
 /// LINE internal use only.
 /// Represents a type which could be converted to a `Message` directly.
-public protocol MessageConvertible {
+public protocol MessageConvertible: Sendable {
     /// Returns a converted `Message` which wraps `Self`.
     var message: Message { get }
 }
 
 /// Represents a type which could be converted to a `Message` with a given alternate text.
-public protocol AltTextMessageConvertible {
-    
+public protocol AltTextMessageConvertible: Sendable {
+
     /// Returns a converted `Message` which wraps `Self` with an alternate text.
     ///
     /// - Parameter text: An alternate text to show in LINE push notification or chat preview.
@@ -64,7 +64,7 @@ public protocol FlexMessageConvertible: AltTextMessageConvertible {
 }
 
 extension FlexMessageConvertible {
-    
+
     /// Returns a converted `Message` which wraps `Self` with an alternate text.
     ///
     /// - Parameter text: The alternate text if the message cannot be displayed correctly.
@@ -75,21 +75,21 @@ extension FlexMessageConvertible {
 }
 
 /// Represents a type which could be converted to a `FlexMessageComponent`.
-public protocol FlexMessageComponentConvertible {
-    
+public protocol FlexMessageComponentConvertible: Sendable {
+
     /// Returns a converted `FlexMessageComponent` which wraps `Self`.
     var component: FlexMessageComponent { get }
 }
 
 /// Represents a type which could be converted to a `MessageAction`.
-public protocol MessageActionConvertible {
-    
+public protocol MessageActionConvertible: Sendable {
+
     /// Returns a converted `MessageAction` which wraps `Self`.
     var action: MessageAction { get }
 }
 
 /// Represents a type in which an action is contained. It is used to simplify the action setting behavior.
-public protocol MessageActionContainer {
+public protocol MessageActionContainer: Sendable {
     var action: MessageAction? { get set }
 }
 
@@ -103,27 +103,27 @@ extension MessageActionContainer {
 }
 
 /// Represents a type which contains a `type` key. It could indicate a `Message` case.
-protocol MessageTypeCompatible {
+protocol MessageTypeCompatible: Sendable {
     var type: MessageType { get }
 }
 
 /// Represents a type which contains a `type` key. It could indicate a `TemplateMessagePayload` case.
-protocol TemplateMessagePayloadTypeCompatible {
+protocol TemplateMessagePayloadTypeCompatible: Sendable {
     var type: TemplateMessagePayloadType { get }
 }
 
 /// Represents a type which contains a `type` key. It could indicate a `MessageAction` case.
-protocol TemplateMessageActionTypeCompatible {
+protocol TemplateMessageActionTypeCompatible: Sendable {
     var type: MessageActionType { get }
 }
 
 /// Represents a type which contains a `type` key. It could indicate a `FlexMessageContainer` case.
-protocol FlexMessageContainerTypeCompatible {
+protocol FlexMessageContainerTypeCompatible: Sendable {
     var type: FlexMessageContainerType { get }
 }
 
 /// Represents a type which contains a `type` key. It could indicate a `FlexMessageComponent` case.
-protocol FlexMessageComponentTypeCompatible {
+protocol FlexMessageComponentTypeCompatible: Sendable {
     var type: FlexMessageComponentType { get }
 }
 

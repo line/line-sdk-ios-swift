@@ -34,7 +34,7 @@ struct InternalAPIError: Decodable {
 /// returns an error in a known format, the error is parsed into an `APIError` object and thrown out. The
 /// error type is `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError`.
 ///
-public struct APIError {
+public struct APIError: Sendable {
     
     /// The error state received from the LINE Platform.
     public let error: String

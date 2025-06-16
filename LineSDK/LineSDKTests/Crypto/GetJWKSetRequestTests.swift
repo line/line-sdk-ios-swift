@@ -29,7 +29,7 @@ extension GetJWKSetRequest: ResponseDataStub {
 }
 
 class GetJWKSetRequestTests: APITests {
-
+    @MainActor
     func testSuccess() {
         let r = GetJWKSetRequest(url: URL(string: "https://example.com")!)
         runTestSuccess(for: r) { result in

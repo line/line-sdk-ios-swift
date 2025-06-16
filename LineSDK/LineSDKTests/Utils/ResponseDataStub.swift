@@ -22,12 +22,12 @@
 import Foundation
 
 protocol ResponseDataStub {
-    static var success: String { get }
-    static var successData: Data { get }
+    @MainActor static var success: String { get }
+    @MainActor static var successData: Data { get }
 }
 
 extension ResponseDataStub {
-    static var successData: Data {
+    @MainActor static var successData: Data {
         return success.data(using: .utf8)!
     }
 }

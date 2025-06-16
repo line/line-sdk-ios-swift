@@ -31,6 +31,7 @@ extension PostMessageSendingTokenIssueRequest: ResponseDataStub {
 }
 
 class PostMessageSendingTokenRequestTests: APITests {
+    @MainActor
     func testSuccess() {
             let request = PostMessageSendingTokenIssueRequest(userIDs: ["1", "2"])
             runTestSuccess(for: request) { result in

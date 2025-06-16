@@ -22,10 +22,11 @@
 import UIKit
 import XCTest
 
+@MainActor
 func XCTAssertViewController<T: UIViewController>(
     _ input: @autoclosure () -> UIViewController,
     isKindOf viewControllerType: T.Type,
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line
 )
 {

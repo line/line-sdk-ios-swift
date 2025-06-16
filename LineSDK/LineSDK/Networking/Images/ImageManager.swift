@@ -23,11 +23,29 @@ import UIKit
 
 typealias ImageSettingResult = Result<UIImage, LineSDKError>
 
-class ImageManager {
+struct SendableCache<Key: AnyObject, Value: AnyObject> {
+    let cache: NSCache<Key, Value>
+    func object(forKey key: Key) -> Value? {
+        return cache.object(forKey: key)
+    }
+
+    func setObject(_ obj: Value, forKey key: Key) {
+        cache.setObject(obj, forKey: key)
+    }
+
+    func removeAllObjects() {
+        cache.removeAllObjects()
+    }
+}
+
+extension SendableCache: @unchecked Sendable where Key: Sendable, Value: Sendable {}
+
+final class ImageManager: Sendable {
 
     typealias TaskToken = UInt
-    private var currentToken: TaskToken = 0
-    func nextToken() -> TaskToken {
+
+    @MainActor private var currentToken: TaskToken = 0
+    @MainActor func nextToken() -> TaskToken {
         if currentToken < TaskToken.max - 1 {
             currentToken += 1
         } else {
@@ -39,18 +57,19 @@ class ImageManager {
     static let shared = ImageManager()
 
     let downloader = ImageDownloader()
-    let cache: NSCache<NSURL, UIImage>
+    let cache: SendableCache<NSURL, UIImage>
 
     private init() {
-        cache = NSCache()
+        let cache = NSCache<NSURL, UIImage>()
         cache.countLimit = 500
+        self.cache = SendableCache(cache: cache)
     }
 
     func getImage(
         _ url: URL,
         taskToken: TaskToken,
         callbackQueue: CallbackQueue = .currentMainOrAsync,
-        completion: @escaping (ImageSettingResult, TaskToken) -> Void)
+        completion: @escaping @Sendable (ImageSettingResult, TaskToken) -> Void)
     {
         getImage(url, callbackQueue: callbackQueue) { completion($0, taskToken) }
     }
@@ -58,7 +77,7 @@ class ImageManager {
     func getImage(
         _ url: URL,
         callbackQueue: CallbackQueue = .currentMainOrAsync,
-        completion: ((ImageSettingResult) -> Void)? = nil)
+        completion: (@Sendable (ImageSettingResult) -> Void)? = nil)
     {
         let nsURL = url as NSURL
         if let image = cache.object(forKey: nsURL) {

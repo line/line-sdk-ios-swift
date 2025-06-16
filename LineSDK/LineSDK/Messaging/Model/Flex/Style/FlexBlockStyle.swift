@@ -21,7 +21,7 @@
 
 /// LINE internal use only.
 /// Represents a style for a block in a flex message.
-public struct FlexBlockStyle: Codable {
+public struct FlexBlockStyle: Codable, Sendable {
     
     /// Background color of the block. White color will be used if not specified.
     public var backgroundColor: HexColor?

@@ -22,12 +22,15 @@
 import Foundation
 
 /// A delegate helper type to "shadow" weak `self`, to prevent creating an unexpected retain cycle.
-class Delegate<Input, Output> {
+final class Delegate<Input, Output>: @unchecked Sendable {
     init() {}
-    
+
+    private let lock = NSLock()
     private var block: ((Input) -> Output?)?
     
     func delegate<T: AnyObject>(on target: T, block: ((T, Input) -> Output)?) {
+        lock.lock()
+        defer { lock.unlock() }
         // The `target` is weak inside block, so you do not need to worry about it in the caller side.
         self.block = { [weak target] input in
             guard let target = target else { return nil }
@@ -36,6 +39,8 @@ class Delegate<Input, Output> {
     }
     
     func call(_ input: Input) -> Output? {
+        lock.lock()
+        defer { lock.unlock() }
         return block?(input)
     }
 }

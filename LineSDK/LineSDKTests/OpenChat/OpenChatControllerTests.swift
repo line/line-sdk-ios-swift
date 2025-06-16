@@ -26,15 +26,13 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
 
     var window: UIWindow!
     
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
         LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         LoginManager.shared.reset()
         resetViewController()
-        super.tearDown()
     }
 
     func testLocalAuthorizationStatus() {

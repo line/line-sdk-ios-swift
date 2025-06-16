@@ -22,17 +22,19 @@
 import Foundation
 import UIKit
 
+@MainActor
 protocol ViewControllerCompatibleTest: AnyObject {
     var window: UIWindow! { get set }
 }
 
 extension ViewControllerCompatibleTest {
-    
+    @MainActor
     func setupViewController() -> UIViewController {
         let rootViewController =  UIViewController()
         return setupViewController(rootViewController)
     }
-    
+
+    @MainActor
     func setupViewController(_ input: UIViewController) -> UIViewController {
 
         input.loadViewIfNeeded()
@@ -42,7 +44,8 @@ extension ViewControllerCompatibleTest {
         window.makeKeyAndVisible()
         return input
     }
-    
+
+    @MainActor
     func resetViewController() {
         window = nil
     }

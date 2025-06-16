@@ -44,7 +44,7 @@ extension API {
         sort: GetFriendsRequest.Sort? = nil,
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetFriendsRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<GetFriendsRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetFriendsRequest(sort: sort, pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -67,7 +67,7 @@ extension API {
     public static func getApproversInFriends(
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetApproversInFriendsRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<GetApproversInFriendsRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetApproversInFriendsRequest(pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -89,7 +89,7 @@ extension API {
     public static func getGroups(
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetGroupsRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<GetGroupsRequest.Response, LineSDKError>) -> Void)
     {
         let request = GetGroupsRequest(pageToken: pageToken)
         Session.shared.send(request, callbackQueue: queue, completionHandler:completion)
@@ -114,7 +114,9 @@ extension API {
         groupID: String,
         pageToken: String?,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetApproversInGroupRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (
+            Result<GetApproversInGroupRequest.Response, LineSDKError>
+        ) -> Void)
     {
         do {
             let request = try GetApproversInGroupRequest(groupID: groupID, pageToken: pageToken)
@@ -138,24 +140,23 @@ extension API {
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be invoked when the API finishes.
     ///
-    /// - Note:
-    ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
+    /// - Note: `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
     ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
     ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
     ///   Please confirm your channel permissions before you use this API.
     ///
-    ///   You could send at most 5 messages to a user in a single call. Line SDK does not check the elements count in
-    ///   `messages` when sending. However, you could expect a 400 error if you contain more that 5 messages in the
-    ///   request.
+    /// You could send at most 5 messages to a user in a single call. Line SDK does not check the elements count in
+    /// `messages` when sending. However, you could expect a 400 error if you contain more that 5 messages in the
+    /// request.
     ///
-    ///   There would be a few cases that API call is successful but message is not delivered. In these cases,
-    ///   the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
+    /// There would be a few cases that API call is successful but message is not delivered. In these cases,
+    /// the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
     ///
     public static func sendMessages(
         _ messages: [MessageConvertible],
         to chatID: String,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<PostSendMessagesRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<PostSendMessagesRequest.Response, LineSDKError>) -> Void)
     {
         let request = PostSendMessagesRequest(chatID: chatID, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
@@ -170,26 +171,25 @@ extension API {
     ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
     ///   - completion: The completion closure to be invoked when the API finishes.
     ///
-    /// - Note:
-    ///   `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
+    /// - Note: `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
     ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
     ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
     ///   Please confirm your channel permissions before you use this API.
     ///
-    ///   You could send at most 5 messages, and to at most 10 users in a single call. Line SDK does not check the
-    ///   elements count in `messages` or `userIDs` when sending. However, you could expect a 400 error if you contain
-    ///   more elements than allowed.
+    /// You could send at most 5 messages, and to at most 10 users in a single call. Line SDK does not check the
+    /// elements count in `messages` or `userIDs` when sending. However, you could expect a 400 error if you contain
+    /// more elements than allowed.
     ///
-    ///   There would be a few cases that API call is successful but message is not delivered. In these cases,
-    ///   the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
-    ///   To know the message delivery result for each receiver, please check the response `results`, which is an array
-    ///   of [SendingResult]`. See `SendingResult` for more.
+    /// There would be a few cases that API call is successful but message is not delivered. In these cases,
+    /// the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
+    /// To know the message delivery result for each receiver, please check the response `results`, which is an array
+    /// of [SendingResult]`. See `SendingResult` for more.
     ///
     public static func multiSendMessages(
         _ messages: [MessageConvertible],
         to userIDs: [String],
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<PostMultisendMessagesRequest.Response, LineSDKError>) -> Void)
+        completionHandler completion: @escaping @Sendable (Result<PostMultisendMessagesRequest.Response, LineSDKError>) -> Void)
     {
         let request = PostMultisendMessagesRequest(userIDs: userIDs, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
@@ -201,20 +201,34 @@ extension API {
     public static func getMessageSendingOneTimeToken(
         userIDs: [String],
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHander completion: @escaping (Result<MessageSendingToken, LineSDKError>) -> Void)
+        completionHander completion: @escaping @Sendable (Result<MessageSendingToken, LineSDKError>) -> Void)
     {
         let request = PostMessageSendingTokenIssueRequest(userIDs: userIDs)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+    }
+
+    public static func getMessageSendingOneTimeToken(userIDs: [String]) async throws -> MessageSendingToken {
+        let request = PostMessageSendingTokenIssueRequest(userIDs: userIDs)
+        return try await Session.shared.send(request)
     }
 
     public static func multiSendMessages(
         _ messages: [MessageConvertible],
         withMessageToken token: MessageSendingToken,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<Unit, LineSDKError>) -> Void)
+        completionHandler completion: @Sendable @escaping (Result<Unit, LineSDKError>) -> Void)
     {
         let request = PostMultisendMessagesWithTokenRequest(token: token, messages: messages)
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+    }
+
+    public static func multiSendMessages(
+        _ messages: [MessageConvertible],
+        withMessageToken token: MessageSendingToken
+    ) async throws -> Unit
+    {
+        let request = PostMultisendMessagesWithTokenRequest(token: token, messages: messages)
+        return try await Session.shared.send(request)
     }
 }
 
@@ -231,7 +245,9 @@ extension API {
     public static func getOpenChatRoomStatus(
         openChatId: EntityID,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetOpenChatRoomStatusRequest.Response, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (
+            Result<GetOpenChatRoomStatusRequest.Response, LineSDKError>
+        ) -> Void
     )
     {
         do {
@@ -254,7 +270,9 @@ extension API {
     public static func getOpenChatRoomMembershipState(
         openChatId: EntityID,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetOpenChatRoomMembershipStateRequest.Response, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (
+            Result<GetOpenChatRoomMembershipStateRequest.Response, LineSDKError>
+        ) -> Void
     )
     {
         do {
@@ -276,7 +294,9 @@ extension API {
     public static func getOpenChatRoomJoinType(
         openChatId: EntityID,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetOpenChatRoomJoinTypeRequest.Response, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (
+            Result<GetOpenChatRoomJoinTypeRequest.Response, LineSDKError>
+        ) -> Void
     )
     {
         do {
@@ -300,7 +320,9 @@ extension API {
         openChatId: EntityID,
         displayName: String,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<PostOpenChatRoomJoinRequest.Response, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (
+            Result<PostOpenChatRoomJoinRequest.Response, LineSDKError>
+        ) -> Void
     )
     {
         do {

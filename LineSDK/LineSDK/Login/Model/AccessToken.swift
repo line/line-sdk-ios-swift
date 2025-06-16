@@ -39,7 +39,7 @@ protocol AccessTokenType {}
 /// Do not try to create an access token yourself. You can get a valid access token in use by accessing the
 /// `current` property of an `AccessTokenStore` object.
 ///
-public struct AccessToken: Codable, AccessTokenType, Equatable {
+public struct AccessToken: Codable, AccessTokenType, Equatable, Sendable {
 
     /// The value of the access token.
     public let value: String

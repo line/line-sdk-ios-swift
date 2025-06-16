@@ -46,14 +46,16 @@ class UserProfileViewController: UIViewController, IndicatorDisplay {
         if needsLoadProfile {
             showIndicator()
             API.getProfile { result in
-                self.hideIndicator()
-                switch result {
-                case .success(let profile):
-                    self.userProfile = profile
-                    self.reloadData()
-                case .failure(let error):
-                    self.displayErrorMessage(error.localizedDescription)
-                    UIAlertController.present(in: self, error: error)
+                Task { @MainActor in
+                    self.hideIndicator()
+                    switch result {
+                    case .success(let profile):
+                        self.userProfile = profile
+                        self.reloadData()
+                    case .failure(let error):
+                        self.displayErrorMessage(error.localizedDescription)
+                        UIAlertController.present(in: self, error: error)
+                    }
                 }
             }
         } else {
@@ -107,11 +109,15 @@ class UserProfileViewController: UIViewController, IndicatorDisplay {
             self.hideIndicator()
             switch result {
             case .success:
-                UIAlertController.present(in: self, successResult: "Logout Successfully.") {
-                    NotificationCenter.default.post(name: .userDidLogout, object: nil)
+                Task { @MainActor in
+                    UIAlertController.present(in: self, successResult: "Logout Successfully.") {
+                        NotificationCenter.default.post(name: .userDidLogout, object: nil)
+                    }
                 }
             case .failure(let error):
-                UIAlertController.present(in: self, error: error)
+                Task { @MainActor in
+                    UIAlertController.present(in: self, error: error)
+                }
             }
         }
     }

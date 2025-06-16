@@ -66,8 +66,7 @@ public extension LoginButtonDelegate {
 
 /// Represents a login button which executes the login function when the user taps the button.
 ///
-/// - Note:
-/// To change the size of the button, use the `buttonSize` property instead of setting its frame or giving
+/// - Note: To change the size of the button, use the `buttonSize` property instead of setting its frame or giving
 /// it some size constraints.
 open class LoginButton: UIButton {
 

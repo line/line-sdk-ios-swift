@@ -153,6 +153,7 @@ func guardSharedProperty<T>(_ input: T?) -> T {
 }
 
 extension Constant {
+    @MainActor
     static var isLINEInstalled: Bool {
         return UIApplication.shared.canOpenURL(Constant.lineAppAuthURLv2)
     }

@@ -35,7 +35,7 @@ public struct GetFriendsRequest: Request {
     ///
     /// - name: Sort by `displayName`
     /// - relation: Sort by relationship.
-    public enum Sort: String {
+    public enum Sort: String, Sendable {
         /// Sort by `displayName`
         case name
 
@@ -64,7 +64,7 @@ public struct GetFriendsRequest: Request {
         return param
     }
 
-    public struct Response: Decodable {
+    public struct Response: Decodable, Sendable {
 
         /// An array of `User` of current user's friends.
         public let friends: [User]

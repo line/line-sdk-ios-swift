@@ -35,12 +35,12 @@ import UIKit
 /// To get the result of the creating controller or have more control of the behaviors, implement methods in
 /// `OpenChatCreatingControllerDelegate` and set `delegate` property of an `OpenChatCreatingController` instance.
 ///
-/// - Note:
-/// The class is intended to be used as-is and to provide a default open chat creating experience across all LINE and
+/// - Note: The class is intended to be used as-is and to provide a default open chat creating experience across all LINE and
 /// LINE SDK integrations. Users expect a consistent UI and interaction across different apps when using the Open Chat
 /// features. But if it's so important for you to provide a fully customized sharing interaction, you can still use the
 ///  related APIs to create your own UIs.
 ///
+@MainActor
 public class OpenChatCreatingController {
     
     /// The delegate object of this open chat creating controller.
@@ -56,7 +56,6 @@ public class OpenChatCreatingController {
     
     /// The suggested category shows as the default category when user creates a new open chat room.
     ///
-    /// - Note:
     /// Users can select a category in UI from a predefined list of `OpenChatCategory`s. It determines which category
     /// the created room should belong to. The `suggestedCategory` value will be show as the selected state when the
     /// user opens open chat creating UI.
@@ -75,7 +74,6 @@ public class OpenChatCreatingController {
     ///                     responsibility of user interaction.
     ///   - handler: A block called when the open chat creating view controller presenting action is done with a result.
     ///
-    /// - Note:
     /// If the `handler` is called with a `.failure` case, it means there is no view controller from LINE SDK
     /// shown. A few reasons can cause it, such as term agreement status cannot be retrieved due to network error.
     /// On the other hand, a `.success` case and its associated value means a view controller from LINE SDK is
@@ -96,10 +94,10 @@ public class OpenChatCreatingController {
         presentedHandler handler: ((Result<UIViewController, LineSDKError>) -> Void)? = nil
     )
     {
-        let checkTermRequest = GetOpenChatTermAgreementStatusRequest()
-        Session.shared.send(checkTermRequest) { result in
-            switch result {
-            case .success(let response):
+        Task {
+            let checkTermRequest = GetOpenChatTermAgreementStatusRequest()
+            do {
+                let response = try await Session.shared.send(checkTermRequest)
                 if response.agreed {
                     self.presentCreatingViewController(in: viewController, handler: handler)
                 } else {
@@ -110,9 +108,8 @@ public class OpenChatCreatingController {
                         self.presentTermAgreementAlert(in: viewController, handler: handler)
                     }
                 }
-                
-            case .failure(let error):
-                handler?(.failure(error))
+            } catch {
+                handler?(.failure(error as? LineSDKError ?? .untypedError(error: error)))
             }
         }
     }
@@ -173,20 +170,21 @@ public class OpenChatCreatingController {
                 let createRoomRequest = PostOpenChatCreateRequest(room: room)
                 
                 let indicator = LoadingIndicator.add(to: navigation.view)
-                Session.shared.send(createRoomRequest) { result in
-                    indicator.remove()
-                    switch result {
-                    case .success(let response):
+                Task {
+                    do {
+                        let response = try await Session.shared.send(createRoomRequest)
+                        indicator.remove()
                         UserDefaultsValue.cachedOpenChatUserProfileName = room.creatorDisplayName
                         navigation.dismiss(animated: true) {
                             self.delegate?.openChatCreatingController(
                                 self, didCreateChatRoom: response, withCreatingItem: room
                             )
                         }
-                    case .failure(let error):
+                    } catch {
+                        indicator.remove()
                         self.delegate?.openChatCreatingController(
                             self,
-                            didFailWithError: error,
+                            didFailWithError: error as? LineSDKError ?? .untypedError(error: error),
                             withCreatingItem: room,
                             presentingViewController: navigation
                         )
@@ -211,13 +209,12 @@ extension OpenChatCreatingController {
     /// - Returns: The local authorization status based on the currently stored token and the permissions specified
     ///            in that token.
     ///
-    /// - Note:
-    ///   If the return value is `.authorized`, you can present a `OpenChatCreatingController` instance for creating a
-    ///   room. But `.authorized` status doesn't necessarily mean the creating would succeed; there may be problems with
-    ///   the token or permissions.
-    ///   
-    ///   The token status is stored locally and may not have been synchronized with the server-side status.
-    ///   The token may have expired or been revoked by the server or via another client.
+    /// If the return value is `.authorized`, you can present a `OpenChatCreatingController` instance for creating a
+    /// room. But `.authorized` status doesn't necessarily mean the creating would succeed; there may be problems with
+    /// the token or permissions.
+    ///
+    /// The token status is stored locally and may not have been synchronized with the server-side status.
+    /// The token may have expired or been revoked by the server or via another client.
     ///
     /// To get the correct result about creating behavior, specify `OpenChatCreatingController.delegate` and implement
     /// the methods in `OpenChatCreatingControllerDelegate`.

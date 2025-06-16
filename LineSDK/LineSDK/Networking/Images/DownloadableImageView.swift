@@ -28,7 +28,7 @@ class DownloadableImageView: UIImageView {
     func setImage(
         _ url: URL?,
         placeholder: UIImage? = nil,
-        completion: ((Result<UIImage, LineSDKError>) -> Void)? = nil)
+        completion: (@Sendable (Result<UIImage, LineSDKError>) -> Void)? = nil)
     {
         taskToken = ImageManager.shared.nextToken()
         image = placeholder
@@ -39,19 +39,20 @@ class DownloadableImageView: UIImageView {
 
         
         ImageManager.shared.getImage(url, taskToken: taskToken!) { result, token in
+            Task { @MainActor in
+                guard token == self.taskToken else {
+                    completion?(.failure(LineSDKError.generalError(reason: .notOriginalTask(token: token))))
+                    return
+                }
 
-            guard token == self.taskToken else {
-                completion?(.failure(LineSDKError.generalError(reason: .notOriginalTask(token: token))))
-                return
-            }
+                guard let image = try? result.get() else { // Error case
+                    completion?(result)
+                    return
+                }
 
-            guard let image = try? result.get() else { // Error case
+                self.image = image
                 completion?(result)
-                return
             }
-
-            self.image = image
-            completion?(result)
         }
     }
 }

@@ -23,7 +23,6 @@ import Foundation
 
 /// A utility type for calling APIs on the LINE Platform.
 ///
-/// - Note:
 /// For most API calls, using the methods in the `API` is equivalent to using and sending an
 /// underlying `Request` object with a `Session` object. However, some methods in `API` provide
 /// additional useful features such as working with the keychain and redirecting the final result 
@@ -39,31 +38,52 @@ public enum API {
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the user's profile is returned.
-    /// - Note: The `.profile` permission is required.
+    /// - Note: The `.profile` permission is required to make this API work.
     ///
     public static func getProfile(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<UserProfile, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (Result<UserProfile, LineSDKError>) -> Void
     )
     {
         let request = GetUserProfileRequest()
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
-    
+
+    /// Gets the user's profile.
+    ///
+    /// - Returns: The user's profile.
+    /// - Note: The `.profile` permission is required to make this API work.
+    public static func getProfile() async throws -> UserProfile {
+        try await withCheckedThrowingContinuation { continuation in
+            getProfile { continuation.resume(with: $0) }
+        }
+    }
+
     /// Gets the friendship status of the user and the LINE Official Account linked to your LINE Login channel.
     ///
     /// - Parameters:
     ///   - queue: The callback queue that is used for `completion`. The default value is
     ///            `.currentMainOrAsync`. For more information, see `CallbackQueue`.
     ///   - completion: The completion closure to be invoked when the friendship status is returned.
-    /// - Note: The `.profile` permission is required.
+    /// - Note: The `.profile` permission is required to make this API work.
     ///
     public static func getBotFriendshipStatus(
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
-        completionHandler completion: @escaping (Result<GetBotFriendshipStatusRequest.Response, LineSDKError>) -> Void
+        completionHandler completion: @escaping @Sendable (Result<GetBotFriendshipStatusRequest.Response, LineSDKError>) -> Void
     )
     {
         let request = GetBotFriendshipStatusRequest()
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+    }
+
+    /// Gets the friendship status of the user and the LINE Official Account linked to your LINE Login channel.
+    ///
+    /// - Returns: The friendship status.
+    /// - Note: The `.profile` permission is required to make this API work.
+    ///
+    public static func getBotFriendshipStatus() async throws -> GetBotFriendshipStatusRequest.Response {
+        try await withCheckedThrowingContinuation { continuation in
+            getBotFriendshipStatus { continuation.resume(with: $0) }
+        }
     }
 }

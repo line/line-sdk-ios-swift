@@ -26,9 +26,8 @@ class FormEntryTests: XCTestCase, ViewControllerCompatibleTest {
     
     var window: UIWindow!
     
-    override func tearDown() {
+    override func tearDown() async throws {
         resetViewController()
-        super.tearDown()
     }
     
     func testRoomNameTextCanUpdate() {

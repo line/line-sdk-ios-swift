@@ -20,11 +20,12 @@
 //
 
 @objcMembers
-public class LineSDKLoginManager: NSObject {
+final public class LineSDKLoginManager: NSObject, Sendable {
     let _value: LoginManager
     init(_ value: LoginManager) { _value = value }
-    
+
     public static let sharedManager = LineSDKLoginManager(.shared)
+    @MainActor
     public var currentProcess: LineSDKLoginProcess? { return _value.currentProcess.map { .init($0) } }
     public var isSetupFinished: Bool { return _value.isSetupFinished }
     public var isAuthorized: Bool { return _value.isAuthorized }
@@ -42,6 +43,7 @@ public class LineSDKLoginManager: NSObject {
     }
 
     @discardableResult
+    @MainActor
     public func login(
         permissions: Set<LineSDKLoginPermission>?,
         inViewController viewController: UIViewController?,
@@ -58,6 +60,7 @@ public class LineSDKLoginManager: NSObject {
     }
 
     @discardableResult
+    @MainActor
     public func login(
         permissions: Set<LineSDKLoginPermission>?,
         inViewController viewController: UIViewController?,
@@ -78,10 +81,11 @@ public class LineSDKLoginManager: NSObject {
         return process.map { .init($0) }
     }
 
-    public func logout(completionHandler completion: @escaping (Error?) -> Void) {
+    public func logout(completionHandler completion: @escaping @Sendable (Error?) -> Void) {
         _value.logout { result in result.matchFailure(with: completion) }
     }
-    
+
+    @MainActor
     public func application(
         _ app: UIApplication,
         open url: URL,
@@ -96,6 +100,7 @@ public class LineSDKLoginManager: NSObject {
     Convert the `options` to a `LoginManager.Parameters` value and
     use `login(permissions:inViewController:parameters:completionHandler:)` instead.")
     """)
+    @MainActor
     @discardableResult
     public func login(
         permissions: Set<LineSDKLoginPermission>?,

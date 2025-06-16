@@ -37,7 +37,7 @@ extension GetDiscoveryDocumentRequest: ResponseDataStub {
 }
 
 class GetDiscoveryDocumentRequestTests: APITests {
-    
+    @MainActor
     func testSuccess() {
         let r = GetDiscoveryDocumentRequest()
         runTestSuccess(for: r) { document in

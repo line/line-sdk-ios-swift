@@ -27,7 +27,7 @@
 public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
     
     /// The style used for a bubble container.
-    public struct Style: Codable {
+    public struct Style: Codable, Sendable {
         
         /// Style of the header block.
         public var header: FlexBlockStyle?
@@ -49,7 +49,7 @@ public struct FlexBubbleContainer: Codable, FlexMessageContainerTypeCompatible {
     ///
     /// - leftToRight: The text should be from left to right.
     /// - rightToLeft: The text should be from right to left.
-    public enum Direction: String, DefaultEnumCodable {
+    public enum Direction: String, DefaultEnumCodable, Sendable {
         /// The text should be from left to right.
         case leftToRight = "ltr"
 

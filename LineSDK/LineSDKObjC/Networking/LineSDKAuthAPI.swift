@@ -23,7 +23,7 @@
 public class LineSDKAuthAPI: NSObject {
     // MARK: - refreshAccessToken
     public static func refreshAccessToken(
-        completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void
+        completionHandler completion: @escaping @Sendable (LineSDKAccessToken?, Error?) -> Void
     )
     {
         refreshAccessToken(callbackQueue: .currentMainOrAsync, completionHandler: completion)
@@ -31,7 +31,7 @@ public class LineSDKAuthAPI: NSObject {
     
     public static func refreshAccessToken(
         callbackQueue queue: LineSDKCallbackQueue,
-        completionHandler completion: @escaping (LineSDKAccessToken?, Error?) -> Void
+        completionHandler completion: @escaping @Sendable (LineSDKAccessToken?, Error?) -> Void
     )
     {
         API.Auth.refreshAccessToken(callbackQueue: queue.unwrapped) { result in
@@ -41,7 +41,7 @@ public class LineSDKAuthAPI: NSObject {
     
     // MARK: - revokeAccessToken
     public static func revokeAccessToken(
-        completionHandler completion: @escaping (Error?) -> Void
+        completionHandler completion: @escaping @Sendable (Error?) -> Void
     )
     {
         revokeAccessToken(nil, completionHandler: completion)
@@ -49,7 +49,7 @@ public class LineSDKAuthAPI: NSObject {
     
     public static func revokeAccessToken(
         _ token: String?,
-        completionHandler completion: @escaping (Error?) -> Void
+        completionHandler completion: @escaping @Sendable (Error?) -> Void
     )
     {
         revokeAccessToken(token, callbackQueue: .currentMainOrAsync, completionHandler: completion)
@@ -58,7 +58,7 @@ public class LineSDKAuthAPI: NSObject {
     public static func revokeAccessToken(
         _ token: String?,
         callbackQueue queue: LineSDKCallbackQueue,
-        completionHandler completion: @escaping (Error?) -> Void
+        completionHandler completion: @escaping @Sendable (Error?) -> Void
     )
     {
         API.Auth.revokeAccessToken(token, callbackQueue: queue.unwrapped) { result in
@@ -68,7 +68,7 @@ public class LineSDKAuthAPI: NSObject {
     
     // MARK: - revokeRefreshToken
     public static func revokeRefreshToken(
-        completionHandler completion: @escaping (Error?) -> Void
+        completionHandler completion: @escaping @Sendable (Error?) -> Void
     )
     {
         revokeRefreshToken(nil, completionHandler: completion)
@@ -76,7 +76,7 @@ public class LineSDKAuthAPI: NSObject {
     
     public static func revokeRefreshToken(
         _ token: String?,
-        completionHandler completion: @escaping (Error?) -> Void
+        completionHandler completion: @escaping @Sendable (Error?) -> Void
     )
     {
         revokeRefreshToken(token, callbackQueue: .currentMainOrAsync, completionHandler: completion)
@@ -85,7 +85,7 @@ public class LineSDKAuthAPI: NSObject {
     public static func revokeRefreshToken(
         _ token: String?,
         callbackQueue queue: LineSDKCallbackQueue,
-        completionHandler completion: @escaping (Error?) -> Void
+        completionHandler completion: @escaping @Sendable (Error?) -> Void
     )
     {
         API.Auth.revokeRefreshToken(token, callbackQueue: queue.unwrapped) { result in
@@ -95,14 +95,14 @@ public class LineSDKAuthAPI: NSObject {
     
     // MARK: - verifyAccessToken
     public static func verifyAccessToken(
-        completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
+        completionHandler completion: @escaping @Sendable (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
     {
         verifyAccessToken(nil, completionHandler: completion)
     }
     
     public static func verifyAccessToken(
         _ token: String?,
-        completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
+        completionHandler completion: @escaping @Sendable (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
     {
         verifyAccessToken(token, callbackQueue: .currentMainOrAsync, completionHandler: completion)
     }
@@ -110,7 +110,7 @@ public class LineSDKAuthAPI: NSObject {
     public static func verifyAccessToken(
         _ token: String?,
         callbackQueue queue: LineSDKCallbackQueue,
-        completionHandler completion: @escaping (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
+        completionHandler completion: @escaping @Sendable (LineSDKAccessTokenVerifyResult?, Error?) -> Void)
     {
         API.Auth.verifyAccessToken(token, callbackQueue: queue.unwrapped) { result in
             result.map(LineSDKAccessTokenVerifyResult.init).match(with: completion)

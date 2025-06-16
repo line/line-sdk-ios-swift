@@ -33,7 +33,7 @@ enum FlexMessageContainerType: String, Codable {
 /// - bubble: Represents the type of bubble container. A `FlexBubbleContainer` value is associated.
 /// - carousel: Represents the type of carousel container. A `FlexCarouselContainer` value is associated.
 /// - unknown: A container type is not defined in the LINE SDK yet.
-public enum FlexMessageContainer: Codable {
+public enum FlexMessageContainer: Codable, Sendable {
 
     /// Represents the type of bubble container. A `FlexBubbleContainer` value is associated.
     case bubble(FlexBubbleContainer)

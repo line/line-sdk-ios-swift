@@ -21,6 +21,7 @@
 
 import UIKit
 
+@MainActor
 struct FormSection {
     let formEntries: [FormEntry]
     let footerText: String?
@@ -35,6 +36,7 @@ struct FormSection {
     }
 }
 
+@MainActor
 class FormSectionRenderer {
     
     let section: FormSection

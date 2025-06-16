@@ -21,6 +21,7 @@
 
 import UIKit
 
+@MainActor
 class LoadingIndicator {
 
     static var indicators = NSMapTable<UIView, LoadingIndicator>.weakToStrongObjects()

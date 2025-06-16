@@ -24,8 +24,8 @@ import Foundation
 /// Represents a JSON Web Token object. Use this struct to get and verify JWT tokens. If the user authorizes
 /// your app with the `.openID` permission, a signed ID token will be issued together with an access token.
 /// The LINE SDK verifies JWT tokens for you.
-public struct JWT: Equatable {
-    
+public struct JWT: Equatable, Sendable {
+
     /// :nodoc:
     public static func == (lhs: JWT, rhs: JWT) -> Bool {
         return lhs.rawValue == rhs.rawValue
@@ -110,9 +110,11 @@ extension JWT {
     
     /// Represents the payload section of a JWT object. Use the exposed properties to get claims from the
     /// payload. Use the `subscript` method to get any unexposed values.
-    public struct Payload {
-        let values: [String: Any]
-        
+    public struct Payload: Sendable {
+
+        // The values only contain simple JSON compatible values so it is perfectly sendbable
+        let values: [String: any Sendable]
+
         func verify<T: Equatable>(keyPath: KeyPath<JWT.Payload, T?>, expected: T) throws {
             try verify(keyPath: keyPath, failingReason: "expected: \(expected)") { value in
                 return value == expected }

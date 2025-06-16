@@ -24,8 +24,8 @@ import Foundation
 extension LoginManager {
     
     /// Parameters used during login.
-    public struct Parameters {
-        
+    public struct Parameters: Sendable {
+
         /// Forces the use of web authentication flow instead of LINE app-to-app authentication flow.
         public var onlyWebLogin: Bool = false
         
@@ -37,9 +37,8 @@ extension LoginManager {
         /// If not set, the web authentication flow shows the login page in the user's device language, or falls
         /// back to English. Once set, the web page is displayed in the preferred language.
         ///
-        /// - Note:
-        ///   This property does not affect the preferred language when LINE is used for authorization.
-        ///   LINE and the login screen are always displayed in the user's device language.
+        /// - Note: This property does not affect the preferred language when LINE is used for authorization.
+        /// LINE and the login screen are always displayed in the user's device language.
         ///
         public var preferredWebPageLanguage: WebPageLanguage? = nil
 
@@ -87,7 +86,7 @@ extension LoginManager {
 extension LoginManager {
     
     /// The style for showing the "Add LINE Official Account as friend" prompt on the consent screen.
-    public enum BotPrompt: String {
+    public enum BotPrompt: String, Sendable {
         /// Includes an option to add a LINE Official Account as friend on the consent screen.
         case normal
         /// Opens a new screen to add a LINE Official Account as a friend after the user agrees to the permissions on the
@@ -96,13 +95,13 @@ extension LoginManager {
     }
 
     /// The method used for the authentication when using the web authentication flow.
-    public enum WebAuthenticationMethod: String {
+    public enum WebAuthenticationMethod: String, Sendable {
         case email
         case qrCode
     }
 
     /// Represents the language used in the web page.
-    public struct WebPageLanguage {
+    public struct WebPageLanguage: Sendable {
         /// :nodoc:
         public let rawValue: String
 
