@@ -70,7 +70,7 @@ extension API {
 
         /// Refreshes the access token with `refreshToken`.
         ///
-        /// - Returns: The refreshed access token if the refress operation finishes sucessfully.
+        /// - Returns: The refreshed access token if the refresh operation finishes successfully.
         /// - Throws: An `LineSDKError` if something wrong happens.
         ///
         /// If the token refresh process finishes successfully, the refreshed access token will be

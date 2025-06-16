@@ -207,8 +207,7 @@ extension API {
         Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
     }
 
-    public static func getMessageSendingOneTimeToken(userIDs: [String]) async throws -> MessageSendingToken
-    {
+    public static func getMessageSendingOneTimeToken(userIDs: [String]) async throws -> MessageSendingToken {
         let request = PostMessageSendingTokenIssueRequest(userIDs: userIDs)
         return try await Session.shared.send(request)
     }
