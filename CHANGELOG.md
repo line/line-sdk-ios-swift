@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Swift 6 and Swift Concurrency support. Now the project is compatible with Swift 6 and takes advantage of Swift Concurrency features. [#224](https://github.com/line/line-sdk-ios-swift/pull/224)
+- Some APIs are converted to the async signature, so you can use the async/await syntax to call these APIs. Check the API reference for more.
+
+### Fixed
+
+- Some outdated usage and compiler version checks are removed due to new iOS SDK requirements. [#222](https://github.com/line/line-sdk-ios-swift/pull/222)
+
 ## [5.12.0] - 2025-01-15
 
 ### Added
