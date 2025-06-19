@@ -4,7 +4,7 @@ platform :ios do
 
   before_all do
     begin
-        xcodes(version: "16.3", select_for_current_build_only: true)
+        xcodes(version: "16.4", select_for_current_build_only: true)
     rescue => ex
         UI.error("Failed when switching to Xcode version: #{ex}")
     end
@@ -165,7 +165,7 @@ platform :ios do
       xcframework_output_directory: output_path
     )
     unless is_ci
-      Actions.sh("codesign --timestamp -v --sign 'Apple Distribution: LINE Corporation (VUTU7AKEUR)' ../#{output_path}/LineSDK.xcframework")
+      Actions.sh("codesign --timestamp -v --sign 'Apple Distribution: LY Corporation (VUTU7AKEUR)' ../#{output_path}/LineSDK.xcframework")
     end
     artifact_paths.push(ENV["XCFRAMEWORK_OUTPUT_PATH"])
     
@@ -179,7 +179,7 @@ platform :ios do
       xcframework_output_directory: output_path
     )
     unless is_ci
-      Actions.sh("codesign --timestamp -v --sign 'Apple Distribution: LINE Corporation (VUTU7AKEUR)' ../#{output_path}/LineSDKObjC.xcframework")
+      Actions.sh("codesign --timestamp -v --sign 'Apple Distribution: LY Corporation (VUTU7AKEUR)' ../#{output_path}/LineSDKObjC.xcframework")
     end
     artifact_paths.push(ENV["XCFRAMEWORK_OUTPUT_PATH"])
 
