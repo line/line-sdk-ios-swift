@@ -39,6 +39,7 @@ Temporary Items
 ## Build generated
 build/
 DerivedData/
+./DerivedData/
 
 ## Various settings
 *.pbxuser
@@ -133,3 +134,16 @@ fastlane/.env
 /.bundle/
 .swiftpm
 vendor/bundle
+
+# Test credentials and environment files
+.env
+.env.local
+.env.test
+*.env
+xcuserdata/
+*.xcuserdatad/
+# Prevent accidental commit of test credential files
+test-credentials.txt
+test-credentials.json
+credentials/
+LineSDKSample/LineSDKSampleUITests/env.xcconfig
