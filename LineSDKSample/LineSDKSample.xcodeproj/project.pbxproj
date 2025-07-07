@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B02FCD72E0E6ED4000FC6A7 /* WebLoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B02FCD62E0E6ED4000FC6A7 /* WebLoginTests.swift */; };
+		2B02FCD92E0E6EDB000FC6A7 /* WebLoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B02FCD82E0E6EDB000FC6A7 /* WebLoginPage.swift */; };
 		4B104808216ED51A00300C61 /* LineSDKSampleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B104807216ED51A00300C61 /* LineSDKSampleError.swift */; };
 		4B121F132249DE4000473132 /* SampleUIHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */; };
 		4B15EEF1211D322B00866E6C /* APIResultEntryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15EEF0211D322B00866E6C /* APIResultEntryTests.swift */; };
@@ -74,6 +76,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2B02FCD62E0E6ED4000FC6A7 /* WebLoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginTests.swift; sourceTree = "<group>"; };
+		2B02FCD82E0E6EDB000FC6A7 /* WebLoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginPage.swift; sourceTree = "<group>"; };
+		2BDC82932E1618E400887697 /* LineSDKSampleUITests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = LineSDKSampleUITests.xctestplan; sourceTree = "<group>"; };
+		2BDC82942E16224C00887697 /* env.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = env.xcconfig; sourceTree = "<group>"; };
 		4B104807216ED51A00300C61 /* LineSDKSampleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineSDKSampleError.swift; sourceTree = "<group>"; };
 		4B121F122249DE4000473132 /* SampleUIHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUIHomeViewController.swift; sourceTree = "<group>"; };
 		4B15EEF0211D322B00866E6C /* APIResultEntryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResultEntryTests.swift; sourceTree = "<group>"; };
@@ -246,9 +252,11 @@
 		4B9058BD21006E9C004D717F /* LineSDKSampleUITests */ = {
 			isa = PBXGroup;
 			children = (
+				2BDC82932E1618E400887697 /* LineSDKSampleUITests.xctestplan */,
 				4B9058C021006E9C004D717F /* Info.plist */,
 				65E6BDBE2154D83C0024D7C1 /* PageObject */,
 				65E6BDC32154D9640024D7C1 /* TestSuites */,
+				2BDC82942E16224C00887697 /* env.xcconfig */,
 			);
 			path = LineSDKSampleUITests;
 			sourceTree = "<group>";
@@ -301,6 +309,7 @@
 		65E6BDBE2154D83C0024D7C1 /* PageObject */ = {
 			isa = PBXGroup;
 			children = (
+				2B02FCD82E0E6EDB000FC6A7 /* WebLoginPage.swift */,
 				65E6BDB82154D80A0024D7C1 /* LoginPage.swift */,
 				9735344D241BB60900D47AAA /* Page.swift */,
 			);
@@ -310,6 +319,7 @@
 		65E6BDC32154D9640024D7C1 /* TestSuites */ = {
 			isa = PBXGroup;
 			children = (
+				2B02FCD62E0E6ED4000FC6A7 /* WebLoginTests.swift */,
 				9735344F241BB67500D47AAA /* AuthenticationTests.swift */,
 			);
 			path = TestSuites;
@@ -509,7 +519,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B02FCD72E0E6ED4000FC6A7 /* WebLoginTests.swift in Sources */,
 				9735344E241BB60900D47AAA /* Page.swift in Sources */,
+				2B02FCD92E0E6EDB000FC6A7 /* WebLoginPage.swift in Sources */,
 				97353450241BB67500D47AAA /* AuthenticationTests.swift in Sources */,
 				65E6BDB92154D80A0024D7C1 /* LoginPage.swift in Sources */,
 			);
@@ -787,9 +799,11 @@
 		};
 		4B9058CA21006E9C004D717F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BDC82942E16224C00887697 /* env.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A4YJ9MRZ66;
 				INFOPLIST_FILE = LineSDKSampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -809,6 +823,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A4YJ9MRZ66;
 				INFOPLIST_FILE = LineSDKSampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

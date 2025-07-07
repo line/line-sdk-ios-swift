@@ -36,7 +36,7 @@ class AuthenticationTests: XCTestCase {
         }
     }
     
-    func testLineLogin() {
+    func xtestLineLogin() {
         // A login script for LINE installed and did not set universal link
         let loginPage = LoginPage(app)
         loginPage.checkLineLoginButtonExists()

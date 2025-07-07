@@ -26,7 +26,8 @@ class LoginPage: Page {
     lazy var okButton = app.buttons["OK"]
     lazy var lineLoginButton = app.buttons["login.button"]
     lazy var lineLogoutButton = app.navigationBars.buttons["Logout"]
-        
+    lazy var errorAlert = app.alerts["Error"]
+
     @discardableResult
     func tapLoginButton() -> Self {
         tap(element: lineLoginButton)
@@ -45,6 +46,16 @@ class LoginPage: Page {
     @discardableResult
     func isLineLogoutButtonExists() -> Bool{
         return lineLogoutButton.exists
+    }
+
+    func dismissSuccessAlert() {
+        expect(element: okButton, status: .exist)
+        tap(element: okButton)
+    }
+
+    func dismissErrorAlert() {
+        expect(element: errorAlert, status: .exist)
+        tap(element: errorAlert.buttons["OK"])
     }
 
     func checkLineLoginButtonExists() {
