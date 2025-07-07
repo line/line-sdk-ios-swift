@@ -10,4 +10,7 @@
    <FileRef
       location = "group:LineSDKSample-SwiftUI/LineSDKSample-SwiftUI.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:LineSDKSample/LineSDKSampleUITests/LineSDKSampleUITests.xctestplan">
+   </FileRef>
 </Workspace>
