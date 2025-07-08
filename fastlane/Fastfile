@@ -38,6 +38,11 @@ platform :ios do
   end
 
   lane :sample_tests do
+    # Ensure required environment variables are set
+    unless ENV["LINE_SDK_TEST_EMAIL"] && ENV["LINE_SDK_TEST_PASSWORD"]
+      UI.user_error!("Missing test credentials. Please set LINE_SDK_TEST_EMAIL and LINE_SDK_TEST_PASSWORD environment variables")
+    end
+    
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 16"],
