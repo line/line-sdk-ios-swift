@@ -43,13 +43,12 @@ struct ProfileView: View {
             guard profile == nil else { return }
 
             Task {
-                let result = await API.getProfile()
-                switch result {
-                case .success(let profile):
-                    self.profile = profile
-                case .failure(let error):
+                do {
+                    let result = try await API.getProfile()
+                    self.profile = result
+                } catch {
                     alertMessage = error.localizedDescription
-                }
+                }                
             }
         }
     }
