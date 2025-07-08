@@ -43,6 +43,26 @@ platform :ios do
       UI.user_error!("Missing test credentials. Please set LINE_SDK_TEST_EMAIL and LINE_SDK_TEST_PASSWORD environment variables")
     end
     
+    # Update env.xcconfig with environment variables
+    env_xcconfig_path = "../LineSDKSample/LineSDKSampleUITests/env.xcconfig"
+    
+    # Read the current content
+    content = File.read(env_xcconfig_path)
+    
+    # Replace the email and password with environment variables
+    updated_content = content.gsub(
+      /LINE_SDK_TEST_EMAIL=.*$/,
+      "LINE_SDK_TEST_EMAIL=#{ENV['LINE_SDK_TEST_EMAIL']}"
+    ).gsub(
+      /LINE_SDK_TEST_PASSWORD=.*$/,
+      "LINE_SDK_TEST_PASSWORD=#{ENV['LINE_SDK_TEST_PASSWORD']}"
+    )
+    
+    # Write the updated content back
+    File.write(env_xcconfig_path, updated_content)
+    
+    UI.message("Updated env.xcconfig with test credentials")
+    
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 16"],
