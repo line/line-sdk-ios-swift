@@ -74,6 +74,19 @@ class WebLoginTests: XCTestCase {
             loginPage.logout()
         }
     }
+    
+    override func tearDownWithError() throws {
+        // Capture screenshot on test failure
+        if let failureCount = testRun?.failureCount, failureCount > 0 {
+            let screenshot = XCUIScreen.main.screenshot()
+            let attachment = XCTAttachment(screenshot: screenshot)
+            attachment.name = "TestFailure_\(self.name)_\(Date().timeIntervalSince1970)"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+        }
+        
+        try super.tearDownWithError()
+    }
 
     override func tearDown() {
         super.tearDown()

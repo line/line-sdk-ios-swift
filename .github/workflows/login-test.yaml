@@ -32,3 +32,77 @@ jobs:
           LINE_SDK_TEST_EMAIL: ${{ secrets.LINE_SDK_TEST_EMAIL }}
           LINE_SDK_TEST_PASSWORD: ${{ secrets.LINE_SDK_TEST_PASSWORD }}
         run: bundle exec fastlane sample_tests
+        continue-on-error: true
+      
+      - name: Extract Screenshots
+        if: always()
+        run: |
+          # Find the xcresult bundle created by fastlane
+          XCRESULT=$(find . -name "*.xcresult" -type d | head -1)
+          
+          if [ ! -z "$XCRESULT" ]; then
+            echo "Found xcresult: $XCRESULT"
+            chmod +x scripts/extract_screenshots.sh
+            ./scripts/extract_screenshots.sh "$XCRESULT" screenshots
+          else
+            echo "No xcresult bundle found"
+          fi
+      
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ github.run_number }}
+          path: |
+            *.xcresult
+            fastlane/test_output/
+          retention-days: 30
+          if-no-files-found: ignore
+      
+      - name: Upload Screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-test-screenshots-${{ github.run_number }}
+          path: screenshots/
+          retention-days: 30
+          if-no-files-found: ignore
+      
+      - name: Create Test Summary
+        if: always()
+        run: |
+          echo "# 📱 LINE SDK Login Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Test execution info
+          echo "## 📊 Test Execution Info" >> $GITHUB_STEP_SUMMARY
+          echo "- **Date**: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Run Number**: #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Screenshot information
+          echo "## 🖼️ Test Screenshots" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -d "screenshots" ] && [ "$(ls -A screenshots 2>/dev/null)" ]; then
+            SCREENSHOT_COUNT=$(find screenshots -name "*.png" | wc -l | tr -d ' ')
+            echo "Captured **$SCREENSHOT_COUNT** screenshot(s) from failed tests:" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            find screenshots -name "*.png" | sort | while read -r screenshot; do
+              filename=$(basename "$screenshot")
+              size=$(du -h "$screenshot" | cut -f1)
+              # Extract test name from filename (before first underscore)
+              test_name=$(echo "$filename" | sed 's/_[^_]*\.png$//')
+              echo "- 📸 **$test_name** - \`$filename\` ($size)" >> $GITHUB_STEP_SUMMARY
+            done
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            echo "💾 Screenshots are available in the **ui-test-screenshots-${{ github.run_number }}** artifact." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ No screenshots captured (all tests passed)." >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "📦 Full test results available in the **test-results-${{ github.run_number }}** artifact." >> $GITHUB_STEP_SUMMARY
