@@ -4,6 +4,10 @@ on:
   schedule:
     - cron: '0 22 * * *'  # Run at UTC 22:00 daily (JST 07:00)
   workflow_dispatch:      # Allow manual trigger
+  # Temporary trigger for testing purposes - remove after testing
+  push:
+    branches:
+      - feature/ui-testing
 
 jobs:
   login_tests:
