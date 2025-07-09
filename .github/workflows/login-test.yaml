@@ -1,0 +1,30 @@
+name: "LINE SDK Login Tests"
+
+on:
+  schedule:
+    - cron: '0 22 * * *'  # Run at UTC 22:00 daily (JST 07:00)
+  workflow_dispatch:      # Allow manual trigger
+
+jobs:
+  login_tests:
+    name: Run Login Tests
+    runs-on: macos-15
+    environment: "Login Test Env"  # Use specified GitHub environment
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Bundle Install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Run Login Tests
+        env:
+          LINE_SDK_TEST_EMAIL: ${{ secrets.LINE_SDK_TEST_EMAIL }}
+          LINE_SDK_TEST_PASSWORD: ${{ secrets.LINE_SDK_TEST_PASSWORD }}
+        run: bundle exec fastlane sample_tests
