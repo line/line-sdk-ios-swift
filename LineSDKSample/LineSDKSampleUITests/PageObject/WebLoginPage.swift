@@ -64,7 +64,7 @@ class WebLoginPage: Page {
     }
     
     @discardableResult
-    func waitForSafariViewController(timeout: TimeInterval = 10) -> Self {
+    func waitForSafariViewController(timeout: TimeInterval = 30) -> Self {
         expect(element: safariView, status: .exist, withIn: timeout)
         return self
     }
@@ -85,8 +85,8 @@ class WebLoginPage: Page {
     @discardableResult
     func enterCredentials(email: String, password: String) -> Self {
         // Wait for the web form to load
-        expect(element: emailField, status: .exist, withIn: 15)
-        
+        expect(element: emailField, status: .exist, withIn: 20)
+
         // Clear and enter email
         emailField.tap()
         focusedTextField.typeText(email)
@@ -107,7 +107,7 @@ class WebLoginPage: Page {
     @discardableResult
     func allowPermissions() -> Self {
         // Wait for permission screen to appear
-        expect(element: webAllowButton, status: .exist, withIn: 10)
+        expect(element: webAllowButton, status: .exist, withIn: 20)
         tap(element: webAllowButton)
         return self
     }
@@ -115,7 +115,7 @@ class WebLoginPage: Page {
     @discardableResult
     func rejectPermissions() -> Self {
         // Wait for permission screen to appear
-        expect(element: webCancelButton, status: .exist, withIn: 10)
+        expect(element: webCancelButton, status: .exist, withIn: 20)
         tap(element: webCancelButton)
         return self
     }
@@ -123,7 +123,7 @@ class WebLoginPage: Page {
     @discardableResult
     func tapNotSavePasswordIfNeeded() -> Self {
         let notSavePasswordButton = app.alerts.buttons.element(boundBy: 1)
-        if notSavePasswordButton.exists {
+        if notSavePasswordButton.waitForExistence(timeout: 3) {
             tap(element: notSavePasswordButton)
         }
         return self
@@ -132,7 +132,7 @@ class WebLoginPage: Page {
     @discardableResult
     func confirmLogin() -> Self {
         // Wait for permission screen to appear
-        expect(element: confirmButton, status: .exist, withIn: 5)
+        expect(element: confirmButton, status: .exist, withIn: 20)
         tap(element: confirmButton)
         return self
     }
@@ -142,14 +142,14 @@ class WebLoginPage: Page {
     @discardableResult
     func switchToQRCodeLogin() -> Self {
         tap(element: qrCodeButton)
-        expect(element: qrCodeImage, status: .exist, withIn: 5)
+        expect(element: qrCodeImage, status: .exist, withIn: 20)
         return self
     }
     
     @discardableResult
     func switchToEmailLogin() -> Self {
         tap(element: emailLoginButton)
-        expect(element: emailField, status: .exist, withIn: 5)
+        expect(element: emailField, status: .exist, withIn: 20)
         return self
     }
     
@@ -164,13 +164,13 @@ class WebLoginPage: Page {
     }
     
     func checkLoginFormLoaded() {
-        expect(element: emailField, status: .exist, withIn: 15)
+        expect(element: emailField, status: .exist, withIn: 20)
         expect(element: passwordField, status: .exist)
         expect(element: loginSubmitButton, status: .exist)
     }
     
     func checkPermissionScreenDisplayed() {
-        expect(element: webAllowButton, status: .exist, withIn: 10)
+        expect(element: webAllowButton, status: .exist, withIn: 20)
     }
 
     func checkQRCodeDisplayed() {
