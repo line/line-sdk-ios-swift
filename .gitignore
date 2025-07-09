@@ -147,3 +147,4 @@ test-credentials.txt
 test-credentials.json
 credentials/
 LineSDKSample/LineSDKSampleUITests/env.xcconfig
+test_output/
