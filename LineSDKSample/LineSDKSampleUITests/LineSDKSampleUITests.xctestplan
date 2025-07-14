@@ -1,0 +1,48 @@
+{
+  "configurations" : [
+    {
+      "id" : "F770F8D8-65B6-43FC-8948-E4E8DDC27623",
+      "name" : "Test Scheme Action",
+      "options" : {
+        "environmentVariableEntries" : [
+          {
+            "key" : "LINE_SDK_TEST_EMAIL",
+            "value" : "$(LINE_SDK_TEST_EMAIL)"
+          },
+          {
+            "key" : "LINE_SDK_TEST_PASSWORD",
+            "value" : "$(LINE_SDK_TEST_PASSWORD)"
+          }
+        ]
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "LINE_SDK_TEST_EMAIL",
+        "value" : "$(LINE_SDK_TEST_EMAIL)"
+      },
+      {
+        "key" : "LINE_SDK_TEST_PASSWORD",
+        "value" : "$(LINE_SDK_TEST_PASSWORD)"
+      }
+    ],
+    "language" : "ja",
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:LineSDKSample.xcodeproj",
+      "identifier" : "4B9058B921006E9C004D717F",
+      "name" : "LineSDKSampleUITests"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:LineSDKSample.xcodeproj",
+        "identifier" : "4B9058B921006E9C004D717F",
+        "name" : "LineSDKSampleUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

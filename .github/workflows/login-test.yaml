@@ -1,0 +1,103 @@
+name: "LINE SDK Login Tests"
+
+on:
+  schedule:
+    - cron: '0 22 * * *'  # Run at UTC 22:00 daily (JST 07:00)
+  workflow_dispatch:      # Allow manual trigger
+
+jobs:
+  login_tests:
+    name: Run Login Tests
+    runs-on: macos-15
+    environment: "Login Test Env"  # Use specified GitHub environment
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Bundle Install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Run Login Tests
+        id: run_tests
+        env:
+          LINE_SDK_TEST_EMAIL: ${{ secrets.LINE_SDK_TEST_EMAIL }}
+          LINE_SDK_TEST_PASSWORD: ${{ secrets.LINE_SDK_TEST_PASSWORD }}
+        run: |
+          set +e  # Don't exit immediately on error
+          bundle exec fastlane sample_tests
+          TEST_RESULT=$?
+          echo "test_result=$TEST_RESULT" >> $GITHUB_OUTPUT
+          exit 0  # Always continue to upload artifacts
+      
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ github.run_number }}
+          path: |
+            test_output/*.xcresult
+            test_output/*.xml
+            fastlane/test_output/
+          retention-days: 30
+          if-no-files-found: ignore
+      
+      - name: Create Test Summary
+        if: always()
+        run: |
+          echo "# 📱 LINE SDK Login Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Test execution info
+          echo "## 📊 Test Execution Info" >> $GITHUB_STEP_SUMMARY
+          echo "- **Date**: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Run Number**: #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          # Find xcresult bundle
+          XCRESULT=$(find test_output -name "*.xcresult" -type d 2>/dev/null | head -1)
+          
+          if [ ! -z "$XCRESULT" ]; then
+            echo "## 📦 Test Results Bundle" >> $GITHUB_STEP_SUMMARY
+            echo "Found test results bundle: \`$(basename $XCRESULT)\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "The xcresult bundle contains:" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Complete test results" >> $GITHUB_STEP_SUMMARY
+            echo "- 📸 Screenshots from failed tests (if any)" >> $GITHUB_STEP_SUMMARY
+            echo "- 📋 Detailed logs and diagnostics" >> $GITHUB_STEP_SUMMARY
+            echo "- 🔍 Code coverage data" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**To view results:**" >> $GITHUB_STEP_SUMMARY
+            echo "1. Download the **test-results-${{ github.run_number }}** artifact" >> $GITHUB_STEP_SUMMARY
+            echo "2. Open the .xcresult file in Xcode" >> $GITHUB_STEP_SUMMARY
+            echo "3. Navigate to failed tests to see screenshots and details" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ No xcresult bundle found" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "💾 Download the **test-results-${{ github.run_number }}** artifact to access all test data." >> $GITHUB_STEP_SUMMARY
+          
+          # Show test result status
+          if [ "${{ steps.run_tests.outputs.test_result }}" != "0" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "## ❌ Tests Failed" >> $GITHUB_STEP_SUMMARY
+            echo "The test suite encountered failures. Please check the test results for details." >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Check Test Result
+        if: always()
+        run: |
+          if [ "${{ steps.run_tests.outputs.test_result }}" != "0" ]; then
+            echo "❌ Tests failed with exit code: ${{ steps.run_tests.outputs.test_result }}"
+            exit 1
+          else
+            echo "✅ All tests passed"
+          fi

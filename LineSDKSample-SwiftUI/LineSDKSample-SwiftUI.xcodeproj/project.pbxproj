@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5E2BB2A0286765790098FB56 /* LineSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2BB29F286765790098FB56 /* LineSDK.framework */; };
 		5E2BB2A1286765790098FB56 /* LineSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2BB29F286765790098FB56 /* LineSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5E2BB2A52867C5D30098FB56 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2BB2A42867C5D30098FB56 /* API.swift */; };
 		5E2BB2A72868349D0098FB56 /* LineLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2BB2A62868349D0098FB56 /* LineLoginButton.swift */; };
 		5E2BB2A9286898600098FB56 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2BB2A8286898600098FB56 /* ProfileView.swift */; };
 		5E2BB2AB28689ADA0098FB56 /* AuthorizatonStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2BB2AA28689ADA0098FB56 /* AuthorizatonStore.swift */; };
@@ -39,7 +38,6 @@
 /* Begin PBXFileReference section */
 		5E2BB29A28675BEC0098FB56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5E2BB29F286765790098FB56 /* LineSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LineSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E2BB2A42867C5D30098FB56 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		5E2BB2A62868349D0098FB56 /* LineLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineLoginButton.swift; sourceTree = "<group>"; };
 		5E2BB2A8286898600098FB56 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		5E2BB2AA28689ADA0098FB56 /* AuthorizatonStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizatonStore.swift; sourceTree = "<group>"; };
@@ -85,14 +83,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5E2BB2A32867C5B20098FB56 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				5E2BB2A42867C5D30098FB56 /* API.swift */,
-			);
-			path = API;
-			sourceTree = "<group>";
-		};
 		5E2BB2AF286949AC0098FB56 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,7 +117,6 @@
 				5E8DCD232861D48500E6F704 /* LineSDKSampleApp.swift */,
 				5E8DCD272861D48700E6F704 /* Assets.xcassets */,
 				5EA44CC92865BEF300AF73FB /* Config.xcconfig */,
-				5E2BB2A32867C5B20098FB56 /* API */,
 				5E2BB29B2867627B0098FB56 /* Login */,
 				5E8DCD292861D48800E6F704 /* Preview Content */,
 				5E2BB2AF286949AC0098FB56 /* Utils */,
@@ -218,7 +207,6 @@
 				5E2BB2A72868349D0098FB56 /* LineLoginButton.swift in Sources */,
 				5E8DCD262861D48500E6F704 /* ContentView.swift in Sources */,
 				5E8DCD242861D48500E6F704 /* LineSDKSampleApp.swift in Sources */,
-				5E2BB2A52867C5D30098FB56 /* API.swift in Sources */,
 				5E9284CC28726EE2001EFE25 /* LoginManager+Extension.swift in Sources */,
 				5E2BB2A9286898600098FB56 /* ProfileView.swift in Sources */,
 				5E2BB2AD28689D6F0098FB56 /* LoginView.swift in Sources */,
