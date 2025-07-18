@@ -23,10 +23,10 @@ import XCTest
 
 class LoginPage: Page {
     
-    lazy var okButton = app.buttons["OK"]
-    lazy var lineLoginButton = app.buttons["login.button"]
-    lazy var lineLogoutButton = app.navigationBars.buttons["Logout"]
-    lazy var errorAlert = app.alerts["Error"]
+    var okButton: XCUIElement { app.buttons["OK"] }
+    var lineLoginButton: XCUIElement { app.buttons["login.button"] }
+    var lineLogoutButton: XCUIElement { app.navigationBars.buttons["Logout"] }
+    var errorAlert: XCUIElement { app.alerts["Error"] }
 
     @discardableResult
     func tapLoginButton() -> Self {

@@ -26,34 +26,35 @@ class WebLoginPage: Page {
     // MARK: - Element Identifiers
     
     // Sample app elements
-    lazy var webLoginButton = app.buttons["Web Login"]
-    lazy var cancelButtonJP = app.buttons["キャンセル"]
-    lazy var cancelButtonCN = app.buttons["取消"]
-    lazy var cancelButtonEN = app.buttons["Cancel"]
+    var webLoginButton: XCUIElement { app.buttons["Web Login"] }
+    var cancelButtonJP: XCUIElement { app.buttons["キャンセル"] }
+    var cancelButtonCN: XCUIElement { app.buttons["取消"] }
+    var cancelButtonEN: XCUIElement { app.buttons["Cancel"] }
 
     // Safari View Controller elements
-    lazy var safariView = app.otherElements["TopBrowserBar"]
-    
+    var safariView: XCUIElement { app.otherElements["TopBrowserBar"] }
+
     // LINE login web form elements
-    lazy var emailField = app.webViews.textFields["メールアドレス"]
-    lazy var focusedTextField = app.webViews.textFields.element(
+    var emailField: XCUIElement { app.webViews.textFields["メールアドレス"] }
+    var focusedTextField: XCUIElement { app.webViews.textFields.element(
         matching: NSPredicate(format: "hasKeyboardFocus == true")
-    )
+    ) }
 
-    lazy var passwordField = app.webViews.secureTextFields["パスワード"]
-    lazy var focusedSecureTextFields = app.webViews.secureTextFields.element(
-        matching: NSPredicate(format: "hasKeyboardFocus == true")
-    )
+    var passwordField: XCUIElement { app.webViews.secureTextFields["パスワード"] }
+    var focusedSecureTextFields: XCUIElement {
+        app.webViews.secureTextFields.element(
+            matching: NSPredicate(format: "hasKeyboardFocus == true"))
+    }
 
-    lazy var loginSubmitButton = app.webViews.buttons["ログイン"]
-    lazy var webAllowButton = app.webViews.buttons["許可する"]
-    lazy var webCancelButton = app.webViews.buttons["キャンセル"]
-    lazy var confirmButton = app.webViews.staticTexts["確認"]
-    
+    var loginSubmitButton: XCUIElement { app.webViews.buttons["ログイン"] }
+    var webAllowButton: XCUIElement { app.webViews.buttons["許可する"] }
+    var webCancelButton: XCUIElement { app.webViews.buttons["キャンセル"] }
+    var confirmButton: XCUIElement { app.webViews.staticTexts["確認"] }
+
     // QR Code login elements
-    lazy var qrCodeButton = app.webViews.staticTexts["QRコードログイン"]
-    lazy var emailLoginButton = app.webViews.staticTexts["メールアドレスでログイン"]
-    lazy var qrCodeImage = app.webViews.images.firstMatch
+    var qrCodeButton: XCUIElement { app.webViews.staticTexts["QRコードログイン"] }
+    var emailLoginButton: XCUIElement { app.webViews.staticTexts["メールアドレスでログイン"]  }
+    var qrCodeImage: XCUIElement { app.webViews.images.firstMatch }
 
     // MARK: - Navigation Actions
     
