@@ -65,6 +65,7 @@ class WebLoginPage: Page {
     
     @discardableResult
     func waitForSafariViewController(timeout: TimeInterval = 30) -> Self {
+        sleep(2) // Allow time for the Safari View Controller to appear
         expect(element: safariView, status: .exist, withIn: timeout)
         return self
     }

@@ -13,7 +13,10 @@
             "key" : "LINE_SDK_TEST_PASSWORD",
             "value" : "$(LINE_SDK_TEST_PASSWORD)"
           }
-        ]
+        ],
+        "maximumTestRepetitions" : 3,
+        "repeatInNewRunnerProcess" : true,
+        "testRepetitionMode" : "retryOnFailure"
       }
     }
   ],
