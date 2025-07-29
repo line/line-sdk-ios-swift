@@ -219,6 +219,131 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             XCTAssertEqual(process.loginRoute, .webLogin)
         }
     }
+    
+    // MARK: - Token Exchange Error Tests
+    
+    func testExchangeTokenWithNonNetworkError() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        // Use a simple NSError that's not a network connection lost error
+        let customError = NSError(domain: "TestDomain", code: 999, userInfo: [NSLocalizedDescriptionKey: "Test error"])
+        
+        let delegateStub = SessionDelegateStub(stub: .error(customError))
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+        
+        var process: LoginProcess!
+        process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
+            loginResult in
+            XCTAssertNotNil(loginResult.error)
+            XCTAssertNil(loginResult.value)
+            
+            if let error = loginResult.error {
+                // Should receive the error wrapped in URLSessionError but not be a network connection lost error
+                XCTAssertFalse(error.isURLSessionErrorCode(sessionErrorCode: NSURLErrorNetworkConnectionLost))
+            } else {
+                XCTFail("Should receive LineSDKError, but got: \(String(describing: loginResult.error))")
+            }
+            
+            expect.fulfill()
+        }!
+        
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
+            let handled = process.resumeOpenURL(url: URL(string: urlString)!)
+            XCTAssertTrue(handled)
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testExchangeTokenWithNetworkErrorRetrySuccess() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        let networkError = NSError(domain: NSURLErrorDomain, code: NSURLErrorNetworkConnectionLost, userInfo: nil)
+        
+        // For retry scenario: 
+        // 1. First PostExchangeTokenRequest -> network error
+        // 2. Second PostExchangeTokenRequest (retry) -> success
+        // 3. GetUserProfileRequest -> success
+        let delegateStub = SessionDelegateStub(stubs: [
+            .error(networkError),
+            .init(data: PostExchangeTokenRequest.successData, responseCode: 200),
+            .init(data: GetUserProfileRequest.successData, responseCode: 200)
+        ])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+        
+        var process: LoginProcess!
+        process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
+            loginResult in
+            if let error = loginResult.error {
+                XCTFail("Should succeed after retry, but got error: \(error)")
+            } else if let result = loginResult.value {
+                XCTAssertEqual(result.accessToken.value, PostExchangeTokenRequest.successToken)
+                try! AccessTokenStore.shared.removeCurrentAccessToken()
+            } else {
+                XCTFail("No result received")
+            }
+            expect.fulfill()
+        }!
+        
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
+            let handled = process.resumeOpenURL(url: URL(string: urlString)!)
+            XCTAssertTrue(handled)
+        }
+        
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testExchangeTokenWithNetworkErrorRetryFail() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        let networkError = NSError(domain: NSURLErrorDomain, code: NSURLErrorNetworkConnectionLost, userInfo: nil)
+        
+        let delegateStub = SessionDelegateStub(stubs: [
+            .error(networkError),
+            .error(networkError)
+        ])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+        
+        var process: LoginProcess!
+        process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
+            loginResult in
+            XCTAssertNotNil(loginResult.error)
+            XCTAssertNil(loginResult.value)
+            
+            if let error = loginResult.error {
+                XCTAssertTrue(error.isURLSessionErrorCode(sessionErrorCode: NSURLErrorNetworkConnectionLost))
+            } else {
+                XCTFail("Should receive network connection lost error")
+            }
+            
+            expect.fulfill()
+        }!
+        
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
+            let handled = process.resumeOpenURL(url: URL(string: urlString)!)
+            XCTAssertTrue(handled)
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
 
 }
 
