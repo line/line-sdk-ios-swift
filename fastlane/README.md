@@ -39,6 +39,14 @@ Run tests.
 
 
 
+### ios sdk_tests_with_coverage
+
+```sh
+[bundle exec] fastlane ios sdk_tests_with_coverage
+```
+
+Run tests with coverage reporting
+
 ### ios sample_tests
 
 ```sh
