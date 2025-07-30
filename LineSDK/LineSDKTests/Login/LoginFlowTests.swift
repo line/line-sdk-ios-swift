@@ -219,7 +219,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
     func testAppUniversalLinkFlow() {
         let expect = expectation(description: "\(#file)_\(#line)")
         
-        let flow = AppUniversalLinkFlow(parameter: parameter)
+        let flow = AppUniversalLinkFlow(parameter: parameter, applicationOpener: UIApplication.shared)
         let universal = URL(string: Constant.lineWebAuthUniversalURL)!
         let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
         XCTAssertEqual(components?.scheme, "https")
@@ -236,7 +236,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
     
     func testAppAuthSchemeFlow() {
         let expect = expectation(description: "\(#file)_\(#line)")
-        let flow = AppAuthSchemeFlow(parameter: parameter)
+        let flow = AppAuthSchemeFlow(parameter: parameter, applicationOpener: UIApplication.shared)
         let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
         XCTAssertEqual(components?.scheme, Constant.lineAuthV2Scheme)
         XCTAssertEqual(components?.host, "authorize")

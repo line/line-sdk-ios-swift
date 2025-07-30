@@ -87,7 +87,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         }!
 
         if !expectOpenID {
-            process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+            process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters, applicationOpener: UIApplication.shared)
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -197,7 +197,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
                 configuration: .shared, scopes: [], parameters: .init(), viewController: setupViewController()
             )
             XCTAssertNil(process.loginRoute)
-            process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+            process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters, applicationOpener: UIApplication.shared)
             XCTAssertEqual(process.loginRoute, .appUniversalLink)
         }
 
@@ -206,7 +206,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
                 configuration: .shared, scopes: [], parameters: .init(), viewController: setupViewController()
             )
             XCTAssertNil(process.loginRoute)
-            process.appAuthSchemeFlow = AppAuthSchemeFlow(parameter: sampleFlowParameters)
+            process.appAuthSchemeFlow = AppAuthSchemeFlow(parameter: sampleFlowParameters, applicationOpener: UIApplication.shared)
             XCTAssertEqual(process.loginRoute, .appAuthScheme)
         }
 
@@ -250,7 +250,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             expect.fulfill()
         }!
         
-        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters, applicationOpener: UIApplication.shared)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
@@ -294,7 +294,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             expect.fulfill()
         }!
         
-        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters, applicationOpener: UIApplication.shared)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
@@ -334,7 +334,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             expect.fulfill()
         }!
         
-        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters, applicationOpener: UIApplication.shared)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
