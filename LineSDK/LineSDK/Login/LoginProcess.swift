@@ -170,7 +170,11 @@ public class LoginProcess {
         scopes: Set<LoginPermission>,
         parameters: LoginManager.Parameters,
         viewController: UIViewController?,
-        flowFactory: LoginFlowFactory = DefaultLoginFlowFactory(),
+        // This should be able to be a non-nil value with DefaultLoginFlowFactory() as its default value. But
+        // CocaoPods lint does not like when Swift 4.2 language version is used.
+        // Revert this later when we can drop support for Swift 4.2:
+        // flowFactory: LoginFlowFactory = DefaultLoginFlowFactory(),
+        flowFactory: LoginFlowFactory? = nil,
         lineAvailabilityChecker: LINEAvailabilityChecker = DefaultLINEAvailabilityChecker()
     ) {
         self.configuration = configuration
@@ -179,7 +183,7 @@ public class LoginProcess {
         self.scopes = scopes
         self.parameters = parameters
         self.presentingViewController = viewController
-        self.flowFactory = flowFactory
+        self.flowFactory = flowFactory ?? DefaultLoginFlowFactory()
         self.lineAvailabilityChecker = lineAvailabilityChecker
 
         if scopes.contains(.openID) {
