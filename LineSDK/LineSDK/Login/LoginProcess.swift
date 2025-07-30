@@ -432,7 +432,7 @@ class AppUniversalLinkFlow: AppUniversalLinkFlowType {
     let onNext = Delegate<Bool, Void>()
     private let applicationOpener: ApplicationOpener
 
-    init(parameter: LoginProcess.FlowParameters, applicationOpener: ApplicationOpener) {
+    init(parameter: LoginProcess.FlowParameters, applicationOpener: ApplicationOpener = UIApplication.shared) {
         let universalURLBase = URL(string: Constant.lineWebAuthUniversalURL)!
         url = universalURLBase.appendedLoginQuery(parameter)
         self.applicationOpener = applicationOpener
@@ -453,7 +453,7 @@ class AppAuthSchemeFlow: AppAuthSchemeFlowType {
     let onNext = Delegate<Bool, Void>()
     private let applicationOpener: ApplicationOpener
 
-    init(parameter: LoginProcess.FlowParameters, applicationOpener: ApplicationOpener) {
+    init(parameter: LoginProcess.FlowParameters, applicationOpener: ApplicationOpener = UIApplication.shared) {
         url = Constant.lineAppAuthURLv2.appendedURLSchemeQuery(parameter)
         self.applicationOpener = applicationOpener
     }
