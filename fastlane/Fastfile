@@ -37,6 +37,34 @@ platform :ios do
     )
   end
 
+  desc "Run tests with coverage reporting"
+  lane :sdk_tests_with_coverage do
+    swift_version = ENV["SWIFT_VERSION"] || "6.0"
+    
+    # Run tests with code coverage enabled
+    run_tests(
+        workspace: "LineSDK.xcworkspace",
+        devices: ["iPhone 16"],
+        scheme: "LineSDK",
+        xcargs: "SWIFT_VERSION=#{swift_version}",
+        code_coverage: true,
+        output_directory: "./test_output",
+        result_bundle: true
+    )
+    
+    # Generate coverage reports using xcov
+    xcov(
+        workspace: "LineSDK.xcworkspace",
+        scheme: "LineSDK",
+        output_directory: "./coverage_output",
+        html_report: true,
+        json_report: true,
+        minimum_coverage_percentage: 0.0,
+        include_test_targets: false,
+        skip_slack: true
+    )
+  end
+
   lane :sample_tests do
     # Ensure required environment variables are set
     unless ENV["LINE_SDK_TEST_EMAIL"] && ENV["LINE_SDK_TEST_PASSWORD"]

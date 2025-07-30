@@ -1,6 +1,7 @@
 <img src="https://raw.githubusercontent.com/line/line-sdk-ios-swift/assets/assets/sdklogo.png" width="355" height="97">
 
 [![LINE SDK CI](https://github.com/line/line-sdk-ios-swift/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/line/line-sdk-ios-swift/actions/workflows/ci.yaml)
+[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/onevcat/49ddb455d585b4c0599186552cfb0249/raw/line-sdk-ios-coverage.json)](https://line.github.io/line-sdk-ios-swift/)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/LineSDKSwift.svg)](https://cocoapods.org/pods/LineSDKSwift)
 [![Swift Package Manager Compatible](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager/)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)

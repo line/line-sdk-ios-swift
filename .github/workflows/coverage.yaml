@@ -1,0 +1,74 @@
+name: Coverage Badge
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  coverage:
+    name: Update Coverage Badge
+    runs-on: macos-15
+    environment: "Coverage Badge Env"  # Use specified GitHub environment
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Cache Gems
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+            
+      - name: Bundle Install
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+          
+      - name: Run Tests with Coverage
+        env:
+          SWIFT_VERSION: "6.0"
+        run: bundle exec fastlane sdk_tests_with_coverage
+        
+      - name: Extract Coverage
+        id: coverage
+        run: |
+          ruby script/extract_coverage.rb
+          
+      - name: Update Coverage Badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: ${{ secrets.GIST_ID }}
+          filename: line-sdk-ios-coverage.json
+          label: Coverage
+          message: ${{ steps.coverage.outputs.coverage }}
+          color: ${{ steps.coverage.outputs.color }}
+          
+      - name: Deploy Coverage Report to GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./coverage_output
+          publish_branch: gh-pages
+          enable_jekyll: false
+          allow_empty_commit: false
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy coverage report for ${{ github.sha }}'
+          
+      - name: Upload Coverage Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: |
+            ./coverage_output/
+            ./test_output/
+          retention-days: 30
