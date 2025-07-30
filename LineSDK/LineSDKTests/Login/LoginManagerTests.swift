@@ -37,6 +37,77 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     
     var window: UIWindow!
     
+    private func setupSessionStub() {
+        let delegateStub = SessionDelegateStub(stubs: [
+            .init(data: PostExchangeTokenRequest.successData, responseCode: 200),
+            .init(data: GetUserProfileRequest.successData, responseCode: 200)
+        ])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+    }
+    
+    private func performLoginTest(
+        permissions: Set<LoginPermission>,
+        expectOpenID: Bool,
+        useNonIsolatedResumeURL: Bool = false,
+        additionalAssertions: ((LoginResult, LoginProcess) -> Void)? = nil
+    ) {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        XCTAssertFalse(LoginManager.shared.isAuthorized)
+        XCTAssertFalse(LoginManager.shared.isAuthorizing)
+        
+        setupSessionStub()
+
+        var process: LoginProcess!
+        process = LoginManager.shared.login(permissions: permissions, in: setupViewController()) {
+            loginResult in
+            XCTAssertNotNil(loginResult.value)
+            
+            let result = loginResult.value!
+            XCTAssertEqual(result.accessToken.value, PostExchangeTokenRequest.successToken)
+            XCTAssertEqual(AccessTokenStore.shared.current, result.accessToken)
+            
+            XCTAssertTrue(LoginManager.shared.isAuthorized)
+            XCTAssertFalse(LoginManager.shared.isAuthorizing)
+
+            if expectOpenID {
+                XCTAssertNotNil(result.IDTokenNonce)
+                XCTAssertEqual(result.IDTokenNonce, process!.IDTokenNonce)
+            } else {
+                XCTAssertNil(result.IDTokenNonce)
+            }
+
+            additionalAssertions?(result, process!)
+
+            try! AccessTokenStore.shared.removeCurrentAccessToken()
+            expect.fulfill()
+        }!
+
+        if !expectOpenID {
+            process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            
+            XCTAssertFalse(LoginManager.shared.isAuthorized)
+            XCTAssertTrue(LoginManager.shared.isAuthorizing)
+
+            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
+            let handled: Bool
+            if useNonIsolatedResumeURL {
+                handled = process.nonisolatedResumeOpenURL(url: URL(string: urlString)!)
+            } else {
+                handled = process.resumeOpenURL(url: URL(string: urlString)!)
+            }
+            XCTAssertTrue(handled)
+        }
+        
+        waitForExpectations(timeout: 2, handler: nil)
+    }
+    
     override func setUp() {
         let url = URL(string: "https://example.com/auth")
         LoginManager.shared.setup(channelID: "123", universalLinkURL: url)
@@ -56,101 +127,32 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     }
     
     func testLoginAction() {
-        let expect = expectation(description: "\(#file)_\(#line)")
-        
-        XCTAssertFalse(LoginManager.shared.isAuthorized)
-        XCTAssertFalse(LoginManager.shared.isAuthorizing)
-        
-        let delegateStub = SessionDelegateStub(stubs: [
-            .init(data: PostExchangeTokenRequest.successData, responseCode: 200),
-            .init(data: GetUserProfileRequest.successData, responseCode: 200)
-        ])
-        Session._shared = Session(
-            configuration: LoginConfiguration.shared,
-            delegate: delegateStub
-        )
-
-        var process: LoginProcess!
-        process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
-            loginResult in
-            XCTAssertNotNil(loginResult.value)
-            
-            let result = loginResult.value!
-            XCTAssertEqual(result.accessToken.value, PostExchangeTokenRequest.successToken)
-            XCTAssertEqual(AccessTokenStore.shared.current, result.accessToken)
-            
-            XCTAssertTrue(LoginManager.shared.isAuthorized)
-            XCTAssertFalse(LoginManager.shared.isAuthorizing)
-
-            // IDTokenNonce should be `nil` when `.openID` not required.
-            XCTAssertNil(result.IDTokenNonce)
-
+        performLoginTest(
+            permissions: [.profile],
+            expectOpenID: false
+        ) { result, process in
             XCTAssertEqual(process.loginRoute, .appUniversalLink)
-
-            try! AccessTokenStore.shared.removeCurrentAccessToken()
-            expect.fulfill()
-        }!
-
-        // Set a sample value for checking `loginRoute` in the result.
-        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            
-            XCTAssertFalse(LoginManager.shared.isAuthorized)
-            XCTAssertTrue(LoginManager.shared.isAuthorizing)
-
-            // Simulate auth result
-            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
-            let handled = process.resumeOpenURL(url: URL(string: urlString)!)
-            XCTAssertTrue(handled)
         }
-        
-        waitForExpectations(timeout: 2, handler: nil)
     }
 
     func testLoginActionWithOpenID() {
-        let expect = expectation(description: "\(#file)_\(#line)")
-
-        XCTAssertFalse(LoginManager.shared.isAuthorized)
-        XCTAssertFalse(LoginManager.shared.isAuthorizing)
-
-        let delegateStub = SessionDelegateStub(stubs: [
-            .init(data: PostExchangeTokenRequest.successData, responseCode: 200),
-            .init(data: GetUserProfileRequest.successData, responseCode: 200)
-        ])
-        Session._shared = Session(
-            configuration: LoginConfiguration.shared,
-            delegate: delegateStub
+        performLoginTest(
+            permissions: [.profile, .openID],
+            expectOpenID: true
         )
-
-        var process: LoginProcess!
-        process = LoginManager.shared.login(permissions: [.profile, .openID], in: setupViewController()) {
-            loginResult in
-            XCTAssertNotNil(loginResult.value)
-
-            let result = loginResult.value!
-
-            // IDTokenNonce should be `nil` when `.openID` not required.
-            XCTAssertNotNil(result.IDTokenNonce)
-            XCTAssertEqual(result.IDTokenNonce, process!.IDTokenNonce)
-
-            try! AccessTokenStore.shared.removeCurrentAccessToken()
-            expect.fulfill()
-        }!
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-
-            XCTAssertFalse(LoginManager.shared.isAuthorized)
-            XCTAssertTrue(LoginManager.shared.isAuthorizing)
-
-            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
-            let handled = process.resumeOpenURL(url: URL(string: urlString)!)
-            XCTAssertTrue(handled)
-        }
-
-        waitForExpectations(timeout: 2, handler: nil)
     }
-    
+
+    func testLoginActionWithNonIsolatedResumeOpenURL() {
+        performLoginTest(
+            permissions: [.profile],
+            expectOpenID: false,
+            useNonIsolatedResumeURL: true
+        ) { result, process in
+            XCTAssertEqual(process.loginRoute, .appUniversalLink)
+        }
+    }
+
+
     func testLogout() {
         let expect = expectation(description: "\(#file)_\(#line)")
 
@@ -216,6 +218,131 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             process.webLoginFlow = WebLoginFlow(parameter: sampleFlowParameters)
             XCTAssertEqual(process.loginRoute, .webLogin)
         }
+    }
+    
+    // MARK: - Token Exchange Error Tests
+    
+    func testExchangeTokenWithNonNetworkError() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        // Use a simple NSError that's not a network connection lost error
+        let customError = NSError(domain: "TestDomain", code: 999, userInfo: [NSLocalizedDescriptionKey: "Test error"])
+        
+        let delegateStub = SessionDelegateStub(stub: .error(customError))
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+        
+        var process: LoginProcess!
+        process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
+            loginResult in
+            XCTAssertNotNil(loginResult.error)
+            XCTAssertNil(loginResult.value)
+            
+            if let error = loginResult.error {
+                // Should receive the error wrapped in URLSessionError but not be a network connection lost error
+                XCTAssertFalse(error.isURLSessionErrorCode(sessionErrorCode: NSURLErrorNetworkConnectionLost))
+            } else {
+                XCTFail("Should receive LineSDKError, but got: \(String(describing: loginResult.error))")
+            }
+            
+            expect.fulfill()
+        }!
+        
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
+            let handled = process.resumeOpenURL(url: URL(string: urlString)!)
+            XCTAssertTrue(handled)
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testExchangeTokenWithNetworkErrorRetrySuccess() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        let networkError = NSError(domain: NSURLErrorDomain, code: NSURLErrorNetworkConnectionLost, userInfo: nil)
+        
+        // For retry scenario: 
+        // 1. First PostExchangeTokenRequest -> network error
+        // 2. Second PostExchangeTokenRequest (retry) -> success
+        // 3. GetUserProfileRequest -> success
+        let delegateStub = SessionDelegateStub(stubs: [
+            .error(networkError),
+            .init(data: PostExchangeTokenRequest.successData, responseCode: 200),
+            .init(data: GetUserProfileRequest.successData, responseCode: 200)
+        ])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+        
+        var process: LoginProcess!
+        process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
+            loginResult in
+            if let error = loginResult.error {
+                XCTFail("Should succeed after retry, but got error: \(error)")
+            } else if let result = loginResult.value {
+                XCTAssertEqual(result.accessToken.value, PostExchangeTokenRequest.successToken)
+                try! AccessTokenStore.shared.removeCurrentAccessToken()
+            } else {
+                XCTFail("No result received")
+            }
+            expect.fulfill()
+        }!
+        
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
+            let handled = process.resumeOpenURL(url: URL(string: urlString)!)
+            XCTAssertTrue(handled)
+        }
+        
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testExchangeTokenWithNetworkErrorRetryFail() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+        
+        let networkError = NSError(domain: NSURLErrorDomain, code: NSURLErrorNetworkConnectionLost, userInfo: nil)
+        
+        let delegateStub = SessionDelegateStub(stubs: [
+            .error(networkError),
+            .error(networkError)
+        ])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+        
+        var process: LoginProcess!
+        process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) {
+            loginResult in
+            XCTAssertNotNil(loginResult.error)
+            XCTAssertNil(loginResult.value)
+            
+            if let error = loginResult.error {
+                XCTAssertTrue(error.isURLSessionErrorCode(sessionErrorCode: NSURLErrorNetworkConnectionLost))
+            } else {
+                XCTFail("Should receive network connection lost error")
+            }
+            
+            expect.fulfill()
+        }!
+        
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
+            let handled = process.resumeOpenURL(url: URL(string: urlString)!)
+            XCTAssertTrue(handled)
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
     }
 
 }
