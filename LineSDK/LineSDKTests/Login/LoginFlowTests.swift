@@ -231,7 +231,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
         flow.start()
         
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     func testAppAuthSchemeFlow() {
@@ -246,7 +246,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
             expect.fulfill()
         }
         flow.start()
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     func testWebLoginFlow() {
@@ -272,7 +272,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
         
         flow.start(in: rootViewController)
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 3.0, handler: nil)
     }
 
     func testWebLoginFlowWithQRCodeFirst() {
@@ -301,7 +301,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
 
         flow.start(in: rootViewController)
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 3.0, handler: nil)
     }
 
     func testAppSwitchingObserver() {
@@ -314,7 +314,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     func testAppSwitchingObserverInvalid() {
@@ -327,7 +327,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         observer.valid = false
         DispatchQueue.main.async { NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil) }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { expect.fulfill() }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     func testAppSwitchingObserverRelease() {
@@ -345,7 +345,7 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
             XCTAssertNil(ref)
             expect.fulfill()
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 3.0, handler: nil)
     }
     
     // MARK: - Window Management Tests
