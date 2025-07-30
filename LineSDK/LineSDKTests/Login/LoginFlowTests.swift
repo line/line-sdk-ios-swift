@@ -347,6 +347,102 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         }
         waitForExpectations(timeout: 1.0, handler: nil)
     }
+    
+    // MARK: - Window Management Tests
+    
+    func testFindKeyWindowWithCreatedWindow() {
+        let testWindow = UIWindow(frame: UIScreen.main.bounds)
+        testWindow.windowLevel = .normal
+        testWindow.makeKeyAndVisible()
+        
+        let foundWindow = UIWindow.findKeyWindow()
+        XCTAssertNotNil(foundWindow, "Should find the created window")
+        XCTAssertEqual(foundWindow, testWindow, "Should return the test window")
+        XCTAssertEqual(foundWindow?.windowLevel, .normal, "Window should be at normal level")
+        XCTAssertTrue(foundWindow?.isKeyWindow == true, "Found window should be key window")
+        
+        testWindow.isHidden = true
+    }
+    
+    func testTopMostViewControllerWithSetup() {
+        let rootViewController = setupViewController()
+        
+        let topMost = UIViewController.topMost
+        XCTAssertNotNil(topMost, "Should find top most view controller with setup window")
+        XCTAssertEqual(topMost, rootViewController, "Top most should be the root view controller")
+        
+        resetViewController()
+    }
+    
+    func testTopMostViewControllerWithPresentation() {
+        let rootViewController = setupViewController()
+        let presentedViewController = UIViewController()
+        
+        let expectPresent = expectation(description: "present")
+        rootViewController.present(presentedViewController, animated: false) {
+            expectPresent.fulfill()
+        }
+        wait(for: [expectPresent], timeout: 1.0)
+        
+        let topMost = UIViewController.topMost
+        XCTAssertNotNil(topMost, "Should find top most view controller")
+        XCTAssertEqual(topMost, presentedViewController, "Top most should be the presented view controller")
+        
+        let expectDismiss = expectation(description: "dismiss")
+        presentedViewController.dismiss(animated: false) {
+            expectDismiss.fulfill()
+        }
+        wait(for: [expectDismiss], timeout: 1.0)
+        
+        resetViewController()
+    }
+    
+    func testTopMostViewControllerWithNestedPresentation() {
+        let rootViewController = setupViewController()
+        let firstPresentedViewController = UIViewController()
+        let secondPresentedViewController = UIViewController()
+        
+        let expectFirstPresent = expectation(description: "first present")
+        rootViewController.present(firstPresentedViewController, animated: false) {
+            expectFirstPresent.fulfill()
+        }
+        wait(for: [expectFirstPresent], timeout: 1.0)
+        
+        let expectSecondPresent = expectation(description: "second present")
+        firstPresentedViewController.present(secondPresentedViewController, animated: false) {
+            expectSecondPresent.fulfill()
+        }
+        wait(for: [expectSecondPresent], timeout: 1.0)
+        
+        let topMost = UIViewController.topMost
+        XCTAssertNotNil(topMost, "Should find top most view controller")
+        XCTAssertEqual(topMost, secondPresentedViewController, "Top most should be the deepest presented view controller")
+        
+        let expectDismissSecond = expectation(description: "dismiss second")
+        secondPresentedViewController.dismiss(animated: false) {
+            expectDismissSecond.fulfill()
+        }
+        wait(for: [expectDismissSecond], timeout: 1.0)
+        
+        let expectDismissFirst = expectation(description: "dismiss first")
+        firstPresentedViewController.dismiss(animated: false) {
+            expectDismissFirst.fulfill()
+        }
+        wait(for: [expectDismissFirst], timeout: 1.0)
+        
+        resetViewController()
+    }
+    
+    func testWindowWithoutRootViewController() {
+        let testWindow = UIWindow(frame: UIScreen.main.bounds)
+        testWindow.windowLevel = .normal
+        testWindow.makeKeyAndVisible()
+        
+        let topMost = UIViewController.topMost
+        XCTAssertNil(topMost, "Should return nil when window has no root view controller")
+        
+        testWindow.isHidden = true
+    }
 }
 
 
