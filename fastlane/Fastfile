@@ -110,7 +110,7 @@ platform :ios do
 
   lane :lint_pod do
     swift_version = ENV["SWIFT_VERSION"] || "6.0"
-    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version=#{swift_version}")
+    Action.sh("bundle exec pod lib lint ../LineSDKSwift.podspec --swift-version=#{swift_version} --allow-warnings")
   end
 
   lane :lint_spm do

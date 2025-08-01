@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B8D25332E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
+		2B8D25342E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
+		2B8D25362E39A2B50029FB34 /* LoginProcessMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */; };
+		2B8D25382E39A2D40029FB34 /* LoginProcessFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25372E39A2D40029FB34 /* LoginProcessFlowTests.swift */; };
 		3F75522F2123D215004AC047 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F75522E2123D214004AC047 /* Assets.xcassets */; };
 		3F75523121244502004AC047 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75523021244502004AC047 /* LoginButton.swift */; };
 		3F946A212126D13A009914ED /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F946A202126D13A009914ED /* Default-568h@2x.png */; };
@@ -576,6 +580,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowFactory.swift; sourceTree = "<group>"; };
+		2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessMocks.swift; sourceTree = "<group>"; };
+		2B8D25372E39A2D40029FB34 /* LoginProcessFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessFlowTests.swift; sourceTree = "<group>"; };
 		3F75522E2123D214004AC047 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F75523021244502004AC047 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		3F946A202126D13A009914ED /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -1194,6 +1201,8 @@
 		4B8A9655211009A400760219 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */,
+				2B8D25372E39A2D40029FB34 /* LoginProcessFlowTests.swift */,
 				4B8FF4922105C49200890AEF /* LoginFlowTests.swift */,
 				4B8A965621100A5800760219 /* LoginConfigurationTests.swift */,
 				4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */,
@@ -1291,6 +1300,7 @@
 				4B6508B7211812CE001796E0 /* LoginManagerOptions.swift */,
 				4BD33EE2238B825600C1E8A9 /* LoginManagerParameters.swift */,
 				4B9058DB21007C8C004D717F /* LoginResult.swift */,
+				2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */,
 				4B45256A2101810D00A39D4F /* LoginProcess.swift */,
 				4B63F4722106FDCC003D1BF1 /* LoginProcessURLResponse.swift */,
 				4B45256E210188C300A39D4F /* LoginPermission.swift */,
@@ -2371,6 +2381,7 @@
 				D1F20A762500BBF4005E359E /* OpenChatCreatingFormItem.swift in Sources */,
 				4B45256B2101810D00A39D4F /* LoginProcess.swift in Sources */,
 				4B9A303121210FE700174C6F /* ImageMessage.swift in Sources */,
+				2B8D25332E39A2540029FB34 /* LoginFlowFactory.swift in Sources */,
 				DBF20278212C137D00780358 /* GetApproversInGroupRequest.swift in Sources */,
 				4BFBEA7B211057050044C2B6 /* PostRefreshTokenRequest.swift in Sources */,
 			);
@@ -2409,6 +2420,7 @@
 				4BA8E44A210ED82B00355F03 /* AdapterTests.swift in Sources */,
 				DB75650928CB254A001A25A5 /* UIColorExtensionTests.swift in Sources */,
 				4B6A0FF7212AACCF00B3ED1F /* FlexButtonComponentTests.swift in Sources */,
+				2B8D25382E39A2D40029FB34 /* LoginProcessFlowTests.swift in Sources */,
 				DB09851523D5AF9D0001A3B8 /* PKCETests.swift in Sources */,
 				4BBAFC502101D31300E7BFF6 /* ConstantTests.swift in Sources */,
 				4B9A305621215DED00174C6F /* TemplateConfirmPayloadTests.swift in Sources */,
@@ -2435,6 +2447,7 @@
 				4BEFF644226DCD960046DB66 /* ShareControllerTests.swift in Sources */,
 				4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */,
 				4B3CCB9E2152449400F51D76 /* ECDSAKeyTests.swift in Sources */,
+				2B8D25362E39A2B50029FB34 /* LoginProcessMocks.swift in Sources */,
 				4B414D5E210F077700FD19BC /* RequestStubs.swift in Sources */,
 				4B5EE2E8212BE0D00009DF2E /* FlexCarouselContainerTests.swift in Sources */,
 				4BCD27952113ECCF00B90D8F /* GetVerifyTokenRequestTests.swift in Sources */,
@@ -2703,6 +2716,7 @@
 				4BCD252B23FFAABA00D4B6BD /* AccessTokenVerifyResult.swift in Sources */,
 				4BCD253F23FFAABA00D4B6BD /* PostMultisendMessagesWithTokenRequest.swift in Sources */,
 				4BCD24F123FFA74100D4B6BD /* LineSDKAudioMessage.swift in Sources */,
+				2B8D25342E39A2540029FB34 /* LoginFlowFactory.swift in Sources */,
 				4BCD256D23FFAABA00D4B6BD /* ResponsePipeline.swift in Sources */,
 				4BCD255A23FFAABA00D4B6BD /* FlexButtonComponent.swift in Sources */,
 				4BCD24F223FFA74100D4B6BD /* LineSDKFlexMessageContainer.swift in Sources */,
