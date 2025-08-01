@@ -98,6 +98,89 @@ class LineSDKErrorTests: XCTestCase {
         let error = LineSDKError.requestFailed(reason: .lackOfAccessToken)
         XCTAssertEqual(error.errorCode, 1002)
     }
+
+    func testAuthorizeErrorReasonDescription() {
+        let authReasons: [LineSDKError.AuthorizeErrorReason] = [
+            .exhaustedLoginFlow,
+            .malformedHierarchy,
+            .userCancelled,
+            .forceStopped,
+            .callbackURLSchemeNotMatching,
+            .invalidSourceApplication,
+            .malformedRedirectURL(url: URL(string: "https://example.com")!, message: nil),
+            .invalidLineURLResultCode("error"),
+            .lineClientError(code: "error", message: nil),
+            .responseStateValueNotMatching(expected: "123", got: "456"),
+            .webLoginError(error: "error", description: nil),
+            .keychainOperation(status: 1),
+            .invalidDataInKeychain,
+            .lackOfIDToken(raw: nil),
+            .JWTPublicKeyNotFound(keyID: "test"),
+            .cryptoError(error: .JWKFailed(reason: .unsupportedKeyType("")))
+        ]
+        for reason in authReasons {
+            XCTAssertNotNil(reason.errorDescription)
+            XCTAssertFalse(reason.errorDescription!.isEmpty)
+        }
+    }
+
+    func testRequestErrorReasonDescription() {
+        let requestReasons: [LineSDKError.RequestErrorReason] = [
+            .missingURL,
+            .lackOfAccessToken,
+            .jsonEncodingFailed(NSError(domain: "TestDomain", code: 1, userInfo: nil)),
+            .invalidParameter([.invalidEntityID("p", value: "v")]),
+        ]
+        for reason in requestReasons {
+            XCTAssertNotNil(reason.errorDescription)
+            XCTAssertFalse(reason.errorDescription!.isEmpty)
+
+            if case .jsonEncodingFailed(let error) = reason {
+                XCTAssertFalse(reason.errorUserInfo.isEmpty)
+
+                let errorInUserInfo = reason.errorUserInfo[LineSDKErrorUserInfoKey.underlyingError.rawValue] as? NSError
+                XCTAssertNotNil(errorInUserInfo)
+                XCTAssertEqual(error as NSError, errorInUserInfo)
+            } else {
+                XCTAssertTrue(reason.errorUserInfo.isEmpty)
+            }
+        }
+    }
+
+    func testResponseErrorReasonDescription() {
+        let responseReasons: [LineSDKError.ResponseErrorReason] = [
+            .URLSessionError(NSError(domain: NSURLErrorDomain, code: NSURLErrorNetworkConnectionLost)),
+            .nonHTTPURLResponse,
+            .dataParsingFailed(String.self, Data(), nil),
+            .invalidHTTPStatusAPIError(detail: LineSDKError.ResponseErrorReason.APIErrorDetail(
+                code: 400, error: APIError(InternalAPIError(message: "Bad Request")),
+                raw: HTTPURLResponse.responseFromCode(400), rawString: "raw")),
+        ]
+        for reason in responseReasons {
+            XCTAssertNotNil(reason.errorDescription)
+            XCTAssertFalse(reason.errorDescription!.isEmpty)
+        }
+    }
+
+    @MainActor
+    func testGeneralErrorReasonDescription() {
+
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
+        defer {
+            LoginManager.shared.reset()
+        }
+
+        let generalReasons: [LineSDKError.GeneralErrorReason] = [
+            .conversionError(string: "", encoding: .utf8),
+            .parameterError(parameterName: "", description: ""),
+            .notOriginalTask(token: 1),
+            .processDiscarded(.init(configuration: .shared, scopes: [], parameters: .init(), viewController: nil)),
+        ]
+        for reason in generalReasons {
+            XCTAssertNotNil(reason.errorDescription)
+            XCTAssertFalse(reason.errorDescription!.isEmpty)
+        }
+    }
 }
 
 func apiErrorReason(code: Int, error: APIError, rawString: String) -> LineSDKError.ResponseErrorReason {
