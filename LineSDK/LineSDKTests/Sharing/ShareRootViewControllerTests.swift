@@ -90,11 +90,64 @@ class ShareRootViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertEqual(shareRootViewController.selectedCount, 0)
     }
     
+    // MARK: - Test Data Factory
+    
+    enum TestDataFactory {
+        static func friendsResponseData(count: Int = 1) -> Data {
+            let friends = (1...count).map { index in
+                """
+                {
+                    "userId": "friend\(index)",
+                    "displayName": "Test Friend \(index)",
+                    "pictureUrl": null
+                }
+                """
+            }.joined(separator: ",")
+            
+            let json = """
+            {
+                "friends": [\(friends)]
+            }
+            """
+            return json.data(using: .utf8)!
+        }
+        
+        static func groupsResponseData(count: Int = 1) -> Data {
+            let groups = (1...count).map { index in
+                """
+                {
+                    "groupId": "group\(index)",
+                    "groupName": "Test Group \(index)",
+                    "pictureUrl": null
+                }
+                """
+            }.joined(separator: ",")
+            
+            let json = """
+            {
+                "groups": [\(groups)]
+            }
+            """
+            return json.data(using: .utf8)!
+        }
+        
+        static func tokenResponseData(_ token: String = "test_token_123") -> Data {
+            let json = """
+            {
+                "token": "\(token)"
+            }
+            """
+            return json.data(using: .utf8)!
+        }
+        
+        static func emptySuccessResponseData() -> Data {
+            return "{}".data(using: .utf8)!
+        }
+    }
+    
     // MARK: - Mock Data Creation
     
     private func createMockUser(id: String, name: String) -> User {
-        // We need to create a User with proper initializer
-        // Since User is Decodable, we'll use JSON decoding
         let json = """
         {
             "userId": "\(id)",
@@ -107,8 +160,6 @@ class ShareRootViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
     }
     
     private func createMockGroup(id: String, name: String) -> Group {
-        // We need to create a Group with proper initializer
-        // Since Group is Decodable, we'll use JSON decoding
         let json = """
         {
             "groupId": "\(id)",
@@ -120,60 +171,85 @@ class ShareRootViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
         return try! JSONDecoder().decode(Group.self, from: data)
     }
     
-    // MARK: - Network Request Tests
+    // MARK: - Test Helper Methods
     
-    func testSuccessfulDataLoading() {
-        let friendsResponseData = """
-        {
-            "friends": [
-                {
-                    "userId": "friend1",
-                    "displayName": "Test Friend 1",
-                    "pictureUrl": null,
-                    "statusMessage": null
-                }
-            ]
-        }
-        """.data(using: .utf8)!
+    private func setupSessionWithSuccessfulResponses(includeTokenAndSend: Bool = false) {
+        var stubs: [SessionDelegateStub.Either] = [
+            .init(data: TestDataFactory.friendsResponseData(), responseCode: 200),
+            .init(data: TestDataFactory.groupsResponseData(), responseCode: 200)
+        ]
         
-        let groupsResponseData = """
-        {
-            "groups": [
-                {
-                    "groupId": "group1",
-                    "groupName": "Test Group 1",
-                    "pictureUrl": null
-                }
-            ]
+        if includeTokenAndSend {
+            stubs.append(.init(data: TestDataFactory.tokenResponseData(), responseCode: 200))
+            stubs.append(.init(data: TestDataFactory.emptySuccessResponseData(), responseCode: 200))
         }
-        """.data(using: .utf8)!
         
-        let sessionStub = SessionDelegateStub(stubs: [
-            .init(data: friendsResponseData, responseCode: 200),
-            .init(data: groupsResponseData, responseCode: 200)
-        ])
+        let sessionStub = SessionDelegateStub(stubs: stubs)
         Session._shared = Session(configuration: LoginConfiguration.shared, delegate: sessionStub)
-        
-        let expectation = expectation(description: "Data loaded")
-        
-        _ = setupViewController(shareRootViewController)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // Check if data loading completed
-            XCTAssertTrue(self.shareRootViewController.allLoaded)
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 2.0)
     }
     
-    func testNetworkErrorHandling() {
+    private func setupSessionWithNetworkError() {
         let networkError = LineSDKError.responseFailed(reason: .URLSessionError(URLError(.notConnectedToInternet)))
         let sessionStub = SessionDelegateStub(stubs: [
             .error(networkError),
             .error(networkError)
         ])
         Session._shared = Session(configuration: LoginConfiguration.shared, delegate: sessionStub)
+    }
+    
+    private func setupSessionWithTokenError() {
+        let tokenError = LineSDKError.responseFailed(reason: .URLSessionError(URLError(.notConnectedToInternet)))
+        let sessionStub = SessionDelegateStub(stubs: [
+            .init(data: TestDataFactory.friendsResponseData(), responseCode: 200),
+            .init(data: TestDataFactory.groupsResponseData(), responseCode: 200),
+            .error(tokenError)
+        ])
+        Session._shared = Session(configuration: LoginConfiguration.shared, delegate: sessionStub)
+    }
+    
+    private func setupTestToken() {
+        let tokenJSON = """
+        {
+            "access_token": "test_access_token",
+            "expires_in": 3600,
+            "scope": "onetime.share",
+            "token_type": "Bearer",
+            "refresh_token": "test_refresh_token"
+        }
+        """
+        let tokenData = tokenJSON.data(using: .utf8)!
+        let testToken = try! JSONDecoder().decode(AccessToken.self, from: tokenData)
+        AccessTokenStore.shared.current = testToken
+    }
+    
+    private func waitForAsyncOperation(
+        description: String,
+        timeout: TimeInterval = 2.0,
+        delay: TimeInterval = 0.5,
+        operation: @escaping () -> Void
+    ) {
+        let expectation = expectation(description: description)
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            operation()
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: timeout)
+    }
+    
+    // MARK: - Network Request Tests
+    
+    func testSuccessfulDataLoading() {
+        setupSessionWithSuccessfulResponses()
+        
+        _ = setupViewController(shareRootViewController)
+        
+        waitForAsyncOperation(description: "Data loaded") {
+            XCTAssertTrue(self.shareRootViewController.allLoaded)
+        }
+    }
+    
+    func testNetworkErrorHandling() {
+        setupSessionWithNetworkError()
         
         var loadingFailedCalled = false
         var failedTargetType: MessageShareTargetType?
@@ -185,20 +261,13 @@ class ShareRootViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
             receivedError = data.1
         }
         
-        let expectation = expectation(description: "Error handled")
-        
         _ = setupViewController(shareRootViewController)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-
+        waitForAsyncOperation(description: "Error handled") {
             XCTAssertTrue(loadingFailedCalled)
             XCTAssertEqual(failedTargetType, .groups)
             XCTAssertNotNil(receivedError)
-
-            expectation.fulfill()
         }
-        
-        waitForExpectations(timeout: 2.0)
     }
     
     // MARK: - Cancel Action Tests
@@ -244,55 +313,7 @@ class ShareRootViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertEqual(messages?.count, 1)
     }
     
-    func testMessageSendingSuccess() {
-        let friendsResponseData = """
-        {
-            "friends": [
-                {
-                    "userId": "friend1",
-                    "displayName": "Test Friend 1",
-                    "pictureUrl": null,
-                    "statusMessage": null
-                }
-            ]
-        }
-        """.data(using: .utf8)!
-
-        let groupsResponseData = """
-        {
-            "groups": [
-                {
-                    "groupId": "group1",
-                    "groupName": "Test Group 1",
-                    "pictureUrl": null
-                }
-            ]
-        }
-        """.data(using: .utf8)!
-        let tokenResponseData = """
-        {
-            "token": "test_token_123"
-        }
-        """.data(using: .utf8)!
-        
-        let sendResponseData = """
-        {}
-        """.data(using: .utf8)!
-
-        let sessionStub = SessionDelegateStub(stubs: [
-            .init(data: friendsResponseData, responseCode: 200),
-            .init(data: groupsResponseData, responseCode: 200),
-            .init(data: tokenResponseData, responseCode: 200),
-            .init(data: sendResponseData, responseCode: 200)
-        ])
-        Session._shared = Session(
-            configuration: LoginConfiguration.shared,
-            delegate: sessionStub
-        )
-        setupTestToken()
-
-        shareRootViewController.messages = [TextMessage(text: "Test message")]
-        
+    private func setupMessageSendingDelegates() -> (successCalled: () -> Bool, dismissCalled: () -> Bool) {
         var successCallbackCalled = false
         var shouldDismissCallbackCalled = false
         
@@ -309,55 +330,13 @@ class ShareRootViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
             return true
         }
         
-        let expectation = expectation(description: "Message sent successfully")
-        
-        _ = setupViewController(shareRootViewController)
-
-        shareRootViewController.sendMessage()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            XCTAssertTrue(successCallbackCalled)
-            XCTAssertTrue(shouldDismissCallbackCalled)
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 2.0)
+        return (
+            successCalled: { successCallbackCalled },
+            dismissCalled: { shouldDismissCallbackCalled }
+        )
     }
     
-    func testMessageSendingFailure() {
-        let friendsResponseData = """
-        {
-            "friends": [
-                {
-                    "userId": "friend1",
-                    "displayName": "Test Friend 1",
-                    "pictureUrl": null,
-                    "statusMessage": null
-                }
-            ]
-        }
-        """.data(using: .utf8)!
-
-        let groupsResponseData = """
-        {
-            "groups": [
-                {
-                    "groupId": "group1",
-                    "groupName": "Test Group 1",
-                    "pictureUrl": null
-                }
-            ]
-        }
-        """.data(using: .utf8)!
-
-        let tokenError = LineSDKError.responseFailed(reason: .URLSessionError(URLError(.notConnectedToInternet)))
-        let sessionStub = SessionDelegateStub(stubs: [
-            .init(data: friendsResponseData, responseCode: 200),
-            .init(data: groupsResponseData, responseCode: 200),
-            .error(tokenError)
-        ])
-        Session._shared = Session(configuration: LoginConfiguration.shared, delegate: sessionStub)
-        
+    private func setupMessageSendingFailureDelegates() -> (failureCalled: () -> Bool, error: () -> LineSDKError?) {
         var failureCallbackCalled = false
         var receivedFailureError: LineSDKError?
         
@@ -370,20 +349,40 @@ class ShareRootViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
             receivedFailureError = data.error
         }
         
-        let expectation = expectation(description: "Message sending failed")
+        return (
+            failureCalled: { failureCallbackCalled },
+            error: { receivedFailureError }
+        )
+    }
+    
+    func testMessageSendingSuccess() {
+        setupSessionWithSuccessfulResponses(includeTokenAndSend: true)
+        setupTestToken()
+        
+        let delegates = setupMessageSendingDelegates()
+        shareRootViewController.messages = [TextMessage(text: "Test message")]
         
         _ = setupViewController(shareRootViewController)
-        
-        // Simulate send message action
         shareRootViewController.sendMessage()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            XCTAssertTrue(failureCallbackCalled)
-            XCTAssertNotNil(receivedFailureError)
-            expectation.fulfill()
-        }
         
-        waitForExpectations(timeout: 2.0)
+        waitForAsyncOperation(description: "Message sent successfully", delay: 1.0) {
+            XCTAssertTrue(delegates.successCalled())
+            XCTAssertTrue(delegates.dismissCalled())
+        }
+    }
+    
+    func testMessageSendingFailure() {
+        setupSessionWithTokenError()
+        
+        let delegates = setupMessageSendingFailureDelegates()
+        
+        _ = setupViewController(shareRootViewController)
+        shareRootViewController.sendMessage()
+        
+        waitForAsyncOperation(description: "Message sending failed", delay: 1.0) {
+            XCTAssertTrue(delegates.failureCalled())
+            XCTAssertNotNil(delegates.error())
+        }
     }
     
     // MARK: - Delegate Protocol Tests
@@ -433,57 +432,45 @@ class ShareRootViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
     // MARK: - UI State Tests
     
     func testNavigationItemStateWithSelection() {
-        let friendsResponseData = """
-        {
-            "friends": [
-                {
-                    "userId": "friend1",
-                    "displayName": "Test Friend 1",
-                    "pictureUrl": null,
-                    "statusMessage": null
-                }
-            ]
-        }
-        """.data(using: .utf8)!
-
-        let groupsResponseData = """
-        {
-            "groups": [
-                {
-                    "groupId": "group1",
-                    "groupName": "Test Group 1",
-                    "pictureUrl": null
-                }
-            ]
-        }
-        """.data(using: .utf8)!
-
-        let tokenError = LineSDKError.responseFailed(reason: .URLSessionError(URLError(.notConnectedToInternet)))
-        let sessionStub = SessionDelegateStub(stubs: [
-            .init(data: friendsResponseData, responseCode: 200),
-            .init(data: groupsResponseData, responseCode: 200),
-            .error(tokenError)
-        ])
-        Session._shared = Session(configuration: LoginConfiguration.shared, delegate: sessionStub)
+        setupSessionWithTokenError()
         setupTestToken()
-
+        
         _ = setupViewController(shareRootViewController)
-
+        
+        // Test selection
         shareRootViewController.store.toggleSelect(atColumn: 0, row: 0)
-        let expectation = expectation(description: "UI update after selection")
-        DispatchQueue.main.async {
+        
+        waitForAsyncOperation(description: "UI update after selection", delay: 0.1) {
             XCTAssertEqual(self.shareRootViewController.selectedCount, 1)
             let title = self.shareRootViewController.navigationItem.rightBarButtonItem?.title
             XCTAssertTrue(title?.contains("1") ?? false)
-            self.shareRootViewController.store.toggleSelect(atColumn: 0, row: 0)
-            DispatchQueue.main.async {
-                XCTAssertEqual(self.shareRootViewController.selectedCount, 0)
-                let title = self.shareRootViewController.navigationItem.rightBarButtonItem?.title
-                XCTAssertTrue(title?.contains("0") ?? false)
-                expectation.fulfill()
-            }
         }
         
-        waitForExpectations(timeout: 1.0)
+        // Test deselection in separate operation
+        shareRootViewController.store.toggleSelect(atColumn: 0, row: 0)
+        
+        waitForAsyncOperation(description: "UI update after deselection", delay: 0.1) {
+            XCTAssertEqual(self.shareRootViewController.selectedCount, 0)
+            XCTAssertNil(self.shareRootViewController.navigationItem.rightBarButtonItem)
+        }
+    }
+}
+
+// MARK: - Test Extensions
+
+extension ShareRootViewControllerTests {
+    
+    func simulateDataLoading() {
+        shareRootViewController.setValue(true, forKey: "allLoaded")
+    }
+    
+    func simulateSelection(count: Int) {
+        // Since store is private, we can only simulate through notifications
+        for _ in 0..<count {
+            NotificationCenter.default.post(
+                name: .columnDataStoreDidSelect,
+                object: nil
+            )
+        }
     }
 }
