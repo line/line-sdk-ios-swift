@@ -71,7 +71,7 @@ class OpenChatUserProfileViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var nameTextView: CountLimitedTextView = {
+    lazy var nameTextView: CountLimitedTextView = {
         let textView = CountLimitedTextView(style: TextViewStyle())
         textView.placeholderText = Localization.string("openchat.create.profile.input.placeholder")
         textView.maximumCount = 20
