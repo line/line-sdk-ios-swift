@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B7596862E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */; };
 		2B8D25332E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
 		2B8D25342E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
 		2B8D25362E39A2B50029FB34 /* LoginProcessMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */; };
@@ -580,6 +581,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRootViewControllerTests.swift; sourceTree = "<group>"; };
 		2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowFactory.swift; sourceTree = "<group>"; };
 		2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessMocks.swift; sourceTree = "<group>"; };
 		2B8D25372E39A2D40029FB34 /* LoginProcessFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessFlowTests.swift; sourceTree = "<group>"; };
@@ -1646,6 +1648,7 @@
 		4BE4E0FA2251C9090071FC60 /* Sharing */ = {
 			isa = PBXGroup;
 			children = (
+				2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */,
 				DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */,
 				4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */,
 				4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */,
@@ -2409,6 +2412,7 @@
 				4BF45A892137B29300CCD28E /* RSATests.swift in Sources */,
 				4B95F3FF21251BB300AD3A81 /* PostSendMessagesRequestTests.swift in Sources */,
 				4B6A0FF9212AACEC00B3ED1F /* HexColorTests.swift in Sources */,
+				2B7596862E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift in Sources */,
 				DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */,
 				4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */,
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
