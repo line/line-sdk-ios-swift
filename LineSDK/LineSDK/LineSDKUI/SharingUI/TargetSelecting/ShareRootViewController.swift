@@ -36,10 +36,10 @@ class ShareRootViewController: UIViewController {
 
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
 
-    private let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
+    let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
 
     // States
-    @objc dynamic private var allLoaded: Bool = false
+    @objc dynamic private(set) var allLoaded: Bool = false
 
     // Observers
     private var selectingObserver: NotificationToken!
@@ -209,7 +209,7 @@ extension ShareRootViewController {
         }
     }
 
-    @objc private func sendMessage() {
+    @objc func sendMessage() {
         let selected = store.selectedData
 
         // `onSendingMessage` is expected to be always delegated.
