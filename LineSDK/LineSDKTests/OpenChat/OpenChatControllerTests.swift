@@ -115,7 +115,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let controller = OpenChatCreatingController()
         
         // Test loadAndPresent flow when terms not agreed
-        controller.loadAndPresent(in: viewController, navigationDismissAnimating: false) { result in
+        controller.loadAndPresent(
+            in: viewController,
+            presentingAnimation: false,
+            navigationDismissAnimating: false
+        ) { result in
             switch result {
             case .success(let resultVC):
                 XCTAssertNotNil(viewController.presentedViewController)
@@ -151,7 +155,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let viewController = setupViewController()
         
         let controller = OpenChatCreatingController()
-        controller.loadAndPresent(in: viewController, navigationDismissAnimating: false) { result in
+        controller.loadAndPresent(
+            in: viewController,
+            presentingAnimation: false,
+            navigationDismissAnimating: false
+        ) { result in
             expect.fulfill()
             switch result {
             case .success:
@@ -178,7 +186,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let mockDelegate = MockOpenChatCreatingControllerDelegate()
         controller.delegate = mockDelegate
         
-        controller.presentCreatingViewController(in: viewController, navigationDismissAnimating: false) { result in
+        controller.presentCreatingViewController(
+            in: viewController,
+            presentingAnimation: false,
+            navigationDismissAnimating: false
+        ) { result in
             switch result {
             case .success(let navigationVC):
                 XCTAssertNotNil(viewController.presentedViewController)
@@ -228,7 +240,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let mockDelegate = MockOpenChatCreatingControllerDelegate()
         controller.delegate = mockDelegate
         
-        controller.presentCreatingViewController(in: viewController, navigationDismissAnimating: false) { result in
+        controller.presentCreatingViewController(
+            in: viewController,
+            presentingAnimation: false,
+            navigationDismissAnimating: false
+        ) { result in
             switch result {
             case .success(let navigationVC):
                 guard let navigation = navigationVC as? UINavigationController,
@@ -280,7 +296,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let mockDelegate = MockOpenChatCreatingControllerDelegate()
         controller.delegate = mockDelegate
         
-        controller.presentCreatingViewController(in: viewController, navigationDismissAnimating: false) { result in
+        controller.presentCreatingViewController(
+            in: viewController,
+            presentingAnimation: false,
+            navigationDismissAnimating: false
+        ) { result in
             switch result {
             case .success(let navigationVC):
                 guard let navigation = navigationVC as? UINavigationController,
@@ -333,7 +353,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let mockDelegate = MockOpenChatCreatingControllerDelegate()
         controller.delegate = mockDelegate
         
-        controller.presentCreatingViewController(in: viewController, navigationDismissAnimating: false) { result in
+        controller.presentCreatingViewController(
+            in: viewController,
+            presentingAnimation: false,
+            navigationDismissAnimating: false
+        ) { result in
             switch result {
             case .success(let navigationVC):
                 guard let navigation = navigationVC as? UINavigationController,
@@ -395,7 +419,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         controller.delegate = mockDelegate
         
         // Start the load and present operation
-        controller.loadAndPresent(in: viewController, navigationDismissAnimating: false) { result in
+        controller.loadAndPresent(
+            in: viewController,
+            presentingAnimation: false,
+            navigationDismissAnimating: false
+        ) { result in
             // This should not be called when delegate prevents the alert
             XCTFail("Handler should not be called when delegate prevents alert")
         }
@@ -425,7 +453,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let viewController = setupViewController()
         let controller = OpenChatCreatingController()
         
-        controller.loadAndPresent(in: viewController, navigationDismissAnimating: false) { result in
+        controller.loadAndPresent(
+            in: viewController,
+            presentingAnimation: false,
+            navigationDismissAnimating: false
+        ) { result in
             expect.fulfill()
             switch result {
             case .success:
@@ -447,7 +479,11 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let mockDelegate = MockOpenChatCreatingControllerDelegate()
         controller.delegate = mockDelegate
         
-        controller.presentCreatingViewController(in: viewController, navigationDismissAnimating: false) { result in
+        controller.presentCreatingViewController(
+            in: viewController,
+            presentingAnimation: false,
+            navigationDismissAnimating: false
+        ) { result in
             expect.fulfill()
             switch result {
             case .success:
