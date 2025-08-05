@@ -37,7 +37,7 @@ extension LineSDKNotificationKey {
 @MainActor
 class ColumnDataStore<T> {
 
-    struct ColumnIndex: Equatable {
+    internal struct ColumnIndex: Equatable {
         let column: Int
         let row: Int
     }
