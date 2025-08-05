@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B70D3AC2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */; };
 		2B7596862E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */; };
 		2B8D25332E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
 		2B8D25342E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
@@ -581,6 +582,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultTableViewControllerTests.swift; sourceTree = "<group>"; };
 		2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRootViewControllerTests.swift; sourceTree = "<group>"; };
 		2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowFactory.swift; sourceTree = "<group>"; };
 		2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessMocks.swift; sourceTree = "<group>"; };
@@ -1648,6 +1650,7 @@
 		4BE4E0FA2251C9090071FC60 /* Sharing */ = {
 			isa = PBXGroup;
 			children = (
+				2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */,
 				2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */,
 				DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */,
 				4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */,
@@ -2407,6 +2410,7 @@
 				4B8A965721100A5800760219 /* LoginConfigurationTests.swift in Sources */,
 				4BEB4928212BA8CF00BA946A /* FlexSeparatorComponentTests.swift in Sources */,
 				4B39D1DE211044B000A45510 /* PostTokenExchangeRequestTests.swift in Sources */,
+				2B70D3AC2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift in Sources */,
 				4BFD605E212A8BA6009E9838 /* FlexComponentMessageTests.swift in Sources */,
 				4B94D06721533D4D0049DE68 /* ECDSATests.swift in Sources */,
 				4BF45A892137B29300CCD28E /* RSATests.swift in Sources */,

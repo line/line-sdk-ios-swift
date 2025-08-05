@@ -38,11 +38,11 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         }
     }
 
-    private typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
-    private let store: ColumnDataStore<ShareTarget>
+    internal typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
+    internal let store: ColumnDataStore<ShareTarget>
 
-    private var selectingObserver: NotificationToken!
-    private var deselectingObserver: NotificationToken!
+    internal var selectingObserver: NotificationToken!
+    internal var deselectingObserver: NotificationToken!
 
     init(store: ColumnDataStore<ShareTarget>) {
         self.store = store
@@ -58,7 +58,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         setupTableView()
     }
 
-    private var filteredIndexes = [[ColumnIndex]](
+    internal var filteredIndexes = [[ColumnIndex]](
         repeating: [], count: MessageShareTargetType.allCases.count)
     {
         didSet { tableView.reloadData() }
@@ -169,7 +169,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         return view
     }
 
-    private func actualSection(_ section: Int) -> Int {
+    internal func actualSection(_ section: Int) -> Int {
         return sectionOrder[section].rawValue
     }
 }
