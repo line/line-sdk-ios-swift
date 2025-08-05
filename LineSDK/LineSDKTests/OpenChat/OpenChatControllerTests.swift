@@ -115,7 +115,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let controller = OpenChatCreatingController()
         
         // Test loadAndPresent flow when terms not agreed
-        controller.loadAndPresent(in: viewController) { result in
+        controller.loadAndPresent(in: viewController, navigationDismissAnimating: false) { result in
             switch result {
             case .success(let resultVC):
                 XCTAssertNotNil(viewController.presentedViewController)
@@ -151,7 +151,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let viewController = setupViewController()
         
         let controller = OpenChatCreatingController()
-        controller.loadAndPresent(in: viewController) { result in
+        controller.loadAndPresent(in: viewController, navigationDismissAnimating: false) { result in
             expect.fulfill()
             switch result {
             case .success:
@@ -216,19 +216,8 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         
         waitForExpectations(timeout: 3, handler: nil)
     }
-    
-    func testOnProfileDoneWorkflow() {
-        // Test success scenario
-        testOnProfileDoneSuccess()
-        
-        // Test failure scenario
-        testOnProfileDoneFailure()
-        
-        // Test caching scenario
-        testOnProfileDoneCaching()
-    }
-    
-    private func testOnProfileDoneSuccess() {
+
+    func testOnProfileDoneSuccess() {
         let expect = expectation(description: "\(#file)_\(#line)")
         
         setupMockSession(success: true, roomCreation: true)
@@ -280,7 +269,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    private func testOnProfileDoneFailure() {
+    func testOnProfileDoneFailure() {
         let expect = expectation(description: "\(#file)_\(#line)")
         
         setupMockSession(success: false, roomCreation: true)
@@ -332,7 +321,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         waitForExpectations(timeout: 3, handler: nil)
     }
     
-    private func testOnProfileDoneCaching() {
+    func testOnProfileDoneCaching() {
         let expect = expectation(description: "\(#file)_\(#line)")
         
         setupMockSession(success: true, roomCreation: true)
@@ -406,7 +395,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         controller.delegate = mockDelegate
         
         // Start the load and present operation
-        controller.loadAndPresent(in: viewController) { result in
+        controller.loadAndPresent(in: viewController, navigationDismissAnimating: false) { result in
             // This should not be called when delegate prevents the alert
             XCTFail("Handler should not be called when delegate prevents alert")
         }
@@ -436,7 +425,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         let viewController = setupViewController()
         let controller = OpenChatCreatingController()
         
-        controller.loadAndPresent(in: viewController) { result in
+        controller.loadAndPresent(in: viewController, navigationDismissAnimating: false) { result in
             expect.fulfill()
             switch result {
             case .success:

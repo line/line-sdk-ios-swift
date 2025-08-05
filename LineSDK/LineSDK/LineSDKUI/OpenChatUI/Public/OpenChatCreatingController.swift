@@ -91,6 +91,7 @@ public class OpenChatCreatingController {
     /// ```
     public func loadAndPresent(
         in viewController: UIViewController,
+        navigationDismissAnimating: Bool = true,
         presentedHandler handler: ((Result<UIViewController, LineSDKError>) -> Void)? = nil
     )
     {
@@ -99,7 +100,11 @@ public class OpenChatCreatingController {
             do {
                 let response = try await Session.shared.send(checkTermRequest)
                 if response.agreed {
-                    self.presentCreatingViewController(in: viewController, handler: handler)
+                    self.presentCreatingViewController(
+                        in: viewController,
+                        navigationDismissAnimating: navigationDismissAnimating,
+                        handler: handler
+                    )
                 } else {
                     let shouldPreventAlert = self.delegate?.openChatCreatingController(
                         self, shouldPreventUserTermAlertFrom: viewController)
