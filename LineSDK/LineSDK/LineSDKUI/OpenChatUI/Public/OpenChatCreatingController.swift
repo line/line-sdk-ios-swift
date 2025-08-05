@@ -91,6 +91,7 @@ public class OpenChatCreatingController {
     /// ```
     public func loadAndPresent(
         in viewController: UIViewController,
+        navigationDismissAnimating: Bool = true,
         presentedHandler handler: ((Result<UIViewController, LineSDKError>) -> Void)? = nil
     )
     {
@@ -99,7 +100,11 @@ public class OpenChatCreatingController {
             do {
                 let response = try await Session.shared.send(checkTermRequest)
                 if response.agreed {
-                    self.presentCreatingViewController(in: viewController, handler: handler)
+                    self.presentCreatingViewController(
+                        in: viewController,
+                        navigationDismissAnimating: navigationDismissAnimating,
+                        handler: handler
+                    )
                 } else {
                     let shouldPreventAlert = self.delegate?.openChatCreatingController(
                         self, shouldPreventUserTermAlertFrom: viewController)
@@ -144,6 +149,7 @@ public class OpenChatCreatingController {
     
     func presentCreatingViewController(
         in viewController: UIViewController,
+        navigationDismissAnimating: Bool = true,
         handler: ((Result<UIViewController, LineSDKError>) -> Void)?
     )
     {
@@ -151,7 +157,7 @@ public class OpenChatCreatingController {
         roomInfoFormViewController.suggestedCategory = suggestedCategory
 
         roomInfoFormViewController.onClose.delegate(on: self) { (self, vc) in
-            vc.dismiss(animated: true) {
+            vc.dismiss(animated: navigationDismissAnimating) {
                 self.delegate?.openChatCreatingControllerDidCancelCreating(self)
             }
         }
@@ -175,7 +181,7 @@ public class OpenChatCreatingController {
                         let response = try await Session.shared.send(createRoomRequest)
                         indicator.remove()
                         UserDefaultsValue.cachedOpenChatUserProfileName = room.creatorDisplayName
-                        navigation.dismiss(animated: true) {
+                        navigation.dismiss(animated: navigationDismissAnimating) {
                             self.delegate?.openChatCreatingController(
                                 self, didCreateChatRoom: response, withCreatingItem: room
                             )
