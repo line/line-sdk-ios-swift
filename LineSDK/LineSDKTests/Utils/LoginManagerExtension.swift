@@ -23,6 +23,7 @@ import Foundation
 @testable import LineSDK
 
 extension LoginManager {
+    @MainActor
     func reset() {
         setup = false
         
@@ -32,5 +33,6 @@ extension LoginManager {
         AccessTokenStore._shared = nil
         
         LoginConfiguration._shared = nil
+        currentProcess?.stop()
     }
 }
