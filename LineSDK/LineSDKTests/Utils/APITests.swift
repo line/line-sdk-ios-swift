@@ -35,9 +35,9 @@ class APITests: XCTestCase {
         LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
     }
     
-    override func tearDown() {
-        LoginManager.shared.reset()
-        super.tearDown()
+    override func tearDown() async throws {
+        await LoginManager.shared.reset()
+        try await super.tearDown()
     }
     
     let config = LoginConfiguration(channelID: "123", universalLinkURL: nil)
