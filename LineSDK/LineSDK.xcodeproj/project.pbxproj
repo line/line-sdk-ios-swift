@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2B70D3AC2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */; };
+		2B414E622E40B9CB006C2276 /* OpenChatUserProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B414E612E40B9CB006C2276 /* OpenChatUserProfileViewControllerTests.swift */; };
 		2B7596862E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */; };
 		2B8D25332E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
 		2B8D25342E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
@@ -583,6 +584,7 @@
 
 /* Begin PBXFileReference section */
 		2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultTableViewControllerTests.swift; sourceTree = "<group>"; };
+		2B414E612E40B9CB006C2276 /* OpenChatUserProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatUserProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRootViewControllerTests.swift; sourceTree = "<group>"; };
 		2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowFactory.swift; sourceTree = "<group>"; };
 		2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessMocks.swift; sourceTree = "<group>"; };
@@ -1153,6 +1155,7 @@
 		4B6CACC5239F424500BD6C35 /* OpenChat */ = {
 			isa = PBXGroup;
 			children = (
+				2B414E612E40B9CB006C2276 /* OpenChatUserProfileViewControllerTests.swift */,
 				4B6CACC6239F44D100BD6C35 /* OpenChatControllerTests.swift */,
 				4BB0E255239F5C8A008C7F3F /* FormEntryTests.swift */,
 				4BB0E257239F6728008C7F3F /* CountLimitedTextViewTests.swift */,
@@ -2419,6 +2422,7 @@
 				2B7596862E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift in Sources */,
 				DBE4E372211D7C9B00184D66 /* GetFriendsRequestTests.swift in Sources */,
 				4B39D1E02110496C00A45510 /* GetUserProfileRequestTests.swift in Sources */,
+				2B414E622E40B9CB006C2276 /* OpenChatUserProfileViewControllerTests.swift in Sources */,
 				4B90588721006E5D004D717F /* LineSDKTests.swift in Sources */,
 				4B15EEFD211D628000866E6C /* MessageSample.swift in Sources */,
 				4BA8E44C210EDB5100355F03 /* ParameterEncoderTests.swift in Sources */,
