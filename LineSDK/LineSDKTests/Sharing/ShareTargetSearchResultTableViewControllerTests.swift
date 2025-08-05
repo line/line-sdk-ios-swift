@@ -22,126 +22,220 @@
 import XCTest
 @testable import LineSDK
 
+@MainActor
 class ShareTargetSearchResultTableViewControllerTests: XCTestCase {
     
-    // MARK: - Test Cases
+    // MARK: - Properties
     
-    @MainActor
+    private var store: ColumnDataStore<ShareTarget>!
+    private var controller: ShareTargetSearchResultTableViewController!
+    private let testIndex = ColumnDataStore<ShareTarget>.ColumnIndex(column: MessageShareTargetType.friends.rawValue, row: 0)
+    
+    // MARK: - Setup & Teardown
+    
+    override func setUp() async throws {
+        store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
+        controller = ShareTargetSearchResultTableViewController(store: store)
+    }
+    
+    override func tearDown() async throws {
+        controller?.stopObserving()
+        controller = nil
+        store = nil
+    }
+    
+    // MARK: - Core Functionality Tests
+
     func testInitialState() {
-        let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
-        let controller = ShareTargetSearchResultTableViewController(store: store)
-        
-        // Test initial state
         XCTAssertEqual(controller.searchText, "")
         XCTAssertTrue(controller.hasSearchResult)
         XCTAssertEqual(controller.sectionOrder, [.friends, .groups])
         XCTAssertEqual(controller.filteredIndexes.count, MessageShareTargetType.allCases.count)
     }
-    
-    @MainActor
+
     func testSearchFiltering() {
-        let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
-        let controller = ShareTargetSearchResultTableViewController(store: store)
+        // Setup test data
+        store.append(data: TestData.friends, to: MessageShareTargetType.friends.rawValue)
         
-        // Add test data first
-        let friends = createDummyFriends()
-        store.append(data: friends, to: MessageShareTargetType.friends.rawValue)
-        
-        // Test search functionality - this will trigger the filtering
+        // Test specific search
         controller.searchText = "Alice"
-        
-        // Should filter to only Alice from friends
-        let friendsIndexes = controller.filteredIndexes[MessageShareTargetType.friends.rawValue]
-        let groupsIndexes = controller.filteredIndexes[MessageShareTargetType.groups.rawValue]
-        
-        XCTAssertEqual(friendsIndexes.count, 1)
-        XCTAssertEqual(groupsIndexes.count, 0)
+        XCTAssertEqual(controller.filteredIndexes[MessageShareTargetType.friends.rawValue].count, 1)
+        XCTAssertEqual(controller.filteredIndexes[MessageShareTargetType.groups.rawValue].count, 0)
         XCTAssertTrue(controller.hasSearchResult)
         
         // Test no results
-        controller.searchText = "NonExistentName"
+        controller.searchText = "NonExistent"
         XCTAssertFalse(controller.hasSearchResult)
         
-        // Test show all with empty search text
-        // First set to something else to trigger the change  
-        controller.searchText = "temp"
+        // Test empty search (show all)
+        controller.searchText = "temp"  // Trigger change
         controller.searchText = ""
         XCTAssertTrue(controller.hasSearchResult)
-        // After searching for empty string, the filteredIndexes should contain all items
-        // (Testing the main filtering logic rather than exact count)
     }
-    
-    @MainActor
-    func testObserverSetupAndCleanup() {
-        let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
-        let controller = ShareTargetSearchResultTableViewController(store: store)
-        
-        // Test observer setup
+
+    func testObserverLifecycle() {
+        // Test setup
         controller.startObserving()
         XCTAssertNotNil(controller.selectingObserver)
         XCTAssertNotNil(controller.deselectingObserver)
         
-        // Test observer cleanup
+        // Test cleanup
         controller.stopObserving()
         XCTAssertNil(controller.selectingObserver)
         XCTAssertNil(controller.deselectingObserver)
         XCTAssertEqual(controller.searchText, "")
     }
-    
-    @MainActor
-    func testSectionMappingLogic() {
-        let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
-        let controller = ShareTargetSearchResultTableViewController(store: store)
-        
-        // Test section mapping
+
+    func testSectionMapping() {
         XCTAssertEqual(controller.actualSection(0), MessageShareTargetType.friends.rawValue)
         XCTAssertEqual(controller.actualSection(1), MessageShareTargetType.groups.rawValue)
-        
-        // Test number of sections
         XCTAssertEqual(controller.numberOfSections(in: UITableView()), MessageShareTargetType.allCases.count)
     }
     
-    @MainActor
-    func testHasSearchResultLogic() {
-        let store = ColumnDataStore<ShareTarget>(columnCount: MessageShareTargetType.allCases.count)
-        let controller = ShareTargetSearchResultTableViewController(store: store)
+    // MARK: - Observer Tests
+
+    func testObserverNotifications() {
+        setupControllerForObserverTests()
         
-        // Add test data
-        let friends = createDummyFriends()
-        store.append(data: friends, to: MessageShareTargetType.friends.rawValue)
+        // Test select notification
+        sendNotification(.columnDataStoreDidSelect)
         
-        // Empty search text should show results
-        controller.searchText = ""
-        XCTAssertTrue(controller.hasSearchResult)
+        // Test deselect notification  
+        sendNotification(.columnDataStoreDidDeselect)
         
-        // Search with results should show true
-        controller.searchText = "Alice"
-        XCTAssertTrue(controller.hasSearchResult)
+        // Verify handleSelectingChange logic components
+        let foundRow = controller.filteredIndexes[testIndex.column].firstIndex(of: testIndex)
+        XCTAssertNotNil(foundRow)
+        XCTAssertEqual(controller.actualSection(testIndex.column), MessageShareTargetType.friends.rawValue)
+        XCTAssertEqual(store.data(at: testIndex).displayName, "Alice")
+    }
+    
+    // MARK: - TableView Tests
+
+    func testTableViewDataSource() {
+        setupControllerForTableViewTests()
         
-        // Search without results should show false
-        controller.searchText = "NonExistentUser"
-        XCTAssertFalse(controller.hasSearchResult)
+        let tableView = controller.tableView!
+        
+        // Test sections
+        XCTAssertEqual(controller.numberOfSections(in: tableView), MessageShareTargetType.allCases.count)
+        
+        // Test empty state
+        testEmptyTableViewState(tableView)
+        
+        // Test with data
+        populateFilteredIndexes()
+        testPopulatedTableViewState(tableView)
+        
+        // Test filtered state
+        testFilteredTableViewState(tableView)
     }
     
     // MARK: - Helper Methods
-    
-    private func createDummyFriends() -> [ShareTarget] {
-        return [
-            DummyUser(userID: "friend1", displayName: "Alice", pictureURL: nil),
-            DummyUser(userID: "friend2", displayName: "Bob", pictureURL: nil),
-            DummyUser(userID: "friend3", displayName: "Charlie", pictureURL: nil)
-        ]
+
+    private func setupControllerForObserverTests() {
+        controller.loadViewIfNeeded()
+        controller.viewDidLoad()
+        store.append(data: TestData.friends, to: MessageShareTargetType.friends.rawValue)
+        controller.filteredIndexes[MessageShareTargetType.friends.rawValue] = [testIndex]
+        controller.tableView.register(ShareTargetSelectingTableCell.self, forCellReuseIdentifier: ShareTargetSelectingTableCell.reuseIdentifier)
+        controller.startObserving()
     }
-    
-    private func createDummyGroups() -> [ShareTarget] {
-        return [
-            DummyGroup(groupID: "group1", groupName: "Development Team", pictureURL: nil),
-            DummyGroup(groupID: "group2", groupName: "Design Team", pictureURL: nil)
-        ]
+
+    private func setupControllerForTableViewTests() {
+        controller.loadViewIfNeeded()
+        controller.viewDidLoad()
+        store.append(data: TestData.friends, to: MessageShareTargetType.friends.rawValue)
+        store.append(data: TestData.groups, to: MessageShareTargetType.groups.rawValue)
+    }
+
+    private func sendNotification(_ name: Notification.Name) {
+        NotificationCenter.default.post(
+            name: name,
+            object: store,
+            userInfo: [
+                LineSDKNotificationKey.selectingIndex: testIndex,
+                LineSDKNotificationKey.positionInSelected: 0
+            ]
+        )
+    }
+
+    private func testEmptyTableViewState(_ tableView: UITableView) {
+        XCTAssertEqual(controller.tableView(tableView, numberOfRowsInSection: 0), 0)
+        XCTAssertEqual(controller.tableView(tableView, numberOfRowsInSection: 1), 0)
+        XCTAssertEqual(controller.tableView(tableView, heightForHeaderInSection: 0), 0)
+        XCTAssertEqual(controller.tableView(tableView, heightForHeaderInSection: 1), 0)
+        XCTAssertNil(controller.tableView(tableView, viewForHeaderInSection: 0))
+        XCTAssertNil(controller.tableView(tableView, viewForHeaderInSection: 1))
+    }
+
+    private func populateFilteredIndexes() {
+        controller.filteredIndexes[MessageShareTargetType.friends.rawValue] = TestData.friendsIndexes
+        controller.filteredIndexes[MessageShareTargetType.groups.rawValue] = TestData.groupsIndexes
+    }
+
+    private func testPopulatedTableViewState(_ tableView: UITableView) {
+        // Test row counts
+        XCTAssertEqual(controller.tableView(tableView, numberOfRowsInSection: 0), TestData.friends.count)
+        XCTAssertEqual(controller.tableView(tableView, numberOfRowsInSection: 1), TestData.groups.count)
+        
+        // Test header heights
+        let expectedHeight = ShareTargetSelectingSectionHeaderView.Design.height
+        XCTAssertEqual(controller.tableView(tableView, heightForHeaderInSection: 0), expectedHeight)
+        XCTAssertEqual(controller.tableView(tableView, heightForHeaderInSection: 1), expectedHeight)
+        
+        // Test header views
+        let headerView0 = controller.tableView(tableView, viewForHeaderInSection: 0)
+        let headerView1 = controller.tableView(tableView, viewForHeaderInSection: 1)
+        XCTAssertTrue(headerView0 is ShareTargetSelectingSectionHeaderView)
+        XCTAssertTrue(headerView1 is ShareTargetSelectingSectionHeaderView)
+        
+        // Test cell creation
+        let cell = controller.tableView(tableView, cellForRowAt: IndexPath(row: 0, section: 0))
+        XCTAssertTrue(cell is ShareTargetSelectingTableCell)
+    }
+
+    private func testFilteredTableViewState(_ tableView: UITableView) {
+        // Simulate filtered state (only Alice)
+        controller.filteredIndexes[MessageShareTargetType.friends.rawValue] = [testIndex]
+        controller.filteredIndexes[MessageShareTargetType.groups.rawValue] = []
+        
+        XCTAssertEqual(controller.tableView(tableView, numberOfRowsInSection: 0), 1)
+        XCTAssertEqual(controller.tableView(tableView, numberOfRowsInSection: 1), 0)
+        XCTAssertEqual(controller.tableView(tableView, heightForHeaderInSection: 0), ShareTargetSelectingSectionHeaderView.Design.height)
+        XCTAssertEqual(controller.tableView(tableView, heightForHeaderInSection: 1), 0)
+        XCTAssertNotNil(controller.tableView(tableView, viewForHeaderInSection: 0))
+        XCTAssertNil(controller.tableView(tableView, viewForHeaderInSection: 1))
     }
 }
 
-// MARK: - Dummy ShareTarget Implementations
+// MARK: - Test Data
+
+private enum TestData {
+    static let friends: [ShareTarget] = [
+        DummyUser(userID: "friend1", displayName: "Alice", pictureURL: nil),
+        DummyUser(userID: "friend2", displayName: "Bob", pictureURL: nil),
+        DummyUser(userID: "friend3", displayName: "Charlie", pictureURL: nil)
+    ]
+    
+    static let groups: [ShareTarget] = [
+        DummyGroup(groupID: "group1", groupName: "Development Team", pictureURL: nil),
+        DummyGroup(groupID: "group2", groupName: "Design Team", pictureURL: nil)
+    ]
+    
+    static let friendsIndexes = [
+        ColumnDataStore<ShareTarget>.ColumnIndex(column: MessageShareTargetType.friends.rawValue, row: 0),
+        ColumnDataStore<ShareTarget>.ColumnIndex(column: MessageShareTargetType.friends.rawValue, row: 1),
+        ColumnDataStore<ShareTarget>.ColumnIndex(column: MessageShareTargetType.friends.rawValue, row: 2)
+    ]
+    
+    static let groupsIndexes = [
+        ColumnDataStore<ShareTarget>.ColumnIndex(column: MessageShareTargetType.groups.rawValue, row: 0),
+        ColumnDataStore<ShareTarget>.ColumnIndex(column: MessageShareTargetType.groups.rawValue, row: 1)
+    ]
+}
+
+// MARK: - Mock Objects
 
 private struct DummyUser: ShareTarget, Sendable {
     let userID: String
