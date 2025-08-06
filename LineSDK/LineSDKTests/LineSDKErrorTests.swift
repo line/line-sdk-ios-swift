@@ -181,6 +181,208 @@ class LineSDKErrorTests: XCTestCase {
             XCTAssertFalse(reason.errorDescription!.isEmpty)
         }
     }
+    
+    func testCryptoErrorAlgorithmsErrorReason() {
+        let testData = Data([1, 2, 3, 4])
+        let testError = NSError(domain: "TestDomain", code: 1001, userInfo: nil)
+        
+        let algorithmReasons: [CryptoError.AlgorithmsErrorReason] = [
+            .invalidDERKey(data: testData, reason: "test reason"),
+            .invalidX509Header(data: testData, index: 10, reason: "x509 test"),
+            .createKeyFailed(data: testData, reason: "key creation failed"),
+            .invalidPEMKey(string: "invalid-pem", reason: "pem test"),
+            .encryptingError(testError),
+            .encryptingError(nil),
+            .decryptingError(testError),
+            .decryptingError(nil),
+            .signingError(testError),
+            .signingError(nil),
+            .verifyingError(testError, statusCode: 401),
+            .verifyingError(nil, statusCode: nil),
+            .invalidSignature(data: testData)
+        ]
+        
+        for reason in algorithmReasons {
+            XCTAssertNotNil(reason.errorDescription)
+            XCTAssertFalse(reason.errorDescription!.isEmpty)
+            
+            let userInfo = reason.errorUserInfo
+            
+            switch reason {
+            case .invalidDERKey(let data, _):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.data.rawValue] as? Data, data)
+                XCTAssertEqual(reason.errorCode, 3016_1001)
+            case .invalidX509Header(let data, let index, _):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.data.rawValue] as? Data, data)
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.index.rawValue] as? Int, index)
+                XCTAssertEqual(reason.errorCode, 3016_1002)
+            case .createKeyFailed(let data, _):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.data.rawValue] as? Data, data)
+                XCTAssertEqual(reason.errorCode, 3016_1003)
+            case .invalidPEMKey(let string, _):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.data.rawValue] as? String, string)
+                XCTAssertEqual(reason.errorCode, 3016_1004)
+            case .encryptingError(let error):
+                if error != nil {
+                    XCTAssertNotNil(userInfo[LineSDKErrorUserInfoKey.underlyingError.rawValue])
+                } else {
+                    XCTAssertNil(userInfo[LineSDKErrorUserInfoKey.underlyingError.rawValue])
+                }
+                XCTAssertEqual(reason.errorCode, 3016_1005)
+            case .decryptingError(let error):
+                if error != nil {
+                    XCTAssertNotNil(userInfo[LineSDKErrorUserInfoKey.underlyingError.rawValue])
+                } else {
+                    XCTAssertNil(userInfo[LineSDKErrorUserInfoKey.underlyingError.rawValue])
+                }
+                XCTAssertEqual(reason.errorCode, 3016_1006)
+            case .signingError(let error):
+                if error != nil {
+                    XCTAssertNotNil(userInfo[LineSDKErrorUserInfoKey.underlyingError.rawValue])
+                } else {
+                    XCTAssertNil(userInfo[LineSDKErrorUserInfoKey.underlyingError.rawValue])
+                }
+                XCTAssertEqual(reason.errorCode, 3016_1007)
+            case .verifyingError(let error, let statusCode):
+                if error != nil {
+                    XCTAssertNotNil(userInfo[LineSDKErrorUserInfoKey.underlyingError.rawValue])
+                } else {
+                    XCTAssertNil(userInfo[LineSDKErrorUserInfoKey.underlyingError.rawValue])
+                }
+                if let statusCode = statusCode {
+                    XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.statusCode.rawValue] as? Int, statusCode)
+                } else {
+                    XCTAssertNil(userInfo[LineSDKErrorUserInfoKey.statusCode.rawValue])
+                }
+                XCTAssertEqual(reason.errorCode, 3016_1008)
+            case .invalidSignature(let data):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.data.rawValue] as? Data, data)
+                XCTAssertEqual(reason.errorCode, 3016_1009)
+            }
+        }
+    }
+    
+    func testCryptoErrorJWTErrorReason() {
+        let jwtReasons: [CryptoError.JWTErrorReason] = [
+            .malformedJWTFormat(string: "invalid-jwt"),
+            .unsupportedHeaderAlgorithm(name: "HS512"),
+            .claimVerifyingFailed(key: "iss", got: "wrong-issuer", description: "issuer mismatch")
+        ]
+        
+        for reason in jwtReasons {
+            XCTAssertNotNil(reason.errorDescription)
+            XCTAssertFalse(reason.errorDescription!.isEmpty)
+            
+            let userInfo = reason.errorUserInfo
+            
+            switch reason {
+            case .malformedJWTFormat(let string):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.text.rawValue] as? String, string)
+                XCTAssertEqual(reason.errorCode, 3016_2001)
+            case .unsupportedHeaderAlgorithm(let name):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.raw.rawValue] as? String, name)
+                XCTAssertEqual(reason.errorCode, 3016_2002)
+            case .claimVerifyingFailed(let key, let got, _):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.key.rawValue] as? String, key)
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.got.rawValue] as? String, got)
+                XCTAssertEqual(reason.errorCode, 3016_2003)
+            }
+        }
+    }
+    
+    func testCryptoErrorJWKErrorReason() {
+        let jwkReasons: [CryptoError.JWKErrorReason] = [
+            .unsupportedKeyType("EC-P521")
+        ]
+        
+        for reason in jwkReasons {
+            XCTAssertNotNil(reason.errorDescription)
+            XCTAssertFalse(reason.errorDescription!.isEmpty)
+            
+            let userInfo = reason.errorUserInfo
+            
+            switch reason {
+            case .unsupportedKeyType(let keyType):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.raw.rawValue] as? String, keyType)
+                XCTAssertEqual(reason.errorCode, 3016_3001)
+            }
+        }
+    }
+    
+    func testCryptoErrorGeneralErrorReason() {
+        let testData = Data([5, 6, 7, 8])
+        
+        let generalReasons: [CryptoError.GeneralErrorReason] = [
+            .base64ConversionFailed(string: "invalid-base64"),
+            .dataConversionFailed(data: testData, encoding: .utf8),
+            .stringConversionFailed(string: "test-string", encoding: .ascii),
+            .operationNotSupported(reason: "iOS version too old"),
+            .decodingFailed(string: "invalid-json", type: [String: Any].self)
+        ]
+        
+        for reason in generalReasons {
+            XCTAssertNotNil(reason.errorDescription)
+            XCTAssertFalse(reason.errorDescription!.isEmpty)
+            
+            let userInfo = reason.errorUserInfo
+            
+            switch reason {
+            case .base64ConversionFailed(let string):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.text.rawValue] as? String, string)
+                XCTAssertEqual(reason.errorCode, 3016_4001)
+            case .dataConversionFailed(let data, let encoding):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.data.rawValue] as? Data, data)
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.encoding.rawValue] as? String.Encoding, encoding)
+                XCTAssertEqual(reason.errorCode, 3016_4002)
+            case .stringConversionFailed(let string, let encoding):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.text.rawValue] as? String, string)
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.encoding.rawValue] as? String.Encoding, encoding)
+                XCTAssertEqual(reason.errorCode, 3016_4003)
+            case .operationNotSupported(_):
+                XCTAssertTrue(userInfo.isEmpty)
+                XCTAssertEqual(reason.errorCode, 3016_4004)
+            case .decodingFailed(let string, _):
+                XCTAssertEqual(userInfo[LineSDKErrorUserInfoKey.raw.rawValue] as? String, string)
+                XCTAssertNotNil(userInfo[LineSDKErrorUserInfoKey.type.rawValue])
+                XCTAssertEqual(reason.errorCode, 3016_4005)
+            }
+        }
+    }
+    
+    func testCryptoErrorMain() {
+        let testData = Data([1, 2, 3])
+        let testError = NSError(domain: "TestDomain", code: 500, userInfo: nil)
+        
+        let cryptoErrors: [CryptoError] = [
+            .algorithmsFailed(reason: .invalidDERKey(data: testData, reason: "test")),
+            .algorithmsFailed(reason: .encryptingError(testError)),
+            .JWTFailed(reason: .malformedJWTFormat(string: "invalid")),
+            .JWTFailed(reason: .unsupportedHeaderAlgorithm(name: "RS512")),
+            .JWKFailed(reason: .unsupportedKeyType("EC-P256")),
+            .generalError(reason: .base64ConversionFailed(string: "invalid-base64"))
+        ]
+        
+        for error in cryptoErrors {
+            XCTAssertNotNil(error.errorDescription)
+            XCTAssertFalse(error.errorDescription!.isEmpty)
+            
+            XCTAssertEqual(CryptoError.errorDomain, "LineSDKError.CryptoError")
+            
+            let userInfo = error.errorUserInfo
+            XCTAssertFalse(userInfo.isEmpty)
+            
+            switch error {
+            case .algorithmsFailed(let reason):
+                XCTAssertEqual(error.errorCode, reason.errorCode)
+            case .JWTFailed(let reason):
+                XCTAssertEqual(error.errorCode, reason.errorCode)
+            case .JWKFailed(let reason):
+                XCTAssertEqual(error.errorCode, reason.errorCode)
+            case .generalError(let reason):
+                XCTAssertEqual(error.errorCode, reason.errorCode)
+            }
+        }
+    }
 }
 
 func apiErrorReason(code: Int, error: APIError, rawString: String) -> LineSDKError.ResponseErrorReason {
