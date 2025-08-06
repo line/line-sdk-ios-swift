@@ -177,10 +177,12 @@ class ShareTargetSearchResultViewControllerTests: XCTestCase, ViewControllerComp
     func testObserverLifecycle() {
         setupControllerWithData()
         _ = setupViewController(controller)
-        
+
+#if swift(>=6.0)
         // Initially no keyboard observers
         XCTAssertEqual(controller.keyboardObservers.count, 0)
-        
+#endif
+
         // Start observing
         controller.start()
         // Verify table view controller starts observing
@@ -212,14 +214,10 @@ class ShareTargetSearchResultViewControllerTests: XCTestCase, ViewControllerComp
         // This is tested indirectly through the table view controller's behavior
         XCTAssertTrue(true, "clear() should execute without crashing")
     }
-    
-    // MARK: - Keyboard Observable Tests
-    
-    func testKeyboardObservableConformance() {
-        XCTAssertTrue(controller != nil)
-        XCTAssertEqual(controller.keyboardObservers.count, 0)
-    }
-    
+
+    // Not sure why, but the part that handles the keyboard would crash the compiler if the language version set to
+    // before Swift 6.0. Basically it is a compiler issue, so limited it to Swift 6 and above.
+#if swift(>=6.0)
     func testKeyboardInfoWillChange() {
         _ = setupViewController(controller)
         
@@ -237,7 +235,7 @@ class ShareTargetSearchResultViewControllerTests: XCTestCase, ViewControllerComp
         // Should not crash and should handle keyboard changes
         XCTAssertTrue(true, "keyboardInfoWillChange should execute without crashing")
     }
-    
+
     func testKeyboardInfoWillChangeWithHiddenKeyboard() {
         _ = setupViewController(controller)
         
@@ -254,7 +252,7 @@ class ShareTargetSearchResultViewControllerTests: XCTestCase, ViewControllerComp
         // Should handle hidden keyboard without crashing
         XCTAssertTrue(true, "keyboardInfoWillChange with hidden keyboard should execute without crashing")
     }
-    
+
     func testKeyboardInfoWillChangeBeforeViewInWindow() {
         // Test keyboard change when view is not yet in window
         let keyboardInfo = KeyboardInfo(
@@ -278,7 +276,41 @@ class ShareTargetSearchResultViewControllerTests: XCTestCase, ViewControllerComp
         
         XCTAssertTrue(true, "viewDidLayoutSubviews should handle temporary keyboard info")
     }
-    
+
+    func testFullIntegrationWithDataAndSearch() {
+        setupControllerWithData()
+        _ = setupViewController(controller)
+
+        // Add test data
+        store.append(data: TestData.friends, to: MessageShareTargetType.friends.rawValue)
+        store.append(data: TestData.groups, to: MessageShareTargetType.groups.rawValue)
+
+        // Start observing
+        controller.start()
+
+        // Test search functionality
+        controller.searchText = "Alice"
+        XCTAssertEqual(controller.searchText, "Alice")
+
+        // Test section order change
+        controller.sectionOrder = [.groups, .friends]
+        XCTAssertEqual(controller.sectionOrder, [.groups, .friends])
+
+        // Test keyboard handling
+        let keyboardInfo = KeyboardInfo(
+            endFrame: CGRect(x: 0, y: 300, width: 375, height: 216),
+            duration: 0.3,
+            isLocal: true,
+            animationCurve: .easeInOut
+        )
+        controller.keyboardInfoWillChange(keyboardInfo: keyboardInfo)
+
+        // Clean up
+        controller.clear()
+
+        XCTAssertTrue(true, "Full integration test should complete without crashing")
+    }
+#endif
     // MARK: - Layout Tests
     
     func testViewDidLayoutSubviews() {
@@ -312,43 +344,7 @@ class ShareTargetSearchResultViewControllerTests: XCTestCase, ViewControllerComp
             UIColor.secondaryLabel
         )
     }
-    
-    // MARK: - Integration Tests
-    
-    func testFullIntegrationWithDataAndSearch() {
-        setupControllerWithData()
-        _ = setupViewController(controller)
-        
-        // Add test data
-        store.append(data: TestData.friends, to: MessageShareTargetType.friends.rawValue)
-        store.append(data: TestData.groups, to: MessageShareTargetType.groups.rawValue)
-        
-        // Start observing
-        controller.start()
-        
-        // Test search functionality
-        controller.searchText = "Alice"
-        XCTAssertEqual(controller.searchText, "Alice")
-        
-        // Test section order change
-        controller.sectionOrder = [.groups, .friends]
-        XCTAssertEqual(controller.sectionOrder, [.groups, .friends])
-        
-        // Test keyboard handling
-        let keyboardInfo = KeyboardInfo(
-            endFrame: CGRect(x: 0, y: 300, width: 375, height: 216),
-            duration: 0.3,
-            isLocal: true,
-            animationCurve: .easeInOut
-        )
-        controller.keyboardInfoWillChange(keyboardInfo: keyboardInfo)
-        
-        // Clean up
-        controller.clear()
-        
-        XCTAssertTrue(true, "Full integration test should complete without crashing")
-    }
-    
+
     func testMemoryManagement() {
         weak var weakController: ShareTargetSearchResultViewController?
         weak var weakStore: ColumnDataStore<ShareTarget>?
