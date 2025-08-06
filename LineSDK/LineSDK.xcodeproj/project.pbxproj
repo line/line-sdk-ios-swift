@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B70D3AC2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */; };
+		2B389E282E433C7900EDC0A9 /* ShareTargetSearchResultViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B389E272E433C7900EDC0A9 /* ShareTargetSearchResultViewControllerTests.swift */; };
 		2B414E622E40B9CB006C2276 /* OpenChatUserProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B414E612E40B9CB006C2276 /* OpenChatUserProfileViewControllerTests.swift */; };
+		2B70D3AC2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */; };
 		2B7596862E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */; };
 		2B8D25332E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
 		2B8D25342E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
@@ -584,8 +585,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultTableViewControllerTests.swift; sourceTree = "<group>"; };
+		2B389E272E433C7900EDC0A9 /* ShareTargetSearchResultViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultViewControllerTests.swift; sourceTree = "<group>"; };
 		2B414E612E40B9CB006C2276 /* OpenChatUserProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenChatUserProfileViewControllerTests.swift; sourceTree = "<group>"; };
+		2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTargetSearchResultTableViewControllerTests.swift; sourceTree = "<group>"; };
 		2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareRootViewControllerTests.swift; sourceTree = "<group>"; };
 		2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowFactory.swift; sourceTree = "<group>"; };
 		2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessMocks.swift; sourceTree = "<group>"; };
@@ -1659,6 +1661,7 @@
 				2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */,
 				2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */,
 				DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */,
+				2B389E272E433C7900EDC0A9 /* ShareTargetSearchResultViewControllerTests.swift */,
 				4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */,
 				4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */,
 			);
@@ -2451,6 +2454,7 @@
 				4B9A30412121286900174C6F /* LocationMessageTests.swift in Sources */,
 				4BEB4920212B9F6900BA946A /* FlexFillerComponentTests.swift in Sources */,
 				4B1A4EF722EAA0390030F560 /* PostMessageSendingTokenRequestTests.swift in Sources */,
+				2B389E282E433C7900EDC0A9 /* ShareTargetSearchResultViewControllerTests.swift in Sources */,
 				4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */,
 				4B95F4042125364500AD3A81 /* PostMultisendMessagesRequestTests.swift in Sources */,
 				4B4B363723E7B3AA0016E2C0 /* StringExtensionTests.swift in Sources */,
