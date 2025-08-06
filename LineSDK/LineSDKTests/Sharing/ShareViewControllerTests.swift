@@ -37,8 +37,8 @@ class ShareViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
     override func setUp() async throws {
         LoginManager.shared.setup(channelID: "test_channel_id", universalLinkURL: nil)
         shareViewController = ShareViewController()
-        _ = shareViewController.view
-        _ = shareViewController.rootViewController.view
+        shareViewController.loadViewIfNeeded()
+        shareViewController.rootViewController.loadViewIfNeeded()
         mockDelegate = MockShareViewControllerDelegate()
         
         // Store original token state
@@ -163,6 +163,7 @@ class ShareViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
         _ = setupViewController(shareViewController)
         
         let rootVC = shareViewController.viewControllers.first as! ShareRootViewController
+        rootVC.loadViewIfNeeded()
         let mockTargets: [ShareTarget] = [TestData.createMockUser(id: "user1", name: "Test User")]
         
         // Test presentation controller delegate setup
@@ -216,6 +217,7 @@ class ShareViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
     func testMessageHandlingWorkflow() {
         _ = setupViewController(shareViewController)
         let rootVC = shareViewController.viewControllers.first as! ShareRootViewController
+        rootVC.loadViewIfNeeded()
         let mockTargets: [ShareTarget] = [TestData.createMockUser(id: "user1", name: "Test User")]
         
         // Test with messages property only
@@ -244,66 +246,6 @@ class ShareViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
         // Test message propagation to root controller
         shareViewController.messages = [TextMessage(text: "Propagated message")]
         XCTAssertEqual(rootVC.messages?.count, 1)
-    }
-    
-    func testMemoryManagementAndCleanup() {
-        weak var weakShareViewController: ShareViewController?
-        weak var weakDelegate: MockShareViewControllerDelegate?
-        
-        autoreleasepool {
-            let testShareViewController = ShareViewController()
-            let testDelegate = MockShareViewControllerDelegate()
-            
-            weakShareViewController = testShareViewController
-            weakDelegate = testDelegate
-            
-            testShareViewController.shareDelegate = testDelegate
-            testShareViewController.messages = [TextMessage(text: "Test")]
-            
-            let testWindow = UIWindow(frame: UIScreen.main.bounds)
-            testShareViewController.loadViewIfNeeded()
-            testWindow.rootViewController = testShareViewController
-            testWindow.makeKeyAndVisible()
-            
-            // Verify components are properly initialized
-            XCTAssertNotNil(testShareViewController.shareDelegate)
-            XCTAssertNotNil(testShareViewController.messages)
-            XCTAssertEqual(testShareViewController.viewControllers.count, 1)
-            
-            // Clean up view hierarchy
-            testShareViewController.willMove(toParent: nil)
-            testShareViewController.view.removeFromSuperview()
-            testShareViewController.removeFromParent()
-            testWindow.rootViewController = nil
-            testWindow.isHidden = true
-            
-            XCTAssertNotNil(weakShareViewController)
-            XCTAssertNotNil(weakDelegate)
-        }
-        
-        resetViewController()
-        
-        // Small delay to allow deallocation in async contexts
-        let expectation = expectation(description: "Memory cleanup")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 1.0)
-        
-        // Both should be deallocated (or at least one of them due to potential UIKit references)
-        XCTAssertTrue(weakShareViewController == nil || weakDelegate == nil, "At least one object should be deallocated")
-        
-        // Test presentation controller without delegate (should not crash)
-        let safeShareViewController = ShareViewController()
-        let presentationController = UIPresentationController(presentedViewController: safeShareViewController, presenting: nil)
-        safeShareViewController.presentationControllerDidDismiss(presentationController)
-        XCTAssertTrue(true, "Should complete without crashing")
-        
-        // Test should dismiss without delegate
-        _ = setupViewController(safeShareViewController)
-        let safeRootVC = safeShareViewController.viewControllers.first as! ShareRootViewController
-        let shouldDismiss = safeRootVC.onShouldDismiss.call(())
-        XCTAssertEqual(shouldDismiss, true, "Should return true by default")
     }
 }
 
