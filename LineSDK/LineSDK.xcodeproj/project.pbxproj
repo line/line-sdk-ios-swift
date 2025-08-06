@@ -15,6 +15,7 @@
 		2B8D25342E39A2540029FB34 /* LoginFlowFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */; };
 		2B8D25362E39A2B50029FB34 /* LoginProcessMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */; };
 		2B8D25382E39A2D40029FB34 /* LoginProcessFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8D25372E39A2D40029FB34 /* LoginProcessFlowTests.swift */; };
+		2BCC133B2E4347D3007B7A54 /* ShareViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCC133A2E4347D3007B7A54 /* ShareViewControllerTests.swift */; };
 		2BDD19402E41D90000C6824C /* LoginButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDD193F2E41D90000C6824C /* LoginButtonTests.swift */; };
 		3F75522F2123D215004AC047 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F75522E2123D214004AC047 /* Assets.xcassets */; };
 		3F75523121244502004AC047 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F75523021244502004AC047 /* LoginButton.swift */; };
@@ -592,6 +593,7 @@
 		2B8D25322E39A2540029FB34 /* LoginFlowFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowFactory.swift; sourceTree = "<group>"; };
 		2B8D25352E39A2B50029FB34 /* LoginProcessMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessMocks.swift; sourceTree = "<group>"; };
 		2B8D25372E39A2D40029FB34 /* LoginProcessFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessFlowTests.swift; sourceTree = "<group>"; };
+		2BCC133A2E4347D3007B7A54 /* ShareViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewControllerTests.swift; sourceTree = "<group>"; };
 		2BDD193F2E41D90000C6824C /* LoginButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButtonTests.swift; sourceTree = "<group>"; };
 		3F75522E2123D214004AC047 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F75523021244502004AC047 /* LoginButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
@@ -1661,6 +1663,7 @@
 				2B70D3AB2E41C7E40017479B /* ShareTargetSearchResultTableViewControllerTests.swift */,
 				2B7596852E404ECB00C1C6B6 /* ShareRootViewControllerTests.swift */,
 				DB0AFF602247FB2E002729AD /* PageTabViewTests.swift */,
+				2BCC133A2E4347D3007B7A54 /* ShareViewControllerTests.swift */,
 				2B389E272E433C7900EDC0A9 /* ShareTargetSearchResultViewControllerTests.swift */,
 				4BEFF643226DCD960046DB66 /* ShareControllerTests.swift */,
 				4BE4E0FB2251CEE10071FC60 /* ColumnDataStoreTests.swift */,
@@ -2445,6 +2448,7 @@
 				4B9A305621215DED00174C6F /* TemplateConfirmPayloadTests.swift in Sources */,
 				DBF2027D212D5B5200780358 /* GetApproversInGroupRequestTests.swift in Sources */,
 				4B5EE2E1212BB53F0009DF2E /* FlexBoxComponentTests.swift in Sources */,
+				2BCC133B2E4347D3007B7A54 /* ShareViewControllerTests.swift in Sources */,
 				4B5EE2DF212BAFA00009DF2E /* FlexSpacerComponentTests.swift in Sources */,
 				4B94D0692153678D0049DE68 /* JWTRSATests.swift in Sources */,
 				D17C6FB022237CB1007BA517 /* ResultUtilsTests.swift in Sources */,
