@@ -91,6 +91,7 @@ public class OpenChatCreatingController {
     /// ```
     public func loadAndPresent(
         in viewController: UIViewController,
+        presentingAnimation: Bool = true,
         navigationDismissAnimating: Bool = true,
         presentedHandler handler: ((Result<UIViewController, LineSDKError>) -> Void)? = nil
     )
@@ -102,6 +103,7 @@ public class OpenChatCreatingController {
                 if response.agreed {
                     self.presentCreatingViewController(
                         in: viewController,
+                        presentingAnimation: presentingAnimation,
                         navigationDismissAnimating: navigationDismissAnimating,
                         handler: handler
                     )
@@ -149,6 +151,7 @@ public class OpenChatCreatingController {
     
     func presentCreatingViewController(
         in viewController: UIViewController,
+        presentingAnimation: Bool = true,
         navigationDismissAnimating: Bool = true,
         handler: ((Result<UIViewController, LineSDKError>) -> Void)?
     )
@@ -198,13 +201,13 @@ public class OpenChatCreatingController {
                 }
             }
             
-            navigation.pushViewController(userInfoFormViewController, animated: true)
+            navigation.pushViewController(userInfoFormViewController, animated: presentingAnimation)
         }
         
         navigation.modalPresentationStyle = .fullScreen
         
         delegate?.openChatCreatingController(self, willPresentCreatingNavigationController: navigation)
-        viewController.present(navigation, animated: true) { handler?(.success(navigation)) }
+        viewController.present(navigation, animated: presentingAnimation) { handler?(.success(navigation)) }
     }
 }
 
