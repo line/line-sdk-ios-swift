@@ -243,7 +243,8 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
                 token.IDToken!,
                 providerMetadata: providerMetadata,
                 process: process,
-                userID: profile?.userID
+                userID: profile?.userID,
+                currentDate: Date()
             )
         }
 
@@ -404,7 +405,10 @@ extension LoginManager {
     func verifyIDToken(
         _ token: JWT,
         providerMetadata: DiscoveryDocument.ResolvedProviderMetadata,
-        process: LoginProcess, userID: String?) throws
+        process: LoginProcess,
+        userID: String?,
+        currentDate: Date = Date()
+    ) throws
     {
 
         try token.verify(with: providerMetadata.jwk)
@@ -417,10 +421,9 @@ extension LoginManager {
         }
         try payload.verify(keyPath: \.audience, expected: process.configuration.channelID)
 
-        let now = Date()
         let allowedClockSkew: TimeInterval = 5 * 60
-        try payload.verify(keyPath: \.expiration, laterThan: now.addingTimeInterval(-allowedClockSkew))
-        try payload.verify(keyPath: \.issueAt, earlierThan: now.addingTimeInterval(allowedClockSkew))
+        try payload.verify(keyPath: \.expiration, laterThan: currentDate.addingTimeInterval(-allowedClockSkew))
+        try payload.verify(keyPath: \.issueAt, earlierThan: currentDate.addingTimeInterval(allowedClockSkew))
         try payload.verify(keyPath: \.nonce, expected: process.IDTokenNonce!)
     }
 }
