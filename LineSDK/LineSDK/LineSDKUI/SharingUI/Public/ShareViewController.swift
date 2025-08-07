@@ -94,7 +94,7 @@ open class ShareViewController: StyleNavigationController {
         get { return rootViewController.messages }
     }
 
-    private let rootViewController = ShareRootViewController()
+    let rootViewController = ShareRootViewController()
 
     // MARK: - Initializers
 
