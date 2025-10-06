@@ -82,17 +82,24 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         defer { lock.unlock() }
 
         guard !setup else {
-            Log.assertionFailure("Trying to set configuration multiple times is not permitted.")
+            Log.assertionFailure("Trying to set configuration multiple times is not permitted. Call `reset` first if you need to reconfigure the SDK with another channel ID and/or universal link URL.")
             return
         }
-        defer { setup = true }
 
         let config = LoginConfiguration(channelID: channelID, universalLinkURL: universalLinkURL)
-        LoginConfiguration._shared = config
-        AccessTokenStore._shared = AccessTokenStore(configuration: config)
-        Session._shared = Session(configuration: config)
+        configureSDK(config)
+        setup = true
     }
-    
+
+    public func reset() {
+        lock.lock()
+        defer { lock.unlock() }
+
+        cleanCurrentProcess()
+        configureSDK(nil)
+        setup = false
+    }
+
     /// Logs in to the LINE Platform.
     ///
     /// - Parameters:
@@ -306,6 +313,28 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         guard let currentProcess = currentProcess else { return false }
 
         return currentProcess.nonisolatedResumeOpenURL(url: url)
+    }
+
+    private func cleanCurrentProcess() {
+        if let currentProcess = currentProcess {
+            currentProcess.onFail.call(
+                LineSDKError.generalError(reason: .loginManagerReset)
+            )
+        }
+        currentProcess = nil
+    }
+
+    private func configureSDK(_ config: LoginConfiguration?) {
+        if let config = config {
+            LoginConfiguration._shared = config
+            AccessTokenStore._shared = AccessTokenStore(configuration: config)
+            Session._shared = Session(configuration: config)
+        } else {
+            LoginConfiguration._shared = nil
+            AccessTokenStore._shared = nil
+            Session._shared?.session.invalidateAndCancel()
+            Session._shared = nil
+        }
     }
 
     // MARK: - Deprecated

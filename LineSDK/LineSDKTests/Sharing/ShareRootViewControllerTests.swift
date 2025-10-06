@@ -39,7 +39,7 @@ class ShareRootViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
         resetViewController()
         Session._shared = originalSession
         shareRootViewController = nil
-        LoginManager.shared.reset()
+        LoginManager.shared.resetForTesting()
     }
     
     // MARK: - Initialization Tests

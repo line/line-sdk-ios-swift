@@ -225,6 +225,8 @@ public enum LineSDKError: Error {
         /// happens when `allowRecreatingLoginProcess` in `LoginManager.Parameters` is `true` 
         /// and users are trying to create another login process. Code 4004.
         case processDiscarded(LoginProcess)
+
+        case loginManagerReset
     }
 
     /// An error occurred while constructing a request.
@@ -645,6 +647,8 @@ extension LineSDKError.GeneralErrorReason {
             return "Image downloading finished but it is not the original one. Token \"\(token)\"."
         case .processDiscarded(let process):
             return "Current process is discarded. \(process)"
+        case .loginManagerReset:
+            return "The LoginManager is reset during the login process."
         }
     }
 
@@ -654,6 +658,7 @@ extension LineSDKError.GeneralErrorReason {
         case .parameterError(_, _):  return 4002
         case .notOriginalTask(_):    return 4003
         case .processDiscarded:      return 4004
+        case .loginManagerReset:     return 4005
         }
     }
 
@@ -669,6 +674,7 @@ extension LineSDKError.GeneralErrorReason {
         case .notOriginalTask: break
         case .processDiscarded(let process):
             userInfo[.process] = process
+        case .loginManagerReset: break
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }

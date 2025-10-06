@@ -45,7 +45,7 @@ class ShareControllerTests: XCTestCase {
 
     func testNoTokenStatus() {
         LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
-        defer { LoginManager.shared.reset() }
+        defer { LoginManager.shared.resetForTesting() }
 
         let status = ShareViewController
             .localAuthorizationStatusForSendingMessage()

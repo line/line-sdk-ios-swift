@@ -167,7 +167,7 @@ class LineSDKErrorTests: XCTestCase {
 
         LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
         defer {
-            LoginManager.shared.reset()
+            LoginManager.shared.resetForTesting()
         }
 
         let generalReasons: [LineSDKError.GeneralErrorReason] = [

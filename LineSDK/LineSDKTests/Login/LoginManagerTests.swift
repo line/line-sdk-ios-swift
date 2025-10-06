@@ -43,7 +43,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     }
     
     override func tearDown() async throws {
-        LoginManager.shared.reset()
+        LoginManager.shared.resetForTesting()
         resetViewController()
     }
     
@@ -54,7 +54,11 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         
         XCTAssertTrue(LoginManager.shared.isSetupFinished)
     }
-    
+
+    func testResetLoginManager() {
+
+    }
+
     func testLoginAction() {
         let expect = expectation(description: "\(#file)_\(#line)")
         
