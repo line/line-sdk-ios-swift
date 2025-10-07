@@ -222,10 +222,12 @@ public enum LineSDKError: Error {
         case notOriginalTask(token: UInt)
         
         /// The process is discarded when a new login process is created. This only
-        /// happens when `allowRecreatingLoginProcess` in `LoginManager.Parameters` is `true` 
+        /// happens when `allowRecreatingLoginProcess` in `LoginManager.Parameters` is `true`
         /// and users are trying to create another login process. Code 4004.
         case processDiscarded(LoginProcess)
 
+        /// The LoginManager was reset during an ongoing login process. This occurs when
+        /// `LoginManager.reset()` is called while a login operation is in progress. Code 4005.
         case loginManagerReset
     }
 

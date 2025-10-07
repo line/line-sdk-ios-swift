@@ -91,6 +91,23 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         setup = true
     }
 
+    /// Resets the LINE SDK to its initial state.
+    ///
+    /// This method clears all SDK configurations, shared instances, and cancels any ongoing login process.
+    /// After calling this method, you must call `setup(channelID:universalLinkURL:)` again before using
+    /// any other SDK functionality.
+    ///
+    /// - Warning: If there is an ongoing login process when this method is called, the login completion
+    ///           handler will be invoked with a `LineSDKError.generalError(reason: .loginManagerReset)` error.
+    ///
+    /// - Note: This method is thread-safe and can be called from any thread.
+    ///
+    /// ## Usage Example
+    /// ```swift
+    /// // Reset the SDK to switch to a different channel
+    /// LoginManager.shared.reset()
+    /// LoginManager.shared.setup(channelID: "newChannelID", universalLinkURL: nil)
+    /// ```
     public func reset() {
         lock.lock()
         defer { lock.unlock() }
@@ -315,6 +332,10 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         return currentProcess.nonisolatedResumeOpenURL(url: url)
     }
 
+    /// Cleans up the current login process by notifying it with a reset error and clearing the reference.
+    ///
+    /// If there is an active login process, this method will invoke its failure callback with a
+    /// `loginManagerReset` error before clearing the process reference.
     private func cleanCurrentProcess() {
         if let currentProcess = currentProcess {
             currentProcess.onFail.call(
@@ -324,6 +345,10 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         currentProcess = nil
     }
 
+    /// Configures or clears the SDK's shared instances based on the provided configuration.
+    ///
+    /// - Parameter config: The configuration to apply. If `nil`, all shared instances will be cleared
+    ///                    and any active network sessions will be cancelled.
     private func configureSDK(_ config: LoginConfiguration?) {
         if let config = config {
             LoginConfiguration._shared = config
