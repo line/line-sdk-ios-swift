@@ -56,7 +56,79 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     }
 
     func testResetLoginManager() {
+        // Ensure LoginManager is properly set up first
+        XCTAssertTrue(LoginManager.shared.isSetupFinished)
+        XCTAssertNotNil(Session.shared)
+        XCTAssertNotNil(AccessTokenStore.shared)
+        XCTAssertNotNil(LoginConfiguration.shared)
 
+        // Test resetting without active login process
+        LoginManager.shared.reset()
+
+        // After reset, all shared instances should be nil and setup should be false
+        XCTAssertFalse(LoginManager.shared.isSetupFinished)
+        XCTAssertNil(Session._shared)
+        XCTAssertNil(AccessTokenStore._shared)
+        XCTAssertNil(LoginConfiguration._shared)
+
+        // Test that we can reconfigure after reset
+        let newURL = URL(string: "https://newexample.com/auth")
+        LoginManager.shared.setup(channelID: "456", universalLinkURL: newURL)
+
+        // After reconfiguration, instances should exist again
+        XCTAssertTrue(LoginManager.shared.isSetupFinished)
+        XCTAssertNotNil(Session.shared)
+        XCTAssertNotNil(AccessTokenStore.shared)
+        XCTAssertNotNil(LoginConfiguration.shared)
+        XCTAssertEqual(LoginConfiguration.shared.channelID, "456")
+        XCTAssertEqual(LoginConfiguration.shared.universalLinkURL, newURL)
+    }
+
+    func testResetLoginManagerWithActiveProcess() {
+        let expect = expectation(description: "\(#file)_\(#line)")
+
+        // Mock a session that will never respond (to keep login process active)
+        let delegateStub = SessionDelegateStub(stubs: [])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+
+        // Start a login process but don't complete it
+        var process: LoginProcess!
+        process = LoginManager.shared.login(permissions: [.profile], in: setupViewController()) { loginResult in
+            // This callback should receive a loginManagerReset error
+            XCTAssertNotNil(loginResult.error)
+            if let error = loginResult.error {
+                if case .generalError(let reason) = error {
+                    if case .loginManagerReset = reason {
+                        // Expected error when reset is called during login
+                        expect.fulfill()
+                    } else {
+                        XCTFail("Expected loginManagerReset error, got: \(reason)")
+                    }
+                } else {
+                    XCTFail("Expected generalError with loginManagerReset, got: \(error)")
+                }
+            }
+        }
+
+        // Verify process is active
+        XCTAssertNotNil(process)
+        XCTAssertTrue(LoginManager.shared.isAuthorizing)
+
+        // Reset the login manager while process is active
+        LoginManager.shared.reset()
+
+        // After reset, no process should be active and setup should be false
+        XCTAssertFalse(LoginManager.shared.isSetupFinished)
+        XCTAssertFalse(LoginManager.shared.isAuthorizing)
+
+        waitForExpectations(timeout: 1, handler: nil)
+
+        // Re-setup after reset to avoid tearDown issues
+        let url = URL(string: "https://example.com/auth")
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: url)
     }
 
     func testLoginAction() {
