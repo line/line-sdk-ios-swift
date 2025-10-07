@@ -38,6 +38,7 @@
 		65E6BDB92154D80A0024D7C1 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E6BDB82154D80A0024D7C1 /* LoginPage.swift */; };
 		9735344E241BB60900D47AAA /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9735344D241BB60900D47AAA /* Page.swift */; };
 		97353450241BB67500D47AAA /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9735344F241BB67500D47AAA /* AuthenticationTests.swift */; };
+		BD1081521DA6442B9F29E151 /* SampleChannelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0EE337A49B4B8083550663 /* SampleChannelSettings.swift */; };
 		D17A9F3724BD312A00D0FD0D /* LoginSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17A9F3624BD312A00D0FD0D /* LoginSettingsViewController.swift */; };
 		D17A9F3924BD34EE00D0FD0D /* LoginSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17A9F3824BD34EE00D0FD0D /* LoginSettings.swift */; };
 		D1F6B58D243C5ACF00024910 /* OpenChatRoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F6B58C243C5ACF00024910 /* OpenChatRoomTableViewController.swift */; };
@@ -135,6 +136,7 @@
 		65E6BDB82154D80A0024D7C1 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
 		9735344D241BB60900D47AAA /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		9735344F241BB67500D47AAA /* AuthenticationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
+		BF0EE337A49B4B8083550663 /* SampleChannelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleChannelSettings.swift; sourceTree = "<group>"; };
 		D1467333238F6D5B004BF2B6 /* LineSDKSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LineSDKSample.entitlements; sourceTree = "<group>"; };
 		D17A9F3624BD312A00D0FD0D /* LoginSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSettingsViewController.swift; sourceTree = "<group>"; };
 		D17A9F3824BD34EE00D0FD0D /* LoginSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSettings.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				4BCD279D2113FE9D00B90D8F /* IndicatorDisplay.swift */,
 				4BCD279F2114007500B90D8F /* UIAlertControllerHelpers.swift */,
 				4BB84462211BF48F005B60D7 /* UIViewControllerExtensions.swift */,
+				BF0EE337A49B4B8083550663 /* SampleChannelSettings.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 				4B38A3EF22FA70DB00A21F05 /* ShareMessageTemplateAddingViewController.swift in Sources */,
 				4B121F132249DE4000473132 /* SampleUIHomeViewController.swift in Sources */,
 				4BFE511B22F7BAC600500B72 /* MessageStore.swift in Sources */,
+				BD1081521DA6442B9F29E151 /* SampleChannelSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

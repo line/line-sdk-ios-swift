@@ -37,9 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
         
         // Modify Config.xcconfig to setup your LINE channel ID.
-        if let channelID = Bundle.main.infoDictionary?["LINE Channel ID"] as? String,
-           let _ = Int(channelID)
-        {
+        if let channelID = SampleChannelSettings.resolveInitialChannelID() {
             LoginManager.shared.setup(channelID: channelID, universalLinkURL: nil)
         } else {
             fatalError("Please set correct channel ID in Config.xcconfig file.")
@@ -67,4 +65,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
