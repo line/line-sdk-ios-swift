@@ -131,6 +131,70 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         LoginManager.shared.setup(channelID: "123", universalLinkURL: url)
     }
 
+    func testResetKeepsTokenScopedByChannel() {
+        let loginExpectation = expectation(description: "\(#file)_\(#line)_login")
+
+        let delegateStub = SessionDelegateStub(stubs: [
+            .init(data: PostExchangeTokenRequest.successData, responseCode: 200),
+            .init(data: GetUserProfileRequest.successData, responseCode: 200)
+        ])
+        Session._shared = Session(
+            configuration: LoginConfiguration.shared,
+            delegate: delegateStub
+        )
+
+        let viewController = setupViewController()
+        var process: LoginProcess!
+        var capturedToken: AccessToken?
+        process = LoginManager.shared.login(permissions: [.profile], in: viewController) { result in
+            switch result {
+            case .success(let loginResult):
+                capturedToken = loginResult.accessToken
+                XCTAssertEqual(loginResult.accessToken.value, PostExchangeTokenRequest.successToken)
+                XCTAssertEqual(AccessTokenStore.shared.current?.value, PostExchangeTokenRequest.successToken)
+            case .failure(let error):
+                XCTFail("Unexpected failure: \(error)")
+            }
+
+            loginExpectation.fulfill()
+        }!
+
+        process.appUniversalLinkFlow = AppUniversalLinkFlow(parameter: sampleFlowParameters)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let urlString = "\(Constant.thirdPartyAppReturnURL)?code=123&state=\(process.processID)"
+            let handled = process.resumeOpenURL(url: URL(string: urlString)!)
+            XCTAssertTrue(handled)
+        }
+
+        waitForExpectations(timeout: 2, handler: nil)
+
+        guard let token = capturedToken else {
+            XCTFail("Token should be captured after login")
+            return
+        }
+
+        // After reset, in-memory singletons are cleared but the keychain token remains.
+        LoginManager.shared.reset()
+        XCTAssertFalse(LoginManager.shared.isSetupFinished)
+        XCTAssertNil(LoginConfiguration._shared)
+        XCTAssertNil(Session._shared)
+        XCTAssertNil(AccessTokenStore._shared)
+
+        // Setup with a different channel should not see the previous token.
+        let secondaryURL = URL(string: "https://alternate.example.com/auth")
+        LoginManager.shared.setup(channelID: "456", universalLinkURL: secondaryURL)
+        XCTAssertTrue(LoginManager.shared.isSetupFinished)
+        XCTAssertNil(AccessTokenStore.shared.current)
+
+        // Reset again to switch back to the original channel.
+        LoginManager.shared.reset()
+
+        let primaryURL = URL(string: "https://example.com/auth")
+        LoginManager.shared.setup(channelID: "123", universalLinkURL: primaryURL)
+        XCTAssertEqual(AccessTokenStore.shared.current?.value, token.value)
+    }
+
     func testLoginAction() {
         let expect = expectation(description: "\(#file)_\(#line)")
         
@@ -425,7 +489,7 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
         let mockAccessToken = try! JSONDecoder().decode(AccessToken.self, from: PostExchangeTokenRequest.successData)
         
         // Create JWK from test RSA public key that matches the test JWT token
-        let testRSAPublicKeyPEM = """
+        /* let testRSAPublicKeyPEM */ _ = """
         -----BEGIN PUBLIC KEY-----
         MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdlatRjRjogo3WojgGHFHYLugd
         UWAY9iR3fy4arWNA1KoS8kVw33cJibXr8bvwUAUparCwlvdbH6dvEOfou0/gCFQs
@@ -899,4 +963,3 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
     }
 
 }
-
