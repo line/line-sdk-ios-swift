@@ -100,7 +100,8 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
     /// - Warning: If there is an ongoing login process when this method is called, the login completion
     ///           handler will be invoked with a `LineSDKError.generalError(reason: .loginManagerReset)` error.
     ///
-    /// - Note: This method is thread-safe and can be called from any thread.
+    /// - Note: This method is `@MainActor` isolated. Call it on the main thread to ensure the login
+    ///         process cancellation is delivered immediately.
     ///
     /// ## Usage Example
     /// ```swift
@@ -108,13 +109,17 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
     /// LoginManager.shared.reset()
     /// LoginManager.shared.setup(channelID: "newChannelID", universalLinkURL: nil)
     /// ```
+    @MainActor
     public func reset() {
         lock.lock()
-        defer { lock.unlock() }
 
-        cleanCurrentProcess()
+        let cancelledProcess = cleanCurrentProcess()
         configureSDK(nil)
         setup = false
+
+        lock.unlock()
+
+        cancelledProcess?.cancelDueToReset()
     }
 
     /// Logs in to the LINE Platform.
@@ -332,17 +337,11 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         return currentProcess.nonisolatedResumeOpenURL(url: url)
     }
 
-    /// Cleans up the current login process by notifying it with a reset error and clearing the reference.
-    ///
-    /// If there is an active login process, this method will invoke its failure callback with a
-    /// `loginManagerReset` error before clearing the process reference.
-    private func cleanCurrentProcess() {
-        if let currentProcess = currentProcess {
-            currentProcess.onFail.call(
-                LineSDKError.generalError(reason: .loginManagerReset)
-            )
-        }
+    /// Clears the current login process reference and returns it for further handling.
+    private func cleanCurrentProcess() -> LoginProcess? {
+        let process = currentProcess
         currentProcess = nil
+        return process
     }
 
     /// Configures or clears the SDK's shared instances based on the provided configuration.
