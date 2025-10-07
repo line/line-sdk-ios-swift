@@ -97,6 +97,10 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
     /// After calling this method, you must call `setup(channelID:universalLinkURL:)` again before using
     /// any other SDK functionality.
     ///
+    /// - Important: Access tokens remain stored in the keychain and are scoped by channel ID. Resetting with the
+    ///              same channel reuses the existing token. Call `logout()` before `reset()` if you need to remove
+    ///              cached credentials.
+    ///
     /// - Warning: If there is an ongoing login process when this method is called, the login completion
     ///           handler will be invoked with a `LineSDKError.generalError(reason: .loginManagerReset)` error.
     ///
