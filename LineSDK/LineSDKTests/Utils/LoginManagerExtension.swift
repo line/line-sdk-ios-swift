@@ -24,15 +24,8 @@ import Foundation
 
 extension LoginManager {
     @MainActor
-    func reset() {
-        setup = false
-        
-        Session._shared = nil
-        
+    func resetForTesting() {
         try! AccessTokenStore.shared.removeCurrentAccessToken()
-        AccessTokenStore._shared = nil
-        
-        LoginConfiguration._shared = nil
-        currentProcess?.stop()
+        reset()
     }
 }

@@ -36,7 +36,7 @@ class APITests: XCTestCase {
     }
     
     override func tearDown() async throws {
-        await LoginManager.shared.reset()
+        await LoginManager.shared.resetForTesting()
         try await super.tearDown()
     }
     

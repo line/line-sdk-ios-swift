@@ -419,6 +419,10 @@ public class LoginProcess {
         onSucceed.call((result, response))
     }
 
+    func cancelDueToReset() {
+        invokeFailure(error: LineSDKError.generalError(reason: .loginManagerReset))
+    }
+
     private func invokeFailure(error: Error) {
         resetFlows()
         onFail.call(error)

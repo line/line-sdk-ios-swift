@@ -52,7 +52,7 @@ class ShareViewControllerTests: XCTestCase, ViewControllerCompatibleTest {
         
         // Restore original token state
         AccessTokenStore.shared.current = originalToken
-        LoginManager.shared.reset()
+        LoginManager.shared.resetForTesting()
     }
     
     // MARK: - Core Tests

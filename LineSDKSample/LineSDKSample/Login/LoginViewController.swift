@@ -82,6 +82,10 @@ class LoginViewController: UIViewController, IndicatorDisplay {
     func updateLoginButtonData() {
         loginButton.permissions = loginSettings.permissions
         loginButton.parameters = loginSettings.parameters
+
+        let canPerformLogin = LoginManager.shared.isSetupFinished
+        loginButton.isEnabled = canPerformLogin
+        webLoginButton.isEnabled = canPerformLogin
     }
 
     @objc

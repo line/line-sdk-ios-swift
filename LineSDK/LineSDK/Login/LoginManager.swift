@@ -82,17 +82,50 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         defer { lock.unlock() }
 
         guard !setup else {
-            Log.assertionFailure("Trying to set configuration multiple times is not permitted.")
+            Log.assertionFailure("Trying to set configuration multiple times is not permitted. Call `reset` first if you need to reconfigure the SDK with another channel ID and/or universal link URL.")
             return
         }
-        defer { setup = true }
 
         let config = LoginConfiguration(channelID: channelID, universalLinkURL: universalLinkURL)
-        LoginConfiguration._shared = config
-        AccessTokenStore._shared = AccessTokenStore(configuration: config)
-        Session._shared = Session(configuration: config)
+        configureSDK(config)
+        setup = true
     }
-    
+
+    /// Resets the LINE SDK to its initial state.
+    ///
+    /// This method clears all SDK configurations, shared instances, and cancels any ongoing login process.
+    /// After calling this method, you must call `setup(channelID:universalLinkURL:)` again before using
+    /// any other SDK functionality.
+    ///
+    /// - Important: Access tokens remain stored in the keychain and are scoped by channel ID. Resetting with the
+    ///              same channel reuses the existing token. Call `logout()` before `reset()` if you need to remove
+    ///              cached credentials.
+    ///
+    /// - Warning: If there is an ongoing login process when this method is called, the login completion
+    ///           handler will be invoked with a `LineSDKError.generalError(reason: .loginManagerReset)` error.
+    ///
+    /// - Note: This method is `@MainActor` isolated. Call it on the main thread to ensure the login
+    ///         process cancellation is delivered immediately.
+    ///
+    /// ## Usage Example
+    /// ```swift
+    /// // Reset the SDK to switch to a different channel
+    /// LoginManager.shared.reset()
+    /// LoginManager.shared.setup(channelID: "newChannelID", universalLinkURL: nil)
+    /// ```
+    @MainActor
+    public func reset() {
+        lock.lock()
+
+        let cancelledProcess = cleanCurrentProcess()
+        configureSDK(nil)
+        setup = false
+
+        lock.unlock()
+
+        cancelledProcess?.cancelDueToReset()
+    }
+
     /// Logs in to the LINE Platform.
     ///
     /// - Parameters:
@@ -306,6 +339,30 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         guard let currentProcess = currentProcess else { return false }
 
         return currentProcess.nonisolatedResumeOpenURL(url: url)
+    }
+
+    /// Clears the current login process reference and returns it for further handling.
+    private func cleanCurrentProcess() -> LoginProcess? {
+        let process = currentProcess
+        currentProcess = nil
+        return process
+    }
+
+    /// Configures or clears the SDK's shared instances based on the provided configuration.
+    ///
+    /// - Parameter config: The configuration to apply. If `nil`, all shared instances will be cleared
+    ///                    and any active network sessions will be cancelled.
+    private func configureSDK(_ config: LoginConfiguration?) {
+        if let config = config {
+            LoginConfiguration._shared = config
+            AccessTokenStore._shared = AccessTokenStore(configuration: config)
+            Session._shared = Session(configuration: config)
+        } else {
+            LoginConfiguration._shared = nil
+            AccessTokenStore._shared = nil
+            Session._shared?.session.invalidateAndCancel()
+            Session._shared = nil
+        }
     }
 
     // MARK: - Deprecated

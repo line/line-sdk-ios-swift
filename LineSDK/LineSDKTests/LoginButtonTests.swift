@@ -35,7 +35,7 @@ class LoginButtonTests: XCTestCase, ViewControllerCompatibleTest {
     }
     
     override func tearDown() async throws {
-        LoginManager.shared.reset()
+        LoginManager.shared.resetForTesting()
         resetViewController()
         loginButton = nil
     }

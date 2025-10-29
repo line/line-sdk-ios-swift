@@ -32,7 +32,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
     }
 
     override func tearDown() async throws {
-        LoginManager.shared.reset()
+        LoginManager.shared.resetForTesting()
         resetViewController()
     }
     
@@ -65,7 +65,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
     
     func testLocalAuthorizationStatusForCreatingOpenChat() {
         // Test with no token
-        LoginManager.shared.reset()
+        LoginManager.shared.resetForTesting()
         LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
         
         let statusNoToken = OpenChatCreatingController.localAuthorizationStatusForCreatingOpenChat()

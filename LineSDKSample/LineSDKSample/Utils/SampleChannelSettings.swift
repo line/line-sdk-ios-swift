@@ -1,5 +1,5 @@
 //
-//  ShareControllerTests.swift
+//  SampleChannelSettings.swift
 //
 //  Copyright (c) 2016-present, LY Corporation. All rights reserved.
 //
@@ -19,39 +19,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import XCTest
-@testable import LineSDK
+import Foundation
 
-@MainActor
-class ShareControllerTests: XCTestCase {
+enum SampleChannelSettings {
+    private static let channelStorageKey = "com.linecorp.linesdk.sample.channelID"
+    private static var defaults: UserDefaults { .standard }
 
-    func testLocalAuthorizationStatus() {
-
-        let status1 = ShareViewController
-            .localAuthorizationStatusForSendingMessage(permissions: [])
-        guard case .lackOfPermissions(let p1) = status1 else {
-            XCTFail()
-            return
+    static func resolveInitialChannelID(bundle: Bundle = .main) -> String? {
+        if let stored = storedChannelID, isValid(channelID: stored) {
+            return stored
         }
-        XCTAssertEqual(p1, [.oneTimeShare])
 
-        let status2 = ShareViewController
-            .localAuthorizationStatusForSendingMessage(permissions: [.oneTimeShare])
-        guard case .authorized = status2 else {
-            XCTFail()
-            return
+        guard let bundledID = bundle.infoDictionary?["LINE Channel ID"] as? String,
+              isValid(channelID: bundledID)
+        else {
+            return nil
         }
+
+        updateChannelID(bundledID)
+        return bundledID
     }
 
-    func testNoTokenStatus() {
-        LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
-        defer { LoginManager.shared.resetForTesting() }
+    static var storedChannelID: String? {
+        defaults.string(forKey: channelStorageKey)
+    }
 
-        let status = ShareViewController
-            .localAuthorizationStatusForSendingMessage()
-        guard case .lackOfToken = status else {
-            XCTFail()
-            return
-        }
+    static func updateChannelID(_ channelID: String) {
+        defaults.set(channelID.trimmingCharacters(in: .whitespacesAndNewlines), forKey: channelStorageKey)
+    }
+
+    static func isValid(channelID: String) -> Bool {
+        let trimmed = channelID.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return false }
+        return Int(trimmed) != nil
     }
 }
+

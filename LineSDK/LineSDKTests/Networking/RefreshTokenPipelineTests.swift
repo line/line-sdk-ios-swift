@@ -33,7 +33,7 @@ class RefreshTokenPipelineTests: XCTestCase, Sendable {
     }
     
     override func tearDown() async throws {
-        LoginManager.shared.reset()
+        LoginManager.shared.resetForTesting()
     }
     
     func testRefreshTokenPipelineSuccess() {

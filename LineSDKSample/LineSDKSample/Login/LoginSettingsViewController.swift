@@ -28,12 +28,15 @@ protocol LoginSettingsViewControllerDelegate: AnyObject {
 
 class LoginSettingsViewController: UITableViewController {
     enum Section: Int, CaseIterable {
+        case channel
         case permissions
         case openID
         case parameters
 
         var sectionTitle: String {
             switch self {
+            case .channel:
+                return "Channel"
             case .permissions:
                 return "Permissions"
             case .openID:
@@ -108,6 +111,9 @@ class LoginSettingsViewController: UITableViewController {
     var loginSettings: LoginSettings!
     weak var delegate: LoginSettingsViewControllerDelegate?
 
+    private weak var onlyResetAction: UIAlertAction?
+    private weak var resetAndSetupAction: UIAlertAction?
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         delegate?.loginSettingsViewControllerWillDisappear(self)
@@ -123,6 +129,7 @@ class LoginSettingsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Section(rawValue: section) {
+        case .channel: return 1
         case .permissions: return permissions.count
         case .openID: return openIDs.count
         case .parameters: return parameters.count
@@ -137,6 +144,10 @@ class LoginSettingsViewController: UITableViewController {
             preconditionFailure()
         }
         switch section {
+        case .channel:
+            cell.textLabel?.text = "Channel ID"
+            cell.detailTextLabel?.text = SampleChannelSettings.storedChannelID ?? "Not Set"
+            cell.accessoryType = .disclosureIndicator
         case .permissions:
             let p = permissions[indexPath.row]
             cell.textLabel?.text = p.title
@@ -166,6 +177,8 @@ class LoginSettingsViewController: UITableViewController {
             return
         }
         switch section {
+        case .channel:
+            presentChannelEditing()
         case .permissions:
             let p = permissions[indexPath.row]
             loginSettings.togglePermission(p.permission)
@@ -177,6 +190,92 @@ class LoginSettingsViewController: UITableViewController {
             p.action(&loginSettings.parameters)
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        tableView.reloadRows(at: [indexPath], with: .none)
+        if section == .parameters || section == .permissions || section == .openID {
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+
+    private func presentChannelEditing() {
+        let alert = UIAlertController(
+            title: "Channel ID",
+            message: "Enter the LINE channel ID to use with the SDK.",
+            preferredStyle: .alert
+        )
+        alert.addTextField { [weak self] textField in
+            textField.keyboardType = .numberPad
+            textField.text = SampleChannelSettings.storedChannelID
+            textField.clearButtonMode = .whileEditing
+            if let self = self {
+                textField.addTarget(self, action: #selector(LoginSettingsViewController.channelTextFieldDidChange(_:)), for: .editingChanged)
+            }
+        }
+
+        let onlyReset = UIAlertAction(title: "Only Reset", style: .destructive) { [weak self, weak alert] _ in
+            guard let channelID = self?.normalizedChannelID(from: alert) else {
+                return
+            }
+            self?.applyChannelChange(channelID: channelID, shouldSetup: false)
+        }
+        onlyReset.isEnabled = false
+        alert.addAction(onlyReset)
+
+        let resetAndSetup = UIAlertAction(title: "Reset & Setup", style: .default) { [weak self, weak alert] _ in
+            guard let channelID = self?.normalizedChannelID(from: alert) else {
+                return
+            }
+            self?.applyChannelChange(channelID: channelID, shouldSetup: true)
+        }
+        resetAndSetup.isEnabled = false
+        alert.addAction(resetAndSetup)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        onlyResetAction = onlyReset
+        resetAndSetupAction = resetAndSetup
+
+        present(alert, animated: true) { [weak self, weak alert] in
+            guard let textField = alert?.textFields?.first else { return }
+            self?.updateChannelActions(for: textField.text)
+        }
+    }
+
+    @objc private func channelTextFieldDidChange(_ sender: UITextField) {
+        updateChannelActions(for: sender.text)
+    }
+
+    private func updateChannelActions(for text: String?) {
+        let isValid = SampleChannelSettings.isValid(channelID: text ?? "")
+        onlyResetAction?.isEnabled = isValid
+        resetAndSetupAction?.isEnabled = isValid
+    }
+
+    private func normalizedChannelID(from alert: UIAlertController?) -> String? {
+        guard let raw = alert?.textFields?.first?.text else { return nil }
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard SampleChannelSettings.isValid(channelID: trimmed) else { return nil }
+        return trimmed
+    }
+
+    private func applyChannelChange(channelID: String, shouldSetup: Bool) {
+        SampleChannelSettings.updateChannelID(channelID)
+        LoginManager.shared.reset()
+
+        if shouldSetup {
+            LoginManager.shared.setup(channelID: channelID, universalLinkURL: nil)
+        }
+
+        let indexPath = IndexPath(row: 0, section: Section.channel.rawValue)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+
+        let message: String
+        if shouldSetup {
+            message = "The SDK was reset and configured with the new channel ID."
+        } else {
+            message = "The SDK was reset. Call setup again before performing login operations."
+        }
+
+        let confirmation = UIAlertController(title: "Channel Updated", message: message, preferredStyle: .alert)
+        confirmation.addAction(UIAlertAction(title: "OK", style: .default))
+        present(confirmation, animated: true)
     }
 }
