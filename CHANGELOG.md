@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.14.0] - 2025-10-30
+
 ### Added
 
 - A `reset` method for `LoginManager` to cancel ongoing login processes and clean up internal state. It allows you using multiple channels in a single app. [#243](https://github.com/line/line-sdk-ios-swift/pull/243)
@@ -334,3 +336,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.11.2]: https://github.com/line/line-sdk-ios-swift/compare/5.11.1...5.11.2
 [5.12.0]: https://github.com/line/line-sdk-ios-swift/compare/5.11.2...5.12.0
 [5.13.0]: https://github.com/line/line-sdk-ios-swift/compare/5.12.0...5.13.0
+[5.14.0]: https://github.com/line/line-sdk-ios-swift/compare/5.13.0...5.14.0
