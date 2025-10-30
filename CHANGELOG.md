@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- A `reset` method for `LoginManager` to cancel ongoing login processes and clean up internal state. It allows you using multiple channels in a single app. [#243](https://github.com/line/line-sdk-ios-swift/pull/243)
+
+### Fixed
+
+- LoginManager reset functionality now properly retains and cancels ongoing processes on the main actor for better thread safety.
+
 ## [5.13.0] - 2025-06-19
 
 ### Added
