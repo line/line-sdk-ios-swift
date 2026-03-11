@@ -39,7 +39,6 @@ enum APICategory: Int, CaseIterable {
     case auth
     case friendship
     case graph
-    case messaging
     case openChat
 }
 
@@ -49,7 +48,6 @@ class APIStore {
     private(set) var authAPIs: [APIItem] = []
     private(set) var friendshipAPIs: [APIItem] = []
     private(set) var graphAPIs: [APIItem] = []
-    private(set) var messagingAPIs: [APIItem] = []
     private(set) var openChatAPIs: [APIItem] = []
 
     private var tokenDidUpdateObserver: NotificationToken?
@@ -73,7 +71,6 @@ class APIStore {
         case .auth: return authAPIs.count
         case .friendship: return friendshipAPIs.count
         case .graph: return graphAPIs.count
-        case .messaging: return messagingAPIs.count
         case .openChat: return openChatAPIs.count
         }
     }
@@ -83,7 +80,6 @@ class APIStore {
         case .auth: return authAPIs[index]
         case .friendship: return friendshipAPIs[index]
         case .graph: return graphAPIs[index]
-        case .messaging: return messagingAPIs[index]
         case .openChat: return openChatAPIs[index]
         }
     }
@@ -126,8 +122,6 @@ extension APIStore {
             ),
             .getApproversInGroup
         ]
-        
-        messagingAPIs = []
         
         openChatAPIs = [
             .init(
@@ -205,105 +199,6 @@ extension APIItem {
                     }
                 }
             }
-    }
-
-    static var sendTextMessage: APIItem {
-        let mock = PostSendMessagesRequest(chatID: "", messages: [])
-        let block: AnyResultBlock = { arg in
-            let (controller, handler) = arg
-            selectUserFromFriendList(in: controller) { result in
-                switch result {
-                case .success(let chatID):
-                    let message = TextMessage(text: "Hello")
-                    let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [message])
-                    Session.shared.send(sendMessage) {
-                        messageResult in
-                        switch messageResult {
-                        case .success(let value): handler(.success(value))
-                        case .failure(let error): handler(.failure(.sdkError(error)))
-                        }
-                    }
-                case .failure(let error):
-                    handler(.failure(error))
-                }
-            }
-        }
-        
-        return APIItem(
-            title: "Send text message to a friend",
-            path: mock.path,
-            method: mock.method,
-            available: true,
-            block: block
-        )
-    }
-    
-    static var multiSendTextMessage: APIItem {
-        let mock = PostMultisendMessagesRequest(userIDs: [], messages: [])
-        let block: AnyResultBlock = { arg in
-            let (_, handler) = arg
-            let getFriends = GetFriendsRequest()
-            Session.shared.send(getFriends) { res in
-                switch res {
-                case .success(let value):
-                    guard !value.friends.isEmpty else {
-                        let error = LineSDKError.generalError(
-                            reason: .parameterError(
-                                parameterName: "friends",
-                                description: "You need at least one friend to use this API."))
-                        handler(.failure(.sdkError(error)))
-                        return
-                    }
-                    let userIDs = value.friends.prefix(5).map { $0.userID }
-                    let message = TextMessage(text: "Hello")
-                    let sendMessage = PostMultisendMessagesRequest(userIDs: userIDs, messages: [message])
-                    Session.shared.send(sendMessage) {
-                        messageResult in
-                        switch messageResult {
-                        case .success(let value): handler(.success(value))
-                        case .failure(let error): handler(.failure(.sdkError(error)))
-                        }
-                    }
-                case .failure(let error):
-                    handler(.failure(.sdkError(error)))
-                }
-            }
-        }
-        
-        return APIItem(
-            title: "Multisend text message to first five friends", mock: mock, available: true, block: block
-        )
-    }
-    
-    static var sendFlexMessage: APIItem {
-        let mock = PostSendMessagesRequest(chatID: "", messages: [])
-        let block: AnyResultBlock = { arg in
-            let (controller, handler) = arg
-            selectUserFromFriendList(in: controller) { result in
-                switch result {
-                case .success(let chatID):
-                    selectFlexMessage(in: controller) { message in
-                        switch message {
-                        case .success(let m):
-                            let sendMessage = PostSendMessagesRequest(chatID: chatID, messages: [m])
-                            Session.shared.send(sendMessage) {
-                                messageResult in
-                                switch messageResult {
-                                case .success(let value): handler(.success(value))
-                                case .failure(let error): handler(.failure(.sdkError(error)))
-                                }
-                            }
-                        case .failure(let error):
-                            handler(.failure(error))
-                        }
-
-                    }
-                case .failure(let error):
-                    handler(.failure(error))
-                }
-            }
-        }
-        return APIItem(title: "Send flex message to a friend", mock: mock, available: true, block: block)
     }
 
     static var getApproversInGroup: APIItem {
@@ -411,44 +306,6 @@ struct APIStatus {
     let code: Int
 }
 
-func selectUserFromFriendList(
-    in viewController: UIViewController,
-    handler: @escaping (Result<String, ApplicationError>) -> Void
-)
-{
-    let getFriends = GetFriendsRequest()
-    Session.shared.send(getFriends) { res in
-        
-        switch res {
-        case .success(let value):
-            guard !value.friends.isEmpty else {
-                let error = LineSDKError.generalError(
-                    reason: .parameterError(
-                        parameterName: "friends",
-                        description: "You need at least one friend to use this API."))
-                handler(.failure(.sdkError(error)))
-                return
-            }
-
-            Task { @MainActor in
-                let alert = UIAlertController(title: "Friends", message: nil, preferredStyle: .actionSheet)
-                value.friends.prefix(5).forEach { friend in
-                    alert.addAction(.init(title: friend.displayName, style: .default) { _ in
-                        handler(.success(friend.userID))
-                    })
-                }
-                alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
-                    handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
-                })
-                alert.setupPopover(in: viewController.view)
-                viewController.present(alert, animated: true)
-            }
-        case .failure(let error):
-            handler(.failure(.sdkError(error)))
-        }
-    }
-}
-
 func selectGroupFromGroupList(
     in viewController: UIViewController,
     handler: @escaping (Result<String, ApplicationError>) -> Void
@@ -485,45 +342,6 @@ func selectGroupFromGroupList(
             handler(.failure(.sdkError(error)))
         }
     }
-}
-
-func selectFlexMessage(
-    in viewController: UIViewController,
-    handler: @escaping (Result<Message, ApplicationError>) -> Void
-)
-{
-    let alert = UIAlertController(title: "Message", message: nil, preferredStyle: .actionSheet)
-
-    alert.addAction(.init(title: "Simple Bubble", style: .default) { _ in
-        let simpleBubble: Message = {
-            var box = FlexBoxComponent(layout: .vertical)
-            box.addComponent(FlexTextComponent(text: "Hello"))
-            box.addComponent(FlexTextComponent(text: "World"))
-            return FlexBubbleContainer(body: box).messageWithAltText("this is a flex message")
-        }()
-        handler(.success(simpleBubble))
-    })
-
-    alert.addAction(.init(title: "Simple Carousel", style: .default, handler: { _ in
-        let flexCarousel: Message = {
-            var firstBox = FlexBoxComponent(layout: .vertical)
-            firstBox.addComponent(FlexTextComponent(text: "Hello"))
-            firstBox.addComponent(FlexTextComponent(text: "World"))
-            let firstBoxBubbleContainer = FlexBubbleContainer(body: firstBox)
-            var secondBox = FlexBoxComponent(layout: .vertical)
-            secondBox.addComponent(FlexTextComponent(text: "Hello"))
-            secondBox.addComponent(FlexTextComponent(text: "World"))
-            let secondBoxBubbleContainer = FlexBubbleContainer(body: secondBox)
-            return FlexCarouselContainer(contents: [firstBoxBubbleContainer, secondBoxBubbleContainer]).messageWithAltText("This is a flex carousel message")
-        }()
-        handler(.success(flexCarousel))
-    }))
-
-    alert.addAction(.init(title: "Cancel", style: .cancel) { _ in
-        handler(.failure(.sampleError(LineSDKSampleError.userCancelAction)))
-    })
-    alert.setupPopover(in: viewController.view)
-    viewController.present(alert, animated: true)
 }
 
 func collectOpenChatMid(
