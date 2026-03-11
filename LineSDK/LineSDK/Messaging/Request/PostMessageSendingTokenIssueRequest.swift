@@ -26,6 +26,7 @@ import Foundation
 ///
 /// `LoginPermission.oneTimeShare` is required.
 ///
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 public struct PostMessageSendingTokenIssueRequest: Request {
 
     public typealias Response = MessageSendingToken
@@ -47,6 +48,7 @@ public struct PostMessageSendingTokenIssueRequest: Request {
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 public struct MessageSendingToken: Codable, Sendable {
 
     public let token: String
