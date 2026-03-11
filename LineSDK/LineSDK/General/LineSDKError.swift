@@ -229,6 +229,9 @@ public enum LineSDKError: Error {
         /// The LoginManager was reset during an ongoing login process. This occurs when
         /// `LoginManager.reset()` is called while a login operation is in progress. Code 4005.
         case loginManagerReset
+
+        /// The API has been deprecated and is no longer functional. Code 4006.
+        case deprecatedAPI(apiName: String)
     }
 
     /// An error occurred while constructing a request.
@@ -651,6 +654,8 @@ extension LineSDKError.GeneralErrorReason {
             return "Current process is discarded. \(process)"
         case .loginManagerReset:
             return "The LoginManager is reset during the login process."
+        case .deprecatedAPI(let apiName):
+            return "The API \"\(apiName)\" has been deprecated and is no longer available."
         }
     }
 
@@ -661,6 +666,7 @@ extension LineSDKError.GeneralErrorReason {
         case .notOriginalTask(_):    return 4003
         case .processDiscarded:      return 4004
         case .loginManagerReset:     return 4005
+        case .deprecatedAPI:         return 4006
         }
     }
 
@@ -677,6 +683,8 @@ extension LineSDKError.GeneralErrorReason {
         case .processDiscarded(let process):
             userInfo[.process] = process
         case .loginManagerReset: break
+        case .deprecatedAPI(let apiName):
+            userInfo[.apiName] = apiName
         }
         return .init(uniqueKeysWithValues: userInfo.map { ($0.rawValue, $1) })
     }
@@ -712,4 +720,5 @@ public enum LineSDKErrorUserInfoKey: String {
     case key
     case got
     case process
+    case apiName
 }
