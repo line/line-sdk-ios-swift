@@ -108,58 +108,12 @@
                              completionHandler:^(LineSDKGetApproversInGroupResponse *result, NSError * error) {}];
 }
 
-- (void)_testSendMessagesInterface {
-    LineSDKTextMessage *message = [[LineSDKTextMessage alloc] initWithText:@"hello" sender:nil];
-    [LineSDKAPI sendMessages:@[message]
-                          to:@"123"
-           completionHandler:^(LineSDKPostSendMessagesResponse *response, NSError *error) {}];
-    [LineSDKAPI sendMessages:@[message]
-                          to:@"123"
-               callbackQueue:[LineSDKCallbackQueue asyncMain]
-           completionHandler:^(LineSDKPostSendMessagesResponse *response, NSError *error) {}];
-}
-
-- (void)_testMultiSendMessagesInterface {
-    LineSDKTextMessage *message = [[LineSDKTextMessage alloc] initWithText:@"hello" sender:nil];
-    NSArray<NSString *> *userIDs = @[@"123", @"456"];
-
-    [LineSDKAPI multiSendMessages:@[message]
-                               to:userIDs
-                completionHandler:^(LineSDKPostMultisendMessagesResponse *response, NSError *error) {}];
-    [LineSDKAPI multiSendMessages:@[message]
-                               to:userIDs
-                    callbackQueue:[LineSDKCallbackQueue asyncMain]
-                completionHandler:^(LineSDKPostMultisendMessagesResponse *response, NSError *error) {}];
-
-}
-
 - (void)_testGetBotFriendshipInterface {
     [LineSDKAPI
      getBotFriendshipStatusWithCompletionHandler:^(LineSDKGetBotFriendshipStatusResponse *response, NSError *error) {}];
     [LineSDKAPI
      getBotFriendshipStatusWithCallbackQueue:[LineSDKCallbackQueue asyncMain]
                        completionHandler:^(LineSDKGetBotFriendshipStatusResponse *response, NSError *error) {}];
-}
-
-- (void)_testGetMessageSendingOneTimeTokenInterface {
-    [LineSDKAPI getMessageSendingOneTimeTokenWithUserIDs:@[@"123", @"456"]
-                                        completionHander:^(LineSDKMessageSendingToken *token, NSError *error) {}];
-    [LineSDKAPI getMessageSendingOneTimeTokenWithUserIDs:@[@"123", @"456"]
-                                           callbackQueue:[LineSDKCallbackQueue asyncMain]
-                                        completionHander:^(LineSDKMessageSendingToken *token, NSError *error) {}];
-}
-
-- (void)_testMultiSendMessageWithMessageTokenInterface {
-    LineSDKTextMessage *message = [[LineSDKTextMessage alloc] initWithText:@"hello" sender:nil];
-    LineSDKMessageSendingToken *token = nil;
-
-    [LineSDKAPI multiSendMessages:@[message]
-                 withMessageToken:token
-                completionHandler:^(NSError *error) {}];
-    [LineSDKAPI multiSendMessages:@[message]
-                 withMessageToken:token
-                    callbackQueue:[LineSDKCallbackQueue asyncMain]
-                completionHandler:^(NSError *error) {}];
 }
 
 - (void)_testGetOpenChatRoomStatusInterface {

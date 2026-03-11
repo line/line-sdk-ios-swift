@@ -22,48 +22,11 @@
 #import <XCTest/XCTest.h>
 @import LineSDKObjC;
 
-@interface LineSDKViewControllerInterfaceTests : XCTestCase <LineSDKShareViewControllerDelegate>
+@interface LineSDKViewControllerInterfaceTests : XCTestCase
 
 @end
 
 @implementation LineSDKViewControllerInterfaceTests
-
-- (void)testShareViewControllerCreating {
-    LineSDKShareViewController *controller = [[LineSDKShareViewController alloc] init];
-    XCTAssertNotNil(controller);
-}
-
-- (void)testShareViewControllerPropertiesSetting {
-
-    LineSDKShareViewController *controller = [[LineSDKShareViewController alloc] init];
-
-    UIColor *color = [UIColor redColor];
-    XCTAssertNotEqual(controller.shareNavigationBarTintColor, color);
-    controller.shareNavigationBarTintColor = color;
-    XCTAssertEqual(controller.shareNavigationBarTintColor, color);
-
-    XCTAssertNotEqual(controller.shareNavigationBarTextColor, color);
-    controller.shareNavigationBarTextColor = color;
-    XCTAssertEqual(controller.shareNavigationBarTextColor, color);
-
-    XCTAssertEqual(controller.shareStatusBarStyle, UIStatusBarStyleLightContent);
-    controller.shareStatusBarStyle = UIStatusBarStyleDefault;
-    XCTAssertEqual(controller.shareStatusBarStyle, UIStatusBarStyleDefault);
-
-    XCTAssertNil(controller.shareMessages);
-
-    LineSDKTextMessage *m1 = [[LineSDKTextMessage alloc] initWithText:@"test"];
-
-    LineSDKFlexBubbleContainer *container = [[LineSDKFlexBubbleContainer alloc] init];
-    LineSDKFlexMessage *m2 = [[LineSDKFlexMessage alloc] initWithAltText:@"flex" container:container];
-
-    controller.shareMessages = @[m1, m2];
-    XCTAssertEqual(controller.shareMessages.count, 2);
-
-    XCTAssertNil(controller.delegate);
-    controller.delegate = self;
-    XCTAssertNotNil(controller.delegate);
-}
 
 - (void)testOpenChatControllerCreating {
     LineSDKOpenChatCreatingController *controller = [[LineSDKOpenChatCreatingController alloc] init];
