@@ -40,6 +40,7 @@ public struct LoginPermission: Hashable, Sendable {
     public static let profile                        = LoginPermission(rawValue: "profile")
     
     /// The permission to select friends or groups and share content with them.
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static let oneTimeShare                   = LoginPermission(rawValue: "onetime.share")
 
     /// :nodoc:
@@ -52,6 +53,7 @@ public struct LoginPermission: Hashable, Sendable {
 
     /// :nodoc:
     /// LINE internal use only. The permission to write a message as current user.
+    @available(*, deprecated, message: "Messaging API is no longer supported.")
     public static let messageWrite                   = LoginPermission(rawValue: "message.write")
     
     /// The permission to check Open Chat use term agreement status. This is necessary if you want to create or join an

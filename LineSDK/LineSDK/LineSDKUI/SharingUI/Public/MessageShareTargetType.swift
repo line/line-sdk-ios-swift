@@ -20,6 +20,7 @@
 //
 
 /// Represents the share target type.
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 public enum MessageShareTargetType: Int, CaseIterable {
 
     /// Share to friends of current user.
