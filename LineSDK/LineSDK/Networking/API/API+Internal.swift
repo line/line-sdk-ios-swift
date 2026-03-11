@@ -130,105 +130,65 @@ extension API {
 
 // MARK: - Messaging API
 extension API {
-    
-    /// Sends messages to a certain chat destination on behalf of the current authorized user.
-    ///
-    /// - Parameters:
-    ///   - messages: `Messages`s will be sent. Up to 5 elements.
-    ///   - chatID: A chat ID to send messages to. It could be an ID of user, room, group or square chat ID.
-    ///   - queue: The callback queue will be used for `completionHandler`.
-    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be invoked when the API finishes.
-    ///
-    /// - Note: `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
-    ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
-    ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
-    ///   Please confirm your channel permissions before you use this API.
-    ///
-    /// You could send at most 5 messages to a user in a single call. Line SDK does not check the elements count in
-    /// `messages` when sending. However, you could expect a 400 error if you contain more that 5 messages in the
-    /// request.
-    ///
-    /// There would be a few cases that API call is successful but message is not delivered. In these cases,
-    /// the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
-    ///
+
+    @available(*, deprecated, message: "Messaging API is no longer supported.")
     public static func sendMessages(
         _ messages: [MessageConvertible],
         to chatID: String,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping @Sendable (Result<PostSendMessagesRequest.Response, LineSDKError>) -> Void)
     {
-        let request = PostSendMessagesRequest(chatID: chatID, messages: messages)
-        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+        let error = LineSDKError.generalError(reason: .deprecatedAPI(apiName: "sendMessages"))
+        queue.execute { completion(.failure(error)) }
     }
-    
-    /// Sends messages to multiple users on behalf of the current authorized user.
-    ///
-    /// - Parameters:
-    ///   - messages: `Messages`s will be sent. Up to 5 elements.
-    ///   - userIDs: An array of users' ID to where messages will be sent. Up to 10 elements.
-    ///   - queue: The callback queue will be used for `completionHandler`.
-    ///            By default, `.currentMainOrAsync` will be used. See `CallbackQueue` for more.
-    ///   - completion: The completion closure to be invoked when the API finishes.
-    ///
-    /// - Note: `.messageWrite` permission is required to use this API. If your token does not contain enough permission,
-    ///   a `LineSDKError.responseFailed` with `.invalidHTTPStatusAPIError` reason will occur, and with 403 as its
-    ///   HTTP status code. You could use `LineSDKError.isPermissionError` to check for this eroor.
-    ///   Please confirm your channel permissions before you use this API.
-    ///
-    /// You could send at most 5 messages, and to at most 10 users in a single call. Line SDK does not check the
-    /// elements count in `messages` or `userIDs` when sending. However, you could expect a 400 error if you contain
-    /// more elements than allowed.
-    ///
-    /// There would be a few cases that API call is successful but message is not delivered. In these cases,
-    /// the `status` in response would be `.discarded` instead of `.ok`. See `MessageSendingStatus` for more.
-    /// To know the message delivery result for each receiver, please check the response `results`, which is an array
-    /// of [SendingResult]`. See `SendingResult` for more.
-    ///
+
+    @available(*, deprecated, message: "Messaging API is no longer supported.")
     public static func multiSendMessages(
         _ messages: [MessageConvertible],
         to userIDs: [String],
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @escaping @Sendable (Result<PostMultisendMessagesRequest.Response, LineSDKError>) -> Void)
     {
-        let request = PostMultisendMessagesRequest(userIDs: userIDs, messages: messages)
-        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+        let error = LineSDKError.generalError(reason: .deprecatedAPI(apiName: "multiSendMessages"))
+        queue.execute { completion(.failure(error)) }
     }
 }
 
 // MARK: - Sharing Related API
 extension API {
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static func getMessageSendingOneTimeToken(
         userIDs: [String],
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHander completion: @escaping @Sendable (Result<MessageSendingToken, LineSDKError>) -> Void)
     {
-        let request = PostMessageSendingTokenIssueRequest(userIDs: userIDs)
-        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+        let error = LineSDKError.generalError(reason: .deprecatedAPI(apiName: "getMessageSendingOneTimeToken"))
+        queue.execute { completion(.failure(error)) }
     }
 
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static func getMessageSendingOneTimeToken(userIDs: [String]) async throws -> MessageSendingToken {
-        let request = PostMessageSendingTokenIssueRequest(userIDs: userIDs)
-        return try await Session.shared.send(request)
+        throw LineSDKError.generalError(reason: .deprecatedAPI(apiName: "getMessageSendingOneTimeToken"))
     }
 
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static func multiSendMessages(
         _ messages: [MessageConvertible],
         withMessageToken token: MessageSendingToken,
         callbackQueue queue: CallbackQueue = .currentMainOrAsync,
         completionHandler completion: @Sendable @escaping (Result<Unit, LineSDKError>) -> Void)
     {
-        let request = PostMultisendMessagesWithTokenRequest(token: token, messages: messages)
-        Session.shared.send(request, callbackQueue: queue, completionHandler: completion)
+        let error = LineSDKError.generalError(reason: .deprecatedAPI(apiName: "multiSendMessages"))
+        queue.execute { completion(.failure(error)) }
     }
 
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static func multiSendMessages(
         _ messages: [MessageConvertible],
         withMessageToken token: MessageSendingToken
     ) async throws -> Unit
     {
-        let request = PostMultisendMessagesWithTokenRequest(token: token, messages: messages)
-        return try await Session.shared.send(request)
+        throw LineSDKError.generalError(reason: .deprecatedAPI(apiName: "multiSendMessages"))
     }
 }
 
