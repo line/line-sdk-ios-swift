@@ -127,11 +127,7 @@ extension APIStore {
             .getApproversInGroup
         ]
         
-        messagingAPIs = [
-            .sendTextMessage,
-            .multiSendTextMessage,
-            .sendFlexMessage
-        ]
+        messagingAPIs = []
         
         openChatAPIs = [
             .init(

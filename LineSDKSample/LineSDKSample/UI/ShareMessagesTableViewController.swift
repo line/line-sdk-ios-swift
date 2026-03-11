@@ -102,6 +102,7 @@ class ShareMessagesTableViewController: UITableViewController {
     }
 }
 
+@available(*, deprecated, message: "ShareViewController is no longer supported.")
 extension ShareMessagesTableViewController: ShareViewControllerDelegate {
     func shareViewController(
         _ controller: ShareViewController,
