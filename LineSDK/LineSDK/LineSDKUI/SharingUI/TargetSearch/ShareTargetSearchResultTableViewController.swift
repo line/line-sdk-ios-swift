@@ -21,6 +21,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 final class ShareTargetSearchResultTableViewController: UITableViewController, ShareTargetTableViewStyling {
 
     // The order of search result section.
@@ -174,6 +175,7 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSearchResultTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

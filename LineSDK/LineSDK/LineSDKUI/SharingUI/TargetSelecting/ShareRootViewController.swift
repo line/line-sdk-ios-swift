@@ -21,6 +21,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 class ShareRootViewController: UIViewController {
 
     struct OnSendingSuccessData {
@@ -146,6 +147,7 @@ class ShareRootViewController: UIViewController {
 }
 
 // MARK: - Controller Actions
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareRootViewController {
     @objc private func cancelSharing() {
         onCancelled.call()
@@ -154,6 +156,7 @@ extension ShareRootViewController {
 
 
 // MARK: - Controller Actions
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareRootViewController {
 
     private func loadGraphList() {
@@ -246,6 +249,7 @@ extension ShareRootViewController {
 }
 
 // MARK: - Selecting view controller delegate
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareRootViewController: ShareTargetSelectingViewControllerDelegate {
     func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool {
         if allLoaded { return true }

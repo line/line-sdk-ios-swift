@@ -21,6 +21,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 class SelectedTargetPanelViewController: UIViewController {
 
     typealias ColumnIndex = ColumnDataStore<ShareTarget>.ColumnIndex
@@ -224,6 +225,7 @@ class SelectedTargetPanelViewController: UIViewController {
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension SelectedTargetPanelViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return store.selectedIndexes.count

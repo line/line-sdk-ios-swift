@@ -21,6 +21,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 class SelectedTargetPanelCell: UICollectionViewCell {
 
     enum Design {

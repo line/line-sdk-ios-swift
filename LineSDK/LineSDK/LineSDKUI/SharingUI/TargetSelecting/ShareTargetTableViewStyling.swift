@@ -27,12 +27,14 @@ enum ShareTargetTableViewDesign {
     static var backgroundViewColor: UIColor { return .systemBackground }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 @MainActor
 protocol ShareTargetTableViewStyling {
     var tableView: UITableView! { get }
     func setupTableViewStyle()
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetTableViewStyling {
     func setupTableViewStyle() {
         tableView.register(
@@ -52,6 +54,7 @@ extension ShareTargetTableViewStyling {
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetTableViewStyling where Self: UIViewController {
     func popSelectingLimitAlert(max: Int) {
         let message = String(format: Localization.string("chat.multi.fwd.confirm"), max)

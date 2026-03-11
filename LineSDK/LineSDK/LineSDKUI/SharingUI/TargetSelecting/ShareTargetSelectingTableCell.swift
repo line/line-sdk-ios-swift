@@ -21,6 +21,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 final class ShareTargetSelectingTableCell: UITableViewCell {
 
     enum Design {
@@ -120,6 +121,7 @@ final class ShareTargetSelectingTableCell: UITableViewCell {
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSelectingTableCell {
 
     private func displayNameAttributedString(_ name: String, highlightText: String? = nil) -> NSAttributedString {
