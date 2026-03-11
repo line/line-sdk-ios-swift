@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@available(*, deprecated, message: "ShareViewController is no longer supported.")
 @objc public protocol LineSDKShareViewControllerDelegate: AnyObject {
     @objc optional func shareViewController(
         _ controller: LineSDKShareViewController,

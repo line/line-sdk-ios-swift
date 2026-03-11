@@ -19,23 +19,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 @objc public protocol LineSDKShareTarget {
     var targetID: String { get }
     var displayName: String { get }
     var avatarURL: URL? { get }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension LineSDKUser: LineSDKShareTarget {
     public var targetID: String { return userID }
     public var avatarURL: URL? { return pictureURLSmall }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension LineSDKGroup: LineSDKShareTarget {
     public var targetID: String { return groupID }
     public var displayName: String { return groupName }
     public var avatarURL: URL? { return pictureURLSmall }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTarget {
     var sdkShareTarget: LineSDKShareTarget {
         if let user = self as? User {
