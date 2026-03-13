@@ -57,10 +57,12 @@ jobs:
         ruby --version
         echo "=== pod lib available? ==="
         bundle exec pod lib --help 2>&1 | head -5 || true
-    - name: Lint CocoaPods
+    - name: Lint CocoaPods (direct)
       env:
         SWIFT_VERSION: ${{ matrix.swift-version }}
-      run: bundle exec fastlane lint_pod
+      run: |
+        bundle exec pod lib lint LineSDKSwift.podspec --swift-version=${SWIFT_VERSION} --allow-warnings
+        echo "exit code: $?"
   lint_spm:
     name: Lint Swift Package Manager
     runs-on: macos-15
