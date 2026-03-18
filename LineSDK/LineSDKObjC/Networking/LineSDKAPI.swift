@@ -123,6 +123,7 @@ public class LineSDKAPI: NSObject {
     }
     
     // MARK: - sendMessages
+    @available(*, deprecated, message: "Messaging API is no longer supported.")
     public static func sendMessages(
         _ messages: [LineSDKMessage],
         to chatID: String,
@@ -131,6 +132,7 @@ public class LineSDKAPI: NSObject {
         sendMessages(messages, to: chatID, callbackQueue: .currentMainOrAsync, completionHandler: completion)
     }
     
+    @available(*, deprecated, message: "Messaging API is no longer supported.")
     public static func sendMessages(
         _ messages: [LineSDKMessage],
         to chatID: String,
@@ -142,6 +144,7 @@ public class LineSDKAPI: NSObject {
         }
     }
 
+    @available(*, deprecated, message: "Messaging API is no longer supported.")
     public static func multiSendMessages(
         _ messages: [LineSDKMessage],
         to userIDs: [String],
@@ -150,6 +153,7 @@ public class LineSDKAPI: NSObject {
         multiSendMessages(messages, to: userIDs, callbackQueue: .currentMainOrAsync, completionHandler: completion)
     }
 
+    @available(*, deprecated, message: "Messaging API is no longer supported.")
     public static func multiSendMessages(
         _ messages: [LineSDKMessage],
         to userIDs: [String],
@@ -178,6 +182,7 @@ public class LineSDKAPI: NSObject {
     }
 
     // MARK: - Sharing
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static func getMessageSendingOneTimeToken(
         userIDs: [String],
         completionHander completion: @escaping @Sendable (LineSDKMessageSendingToken?, Error?) -> Void)
@@ -186,6 +191,7 @@ public class LineSDKAPI: NSObject {
             userIDs: userIDs, callbackQueue: .currentMainOrAsync, completionHander: completion)
     }
 
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static func getMessageSendingOneTimeToken(
         userIDs: [String],
         callbackQueue queue: LineSDKCallbackQueue,
@@ -196,6 +202,7 @@ public class LineSDKAPI: NSObject {
         }
     }
 
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static func multiSendMessages(
         _ messages: [LineSDKMessage],
         withMessageToken token: LineSDKMessageSendingToken,
@@ -205,6 +212,7 @@ public class LineSDKAPI: NSObject {
             messages, withMessageToken: token, callbackQueue: .currentMainOrAsync, completionHandler: completion)
     }
 
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static func multiSendMessages(
         _ messages: [LineSDKMessage],
         withMessageToken token: LineSDKMessageSendingToken,

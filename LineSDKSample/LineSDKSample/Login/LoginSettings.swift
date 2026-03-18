@@ -25,7 +25,7 @@ import LineSDK
 class LoginSettings {
 
     static let normalPermissions: [LoginPermission] = [
-        .profile, .friends, .groups, .messageWrite, .oneTimeShare,
+        .profile, .friends, .groups,
         .openChatTermStatus, .openChatInfo, .openChatRoomCreateAndJoin
     ]
 

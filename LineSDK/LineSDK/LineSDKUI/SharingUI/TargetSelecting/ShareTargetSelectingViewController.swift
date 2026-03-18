@@ -21,6 +21,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 @MainActor
 protocol ShareTargetSelectingViewControllerDelegate: AnyObject {
     func shouldSearchStart(_ viewController: ShareTargetSelectingViewController) -> Bool
@@ -34,6 +35,7 @@ protocol ShareTargetSelectingViewControllerDelegate: AnyObject {
     ) -> PageViewController
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 final class ShareTargetSelectingViewController: UITableViewController, ShareTargetTableViewStyling {
 
     private typealias AppendingIndexRange = ColumnDataStore<ShareTarget>.AppendingIndexRange
@@ -173,6 +175,7 @@ final class ShareTargetSelectingViewController: UITableViewController, ShareTarg
 }
 
 // MARK: - UITableViewDataSource
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSelectingViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return store.data(atColumn: columnIndex).count
@@ -193,6 +196,7 @@ extension ShareTargetSelectingViewController {
 }
 
 // MARK: - UITableViewDelegate
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSelectingViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -204,6 +208,7 @@ extension ShareTargetSelectingViewController {
 }
 
 // MARK: - UITableViewPrefetching
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSelectingViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
@@ -215,6 +220,7 @@ extension ShareTargetSelectingViewController: UITableViewDataSourcePrefetching {
 }
 
 // MARK: - Search Controller
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSelectingViewController: UISearchResultsUpdating {
     public func updateSearchResults(for searchController: UISearchController) {
         resultViewController.view.isHidden = false
@@ -225,6 +231,7 @@ extension ShareTargetSelectingViewController: UISearchResultsUpdating {
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSelectingViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         return delegate?.shouldSearchStart(self) ?? true
@@ -235,6 +242,7 @@ extension ShareTargetSelectingViewController: UISearchBarDelegate {
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSelectingViewController: UISearchControllerDelegate {
 
     func willPresentSearchController(_ searchController: UISearchController) {

@@ -65,6 +65,7 @@ import UIKit
  expect sharing messages to friends and groups in LINE to work the same across different apps. Nevertheless, if you 
  absolutely need a custom sharing interaction, you can create it using the related APIs.
  */
+@available(*, deprecated, message: "ShareViewController is no longer supported.")
 open class ShareViewController: StyleNavigationController {
 
     /// The delegate object of this share view controller.
@@ -102,9 +103,7 @@ open class ShareViewController: StyleNavigationController {
     /// `ShareViewController` instance.
     public init() {
         super.init(nibName: nil, bundle: nil)
-        setupRootDelegates()
-        setupPresentationDelegate()
-        self.viewControllers = [rootViewController]
+        Log.print("[LineSDK] WARNING: ShareViewController has been deprecated. Sharing functionality is no longer available. This view controller will be dismissed immediately.")
     }
 
     /// `ShareViewController` can't be created from Storyboard or XIB file. This method merely throws a
@@ -114,6 +113,15 @@ open class ShareViewController: StyleNavigationController {
     }
 
     // MARK: - Setup & Style
+
+    /// :nodoc:
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            self.shareDelegate?.shareViewControllerDidCancelSharing(self)
+        }
+    }
 
     /// :nodoc:
     open override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -190,6 +198,7 @@ open class ShareViewController: StyleNavigationController {
 public typealias MessageShareAuthorizationStatus = AuthorizationStatus
 
 // MARK: - Authorization Helpers
+@available(*, deprecated, message: "ShareViewController is no longer supported.")
 extension ShareViewController {
     
     /// Gets the local authorization status for sending messages to friends and groups.
@@ -209,28 +218,18 @@ extension ShareViewController {
     public static func localAuthorizationStatusForSendingMessage()
         -> AuthorizationStatus
     {
-        guard let token = AccessTokenStore.shared.current else {
-            return .lackOfToken
-        }
-
-        return localAuthorizationStatusForSendingMessage(permissions: token.permissions)
+        return .lackOfPermissions([.oneTimeShare])
     }
 
     static func localAuthorizationStatusForSendingMessage(permissions: [LoginPermission])
         -> AuthorizationStatus
     {
-        let lackPermissions = Set([.oneTimeShare]).filter {
-            !permissions.contains($0)
-        }
-
-        guard lackPermissions.isEmpty else {
-            return .lackOfPermissions(lackPermissions)
-        }
-        return .authorized
+        return .lackOfPermissions([.oneTimeShare])
     }
 }
 
 /// :nodoc:
+@available(*, deprecated, message: "ShareViewController is no longer supported.")
 extension ShareViewController: UIAdaptivePresentationControllerDelegate {
     /// :nodoc:
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {

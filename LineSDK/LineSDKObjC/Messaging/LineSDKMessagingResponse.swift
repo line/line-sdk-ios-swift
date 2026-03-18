@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@available(*, deprecated, message: "Messaging API is no longer supported.")
 @objcMembers
 final public class LineSDKMessageSendingStatus: NSObject, Sendable {
     let _value: MessageSendingStatus
@@ -38,6 +39,7 @@ final public class LineSDKMessageSendingStatus: NSObject, Sendable {
     var unwrapped: MessageSendingStatus { return _value }
 }
 
+@available(*, deprecated, message: "Messaging API is no longer supported.")
 @objcMembers
 public class LineSDKPostSendMessagesResponse: NSObject {
     let _value: PostSendMessagesRequest.Response
@@ -46,6 +48,7 @@ public class LineSDKPostSendMessagesResponse: NSObject {
     public var status: LineSDKMessageSendingStatus { return .init(_value.status) }
 }
 
+@available(*, deprecated, message: "Messaging API is no longer supported.")
 @objcMembers
 public class LineSDKPostMultisendMessagesResponseSendingResult: NSObject {
     let _value: PostMultisendMessagesRequest.Response.SendingResult
@@ -55,6 +58,7 @@ public class LineSDKPostMultisendMessagesResponseSendingResult: NSObject {
     public var status: LineSDKMessageSendingStatus { return .init(_value.status) }
 }
 
+@available(*, deprecated, message: "Messaging API is no longer supported.")
 @objcMembers
 public class LineSDKPostMultisendMessagesResponse: NSObject {
     let _value: PostMultisendMessagesRequest.Response

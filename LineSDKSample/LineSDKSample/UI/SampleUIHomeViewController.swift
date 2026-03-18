@@ -23,31 +23,4 @@ import UIKit
 import LineSDK
 
 class SampleUIHomeViewController: UITableViewController {
-
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == "showMessageChooser" {
-            let status = ShareViewController.localAuthorizationStatusForSendingMessage()
-            switch status {
-            case .authorized:
-                return true
-            case .lackOfPermissions(let p):
-                UIAlertController.present(
-                    in: self,
-                    title: nil,
-                    message: "Lack of permissions: \(p)",
-                    actions: [.init(title: "OK", style: .cancel)]
-                )
-                return false
-            case .lackOfToken:
-                UIAlertController.present(
-                    in: self,
-                    title: nil,
-                    message: "Please login first.",
-                    actions: [.init(title: "OK", style: .cancel)]
-                )
-                return false
-            }
-        }
-        return true
-    }
 }

@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 @objc public enum LineSDKMessageShareTargetType: Int {
     case friends
     case groups

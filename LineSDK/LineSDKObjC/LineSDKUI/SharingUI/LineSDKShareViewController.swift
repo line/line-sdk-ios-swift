@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+@available(*, deprecated, message: "ShareViewController is no longer supported.")
 @objcMembers
 @MainActor
 public class LineSDKShareViewController: NSObject {
@@ -75,6 +76,7 @@ public class LineSDKShareViewController: NSObject {
     }
 }
 
+@available(*, deprecated, message: "ShareViewController is no longer supported.")
 class LineSDKShareViewControllerDelegateProxy: ShareViewControllerDelegate {
 
     weak var proxy: LineSDKShareViewControllerDelegate?

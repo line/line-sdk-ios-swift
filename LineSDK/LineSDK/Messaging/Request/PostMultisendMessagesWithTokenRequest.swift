@@ -27,6 +27,7 @@ import Foundation
 ///
 /// `LoginPermission.oneTimeShare` is required.
 ///
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 public struct PostMultisendMessagesWithTokenRequest: Request {
 
     public typealias Response = Unit

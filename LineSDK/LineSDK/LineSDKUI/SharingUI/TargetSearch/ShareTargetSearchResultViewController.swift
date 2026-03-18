@@ -21,6 +21,7 @@
 
 import UIKit
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 class ShareTargetSearchResultViewController: UIViewController {
 
     enum Design {
@@ -123,6 +124,7 @@ class ShareTargetSearchResultViewController: UIViewController {
 }
 
 // MARK: - SelectedTargetPanelViewController
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSearchResultViewController {
 
     private func updatePanelBottomConstraint(keyboardInfo: KeyboardInfo) {
@@ -168,6 +170,7 @@ extension ShareTargetSearchResultViewController {
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTargetSearchResultViewController: KeyboardObservable {
     func keyboardInfoWillChange(keyboardInfo: KeyboardInfo) {
         // `self.view` is not yet added to current view hierarchy.

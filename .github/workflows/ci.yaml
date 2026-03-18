@@ -15,7 +15,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-gems-v2-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
       - name: Bundle Install
@@ -38,17 +38,31 @@ jobs:
     - uses: actions/cache@v4
       with:
         path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        key: ${{ runner.os }}-gems-v2-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
     - name: Bundle Install
       run: |
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
-    - name: Lint CocoaPods
+    - name: Debug CocoaPods environment
+      run: |
+        echo "=== System pod ==="
+        which pod && pod --version || echo "no system pod"
+        echo "=== Bundled pod ==="
+        bundle exec which pod && bundle exec pod --version
+        echo "=== Bundler version ==="
+        bundle --version
+        echo "=== Ruby version ==="
+        ruby --version
+        echo "=== pod lib available? ==="
+        bundle exec pod lib --help 2>&1 | head -5 || true
+    - name: Lint CocoaPods (direct)
       env:
         SWIFT_VERSION: ${{ matrix.swift-version }}
-      run: bundle exec fastlane lint_pod
+      run: |
+        bundle exec pod lib lint LineSDKSwift.podspec --swift-version=${SWIFT_VERSION} --allow-warnings
+        echo "exit code: $?"
   lint_spm:
     name: Lint Swift Package Manager
     runs-on: macos-15
@@ -57,7 +71,7 @@ jobs:
         - uses: actions/cache@v4
           with:
             path: vendor/bundle
-            key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+            key: ${{ runner.os }}-gems-v2-${{ hashFiles('**/Gemfile.lock') }}
             restore-keys: |
               ${{ runner.os }}-gems-
         - name: Bundle Install
@@ -74,7 +88,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-gems-v2-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
       - name: Bundle Install

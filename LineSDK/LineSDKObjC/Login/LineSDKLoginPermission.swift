@@ -38,7 +38,9 @@ final public class LineSDKLoginPermission: NSObject, Sendable {
     public static let profile                         = LineSDKLoginPermission(.profile)
     public static let friends                         = LineSDKLoginPermission(.friends)
     public static let groups                          = LineSDKLoginPermission(.groups)
+    @available(*, deprecated, message: "Sharing API is no longer supported.")
     public static let oneTimeShare                    = LineSDKLoginPermission(.oneTimeShare)
+    @available(*, deprecated, message: "Messaging API is no longer supported.")
     public static let messageWrite                    = LineSDKLoginPermission(.messageWrite)
     
     public static let email                           = LineSDKLoginPermission(.email)

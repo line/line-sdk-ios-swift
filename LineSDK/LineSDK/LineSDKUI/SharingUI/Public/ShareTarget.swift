@@ -23,6 +23,7 @@ import UIKit
 
 /// Represents the share target in a share action.
 /// A target can be either a friend of current user, or a group of which the current user is a member.
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 public protocol ShareTarget: Sendable {
 
     /// The ID of this share target.
@@ -35,17 +36,20 @@ public protocol ShareTarget: Sendable {
     var avatarURL: URL? { get }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension User: ShareTarget {
     public var targetID: String { return userID }
     public var avatarURL: URL? { return pictureURL }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension Group: ShareTarget {
     public var targetID: String { return groupID }
     public var displayName: String { return groupName }
     public var avatarURL: URL? { return pictureURL }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension ShareTarget {
     var placeholderImage: UIImage? {
         let value = displayName.count % 4 + 1

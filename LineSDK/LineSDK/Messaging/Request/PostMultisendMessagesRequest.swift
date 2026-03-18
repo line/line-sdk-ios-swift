@@ -25,6 +25,7 @@ import Foundation
 /// Represents the request of sending some messages to multiple users on behalf of the current authorized user.
 /// This request requires you have the `.messageWrite` permission, otherwise, you would get a 403 permission
 /// grant error.
+@available(*, deprecated, message: "Messaging API is no longer supported.")
 public struct PostMultisendMessagesRequest: Request {
 
     /// An array of user IDs to where messages will be sent. Up to 10 elements.

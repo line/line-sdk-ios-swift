@@ -25,6 +25,7 @@ import Foundation
 /// Represents the request of sending some messages to a certain chat destination on behalf of the current
 /// authorized user. This request requires you have the `.messageWrite` permission, otherwise, you would get a 403
 /// permission grant error.
+@available(*, deprecated, message: "Messaging API is no longer supported.")
 public struct PostSendMessagesRequest: Request {
     
     /// A chat ID to send messages to. It could be an ID of user, room, group or square chat ID.
@@ -69,6 +70,7 @@ public struct PostSendMessagesRequest: Request {
 ///              status does not apply for messages sent to room, group or square chat.
 /// - unknown: Server returns an unknown status code, which is bound to the associated value in this case.
 ///
+@available(*, deprecated, message: "Messaging API is no longer supported.")
 public enum MessageSendingStatus: Decodable, Equatable, Sendable {
     
     /// Messages are delivered successfully.

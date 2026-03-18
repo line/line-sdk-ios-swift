@@ -26,6 +26,7 @@ import Foundation
 ///
 /// `LoginPermission.oneTimeShare` is required.
 ///
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 public struct GetShareGroupsRequest: Request {
 
     public init(pageToken: String? = nil) {
@@ -57,6 +58,7 @@ public struct GetShareGroupsRequest: Request {
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension GetShareGroupsRequest.Response: PaginatedResponse {
     var paginatedValues: [Group] { return groups }
 }

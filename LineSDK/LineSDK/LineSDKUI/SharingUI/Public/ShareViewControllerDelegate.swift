@@ -30,6 +30,7 @@
  that you do so. Without implementing the delegate methods, you can't retrieve information about events like 
  loading failure, user cancellation, or message sending success.
 */
+@available(*, deprecated, message: "ShareViewController is no longer supported.")
 @MainActor
 public protocol ShareViewControllerDelegate: AnyObject {
 
@@ -156,6 +157,7 @@ public protocol ShareViewControllerDelegate: AnyObject {
 
 }
 
+@available(*, deprecated, message: "ShareViewController is no longer supported.")
 extension ShareViewControllerDelegate {
     public func shareViewController(
         _ controller: ShareViewController,

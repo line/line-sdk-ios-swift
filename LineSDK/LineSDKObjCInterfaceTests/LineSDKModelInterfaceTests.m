@@ -38,8 +38,6 @@
     XCTAssertNotNil([LineSDKLoginPermission profile]);
     XCTAssertNotNil([LineSDKLoginPermission friends]);
     XCTAssertNotNil([LineSDKLoginPermission groups]);
-    XCTAssertNotNil([LineSDKLoginPermission messageWrite]);
-    
     XCTAssertNotNil([LineSDKLoginPermission email]);
     XCTAssertNotNil([LineSDKLoginPermission phone]);
     XCTAssertNotNil([LineSDKLoginPermission gender]);
@@ -244,29 +242,6 @@
     XCTAssertEqual(LineSDKGetFriendsRequestSortName, 1);
 }
 
-- (void)testMessageSendingStatusInterface {
-    LineSDKMessageSendingStatus *status = nil;
-    XCTAssertFalse(status.isOK);
-    XCTAssertTrue([[LineSDKMessageSendingStatus statusOK] isOK]);
-    XCTAssertFalse([[LineSDKMessageSendingStatus statusDiscarded] isOK]);
-}
-
-- (void)testPostSendMessagesResponseInterface {
-    LineSDKPostSendMessagesResponse *response = nil;
-    XCTAssertNil(response.status);
-}
-
-- (void)testPostMultisendMessagesResponseSendingResultInterface {
-    LineSDKPostMultisendMessagesResponseSendingResult *result = nil;
-    XCTAssertNil(result.to);
-    XCTAssertNil(result.status);
-}
-
-- (void)testPostMultisendMessagesResponseInterface {
-    LineSDKPostMultisendMessagesResponse *response = nil;
-    XCTAssertNil(response.result);
-}
-
 -(void)testErrorDomain {
     XCTAssertTrue([[LineSDKErrorConstant errorDomain] isEqualToString:@"LineSDKError"]);
     XCTAssertTrue([[LineSDKErrorConstant cryptoErrorDomain] isEqualToString:@"LineSDKError.CryptoError"]);
@@ -304,17 +279,6 @@
     
 - (void)testConstantInterface {
     XCTAssertNotNil(LineSDKConstant.SDKVersion);
-}
-
-- (void)testShareViewControllerAuthorizationStatus {
-    LineSDKAuthorizationStatus *status =
-        [LineSDKShareViewController localAuthorizationStatusForSendingMessage];
-    XCTAssertEqual(status, [LineSDKAuthorizationStatus lackOfToken]);
-}
-
-- (void)testLineSDKMessageSendingToken {
-    LineSDKMessageSendingToken *token = nil;
-    XCTAssertNil(token.token);
 }
 
 - (void)testOpenChatCreatingControllerAuthorizationStatus {

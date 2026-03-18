@@ -28,6 +28,7 @@ import Foundation
 ///
 /// `LoginPermission.oneTimeShare` is required.
 ///
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 public struct GetShareFriendsRequest: Request {
     
     let sort: Sort?
@@ -73,10 +74,12 @@ public struct GetShareFriendsRequest: Request {
     }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension GetShareFriendsRequest: SortParameterRequest {
     var sortParameter: String? { return sort?.rawValue }
 }
 
+@available(*, deprecated, message: "Sharing API is no longer supported.")
 extension GetShareFriendsRequest.Response: PaginatedResponse {
     var paginatedValues: [User] { return friends }
 }
