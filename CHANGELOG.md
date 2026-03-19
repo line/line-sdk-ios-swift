@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Deprecated
+
+- The messaging and sharing APIs (`PostSendMessagesRequest`, `PostMultisendMessagesRequest`, `GetShareMessageActionListRequest`, etc.) and related UI components (`ShareViewController`, `ShareViewControllerDelegate`) are now deprecated and will return a `deprecatedAPI` error when called. [#249](https://github.com/line/line-sdk-ios-swift/pull/249)
+- The corresponding Objective-C wrappers for messaging and sharing APIs are also deprecated.
+
+### Removed
+
+- The messaging and sharing related UI entries and test files have been removed from the sample app.
+
 ## [5.14.0] - 2025-10-30
 
 ### Added
