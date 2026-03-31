@@ -129,18 +129,18 @@ class ShareRootViewController: UIViewController {
         selectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
-            [unowned self] noti in
+            [weak self] noti in
             Task { @MainActor in
-                self.handleSelectingChange()
+                self?.handleSelectingChange()
             }
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
-            [unowned self] noti in
+            [weak self] noti in
             Task { @MainActor in
-                self.handleSelectingChange()
+                self?.handleSelectingChange()
             }
         }
     }

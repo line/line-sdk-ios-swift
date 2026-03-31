@@ -131,24 +131,24 @@ class SelectedTargetPanelViewController: UIViewController {
         selectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
-            [unowned self] noti in
+            [weak self] noti in
             guard let positionInSelected = noti.userInfo?[LineSDKNotificationKey.positionInSelected] as? Int else {
                 return
             }
             Task { @MainActor in
-                self.handleSelectingChange(positionInSelected: positionInSelected, isSelecting: true)
+                self?.handleSelectingChange(positionInSelected: positionInSelected, isSelecting: true)
             }
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
-            [unowned self] noti in
+            [weak self] noti in
             guard let positionInSelected = noti.userInfo?[LineSDKNotificationKey.positionInSelected] as? Int else {
                 return
             }
             Task { @MainActor in
-                self.handleSelectingChange(positionInSelected: positionInSelected, isSelecting: false)
+                self?.handleSelectingChange(positionInSelected: positionInSelected, isSelecting: false)
             }
         }
     }
