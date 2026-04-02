@@ -40,7 +40,7 @@ extension KeyboardObservable {
                 forName: UIResponder.keyboardWillChangeFrameNotification,
                 object: nil,
                 queue: .main,
-                using: { [unowned self] in
+                using: { [weak self] in
                     guard let userInfo = $0.userInfo else { return }
 
                     guard let endFrame = (
@@ -63,6 +63,7 @@ extension KeyboardObservable {
                     }
 
                     MainActor.assumeIsolated {
+                        guard let self else { return }
                         let keyboardInfo = KeyboardInfo(
                             endFrame: endFrame,
                             duration: duration,

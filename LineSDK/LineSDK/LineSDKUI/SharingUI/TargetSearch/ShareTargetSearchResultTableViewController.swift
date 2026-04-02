@@ -78,28 +78,28 @@ final class ShareTargetSearchResultTableViewController: UITableViewController, S
         selectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidSelect, object: store, queue: nil)
         {
-            [unowned self] notification in
+            [weak self] notification in
             guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
                 assertionFailure("The `columnDataStoreSelected` notification should contain " +
                     "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
                 return
             }
             Task { @MainActor in
-                self.handleSelectingChange(index: index)
+                self?.handleSelectingChange(index: index)
             }
         }
 
         deselectingObserver = NotificationCenter.default.addObserver(
             forName: .columnDataStoreDidDeselect, object: store, queue: nil)
         {
-            [unowned self] notification in
+            [weak self] notification in
             guard let index = notification.userInfo?[LineSDKNotificationKey.selectingIndex] as? ColumnIndex else {
                 assertionFailure("The `columnDataStoreSelected` notification should contain " +
                     "`selectingIndex` in `userInfo`. But got `userInfo`: \(String(describing: notification.userInfo))")
                 return
             }
             Task { @MainActor in
-                self.handleSelectingChange(index: index)
+                self?.handleSelectingChange(index: index)
             }
         }
     }
