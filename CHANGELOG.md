@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- The Xcode project now builds with Swift 6 language mode by default. [#252](https://github.com/line/line-sdk-ios-swift/pull/252)
+
+### Fixed
+
+- Fixed data race errors in NotificationCenter observer handlers by replacing `unowned self` captures with `weak self` to comply with Swift 6 strict concurrency. [#252](https://github.com/line/line-sdk-ios-swift/pull/252)
+
 ## [5.15.0] - 2026-03-19
 
 ### Deprecated
