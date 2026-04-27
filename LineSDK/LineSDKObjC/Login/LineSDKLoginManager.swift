@@ -86,6 +86,11 @@ final public class LineSDKLoginManager: NSObject, Sendable {
     }
 
     @MainActor
+    public func reset() {
+        _value.reset()
+    }
+
+    @MainActor
     public func application(
         _ app: UIApplication,
         open url: URL,
