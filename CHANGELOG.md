@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Expose `reset()` on the Objective-C `LineSDKLoginManager` wrapper so ObjC consumers can reset the SDK. [#254](https://github.com/line/line-sdk-ios-swift/pull/254)
+
 ## [5.16.0] - 2026-04-03
 
 ### Changed
