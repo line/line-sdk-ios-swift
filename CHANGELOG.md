@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.16.1] - 2026-04-30
+
 ### Fixed
 
 - Expose `reset()` on the Objective-C `LineSDKLoginManager` wrapper so ObjC consumers can reset the SDK. [#254](https://github.com/line/line-sdk-ios-swift/pull/254)
@@ -364,3 +366,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.14.0]: https://github.com/line/line-sdk-ios-swift/compare/5.13.0...5.14.0
 [5.15.0]: https://github.com/line/line-sdk-ios-swift/compare/5.14.0...5.15.0
 [5.16.0]: https://github.com/line/line-sdk-ios-swift/compare/5.15.0...5.16.0
+[5.16.1]: https://github.com/line/line-sdk-ios-swift/compare/5.16.0...5.16.1
