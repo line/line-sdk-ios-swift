@@ -148,3 +148,7 @@ test-credentials.json
 credentials/
 LineSDKSample/LineSDKSampleUITests/env.xcconfig
 test_output/
+
+# xcode-build-server files
+buildServer.json
+.compile
