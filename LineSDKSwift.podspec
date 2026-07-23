@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.license             = "Apache License, Version 2.0"
 
   s.author              = "LINE"
-  s.platform            = :ios, "13.0"
+  s.platform            = :ios, "15.0"
   
   s.module_name         = "LineSDK"
   s.swift_version       = "5.0"
