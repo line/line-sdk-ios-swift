@@ -74,7 +74,7 @@ class RoomDescriptionText: FormEntry {
     }
 }
 
-class Option<T: CustomStringConvertible & Equatable>: FormEntry {
+class Option<T: CustomStringConvertible & Equatable & Sendable>: FormEntry {
     var selectedOption: T {
         didSet {
             cell.detailTextLabel?.text = selectedOption.description

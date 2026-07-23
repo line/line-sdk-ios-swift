@@ -34,7 +34,6 @@ extension IndicatorDisplay where Self: UIViewController {
     }
 
     func showIndicatorOnWindow() {
-        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
         showIndicator(in: keyWindow ?? view)
     }
     
@@ -43,8 +42,11 @@ extension IndicatorDisplay where Self: UIViewController {
     }
 
     func hideIndicatorFromWindow() {
-        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
         hideIndicator(from: keyWindow ?? view)
+    }
+
+    private var keyWindow: UIWindow? {
+        view.window?.windowScene?.windows.first { $0.isKeyWindow }
     }
     
     func showIndicator(in view: UIView) {

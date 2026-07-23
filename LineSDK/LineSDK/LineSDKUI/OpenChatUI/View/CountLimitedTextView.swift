@@ -21,6 +21,8 @@
 
 import UIKit
 
+private let clearButtonContentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+
 protocol CountLimitedTextViewStyle {
     var font: UIFont { get }
     var textColor: UIColor { get }
@@ -101,8 +103,10 @@ class CountLimitedTextView: UIView {
     
     private(set) lazy var clearButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        button.setImage(UIImage(bundleNamed: "setting_icon_delete_normal"), for: .normal)
+        var configuration = UIButton.Configuration.plain()
+        configuration.contentInsets = clearButtonContentInsets
+        configuration.image = UIImage(bundleNamed: "setting_icon_delete_normal")
+        button.configuration = configuration
         button.isHidden = true
         button.addTarget(self, action: #selector(clearText), for: .touchUpInside)
         return button
@@ -174,7 +178,7 @@ class CountLimitedTextView: UIView {
         NSLayoutConstraint.activate([
             clearButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             clearButton.trailingAnchor
-                .constraint(equalTo: trailingAnchor, constant: -13 + clearButton.contentEdgeInsets.right)
+                .constraint(equalTo: trailingAnchor, constant: -13 + clearButtonContentInsets.trailing)
         ])
         
         // Placeholder
