@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [5.17.0] - 2026-07-23
+
 ### Changed
 
 - Raise the minimum supported iOS deployment target to 15.0. Xcode 27 only supports building for iOS 15.0 or later, and LINE app itself no longer runs on iOS 14 or earlier. [#257](https://github.com/line/line-sdk-ios-swift/pull/257)
@@ -371,3 +373,4 @@ LINE SDK version 5 is not compatible with version 4.x. To upgrade to version 5, 
 [5.15.0]: https://github.com/line/line-sdk-ios-swift/compare/5.14.0...5.15.0
 [5.16.0]: https://github.com/line/line-sdk-ios-swift/compare/5.15.0...5.16.0
 [5.16.1]: https://github.com/line/line-sdk-ios-swift/compare/5.16.0...5.16.1
+[5.17.0]: https://github.com/line/line-sdk-ios-swift/compare/5.16.1...5.17.0
