@@ -4,7 +4,7 @@ platform :ios do
 
   before_all do
     begin
-        xcodes(version: "26.4.1", select_for_current_build_only: true)
+        xcodes(version: "26.6", select_for_current_build_only: true)
     rescue => ex
         UI.error("Failed when switching to Xcode version: #{ex}")
     end
@@ -28,7 +28,7 @@ platform :ios do
         scheme: "LineSDK",
         xcargs: "SWIFT_VERSION=#{swift_version}"
     )
-    
+
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 16"],
@@ -40,7 +40,7 @@ platform :ios do
   desc "Run tests with coverage reporting"
   lane :sdk_tests_with_coverage do
     swift_version = ENV["SWIFT_VERSION"] || "6.0"
-    
+
     # Run tests with code coverage enabled
     run_tests(
         workspace: "LineSDK.xcworkspace",
@@ -51,7 +51,7 @@ platform :ios do
         output_directory: "./test_output",
         result_bundle: true
     )
-    
+
     # Generate coverage reports using xcov
     xcov(
         workspace: "LineSDK.xcworkspace",
@@ -70,13 +70,13 @@ platform :ios do
     unless ENV["LINE_SDK_TEST_EMAIL"] && ENV["LINE_SDK_TEST_PASSWORD"]
       UI.user_error!("Missing test credentials. Please set LINE_SDK_TEST_EMAIL and LINE_SDK_TEST_PASSWORD environment variables")
     end
-    
+
     # Update env.xcconfig with environment variables
     env_xcconfig_path = "../LineSDKSample/LineSDKSampleUITests/env.xcconfig"
-    
+
     # Read the current content
     content = File.read(env_xcconfig_path)
-    
+
     # Replace the email and password with environment variables
     updated_content = content.gsub(
       /LINE_SDK_TEST_EMAIL=.*$/,
@@ -85,12 +85,12 @@ platform :ios do
       /LINE_SDK_TEST_PASSWORD=.*$/,
       "LINE_SDK_TEST_PASSWORD=#{ENV['LINE_SDK_TEST_PASSWORD']}"
     )
-    
+
     # Write the updated content back
     File.write(env_xcconfig_path, updated_content)
-    
+
     UI.message("Updated env.xcconfig with test credentials")
-    
+
     run_tests(
         workspace: "LineSDK.xcworkspace",
         devices: ["iPhone 16"],
@@ -149,7 +149,7 @@ platform :ios do
     bump_constant_version(version: target_version)
     bump_reference_top_version(version: target_version)
     version_bump_podspec(path: "LineSDKSwift.podspec", version_number: target_version)
-    
+
     release_content = read_changelog(excluded_markdown_elements: [])
     change_log(version: target_version)
 
@@ -157,7 +157,7 @@ platform :ios do
     Actions.sh("git tag -u #{ENV["GPG_KEY_ID"]} #{target_version} -m ''")
 
     binary_frameworks = xcframework(version: target_version)
-    
+
     push_to_git_remote
     set_github_release(
       repository_name: "line/line-sdk-ios-swift",
@@ -210,12 +210,12 @@ platform :ios do
     output_path = "build"
 
     FileUtils.rm_rf "../#{output_path}"
-    
+
     artifact_paths = []
 
     create_xcframework(
-      workspace: "LineSDK.xcworkspace", 
-      scheme: "LineSDK", 
+      workspace: "LineSDK.xcworkspace",
+      scheme: "LineSDK",
       destinations: ['iOS'],
       enable_bitcode: false,
       include_debug_symbols: true,
@@ -225,12 +225,12 @@ platform :ios do
       Actions.sh("codesign --timestamp -v --sign 'Apple Distribution: LY Corporation (VUTU7AKEUR)' ../#{output_path}/LineSDK.xcframework")
     end
     artifact_paths.push(ENV["XCFRAMEWORK_OUTPUT_PATH"])
-    
+
     create_xcframework(
-      workspace: "LineSDK.xcworkspace", 
-      scheme: "LineSDKObjCBinary", 
-      product_name: "LineSDKObjC", 
-      destinations: ['iOS'], 
+      workspace: "LineSDK.xcworkspace",
+      scheme: "LineSDKObjCBinary",
+      product_name: "LineSDKObjC",
+      destinations: ['iOS'],
       enable_bitcode: false,
       include_debug_symbols: true,
       xcframework_output_directory: output_path
