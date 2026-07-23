@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "LineSDK",
 
-    platforms: [.iOS(.v13)],
+    platforms: [.iOS("15.0")],
     products: [
         .library(name: "LineSDK", targets: ["LineSDK"]),
         .library(name: "LineSDKObjC", targets: ["LineSDKObjC"])
