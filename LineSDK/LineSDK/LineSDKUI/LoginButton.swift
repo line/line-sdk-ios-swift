@@ -205,20 +205,25 @@ open class LoginButton: UIButton {
             setBackgroundImage(UIImage(bundleNamed: imageName), for: state)
         }
 
-        titleEdgeInsets = UIEdgeInsets(
-            top:    CGFloat(buttonSize.constant.bubbleWidth / 2),
-            left:   CGFloat(buttonSize.constant.iconWidth +
-                            buttonSize.constant.separatorWidth +
-                            buttonSize.constant.leftPadding),
-            bottom: CGFloat(buttonSize.constant.bubbleWidth / 2),
-            right:  CGFloat(buttonSize.constant.rightPadding)
-        )
-        
         setTitle(buttonText, for: .normal)
         
         let titleSize = titleLabel?.intrinsicContentSize ?? .zero
         frame.size = buttonSize.sizeForTitleSize(titleSize)
         invalidateIntrinsicContentSize()
+    }
+
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+
+        let constant = buttonSize.constant
+        let titleLeading = CGFloat(constant.iconWidth + constant.separatorWidth + constant.leftPadding)
+        let titleVerticalInset = CGFloat(constant.bubbleWidth / 2)
+        titleLabel?.frame = CGRect(
+            x: titleLeading,
+            y: titleVerticalInset,
+            width: bounds.width - titleLeading - CGFloat(constant.rightPadding),
+            height: bounds.height - titleVerticalInset * 2
+        )
     }
 
     /// Overrides the getter of the `intrinsicContentSize` property to support automatic layout.

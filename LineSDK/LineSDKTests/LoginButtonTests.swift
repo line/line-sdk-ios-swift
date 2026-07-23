@@ -164,15 +164,24 @@ class LoginButtonTests: XCTestCase, ViewControllerCompatibleTest {
     
     // MARK: - UI Configuration Tests
     
-    func testTitleEdgeInsets() {
+    func testTitleLayout() {
         loginButton.buttonSize = .normal
         loginButton.updateButtonStyle()
-        
-        let insets = loginButton.titleEdgeInsets
-        XCTAssertTrue(insets.left > 0)
-        XCTAssertTrue(insets.right > 0)
-        XCTAssertTrue(insets.top > 0)
-        XCTAssertTrue(insets.bottom > 0)
+        loginButton.frame.size = loginButton.intrinsicContentSize
+        loginButton.layoutIfNeeded()
+
+        let constant = loginButton.buttonSize.constant
+        let titleLeading = CGFloat(constant.iconWidth + constant.separatorWidth + constant.leftPadding)
+        let titleVerticalInset = CGFloat(constant.bubbleWidth / 2)
+        XCTAssertEqual(
+            loginButton.titleLabel?.frame,
+            CGRect(
+                x: titleLeading,
+                y: titleVerticalInset,
+                width: loginButton.bounds.width - titleLeading - CGFloat(constant.rightPadding),
+                height: loginButton.bounds.height - titleVerticalInset * 2
+            )
+        )
     }
     
     func testBackgroundImages() {
