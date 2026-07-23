@@ -595,15 +595,20 @@ extension URL {
 
 extension UIWindow {
     static func findKeyWindow() -> UIWindow? {
-        if let window = (UIApplication.shared.windows.filter {$0.isKeyWindow}.first), window.windowLevel == .normal {
+        let windowScenes = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive }
+        let windows = windowScenes.flatMap(\.windows)
+
+        if let window = windows.first(where: { $0.isKeyWindow && $0.windowLevel == .normal }) {
             // A key window of main app exists, go ahead and use it
             return window
         }
 
         // Otherwise, try to find a normal level window
-        let window = UIApplication.shared.windows.first { $0.windowLevel == .normal }
+        let window = windows.first { $0.windowLevel == .normal }
         guard let result = window else {
-            Log.print("Cannot find a valid UIWindow at normal level. Current windows: \(UIApplication.shared.windows)")
+            Log.print("Cannot find a valid UIWindow at normal level. Current windows: \(windows)")
             return nil
         }
         return result

@@ -22,7 +22,7 @@
 import Foundation
 
 /// Represents the category of an Open Chat room.
-public enum OpenChatCategory: Int, CaseIterable {
+public enum OpenChatCategory: Int, CaseIterable, Sendable {
     // The order is important. It is the order which displayed when using `OpenChatCategory.allCases`.
     /// Not selected.
     case notSelected = 1

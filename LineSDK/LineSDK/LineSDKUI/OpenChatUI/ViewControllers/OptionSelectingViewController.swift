@@ -21,7 +21,7 @@
 
 import UIKit
 
-class OptionSelectingViewController<T: CustomStringConvertible & Equatable>: UITableViewController {
+class OptionSelectingViewController<T: CustomStringConvertible & Equatable & Sendable>: UITableViewController {
     
     let onSelected = Delegate<T, Void>()
     
