@@ -183,6 +183,12 @@ final public class AccessTokenStore: @unchecked Sendable {
 
     private var lifecycleObservers: [NSObjectProtocol] = []
 
+    // Executes a pending-persistence retry, off the main thread by default since keychain calls can
+    // block when securityd is unresponsive. Tests replace this to run retries synchronously.
+    var persistenceRetryExecutor: (@escaping @Sendable () -> Void) -> Void = { work in
+        DispatchQueue.global(qos: .utility).async(execute: work)
+    }
+
     func setCurrentToken(_ token: AccessToken) {
         guard current != token else { return }
 
@@ -254,8 +260,7 @@ final public class AccessTokenStore: @unchecked Sendable {
         lifecycleObservers = names.map { name in
             NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil) { [weak self] _ in
                 guard let self = self, self.isTokenPersistencePending else { return }
-                // Retry off the main thread. Keychain calls can block when securityd is unresponsive.
-                DispatchQueue.global(qos: .utility).async {
+                self.persistenceRetryExecutor {
                     self.retryPendingTokenPersistence()
                 }
             }

@@ -69,17 +69,10 @@ class AccessTokenStoreTests: XCTestCase, Sendable {
         }
     }
 
-    private func waitUntil(
-        timeout: TimeInterval = 3,
-        _ condition: () -> Bool,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        let start = Date()
-        while !condition() && Date().timeIntervalSince(start) < timeout {
-            RunLoop.current.run(until: Date().addingTimeInterval(0.05))
-        }
-        XCTAssertTrue(condition(), file: file, line: line)
+    // Makes lifecycle-triggered retries run synchronously so tests do not depend on background
+    // dispatch timing.
+    private func useSynchronousRetryExecutor() {
+        AccessTokenStore.shared.persistenceRetryExecutor = { $0() }
     }
 
     func testSetCurrentTokenStoresToKeychain() {
@@ -144,6 +137,7 @@ class AccessTokenStoreTests: XCTestCase, Sendable {
     }
 
     func testPendingTokenIsStoredWhenAppBecomesActive() {
+        useSynchronousRetryExecutor()
         let token = makeToken(value: "token1")
 
         breakKeychainWriting()
@@ -153,11 +147,12 @@ class AccessTokenStoreTests: XCTestCase, Sendable {
         restoreKeychainFunctions()
         NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
 
-        waitUntil { !AccessTokenStore.shared.isTokenPersistencePending }
+        XCTAssertFalse(AccessTokenStore.shared.isTokenPersistencePending)
         XCTAssertEqual(tokenInKeychain(), token)
     }
 
     func testPendingTokenIsStoredWhenProtectedDataBecomesAvailable() {
+        useSynchronousRetryExecutor()
         let token = makeToken(value: "token1")
 
         breakKeychainWriting()
@@ -169,7 +164,7 @@ class AccessTokenStoreTests: XCTestCase, Sendable {
             name: UIApplication.protectedDataDidBecomeAvailableNotification, object: nil
         )
 
-        waitUntil { !AccessTokenStore.shared.isTokenPersistencePending }
+        XCTAssertFalse(AccessTokenStore.shared.isTokenPersistencePending)
         XCTAssertEqual(tokenInKeychain(), token)
     }
 
@@ -189,6 +184,7 @@ class AccessTokenStoreTests: XCTestCase, Sendable {
     }
 
     func testRemoveTokenClearsPendingState() {
+        useSynchronousRetryExecutor()
         let token = makeToken(value: "token1")
 
         breakKeychainWriting()
@@ -203,7 +199,6 @@ class AccessTokenStoreTests: XCTestCase, Sendable {
 
         // A lifecycle event must not resurrect the removed token.
         NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
-        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
         XCTAssertNil(tokenInKeychain())
     }
 
