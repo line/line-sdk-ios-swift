@@ -25,7 +25,7 @@ import XCTest
 @MainActor 
 func setupTestToken() {
     let token = try! JSONDecoder().decode(AccessToken.self, from: PostExchangeTokenRequest.successData)
-    try! AccessTokenStore.shared.setCurrentToken(token)
+    AccessTokenStore.shared.setCurrentToken(token)
 }
 
 class APITests: XCTestCase {

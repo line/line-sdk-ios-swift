@@ -19,11 +19,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 extension Notification.Name {
-    /// Sent when the LINE SDK detects that the current token has been updated and stored in the keychain.
-    /// This means that the user has authorized your app and your app has obtained an access token. The
+    /// Sent when the LINE SDK detects that the current token has been updated. This means that the user has
+    /// authorized your app and your app has obtained an access token. Normally, the new token is also stored
+    /// in the keychain. If the keychain is temporarily unavailable, the token is kept in memory and the SDK
+    /// stores it to the keychain later when the app becomes active or protected data becomes available. The
     /// `object` property of the posted `Notification` object contains the new access token. The `userInfo`
     /// dictionary of the posted `Notification` object contains the new access token under the
     /// `LineSDKNotificationKey.newAccessToken` key. If an access token has previously existed, it will be under
@@ -123,7 +125,7 @@ final public class AccessTokenStore: @unchecked Sendable {
     
     init(configuration: LoginConfiguration) {
         self.configuration = configuration
-        
+
         let keychainStore = KeychainStore(service: storeVersion.keychainService)
         self.keychainStore = keychainStore
         do {
@@ -132,6 +134,11 @@ final public class AccessTokenStore: @unchecked Sendable {
             Log.print("Error happened during loading token from token store: \(error)")
             Log.print("LineSDK recovered from it but your user might need another authorization to Line SDK.")
         }
+        setupTokenPersistenceRetryObservers()
+    }
+
+    deinit {
+        lifecycleObservers.forEach(NotificationCenter.default.removeObserver)
     }
 
     private let lock = NSLock()
@@ -151,31 +158,114 @@ final public class AccessTokenStore: @unchecked Sendable {
         }
     }
 
-    func setCurrentToken(_ token: AccessToken) throws {
+    // Whether the `current` token failed to be stored to the keychain and is waiting for another
+    // persistence attempt. Guarded by `lock`.
+    private var _tokenPersistencePending = false
+    var isTokenPersistencePending: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return _tokenPersistencePending
+    }
+
+    private var lifecycleObservers: [NSObjectProtocol] = []
+
+    func setCurrentToken(_ token: AccessToken) {
         guard current != token else { return }
-        
-        try keychainStore.set(token, configuration: configuration, version: storeVersion)
-        
+
+        lock.lock()
+        var persistenceError: Error?
+        do {
+            try keychainStore.set(token, configuration: configuration, version: storeVersion)
+            _tokenPersistencePending = false
+        } catch {
+            // The keychain can be temporarily unavailable (typically `errSecNotAvailable` when securityd is
+            // unreachable). Keep the token in memory so the current session continues with the new token and
+            // the consumed refresh token is not sent again. The keychain writing will be retried later.
+            _tokenPersistencePending = true
+            persistenceError = error
+        }
+
         var userInfo = [LineSDKNotificationKey.newAccessToken: token]
-        if let old = current {
+        if let old = _current {
             userInfo[LineSDKNotificationKey.oldAccessToken] = old
         }
-        current = token
-        
+        _current = token
+        lock.unlock()
+
+        if let error = persistenceError {
+            logTokenPersistenceFailure(error)
+        }
         NotificationCenter.default.post(name: .LineSDKAccessTokenDidUpdate, object: token, userInfo: userInfo)
     }
-    
+
+    // Retries to store the in-memory token when a previous keychain writing failed.
+    func retryPendingTokenPersistence() {
+        lock.lock()
+        defer { lock.unlock() }
+        guard _tokenPersistencePending, let token = _current else { return }
+        do {
+            try keychainStore.set(token, configuration: configuration, version: storeVersion)
+            _tokenPersistencePending = false
+            Log.print("The pending access token is now stored to keychain successfully.")
+        } catch {
+            // Keychain is still unavailable. Keep the pending state and wait for the next chance.
+            Log.print("Retrying token persistence failed again: \(error)")
+        }
+    }
+
+    private func setupTokenPersistenceRetryObservers() {
+        let names: [Notification.Name] = [
+            UIApplication.didBecomeActiveNotification,
+            UIApplication.protectedDataDidBecomeAvailableNotification
+        ]
+        lifecycleObservers = names.map { name in
+            NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil) { [weak self] _ in
+                guard let self = self, self.isTokenPersistencePending else { return }
+                // Retry off the main thread. Keychain calls can block when securityd is unresponsive.
+                DispatchQueue.global(qos: .utility).async {
+                    self.retryPendingTokenPersistence()
+                }
+            }
+        }
+    }
+
+    private func logTokenPersistenceFailure(_ error: Error) {
+        Task { @MainActor in
+            let application = UIApplication.shared
+            let state: String
+            switch application.applicationState {
+            case .active: state = "active"
+            case .inactive: state = "inactive"
+            case .background: state = "background"
+            @unknown default: state = "unknown"
+            }
+            Log.print(
+                "Writing token to keychain failed: \(error). The token is kept in memory and LineSDK will " +
+                "retry the writing when the app becomes active or protected data becomes available. " +
+                "(applicationState: \(state), " +
+                "isProtectedDataAvailable: \(application.isProtectedDataAvailable))"
+            )
+        }
+    }
+
     func removeCurrentAccessToken() throws {
+        lock.lock()
+        _tokenPersistencePending = false
+        lock.unlock()
+
         let key = storeVersion.tokenKey(for: configuration)
         if try keychainStore.contains(key) {
             try keychainStore.remove(key)
-            
-            // TODO: We need to consider the location of setting `nil` carefully.
-            // In normal case if keychainStore works well, everything should be fine.
-            // But what will happen if revoke request succeeded, then keychain operation fails?
-            // Do we want to keep `current` token or should be put it outside the if statement
-            // and always reset it?
-            let token = current
+        }
+
+        // TODO: We need to consider the location of setting `nil` carefully.
+        // In normal case if keychainStore works well, everything should be fine.
+        // But what will happen if revoke request succeeded, then keychain operation fails?
+        // Now `current` is kept in that case since the throws above skip the code below.
+        //
+        // The in-memory token needs to be cleared even when the keychain does not contain
+        // the key. A pending token which failed to be stored only exists in memory.
+        if let token = current {
             current = nil
             NotificationCenter.default.post(name: .LineSDKAccessTokenDidRemove, object: token, userInfo: nil)
         }

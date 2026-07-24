@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Keep the refreshed access token in memory when storing it to the keychain fails (such as `errSecNotAvailable` when the keychain service is temporarily unavailable). The current session continues with the new token and the consumed refresh token is not sent again. The SDK retries the keychain writing when the app becomes active or protected data becomes available.
+
 ## [5.17.0] - 2026-07-23
 
 ### Changed

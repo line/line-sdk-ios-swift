@@ -113,6 +113,7 @@
 		4B6CACC9239F4A2B00BD6C35 /* AssertionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CACC8239F4A2B00BD6C35 /* AssertionHelpers.swift */; };
 		4B792FB121102D9200EDDD1E /* LoginProcessURLResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */; };
 		4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */; };
+		A7C0FFEE2607250001ACCE55 /* AccessTokenStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C0FFED2607250001ACCE55 /* AccessTokenStoreTests.swift */; };
 		4B792FB821103D4B00EDDD1E /* ResponseDataStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B792FB721103D4B00EDDD1E /* ResponseDataStub.swift */; };
 		4B7D8C252137B9FA00C6855A /* public_base_64_newline in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C1D2137B9FA00C6855A /* public_base_64_newline */; };
 		4B7D8C262137B9FA00C6855A /* public_base_64_header in Resources */ = {isa = PBXBuildFile; fileRef = 4B7D8C1E2137B9FA00C6855A /* public_base_64_header */; };
@@ -681,6 +682,7 @@
 		4B6CACC8239F4A2B00BD6C35 /* AssertionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssertionHelpers.swift; sourceTree = "<group>"; };
 		4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcessURLResponseTests.swift; sourceTree = "<group>"; };
 		4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerTests.swift; sourceTree = "<group>"; };
+		A7C0FFED2607250001ACCE55 /* AccessTokenStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenStoreTests.swift; sourceTree = "<group>"; };
 		4B792FB721103D4B00EDDD1E /* ResponseDataStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDataStub.swift; sourceTree = "<group>"; };
 		4B7D8C1D2137B9FA00C6855A /* public_base_64_newline */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public_base_64_newline; sourceTree = "<group>"; };
 		4B7D8C1E2137B9FA00C6855A /* public_base_64_header */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public_base_64_header; sourceTree = "<group>"; };
@@ -1197,6 +1199,7 @@
 				4B8A965621100A5800760219 /* LoginConfigurationTests.swift */,
 				4B792FB021102D9200EDDD1E /* LoginProcessURLResponseTests.swift */,
 				4B792FB221103A0200EDDD1E /* LoginManagerTests.swift */,
+				A7C0FFED2607250001ACCE55 /* AccessTokenStoreTests.swift */,
 				DB09851423D5AF9D0001A3B8 /* PKCETests.swift */,
 			);
 			path = Login;
@@ -2422,6 +2425,7 @@
 				4B39D1E421104DBA00A45510 /* APITests.swift in Sources */,
 				4B9A305A2121639600174C6F /* TemplateCarouselPayloadTests.swift in Sources */,
 				4B792FB321103A0200EDDD1E /* LoginManagerTests.swift in Sources */,
+				A7C0FFEE2607250001ACCE55 /* AccessTokenStoreTests.swift in Sources */,
 				4BFC09EF213CCE7700F4594D /* JWKTests.swift in Sources */,
 				4B3CCB9E2152449400F51D76 /* ECDSAKeyTests.swift in Sources */,
 				2B8D25362E39A2B50029FB34 /* LoginProcessMocks.swift in Sources */,

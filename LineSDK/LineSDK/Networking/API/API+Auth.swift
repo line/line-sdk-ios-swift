@@ -57,7 +57,7 @@ extension API {
                 case .success(let newToken):
                     do {
                         let combinedToken = try AccessToken(token: newToken, currentIDTokenRaw: token.IDTokenRaw)
-                        try AccessTokenStore.shared.setCurrentToken(combinedToken)
+                        AccessTokenStore.shared.setCurrentToken(combinedToken)
                         completion(.success(combinedToken))
                     } catch {
                         completion(.failure(error.sdkError))
