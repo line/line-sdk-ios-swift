@@ -62,7 +62,11 @@ class AccessTokenStoreTests: XCTestCase, Sendable {
 
     private func tokenInKeychain() -> AccessToken? {
         let store = AccessTokenStore.shared
-        return try? store.keychainStore.token(for: store.configuration, version: store.storeVersion)
+        do {
+            return try store.keychainStore.token(for: store.configuration, version: store.storeVersion)
+        } catch {
+            return nil
+        }
     }
 
     private func waitUntil(
