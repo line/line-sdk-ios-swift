@@ -26,17 +26,15 @@ import Security
 @MainActor
 class AccessTokenStoreTests: XCTestCase, Sendable {
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
         LoginManager.shared.setup(channelID: "123", universalLinkURL: nil)
         try? AccessTokenStore.shared.removeCurrentAccessToken()
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         restoreKeychainFunctions()
         try? AccessTokenStore.shared.removeCurrentAccessToken()
         LoginManager.shared.resetForTesting()
-        super.tearDown()
     }
 
     private func makeToken(value: String) -> AccessToken {
