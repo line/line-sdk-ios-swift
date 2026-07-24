@@ -22,11 +22,13 @@
 @objc extension NSNotification {
     public static let LineSDKAccessTokenDidUpdate = Notification.Name.LineSDKAccessTokenDidUpdate
     public static let LineSDKAccessTokenDidRemove = Notification.Name.LineSDKAccessTokenDidRemove
+    public static let LineSDKAccessTokenDidFailToPersist = Notification.Name.LineSDKAccessTokenDidFailToPersist
 }
 
 @objc extension NSNotification {
     public static let LineSDKOldAccessTokenKey = LineSDKNotificationKey.oldAccessToken
     public static let LineSDKNewAccessTokenKey = LineSDKNotificationKey.newAccessToken
+    public static let LineSDKPersistingErrorKey = LineSDKNotificationKey.persistingError
 }
 
 @objcMembers

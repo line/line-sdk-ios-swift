@@ -98,6 +98,9 @@ class AccessTokenStoreTests: XCTestCase, Sendable {
             let newToken = notification.userInfo?[LineSDKNotificationKey.newAccessToken] as? AccessToken
             return newToken == token
         }
+        expectation(forNotification: .LineSDKAccessTokenDidFailToPersist, object: nil) { notification in
+            return notification.userInfo?[LineSDKNotificationKey.persistingError] is LineSDKError
+        }
 
         breakKeychainWriting()
         AccessTokenStore.shared.setCurrentToken(token)
@@ -125,6 +128,19 @@ class AccessTokenStoreTests: XCTestCase, Sendable {
         AccessTokenStore.shared.retryPendingTokenPersistence()
         XCTAssertFalse(AccessTokenStore.shared.isTokenPersistencePending)
         XCTAssertEqual(tokenInKeychain(), token)
+    }
+
+    func testRetryFailurePostsDidFailToPersistNotification() {
+        let token = makeToken(value: "token1")
+
+        breakKeychainWriting()
+        AccessTokenStore.shared.setCurrentToken(token)
+
+        expectation(forNotification: .LineSDKAccessTokenDidFailToPersist, object: nil) { notification in
+            return notification.userInfo?[LineSDKNotificationKey.persistingError] is LineSDKError
+        }
+        AccessTokenStore.shared.retryPendingTokenPersistence()
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
 
     func testPendingTokenIsStoredWhenAppBecomesActive() {

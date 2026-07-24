@@ -37,15 +37,29 @@ extension Notification.Name {
     /// automatically removed since the access token is refreshed when it is used to make an API call.
     /// The `object` property of the posted `Notification` object contains the removed access token.
     public static let LineSDKAccessTokenDidRemove = Notification.Name("com.linecorp.linesdk.AccessTokenDidRemove")
+
+    /// Sent when the LINE SDK fails to store the current access token to the keychain. This can happen when
+    /// the keychain is temporarily unavailable (for example, `errSecNotAvailable`). The token is kept in
+    /// memory and keeps working for the current session, and the SDK retries the storing when the app
+    /// becomes active or protected data becomes available; this notification is sent again if a retry fails.
+    /// The `object` property of the posted `Notification` object contains the access token which failed to
+    /// be stored. The `userInfo` dictionary contains the underlying error under the
+    /// `LineSDKNotificationKey.persistingError` key. Observe this notification if you want to log or report
+    /// such failures.
+    public static let LineSDKAccessTokenDidFailToPersist =
+        Notification.Name("com.linecorp.linesdk.AccessTokenDidFailToPersist")
 }
 
 extension LineSDKNotificationKey {
     
     /// A user information key for an old access token value.
     public static let oldAccessToken = "oldAccessToken"
-    
+
     /// A user information key for a new access token value.
     public static let newAccessToken = "newAccessToken"
+
+    /// A user information key for the error which caused an access token persisting failure.
+    public static let persistingError = "persistingError"
 }
 
 /// Represents the storage of an `AccessToken` object.
@@ -192,24 +206,43 @@ final public class AccessTokenStore: @unchecked Sendable {
         _current = token
         lock.unlock()
 
+        NotificationCenter.default.post(name: .LineSDKAccessTokenDidUpdate, object: token, userInfo: userInfo)
         if let error = persistenceError {
             logTokenPersistenceFailure(error)
+            NotificationCenter.default.post(
+                name: .LineSDKAccessTokenDidFailToPersist,
+                object: token,
+                userInfo: [LineSDKNotificationKey.persistingError: error]
+            )
         }
-        NotificationCenter.default.post(name: .LineSDKAccessTokenDidUpdate, object: token, userInfo: userInfo)
     }
 
     // Retries to store the in-memory token when a previous keychain writing failed.
     func retryPendingTokenPersistence() {
         lock.lock()
-        defer { lock.unlock() }
-        guard _tokenPersistencePending, let token = _current else { return }
+        guard _tokenPersistencePending, let token = _current else {
+            lock.unlock()
+            return
+        }
+        var persistenceError: Error?
         do {
             try keychainStore.set(token, configuration: configuration, version: storeVersion)
             _tokenPersistencePending = false
-            Log.print("The pending access token is now stored to keychain successfully.")
         } catch {
             // Keychain is still unavailable. Keep the pending state and wait for the next chance.
+            persistenceError = error
+        }
+        lock.unlock()
+
+        if let error = persistenceError {
             Log.print("Retrying token persistence failed again: \(error)")
+            NotificationCenter.default.post(
+                name: .LineSDKAccessTokenDidFailToPersist,
+                object: token,
+                userInfo: [LineSDKNotificationKey.persistingError: error]
+            )
+        } else {
+            Log.print("The pending access token is now stored to keychain successfully.")
         }
     }
 
