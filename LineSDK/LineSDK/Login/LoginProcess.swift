@@ -33,7 +33,7 @@ public class LoginProcess {
     public enum LoginRoute: String {
         /// The auth flow starts with a LINE app universal link.
         case appUniversalLink
-        /// The auth flow starts with a LINE customize URL scheme.
+        /// A legacy login route retained for source compatibility. The SDK no longer starts this flow.
         case appAuthScheme
         /// The auth flow starts in a web page inside LINE SDK.
         case webLogin
@@ -101,7 +101,6 @@ public class LoginProcess {
     let scopes: Set<LoginPermission>
     let parameters: LoginManager.Parameters
     private let flowFactory: LoginFlowFactory
-    private let lineAvailabilityChecker: LINEAvailabilityChecker
 
     // Flows of login process. A flow will be `nil` until it is running, so we could tell which one should take
     // responsibility to handle a url callback response.
@@ -114,15 +113,6 @@ public class LoginProcess {
             }
         }
     }
-    // LINE Client app auth flow by LINE customize URL scheme.
-    var appAuthSchemeFlow: AppAuthSchemeFlowType? {
-        didSet {
-            if appAuthSchemeFlow != nil && loginRoute == nil {
-                loginRoute = .appAuthScheme
-            }
-        }
-    }
-
     // Web login flow with Safari View Controller or Mobile Safari
     var webLoginFlow: WebLoginFlowType? {
         didSet {
@@ -139,9 +129,9 @@ public class LoginProcess {
 
     /// Describes how the authentication flow is initiated for this login result.
     ///
-    /// If the LINE app was launched to obtain this result, the value will be either `.appUniversalLink` or
-    /// `.appAuthScheme`, depending on how the LINE app was opened. If authentication occurred via a web page within
-    /// the LINE SDK, the value will be `.webLogin`. If the authentication flow is never or not yet initiated, the value
+    /// If the LINE app was launched to obtain this result, the value will be `.appUniversalLink`.
+    /// If authentication occurred via a web page within the LINE SDK, the value will be `.webLogin`.
+    /// If the authentication flow is never or not yet initiated, the value
     /// will be `nil`.
     ///
     /// This value is `nil` until the process starts the auth flow actually. You can access this value safely when an
@@ -174,8 +164,7 @@ public class LoginProcess {
         // CocaoPods lint does not like when Swift 4.2 language version is used.
         // Revert this later when we can drop support for Swift 4.2:
         // flowFactory: LoginFlowFactory = DefaultLoginFlowFactory(),
-        flowFactory: LoginFlowFactory? = nil,
-        lineAvailabilityChecker: LINEAvailabilityChecker = DefaultLINEAvailabilityChecker()
+        flowFactory: LoginFlowFactory? = nil
     ) {
         self.configuration = configuration
         self.processID = Data.randomData(bytesCount: 32).base64URLEncoded
@@ -184,7 +173,6 @@ public class LoginProcess {
         self.parameters = parameters
         self.presentingViewController = viewController
         self.flowFactory = flowFactory ?? DefaultLoginFlowFactory()
-        self.lineAvailabilityChecker = lineAvailabilityChecker
 
         if scopes.contains(.openID) {
             IDTokenNonce = self.parameters.IDTokenNonce ?? Data.randomData(bytesCount: 32).base64URLEncoded
@@ -248,30 +236,12 @@ public class LoginProcess {
                 self.setupAppSwitchingObserver()
                 self.appUniversalLinkFlow = appUniversalLinkFlow
             } else {
-                // LINE universal link handling failed for some reason. Fallback to LINE v2 auth or web login.
-                if self.canUseLineAuthV2 {
-                    self.startAppAuthSchemeFlow(parameters)
-                } else {
-                    self.startWebLoginFlow(parameters)
-                }
-            }
-        }
-
-        appUniversalLinkFlow.start()
-    }
-
-    private func startAppAuthSchemeFlow(_ parameters: FlowParameters) {
-        let appAuthSchemeFlow = flowFactory.createAppAuthSchemeFlow(parameter: parameters)
-        appAuthSchemeFlow.onNext.delegate(on: self) { [unowned appAuthSchemeFlow] (self, started) in
-            if started {
-                self.setupAppSwitchingObserver()
-                self.appAuthSchemeFlow = appAuthSchemeFlow
-            } else {
+                // Custom URL schemes cannot identify the app that receives the authorization request.
                 self.startWebLoginFlow(parameters)
             }
         }
 
-        appAuthSchemeFlow.start()
+        appUniversalLinkFlow.start()
     }
 
     private func startWebLoginFlow(_ parameters: FlowParameters) {
@@ -404,13 +374,8 @@ public class LoginProcess {
         }
     }
 
-    private var canUseLineAuthV2: Bool {
-        return lineAvailabilityChecker.isLINEInstalled
-    }
-
     private func resetFlows() {
         appUniversalLinkFlow = nil
-        appAuthSchemeFlow = nil
         webLoginFlow = nil
     }
 
@@ -451,26 +416,6 @@ class AppUniversalLinkFlow: AppUniversalLinkFlowType {
 }
 
 @MainActor
-class AppAuthSchemeFlow: AppAuthSchemeFlowType {
-
-    let url: URL
-    let onNext = Delegate<Bool, Void>()
-    private let applicationOpener: ApplicationOpener
-
-    init(parameter: LoginProcess.FlowParameters, applicationOpener: ApplicationOpener = UIApplication.shared) {
-        url = Constant.lineAppAuthURLv2.appendedURLSchemeQuery(parameter)
-        self.applicationOpener = applicationOpener
-    }
-
-    func start() {
-        applicationOpener.open(url, options: [:]) {
-            opened in
-            self.onNext.call(opened)
-        }
-    }
-}
-
-@MainActor
 class WebLoginFlow: NSObject, WebLoginFlowType {
 
     enum Next {
@@ -493,7 +438,8 @@ class WebLoginFlow: NSObject, WebLoginFlowType {
             component.fragment = "/qr"
         }
         let baseURL = component.url!
-        url = baseURL.appendedLoginQuery(parameter)
+        // Disable app auto login to keep the fallback in the web flow.
+        url = baseURL.appendedLoginQuery(parameter, disableAppAutoLogin: true)
     }
 
     func start(in viewController: UIViewController?) {
@@ -565,7 +511,10 @@ extension String {
 }
 
 extension URL {
-    func appendedLoginQuery(_ flowParameters: LoginProcess.FlowParameters) -> URL {
+    func appendedLoginQuery(
+        _ flowParameters: LoginProcess.FlowParameters,
+        disableAppAutoLogin: Bool = false
+    ) -> URL {
         let returnUri = String.returnUri(flowParameters)
         var parameters: [String: Any] = [
             "returnUri": returnUri,
@@ -574,20 +523,10 @@ extension URL {
         if let lang = flowParameters.preferredWebPageLanguage {
             parameters["ui_locales"] = lang.rawValue
         }
-        if flowParameters.onlyWebLogin {
+        if disableAppAutoLogin || flowParameters.onlyWebLogin {
             parameters["disable_ios_auto_login"] = true
         }
 
-        let encoder = URLQueryEncoder(parameters: parameters)
-        return encoder.encoded(for: self)
-    }
-
-    func appendedURLSchemeQuery(_ flowParameters: LoginProcess.FlowParameters) -> URL {
-        let loginBase = URL(string: Constant.lineWebAuthUniversalURL)!
-        let loginUrl = loginBase.appendedLoginQuery(flowParameters)
-        let parameters = [
-            "loginUrl": "\(loginUrl)"
-        ]
         let encoder = URLQueryEncoder(parameters: parameters)
         return encoder.encoded(for: self)
     }

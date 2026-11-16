@@ -194,32 +194,11 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         XCTAssertTrue(item.value!.removingPercentEncoding!.contains("prompt_bot_id=@abc123"))
     }
 
-    // URL Scheme has a triple escaped query.
-    func testURLSchemeQueryEncode() {
-        let baseURL = Constant.lineAppAuthURLv2
-        let result = baseURL.appendedURLSchemeQuery(parameter)
-        
-        let urlString = result.absoluteString.removingPercentEncoding
-        XCTAssertNotNil(urlString)
-        
-        let components = URLComponents(url: result, resolvingAgainstBaseURL: false)
-        let items = components!.queryItems!
-        XCTAssertEqual(items.count, ["loginChannelId"].count)
-
-        let item = items.first { $0.name == "loginUrl" }!
-        XCTAssertNotEqual(item.value, item.value?.removingPercentEncoding)
-        XCTAssertNotEqual(item.value?.removingPercentEncoding,
-                          item.value?.removingPercentEncoding?.removingPercentEncoding)
-
-        // Should be already fully decoded (no double encoding in the url)
-        XCTAssertEqual(item.value?.removingPercentEncoding?.removingPercentEncoding,
-                       item.value?.removingPercentEncoding?.removingPercentEncoding?.removingPercentEncoding)
-    }
-    
     func testAppUniversalLinkFlow() {
         let expect = expectation(description: "\(#file)_\(#line)")
-        
-        let flow = AppUniversalLinkFlow(parameter: parameter, applicationOpener: UIApplication.shared)
+
+        let opener = MockApplicationOpener()
+        let flow = AppUniversalLinkFlow(parameter: parameter, applicationOpener: opener)
         let universal = URL(string: Constant.lineWebAuthUniversalURL)!
         let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
         XCTAssertEqual(components?.scheme, "https")
@@ -232,23 +211,38 @@ class LoginFlowTests: XCTestCase, ViewControllerCompatibleTest {
         flow.start()
         
         waitForExpectations(timeout: 3.0, handler: nil)
+        XCTAssertEqual(opener.openCallCount, 1)
+        XCTAssertEqual(opener.lastOpenedURL, flow.url)
+        XCTAssertEqual(opener.lastOptions?[.universalLinksOnly] as? Bool, true)
+        XCTAssertNil(components?.queryItems?.first { $0.name == "disable_ios_auto_login" })
     }
     
-    func testAppAuthSchemeFlow() {
-        let expect = expectation(description: "\(#file)_\(#line)")
-        let flow = AppAuthSchemeFlow(parameter: parameter, applicationOpener: UIApplication.shared)
-        let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
-        XCTAssertEqual(components?.scheme, Constant.lineAuthV2Scheme)
-        XCTAssertEqual(components?.host, "authorize")
-        XCTAssertEqual(components?.path, "/")
+    func testWebLoginFlowDisablesAppAutoLogin() {
+        for parameters in [parameter, parameterWithOnlyWebLogin] {
+            let flow = WebLoginFlow(parameter: parameters)
+            let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
+            let items = components?.queryItems?.filter { $0.name == "disable_ios_auto_login" }
 
-        flow.onNext.delegate(on: self) { (self, started) in
-            expect.fulfill()
+            XCTAssertEqual(items?.count, 1)
+            XCTAssertEqual(items?.first?.value, "true")
         }
-        flow.start()
-        waitForExpectations(timeout: 3.0, handler: nil)
     }
-    
+
+    func testWebLoginFlowPreservesAuthorizationParameters() throws {
+        let flow = WebLoginFlow(parameter: parameter)
+        let components = URLComponents(url: flow.url, resolvingAgainstBaseURL: false)
+        let returnURI = try XCTUnwrap(components?.queryItems?.first { $0.name == "returnUri" }?.value)
+        let items = try XCTUnwrap(URLComponents(string: returnURI)?.queryItems)
+        let values = Dictionary(uniqueKeysWithValues: items.map { ($0.name, $0.value) })
+
+        XCTAssertEqual(values["client_id"], parameter.channelID)
+        XCTAssertEqual(values["state"], parameter.processID)
+        XCTAssertEqual(values["code_challenge"], parameter.pkce.codeChallenge)
+        XCTAssertEqual(values["code_challenge_method"], parameter.pkce.codeChallengeMethod)
+        XCTAssertEqual(values["nonce"], parameter.nonce)
+        XCTAssertEqual(values["redirect_uri"], Constant.thirdPartyAppReturnURL)
+    }
+
     func testWebLoginFlow() {
         let expect = expectation(description: "\(#file)_\(#line)")
         let flow = WebLoginFlow(parameter: parameter)
