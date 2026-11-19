@@ -339,15 +339,6 @@ class LoginManagerTests: XCTestCase, ViewControllerCompatibleTest {
             XCTAssertEqual(process.loginRoute, .appUniversalLink)
         }
 
-        XCTContext.runActivity(named: "app auth") { _ in
-            let process = LoginProcess(
-                configuration: .shared, scopes: [], parameters: .init(), viewController: setupViewController()
-            )
-            XCTAssertNil(process.loginRoute)
-            process.appAuthSchemeFlow = AppAuthSchemeFlow(parameter: sampleFlowParameters)
-            XCTAssertEqual(process.loginRoute, .appAuthScheme)
-        }
-
         XCTContext.runActivity(named: "web login") { _ in
             let process = LoginProcess(
                 configuration: .shared, scopes: [], parameters: .init(), viewController: setupViewController()

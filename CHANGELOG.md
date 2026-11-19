@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - Behavior change: `API.Auth.refreshAccessToken` and the login flow no longer report a failure when the token itself is obtained but cannot be stored to the keychain. Observe the new `.LineSDKAccessTokenDidFailToPersist` notification if you need to detect or report such storing failures. The underlying error is available in the `userInfo` dictionary under the `LineSDKNotificationKey.persistingError` key.
+- Fall back directly to web login when the LINE app universal link cannot open. The SDK no longer sends login requests through the `lineauth2` URL scheme.
 
 ## [5.17.0] - 2026-07-23
 

@@ -44,13 +44,6 @@ protocol AppUniversalLinkFlowType: AnyObject {
     func start()
 }
 
-/// Protocol for AppAuthSchemeFlow behavior  
-@MainActor
-protocol AppAuthSchemeFlowType: AnyObject {
-    var onNext: Delegate<Bool, Void> { get }
-    func start()
-}
-
 /// Protocol for WebLoginFlow behavior
 @MainActor
 protocol WebLoginFlowType: AnyObject {
@@ -60,27 +53,12 @@ protocol WebLoginFlowType: AnyObject {
     func dismiss()
 }
 
-// MARK: - LINE Availability Checker Protocol
-
-/// Protocol to check if LINE app is available
-protocol LINEAvailabilityChecker: Sendable {
-    @MainActor var isLINEInstalled: Bool { get }
-}
-
-/// Default implementation using Constant.isLINEInstalled
-struct DefaultLINEAvailabilityChecker: LINEAvailabilityChecker {
-    @MainActor var isLINEInstalled: Bool {
-        return Constant.isLINEInstalled
-    }
-}
-
 // MARK: - Flow Factory Protocol
 
 /// Factory protocol for creating login flows (allows dependency injection)
 @MainActor
 protocol LoginFlowFactory: Sendable {
     func createAppUniversalLinkFlow(parameter: LoginProcess.FlowParameters) -> AppUniversalLinkFlowType
-    func createAppAuthSchemeFlow(parameter: LoginProcess.FlowParameters) -> AppAuthSchemeFlowType  
     func createWebLoginFlow(parameter: LoginProcess.FlowParameters) -> WebLoginFlowType
 }
 
@@ -97,10 +75,6 @@ class DefaultLoginFlowFactory: LoginFlowFactory {
     
     func createAppUniversalLinkFlow(parameter: LoginProcess.FlowParameters) -> AppUniversalLinkFlowType {
         return AppUniversalLinkFlow(parameter: parameter, applicationOpener: applicationOpener)
-    }
-    
-    func createAppAuthSchemeFlow(parameter: LoginProcess.FlowParameters) -> AppAuthSchemeFlowType {
-        return AppAuthSchemeFlow(parameter: parameter, applicationOpener: applicationOpener)
     }
     
     func createWebLoginFlow(parameter: LoginProcess.FlowParameters) -> WebLoginFlowType {
