@@ -31,21 +31,18 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
     // MARK: - Helper Methods
 
     private func createLoginProcess(
-        lineInstalled: Bool = true,
-        onlyWebLogin: Bool = false
+        onlyWebLogin: Bool = false,
+        scopes: Set<LoginPermission> = [.profile]
     ) -> LoginProcess {
-        let mockLineChecker = MockLINEAvailabilityChecker(isLINEInstalled: lineInstalled)
-
         var parameters = LoginManager.Parameters()
         parameters.onlyWebLogin = onlyWebLogin
 
         return LoginProcess(
             configuration: LoginConfiguration(channelID: "test_channel", universalLinkURL: nil),
-            scopes: [.profile],
+            scopes: scopes,
             parameters: parameters,
             viewController: setupViewController(),
-            flowFactory: mockFlowFactory,
-            lineAvailabilityChecker: mockLineChecker
+            flowFactory: mockFlowFactory
         )
     }
 
@@ -71,35 +68,6 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
             XCTAssertNotNil(process.appUniversalLinkFlow)
             XCTAssertEqual(process.loginRoute, .appUniversalLink)
 
-            // Auth scheme and web login should not be started
-            XCTAssertNil(self.mockFlowFactory.mockAuthSchemeFlow)
-            XCTAssertNil(self.mockFlowFactory.mockWebLoginFlow)
-
-            expect.fulfill()
-        }
-
-        waitForExpectations(timeout: 1.0)
-    }
-
-    func testUniversalLinkFlowFailureFallbackToAuth() {
-        let expect = expectation(description: "universal link failure fallback to auth")
-
-        let process = createLoginProcess()
-        mockFlowFactory.configureUniversalLinkFailAuthSchemeSucceed()
-
-        process.start()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            // Verify Universal Link flow was started and failed
-            XCTAssertNotNil(self.mockFlowFactory.mockUniversalLinkFlow)
-            XCTAssertEqual(self.mockFlowFactory.mockUniversalLinkFlow?.startCallCount, 1)
-
-            // Verify Auth Scheme flow was started as fallback
-            XCTAssertNotNil(self.mockFlowFactory.mockAuthSchemeFlow)
-            XCTAssertEqual(self.mockFlowFactory.mockAuthSchemeFlow?.startCallCount, 1)
-            XCTAssertNotNil(process.appAuthSchemeFlow)
-            XCTAssertEqual(process.loginRoute, .appAuthScheme)
-
             // Web login should not be started
             XCTAssertNil(self.mockFlowFactory.mockWebLoginFlow)
 
@@ -109,11 +77,11 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
         waitForExpectations(timeout: 1.0)
     }
 
-    func testUniversalLinkFlowFailureFallbackToWeb() {
+    func testUniversalLinkFailureFallsBackToWeb() {
         let expect = expectation(description: "universal link failure fallback to web")
 
-        mockFlowFactory.configureUniversalLinkFailAuthSchemeSucceed()
-        let process = createLoginProcess(lineInstalled: false) // LINE not installed
+        let process = createLoginProcess(scopes: [.profile, .openID])
+        mockFlowFactory.configureUniversalLinkFailure()
 
         process.start()
 
@@ -122,66 +90,15 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
             XCTAssertNotNil(self.mockFlowFactory.mockUniversalLinkFlow)
             XCTAssertEqual(self.mockFlowFactory.mockUniversalLinkFlow?.startCallCount, 1)
 
-            // Auth Scheme should be skipped since LINE is not installed
-            XCTAssertNil(self.mockFlowFactory.mockAuthSchemeFlow)
-
-            // Verify Web Login flow was started as fallback
-            XCTAssertNotNil(self.mockFlowFactory.mockWebLoginFlow)
             XCTAssertEqual(self.mockFlowFactory.mockWebLoginFlow?.startCallCount, 1)
-            XCTAssertNotNil(process.webLoginFlow)
             XCTAssertEqual(process.loginRoute, .webLogin)
 
-            expect.fulfill()
-        }
-
-        waitForExpectations(timeout: 1.0)
-    }
-
-    // MARK: - Auth Scheme Flow Tests
-
-    func testAuthSchemeFlowSuccess() {
-        let expect = expectation(description: "auth scheme success")
-
-        mockFlowFactory.universalLinkShouldSucceed = false
-        mockFlowFactory.authSchemeShouldSucceed = true
-        let process = createLoginProcess(lineInstalled: true)
-
-        process.start()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            // Verify Auth Scheme flow was started and succeeded
-            XCTAssertNotNil(self.mockFlowFactory.mockAuthSchemeFlow)
-            XCTAssertEqual(self.mockFlowFactory.mockAuthSchemeFlow?.startCallCount, 1)
-            XCTAssertNotNil(process.appAuthSchemeFlow)
-            XCTAssertEqual(process.loginRoute, .appAuthScheme)
-
-            // Web login should not be started
-            XCTAssertNil(self.mockFlowFactory.mockWebLoginFlow)
-
-            expect.fulfill()
-        }
-
-        waitForExpectations(timeout: 1.0)
-    }
-
-    func testAuthSchemeFlowFailureFallbackToWeb() {
-        let expect = expectation(description: "auth scheme failure fallback to web")
-
-        let process = createLoginProcess()
-        mockFlowFactory.configureAllAppFlowsFailWebSucceed()
-
-        process.start()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            // Both Universal Link and Auth Scheme should have been tried
-            XCTAssertNotNil(self.mockFlowFactory.mockUniversalLinkFlow)
-            XCTAssertNotNil(self.mockFlowFactory.mockAuthSchemeFlow)
-
-            // Web Login should be started as final fallback
-            XCTAssertNotNil(self.mockFlowFactory.mockWebLoginFlow)
-            XCTAssertEqual(self.mockFlowFactory.mockWebLoginFlow?.startCallCount, 1)
-            XCTAssertNotNil(process.webLoginFlow)
-            XCTAssertEqual(process.loginRoute, .webLogin)
+            let parameters = self.mockFlowFactory.webLoginParameters
+            XCTAssertEqual(parameters?.channelID, process.configuration.channelID)
+            XCTAssertEqual(parameters?.processID, process.processID)
+            XCTAssertEqual(parameters?.pkce.codeVerifier, process.pkce.codeVerifier)
+            XCTAssertNotNil(process.IDTokenNonce)
+            XCTAssertEqual(parameters?.nonce, process.IDTokenNonce)
 
             expect.fulfill()
         }
@@ -195,7 +112,7 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
         let expect = expectation(description: "web login success")
 
         let process = createLoginProcess()
-        mockFlowFactory.configureAllAppFlowsFailWebSucceed()
+        mockFlowFactory.configureUniversalLinkFailure()
 
         process.start()
 
@@ -239,7 +156,7 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
 
         // Configure all flows to fail except web login
         let process = createLoginProcess()
-        mockFlowFactory.configureAllAppFlowsFailWebSucceed()
+        mockFlowFactory.configureUniversalLinkFailure()
 
         process.start()
 
@@ -247,9 +164,6 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
             // Verify all flows were attempted in order
             XCTAssertNotNil(self.mockFlowFactory.mockUniversalLinkFlow)
             XCTAssertEqual(self.mockFlowFactory.mockUniversalLinkFlow?.startCallCount, 1)
-
-            XCTAssertNotNil(self.mockFlowFactory.mockAuthSchemeFlow)
-            XCTAssertEqual(self.mockFlowFactory.mockAuthSchemeFlow?.startCallCount, 1)
 
             XCTAssertNotNil(self.mockFlowFactory.mockWebLoginFlow)
             XCTAssertEqual(self.mockFlowFactory.mockWebLoginFlow?.startCallCount, 1)
@@ -274,7 +188,6 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             // Only Web Login should be started, no app links
             XCTAssertNil(self.mockFlowFactory.mockUniversalLinkFlow)
-            XCTAssertNil(self.mockFlowFactory.mockAuthSchemeFlow)
 
             XCTAssertNotNil(self.mockFlowFactory.mockWebLoginFlow)
             XCTAssertEqual(self.mockFlowFactory.mockWebLoginFlow?.startCallCount, 1)
@@ -307,30 +220,11 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
         waitForExpectations(timeout: 1.0)
     }
 
-    func testAppSwitchingObserverSetupOnAuthSchemeSuccess() {
-        let expect = expectation(description: "app switching observer setup on auth scheme success")
-
-        let process = createLoginProcess()
-        mockFlowFactory.configureUniversalLinkFailAuthSchemeSucceed()
-
-        process.start()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            // When Auth Scheme succeeds, app switching observer should be set up
-            XCTAssertNotNil(process.appSwitchingObserver)
-            XCTAssertEqual(process.loginRoute, .appAuthScheme)
-
-            expect.fulfill()
-        }
-
-        waitForExpectations(timeout: 1.0)
-    }
-
     func testAppSwitchingObserverNotSetupOnWebLogin() {
         let expect = expectation(description: "app switching observer not setup on web login")
 
         let process = createLoginProcess()
-        mockFlowFactory.configureAllAppFlowsFailWebSucceed()
+        mockFlowFactory.configureUniversalLinkFailure()
 
         process.start()
 
@@ -360,7 +254,6 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             // On macCatalyst, should skip to Web Login directly
             XCTAssertNil(self.mockFlowFactory.mockUniversalLinkFlow)
-            XCTAssertNil(self.mockFlowFactory.mockAuthSchemeFlow)
 
             XCTAssertNotNil(self.mockFlowFactory.mockWebLoginFlow)
             XCTAssertEqual(process.loginRoute, .webLogin)
@@ -415,7 +308,6 @@ class LoginProcessFlowTests: XCTestCase, ViewControllerCompatibleTest {
 
             // Verify flows are reset
             XCTAssertNil(process.appUniversalLinkFlow)
-            XCTAssertNil(process.appAuthSchemeFlow)
             XCTAssertNil(process.webLoginFlow)
             XCTAssertNil(process.loginRoute)
             XCTAssertNil(process.appSwitchingObserver)

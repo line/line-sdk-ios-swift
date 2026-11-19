@@ -47,37 +47,11 @@ class MockApplicationOpener: ApplicationOpener {
     }
 }
 
-// MARK: - Mock LINEAvailabilityChecker
-
-/// Mock LINEAvailabilityChecker for testing
-struct MockLINEAvailabilityChecker: LINEAvailabilityChecker {
-    let isLINEInstalled: Bool
-
-    init(isLINEInstalled: Bool = true) {
-        self.isLINEInstalled = isLINEInstalled
-    }
-}
-
 // MARK: - Mock Flow Implementations
 
 /// Mock AppUniversalLinkFlow for testing
 @MainActor
 class MockAppUniversalLinkFlow: AppUniversalLinkFlowType {
-    let onNext = Delegate<Bool, Void>()
-    var shouldSucceed: Bool = true
-    var startCallCount = 0
-
-    func start() {
-        startCallCount += 1
-        DispatchQueue.main.async {
-            self.onNext.call(self.shouldSucceed)
-        }
-    }
-}
-
-/// Mock AppAuthSchemeFlow for testing
-@MainActor
-class MockAppAuthSchemeFlow: AppAuthSchemeFlowType {
     let onNext = Delegate<Bool, Void>()
     var shouldSucceed: Bool = true
     var startCallCount = 0
@@ -117,12 +91,11 @@ class MockWebLoginFlow: WebLoginFlowType {
 @MainActor
 class MockLoginFlowFactory: LoginFlowFactory {
     var mockUniversalLinkFlow: MockAppUniversalLinkFlow?
-    var mockAuthSchemeFlow: MockAppAuthSchemeFlow?
     var mockWebLoginFlow: MockWebLoginFlow?
+    var webLoginParameters: LoginProcess.FlowParameters?
 
     // Configuration for created flows
     var universalLinkShouldSucceed: Bool = true
-    var authSchemeShouldSucceed: Bool = true
     var webLoginResult: WebLoginFlow.Next = .safariViewController
 
     func createAppUniversalLinkFlow(parameter: LoginProcess.FlowParameters) -> AppUniversalLinkFlowType {
@@ -132,14 +105,8 @@ class MockLoginFlowFactory: LoginFlowFactory {
         return flow
     }
 
-    func createAppAuthSchemeFlow(parameter: LoginProcess.FlowParameters) -> AppAuthSchemeFlowType {
-        let flow = MockAppAuthSchemeFlow()
-        flow.shouldSucceed = authSchemeShouldSucceed
-        mockAuthSchemeFlow = flow
-        return flow
-    }
-
     func createWebLoginFlow(parameter: LoginProcess.FlowParameters) -> WebLoginFlowType {
+        webLoginParameters = parameter
         let flow = MockWebLoginFlow()
         flow.nextResult = webLoginResult
         mockWebLoginFlow = flow
@@ -153,28 +120,18 @@ extension MockLoginFlowFactory {
     /// Configure all flows to succeed
     func configureAllFlowsToSucceed() {
         universalLinkShouldSucceed = true
-        authSchemeShouldSucceed = true
         webLoginResult = .safariViewController
     }
 
-    /// Configure Universal Link to fail, Auth Scheme to succeed
-    func configureUniversalLinkFailAuthSchemeSucceed() {
+    /// Configure Universal Link to fail and Web Login to succeed
+    func configureUniversalLinkFailure() {
         universalLinkShouldSucceed = false
-        authSchemeShouldSucceed = true
         webLoginResult = .safariViewController
     }
 
-    /// Configure Universal Link and Auth Scheme to fail, Web Login to succeed
-    func configureAllAppFlowsFailWebSucceed() {
-        universalLinkShouldSucceed = false
-        authSchemeShouldSucceed = false
-        webLoginResult = .safariViewController
-    }
-
-    /// Configure Universal all flows to fail
+    /// Configure all flows to fail
     func configureAllFlowsToFail(with webError: Error = LineSDKError.authorizeFailed(reason: .malformedHierarchy)) {
         universalLinkShouldSucceed = false
-        authSchemeShouldSucceed = false
         webLoginResult = .error(webError)
     }
 }

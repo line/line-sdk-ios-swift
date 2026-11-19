@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- Fall back directly to web login when the LINE app universal link cannot open. The SDK no longer sends login requests through the `lineauth2` URL scheme.
+
 ## [5.17.0] - 2026-07-23
 
 ### Changed
