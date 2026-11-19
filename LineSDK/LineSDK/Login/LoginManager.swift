@@ -282,7 +282,7 @@ public final class LoginManager: @unchecked Sendable /* Sendable is ensured by t
         }
 
         // Everything goes fine now. Store token.
-        try AccessTokenStore.shared.setCurrentToken(token)
+        AccessTokenStore.shared.setCurrentToken(token)
         return LoginResult.init(
             accessToken: token,
             permissions: Set(token.permissions),

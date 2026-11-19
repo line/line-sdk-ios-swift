@@ -34,6 +34,13 @@ private let kAttributeSynchronizable = String(kSecAttrSynchronizable)
 /// It does not provide full set of functionality of keychain access now.
 /// Only features used in LINE SDK are added.
 struct KeychainStore {
+
+    // Seam for tests to simulate keychain write failures (such as `errSecNotAvailable`),
+    // which cannot be triggered on a normal simulator or device. Never mutated in production code.
+    nonisolated(unsafe) static var secItemUpdate: (CFDictionary, CFDictionary) -> OSStatus = SecItemUpdate
+    nonisolated(unsafe) static var secItemAdd: (CFDictionary, UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus
+        = SecItemAdd
+
     struct Options {
         enum ItemClass {
             case genericPassword
@@ -126,13 +133,13 @@ extension KeychainStore {
         query[kAttributeAccount] = key
 
         let attributes = options.attributes(for: nil, value: data)
-        let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+        let status = Self.secItemUpdate(query as CFDictionary, attributes as CFDictionary)
         switch status {
         case errSecSuccess:
             break
         case errSecItemNotFound:
             let a = options.attributes(for: key, value: data)
-            let status = SecItemAdd(a as CFDictionary, nil)
+            let status = Self.secItemAdd(a as CFDictionary, nil)
             if status != errSecSuccess {
                 throw keychainError(status)
             }

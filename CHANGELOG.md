@@ -4,8 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- Keep the refreshed access token in memory when storing it to the keychain fails (such as `errSecNotAvailable` when the keychain service is temporarily unavailable). The current session continues with the new token and the consumed refresh token is not sent again. The SDK retries the keychain writing when the app becomes active or protected data becomes available.
+
 ### Changed
 
+- Behavior change: `API.Auth.refreshAccessToken` and the login flow no longer report a failure when the token itself is obtained but cannot be stored to the keychain. Observe the new `.LineSDKAccessTokenDidFailToPersist` notification if you need to detect or report such storing failures. The underlying error is available in the `userInfo` dictionary under the `LineSDKNotificationKey.persistingError` key.
 - Fall back directly to web login when the LINE app universal link cannot open. The SDK no longer sends login requests through the `lineauth2` URL scheme.
 
 ## [5.17.0] - 2026-07-23

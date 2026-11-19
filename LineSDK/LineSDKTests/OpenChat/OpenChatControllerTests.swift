@@ -87,7 +87,7 @@ class OpenChatCreatingControllerTests: XCTestCase, ViewControllerCompatibleTest 
         """.data(using: .utf8)!
         
         let token = try! JSONDecoder().decode(AccessToken.self, from: tokenData)
-        try! AccessTokenStore.shared.setCurrentToken(token)
+        AccessTokenStore.shared.setCurrentToken(token)
         
         let statusWithToken = OpenChatCreatingController.localAuthorizationStatusForCreatingOpenChat()
         guard case .authorized = statusWithToken else {
